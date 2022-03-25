@@ -19,30 +19,31 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
 
   registerCliOption(cliOptions);
 
-  // TODO: get from routeManifest
-  const routeManifest = {
-    '/': '/src/pages/index',
-    '/about': '/src/pages/about',
-  };
+  const outputDir = path.join(rootDir, 'build');
+  const serverEntry = path.join(outputDir, 'server/entry.mjs');
+  const routeManifest = path.join(rootDir, '.ice/route-manifest.json');
 
-  onHook(`before.${command as 'start' | 'build'}.run`, async ({ esbuildCompile, taskConfig }) => {
-    const outDir = taskConfig.outputDir;
+  // server entry must build after client task, because it needs assets manifest
+  onHook(`after.${command as 'start' | 'build'}.compile`, async ({ esbuildCompile }) => {
     // TODO: watch file changes and rebuild
     await esbuildCompile({
       entryPoints: [path.join(rootDir, '.ice/entry.server')],
-      outdir: path.join(outDir, 'server'),
+      outdir: path.join(outputDir, 'server'),
       // platform: 'node',
       format: 'esm',
       outExtension: { '.js': '.mjs' },
       // FIXME: https://github.com/ice-lab/ice-next/issues/27
       external: process.env.JEST_TEST === 'true' ? [] : ['./node_modules/*', 'react'],
     }, { isServer: true });
+  });
 
-    if (command === 'build') {
-      // generator html to outputDir
-      const entryPath = path.resolve(outDir, 'server/entry.mjs');
-      await generateHtml(entryPath, outDir, routeManifest);
-    }
+  // generator html
+  onHook('after.build.compile', async () => {
+    await generateHtml({
+      outDir: outputDir,
+      entry: serverEntry,
+      routeManifest,
+    });
   });
 
   onHook('after.start.compile', ({ urls, stats, messages }) => {
@@ -74,12 +75,14 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
   });
 
   if (!commandArgs.disableOpen) {
-    onHook('after.start.devServer', ({ urls }: any) => {
-      openBrowser(urls.localUrlForBrowser);
+    // assets manifest will generate after client compile
+    onHook('after.start.compile', ({ urls, isFirstCompile }: any) => {
+      if (isFirstCompile) {
+        openBrowser(urls.localUrlForBrowser);
+      }
     });
   }
 
-  const outputDir = path.join(rootDir, 'build');
   registerTask('web', {
     mode,
     outputDir,
@@ -95,7 +98,7 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
       middlewares.push({
         name: 'document-render-server',
         middleware: setupRenderServer({
-          entry: path.resolve(outputDir, 'server/entry.mjs'),
+          entry: serverEntry,
           routeManifest,
         }),
       });

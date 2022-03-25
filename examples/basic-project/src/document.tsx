@@ -1,6 +1,6 @@
 /* eslint-disable react/self-closing-comp */
 import React from 'react';
-// import { Script } from 'ice';
+import { Meta, Title, Links, Main, Scripts } from 'ice';
 
 function Document() {
   return (
@@ -9,11 +9,13 @@ function Document() {
         <meta charSet="utf-8" />
         <meta name="description" content="ICE 3.0 Demo" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>ICE Demo</title>
+        <Meta />
+        <Title />
+        <Links />
       </head>
       <body>
-        <div id="root" dangerouslySetInnerHTML={{ __html: '<!--app-html-->' }}></div>
-        <script src="./main.js"></script>
+        <Main />
+        <Scripts />
       </body>
     </html>
   );

@@ -3,12 +3,15 @@ import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 import consola from 'consola';
 import fse from 'fs-extra';
-// import { hijackWebpack } from './requireHook.js';
+import { hijackWebpack } from './requireHook.js';
 import type { IGetBuiltInPlugins, IPluginList, IUserConfig } from 'build-scripts';
 import { builtInPlugins } from './constant.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// avoid multi wabpack
+hijackWebpack();
 
 const getDynamicPlugins = (userConfig: IUserConfig) => {
   const { plugins } = userConfig;
@@ -42,8 +45,6 @@ const getDynamicPlugins = (userConfig: IUserConfig) => {
 };
 
 const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
-  // enable webpack 5 by default
-  // hijackWebpack();
   // eslint-disable-next-line
   const pkg = fse.readJSONSync(path.resolve(__dirname, '../package.json'));
   process.env.__FRAMEWORK_VERSION__ = pkg.version;

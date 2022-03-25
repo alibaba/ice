@@ -1,12 +1,11 @@
 import React, { useLayoutEffect, useReducer } from 'react';
 import type { Update } from 'history';
 import { createHashHistory, createBrowserHistory } from 'history';
-import { matchRoutes, createSearchParams } from 'react-router-dom';
+import { createSearchParams } from 'react-router-dom';
 import Runtime from './runtime.js';
 import App from './App.js';
 import type { AppContext, InitialContext, AppConfig, RouteItem } from './types';
-import { loadRouteModules } from './routes.js';
-import { getCurrentPageData, loadPageData } from './transition.js';
+import { loadRouteModules, loadPageData, matchRoutes } from './routes.js';
 
 export default async function runBrowserApp(
   appConfig: AppConfig,
@@ -15,13 +14,13 @@ export default async function runBrowserApp(
 ) {
   const matches = matchRoutes(routes, window.location);
   const routeModules = await loadRouteModules(matches.map(match => match.route as RouteItem));
-  const pageDataResults = await loadPageData({ matches, location: window.location, routeModules });
+  const pageData = await loadPageData(matches, routeModules, {});
   const appContext: AppContext = {
     routes,
     appConfig,
     initialData: null,
     routeModules,
-    pageData: getCurrentPageData(pageDataResults),
+    pageData,
   };
   // ssr enabled and the server has returned data
   if ((window as any).__ICE_APP_DATA__) {

@@ -38,6 +38,7 @@
     "fs-extra": "^10.0.0",
     "prettier": "^2.5.1",
     "semver": "^7.3.5",
+    "webpack": "^5.69.1",
     "webpack-dev-server": "^4.7.4",
     "yargs-parser": "^21.0.0"
   },
@@ -46,7 +47,6 @@
     "@types/ejs": "^3.1.0",
     "@types/lodash.debounce": "^4.0.6",
     "chokidar": "^3.5.3",
-    "unplugin": "^0.3.2",
-    "webpack": "^5.0.0"
+    "unplugin": "^0.3.2"
   }
 }

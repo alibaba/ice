@@ -27,7 +27,15 @@ export const startFixture = async function (example: string) {
     port,
     disableOpen: true,
   }, getBuiltInPlugins });
-  const devServer = await service.run() as unknown as Server;
+
+  // @ts-ignore
+  const { compiler, devServer } = await service.run();
+  // wait generate assets manifest
+  await new Promise((resolve) => {
+    compiler.hooks.done.tap('done',() => {
+      resolve(true);
+    })
+  });
 
   return {
     port,

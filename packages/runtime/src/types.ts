@@ -1,5 +1,5 @@
 import type { Action, Location } from 'history';
-import type { Navigator } from 'react-router-dom';
+import type { Navigator, Params } from 'react-router-dom';
 import type { ComponentType, ReactNode } from 'react';
 import type { Renderer } from 'react-dom';
 import type { usePageContext } from './PageContext';
@@ -25,10 +25,6 @@ export {
   Renderer,
 };
 
-export interface PageConfig {
-  auth?: string[];
-}
-
 export interface ServerContext {
   req?: Request;
   res?: Response;
@@ -49,16 +45,25 @@ export interface PageComponent {
 }
 
 export interface RouteItem {
+  id: string;
   path: string;
   element: ReactNode;
   componentName: string;
-  id: string;
   index?: false;
   exact?: boolean;
   strict?: boolean;
   load?: () => Promise<PageComponent>;
   pageConfig?: PageConfig;
   children?: RouteItem[];
+}
+
+export interface PageConfig {
+  title?: string;
+  // TODO: fix type
+  meta?: any[];
+  links?: any[];
+  scripts?: any[];
+  auth?: string[];
 }
 
 export type PageWrapper<InjectProps> = (<Props>(Component: ComponentType<Props & InjectProps>) => ComponentType<Props>);
@@ -71,21 +76,25 @@ export interface RouteModules {
   [routeId: string]: PageComponent;
 }
 
+export interface AssetsManifest {
+  publicPath?: string;
+  bundles?: string[];
+}
 export interface AppContext {
-  // todo: 这是啥
-  appManifest?: Record<string, any>;
   routeModules: RouteModules;
   appConfig: AppConfig;
+  assetsManifest?: AssetsManifest;
+  matches?: RouteMatch[];
   pageData: PageData;
   routes?: RouteItem[];
   initialData?: InitialData;
-  document?: ComponentType;
 }
 
 export interface PageData {
   pageConfig?: PageConfig;
   initialData?: InitialData;
 }
+
 export interface RuntimeAPI {
   setAppRouter: SetAppRouter;
   addProvider: AddProvider;
@@ -117,4 +126,24 @@ export interface AppRouterProps {
 
 export interface AppRouteProps {
   routes: RouteItem[];
+}
+
+// rewrite the `RouteMatch` type which is referenced by the react-router-dom
+export interface RouteMatch {
+  /**
+   * The names and values of dynamic parameters in the URL.
+   */
+  params: Params;
+  /**
+   * The portion of the URL pathname that was matched.
+   */
+  pathname: string;
+  /**
+   * The portion of the URL pathname that was matched before child routes.
+   */
+  pathnameBase: string;
+  /**
+   * The route object that was used to match.
+   */
+  route: RouteItem;
 }

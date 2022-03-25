@@ -57,13 +57,18 @@ async function webpackCompiler(options: {
       consola.warn('Compiled with warnings.\n');
       consola.warn(messages.warnings.join('\n\n'));
     }
-    await applyHook(`after.${command}.compile`, {
-      stats,
-      isSuccessful,
-      isFirstCompile,
-      urls,
-      messages,
-    });
+    // compiler.hooks.done is AsyncSeriesHook which does not support async function
+    if (command === 'start') {
+      await applyHook('after.start.compile', {
+        stats,
+        isSuccessful,
+        isFirstCompile,
+        urls,
+        messages,
+        taskConfig,
+        esbuildCompile,
+      });
+    }
 
     if (isSuccessful) {
       consola.success(`Compiled successfully in ${(statsData.children ? statsData.children[0] : statsData).time} ms`);

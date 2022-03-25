@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { useAppContext, Link } from 'ice';
+import type { PageConfig } from '@ice/runtime/esm/types';
 import styles from './index.module.css';
 
 export default function Home() {
-  const appContext = useAppContext();
-
-  console.log('Home Page: appContext', appContext);
+  // const appContext = useAppContext();
 
   return (
     <>
@@ -15,8 +14,11 @@ export default function Home() {
   );
 }
 
-export function getPageConfig() {
+export function getPageConfig(): PageConfig {
   return {
+    // scripts: [
+    //   { src: 'https://g.alicdn.com/alilog/mlog/aplus_v2.js', block: true },
+    // ],
     auth: ['admin'],
   };
 }

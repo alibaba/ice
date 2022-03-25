@@ -1,6 +1,9 @@
 import React from 'react';
-import RouteWrapper from './RouteWrapper.js';
-import type { RouteItem, RouteModules, PageWrapper } from './types';
+import type { Location } from 'history';
+import type { RouteObject } from 'react-router-dom';
+import { matchRoutes as originMatchRoutes } from 'react-router-dom';
+import PageWrapper from './PageWrapper.js';
+import type { RouteItem, RouteModules, PageWrapper as IPageWrapper, RouteMatch } from './types';
 import { useAppContext } from './AppContext.js';
 
 export async function loadRouteModule(route: RouteItem, routeModulesCache: RouteModules) {
@@ -37,9 +40,47 @@ export async function loadRouteModules(routes: RouteItem[]) {
 }
 
 /**
+* get data for the matched page
+* @param requestContext
+* @param matches
+* @returns
+*/
+export async function loadPageData(matches, routeModules, requestContext) {
+  if (!matches || !matches.length) {
+    return null;
+  }
+
+  // use the last matched route as the page entry
+  const last = matches.length - 1;
+  const { route } = matches[last];
+  const { id } = route;
+
+  const routeModule = routeModules[id];
+
+  const { getInitialData, getPageConfig } = routeModule;
+  let initialData;
+  let pageConfig;
+
+  if (getInitialData) {
+    initialData = await getInitialData(requestContext);
+  }
+
+  if (getPageConfig) {
+    pageConfig = getPageConfig({
+      initialData,
+    });
+  }
+
+  return {
+    initialData,
+    pageConfig,
+  };
+}
+
+/**
  * Create routes which will be consumed by react-router-dom
  */
-export function createRoutes(routes: RouteItem[], routeModules: RouteModules, PageWrappers?: PageWrapper<any>[]) {
+export function createRoutes(routes: RouteItem[], routeModules: RouteModules, PageWrappers?: IPageWrapper<any>[]) {
   return routes.map((routeItem: RouteItem) => {
     let { path, children, index, id, element, ...rest } = routeItem;
     const idParts = id.split('/');
@@ -48,7 +89,7 @@ export function createRoutes(routes: RouteItem[], routeModules: RouteModules, Pa
     element = isLayout ? (
       <RouteComponent id={id} />
     ) : (
-      <RouteWrapper
+      <PageWrapper
         PageComponent={(...props) => <RouteComponent id={id} {...props} />}
         PageWrappers={PageWrappers}
       />
@@ -81,4 +122,20 @@ function RouteComponent({ id, ...props }: { id: string }) {
     }
   }
   return <Component {...props} />;
+}
+
+export function matchRoutes(
+  routes: RouteItem[],
+  location: Partial<Location> | string,
+  basename?: string,
+): RouteMatch[] {
+  let matches = originMatchRoutes(routes as unknown as RouteObject[], location, basename);
+  if (!matches) return [];
+
+  return matches.map(({ params, pathname, pathnameBase, route }) => ({
+    params,
+    pathname,
+    route: route as unknown as RouteItem,
+    pathnameBase,
+  }));
 }

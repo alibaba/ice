@@ -27,8 +27,7 @@
     "process": "^0.11.10",
     "react-refresh": "^0.11.0",
     "sass": "^1.49.9",
-    "unplugin": "^0.3.2",
-    "webpack-dev-server": "^4.7.4"
+    "unplugin": "^0.3.2"
   },
   "devDependencies": {
     "@ice/types": "^1.0.0",

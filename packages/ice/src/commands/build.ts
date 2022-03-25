@@ -19,7 +19,7 @@ const build = async (context: Context<Config>, contextConfig: ContextConfig[], e
     applyHook,
     esbuildCompile,
   });
-  await new Promise((resolve, reject): void => {
+  const { stats, isSuccessful, messages } = await new Promise((resolve, reject): void => {
     let messages: { errors: string[]; warnings: string[] };
     compiler.run((err, stats) => {
       if (err) {
@@ -41,13 +41,23 @@ const build = async (context: Context<Config>, contextConfig: ContextConfig[], e
         return;
       } else {
         compiler?.close?.(() => {});
+        const isSuccessful = !messages.errors.length && !messages.warnings.length;
         resolve({
           stats,
+          messages,
+          isSuccessful,
         });
       }
     });
   });
-  return compiler;
+  await applyHook('after.build.compile', {
+    stats,
+    isSuccessful,
+    messages,
+    taskConfig: webConfig.taskConfig,
+    esbuildCompile,
+  });
+  return { compiler };
 };
 
 export default build;

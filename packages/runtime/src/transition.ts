@@ -1,9 +1,7 @@
 // Based on https://github.com/remix-run/remix/blob/main/packages/remix-react/transition.ts
 import type { Location } from 'history';
-import type { RouteMatch } from 'react-router-dom';
-import { matchRoutes } from 'react-router-dom';
-import { loadRouteModule } from './routes.js';
-import type { PageConfig, PageData, RouteItem, RouteModules } from './types';
+import { loadRouteModules, loadPageData, matchRoutes } from './routes.js';
+import type { PageData, RouteItem, RouteModules } from './types';
 
 interface TransitionState {
   location: Location;
@@ -19,7 +17,7 @@ interface TransitionOptions {
 }
 
 export function createTransitionManager(options: TransitionOptions) {
-  const { routes, location, routeModules, onChange, pageData } = options;
+  const { routes, location, onChange, pageData } = options;
   let state = {
     location,
     pageData,
@@ -39,10 +37,13 @@ export function createTransitionManager(options: TransitionOptions) {
     if (!matches) {
       throw new Error(`Routes not found in location ${location}.`);
     }
-    const results = await loadPageData({ matches, location, routeModules });
+
+    const routeModules = await loadRouteModules(matches.map(match => match.route as RouteItem));
+    const pageData = await loadPageData(matches, routeModules, {});
+
     update({
       location,
-      pageData: getCurrentPageData(results),
+      pageData,
      });
   }
 
@@ -51,39 +52,4 @@ export function createTransitionManager(options: TransitionOptions) {
     handleLoad,
     getState,
   };
-}
-
-export async function loadPageData({
-  matches,
-  location,
-  routeModules,
-  }: {
-  matches: RouteMatch[];
-  location: Partial<Location>;
-  routeModules: RouteModules;
-}): Promise<PageData[]> {
-  return Promise.all(matches.map(async (match) => {
-      const route = match.route as RouteItem;
-      const routeModule = await loadRouteModule(route, routeModules);
-      const { getPageConfig, getInitialData } = routeModule;
-      let initialData: any;
-      let pageConfig: PageConfig;
-      if (getInitialData) {
-        const { pathname } = location;
-        // @ts-expect-error TODO: update the getInitialData params types, including `path`, `query`
-        initialData = await getInitialData({ pathname });
-        if (getPageConfig) {
-          pageConfig = getPageConfig({ initialData });
-        }
-      }
-
-      return { pageConfig, initialData };
-  }));
-}
-
-export function getCurrentPageData(results: PageData[]): PageData {
-  if (!results.length) {
-    return {};
-  }
-  return results[results.length - 1];
 }

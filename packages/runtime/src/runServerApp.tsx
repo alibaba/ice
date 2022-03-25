@@ -2,23 +2,36 @@ import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server.js';
 import type { Location, To } from 'history';
 import { Action, createPath, parsePath } from 'history';
-import { createSearchParams, matchRoutes } from 'react-router-dom';
+import { createSearchParams } from 'react-router-dom';
 import Runtime from './runtime.js';
 import App from './App.js';
-import { loadRouteModules } from './routes.js';
-import { getCurrentPageData, loadPageData } from './transition.js';
-import type { AppContext, AppConfig, RouteItem, ServerContext, InitialContext } from './types';
+import { DocumentContextProvider } from './Document.js';
+import { loadRouteModules, loadPageData, matchRoutes } from './routes.js';
+import { getPageAssets, getEntryAssets } from './assets.js';
+import type { AppContext, InitialContext, RouteItem, ServerContext, AppConfig, RuntimePlugin, CommonJsRuntime, AssetsManifest } from './types';
 
-export default async function runServerApp(
-  serverContext: ServerContext,
-  appConfig: AppConfig,
-  runtimeModules,
-  routes: RouteItem[],
-  Document,
-  documentOnly: boolean,
-): Promise<string> {
-  const routeModules = await loadRouteModules(routes);
-  const { req } = serverContext;
+interface RunServerAppOptions {
+  requestContext: ServerContext;
+  appConfig: AppConfig;
+  routes: RouteItem[];
+  documentOnly: boolean;
+  runtimeModules: (RuntimePlugin | CommonJsRuntime)[];
+  Document: React.ComponentType<any>;
+  assetsManifest: AssetsManifest;
+}
+
+export default async function runServerApp(options: RunServerAppOptions): Promise<string> {
+  const {
+    requestContext,
+    appConfig,
+    runtimeModules,
+    routes,
+    Document,
+    documentOnly,
+    assetsManifest,
+  } = options;
+
+  const { req } = requestContext;
   // ref: https://github.com/remix-run/react-router/blob/main/packages/react-router-dom/server.tsx
   const locationProps = parsePath(req.url);
 
@@ -29,34 +42,40 @@ export default async function runServerApp(
     state: null,
     key: 'default',
   };
+
   const matches = matchRoutes(routes, location);
-  const pageDataResults = await loadPageData({ matches, location, routeModules });
-  const appContext: AppContext = {
-    routes,
-    appConfig,
-    initialData: null,
-    document: Document,
-    routeModules,
-    pageData: getCurrentPageData(pageDataResults),
-  };
+  const routeModules = await loadRouteModules(matches.map(match => match.route as RouteItem));
+  const pageData = await loadPageData(matches, routeModules, requestContext);
 
   const initialContext: InitialContext = {
-    ...serverContext,
+    ...requestContext,
     pathname: location.pathname,
     query: Object.fromEntries(createSearchParams(location.search)),
     path: req.url,
   };
 
+  let initialData;
   if (appConfig?.app?.getInitialData) {
-    appContext.initialData = await appConfig.app.getInitialData(initialContext);
+    initialData = await appConfig.app.getInitialData(initialContext);
   }
+
+  const appContext: AppContext = {
+    matches,
+    routes,
+    appConfig,
+    initialData,
+    pageData,
+    routeModules,
+    assetsManifest,
+  };
 
   const runtime = new Runtime(appContext);
   runtimeModules.forEach(m => {
     runtime.loadModule(m);
   });
 
-  return render(runtime, location, Document, documentOnly);
+  const html = render(runtime, location, Document, documentOnly);
+  return html;
 }
 
 async function render(
@@ -65,15 +84,40 @@ async function render(
   Document,
   documentOnly: boolean,
 ) {
-  const documentHtml = ReactDOMServer.renderToString(<Document />);
+  const appContext = runtime.getAppContext();
+  const { matches, pageData = {}, assetsManifest } = appContext;
 
-  if (documentOnly) {
-    return documentHtml;
+  let html = '';
+
+  if (!documentOnly) {
+    html = renderApp(runtime, location);
   }
 
- const staticNavigator = createStaticNavigator();
+  const { pageConfig } = pageData;
 
-  const pageHtml = ReactDOMServer.renderToString(
+  const pageAssets = getPageAssets(matches, assetsManifest);
+  const entryAssets = getEntryAssets(assetsManifest);
+
+  const documentContext = {
+    pageConfig,
+    pageAssets,
+    entryAssets,
+    html,
+  };
+
+  const result = ReactDOMServer.renderToString(
+    <DocumentContextProvider value={documentContext}>
+      <Document />
+    </DocumentContextProvider>,
+  );
+
+  return result;
+}
+
+function renderApp(runtime, location) {
+  const staticNavigator = createStaticNavigator();
+
+  const html = ReactDOMServer.renderToString(
     <App
       action={Action.Pop}
       runtime={runtime}
@@ -83,11 +127,8 @@ async function render(
     />,
   );
 
-  const html = documentHtml.replace('<!--app-html-->', pageHtml);
-
   return html;
 }
-
 
 function createStaticNavigator() {
   return {
