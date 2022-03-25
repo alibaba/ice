@@ -24,7 +24,7 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
   const routeManifest = path.join(rootDir, '.ice/route-manifest.json');
 
   // server entry must build after client task, because it needs assets manifest
-  onHook(`after.${command as 'start' | 'build'}.compile`, async ({ esbuildCompile, taskConfig }) => {
+  onHook(`after.${command as 'start' | 'build'}.compile`, async ({ esbuildCompile }) => {
     // TODO: watch file changes and rebuild
     await esbuildCompile({
       entryPoints: [path.join(rootDir, '.ice/entry.server')],
