@@ -90,7 +90,7 @@ async function render(
   documentOnly: boolean,
 ) {
   const appContext = runtime.getAppContext();
-  const { matches, pageData, assetsManifest } = appContext;
+  const { matches, pageData = {}, assetsManifest } = appContext;
 
   let html = '';
 

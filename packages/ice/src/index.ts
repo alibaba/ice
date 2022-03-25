@@ -48,7 +48,7 @@ async function createService({ rootDir, command, commandArgs, getBuiltInPlugins 
     (eventName) => {
       if (eventName === 'add' || eventName === 'unlink') {
         // TODO: only watch src/layout.tsx and src/pages/**
-        const routesStr = generateRoutesInfo(rootDir);
+        const { routes, routesStr } = generateRoutesInfo(rootDir);
         generator.renderFile(
           path.join(templatePath, 'routes.ts.ejs'),
           path.join(tmpDir, 'routes.ts'),
