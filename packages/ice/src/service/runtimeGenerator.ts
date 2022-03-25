@@ -276,7 +276,8 @@ export default class Generator {
       }
       let content = ejs.render(templateContent, renderData);
       // example: name = 'routes.ts'
-      if (path.extname(name) === '.ts') {
+      const realExtname = path.extname(name);
+      if (realExtname === '.ts' || realExtname === '.tsx') {
         try {
           content = prettier.format(content, {
             parser: 'typescript',

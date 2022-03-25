@@ -1,12 +1,11 @@
 import * as React from 'react';
-import type { PageConfig, AppData } from './types';
+import type { PageConfig } from './types';
 
 interface DocumentContext {
   html?: string;
   entryAssets?: string[];
   pageAssets?: string[];
   pageConfig?: PageConfig;
-  appData?: AppData;
 }
 
 const Context = React.createContext<DocumentContext>(null);
@@ -62,7 +61,7 @@ export function Links() {
 }
 
 export function Scripts() {
-  const { pageConfig = {}, pageAssets, entryAssets, appData } = useDocumentContext();
+  const { pageConfig = {}, pageAssets, entryAssets } = useDocumentContext();
   const { links: customLinks = [], scripts: customScripts = [] } = pageConfig;
 
   const scripts = pageAssets.concat(entryAssets).filter(path => path.indexOf('.js') > -1);
@@ -73,7 +72,6 @@ export function Scripts() {
 
   return (
     <>
-      <script dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_DATA__=${JSON.stringify(appData)}` }} />
       {
         blockScripts.map(script => {
           const { block, ...props } = script;

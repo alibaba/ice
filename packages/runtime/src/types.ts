@@ -55,7 +55,6 @@ export interface RouteItem {
   path: string;
   element: ReactNode;
   componentName: string;
-  id: string;
   index?: false;
   exact?: boolean;
   strict?: boolean;
@@ -95,11 +94,6 @@ export interface AppContext {
   pageData: PageData;
   routes?: RouteItem[];
   initialData?: InitialData;
-}
-
-export interface AppData {
-  initialData?: InitialData;
-  pageData?: PageData;
 }
 
 export interface PageData {

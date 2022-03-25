@@ -14,32 +14,11 @@ export default async function runBrowserApp(
 ) {
   const matches = matchRoutes(routes, window.location);
   const routeModules = await loadRouteModules(matches.map(match => match.route as RouteItem));
-
-  const { href, origin, pathname, search } = window.location;
-  const path = href.replace(origin, '');
-  const query = Object.fromEntries(createSearchParams(search));
-  const initialContext: InitialContext = {
-    pathname,
-    path,
-    query,
-  };
-
-  const appData = (window as any).__ICE_APP_DATA__ || {};
-  let { initialData, pageData } = appData;
-
-  if (!initialData && appConfig?.app?.getInitialData) {
-    initialData = await appConfig.app.getInitialData(initialContext);
-  }
-
-  if (!pageData) {
-    pageData = await loadPageData(matches, routeModules, initialContext);
-  }
-
+  const pageData = await loadPageData(matches, routeModules, {});
   const appContext: AppContext = {
     routes,
     appConfig,
     routeModules,
-    initialData,
     pageData,
   };
 

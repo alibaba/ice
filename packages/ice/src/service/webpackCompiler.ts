@@ -69,6 +69,12 @@ async function webpackCompiler(options: {
         esbuildCompile,
       });
     }
+
+    if (isSuccessful) {
+      consola.success(`Compiled successfully in ${(statsData.children ? statsData.children[0] : statsData).time} ms`);
+      // if compiled successfully reset first compile flag after been posted to lifecycle hooks
+      isFirstCompile = false;
+    }
   });
 
   return compiler;

@@ -39,6 +39,15 @@ export const startFixture = async function (example: string) {
     })
   });
 
+  // @ts-ignore
+  const { compiler, devServer } = await service.run();
+  // wait generate assets manifest
+  await new Promise((resolve) => {
+    compiler.hooks.done.tap('done',() => {
+      resolve(true);
+    })
+  });
+
   const devServer = await start({
     args: {
       config: path.join(rootDir, 'build.json'),
