@@ -16,24 +16,23 @@ interface RunServerAppOptions {
   routes: RouteItem[];
   documentOnly: boolean;
   runtimeModules: (RuntimePlugin | CommonJsRuntime)[];
-  Document: React.ComponentType<any>;
   assetsManifest: AssetsManifest;
 }
 
-export default async function runServerApp(options: RunServerAppOptions): Promise<string> {
+async function runServerApp(Document: React.ComponentType<any>, options: RunServerAppOptions): Promise<string> {
   const {
-    requestContext,
     appConfig,
+    assetsManifest,
+    documentOnly,
+    requestContext,
     runtimeModules,
     routes,
-    Document,
-    documentOnly,
-    assetsManifest,
   } = options;
 
   const { req } = requestContext;
+  const { url } = req;
   // ref: https://github.com/remix-run/react-router/blob/main/packages/react-router-dom/server.tsx
-  const locationProps = parsePath(req.url);
+  const locationProps = parsePath(url);
 
   const location: Location = {
     pathname: locationProps.pathname || '/',
@@ -45,19 +44,20 @@ export default async function runServerApp(options: RunServerAppOptions): Promis
 
   const matches = matchRoutes(routes, location);
   const routeModules = await loadRouteModules(matches.map(match => match.route as RouteItem));
-  const pageData = await loadPageData(matches, routeModules, requestContext);
 
   const initialContext: InitialContext = {
     ...requestContext,
     pathname: location.pathname,
     query: Object.fromEntries(createSearchParams(location.search)),
-    path: req.url,
+    path: url,
   };
 
   let initialData;
   if (appConfig?.app?.getInitialData) {
     initialData = await appConfig.app.getInitialData(initialContext);
   }
+
+  const pageData = await loadPageData(matches, routeModules, initialContext);
 
   const appContext: AppContext = {
     matches,
@@ -79,18 +79,20 @@ export default async function runServerApp(options: RunServerAppOptions): Promis
     runtime.loadModule(m);
   });
 
-  const html = render(runtime, location, Document, documentOnly);
+  const html = render(Document, runtime, location, documentOnly);
   return html;
 }
 
+export default runServerApp;
+
 async function render(
+  Document,
   runtime: Runtime,
   location: Location,
-  Document,
   documentOnly: boolean,
 ) {
   const appContext = runtime.getAppContext();
-  const { matches, pageData = {}, assetsManifest } = appContext;
+  const { matches, initialData, pageData, assetsManifest } = appContext;
 
   let html = '';
 
@@ -103,7 +105,13 @@ async function render(
   const pageAssets = getPageAssets(matches, assetsManifest);
   const entryAssets = getEntryAssets(assetsManifest);
 
+  const appData = {
+    initialData,
+    pageData,
+  };
+
   const documentContext = {
+    appData,
     pageConfig,
     pageAssets,
     entryAssets,

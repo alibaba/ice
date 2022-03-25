@@ -14,31 +14,34 @@ export default async function runBrowserApp(
 ) {
   const matches = matchRoutes(routes, window.location);
   const routeModules = await loadRouteModules(matches.map(match => match.route as RouteItem));
-  const pageData = await loadPageData(matches, routeModules, {});
+
+  const { href, origin, pathname, search } = window.location;
+  const path = href.replace(origin, '');
+  const query = Object.fromEntries(createSearchParams(search));
+  const initialContext: InitialContext = {
+    pathname,
+    path,
+    query,
+  };
+
+  const appData = (window as any).__ICE_APP_DATA__ || {};
+  let { initialData, pageData } = appData;
+
+  if (!initialData && appConfig?.app?.getInitialData) {
+    initialData = await appConfig.app.getInitialData(initialContext);
+  }
+
+  if (!pageData) {
+    pageData = await loadPageData(matches, routeModules, initialContext);
+  }
+
   const appContext: AppContext = {
     routes,
     appConfig,
-    initialData: null,
     routeModules,
+    initialData,
     pageData,
   };
-  // ssr enabled and the server has returned data
-  if ((window as any).__ICE_APP_DATA__) {
-    appContext.initialData = (window as any).__ICE_APP_DATA__;
-    // context.pageInitialProps = (window as any).__ICE_PAGE_PROPS__;
-  } else if (appConfig?.app?.getInitialData) {
-    const { href, origin, pathname, search } = window.location;
-    const path = href.replace(origin, '');
-    const query = Object.fromEntries(createSearchParams(search));
-    const ssrError = (window as any).__ICE_SSR_ERROR__;
-    const initialContext: InitialContext = {
-      pathname,
-      path,
-      query,
-      ssrError,
-    };
-    appContext.initialData = await appConfig.app.getInitialData(initialContext);
-  }
 
   const runtime = new Runtime(appContext);
   runtimeModules.forEach(m => {
