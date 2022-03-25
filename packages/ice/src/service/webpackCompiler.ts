@@ -44,10 +44,6 @@ async function webpackCompiler(options: {
     });
     const messages = formatWebpackMessages(statsData);
     const isSuccessful = !messages.errors.length && !messages.warnings.length;
-    if (isSuccessful) {
-      consola.success(`Compiled successfully in ${(statsData.children ? statsData.children[0] : statsData).time} ms`);
-      isFirstCompile = false;
-    }
     if (messages.errors.length) {
       // Only keep the first error. Others are often indicative
       // of the same problem, but confuse the reader with noise.
@@ -61,15 +57,24 @@ async function webpackCompiler(options: {
       consola.warn('Compiled with warnings.\n');
       consola.warn(messages.warnings.join('\n\n'));
     }
-    await applyHook(`after.${command}.compile`, {
-      stats,
-      isSuccessful,
-      isFirstCompile,
-      urls,
-      messages,
-      taskConfig,
-      esbuildCompile,
-    });
+    // compiler.hooks.done is AsyncSeriesHook which does not support async function
+    if (command === 'start') {
+      await applyHook('after.start.compile', {
+        stats,
+        isSuccessful,
+        isFirstCompile,
+        urls,
+        messages,
+        taskConfig,
+        esbuildCompile,
+      });
+    }
+
+    if (isSuccessful) {
+      consola.success(`Compiled successfully in ${(statsData.children ? statsData.children[0] : statsData).time} ms`);
+      // if compiled successfully reset first compile flag after been posted to lifecycle hooks
+      isFirstCompile = false;
+    }
   });
 
   return compiler;

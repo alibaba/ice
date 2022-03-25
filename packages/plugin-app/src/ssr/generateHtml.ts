@@ -1,22 +1,18 @@
 import fs from 'fs';
 import path from 'path';
-import { generateRouteManifest } from '@ice/route-manifest';
 
-export default async function generateHTML(rootDir, outDir, entry: string) {
+export default async function generateHTML(options) {
+  const {
+    entry,
+    routeManifest,
+    outDir,
+  } = options;
+
   const serverEntry = await import(entry);
 
-  // TODO: get route manifest from context
-  const routeManifests = generateRouteManifest(rootDir);
+  const routes = JSON.parse(fs.readFileSync(routeManifest, 'utf8'));
 
-  // get all route path
-  const paths = [];
-  Object.values(routeManifests).forEach(route => {
-    if (route.path) {
-      paths.push(route.path);
-    } else if (route.path == null) {
-      paths.push('/');
-    }
-  });
+  const paths = getPaths(routes);
 
   for (let i = 0, n = paths.length; i < n; i++) {
     const routePath = paths[i];
@@ -30,4 +26,23 @@ export default async function generateHTML(rootDir, outDir, entry: string) {
     const fileName = routePath === '/' ? 'index.html' : `${routePath}.html`;
     fs.writeFileSync(path.join(outDir, fileName), htmlContent);
   }
+}
+
+/**
+ * get all route path
+ * @param routes
+ * @returns
+ */
+function getPaths(routes) {
+  let pathList = [];
+
+  routes.forEach(route => {
+    if (route.children) {
+      pathList = pathList.concat(getPaths(route.children));
+    } else {
+      pathList.push(route.path || '/');
+    }
+  });
+
+  return pathList;
 }

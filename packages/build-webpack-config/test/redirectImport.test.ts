@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import { fileURLToPath } from 'url';
-import { redirectImport } from '../src/plugins/redirectImport';
+import { redirectImport } from '../src/unPlugins/redirectImport';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 

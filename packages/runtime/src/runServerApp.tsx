@@ -97,7 +97,7 @@ async function render(
     html = renderApp(runtime, location);
   }
 
-  const { pageConfig } = pageData;
+  const { pageConfig } = pageData || {};
 
   const pageAssets = getPageAssets(matches, assetsManifest);
   const entryAssets = getEntryAssets(assetsManifest);

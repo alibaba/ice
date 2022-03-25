@@ -104,6 +104,7 @@ export function Scripts() {
 export function Main() {
   const { html } = useDocumentContext();
 
+  // TODO: set id from config
   // eslint-disable-next-line react/self-closing-comp
   return <div id="ice-container" dangerouslySetInnerHTML={{ __html: html || '' }}></div>;
 }
