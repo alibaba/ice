@@ -6,13 +6,12 @@ import assetsManifest from '../build/assets-manifest.json';
 import routes from './routes';
 
 export async function render(requestContext, documentOnly = false) {
-  return await runServerApp({
+  return await runServerApp(Document, {
     requestContext,
     runtimeModules,
     appConfig,
     routes,
     assetsManifest,
-    Document,
     documentOnly,
   });
 }
