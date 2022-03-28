@@ -33,6 +33,7 @@ async function runServerApp(options: RunServerAppOptions): Promise<string> {
 
   const { req } = requestContext;
   const { url } = req;
+
   // ref: https://github.com/remix-run/react-router/blob/main/packages/react-router-dom/server.tsx
   const locationProps = parsePath(url);
 
