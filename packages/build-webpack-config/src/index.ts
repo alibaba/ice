@@ -11,6 +11,7 @@ import type { Configuration as DevServerConfiguration } from 'webpack-dev-server
 import type { Config } from '@ice/types';
 import type { CommandArgs } from 'build-scripts';
 import { createUnplugin } from 'unplugin';
+import { getRuntimeEnvironment } from './clientEnv.js';
 import AssetsManifestPlugin from './webpackPlugins/AssetsManifestPlugin.js';
 import getTransformPlugins from './unPlugins/index.js';
 
@@ -42,11 +43,19 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, commandArgs = {} 
   } = config;
 
   const dev = mode !== 'production';
-  const defineVariables = {
+  const defineStaticVariables = {
     'process.env.NODE_ENV': JSON.stringify(mode || 'development'),
     'process.env.SERVER_PORT': JSON.stringify(commandArgs.port),
     'process.env.__IS_SERVER__': false,
   };
+  const runtimeEnv = getRuntimeEnvironment();
+  const defineRuntimeVariables = {};
+  Object.keys(runtimeEnv).forEach((key) => {
+    const runtimeValue = runtimeEnv[key];
+    // set true to flag the module as uncacheable
+    defineRuntimeVariables[key] = webpack.DefinePlugin.runtimeValue(runtimeValue, true);
+  });
+
   // create plugins
   const webpackPlugins = getTransformPlugins(rootDir, config).map((plugin) => createUnplugin(() => plugin).webpack());
 
@@ -147,7 +156,10 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, commandArgs = {} 
       new MiniCssExtractPlugin({
         filename: '[name].css',
       }),
-      new webpack.DefinePlugin(defineVariables),
+      new webpack.DefinePlugin({
+        ...defineStaticVariables,
+        ...defineRuntimeVariables,
+      }),
       new webpack.ProvidePlugin({ process: 'process/browser' }),
       new AssetsManifestPlugin({
         fileName: 'assets-manifest.json',

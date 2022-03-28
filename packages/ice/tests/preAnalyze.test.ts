@@ -45,7 +45,12 @@ describe('getImportPath', () => {
 describe('analyzeImports', () => {
   it('basic usage', async () => {
     const entryFile  = path.join(__dirname, './fixtures/preAnalyze/app.ts');
-    const analyzeSet = await analyzeImports([entryFile], { alias: {'@': path.join(__dirname, './fixtures/preAnalyze')}})
+    const analyzeSet = await analyzeImports([entryFile], {
+      analyzeRelativeImport: true,
+      alias: {
+        '@': path.join(__dirname, './fixtures/preAnalyze'),
+      },
+    });
     expect([...(analyzeSet || [])]).toStrictEqual(['runApp', 'request', 'store']);
   })
 });

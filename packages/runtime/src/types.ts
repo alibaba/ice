@@ -122,6 +122,8 @@ export interface CommonJsRuntime {
 
 export type GetWrapperPageRegistration = () => PageWrapper<any>[];
 
+export type RuntimeModules = (RuntimePlugin | CommonJsRuntime)[];
+
 export interface AppRouterProps {
   action: Action;
   location: Location;
