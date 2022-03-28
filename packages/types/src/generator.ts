@@ -7,7 +7,7 @@ export interface ExportData {
 
 export type RenderData = Record<string, unknown>;
 type RenderDataFunction = (renderDataFunction: RenderData) => RenderData;
-interface TemplateOptions {
+export interface TemplateOptions {
   template: string;
   targetDir: string;
 }

@@ -24,6 +24,7 @@ import type {
   RenderData,
   ExportData,
   Registration,
+  TemplateOptions,
 } from '@ice/types/esm/generator.js';
 import getRuntimeModules from '../utils/getRuntimeModules.js';
 import formatPath from '../utils/formatPath.js';
@@ -31,6 +32,13 @@ import formatPath from '../utils/formatPath.js';
 const { debounce } = lodash;
 
 const RENDER_WAIT = 150;
+
+interface Options {
+  rootDir: string;
+  targetDir: string;
+  defaultRenderData: RenderData;
+  templates?: (string | TemplateOptions)[];
+}
 
 export function generateExports(exportList: ExportData[]) {
   const importStatements = [];
@@ -105,7 +113,8 @@ export default class Generator {
 
   private plugins: any[];
 
-  public constructor({ rootDir, targetDir, defaultRenderData }) {
+  public constructor(options: Options) {
+    const { rootDir, targetDir, defaultRenderData, templates } = options;
     this.rootDir = rootDir;
     this.targetDir = targetDir;
     this.renderData = defaultRenderData;
@@ -119,6 +128,10 @@ export default class Generator {
     this.plugins = [];
     // empty .ice before render
     fse.emptyDirSync(path.join(rootDir, targetDir));
+    // add initial templates
+    if (templates) {
+      templates.forEach(template => this.addTemplateFiles(template));
+    }
   }
 
   public setPlugins: SetPlugins = (plugins) => {

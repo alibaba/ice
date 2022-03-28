@@ -3,12 +3,18 @@ import type { WatchOptions } from 'chokidar';
 import type { WatchEvent } from '@ice/types/esm/plugin.js';
 import formatPath from '../utils/formatPath.js';
 
-function createWatch(dir: string, command: string, options?: WatchOptions) {
-  const watchEvents = [];
+function createWatch(options: {
+  watchDir: string;
+  command: string;
+  watchOptions?: WatchOptions;
+  watchEvents?: WatchEvent[];
+}) {
+  const { watchDir, command, watchOptions } = options;
+  const watchEvents = options.watchEvents || [];
   // do not setup chokidar when run build
-  const watcher = command === 'start' && chokidar.watch(dir, {
+  const watcher = command === 'start' && chokidar.watch(watchDir, {
     ignoreInitial: true,
-    ...(options || {}),
+    ...(watchOptions || {}),
   }).on('all', (event, filePath) => {
     watchEvents.forEach(([pattern, action]) => {
       const formattedPath = formatPath(filePath);
@@ -26,7 +32,7 @@ function createWatch(dir: string, command: string, options?: WatchOptions) {
       watchEvents.push([pattern, action, name]);
     },
     removeWatchEvent: (name: string) => {
-      const eventIndex = watchEvents.findIndex((watchEvent) => watchEvent.name === name);
+      const eventIndex = watchEvents.findIndex(([,,watchName]) => watchName === name);
       watchEvents.splice(eventIndex, 1);
     },
   };

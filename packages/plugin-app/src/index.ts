@@ -18,27 +18,30 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
   const mode = command === 'start' ? 'development' : 'production';
 
   registerCliOption(cliOptions);
+  let serverCompiler = async () => '';
 
   const outputDir = path.join(rootDir, 'build');
-  const serverEntry = path.join(outputDir, 'server/entry.mjs');
   const routeManifest = path.join(rootDir, '.ice/route-manifest.json');
+  const serverEntry = path.join(outputDir, 'server/entry.mjs');
 
-  // server entry must build after client task, because it needs assets manifest
-  onHook(`after.${command as 'start' | 'build'}.compile`, async ({ esbuildCompile }) => {
-    // TODO: watch file changes and rebuild
-    await esbuildCompile({
-      entryPoints: [path.join(rootDir, '.ice/entry.server')],
-      outdir: path.join(outputDir, 'server'),
-      // platform: 'node',
-      format: 'esm',
-      outExtension: { '.js': '.mjs' },
-      // FIXME: https://github.com/ice-lab/ice-next/issues/27
-      external: process.env.JEST_TEST === 'true' ? [] : ['./node_modules/*', 'react'],
-    }, { isServer: true });
+  onHook(`before.${command as 'start' | 'build'}.run`, async ({ esbuildCompile }) => {
+    serverCompiler = async () => {
+      await esbuildCompile({
+        entryPoints: [path.join(rootDir, '.ice/entry.server')],
+        outdir: path.join(outputDir, 'server'),
+        // platform: 'node',
+        format: 'esm',
+        outExtension: { '.js': '.mjs' },
+        // FIXME: https://github.com/ice-lab/ice-next/issues/27
+        external: process.env.JEST_TEST === 'true' ? [] : ['./node_modules/*', 'react'],
+      }, { isServer: true });
+      // timestamp for disable import cache
+      return `${serverEntry}?version=${new Date().getTime()}`;
+    };
   });
 
-  // generator html
   onHook('after.build.compile', async () => {
+    await serverCompiler();
     await generateHtml({
       outDir: outputDir,
       entry: serverEntry,
@@ -98,7 +101,7 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
       middlewares.push({
         name: 'document-render-server',
         middleware: setupRenderServer({
-          entry: serverEntry,
+          serverCompiler,
           routeManifest,
         }),
       });
