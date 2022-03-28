@@ -1,11 +1,11 @@
 import React, { useLayoutEffect, useReducer } from 'react';
 import type { Update } from 'history';
 import { createHashHistory, createBrowserHistory } from 'history';
-import { createSearchParams } from 'react-router-dom';
 import Runtime from './runtime.js';
 import App from './App.js';
-import type { AppContext, InitialContext, AppConfig, RouteItem } from './types';
+import type { AppContext, AppConfig, RouteItem } from './types';
 import { loadRouteModules, loadPageData, matchRoutes } from './routes.js';
+import getInitialData from './getInitialData.js';
 
 export default async function runBrowserApp(
   appConfig: AppConfig,
@@ -22,22 +22,8 @@ export default async function runBrowserApp(
     routeModules,
     pageData,
   };
-  // ssr enabled and the server has returned data
-  if ((window as any).__ICE_APP_DATA__) {
-    appContext.initialData = (window as any).__ICE_APP_DATA__;
-    // context.pageInitialProps = (window as any).__ICE_PAGE_PROPS__;
-  } else if (appConfig?.app?.getInitialData) {
-    const { href, origin, pathname, search } = window.location;
-    const path = href.replace(origin, '');
-    const query = Object.fromEntries(createSearchParams(search));
-    const ssrError = (window as any).__ICE_SSR_ERROR__;
-    const initialContext: InitialContext = {
-      pathname,
-      path,
-      query,
-      ssrError,
-    };
-    appContext.initialData = await appConfig.app.getInitialData(initialContext);
+  if (process.env.ICE_RUNTIME_INITIAL_DATA) {
+    appContext.initialData = await getInitialData(appConfig);
   }
 
   const runtime = new Runtime(appContext);
