@@ -118,7 +118,7 @@ export async function analyzeImports(files: string[], options: Options) {
             if (!path.isAbsolute(importPath)) {
               importPath = getImportPath(importPath, filePath, alias);
             }
-            if (importPath && fs.existsSync(importPath) && !analyzedSet.has(importPath)) {
+            if (importPath && importPath.match(/\.(j|t)sx?$/) && fs.existsSync(importPath) && !analyzedSet.has(importPath)) {
               await analyzeFile(importPath);
             }
           }
