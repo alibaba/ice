@@ -1,7 +1,6 @@
 import * as React from 'react';
-import type { PageData } from './types';
 
-const Context = React.createContext<PageData>({});
+const Context = React.createContext({});
 
 Context.displayName = 'PageContext';
 
