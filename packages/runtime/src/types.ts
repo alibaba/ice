@@ -99,6 +99,10 @@ export interface AppContext {
   initialData?: InitialData;
 }
 
+export interface AppData {
+  initialData?: InitialData;
+}
+
 export interface PageData {
   pageConfig?: PageConfig;
   initialData?: InitialData;
