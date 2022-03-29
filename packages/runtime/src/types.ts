@@ -98,7 +98,7 @@ export interface AppData {
 }
 
 export interface PageData {
-  pageConfig?: PageConfig;
+  pageConfig: PageConfig;
   initialData?: InitialData;
 }
 
