@@ -46,6 +46,12 @@ async function runServerApp(options: RunServerAppOptions): Promise<string> {
   };
 
   const matches = matchRoutes(routes, location);
+
+  // TODO: error handling
+  if (!matches.length) {
+    throw new Error('No matched page found.');
+  }
+
   const routeModules = await loadRouteModules(matches.map(match => match.route as RouteItem));
 
   const initialContext: InitialContext = {
