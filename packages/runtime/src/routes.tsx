@@ -46,10 +46,6 @@ export async function loadRouteModules(routes: RouteItem[]) {
 * @returns
 */
 export async function loadPageData(matches, routeModules, requestContext) {
-  if (!matches || !matches.length) {
-    return null;
-  }
-
   // use the last matched route as the page entry
   const last = matches.length - 1;
   const { route } = matches[last];
@@ -59,7 +55,7 @@ export async function loadPageData(matches, routeModules, requestContext) {
 
   const { getInitialData, getPageConfig } = routeModule;
   let initialData;
-  let pageConfig;
+  let pageConfig = {};
 
   if (getInitialData) {
     initialData = await getInitialData(requestContext);

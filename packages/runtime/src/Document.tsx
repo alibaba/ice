@@ -1,11 +1,12 @@
 import * as React from 'react';
-import type { PageConfig } from './types';
+import type { PageData, AppData } from './types';
 
 interface DocumentContext {
   html?: string;
   entryAssets?: string[];
   pageAssets?: string[];
-  pageConfig?: PageConfig;
+  pageData?: PageData;
+  appData?: AppData;
 }
 
 const Context = React.createContext<DocumentContext>(null);
@@ -20,8 +21,8 @@ export const useDocumentContext = () => {
 export const DocumentContextProvider = Context.Provider;
 
 export function Meta() {
-  const { pageConfig = {} } = useDocumentContext();
-  const { meta = [] } = pageConfig;
+  const { pageData } = useDocumentContext();
+  const meta = pageData.pageConfig.meta || [];
 
   return (
     <>
@@ -31,8 +32,8 @@ export function Meta() {
 }
 
 export function Title() {
-  const { pageConfig = {} } = useDocumentContext();
-  const { title = '' } = pageConfig;
+  const { pageData } = useDocumentContext();
+  const title = pageData.pageConfig.title || [];
 
   return (
     <title>{title}</title>
@@ -40,9 +41,8 @@ export function Title() {
 }
 
 export function Links() {
-  const { pageConfig = {}, pageAssets, entryAssets } = useDocumentContext();
-  const { links: customLinks = [] } = pageConfig;
-
+  const { pageAssets, entryAssets, pageData } = useDocumentContext();
+  const customLinks = pageData.pageConfig.links || [];
   const blockLinks = customLinks.filter((link) => link.block);
 
   const styles = pageAssets.concat(entryAssets).filter(path => path.indexOf('.css') > -1);
@@ -61,8 +61,8 @@ export function Links() {
 }
 
 export function Scripts() {
-  const { pageConfig = {}, pageAssets, entryAssets } = useDocumentContext();
-  const { links: customLinks = [], scripts: customScripts = [] } = pageConfig;
+  const { pageData, pageAssets, entryAssets, appData } = useDocumentContext();
+  const { links: customLinks = [], scripts: customScripts = [] } = pageData.pageConfig;
 
   const scripts = pageAssets.concat(entryAssets).filter(path => path.indexOf('.js') > -1);
 
@@ -72,6 +72,8 @@ export function Scripts() {
 
   return (
     <>
+      <script dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_DATA__=${JSON.stringify(appData)}` }} />
+      <script dangerouslySetInnerHTML={{ __html: `window.__ICE_PAGE_DATA__=${JSON.stringify(pageData)}` }} />
       {
         blockScripts.map(script => {
           const { block, ...props } = script;
