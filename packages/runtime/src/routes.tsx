@@ -55,7 +55,7 @@ export async function loadPageData(matches, routeModules, requestContext) {
 
   const { getInitialData, getPageConfig } = routeModule;
   let initialData;
-  let pageConfig;
+  let pageConfig = {};
 
   if (getInitialData) {
     initialData = await getInitialData(requestContext);

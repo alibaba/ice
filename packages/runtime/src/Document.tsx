@@ -22,7 +22,7 @@ export const DocumentContextProvider = Context.Provider;
 
 export function Meta() {
   const { pageData } = useDocumentContext();
-  const meta = pageData.pageConfig?.meta || [];
+  const meta = pageData.pageConfig.meta || [];
 
   return (
     <>
@@ -33,7 +33,7 @@ export function Meta() {
 
 export function Title() {
   const { pageData } = useDocumentContext();
-  const title = pageData.pageConfig?.title || [];
+  const title = pageData.pageConfig.title || [];
 
   return (
     <title>{title}</title>
@@ -42,7 +42,7 @@ export function Title() {
 
 export function Links() {
   const { pageAssets, entryAssets, pageData } = useDocumentContext();
-  const customLinks = pageData.pageConfig?.links || [];
+  const customLinks = pageData.pageConfig.links || [];
   const blockLinks = customLinks.filter((link) => link.block);
 
   const styles = pageAssets.concat(entryAssets).filter(path => path.indexOf('.css') > -1);
@@ -62,7 +62,7 @@ export function Links() {
 
 export function Scripts() {
   const { pageData, pageAssets, entryAssets, appData } = useDocumentContext();
-  const { links: customLinks = [], scripts: customScripts = [] } = pageData.pageConfig || {};
+  const { links: customLinks = [], scripts: customScripts = [] } = pageData.pageConfig;
 
   const scripts = pageAssets.concat(entryAssets).filter(path => path.indexOf('.js') > -1);
 

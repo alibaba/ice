@@ -26,7 +26,7 @@ export default async function runBrowserApp(
 
   let appData = (window as any).__ICE_APP_DATA__ || {};
   let { initialData } = appData;
-  if (!initialData && appConfig?.app?.getInitialData) {
+  if (!initialData && appConfig.app?.getInitialData) {
     initialData = await appConfig.app.getInitialData(initialContext);
   }
 
