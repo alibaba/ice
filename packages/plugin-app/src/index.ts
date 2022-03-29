@@ -3,7 +3,8 @@ import chalk from 'chalk';
 import type { Plugin } from '@ice/types';
 import openBrowser from './utils/openBrowser.js';
 import { setupRenderServer } from './ssr/server.js';
-import renderDocument from './ssr/renderDocument.js';
+import generateHtml from './ssr/generateHtml.js';
+import userConfig from './userConfig.js';
 
 // TODO: register more cli options
 const cliOptions = [
@@ -13,11 +14,10 @@ const cliOptions = [
   },
 ];
 
-const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) => {
+const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption, registerUserConfig }) => {
   const { command, rootDir, commandArgs } = context;
   const mode = command === 'start' ? 'development' : 'production';
 
-  registerCliOption(cliOptions);
   let serverCompiler = async () => '';
 
   const outputDir = path.join(rootDir, 'build');
@@ -86,6 +86,9 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption }) =>
     });
   }
 
+  registerCliOption(cliOptions);
+  // @ts-expect-error remove me when build-script fix type error
+  registerUserConfig(userConfig);
   registerTask('web', {
     mode,
     outputDir,

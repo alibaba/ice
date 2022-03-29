@@ -34,14 +34,19 @@ export default class AssetsManifestPlugin {
     for (const entrypoint of entrypoints) {
       const entryName = entrypoint.name;
       const mainFiles = getEntrypointFiles(entrypoint);
-
-      bundles[entryName] = mainFiles;
+      bundles[entryName] = {
+        isEntry: true,
+        files: mainFiles,
+      };
 
       const chunks = entrypoint?.getChildren();
       chunks.forEach((chunk: any) => {
         const chunkName = chunk.name;
         const chunkFiles = chunk.getFiles();
-        bundles[chunkName] = chunkFiles;
+        bundles[chunkName] = {
+          isEntry: false,
+          files: chunkFiles,
+        };
       });
     }
 
