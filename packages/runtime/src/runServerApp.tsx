@@ -14,9 +14,9 @@ interface RunServerAppOptions {
   requestContext: ServerContext;
   appConfig: AppConfig;
   routes: RouteItem[];
-  Document: React.ComponentType<{}>;
   documentOnly: boolean;
   runtimeModules: (RuntimePlugin | CommonJsRuntime)[];
+  Document: React.ComponentType<{}>;
   assetsManifest: AssetsManifest;
 }
 
