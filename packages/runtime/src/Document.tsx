@@ -21,8 +21,8 @@ export const useDocumentContext = () => {
 export const DocumentContextProvider = Context.Provider;
 
 export function Meta() {
-  const context = useDocumentContext();
-  const meta = context.pageData?.pageConfig?.meta || [];
+  const { pageData } = useDocumentContext();
+  const meta = pageData?.pageConfig?.meta || [];
 
   return (
     <>
@@ -32,8 +32,8 @@ export function Meta() {
 }
 
 export function Title() {
-  const context = useDocumentContext();
-  const title = context.pageData?.pageConfig?.title || [];
+  const { pageData } = useDocumentContext();
+  const title = pageData?.pageConfig?.title || [];
 
   return (
     <title>{title}</title>
