@@ -1,8 +1,16 @@
 import * as fs from 'fs';
 import { matchRoutes } from 'react-router-dom';
 
-export function setupRenderServer(options) {
-  const { entry, routeManifest } = options;
+interface Options {
+  routeManifest: string;
+  serverCompiler: () => Promise<string>;
+}
+
+export function setupRenderServer(options: Options) {
+  const {
+    routeManifest,
+    serverCompiler,
+  } = options;
 
   return async (req, res) => {
     // Read the latest routes info.
@@ -12,9 +20,8 @@ export function setupRenderServer(options) {
     let matches = matchRoutes(routes, req.path);
     if (!matches) return;
 
+    const entry = await serverCompiler();
     const serverEntry = await import(entry);
-
-    // TODO: disable cache
     const html = await serverEntry.render({
       req,
       res,

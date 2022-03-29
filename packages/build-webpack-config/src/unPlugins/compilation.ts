@@ -1,5 +1,5 @@
 import path from 'path';
-import { transform } from '@builder/swc';
+import { transform, type Config as SwcConfig } from '@builder/swc';
 import type { UnpluginOptions } from 'unplugin';
 import lodash from '@builder/pack/deps/lodash/lodash.js';
 import type { Config } from '@ice/types';
@@ -15,12 +15,12 @@ interface Options {
   sourceMap?: Config['sourceMap'];
 }
 
-const swcPlugin = (options: Options): UnpluginOptions => {
+const compilationPlugin = (options: Options): UnpluginOptions => {
   const { rootDir, sourceMap, mode, isServer } = options;
   const dev = mode !== 'production';
 
   return {
-    name: 'swc-plugin',
+    name: 'compilation-plugin',
     async transform(source: string, id: string) {
       // TODO specific runtime plugin name
       if ((/node_modules/.test(id) && !/[\\/]runtime[\\/]/.test(id))) {
@@ -67,7 +67,7 @@ function getSwcTransformOptions({
    };
   const reactTransformConfig = merge(baseReactTransformConfig, hasJsxRuntime(rootDir) ? { runtime: 'automatic' } : {});
 
-  const commonOptions = {
+  const commonOptions: SwcConfig = {
     jsc: {
       transform: {
         react: reactTransformConfig,
@@ -76,6 +76,7 @@ function getSwcTransformOptions({
       externalHelpers: false,
     },
     module: {
+      // @ts-expect-error module type only support cjs umd amd, fix me when @builder/swc fix type error
       type: 'es6',
       noInterop: false,
       // webpack will evaluate dynamic import, so there need preserve it
@@ -83,9 +84,11 @@ function getSwcTransformOptions({
     },
     env: {
       loose: true,
-      targets: 'last 2 versions',
     },
   };
+  if (isServer) {
+    commonOptions.env.targets = 'node >= 12';
+  }
 
   const jsOptions = merge({
     jsc: {
@@ -135,4 +138,4 @@ function hasJsxRuntime(rootDir: string) {
   }
 }
 
-export default swcPlugin;
+export default compilationPlugin;

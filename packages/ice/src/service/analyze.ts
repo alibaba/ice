@@ -8,6 +8,7 @@ import consola from 'consola';
 
 interface Options {
   parallel?: number;
+  analyzeRelativeImport?: boolean;
   alias?: Alias;
 }
 
@@ -79,7 +80,7 @@ export function getImportPath(
 }
 
 export async function analyzeImports(files: string[], options: Options) {
-  const { parallel, alias = {} } = options;
+  const { parallel, analyzeRelativeImport, alias = {} } = options;
   const parallelNum = parallel ?? 10;
   const entries = [...files];
   const analyzedSet = new Set<string>();
@@ -113,12 +114,12 @@ export async function analyzeImports(files: string[], options: Options) {
                 if (!importSet.has(importStr)) importSet.add(importStr);
               });
             }
-          } else {
+          } else if (analyzeRelativeImport) {
             let importPath = importName;
             if (!path.isAbsolute(importPath)) {
               importPath = getImportPath(importPath, filePath, alias);
             }
-            if (importPath && fs.existsSync(importPath) && !analyzedSet.has(importPath)) {
+            if (importPath && importPath.match(/\.(j|t)sx?$/) && fs.existsSync(importPath) && !analyzedSet.has(importPath)) {
               await analyzeFile(importPath);
             }
           }

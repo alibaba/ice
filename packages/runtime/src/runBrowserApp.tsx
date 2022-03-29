@@ -4,8 +4,9 @@ import { createHashHistory, createBrowserHistory } from 'history';
 import { createSearchParams } from 'react-router-dom';
 import Runtime from './runtime.js';
 import App from './App.js';
-import type { AppContext, InitialContext, AppConfig, RouteItem } from './types';
+import type { AppContext, AppConfig, RouteItem, InitialContext } from './types';
 import { loadRouteModules, loadPageData, matchRoutes } from './routes.js';
+// import getInitialData from './getInitialData.js';
 
 export default async function runBrowserApp(
   appConfig: AppConfig,
@@ -42,6 +43,10 @@ export default async function runBrowserApp(
     initialData,
     pageData,
   };
+
+  // if (process.env.ICE_RUNTIME_INITIAL_DATA) {
+  //   appContext.initialData = await getInitialData(appConfig);
+  // }
 
   const runtime = new Runtime(appContext);
   runtimeModules.forEach(m => {

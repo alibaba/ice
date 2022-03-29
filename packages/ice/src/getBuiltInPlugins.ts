@@ -3,8 +3,8 @@ import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 import consola from 'consola';
 import fse from 'fs-extra';
-import { hijackWebpack } from './requireHook.js';
 import type { IGetBuiltInPlugins, IPluginList, IUserConfig } from 'build-scripts';
+import { hijackWebpack } from './requireHook.js';
 import { builtInPlugins } from './constant.js';
 
 const require = createRequire(import.meta.url);

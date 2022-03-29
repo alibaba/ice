@@ -78,7 +78,10 @@ export interface RouteModules {
 
 export interface AssetsManifest {
   publicPath?: string;
-  bundles?: string[];
+  bundles?: Record<string, {
+    files: string[];
+    isEntry: boolean;
+  }>;
 }
 export interface AppContext {
   routeModules: RouteModules;
@@ -120,6 +123,8 @@ export interface CommonJsRuntime {
 }
 
 export type GetWrapperPageRegistration = () => PageWrapper<any>[];
+
+export type RuntimeModules = (RuntimePlugin | CommonJsRuntime)[];
 
 export interface AppRouterProps {
   action: Action;

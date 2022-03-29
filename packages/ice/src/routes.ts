@@ -8,6 +8,7 @@ export function generateRoutesInfo(rootDir: string) {
   const str = generateNestRoutesStr(routes);
 
   return {
+    routeManifest,
     routesStr: `[${str}]`,
     routes,
   };
