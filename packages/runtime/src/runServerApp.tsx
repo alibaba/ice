@@ -61,7 +61,7 @@ export default async function runServerApp(options: RunServerAppOptions): Promis
   };
 
   let initialData;
-  if (appConfig?.app?.getInitialData) {
+  if (appConfig.app?.getInitialData) {
     initialData = await appConfig.app.getInitialData(initialContext);
   }
 
