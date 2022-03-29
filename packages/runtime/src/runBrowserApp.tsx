@@ -6,7 +6,6 @@ import Runtime from './runtime.js';
 import App from './App.js';
 import type { AppContext, AppConfig, RouteItem, InitialContext } from './types';
 import { loadRouteModules, loadPageData, matchRoutes } from './routes.js';
-// import getInitialData from './getInitialData.js';
 
 export default async function runBrowserApp(
   appConfig: AppConfig,
@@ -25,28 +24,24 @@ export default async function runBrowserApp(
     query,
   };
 
-  const appData = (window as any).__ICE_APP_DATA__ || {};
-  let { initialData, pageData } = appData;
-
+  let appData = (window as any).__ICE_APP_DATA__ || {};
+  let { initialData } = appData;
   if (!initialData && appConfig?.app?.getInitialData) {
     initialData = await appConfig.app.getInitialData(initialContext);
   }
 
+  let pageData = (window as any).__ICE_PAGE_DATA__ || {};
   if (!pageData) {
     pageData = await loadPageData(matches, routeModules, initialContext);
   }
 
   const appContext: AppContext = {
     routes,
-    appConfig,
     routeModules,
+    appConfig,
     initialData,
     pageData,
   };
-
-  // if (process.env.ICE_RUNTIME_INITIAL_DATA) {
-  //   appContext.initialData = await getInitialData(appConfig);
-  // }
 
   const runtime = new Runtime(appContext);
   runtimeModules.forEach(m => {

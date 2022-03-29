@@ -95,7 +95,6 @@ export interface AppContext {
 
 export interface AppData {
   initialData?: InitialData;
-  pageData?: PageData;
 }
 
 export interface PageData {

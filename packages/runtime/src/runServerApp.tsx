@@ -14,7 +14,7 @@ interface RunServerAppOptions {
   requestContext: ServerContext;
   appConfig: AppConfig;
   routes: RouteItem[];
-  Document: React.ComponentType<any>;
+  Document: React.ComponentType<{}>;
   documentOnly: boolean;
   runtimeModules: (RuntimePlugin | CommonJsRuntime)[];
   assetsManifest: AssetsManifest;
@@ -98,19 +98,16 @@ async function render(
     html = renderApp(runtime, location);
   }
 
-  const { pageConfig } = pageData || {};
-
   const pageAssets = getPageAssets(matches, assetsManifest);
   const entryAssets = getEntryAssets(assetsManifest);
 
   const appData = {
     initialData,
-    pageData,
   };
 
   const documentContext = {
     appData,
-    pageConfig,
+    pageData,
     pageAssets,
     entryAssets,
     html,
