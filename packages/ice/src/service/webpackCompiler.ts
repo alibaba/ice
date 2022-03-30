@@ -44,6 +44,19 @@ async function webpackCompiler(options: {
     });
     const messages = formatWebpackMessages(statsData);
     const isSuccessful = !messages.errors.length && !messages.warnings.length;
+    if (isSuccessful && !process.env.DISABLE_STATS) {
+      const assetsStatsOptions = {
+        errors: false,
+        warnings: false,
+        colors: true,
+        assets: true,
+        chunks: false,
+        entrypoints: false,
+        modules: false,
+        timings: false,
+      };
+      consola.log(stats.toString(assetsStatsOptions));
+    }
     if (messages.errors.length) {
       // Only keep the first error. Others are often indicative
       // of the same problem, but confuse the reader with noise.

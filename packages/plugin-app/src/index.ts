@@ -49,22 +49,9 @@ const plugin: Plugin = ({ registerTask, context, onHook, registerCliOption, regi
     });
   });
 
-  onHook('after.start.compile', ({ urls, stats, messages }) => {
+  onHook('after.start.compile', ({ urls, messages }) => {
     // 包含错误时不打印 localUrl 和 assets 信息
     if (!messages.errors.length) {
-      if (!commandArgs.disableAssets) {
-        console.log(stats.toString({
-          errors: false,
-          warnings: false,
-          colors: true,
-          assets: true,
-          chunks: false,
-          entrypoints: false,
-          modules: false,
-          timings: false,
-        }));
-      }
-
       console.log();
       console.log(chalk.green(' Starting the development server at:'));
       if (process.env.CLOUDIDE_ENV) {
