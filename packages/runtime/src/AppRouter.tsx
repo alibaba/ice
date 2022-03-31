@@ -12,14 +12,8 @@ const AppRouter: React.ComponentType<AppRouterProps> = (props) => {
       navigator={navigator}
       static={staticProps}
     >
-      <AppRoutes routes={routes} />
+      <Routes routes={routes} />
     </Router>
-  );
-};
-
-export const AppRoutes: React.ComponentType<AppRouteProps> = ({ routes }) => {
-  return (
-    <Routes routes={routes} />
   );
 };
 
