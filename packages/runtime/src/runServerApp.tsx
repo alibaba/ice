@@ -52,7 +52,7 @@ async function runServerApp(options: RunServerAppOptions): Promise<string> {
     throw new Error('No matched page found.');
   }
 
-  const routeModules = await loadRouteModules(matches.map(match => match.route as RouteItem));
+  await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
 
   const initialContext: InitialContext = {
     ...requestContext,
@@ -66,15 +66,16 @@ async function runServerApp(options: RunServerAppOptions): Promise<string> {
     initialData = await appConfig.app.getInitialData(initialContext);
   }
 
-  const pageData = await loadPageData(matches, routeModules, initialContext);
+  const pageData = await loadPageData(matches, initialContext);
 
   const appContext: AppContext = {
     matches,
     routes,
     appConfig,
     initialData,
+    initialPageData: pageData,
+    // pageData and initialPageData are the same when SSR/SSG
     pageData,
-    routeModules,
     assetsManifest,
   };
 
@@ -101,7 +102,23 @@ async function render(
   let html = '';
 
   if (!documentOnly) {
-    html = renderApp(runtime, location);
+    const staticNavigator = createStaticNavigator();
+    const AppProvider = runtime.composeAppProvider() || React.Fragment;
+    const PageWrappers = runtime.getWrapperPageRegistration();
+    const AppRouter = runtime.getAppRouter();
+
+    html = ReactDOMServer.renderToString(
+      <App
+        action={Action.Pop}
+        location={location}
+        navigator={staticNavigator}
+        static
+        appContext={appContext}
+        AppProvider={AppProvider}
+        PageWrappers={PageWrappers}
+        AppRouter={AppRouter}
+      />,
+    );
   }
 
   const pageAssets = getPageAssets(matches, assetsManifest);
@@ -126,22 +143,6 @@ async function render(
   );
 
   return result;
-}
-
-function renderApp(runtime, location) {
-  const staticNavigator = createStaticNavigator();
-
-  const html = ReactDOMServer.renderToString(
-    <App
-      action={Action.Pop}
-      runtime={runtime}
-      location={location}
-      navigator={staticNavigator}
-      static
-    />,
-  );
-
-  return html;
 }
 
 function createStaticNavigator() {

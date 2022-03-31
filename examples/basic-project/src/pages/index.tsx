@@ -3,8 +3,10 @@ import { useAppContext, Link } from 'ice';
 import type { PageConfig } from '@ice/runtime/esm/types';
 import styles from './index.module.css';
 
-export default function Home() {
+export default function Home(props) {
   // const appContext = useAppContext();
+
+  console.log('render Home', props);
 
   return (
     <>
@@ -24,7 +26,11 @@ export function getPageConfig(): PageConfig {
 }
 
 export function getInitialData() {
-  return {
-    name: 'home',
-  };
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        name: 'Home',
+      });
+    }, 1 * 100);
+  });
 }

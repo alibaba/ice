@@ -7,12 +7,16 @@ export default function About() {
 
 export function getPageConfig() {
   return {
-    auth: ['guest'],
+    // auth: ['guest'],
   };
 }
 
 export function getInitialData() {
-  return {
-    name: 'about',
-  };
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        name: 'About',
+      });
+    }, 1 * 100);
+  });
 }
