@@ -14,6 +14,7 @@ function createWatch(options: {
   // do not setup chokidar when run build
   const watcher = command === 'start' && chokidar.watch(watchDir, {
     ignoreInitial: true,
+    ignored: [/node_modules/],
     ...(watchOptions || {}),
   }).on('all', (event, filePath) => {
     watchEvents.forEach(([pattern, action]) => {

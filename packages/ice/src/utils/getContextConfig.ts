@@ -5,7 +5,7 @@ import type { Config } from '@ice/types';
 import type { Configuration } from 'webpack';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import type { UnpluginOptions } from 'unplugin';
-import { getWebpackConfig, getTransformPlugins as getBuiltInPlugins } from '@builder/webpack-config';
+import { getWebpackConfig, getTransformPlugins as getBuiltInPlugins } from '@ice/webpack-config';
 import { builtInPlugins } from '../constant.js';
 
 export interface ContextConfig {

@@ -1,6 +1,6 @@
 {
-  "name": "@builder/webpack-config",
-  "version": "3.0.0",
+  "name": "@ice/webpack-config",
+  "version": "1.0.0",
   "repository": "ice-lab/ice-next",
   "bugs": "https://github.com/ice-lab/ice-next/issues",
   "homepage": "https://next.ice.work",
@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@ice/types": "^1.0.0",
-    "build-scripts": "^2.0.0-7",
+    "build-scripts": "^2.0.0-14",
     "webpack": "^5.69.1",
     "webpack-dev-server": "^4.7.4"
   }

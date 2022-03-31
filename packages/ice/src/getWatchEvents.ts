@@ -8,12 +8,13 @@ interface Options {
   rootDir: string;
   targetDir: string;
   templateDir: string;
+  configFile: string;
   generator: Generator;
   cache: Map<string, string>;
 }
 
 const getWatchEvents = (options: Options): WatchEvent[] => {
-  const { rootDir, generator, targetDir, templateDir, cache } = options;
+  const { rootDir, generator, targetDir, templateDir, configFile, cache } = options;
   const watchRoutes: WatchEvent = [
     /src\/pages\/?[\w*-:.$]+$/,
     (eventName: string) => {
@@ -47,7 +48,16 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
     },
   ];
 
-  return [watchRoutes, watchGlobalStyle];
+  const watchConfigFile: WatchEvent = [
+    new RegExp(configFile),
+    (event: string, filePath: string) => {
+      if (event === 'change') {
+        consola.warn(`Found a change in ${path.basename(filePath)}. Restart the dev server to see the changes in effect.`);
+      }
+    },
+  ];
+
+  return [watchConfigFile, watchRoutes, watchGlobalStyle];
 };
 
 export default getWatchEvents;

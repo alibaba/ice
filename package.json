@@ -16,6 +16,7 @@
     "lint:diff": "esmo ./scripts/lintDiff.ts",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
     "lint:fix": "npm run lint -- --fix",
+    "publish:alpha": "PUBLISH_TYPE=alpha esmo ./scripts/publishPackageWithDistTag.ts",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest --forceExit --config ./jest.config.mjs",
     "test:ci": "npm run test -- --ci",
     "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch --config ./jest.config.mjs"
@@ -34,7 +35,7 @@
     "@types/jest": "^27.4.0",
     "@types/node": "^17.0.13",
     "@types/semver": "^7.3.9",
-    "build-scripts": "^2.0.0-9",
+    "build-scripts": "^2.0.0-14",
     "chalk": "^4.1.2",
     "chokidar": "^3.5.3",
     "dependency-check": "^4.1.0",
