@@ -1,10 +1,12 @@
 name: Add contributors
-on:
-  # schedule:
-  #   - cron: '5 * * * *'
-  push:
-    branches:
-      - master
+
+on: [push]
+# on:
+#   # schedule:
+#   #   - cron: '5 * * * *'
+#   push:
+#     branches:
+#       - master
 
 jobs:
   add-contributors:
@@ -23,3 +25,4 @@ jobs:
           COMMIT_MESSAGE: "docs(README): update contributors"
           AVATAR_SHAPE: "round"
           IGNORED_CONTRIBUTORS: "dashdotdawn"
+          PULL_REQUEST: "master"
