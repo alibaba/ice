@@ -3,7 +3,14 @@ import type { CreateHistory, InitHistory } from '../createInitHistory';
 import createInitHistory from '../createInitHistory';
 import { setHistory } from '../storage';
 
-const createHistory: CreateHistory = ({ type, basename, location, customHistory }) => {
+const createHistory: CreateHistory = ({
+  type,
+  basename,
+  location,
+  customHistory,
+  initialIndex,
+  initialEntries,
+}) => {
   let history: History;
   if (process.env.__IS_SERVER__) {
     history = createMemoryHistory();
@@ -16,7 +23,10 @@ const createHistory: CreateHistory = ({ type, basename, location, customHistory 
   } else if (type === 'browser') {
     history = createBrowserHistory({ basename });
   } else {
-    history = createMemoryHistory();
+    history = createMemoryHistory({
+      initialIndex,
+      initialEntries
+    });
   }
   setHistory(history);
   return history;

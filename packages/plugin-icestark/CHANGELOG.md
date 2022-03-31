@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.3
+
+- [fix] revert from version 2.5.2 and suport memory router
+
 ## 2.5.2
 
 - [fix] support custom history configuration.
