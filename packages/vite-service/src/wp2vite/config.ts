@@ -146,7 +146,7 @@ const configMap: ConfigMap = {
       });
 
       // Object to Array
-      const result: any = Object.entries(data).map(([find, replacement]) => {
+      const result: {find: string | RegExp, replacement: string}[] = Object.entries(data).map(([find, replacement]) => {
         return { find, replacement };
       });
       // alias 到指向 framework runtime 入口
