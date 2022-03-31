@@ -26,7 +26,7 @@
   "bugs": "https://github.com/ice-lab/ice-next/issues",
   "homepage": "https://next.ice.work",
   "devDependencies": {
-    "build-scripts": "^2.0.0-9",
+    "build-scripts": "^2.0.0-14",
     "esbuild": "^0.14.23",
     "@ice/runtime": "^1.0.0",
     "@ice/route-manifest": "^1.0.0",
