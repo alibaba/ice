@@ -21,6 +21,8 @@ export interface AppConfig {
     type?: 'hash' | 'browser' | 'memory' | 'static';
     history?: History;
     basename?: string;
+    initialIndex?: number;
+    initialEntries?: string[];
   },
 }
 

@@ -43,7 +43,7 @@ export default async function (
     { 
       source: './plugins/i18n', 
       importSource: '$$ice/plugins/i18n',
-      exportMembers: ['useLocale', 'getAllLocales', 'getDefaultLocale', 'getLocale']
+      exportMembers: ['useLocale', 'getAllLocales', 'getDefaultLocale', 'getLocale', 'setLocale']
     });
 }
 

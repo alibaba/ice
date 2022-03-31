@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.3
+
+- [fix] be able to pass arguments to memory router
+
 ## 2.1.2
 
 - [fix] bump version of `@builder/pack`(^0.6.0)

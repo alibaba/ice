@@ -28,7 +28,12 @@ const module = ({ setRenderApp, appConfig, modifyRoutes, modifyRoutesComponent, 
       ...customRouterProps,
     };
     if (!routerProps.history) {
-      routerProps.history = applyRuntimeAPI('createHistory', { type: appConfigRouter.type, basename: appConfigRouter.basename });
+      routerProps.history = applyRuntimeAPI('createHistory', {
+        type: appConfigRouter.type,
+        basename: appConfigRouter.basename,
+        initialIndex: appConfigRouter.initialIndex,
+        initialEntries: appConfigRouter.initialEntries
+      });
     }
     if (process.env.__IS_SERVER__) {
       const { initialContext = {} } = context;
