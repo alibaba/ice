@@ -26,7 +26,6 @@ export type RemoveExport = (registerKey: string, removeSource: string | string[]
 export type AddContent = (apiName: string, ...args: any) => void;
 export type GetExportStr = (registerKey: string, dataKeys: string[]) => { [x: string]: string };
 export type ParseRenderData = () => Record<string, unknown>;
-export type GenerateImportStr = (apiName: string) => string;
 export type Render = () => void;
 export type ModifyRenderData = (registration: RenderDataRegistration) => void;
 export type AddRenderFile = (templatePath: string, targetPath: string, extraData?: ExtraData) => void;

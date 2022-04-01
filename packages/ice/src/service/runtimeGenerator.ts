@@ -12,7 +12,6 @@ import type {
   AddContent,
   GetExportStr,
   ParseRenderData,
-  GenerateImportStr,
   Render,
   RenderFile,
   ModifyRenderData,
@@ -200,14 +199,6 @@ export default class Generator {
       staticConfig: staticConfig.length && staticConfig[0],
       globalStyle: globalStyles.length && formatPath(path.relative(path.join(this.targetDir, 'core'), globalStyles[0])),
     };
-  };
-
-  public generateImportStr: GenerateImportStr = (apiName) => {
-    const imports = this.contentRegistration[apiName] || [];
-    return imports.map(({ source, specifier }) => {
-      return specifier
-        ? `import ${specifier} from '${source}';` : `import '${source}'`;
-    }).join('\n');
   };
 
   public render: Render = () => {

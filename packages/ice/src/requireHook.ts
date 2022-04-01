@@ -58,7 +58,7 @@ export function getHookFiles() {
   ];
 }
 
-export function hijackWebpack() {
+function hijackWebpack() {
   const hookPropertyMap = new Map(
     getHookFiles().map(([request, replacement]) => [request, require.resolve(replacement)]),
   );
@@ -76,3 +76,5 @@ export function hijackWebpack() {
     return resolveFilename.call(mod, request, parent, isMain, options);
   };
 }
+// avoid multi webpack
+hijackWebpack();

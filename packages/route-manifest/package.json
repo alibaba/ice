@@ -7,7 +7,8 @@
   "exports": "./esm/index.js",
   "author": "ice-admin",
   "files": [
-    "lib"
+    "esm",
+    "!esm/**/*.map"
   ],
   "license": "MIT",
   "repository": "ice-lab/ice-next",

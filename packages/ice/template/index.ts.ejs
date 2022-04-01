@@ -11,19 +11,19 @@ import {
 } from '@ice/runtime';
 <%- framework.imports %>
 
-<% if (framework.exports) { %>
-  export {
-    defineAppConfig,
-    useAppContext,
-    Link,
-    Outlet,
-    Meta,
-    Title,
-    Links,
-    Scripts,
-    Main,
-    <%- framework.exports %>
-  }
-<% } %>
+export {
+  defineAppConfig,
+  useAppContext,
+  Link,
+  Outlet,
+  Meta,
+  Title,
+  Links,
+  Scripts,
+  Main,
+  <% if (framework.exports) { %>
+  <%- framework.exports %>
+  <% } %>
+};
 
 export * from './types';

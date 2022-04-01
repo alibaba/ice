@@ -7,7 +7,9 @@
   "main": "./esm/index.js",
   "exports": {
     ".": "./esm/index.js",
-    "./runtime": "./runtime"
+    "./runtime": "./runtime",
+    "./runtime/Auth": "./runtime/Auth.tsx",
+    "./runtime/types": "./runtime/types.ts"
   },
   "files": [
     "esm",
