@@ -1,7 +1,14 @@
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'fs';
+import * as path from 'path';
+import type { RouteItem } from '@ice/runtime';
 
-export default async function generateHTML(options) {
+interface Options {
+  entry: string;
+  routeManifest: string;
+  outDir: string;
+}
+
+export default async function generateHTML(options: Options) {
   const {
     entry,
     routeManifest,
@@ -9,9 +16,7 @@ export default async function generateHTML(options) {
   } = options;
 
   const serverEntry = await import(entry);
-
   const routes = JSON.parse(fs.readFileSync(routeManifest, 'utf8'));
-
   const paths = getPaths(routes);
 
   for (let i = 0, n = paths.length; i < n; i++) {
@@ -33,7 +38,7 @@ export default async function generateHTML(options) {
  * @param routes
  * @returns
  */
-function getPaths(routes) {
+function getPaths(routes: RouteItem[]): string[] {
   let pathList = [];
 
   routes.forEach(route => {

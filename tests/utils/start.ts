@@ -2,7 +2,6 @@ import path from 'path';
 import getPort from 'get-port';
 import Browser, { Page } from './browser';
 import { Server } from 'http';
-import getBuiltInPlugins from '../../packages/ice/src/getBuiltInPlugins';
 import createService from '../../packages/ice/src/createService';
 import { fileURLToPath } from 'url';
 
@@ -26,7 +25,7 @@ export const startFixture = async function (example: string) {
   const service = await createService({ rootDir, command: 'start', commandArgs: {
     port,
     disableOpen: true,
-  }, getBuiltInPlugins });
+  }});
 
   // @ts-ignore
   const { compiler, devServer } = await service.run();

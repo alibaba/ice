@@ -46,6 +46,17 @@ export function createEsbuildCompiler(options: {
                     };
                   }
                 }
+                return { path: resolved };
+              }
+            });
+            build.onResolve({ filter: /.*/ }, (args) => {
+              const id = args.path;
+              // external ids which is third-party dependencies
+              // runtime folder need to been bundled while it is not compiled
+              if (id[0] !== '.' && !path.isAbsolute(id) && !id.includes('/runtime/')) {
+                return {
+                  external: true,
+                };
               }
             });
           },

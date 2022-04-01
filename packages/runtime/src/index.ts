@@ -19,10 +19,13 @@ import {
   AppContext,
   AppConfig,
   PageWrapper,
+  RouteItem,
 } from './types.js';
 import defineAppConfig from './defineAppConfig.js';
+import { matchRoutes } from './routes.js';
 
 export {
+  matchRoutes,
   Runtime,
   App,
   runClientApp,
@@ -41,4 +44,5 @@ export {
   AppContext,
   AppConfig,
   PageWrapper,
+  RouteItem,
 };

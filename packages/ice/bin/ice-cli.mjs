@@ -4,7 +4,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { program } from 'commander';
 import parse from 'yargs-parser';
-import getBuiltInPlugins from '../esm/getBuiltInPlugins.js';
+// hijack webpack before import other modules
+import '../esm/requireHook.js';
 import createService from '../esm/createService.js';
 import checkNodeVersion from './checkNodeVersion.mjs';
 
@@ -33,7 +34,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .option('--config <config>', 'use custom config')
     .option('--rootDir <rootDir>', 'project root directory')
     .action(async () => {
-      const service = await createService({ rootDir, command: 'build', commandArgs, getBuiltInPlugins });
+      const service = await createService({ rootDir, command: 'build', commandArgs });
       service.run();
     });
 
@@ -46,7 +47,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .option('-p, --port <port>', 'dev server port')
     .option('--rootDir <rootDir>', 'project root directory')
     .action(async () => {
-      const service = await createService({ rootDir, command: 'start', commandArgs, getBuiltInPlugins });
+      const service = await createService({ rootDir, command: 'start', commandArgs });
       const devServer = await service.run();
     });
 
@@ -56,7 +57,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .allowUnknownOption() // allow jest config
     .option('--config <config>', 'use custom config')
     .action(async () => {
-      await createService({ rootDir, command: 'test', commandArgs, getBuiltInPlugins });
+      await createService({ rootDir, command: 'test', commandArgs });
     });
 
   program.parse(process.argv);

@@ -1,5 +1,5 @@
 {
-  "name": "@ice/cli",
+  "name": "@ice/app",
   "version": "3.0.0",
   "description": "provide scripts and configuration used by web framework ice",
   "type": "module",
@@ -21,12 +21,10 @@
   "dependencies": {
     "@builder/pack": "^0.6.0",
     "@ice/webpack-config": "^1.0.0",
-    "@ice/plugin-app": "^1.0.0",
-    "@ice/plugin-auth": "^1.0.0",
     "@ice/route-manifest": "^1.0.0",
     "@ice/runtime": "^1.0.0",
     "address": "^1.1.2",
-    "build-scripts": "^2.0.0-14",
+    "build-scripts": "^2.0.0-15",
     "chalk": "^4.0.0",
     "commander": "^9.0.0",
     "consola": "^2.15.3",
