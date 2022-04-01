@@ -2,18 +2,12 @@
 
 exports[`generateRouteManifest function basic-routes 1`] = `
 Object {
-  "layout": Object {
-    "componentName": "Layout",
-    "file": "layout.tsx",
-    "id": "layout",
-    "path": "",
-  },
   "pages/About/index": Object {
     "componentName": "PagesAboutIndex",
     "file": "pages/About/index.tsx",
     "id": "pages/About/index",
     "index": true,
-    "parentId": "layout",
+    "parentId": "pages/layout",
     "path": "/About",
   },
   "pages/About/me/index": Object {
@@ -21,7 +15,7 @@ Object {
     "file": "pages/About/me/index.tsx",
     "id": "pages/About/me/index",
     "index": true,
-    "parentId": "layout",
+    "parentId": "pages/layout",
     "path": "/About/me",
   },
   "pages/home": Object {
@@ -29,7 +23,7 @@ Object {
     "file": "pages/home.tsx",
     "id": "pages/home",
     "index": undefined,
-    "parentId": "layout",
+    "parentId": "pages/layout",
     "path": "/home",
   },
   "pages/index": Object {
@@ -37,7 +31,15 @@ Object {
     "file": "pages/index.tsx",
     "id": "pages/index",
     "index": true,
-    "parentId": "layout",
+    "parentId": "pages/layout",
+    "path": undefined,
+  },
+  "pages/layout": Object {
+    "componentName": "PagesLayout",
+    "file": "pages/layout.tsx",
+    "id": "pages/layout",
+    "index": undefined,
+    "parentId": undefined,
     "path": undefined,
   },
 }
@@ -45,19 +47,21 @@ Object {
 
 exports[`generateRouteManifest function doc-delimeters-routes 1`] = `
 Object {
-  "layout": Object {
-    "componentName": "Layout",
-    "file": "layout.tsx",
-    "id": "layout",
-    "path": "",
-  },
   "pages/home.news": Object {
     "componentName": "PagesHomeNews",
     "file": "pages/home.news.tsx",
     "id": "pages/home.news",
     "index": undefined,
-    "parentId": "layout",
+    "parentId": "pages/layout",
     "path": "/home/news",
+  },
+  "pages/layout": Object {
+    "componentName": "PagesLayout",
+    "file": "pages/layout.tsx",
+    "id": "pages/layout",
+    "index": undefined,
+    "parentId": undefined,
+    "path": undefined,
   },
 }
 `;
@@ -101,18 +105,12 @@ Object {
 
 exports[`generateRouteManifest function layout-routes 1`] = `
 Object {
-  "layout": Object {
-    "componentName": "Layout",
-    "file": "layout.tsx",
-    "id": "layout",
-    "path": "",
-  },
   "pages/about": Object {
     "componentName": "PagesAbout",
     "file": "pages/about.tsx",
     "id": "pages/about",
     "index": undefined,
-    "parentId": "layout",
+    "parentId": "pages/layout",
     "path": "/about",
   },
   "pages/blog/$id": Object {
@@ -136,7 +134,7 @@ Object {
     "file": "pages/blog/layout.tsx",
     "id": "pages/blog/layout",
     "index": undefined,
-    "parentId": "layout",
+    "parentId": "pages/layout",
     "path": "/blog",
   },
   "pages/home/index": Object {
@@ -152,7 +150,7 @@ Object {
     "file": "pages/home/layout.tsx",
     "id": "pages/home/layout",
     "index": undefined,
-    "parentId": "layout",
+    "parentId": "pages/layout",
     "path": "/home",
   },
   "pages/home/layout/index": Object {
@@ -168,7 +166,15 @@ Object {
     "file": "pages/index.tsx",
     "id": "pages/index",
     "index": true,
-    "parentId": "layout",
+    "parentId": "pages/layout",
+    "path": undefined,
+  },
+  "pages/layout": Object {
+    "componentName": "PagesLayout",
+    "file": "pages/layout.tsx",
+    "id": "pages/layout",
+    "index": undefined,
+    "parentId": undefined,
     "path": undefined,
   },
 }
@@ -176,18 +182,12 @@ Object {
 
 exports[`generateRouteManifest function splat-routes 1`] = `
 Object {
-  "layout": Object {
-    "componentName": "Layout",
-    "file": "layout.tsx",
-    "id": "layout",
-    "path": "",
-  },
   "pages/$": Object {
     "componentName": "Pages$",
     "file": "pages/$.tsx",
     "id": "pages/$",
     "index": undefined,
-    "parentId": "layout",
+    "parentId": "pages/layout",
     "path": "/*",
   },
   "pages/home": Object {
@@ -195,8 +195,16 @@ Object {
     "file": "pages/home.tsx",
     "id": "pages/home",
     "index": undefined,
-    "parentId": "layout",
+    "parentId": "pages/layout",
     "path": "/home",
+  },
+  "pages/layout": Object {
+    "componentName": "PagesLayout",
+    "file": "pages/layout.tsx",
+    "id": "pages/layout",
+    "index": undefined,
+    "parentId": undefined,
+    "path": undefined,
   },
 }
 `;
