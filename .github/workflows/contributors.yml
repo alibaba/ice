@@ -1,10 +1,12 @@
 name: Add contributors
+
 on:
   # schedule:
   #   - cron: '5 * * * *'
   push:
     branches:
-      - master
+      # just for skip this workflow
+      - master_foo_bar
 
 jobs:
   add-contributors:
@@ -22,4 +24,4 @@ jobs:
           PATH: "/README.md"
           COMMIT_MESSAGE: "docs(README): update contributors"
           AVATAR_SHAPE: "round"
-          IGNORED_CONTRIBUTORS: "dashdotdawn"
+          PULL_REQUEST: "master"
