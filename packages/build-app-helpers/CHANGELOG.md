@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.4
+
+- [fix] compile jsx syntax before analyze
+
 ## 2.5.3
 
 - [fix] filter js/ts file when analyze
