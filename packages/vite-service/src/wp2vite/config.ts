@@ -87,7 +87,7 @@ const mapWithBrowserField = (packageName: string, resolvePath: string): Record<s
   try {
     const packagePath = require.resolve(`${resolvePath}/package.json`);
     const data = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
-    
+
     if (isObject(data.browser)) {
       Object.keys(data.browser).forEach((requirePath) => {
         const pathExtname = path.extname(requirePath);
@@ -117,6 +117,7 @@ const configMap: ConfigMap = {
       // webpack/hot is not necessary in mode vite
       const blackList = ['webpack/hot'];
       const packagesWithBrowserField = ['react-dom'];
+      const framework = process.env.__FRAMEWORK_NAME__ || 'ice';
       const data: Record<string, any> = Object.keys(value).reduce(
         (acc, key) => {
           if (!blackList.some((word) => value[key]?.includes(word))) {
@@ -134,8 +135,10 @@ const configMap: ConfigMap = {
         {}
       );
 
-      // alias 到指向 ice runtime 入口
-      data.ice = path.resolve(rootDir, '.ice/index.ts');
+      // 删除原webpack体系下的framework alias
+      // trail $ 在 vite alias下无精确匹配的能力
+      delete data[`${framework}$`];
+      delete data[framework];
 
       // built-in alias for ～antd and ～@alifd/next which commonly unused in style files
       ['antd', '@alifd/next'].forEach((pkg) => {
@@ -143,9 +146,20 @@ const configMap: ConfigMap = {
       });
 
       // Object to Array
-      return Object.entries(data).map(([find, replacement]) => {
+      const result: {find: string | RegExp, replacement: string}[] = Object.entries(data).map(([find, replacement]) => {
         return { find, replacement };
       });
+      // alias 到指向 framework runtime 入口
+      result.push({
+        find: new RegExp(`^${framework}$`),
+        replacement: path.resolve(rootDir, `.${framework}/index.ts`),
+      });
+      // 支持原{{framework}}/xxx 的目录能力
+      result.push({
+        find: new RegExp(`^${framework}/(.+)$`),
+        replacement: path.resolve(rootDir, `.${framework}/pages/$1`),
+      });
+      return result;
     },
   },
   'resolve.extensions': {
