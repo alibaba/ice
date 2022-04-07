@@ -37,8 +37,7 @@
     "prettier": "^2.5.1",
     "semver": "^7.3.5",
     "webpack": "^5.69.1",
-    "webpack-dev-server": "^4.7.4",
-    "yargs-parser": "^21.0.0"
+    "webpack-dev-server": "^4.7.4"
   },
   "devDependencies": {
     "@ice/types": "^1.0.0",

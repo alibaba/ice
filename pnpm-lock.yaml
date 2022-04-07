@@ -166,7 +166,6 @@ importers:
       unplugin: ^0.3.2
       webpack: ^5.69.1
       webpack-dev-server: ^4.7.4
-      yargs-parser: ^21.0.0
     dependencies:
       '@builder/pack': 0.6.0
       '@ice/route-manifest': link:../route-manifest
@@ -187,7 +186,6 @@ importers:
       semver: 7.3.5
       webpack: 5.69.1_esbuild@0.14.23
       webpack-dev-server: 4.7.4_webpack@5.69.1
-      yargs-parser: 21.0.0
     devDependencies:
       '@ice/types': link:../types
       '@types/ejs': 3.1.0
@@ -6902,6 +6900,7 @@ packages:
   /yargs-parser/21.0.0:
     resolution: {integrity: sha512-z9kApYUOCwoeZ78rfRYYWdiU/iNL6mwwYlkkZfJoyMR1xps+NEBX5X7XmRpxkZHhXJ6+Ey00IwKxBBSW9FIjyA==}
     engines: {node: '>=12'}
+    dev: true
 
   /yargs/16.2.0:
     resolution: {integrity: sha512-D1mvvtDG0L5ft/jGWkLpG1+m0eQxOfaBvTNELraWj22wSVUMWxZUvYgJYcKh6jGGIkJFhH4IZPQhR4TKpc8mBw==}
