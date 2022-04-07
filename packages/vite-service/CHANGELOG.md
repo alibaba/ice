@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.1.2
+
+- [chore] optimize compile log
+
 ## 2.1.1
 
 - [feat] plugin for rename main css chunk name
