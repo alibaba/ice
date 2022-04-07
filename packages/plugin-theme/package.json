@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-theme",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "multi themes",
   "main": "lib/index.js",
   "scripts": {
@@ -15,7 +15,7 @@
   "author": "ice-admin@alibaba-inc.com",
   "license": "MIT",
   "dependencies": {
-    "@builder/pack": "^0.5.0",
+    "@builder/pack": "^0.6.0",
     "fs-extra": "^9.0.0",
     "less": "^4.1.1",
     "lodash": "^4.17.21",

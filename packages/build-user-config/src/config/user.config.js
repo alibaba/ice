@@ -1,6 +1,9 @@
 const { validation } = require('@builder/app-helpers');
 
 const watchIgnoredRegexp = process.env.RUNTIME_DEBUG ? /node_modules/ : /node_modules|[/\\]\.ice[/\\]|[/\\]\.rax[/\\]/;
+const sockHost = process.env.WDS_SOCKET_HOST;
+const sockPath = process.env.WDS_SOCKET_PATH; // default: '/ws'
+const sockPort = process.env.WDS_SOCKET_PORT;
 
 module.exports = [
   {
@@ -50,7 +53,11 @@ module.exports = [
     validation: 'object',
     defaultValue: {
       allowedHosts: 'all',
-      hot: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': '*',
+        'Access-Control-Allow-Headers': '*',
+      },
       compress: true,
       webSocketServer: 'ws',
       devMiddleware: {
@@ -62,15 +69,19 @@ module.exports = [
         }
       },
       client: {
-        overlay: false,
-        logging: 'info',
-      },
-      onBeforeSetupMiddleware({ app }) {
-        app.use((req, res, next) => {
-          // set cros for all served files
-          res.set('Access-Control-Allow-Origin', '*');
-          next();
-        });
+        overlay: {
+          errors: true,
+          warnings: false, // overlay only shows error
+        },
+        logging: 'info', 
+        webSocketURL: {
+          // Enable custom sockjs pathname for websocket connection to hot reloading server.
+          // Enable custom sockjs hostname, pathname and port for websocket connection
+          // to hot reloading server.
+          hostname: sockHost,
+          pathname: sockPath,
+          port: sockPort,
+        },
       },
     }
   },

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.5
+
+- [feat] be able to pass arguments to memory router
+
+## 1.2.4
+
+- [fix] support history for custom configuration
+
 ## 1.2.3
 
 - [fix] revert AppProvider

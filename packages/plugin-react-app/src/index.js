@@ -20,7 +20,7 @@ module.exports = async (api) => {
     log.info(invalidMsg);
   }
 
-  if (userConfig.vitePlugins) {
+  if (userConfig.vitePlugins && userConfig.vite) {
     // transform vitePlugins to vite.plugins
     modifyUserConfig('vite.plugins', userConfig.vitePlugins, { deepmerge: true });
   }
@@ -47,6 +47,32 @@ module.exports = async (api) => {
     chainConfig.resolve.modules.add(path.join(rootDir, 'node_modules'));
     if (iceTempPath) {
       chainConfig.resolve.alias.set('$ice/ErrorBoundary', path.join(iceTempPath, 'core' ,'ErrorBoundary'));
+    }
+
+    if (!process.env.CDN_PATH) {
+      let publicPath = chainConfig.output.get('publicPath');
+      // add last slash
+      if (publicPath && !publicPath.endsWith('/')) {
+        publicPath = `${publicPath}/`;
+      }
+      // process.env.CDN_PATH may defined by other plugins
+      process.env.CDN_PATH = publicPath;
+    }
+
+    chainConfig.plugin('DefinePlugin').tap((args) => [
+      Object.assign({}, ...args, {
+        // keep the same name in build-plugin-def
+        'process.env.CDN_PATH': JSON.stringify(process.env.CDN_PATH),
+      }),
+    ]);
+    if (chainConfig.plugins.get('HtmlWebpackPlugin')) {
+      chainConfig.plugin('HtmlWebpackPlugin').tap(([args]) => {
+        args.templateParameters = {
+          ...(args.templateParameters || {}),
+          CDN_PATH: process.env.CDN_PATH,
+        };
+        return [args];
+      });
     }
   });
 

@@ -14,6 +14,8 @@ export type CreateHistory = (options: {
   location?: Location;
   routes?: Route[];
   customHistory?: History;
+  initialIndex?: number;
+  initialEntries?: string[];
 }) => History<unknown>
 type InitialContext = null | { location?: Location }
 type Options = {
@@ -32,8 +34,16 @@ export default (createHistory: CreateHistory) =>
     }
     const { initialContext = null, staticConfig = { routes: [] } } = options;
     const { router } = appConfig;
-    const { type = DEFAULT_APP_CONFIG.router.type, basename, history: customHistory } = router;
+    const { type = DEFAULT_APP_CONFIG.router.type, basename, history: customHistory, initialEntries, initialIndex } = router;
     const location = initialContext ? initialContext.location : null;
-    const newHistory = createHistory({ type, basename, location, customHistory, routes: staticConfig.routes });
+    const newHistory = createHistory({
+      type,
+      basename,
+      location,
+      customHistory,
+      routes: staticConfig.routes,
+      initialEntries,
+      initialIndex
+    });
     appConfig.router.history = newHistory;
   };

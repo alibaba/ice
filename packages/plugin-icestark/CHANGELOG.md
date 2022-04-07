@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.5.3
+
+- [fix] revert from version 2.5.2 and suport memory router
+
+## 2.5.2
+
+- [fix] support custom history configuration.
+
 ## 2.5.1
 
 - [fix] output of assets should be prefixed `index` instead of `app`, which break changed by version 2.5.0.

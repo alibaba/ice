@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.2.1
+
+- [chore] bump version of `esbuild`(0.14.14)
+- [feat] define variables of `CDN_PATH`
+- [fix] support userConfig `cssChunkNames`
+- [fix] bump version of `@builder/pack`(^0.6.0)
+- [fix] remove `webpackHotDevClient`
+- [fix] `vitePlugins` only take effect when `vite` is true
+- [fix] additional analyze for auth
+
 ## 2.2.0
 
 - [feat] optimize runtime when build

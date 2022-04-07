@@ -1,11 +1,16 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('@builder/pack/deps/html-webpack-plugin');
-const { analyzeRuntime, globSourceFiles } = require('@builder/app-helpers');
+const { analyzeRuntime, analyzeAuth, globSourceFiles } = require('@builder/app-helpers');
 const { getWebOutputPath, logWebpackConfig } = require('./utils');
 
 module.exports = (api) => {
-  const { context, onHook, onGetWebpackConfig, applyMethod } = api;
+  const { context, onHook, onGetWebpackConfig, applyMethod, log } = api;
   const { userConfig, rootDir } = context;
+
+  function disableRuntimePlugin(pluginName) {
+    applyMethod('addDisableRuntimePlugin', pluginName);
+    log.info('[analyze]' ,`${pluginName} removed after runtime analyse`);
+  }
 
   if (userConfig.optimizeRuntime && !userConfig.mpa && !userConfig.disableRuntime) {
     // analyze source folder when SPA
@@ -15,7 +20,19 @@ module.exports = (api) => {
       Object.keys(runtimeUsedMap).forEach((pluginName) => {
         const isUsed = runtimeUsedMap[pluginName];
         if (!isUsed) {
-          applyMethod('addDisableRuntimePlugin', pluginName);
+          if (pluginName === 'build-plugin-ice-auth') {
+            try {
+              const appEntry = path.join(rootDir, 'src/app');
+              const hasAuthConfig = analyzeAuth(appEntry);
+              if (!hasAuthConfig) {
+                disableRuntimePlugin(pluginName);
+              }
+            } catch (e) {
+              console.log('[Error] errors occurred with analyze runApp');
+            }  
+          } else {
+            disableRuntimePlugin(pluginName);
+          }
         }
       });
     });

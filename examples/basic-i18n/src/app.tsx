@@ -1,4 +1,4 @@
-import { runApp, IAppConfig, useLocale, getDefaultLocale } from 'ice';
+import { runApp, IAppConfig, useLocale, getDefaultLocale, setLocale } from 'ice';
 import { IntlProvider as ReactIntlProvider } from 'react-intl';
 import { messages } from './locales';
 
@@ -27,6 +27,9 @@ const appConfig: IAppConfig = {
       return (
         <IntlProvider>{children}</IntlProvider>
       );
+    },
+    async getInitialData() {
+      setLocale('zh-CN');
     }
   }
 };

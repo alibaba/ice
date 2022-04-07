@@ -9,6 +9,8 @@ import getDetectedLocaleFromPathname from './utils/getDetectedLocaleFromPathname
 import { getAppConfig } from '../../core/appConfig';
 <% } %>
 
+const cookies = new Cookies();
+
 const LOCALE_COOKIE_KEY = '<%= LOCALE_COOKIE_KEY %>';
 const i18nConfig = <%- JSON.stringify(i18nConfig) %>;
 
@@ -75,16 +77,22 @@ export function getLocale(): string {
     <% if (i18nRouting !== false) {%>
     getDetectedLocaleFromPath(locales, defaultLocale) ||
     <% } %>
-    new Cookies().get(LOCALE_COOKIE_KEY) ||
+    cookies.get(LOCALE_COOKIE_KEY) ||
     defaultLocale
   )
 }
 
+/**
+ * 设置当前国际化语言，修改 cookie 的 <%= LOCALE_COOKIE_KEY %> 值
+ */
+export function setLocale(locale: string) {
+  setLocaleToCookies(locale);
+}
+
 function setLocaleToCookies(locale: string) {
-  const cookies = new Cookies();
   cookies.set(LOCALE_COOKIE_KEY, locale, { path: '/' });
 }
 
 export function getLocaleFromCookies() {
-  return new Cookies().get(LOCALE_COOKIE_KEY);
+  return cookies.get(LOCALE_COOKIE_KEY);
 }

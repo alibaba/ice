@@ -19,7 +19,10 @@ import {
   ignoreHtmlPlugin,
   mockPlugin,
   ImportDeclarations,
+  cssChunk,
 } from '../plugins';
+
+import type { ChunkName } from '../plugins';
 
 type Option = BuildOptions & InlineConfig;
 
@@ -29,9 +32,9 @@ const getAnalyzer = (config: ITaskConfig['chainConfig']) => {
   return analyzer({ open: true, brotliSize: true, filename: 'ice-stats.html' });
 };
 
-const getWebpackConfig = (context: Context) => {
-  const configArr = context.getWebpackConfig();
-  return configArr[0];
+const getWebpackChain = (context: Context) => {
+  const configArr = context.getWebpackConfig() || [];
+  return configArr.find(({name}) => name === 'web')?.chainConfig;
 };
 
 // simple array merge for config merge
@@ -43,6 +46,7 @@ const isBuild = (command: string) => command === 'build';
 
 const getHtmlPlugin = (context: Context) => {
   const { getValue, userConfig, rootDir, command } = context;
+  const config = getWebpackChain(context);
   type Opt = {
     template: string
     filename: string
@@ -53,14 +57,20 @@ const getHtmlPlugin = (context: Context) => {
     excludeChunks?: string[]
   }
 
+  let templateParameters = {};
+
   const isMpa = userConfig.mpa as boolean;
   const ssr = userConfig.ssr as boolean;
 
   if (!isMpa) {
+    templateParameters = config.plugins.get('HtmlWebpackPlugin')
+      ? config.plugin('HtmlWebpackPlugin').get('args')[0]?.templateParameters : {};
+
     return htmlPlugin({
       entry: userConfig.entry as string,    // webpack entry
       template: path.resolve(rootDir, 'public', 'index.html'),
       filename: 'index.html',
+      templateParameters,
       rootDir,
       ssr,
       command,
@@ -75,22 +85,16 @@ const getHtmlPlugin = (context: Context) => {
     ...getValue('MPA_PAGES'),
   } as Record<string, Opt>;
   const entries = userConfig.entry as Record<string, string[]>;
+  const pluginKey = `HtmlWebpackPlugin_${Object.keys(entries)[0]}`;
+  templateParameters = config.plugins.get(pluginKey)
+    ? config.plugin(pluginKey).get('args')[0]?.templateParameters : {};
 
   const mpaHtmlPlugins = Object.keys(entries).map(entryName => {
     const singlePage = pages[entryName] ?? pages.index;
 
-    if (entryName === 'index') {
-      return htmlPlugin({
-        ...singlePage,
-        entry: entries[entryName][0],    // webpack entry
-        rootDir,
-        ssr,
-        command,
-      });
-    }
-
     return htmlPlugin({
       ...singlePage,
+      templateParameters,
       entry: entries[entryName][0],    // webpack entry
       rootDir,
       ssr,
@@ -144,21 +148,21 @@ const getRedirectImport = (context: Context) => {
  */
 export const wp2vite = (context: Context): InlineConfig => {
   const { commandArgs = {}, userConfig, originalUserConfig, rootDir, command } = context;
-  const config = getWebpackConfig(context);
+  const config = getWebpackChain(context);
 
   let viteConfig: Partial<Record<keyof Option, any>> = {
     configFile: false,
     root: rootDir,
     // ice 开发调试时保证 cjs 依赖转为 esm 文件
     plugins: [
-      userConfig.mock && mockPlugin((userConfig.mock as { exclude?: string[]})?.exclude),
-      getAnalyzer(config.chainConfig),
+      !commandArgs?.disableMock && userConfig.mock && mockPlugin((userConfig.mock as { exclude?: string[]})?.exclude),
+      getAnalyzer(config),
       // TODO: User Config Type Completion
       externalsPlugin(userConfig.externals as any),
       // import xx from 'ice' 的重定向逻辑
       importPlugin({ source: 'ice', redirectImports: getRedirectImport(context) }),
       // spa 与 mpa 中对 html 的处理
-      serverHistoryPlugin(config.chainConfig.devServer.get('historyApiFallback')),
+      serverHistoryPlugin(config.devServer.get('historyApiFallback')),
       getHtmlPlugin(context),
       userConfig.tsChecker && tsChecker(),
       polyfillPlugin({
@@ -170,6 +174,7 @@ export const wp2vite = (context: Context): InlineConfig => {
       }),
       userConfig.ignoreHtmlTemplate ? ignoreHtmlPlugin(rootDir) : null,
       ...getPluginReact(context),
+      userConfig.cssChunkNames && cssChunk(userConfig.cssChunkNames as ChunkName),
     ].filter(Boolean),
   };
   if (userConfig.eslint !== false) {
@@ -189,7 +194,7 @@ export const wp2vite = (context: Context): InlineConfig => {
   if (isObject(userConfig.vite)) {
     // 保证 userConfig.vite 优先级最高
     viteConfig = all([
-      recordMap(config.chainConfig, context),
+      recordMap(config, context),
       viteConfig,
       userConfig.vite
     ], { arrayMerge });
