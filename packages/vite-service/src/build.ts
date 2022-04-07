@@ -30,7 +30,7 @@ export async function viteBuild(context: any): Promise<BuildResult> {
       config: prodConfig,
     });
   } catch (err) {
-    console.error('CONFIG', chalk.red('Failed to load vite config.'));
+    console.error('Vite', chalk.red('Failed to build.'));
     throw err;
   }
 }

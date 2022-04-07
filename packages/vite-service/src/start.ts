@@ -41,7 +41,7 @@ export async function viteStart(context: Context): Promise<StartResult> {
 
     return devServer;
   } catch (err) {
-    console.error('CONFIG', chalk.red('Failed to load vite config.'));
+    console.error('Vite', chalk.red('Failed to start vite server.'));
     await applyHook('error', { err });
     throw err;
   }
