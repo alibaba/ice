@@ -25,6 +25,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
 
   return {
     name: 'compilation-plugin',
+    // @ts-expect-error TODO: source map types
     async transform(source: string, id: string) {
       // TODO specific runtime plugin name
       if ((/node_modules/.test(id) && !/[\\/]runtime[\\/]/.test(id))) {

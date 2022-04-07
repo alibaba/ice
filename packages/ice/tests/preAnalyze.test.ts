@@ -1,3 +1,4 @@
+import { expect, it, describe } from 'vitest';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { analyzeImports, getImportPath, resolveId, type Alias } from '../src/service/analyze';
