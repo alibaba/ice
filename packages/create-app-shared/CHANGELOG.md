@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.6
+
+- [fix] miniapp app lifecycle is invalid 
+
 ## 1.2.5
 
 - [feat] be able to pass arguments to memory router
