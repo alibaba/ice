@@ -1,3 +1,4 @@
+import { expect, it, describe } from 'vitest';
 import { generateExports, checkExportData, removeExportData } from '../src/service/runtimeGenerator';
 
 describe('generateExports', () => {

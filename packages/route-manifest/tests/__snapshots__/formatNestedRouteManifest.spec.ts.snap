@@ -1,4 +1,41 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
+
+exports[`generateRouteManifest function > layout-routes 1`] = `
+[
+  {
+    "componentName": "PagesBlogIndex",
+    "file": "pages/blog/index.tsx",
+    "id": "pages/blog/index",
+    "index": true,
+    "parentId": undefined,
+    "path": "/blog",
+  },
+  {
+    "componentName": "PagesBlog$id",
+    "file": "pages/blog/$id.tsx",
+    "id": "pages/blog/$id",
+    "index": undefined,
+    "parentId": undefined,
+    "path": "/blog/:id",
+  },
+  {
+    "componentName": "PagesAbout",
+    "file": "pages/about.tsx",
+    "id": "pages/about",
+    "index": undefined,
+    "parentId": undefined,
+    "path": "/about",
+  },
+  {
+    "componentName": "PagesIndex",
+    "file": "pages/index.tsx",
+    "id": "pages/index",
+    "index": true,
+    "parentId": undefined,
+    "path": undefined,
+  },
+]
+`;
 
 exports[`generateRouteManifest function layout-routes 1`] = `
 Array [

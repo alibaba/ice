@@ -1,3 +1,4 @@
+import { expect, test, describe } from 'vitest';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { generateRouteManifest } from '../src/index';

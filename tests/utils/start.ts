@@ -21,7 +21,6 @@ export const startFixture = async function (example: string) {
   const port = await getPort();
   const rootDir = path.join(__dirname, `../../examples/${example}`);
   process.env.DISABLE_FS_CACHE = 'true';
-  process.env.JEST_TEST = 'true';
   const service = await createService({ rootDir, command: 'start', commandArgs: {
     port,
     disableOpen: true,
