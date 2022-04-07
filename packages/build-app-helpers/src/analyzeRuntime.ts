@@ -138,8 +138,9 @@ export default async function analyzeRuntime(files: string[], options: Options):
     analyzedSet.add(filePath);
     let source = fs.readFileSync(filePath, 'utf-8');
     const lang = path.extname(filePath).slice(1);
-    let loader: Loader;
-    if (lang === 'ts' || lang === 'tsx') {
+    let loader: Loader = 'js';
+    if (lang === 'ts' || lang === 'tsx' || lang === 'jsx') {
+      // if file includes syntax of JSX, it need to be ends with extension .jsx
       loader = lang;
     }
     try {
