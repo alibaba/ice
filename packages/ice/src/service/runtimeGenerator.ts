@@ -6,7 +6,6 @@ import ejs from 'ejs';
 import prettier from 'prettier';
 import lodash from '@builder/pack/deps/lodash/lodash.js';
 import type {
-  SetPlugins,
   AddExport,
   RemoveExport,
   AddContent,
@@ -17,7 +16,6 @@ import type {
   ModifyRenderData,
   AddRenderFile,
   AddTemplateFiles,
-  AddDisableRuntimePlugin,
   RenderDataRegistration,
   RenderTemplate,
   RenderData,
@@ -25,7 +23,6 @@ import type {
   Registration,
   TemplateOptions,
 } from '@ice/types/esm/generator.js';
-import getRuntimeModules from '../utils/getRuntimeModules.js';
 import formatPath from '../utils/formatPath.js';
 
 const { debounce } = lodash;
@@ -106,11 +103,7 @@ export default class Generator {
 
   private showPrettierError: boolean;
 
-  private disableRuntimePlugins: string[];
-
   private contentTypes: string[];
-
-  private plugins: any[];
 
   public constructor(options: Options) {
     const { rootDir, targetDir, defaultRenderData, templates } = options;
@@ -122,9 +115,7 @@ export default class Generator {
     this.showPrettierError = true;
     this.renderTemplates = [];
     this.renderDataRegistration = [];
-    this.disableRuntimePlugins = [];
     this.contentTypes = ['framework', 'frameworkTypes', 'configTypes'];
-    this.plugins = [];
     // empty .ice before render
     fse.emptyDirSync(path.join(rootDir, targetDir));
     // add initial templates
@@ -132,10 +123,6 @@ export default class Generator {
       templates.forEach(template => this.addTemplateFiles(template));
     }
   }
-
-  public setPlugins: SetPlugins = (plugins) => {
-    this.plugins = plugins;
-  };
 
   private debounceRender = debounce(() => {
     this.render();
@@ -209,11 +196,6 @@ export default class Generator {
       }
       return previousValue;
     }, this.parseRenderData());
-    // 生成所有运行时插件，在 load 阶段判断是否需要加载，确保 index 中的 exports 路径永远可以获取引用
-    this.renderData.runtimeModules = getRuntimeModules(this.plugins)
-      .filter((plugin) => {
-        return !this.disableRuntimePlugins.includes(plugin?.name);
-      });
 
     this.renderTemplates.forEach((args) => {
       this.renderFile(...args);
@@ -298,12 +280,6 @@ export default class Generator {
     } else {
       fse.ensureDirSync(path.dirname(realTargetPath));
       fse.copyFileSync(templatePath, realTargetPath);
-    }
-  };
-
-  public addDisableRuntimePlugin: AddDisableRuntimePlugin = (pluginName) => {
-    if (!this.disableRuntimePlugins.includes(pluginName)) {
-      this.disableRuntimePlugins.push(pluginName);
     }
   };
 }

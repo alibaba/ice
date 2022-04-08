@@ -14,6 +14,7 @@ import getContextConfig from './utils/getContextConfig.js';
 import getWatchEvents from './getWatchEvents.js';
 import { getAppConfig } from './analyzeRuntime.js';
 import { defineRuntimeEnv, updateRuntimeEnv } from './utils/runtimeEnv.js';
+import getRuntimeModules from './utils/getRuntimeModules.js';
 import { generateRoutesInfo } from './routes.js';
 import webPlugin from './plugins/web/index.js';
 import configPlugin from './plugins/config.js';
@@ -89,7 +90,11 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     },
   });
   await ctx.resolveConfig();
-  generator.setPlugins(ctx.getAllPlugin());
+  const runtimeModules = getRuntimeModules(ctx.getAllPlugin());
+  generator.modifyRenderData((renderData) => ({
+    ...renderData,
+    runtimeModules,
+  }));
   await ctx.setup();
   // render template before webpack compile
   const renderStart = new Date().getTime();
@@ -97,11 +102,12 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   consola.debug('template render cost:', new Date().getTime() - renderStart);
   // define runtime env before get webpack config
   defineRuntimeEnv();
-  const contextConfig = getContextConfig(ctx);
+  const compileIncludes = runtimeModules.map(({ name }) => `${name}/runtime`);
+  const contextConfig = getContextConfig(ctx, { compileIncludes });
   const webTask = contextConfig.find(({ name }) => name === 'web');
   const esbuildCompile = createEsbuildCompiler({
-    alias: webTask.webpackConfig.resolve.alias as Record<string, string>,
-    getTransformPlugins: webTask.getTransformPlugins,
+    rootDir,
+    task: webTask,
   });
 
   return {

@@ -17,7 +17,7 @@ const webPlugin: Plugin = ({ registerTask, context, onHook }) => {
         // platform: 'node',
         format: 'esm',
         outExtension: { '.js': '.mjs' },
-      }, { isServer: true });
+      });
       // timestamp for disable import cache
       return `${serverEntry}?version=${new Date().getTime()}`;
     };
