@@ -12,7 +12,7 @@ type JSXSuffix = 'jsx' | 'tsx';
 interface Options {
   rootDir: string;
   mode: 'development' | 'production' | 'none';
-  isServer?: boolean;
+  compileIncludes?: (string | RegExp)[];
   sourceMap?: Config['sourceMap'];
 }
 
@@ -20,15 +20,16 @@ const require = createRequire(import.meta.url);
 const regeneratorRuntimePath = require.resolve('regenerator-runtime');
 
 const compilationPlugin = (options: Options): UnpluginOptions => {
-  const { rootDir, sourceMap, mode, isServer } = options;
+  const { rootDir, sourceMap, mode, compileIncludes } = options;
   const dev = mode !== 'production';
-
+  const compileRegex = compileIncludes.map((includeRule) => {
+    return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);
+  });
   return {
     name: 'compilation-plugin',
     // @ts-expect-error TODO: source map types
     async transform(source: string, id: string) {
-      // TODO specific runtime plugin name
-      if ((/node_modules/.test(id) && !/[\\/]runtime[\\/]/.test(id))) {
+      if ((/node_modules/.test(id) && !compileRegex.some((regex) => regex.test(id)))) {
         return;
       }
 
@@ -40,7 +41,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
       const programmaticOptions = {
         filename: id,
         sourceMaps: !!sourceMap,
-        ...getSwcTransformOptions({ suffix, rootDir, dev, isServer }),
+        ...getSwcTransformOptions({ suffix, rootDir, dev }),
       };
       // auto detect development mode
       if (mode && programmaticOptions.jsc && programmaticOptions.jsc.transform &&
@@ -60,7 +61,6 @@ function getSwcTransformOptions({
   suffix,
   rootDir,
   dev,
-  isServer,
 }: {
     suffix: JSXSuffix;
     rootDir: string;
@@ -68,7 +68,7 @@ function getSwcTransformOptions({
     isServer?: boolean;
   }) {
   const baseReactTransformConfig = {
-    refresh: dev && !isServer,
+    refresh: dev,
    };
   const reactTransformConfig = merge(baseReactTransformConfig, hasJsxRuntime(rootDir) ? { runtime: 'automatic' } : {});
 
@@ -95,9 +95,6 @@ function getSwcTransformOptions({
       loose: true,
     },
   };
-  if (isServer) {
-    commonOptions.env.targets = 'node >= 12';
-  }
 
   const jsOptions = merge({
     jsc: {

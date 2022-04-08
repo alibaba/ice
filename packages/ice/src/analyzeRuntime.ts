@@ -17,8 +17,7 @@ export const getAppConfig = async (options: Options): Promise<AppConfig> => {
       entryPoints: [path.join(rootDir, 'src/app')],
       outfile,
       format: 'esm',
-      external: ['./node_modules/*'],
-    }, { isServer: true });
+    });
 
     const appConfig = (await import(outfile)).default;
     consola.debug('app config:', appConfig);

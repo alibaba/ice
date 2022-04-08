@@ -31,4 +31,3 @@ export type ModifyRenderData = (registration: RenderDataRegistration) => void;
 export type AddRenderFile = (templatePath: string, targetPath: string, extraData?: ExtraData) => void;
 export type AddTemplateFiles = (templateOptions: string | TemplateOptions, extraData?: ExtraData) => void;
 export type RenderFile = (templatePath: string, targetPath: string, extraData?: ExtraData) => void;
-export type AddDisableRuntimePlugin = (pluginName: string) => void;

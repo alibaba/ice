@@ -47,5 +47,5 @@ export interface Config {
 
   proxy?: ProxyConfigArrayItem | ProxyConfigMap | ProxyConfigArray | undefined;
 
-  isServer?: boolean;
+  compileIncludes?: (string | RegExp)[];
 }

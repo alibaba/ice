@@ -9,7 +9,7 @@ export interface RuntimeModule {
 }
 
 export interface Plugin {
-  pluginPath: string;
+  pluginPath?: string;
 }
 
 function getRuntimeModules(plugins: Plugin[]) {
@@ -27,7 +27,7 @@ function getRuntimeModules(plugins: Plugin[]) {
         const pkgInfo = fse.readJSONSync(pkgPath);
         return {
           staticModule: !!pkgInfo?.pluginConfig?.staticModule,
-          path: `${packageDir}/runtime`,
+          path: `${pkgInfo.name}/runtime`,
           name: pkgInfo.name as string,
         };
       } catch (error) {
