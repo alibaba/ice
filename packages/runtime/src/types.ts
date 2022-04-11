@@ -7,7 +7,6 @@ import type { usePageContext } from './PageContext';
 type VoidFunction = () => void;
 type AppLifecycle = 'onShow' | 'onHide' | 'onPageNotFound' | 'onShareAppMessage' | 'onUnhandledRejection' | 'onLaunch' | 'onError' | 'onTabItemClick';
 type App = Partial<{
-  rootId?: string;
   strict?: boolean;
   addProvider?: ({ children }: { children: ReactNode }) => ReactNode;
   getInitialData?: (ctx?: InitialContext) => Promise<any>;
@@ -77,11 +76,9 @@ export interface RouteModules {
 }
 
 export interface AssetsManifest {
-  publicPath?: string;
-  bundles?: Record<string, {
-    files: string[];
-    isEntry: boolean;
-  }>;
+  publicPath: string;
+  entries: string[];
+  pages: string[];
 }
 export interface AppContext {
   appConfig: AppConfig;
@@ -91,10 +88,7 @@ export interface AppContext {
   initialData?: InitialData;
   pageData?: PageData;
   initialPageData?: PageData;
-}
-
-export interface AppData {
-  initialData?: InitialData;
+  documentOnly?: boolean;
 }
 
 export interface PageData {

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Meta, Title, Links, Main, Scripts } from 'ice';
 
-function Document() {
+function Document(props) {
   return (
     <html lang="en">
       <head>
@@ -14,7 +14,9 @@ function Document() {
         <Links />
       </head>
       <body>
-        <Main />
+        <Main>
+          {props.children}
+        </Main>
         <Scripts />
       </body>
     </html>

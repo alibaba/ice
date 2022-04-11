@@ -42,6 +42,40 @@ describe(`start ${example}`, () => {
     expect(await page.$$text('h2')).toStrictEqual(['Home Page']);
   }, 120000);
 
+  test('should update pageConfig during client routing', async () => {
+    const { devServer, port } = await startFixture(example);
+    const res = await setupStartBrowser({ server: devServer, port });
+    page = res.page;
+    browser = res.browser;
+
+    expect(
+      await page.title()
+    ).toBe('Home');
+
+    expect(
+      await page.$$attr('meta[name="theme-color"]', 'content')
+    ).toStrictEqual(['#000']);
+
+    await page.click('a[href="/about"]');
+    await page.waitForNetworkIdle();
+
+    expect(
+      await page.title()
+    ).toBe('About');
+
+    expect(
+      await page.$$attr('meta[name="theme-color"]', 'content')
+    ).toStrictEqual(['#eee']);
+
+    expect(
+      await page.$$eval('link[href*="bootstrap"]', (els) => els.length)
+    ).toBe(1);
+
+    expect(
+      await page.$$eval('script[src*="lodash"]', (els) => els.length)
+    ).toBe(1);
+  }, 120000);
+
   afterAll(async () => {
     await browser.close();
   });

@@ -40,9 +40,7 @@ class Runtime {
   public getAppContext = () => this.appContext;
 
   public getRender = () => {
-    // TODO: set ssr by process env
-    const isSSR = true;
-    return isSSR ? ReactDOM.hydrate : this.render;
+    return ReactDOM.hydrate;
   };
 
   public getAppRouter = () => this.AppRouter;

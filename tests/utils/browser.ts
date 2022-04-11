@@ -110,25 +110,16 @@ export default class Browser {
       page.$$eval(selector, (els, trim) => els.map((el) => {
         return trim ? (el.textContent || '').replace(/^\s+|\s+$/g, '') : el.textContent
       }), trim);
-    page.$attr = (selector, attr) => {
-      return page.$eval(
+
+    page.$attr = (selector, attr) =>
+      page.$eval(selector, (el, attr) => el.getAttribute(attr as string), attr);
+
+    page.$$attr = (selector, attr) =>
+      page.$$eval(
         selector,
-        (el: Element, ...args: unknown[]) => {
-          const [] = args;
-          return el.getAttribute(attr)
-        },
-        attr
-      )
-    };
-    page.$$attr = (selector, attr) =>{
-     return page.$$eval(
-        selector,
-        (els, ...args: unknown[]) => {
-          return els.map(el => el.getAttribute(attr))
-        },
-        attr
+        (els, attr) => els.map(el => el.getAttribute(attr as string)),
+        attr,
       );
-    }
     return page;
   }
 }

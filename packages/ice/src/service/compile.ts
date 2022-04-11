@@ -32,6 +32,8 @@ export function createEsbuildCompiler(options: Options) {
         // ref: https://github.com/evanw/esbuild/blob/master/CHANGELOG.md#01117
         // in esm, this in the global should be undefined. Set the following config to avoid warning
         this: undefined,
+        // TOOD: sync ice runtime env
+        'process.env.ICE_RUNTIME_SERVER': 'true',
       },
       plugins: [
         {

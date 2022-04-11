@@ -5,7 +5,7 @@ import {
 import Runtime from './runtime.js';
 import App from './App.js';
 import runClientApp from './runClientApp.js';
-import runServerApp from './runServerApp.js';
+import runServerApp, { renderDocument } from './runServerApp.js';
 import { useAppContext } from './AppContext.js';
 import {
   Meta,
@@ -30,6 +30,7 @@ export {
   App,
   runClientApp,
   runServerApp,
+  renderDocument,
   useAppContext,
   Link,
   Outlet,
