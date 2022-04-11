@@ -5,12 +5,16 @@ import type { Request, Response } from 'express';
 interface Options {
   routeManifest: string;
   serverCompiler: () => Promise<string>;
+  ssg: boolean;
+  ssr: boolean;
 }
 
 export function setupRenderServer(options: Options) {
   const {
     routeManifest,
     serverCompiler,
+    ssg,
+    ssr,
   } = options;
 
   return async (req: Request, res: Response) => {
@@ -23,10 +27,17 @@ export function setupRenderServer(options: Options) {
 
     const entry = await serverCompiler();
     const serverEntry = await import(entry);
-    const html = await serverEntry.render({
+    const requestContext = {
       req,
       res,
-    });
+    };
+
+    let html;
+    if (ssg || ssr) {
+      html = await serverEntry.render(requestContext);
+    } else {
+      html = await serverEntry.renderDocument(requestContext);
+    }
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.send(html);

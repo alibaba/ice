@@ -27,32 +27,29 @@ export default class AssetsManifestPlugin {
   }
 
   public createAssets(compilation: Compilation) {
-    const bundles = {};
+    const entries = {};
+    const pages = {};
 
     const entrypoints = compilation.entrypoints.values();
 
     for (const entrypoint of entrypoints) {
       const entryName = entrypoint.name;
       const mainFiles = getEntrypointFiles(entrypoint);
-      bundles[entryName] = {
-        isEntry: true,
-        files: mainFiles,
-      };
+
+      entries[entryName] = mainFiles;
 
       const chunks = entrypoint?.getChildren();
       chunks.forEach((chunk: any) => {
         const chunkName = chunk.name;
         const chunkFiles = chunk.getFiles();
-        bundles[chunkName] = {
-          isEntry: false,
-          files: chunkFiles,
-        };
+        pages[chunkName] = chunkFiles;
       });
     }
 
     const manifest = {
       publicPath: compilation.outputOptions?.publicPath,
-      bundles,
+      entries,
+      pages,
     };
 
     const manifestFileName = resolve(this.outputDir, this.fileName);

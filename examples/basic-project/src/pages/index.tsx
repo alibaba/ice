@@ -18,9 +18,17 @@ export default function Home(props) {
 
 export function getPageConfig(): PageConfig {
   return {
-    // scripts: [
-    //   { src: 'https://g.alicdn.com/alilog/mlog/aplus_v2.js', block: true },
-    // ],
+    title: 'Home',
+    meta: [
+      {
+        name: 'theme-color',
+        content: '#000',
+      },
+      {
+        name: 'title-color',
+        content: '#f00',
+      },
+    ],
     auth: ['admin'],
   };
 }

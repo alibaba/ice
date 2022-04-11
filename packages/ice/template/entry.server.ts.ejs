@@ -1,18 +1,26 @@
-import { runServerApp } from '@ice/runtime';
+import { runServerApp, renderDocument as runDocumentRender } from '@ice/runtime';
 import appConfig from '@/app';
 import runtimeModules from './runtimeModules';
 import Document from '@/document';
 import assetsManifest from './assets-manifest.json';
 import routes from './routes';
 
-export async function render(requestContext, documentOnly = false) {
-  return await runServerApp({
-    requestContext,
-    runtimeModules,
+export async function render(requestContext) {
+  return await runServerApp(requestContext, {
     appConfig,
-    routes,
     assetsManifest,
+    routes,
+    runtimeModules,
     Document,
-    documentOnly,
+  });
+}
+
+export async function renderDocument(requestContext) {
+  return await runDocumentRender(requestContext, {
+    appConfig,
+    assetsManifest,
+    routes,
+    runtimeModules,
+    Document,
   });
 }

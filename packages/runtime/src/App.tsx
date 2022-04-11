@@ -2,16 +2,15 @@ import React, { useMemo } from 'react';
 import type { Action, Location } from 'history';
 import type { Navigator } from 'react-router-dom';
 import AppErrorBoundary from './AppErrorBoundary.js';
-import { AppContextProvider } from './AppContext.js';
+import { useAppContext } from './AppContext.js';
 import { createRouteElements } from './routes.js';
-import type { AppContext, PageWrapper, AppRouterProps } from './types';
+import type { PageWrapper, AppRouterProps } from './types';
 
 interface Props {
   action: Action;
   location: Location;
   navigator: Navigator;
   static?: boolean;
-  appContext: AppContext;
   AppProvider: React.ComponentType<any>;
   PageWrappers: PageWrapper<{}>[];
   AppRouter: React.ComponentType<AppRouterProps>;
@@ -19,10 +18,16 @@ interface Props {
 
 export default function App(props: Props) {
   const {
-    location, action, navigator, static: staticProp = false,
-    appContext, AppProvider, AppRouter, PageWrappers,
+    location,
+    action,
+    navigator,
+    static: staticProp = false,
+    AppProvider,
+    AppRouter,
+    PageWrappers,
   } = props;
-  const { appConfig, routes: originRoutes } = appContext;
+
+  const { appConfig, routes: originRoutes } = useAppContext();
   const { strict } = appConfig.app;
   const StrictMode = strict ? React.StrictMode : React.Fragment;
 
@@ -52,16 +57,13 @@ export default function App(props: Props) {
       />
     );
   }
+
   return (
     <StrictMode>
       <AppErrorBoundary>
-        <AppContextProvider
-          value={appContext}
-        >
-          <AppProvider>
-            {element}
-          </AppProvider>
-        </AppContextProvider>
+        <AppProvider>
+          {element}
+        </AppProvider>
       </AppErrorBoundary>
     </StrictMode>
   );
