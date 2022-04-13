@@ -74,7 +74,7 @@ module.exports = (api, { target, webpackConfig }) => {
   }
 
   webpackConfig.resolve.merge({
-    conditionNames: ['web', 'import', 'require', 'node'],
+    conditionNames: ['web', '...'],
   });
 
   return webpackConfig;
