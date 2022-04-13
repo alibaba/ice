@@ -1,7 +1,7 @@
 import type { UserConfig } from '@ice/types';
 
-export function defineUserConfig(userConfig: UserConfig) {
-  return userConfig;
+export function defineConfig(config: UserConfig) {
+  return config;
 }
 
 export type { UserConfig };
