@@ -13,10 +13,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@builder/app-helpers": "^2.5.2",
+    "@builder/app-helpers": "^2.5.4",
     "@builder/jest-config": "^2.0.1",
     "@builder/pack": "^0.6.0",
-    "@builder/user-config": "^2.2.0",
+    "@builder/user-config": "^2.2.3",
     "@builder/webpack-config": "^2.0.1",
     "chalk": "^4.0.0",
     "debug": "^4.1.1",
