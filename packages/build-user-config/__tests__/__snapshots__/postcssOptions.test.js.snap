@@ -1,5 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`merge postcss options when postcss-loader is v3 should convert default options in rax correctly 1`] = `
+Object {
+  "plugins": Array [
+    [Function],
+    [Function],
+    [Function],
+  ],
+  "sourceMap": true,
+}
+`;
+
+exports[`merge postcss options when postcss-loader is v3 should convert root options correctly 1`] = `
+Object {
+  "config": Object {},
+  "exec": true,
+  "parser": "sugarss",
+  "plugins": Array [
+    [Function],
+    [Function],
+    [Function],
+  ],
+  "sourceMap": false,
+  "stringifier": "midas",
+  "syntax": "sugarss",
+}
+`;
+
+exports[`merge postcss options when postcss-loader is v3 should merge plugin correctly 1`] = `
+Object {
+  "plugins": Array [
+    [Function],
+    [Function],
+  ],
+  "sourceMap": true,
+}
+`;
+
 exports[`merge postcss options when postcss-loader is v5 should convert default options in rax correctly 1`] = `
 Object {
   "postcssOptions": Object {
@@ -15,6 +52,7 @@ Object {
 
 exports[`merge postcss options when postcss-loader is v5 should convert root options correctly 1`] = `
 Object {
+  "execute": true,
   "postcssOptions": Object {
     "map": false,
     "parser": "sugarss",
@@ -26,7 +64,7 @@ Object {
     "stringifier": "midas",
     "syntax": "sugarss",
   },
-  "sourceMap": true,
+  "sourceMap": false,
 }
 `;
 
