@@ -3,7 +3,7 @@ import type { AssetsManifest, RouteMatch } from './types';
 /**
  * merge assets info for matched page
  */
- export function getPageAssets(matches: RouteMatch[], assetsManifest: AssetsManifest): string[] {
+export function getPageAssets(matches: RouteMatch[], assetsManifest: AssetsManifest): string[] {
   // TODO：publicPath from runtime
   const { pages, publicPath } = assetsManifest;
 

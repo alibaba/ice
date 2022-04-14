@@ -191,7 +191,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, commandArgs = {} 
     performance: false,
     devtool: getDevtoolValue(sourceMap),
     plugins: [
-       ...webpackPlugins,
+      ...webpackPlugins,
       dev && new ReactRefreshWebpackPlugin(),
       new webpack.DefinePlugin({
         ...defineStaticVariables,
