@@ -1,5 +1,3 @@
-/* eslint-disable react/self-closing-comp */
-import React from 'react';
 import { Meta, Title, Links, Main, Scripts, useAppData } from 'ice';
 import type { AppData } from './types';
 

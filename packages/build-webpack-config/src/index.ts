@@ -94,7 +94,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, commandArgs = {} 
   });
 
   // create plugins
-  const webpackPlugins = getTransformPlugins(rootDir, config).map((plugin) => createUnplugin(() => plugin).webpack());
+  const webpackPlugins = getTransformPlugins(config).map((plugin) => createUnplugin(() => plugin).webpack());
 
   const terserOptions: any = {
     parse: {
