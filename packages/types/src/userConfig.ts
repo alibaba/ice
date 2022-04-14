@@ -18,4 +18,5 @@ export interface UserConfig {
     defineRoutes?: (defineRoute: DefineRouteFunction) => void;
   };
   plugins?: IPluginList;
+  compileDependencies?: boolean | string[] | RegExp[];
 }

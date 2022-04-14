@@ -113,6 +113,35 @@ const userConfig = [
     },
   },
   {
+    name: 'compileDependencies',
+    validation: 'array|boolean',
+    setConfig: (config: Config, customValue: UserConfig['compileDependencies'], context) => {
+      const { command } = context;
+      let compileRegex: RegExp | false;
+      if (customValue === undefined) {
+        // compile all node_modules dependencies when build
+        compileRegex = command === 'start' ? false : /node_modules\/*/;
+      }
+      if (customValue === true) {
+        compileRegex = /node_modules\/*/;
+      } else if (customValue && customValue.length > 0) {
+        compileRegex = new RegExp(customValue.map((dep: string | RegExp) => {
+          if (dep instanceof RegExp) {
+            return dep.source;
+          } else if (typeof dep === 'string') {
+            // add default prefix of node_modules
+            const matchStr = `node_modules/?.+${dep}/`;
+            return matchStr;
+          }
+          return false;
+        }).filter(Boolean).join('|'));
+      }
+      if (compileRegex) {
+        config.compileIncludes = [compileRegex];
+      }
+    },
+  },
+  {
     name: 'routes',
     validation: 'object',
   },
