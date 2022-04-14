@@ -172,7 +172,7 @@ importers:
       '@types/ejs': ^3.1.0
       '@types/less': ^3.0.3
       '@types/lodash.debounce': ^4.0.6
-      '@types/lodash.merge': ^4.6.6
+      '@types/lodash.mergewith': ^4.6.6
       '@types/sass': ^1.43.1
       '@types/temp': ^0.9.1
       address: ^1.1.2
@@ -189,7 +189,7 @@ importers:
       find-up: ^5.0.0
       fs-extra: ^10.0.0
       less: ^4.1.2
-      lodash.merge: ^4.6.2
+      lodash.mergewith: ^4.6.2
       open: ^8.4.0
       mrmime: ^1.0.0
       postcss: ^8.4.7
@@ -219,7 +219,7 @@ importers:
       find-up: 5.0.0
       fs-extra: 10.0.1
       less: 4.1.2
-      lodash.merge: 4.6.2
+      lodash.mergewith: 4.6.2
       open: 8.4.0
       mrmime: 1.0.0
       postcss: 8.4.12
@@ -236,7 +236,7 @@ importers:
       '@types/ejs': 3.1.0
       '@types/less': 3.0.3
       '@types/lodash.debounce': 4.0.6
-      '@types/lodash.merge': 4.6.6
+      '@types/lodash.mergewith': 4.6.6
       '@types/sass': 1.43.1
       '@types/temp': 0.9.1
       chokidar: 3.5.3
@@ -1334,8 +1334,8 @@ packages:
       '@types/lodash': 4.14.181
     dev: true
 
-  /@types/lodash.merge/4.6.6:
-    resolution: {integrity: sha512-IB90krzMf7YpfgP3u/EvZEdXVvm4e3gJbUvh5ieuI+o+XqiNEt6fCzqNRaiLlPVScLI59RxIGZMQ3+Ko/DJ8vQ==}
+  /@types/lodash.mergewith/4.6.6:
+    resolution: {integrity: sha512-RY/8IaVENjG19rxTZu9Nukqh0W2UrYgmBj5sdns4hWRZaV8PqR7wIKHFKzvOTjo4zVRV7sVI+yFhAJql12Kfqg==}
     dependencies:
       '@types/lodash': 4.14.181
     dev: true
@@ -4377,6 +4377,11 @@ packages:
 
   /lodash.merge/4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
+    dev: true
+
+  /lodash.mergewith/4.6.2:
+    resolution: {integrity: sha512-GK3g5RPZWTRSeLSpgP8Xhra+pnjBC56q9FZYe1d5RN3TJ35dbkGy3YqBSMbyCrlbi+CM9Z3Jk5yTL7RCsqboyQ==}
+    dev: false
 
   /lodash.truncate/4.4.2:
     resolution: {integrity: sha1-WjUNoLERO4N+z//VgSy+WNbq4ZM=}
@@ -6508,7 +6513,7 @@ packages:
       mime-types: 2.1.35
       range-parser: 1.2.1
       schema-utils: 4.0.0
-      webpack: 5.72.0_@swc+core@1.2.165
+      webpack: 5.72.0_esbuild@0.14.36
 
   /webpack-dev-server/4.8.1_webpack@5.72.0:
     resolution: {integrity: sha512-dwld70gkgNJa33czmcj/PlKY/nOy/BimbrgZRaR9vDATBQAYgLzggR0nxDtPLJiLrMgZwbE6RRfJ5vnBBasTyg==}
@@ -6548,7 +6553,7 @@ packages:
       serve-index: 1.9.1
       sockjs: 0.3.24
       spdy: 4.0.2
-      webpack: 5.72.0_@swc+core@1.2.165
+      webpack: 5.72.0_esbuild@0.14.36
       webpack-dev-middleware: 5.3.1_webpack@5.72.0
       ws: 8.5.0
     transitivePeerDependencies:

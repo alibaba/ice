@@ -3,7 +3,7 @@ import type { Config } from '@ice/types';
 import type { Configuration } from 'webpack';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import { getWebpackConfig } from '@ice/webpack-config';
-import merge from 'lodash.merge';
+import mergeWith from 'lodash.mergewith';
 
 export interface ContextConfig {
   name: string;
@@ -23,7 +23,11 @@ function getContextConfig(context: Context<Config>, customConfig: Partial<Config
   const configs = contextConfig.map(({ config, name }) => {
     const webpackConfig = getWebpackConfig({
       rootDir,
-      config: merge(config, customConfig),
+      config: mergeWith(config, customConfig, (objValue, srcValue) => {
+        if (Array.isArray(objValue)) {
+          return objValue.concat(srcValue);
+        }
+      }),
     });
     return {
       name,

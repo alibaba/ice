@@ -38,7 +38,7 @@
     "less": "^4.1.2",
     "postcss": "^8.4.7",
     "postcss-modules": "^4.3.1",
-    "lodash.merge": "^4.6.2",
+    "lodash.mergewith": "^4.6.2",
     "open": "^8.4.0",
     "mrmime": "^1.0.0",
     "prettier": "^2.5.1",
@@ -56,7 +56,7 @@
     "@types/lodash.debounce": "^4.0.6",
     "@types/sass": "^1.43.1",
     "@types/temp": "^0.9.1",
-    "@types/lodash.merge": "^4.6.6",
+    "@types/lodash.mergewith": "^4.6.6",
     "chokidar": "^3.5.3",
     "unplugin": "^0.3.2"
   }
