@@ -134,7 +134,7 @@ importers:
       regenerator-runtime: ^0.13.9
       sass: ^1.49.9
       unplugin: ^0.3.2
-      webpack: ^5.69.1
+      webpack: ^5.72.0
       webpack-dev-server: ^4.7.4
     dependencies:
       '@builder/pack': 0.6.1
@@ -188,6 +188,7 @@ importers:
       fs-extra: ^10.0.0
       less: ^4.1.2
       lodash.merge: ^4.6.2
+      mrmime: ^1.0.0
       postcss: ^8.4.7
       postcss-modules: ^4.3.1
       prettier: ^2.5.1
@@ -195,7 +196,7 @@ importers:
       semver: ^7.3.5
       temp: ^0.9.4
       unplugin: ^0.3.2
-      webpack: ^5.69.1
+      webpack: ^5.72.0
       webpack-dev-server: ^4.7.4
     dependencies:
       '@builder/pack': 0.6.1
@@ -215,6 +216,7 @@ importers:
       fs-extra: 10.0.1
       less: 4.1.2
       lodash.merge: 4.6.2
+      mrmime: 1.0.0
       postcss: 8.4.12
       postcss-modules: 4.3.1_postcss@8.4.12
       prettier: 2.6.2
@@ -269,7 +271,7 @@ importers:
       esbuild: ^0.14.23
       react: ^17.0.2
       unplugin: ^0.3.2
-      webpack: ^5.69.1
+      webpack: ^5.72.0
       webpack-dev-server: ^4.7.4
     devDependencies:
       '@ice/route-manifest': link:../route-manifest
@@ -4595,7 +4597,6 @@ packages:
   /mrmime/1.0.0:
     resolution: {integrity: sha512-a70zx7zFfVO7XpnQ2IX1Myh9yY4UYvfld/dikWRnsXxbyvMcfz+u6UfgNAtH+k2QqtJuzVpv6eLTx1G2+WKZbQ==}
     engines: {node: '>=10'}
-    dev: true
 
   /ms/2.0.0:
     resolution: {integrity: sha1-VgiurfwAvmwpAd9fmGF4jeDVl8g=}
@@ -6495,7 +6496,7 @@ packages:
       mime-types: 2.1.35
       range-parser: 1.2.1
       schema-utils: 4.0.0
-      webpack: 5.72.0_esbuild@0.14.36
+      webpack: 5.72.0_@swc+core@1.2.165
 
   /webpack-dev-server/4.8.1_webpack@5.72.0:
     resolution: {integrity: sha512-dwld70gkgNJa33czmcj/PlKY/nOy/BimbrgZRaR9vDATBQAYgLzggR0nxDtPLJiLrMgZwbE6RRfJ5vnBBasTyg==}
@@ -6535,7 +6536,7 @@ packages:
       serve-index: 1.9.1
       sockjs: 0.3.24
       spdy: 4.0.2
-      webpack: 5.72.0_esbuild@0.14.36
+      webpack: 5.72.0_@swc+core@1.2.165
       webpack-dev-middleware: 5.3.1_webpack@5.72.0
       ws: 8.5.0
     transitivePeerDependencies:
