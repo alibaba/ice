@@ -41,7 +41,7 @@ describe(`start ${example}`, () => {
     expect(await page.$$text('h2')).toStrictEqual(['Home Page']);
   }, 120000);
 
-  test('should update pageConfig during client routing', async () => {
+  test('should update config during client routing', async () => {
     const { devServer, port } = await startFixture(example);
     const res = await setupStartBrowser({ server: devServer, port });
     page = res.page;

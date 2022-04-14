@@ -6,8 +6,12 @@ import { createSearchParams } from 'react-router-dom';
 import Runtime from './runtime.js';
 import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
-import { loadRouteModules, loadPageData, loadPageConfig, matchRoutes } from './routes.js';
-import type { AppContext, InitialContext, RouteItem, ServerContext, AppConfig, RuntimePlugin, CommonJsRuntime, AssetsManifest } from './types';
+import { AppDataProvider } from './AppData.js';
+import { loadRouteModules, loadRoutesData, getRoutesConfig, matchRoutes } from './routes.js';
+import type {
+  AppContext, InitialContext, RouteItem, ServerContext,
+  AppConfig, RuntimePlugin, CommonJsRuntime, AssetsManifest,
+} from './types';
 
 interface RenderOptions {
   appConfig: AppConfig;
@@ -57,20 +61,20 @@ export async function renderServerApp(requestContext: ServerContext, options: Re
     path: req.url,
   };
 
-  let initialData;
-  if (appConfig.app?.getInitialData) {
-    initialData = await appConfig.app.getInitialData(initialContext);
+  let appData;
+  if (appConfig.app?.getData) {
+    appData = await appConfig.app.getData(initialContext);
   }
 
-  const pageData = await loadPageData(matches, initialContext);
+  const routesData = await loadRoutesData(matches, initialContext);
+  const routesConfig = getRoutesConfig(matches, routesData);
 
   const appContext: AppContext = {
     appConfig,
     assetsManifest,
-    initialData,
-    initialPageData: pageData,
-    // pageData and initialPageData are the same when SSR/SSG
-    pageData,
+    appData,
+    routesData,
+    routesConfig,
     matches,
     routes,
   };
@@ -87,17 +91,19 @@ export async function renderServerApp(requestContext: ServerContext, options: Re
 
   const result = ReactDOMServer.renderToString(
     <AppContextProvider value={appContext}>
-      <Document>
-        <App
-          action={Action.Pop}
-          location={location}
-          navigator={staticNavigator}
-          static
-          AppProvider={AppProvider}
-          PageWrappers={PageWrappers}
-          AppRouter={AppRouter}
-        />
-      </Document>
+      <AppDataProvider value={appData}>
+        <Document>
+          <App
+            action={Action.Pop}
+            location={location}
+            navigator={staticNavigator}
+            static
+            AppProvider={AppProvider}
+            PageWrappers={PageWrappers}
+            AppRouter={AppRouter}
+          />
+        </Document>
+      </AppDataProvider>
     </AppContextProvider>,
   );
 
@@ -127,16 +133,17 @@ export async function renderDocument(requestContext: ServerContext, options: Ren
 
   await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
 
-  const pageConfig = loadPageConfig(matches);
-
-  const pageData = {
-    pageConfig,
-  };
+  const routesConfig = getRoutesConfig(matches, {});
+  // renderDocument needn't to load routesData and appData.
+  const routesData = {};
+  const appData = {};
 
   const appContext: AppContext = {
     assetsManifest,
     appConfig,
-    pageData,
+    appData,
+    routesData,
+    routesConfig,
     matches,
     routes,
     documentOnly: true,
@@ -144,7 +151,9 @@ export async function renderDocument(requestContext: ServerContext, options: Ren
 
   const result = ReactDOMServer.renderToString(
     <AppContextProvider value={appContext}>
-      <Document />
+      <AppDataProvider value={appData}>
+        <Document />
+      </AppDataProvider>
     </AppContextProvider>,
   );
 
@@ -154,7 +163,7 @@ export async function renderDocument(requestContext: ServerContext, options: Ren
 /**
  * ref: https://github.com/remix-run/react-router/blob/main/packages/react-router-dom/server.tsx
  */
-function getLocation(url) {
+function getLocation(url: string) {
   const locationProps = parsePath(url);
 
   const location: Location = {

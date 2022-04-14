@@ -1,12 +1,23 @@
 import * as React from 'react';
-import { useAppContext, Link } from 'ice';
-import type { PageConfig } from '@ice/runtime/esm/types';
+import { Link, useAppData, useData, useConfig } from 'ice';
+// not recomended but works
+import { useAppContext } from '@ice/runtime';
+import type { AppData } from '@/types';
 import styles from './index.module.css';
 
 export default function Home(props) {
-  // const appContext = useAppContext();
-
   console.log('render Home', props);
+
+  const appData = useAppData<AppData>();
+  console.log('get AppData', appData);
+
+  const appContext = useAppContext();
+  console.log('get AppContext', appContext);
+
+  const data = useData();
+  const config = useConfig();
+
+  console.log('render Home', 'data', data, 'config', config);
 
   return (
     <>
@@ -16,7 +27,7 @@ export default function Home(props) {
   );
 }
 
-export function getPageConfig(): PageConfig {
+export function getConfig() {
   return {
     title: 'Home',
     meta: [
@@ -33,7 +44,7 @@ export function getPageConfig(): PageConfig {
   };
 }
 
-export function getInitialData() {
+export function getData() {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
