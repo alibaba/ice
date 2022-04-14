@@ -1,25 +1,24 @@
 import * as React from 'react';
 import { useAppContext } from './AppContext.js';
+import { useAppData } from './AppData.js';
 import { getPageAssets, getEntryAssets } from './assets.js';
+import { getMeta, getTitle, getLinks, getScripts } from './routesConfig.js';
+import type { AppContext } from './types';
 
 export function Meta() {
-  const { pageData } = useAppContext();
-  const meta = pageData.pageConfig.meta || [];
+  const { matches, routesConfig } = useAppContext();
+  const meta = getMeta(matches, routesConfig);
 
   return (
     <>
       {meta.map(item => <meta key={item.name} {...item} />)}
-      <meta
-        name="ice-meta-count"
-        content={meta.length.toString()}
-      />
     </>
   );
 }
 
 export function Title() {
-  const { pageData } = useAppContext();
-  const title = pageData.pageConfig.title || [];
+  const { matches, routesConfig } = useAppContext();
+  const title = getTitle(matches, routesConfig);
 
   return (
     <title>{title}</title>
@@ -27,10 +26,9 @@ export function Title() {
 }
 
 export function Links() {
-  const { pageData, matches, assetsManifest } = useAppContext();
+  const { routesConfig, matches, assetsManifest } = useAppContext();
 
-  const customLinks = pageData.pageConfig.links || [];
-
+  const customLinks = getLinks(matches, routesConfig);
   const pageAssets = getPageAssets(matches, assetsManifest);
   const entryAssets = getEntryAssets(assetsManifest);
   const styles = pageAssets.concat(entryAssets).filter(path => path.indexOf('.css') > -1);
@@ -49,19 +47,20 @@ export function Links() {
 }
 
 export function Scripts() {
-  const { pageData, initialData, matches, assetsManifest, documentOnly } = useAppContext();
+  const { routesData, routesConfig, matches, assetsManifest, documentOnly } = useAppContext();
+  const appData = useAppData();
 
+  const customScripts = getScripts(matches, routesConfig);
   const pageAssets = getPageAssets(matches, assetsManifest);
   const entryAssets = getEntryAssets(assetsManifest);
-
-  const { scripts: customScripts = [] } = pageData.pageConfig;
-
   const scripts = pageAssets.concat(entryAssets).filter(path => path.indexOf('.js') > -1);
 
-  const appContext = {
-    initialData,
-    pageData,
+  const appContext: AppContext = {
+    appData,
+    routesData,
+    routesConfig,
     assetsManifest,
+    appConfig: {},
   };
 
   return (

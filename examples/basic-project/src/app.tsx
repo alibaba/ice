@@ -7,8 +7,9 @@ if (process.env.ICE_RUNTIME_ERROR_BOUNDARY) {
 export default defineAppConfig({
   app: {
     // @ts-expect-error loss tslib dependency
-    getInitialData: async (ctx) => {
+    getData: async (ctx) => {
       return {
+        title: 'gogogo',
         auth: {
           admin: true,
         },

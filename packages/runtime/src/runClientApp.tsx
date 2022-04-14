@@ -1,13 +1,18 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { createHashHistory, createBrowserHistory } from 'history';
-import type { HashHistory, BrowserHistory } from 'history';
+import type { HashHistory, BrowserHistory, Action, Location } from 'history';
 import { createSearchParams } from 'react-router-dom';
 import Runtime from './runtime.js';
 import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
-import type { AppContext, AppConfig, RouteItem, AppRouterProps, PageWrapper, RuntimeModules, InitialContext } from './types';
-import { loadRouteModules, loadPageData, matchRoutes } from './routes.js';
+import { AppDataProvider } from './AppData.js';
+import type {
+  AppContext, AppConfig, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
+  PageWrapper, RuntimeModules, InitialContext, RouteMatch,
+} from './types';
+import { loadRouteModules, loadRoutesData, getRoutesConfig, matchRoutes, filterMatchesToLoad } from './routes.js';
 import { loadStyleLinks, loadScripts } from './assets.js';
+import { getLinks, getScripts } from './routesConfig.js';
 
 interface RunClientAppOptions {
   appConfig: AppConfig;
@@ -27,29 +32,32 @@ export default async function runClientApp(options: RunClientAppOptions) {
   const matches = matchRoutes(routes, window.location);
   await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
 
-  const appContextFromServer = (window as any).__ICE_APP_CONTEXT__ || {};
-
-  let { initialData, pageData, assetsManifest } = appContextFromServer;
+  const appContextFromServer: AppContext = (window as any).__ICE_APP_CONTEXT__ || {};
+  let { appData, routesData, routesConfig, assetsManifest } = appContextFromServer;
 
   const initialContext = getInitialContext();
-  if (!initialData && appConfig.app?.getInitialData) {
-    initialData = await appConfig.app.getInitialData(initialContext);
+  if (!appData && appConfig.app?.getData) {
+    appData = await appConfig.app.getData(initialContext);
   }
 
-  if (!pageData) {
-    pageData = await loadPageData(matches, initialContext);
+  if (!routesData) {
+    routesData = await loadRoutesData(matches, initialContext);
+  }
+
+  if (!routesConfig) {
+    routesConfig = getRoutesConfig(matches, routesConfig);
   }
 
   const appContext: AppContext = {
     routes,
     appConfig,
-    initialData,
-    initialPageData: pageData,
+    appData,
+    routesData,
+    routesConfig,
     assetsManifest,
     matches,
   };
 
-  // TODO: provide useAppContext for runtime modules
   const runtime = new Runtime(appContext);
   runtimeModules.forEach(m => {
     runtime.loadModule(m);
@@ -60,14 +68,12 @@ export default async function runClientApp(options: RunClientAppOptions) {
 
 async function render(runtime: Runtime, Document: React.ComponentType<{}>) {
   const appContext = runtime.getAppContext();
-  const { appConfig } = appContext;
-  const { router: { type: routerType } } = appConfig;
   const render = runtime.getRender();
   const AppProvider = runtime.composeAppProvider() || React.Fragment;
   const PageWrappers = runtime.getWrapperPageRegistration();
   const AppRouter = runtime.getAppRouter();
 
-  const history = (routerType === 'hash' ? createHashHistory : createBrowserHistory)({ window });
+  const history = (appContext.appConfig?.router?.type === 'hash' ? createHashHistory : createBrowserHistory)({ window });
 
   render(
     <BrowserEntry
@@ -91,29 +97,46 @@ interface BrowserEntryProps {
   Document: React.ComponentType<{}>;
 }
 
-function BrowserEntry({ history, appContext, Document, ...rest }: BrowserEntryProps) {
-  const { routes, initialPageData, matches: originMatches } = appContext;
+interface HistoryState {
+  action: Action;
+  location: Location;
+  routesData: RoutesData;
+  routesConfig: RoutesConfig;
+  matches: RouteMatch[];
+}
 
-  const [historyState, setHistoryState] = useState({
+function BrowserEntry({ history, appContext, Document, ...rest }: BrowserEntryProps) {
+  const {
+    routes, matches: originMatches, routesData: initialRoutesData,
+    routesConfig: initialRoutesConfig, appData,
+  } = appContext;
+
+  const [historyState, setHistoryState] = useState<HistoryState>({
     action: history.action,
     location: history.location,
-    pageData: initialPageData,
+    routesData: initialRoutesData,
+    routesConfig: initialRoutesConfig,
     matches: originMatches,
   });
 
-  const { action, location, pageData, matches } = historyState;
+  const { action, location, routesData, routesConfig, matches } = historyState;
 
   // listen the history change and update the state which including the latest action and location
   useLayoutEffect(() => {
     history.listen(({ action, location }) => {
-      const matches = matchRoutes(routes, location);
-      if (!matches.length) {
+      const currentMatches = matchRoutes(routes, location);
+      if (!currentMatches.length) {
         throw new Error(`Routes not found in location ${location.pathname}.`);
       }
 
-      loadNextPage(matches, (pageData) => {
-        // just re-render once, so add pageData to historyState :(
-        setHistoryState({ action, location, pageData, matches });
+      loadNextPage(currentMatches, historyState).then(({ routesData, routesConfig }) => {
+        setHistoryState({
+          action,
+          location,
+          routesData,
+          routesConfig,
+          matches: currentMatches,
+        });
       });
     });
   }, []);
@@ -121,19 +144,22 @@ function BrowserEntry({ history, appContext, Document, ...rest }: BrowserEntryPr
   // update app context for the current route.
   Object.assign(appContext, {
     matches,
-    pageData,
+    routesData,
+    routesConfig,
   });
 
   return (
     <AppContextProvider value={appContext}>
-      <Document>
-        <App
-          action={action}
-          location={location}
-          navigator={history}
-          {...rest}
-        />
-      </Document>
+      <AppDataProvider value={appData}>
+        <Document>
+          <App
+            action={action}
+            location={location}
+            navigator={history}
+            {...rest}
+          />
+        </Document>
+      </AppDataProvider>
     </AppContextProvider>
   );
 }
@@ -142,19 +168,40 @@ function BrowserEntry({ history, appContext, Document, ...rest }: BrowserEntryPr
  * Prepare for the next pages.
  * Load modules、getPageData and preLoad the custom assets.
  */
-async function loadNextPage(matches, callback) {
-  await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
+async function loadNextPage(currentMatches: RouteMatch[], prevHistoryState: HistoryState) {
+  const {
+    matches: preMatches,
+    routesData: preRoutesData,
+  } = prevHistoryState;
 
+  await loadRouteModules(currentMatches.map(({ route: { id, load } }) => ({ id, load })));
+
+  // load data for changed route.
   const initialContext = getInitialContext();
-  const pageData = await loadPageData(matches, initialContext);
+  const matchesToLoad = filterMatchesToLoad(preMatches, currentMatches);
+  const data = await loadRoutesData(matchesToLoad, initialContext);
 
-  const { pageConfig } = pageData;
+  const routesData: RoutesData = {};
+  // merge page data.
+  currentMatches.forEach(({ route }) => {
+    const { id } = route;
+    routesData[id] = data[id] || preRoutesData[id];
+  });
+
+  const routesConfig = getRoutesConfig(currentMatches, routesData);
+
+  const links = getLinks(currentMatches, routesConfig);
+  const scripts = getScripts(currentMatches, routesConfig);
+
   await Promise.all([
-    loadStyleLinks(pageConfig.links),
-    loadScripts(pageConfig.scripts),
+    loadStyleLinks(links),
+    loadScripts(scripts),
   ]);
 
-  callback(pageData);
+  return {
+    routesData,
+    routesConfig,
+  };
 }
 
 function getInitialContext() {

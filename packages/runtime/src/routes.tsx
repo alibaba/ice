@@ -3,7 +3,7 @@ import type { Location } from 'history';
 import type { RouteObject } from 'react-router-dom';
 import { matchRoutes as originMatchRoutes } from 'react-router-dom';
 import PageWrapper from './PageWrapper.js';
-import type { RouteItem, RouteModules, PageWrapper as IPageWrapper, RouteMatch, InitialContext, PageConfig } from './types';
+import type { RouteItem, RouteModules, PageWrapper as IPageWrapper, RouteMatch, InitialContext, RoutesConfig, RoutesData } from './types';
 
 // global route modules cache
 const routeModules: RouteModules = {};
@@ -36,48 +36,46 @@ export async function loadRouteModules(routes: RouteModule[]) {
 }
 
 /**
-* get data for the matched pages
+* get data for the matched routes.
 */
-export async function loadPageData(matches: RouteMatch[], initialContext: InitialContext) {
-  // use the last matched route as the page entry
-  const last = matches.length - 1;
-  const { route } = matches[last];
-  const { id } = route;
+export async function loadRoutesData(matches: RouteMatch[], initialContext: InitialContext): Promise<RoutesData> {
+  const routesData: RoutesData = {};
 
-  const routeModule = routeModules[id];
+  await Promise.all(
+    matches.map(async (match) => {
+      const { id } = match.route;
+      const routeModule = routeModules[id];
+      const { getData } = routeModule;
 
-  const { getInitialData, getPageConfig } = routeModule;
-  let initialData;
-  let pageConfig: PageConfig = {};
+      if (getData) {
+        const initialData = await getData(initialContext);
+        routesData[id] = initialData;
+      }
+    }),
+  );
 
-  if (getInitialData) {
-    initialData = await getInitialData(initialContext);
-  }
-
-  if (getPageConfig) {
-    pageConfig = getPageConfig({
-      initialData,
-    });
-  }
-
-  return {
-    initialData,
-    pageConfig,
-  };
+  return routesData;
 }
 
 /**
- * Load page config without initial data.
+ * Get page config for matched routes.
  */
-export function loadPageConfig(matches: RouteMatch[]) {
-  const last = matches.length - 1;
-  const { route } = matches[last];
-  const { id } = route;
+export function getRoutesConfig(matches: RouteMatch[], routesData: RoutesData): RoutesConfig {
+  const routesConfig: RoutesConfig = {};
 
-  const routeModule = routeModules[id];
+  matches.forEach(async (match) => {
+    const { id } = match.route;
+    const routeModule = routeModules[id];
+    const { getConfig } = routeModule;
+    const data = routesData[id];
 
-  const { getPageConfig } = routeModule;
-  return getPageConfig({ initialData: null });
+    if (getConfig) {
+      const value = getConfig({ data });
+      routesConfig[id] = value;
+    }
+  });
+
+  return routesConfig;
 }
 
 /**
@@ -93,8 +91,9 @@ export function createRouteElements(routes: RouteItem[], PageWrappers?: IPageWra
       <RouteComponent id={id} />
     ) : (
       <PageWrapper
-        PageComponent={(...props) => <RouteComponent id={id} {...props} />}
+        PageComponent={(props) => <RouteComponent id={id} {...props} />}
         PageWrappers={PageWrappers}
+        id={id}
       />
     );
     const route: RouteItem = {
@@ -140,4 +139,32 @@ export function matchRoutes(
     route: route as unknown as RouteItem,
     pathnameBase,
   }));
+}
+
+/**
+ * filter matches is new or path changed.
+ */
+export function filterMatchesToLoad(prevMatches: RouteMatch[], currentMatches: RouteMatch[]): RouteMatch[] {
+  let isNew = (match: RouteMatch, index: number) => {
+    // [a] -> [a, b]
+    if (!prevMatches[index]) return true;
+
+    // [a, b] -> [a, c]
+    return match.route.id !== prevMatches[index].route.id;
+  };
+
+  let matchPathChanged = (match: RouteMatch, index: number) => {
+    return (
+      // param change, /users/123 -> /users/456
+      prevMatches[index].pathname !== match.pathname ||
+      // splat param changed, which is not present in match.path
+      // e.g. /files/images/avatar.jpg -> files/finances.xls
+      (prevMatches[index].route.path?.endsWith('*') &&
+      prevMatches[index].params['*'] !== match.params['*'])
+    );
+  };
+
+  return currentMatches.filter((match, index) => {
+    return isNew(match, index) || matchPathChanged(match, index);
+  });
 }
