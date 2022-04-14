@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.2
+
+- [fix] config of conditionNames
+
 ## 2.2.1
 
 - [chore] bump version of `esbuild`(0.14.14)
