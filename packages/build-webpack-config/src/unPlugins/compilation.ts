@@ -1,5 +1,5 @@
-import path from 'path';
 import { createRequire } from 'module';
+import type { ReactConfig } from '@builder/swc';
 import { transform, type Config as SwcConfig } from '@builder/swc';
 import type { UnpluginOptions } from 'unplugin';
 import lodash from '@builder/pack/deps/lodash/lodash.js';
@@ -10,7 +10,6 @@ const { merge } = lodash;
 type JSXSuffix = 'jsx' | 'tsx';
 
 interface Options {
-  rootDir: string;
   mode: 'development' | 'production' | 'none';
   compileIncludes?: (string | RegExp)[];
   sourceMap?: Config['sourceMap'];
@@ -21,7 +20,7 @@ const require = createRequire(import.meta.url);
 const regeneratorRuntimePath = require.resolve('regenerator-runtime');
 
 const compilationPlugin = (options: Options): UnpluginOptions => {
-  const { rootDir, sourceMap, mode, compileIncludes, compileExcludes } = options;
+  const { sourceMap, mode, compileIncludes, compileExcludes } = options;
   const dev = mode !== 'production';
   const compileRegex = compileIncludes.map((includeRule) => {
     return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);
@@ -43,7 +42,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
       const programmaticOptions = {
         filename: id,
         sourceMaps: !!sourceMap,
-        ...getSwcTransformOptions({ suffix, rootDir, dev }),
+        ...getSwcTransformOptions({ suffix, dev }),
       };
       // auto detect development mode
       if (mode && programmaticOptions.jsc && programmaticOptions.jsc.transform &&
@@ -61,17 +60,16 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
 
 function getSwcTransformOptions({
   suffix,
-  rootDir,
   dev,
 }: {
   suffix: JSXSuffix;
-  rootDir: string;
   dev: boolean;
+  isServer?: boolean;
 }) {
-  const baseReactTransformConfig = {
+  const reactTransformConfig: ReactConfig = {
     refresh: dev,
+    runtime: 'automatic',
   };
-  const reactTransformConfig = merge(baseReactTransformConfig, hasJsxRuntime(rootDir) ? { runtime: 'automatic' } : {});
 
   const commonOptions: SwcConfig = {
     jsc: {
@@ -127,22 +125,6 @@ function getSwcTransformOptions({
     return tsOptions;
   }
   return commonOptions;
-}
-
-function hasJsxRuntime(rootDir: string) {
-  try {
-    // auto detect of jsx runtime
-    // eslint-disable-next-line
-    const tsConfig = require(path.join(rootDir, 'tsconfig.json'));
-    if (tsConfig?.compilerOptions?.jsx !== 'react-jsx') {
-      return false;
-    }
-    // ensure react/jsx-runtime
-    require.resolve('react/jsx-runtime');
-    return true;
-  } catch (e) {
-    return false;
-  }
 }
 
 export default compilationPlugin;

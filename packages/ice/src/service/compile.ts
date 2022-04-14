@@ -1,3 +1,5 @@
+import * as path from 'path';
+import { fileURLToPath } from 'url';
 import { createHash } from 'crypto';
 import consola from 'consola';
 import esbuild from 'esbuild';
@@ -9,16 +11,19 @@ import stylePlugin from '../esbuild/style.js';
 import aliasPlugin from '../esbuild/alias.js';
 import type { ContextConfig } from '../utils/getContextConfig.js';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 interface Options {
   rootDir: string;
   task: ContextConfig;
 }
 
 export function createEsbuildCompiler(options: Options) {
-  const { task, rootDir } = options;
+  const { task } = options;
   const { taskConfig, webpackConfig } = task;
+  const transformPlugins = getTransformPlugins(taskConfig);
   const alias = (webpackConfig.resolve?.alias || {}) as Record<string, string | false>;
-  const transformPlugins = getTransformPlugins(rootDir, taskConfig);
+
   const esbuildCompile: EsbuildCompile = async (buildOptions) => {
     const startTime = new Date().getTime();
     consola.debug('[esbuild]', `start compile for: ${buildOptions.entryPoints}`);
@@ -33,6 +38,7 @@ export function createEsbuildCompiler(options: Options) {
         // TOOD: sync ice runtime env
         'process.env.ICE_RUNTIME_SERVER': 'true',
       },
+      inject: [path.resolve(__dirname, '../polyfills/react.js')],
       plugins: [
         stylePlugin({
           extract: false,

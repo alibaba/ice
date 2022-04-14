@@ -5,5 +5,6 @@
     "outDir": "esm",
     "preserveSymlinks": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["src/shims/*"]
 }

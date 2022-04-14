@@ -11,13 +11,13 @@ const SKIP_COMPILE = [
   '@pmmmwh/react-refresh-webpack-plugin', 'webpack', 'webpack-dev-server', 'react-refresh',
 ];
 
-const getTransformPlugins = (rootDir: string, config: Config): UnpluginOptions[] => {
+const getTransformPlugins = (config: Config): UnpluginOptions[] => {
   const { sourceMap, transformPlugins = [], transforms = [], mode, compileIncludes } = config;
   // create regexp for ignore dependencies
   const compileExcludes = [new RegExp(SKIP_COMPILE.map((dep) => `node_modules/?.+${dep}/`).join('|'))];
 
   return [
-    compilationPlugin({ rootDir, sourceMap, mode, compileIncludes, compileExcludes }),
+    compilationPlugin({ sourceMap, mode, compileIncludes, compileExcludes }),
     ...transformPlugins,
     ...transforms.map((transform, index) => ({ name: `transform_${index}`, transform })),
   ];

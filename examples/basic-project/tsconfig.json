@@ -6,7 +6,7 @@
     "outDir": "build",
     "module": "esnext",
     "target": "es6",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "lib": ["es6", "dom"],
