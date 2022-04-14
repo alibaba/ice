@@ -2,42 +2,87 @@
 
 exports[`generateRouteManifest function > basic-routes 1`] = `
 {
-  "pages/About/index": {
-    "componentName": "PagesAboutIndex",
-    "file": "pages/About/index.tsx",
-    "id": "pages/About/index",
+  "About/index": {
+    "componentName": "about-index",
+    "file": "About/index.tsx",
+    "id": "About/index",
     "index": true,
-    "parentId": "pages/layout",
-    "path": "/About",
+    "parentId": "layout",
+    "path": "About",
   },
-  "pages/About/me/index": {
-    "componentName": "PagesAboutMeIndex",
-    "file": "pages/About/me/index.tsx",
-    "id": "pages/About/me/index",
+  "About/me/index": {
+    "componentName": "about-me-index",
+    "file": "About/me/index.tsx",
+    "id": "About/me/index",
     "index": true,
-    "parentId": "pages/layout",
-    "path": "/About/me",
+    "parentId": "layout",
+    "path": "About/me",
   },
-  "pages/home": {
-    "componentName": "PagesHome",
-    "file": "pages/home.tsx",
-    "id": "pages/home",
+  "home": {
+    "componentName": "home",
+    "file": "home.tsx",
+    "id": "home",
     "index": undefined,
-    "parentId": "pages/layout",
-    "path": "/home",
+    "parentId": "layout",
+    "path": "home",
   },
-  "pages/index": {
-    "componentName": "PagesIndex",
-    "file": "pages/index.tsx",
-    "id": "pages/index",
+  "index": {
+    "componentName": "index",
+    "file": "index.tsx",
+    "id": "index",
     "index": true,
-    "parentId": "pages/layout",
+    "parentId": "layout",
     "path": undefined,
   },
-  "pages/layout": {
-    "componentName": "PagesLayout",
-    "file": "pages/layout.tsx",
-    "id": "pages/layout",
+  "layout": {
+    "componentName": "layout",
+    "file": "layout.tsx",
+    "id": "layout",
+    "index": undefined,
+    "parentId": undefined,
+    "path": undefined,
+  },
+}
+`;
+
+exports[`generateRouteManifest function > define-extra-routes 1`] = `
+{
+  "About/index": {
+    "componentName": "about-index",
+    "file": "About/index.tsx",
+    "id": "About/index",
+    "index": undefined,
+    "parentId": undefined,
+    "path": "/about-me",
+  },
+  "About/me/index": {
+    "componentName": "about-me-index",
+    "file": "About/me/index.tsx",
+    "id": "About/me/index",
+    "index": true,
+    "parentId": "layout",
+    "path": "About/me",
+  },
+  "home": {
+    "componentName": "home",
+    "file": "home.tsx",
+    "id": "home",
+    "index": undefined,
+    "parentId": "layout",
+    "path": "home",
+  },
+  "index": {
+    "componentName": "index",
+    "file": "index.tsx",
+    "id": "index",
+    "index": true,
+    "parentId": "layout",
+    "path": undefined,
+  },
+  "layout": {
+    "componentName": "layout",
+    "file": "layout.tsx",
+    "id": "layout",
     "index": undefined,
     "parentId": undefined,
     "path": undefined,
@@ -47,18 +92,18 @@ exports[`generateRouteManifest function > basic-routes 1`] = `
 
 exports[`generateRouteManifest function > doc-delimeters-routes 1`] = `
 {
-  "pages/home.news": {
-    "componentName": "PagesHomeNews",
-    "file": "pages/home.news.tsx",
-    "id": "pages/home.news",
+  "home.news": {
+    "componentName": "home-news",
+    "file": "home.news.tsx",
+    "id": "home.news",
     "index": undefined,
-    "parentId": "pages/layout",
-    "path": "/home/news",
+    "parentId": "layout",
+    "path": "home/news",
   },
-  "pages/layout": {
-    "componentName": "PagesLayout",
-    "file": "pages/layout.tsx",
-    "id": "pages/layout",
+  "layout": {
+    "componentName": "layout",
+    "file": "layout.tsx",
+    "id": "layout",
     "index": undefined,
     "parentId": undefined,
     "path": undefined,
@@ -68,35 +113,72 @@ exports[`generateRouteManifest function > doc-delimeters-routes 1`] = `
 
 exports[`generateRouteManifest function > dynamic-routes 1`] = `
 {
-  "pages/about": {
-    "componentName": "PagesAbout",
-    "file": "pages/about.tsx",
-    "id": "pages/about",
+  "about": {
+    "componentName": "about",
+    "file": "about.tsx",
+    "id": "about",
     "index": undefined,
     "parentId": undefined,
-    "path": "/about",
+    "path": "about",
   },
-  "pages/blog/$id": {
-    "componentName": "PagesBlog$id",
-    "file": "pages/blog/$id.tsx",
-    "id": "pages/blog/$id",
+  "blog/$id": {
+    "componentName": "blog-$id",
+    "file": "blog/$id.tsx",
+    "id": "blog/$id",
     "index": undefined,
     "parentId": undefined,
-    "path": "/blog/:id",
+    "path": "blog/:id",
   },
-  "pages/blog/index": {
-    "componentName": "PagesBlogIndex",
-    "file": "pages/blog/index.tsx",
-    "id": "pages/blog/index",
+  "blog/index": {
+    "componentName": "blog-index",
+    "file": "blog/index.tsx",
+    "id": "blog/index",
     "index": true,
     "parentId": undefined,
-    "path": "/blog",
+    "path": "blog",
   },
-  "pages/index": {
-    "componentName": "PagesIndex",
-    "file": "pages/index.tsx",
-    "id": "pages/index",
+  "index": {
+    "componentName": "index",
+    "file": "index.tsx",
+    "id": "index",
     "index": true,
+    "parentId": undefined,
+    "path": undefined,
+  },
+}
+`;
+
+exports[`generateRouteManifest function > ignore-routes 1`] = `
+{
+  "About/me/index": {
+    "componentName": "about-me-index",
+    "file": "About/me/index.tsx",
+    "id": "About/me/index",
+    "index": true,
+    "parentId": "layout",
+    "path": "About/me",
+  },
+  "home": {
+    "componentName": "home",
+    "file": "home.tsx",
+    "id": "home",
+    "index": undefined,
+    "parentId": "layout",
+    "path": "home",
+  },
+  "index": {
+    "componentName": "index",
+    "file": "index.tsx",
+    "id": "index",
+    "index": true,
+    "parentId": "layout",
+    "path": undefined,
+  },
+  "layout": {
+    "componentName": "layout",
+    "file": "layout.tsx",
+    "id": "layout",
+    "index": undefined,
     "parentId": undefined,
     "path": undefined,
   },
@@ -105,74 +187,74 @@ exports[`generateRouteManifest function > dynamic-routes 1`] = `
 
 exports[`generateRouteManifest function > layout-routes 1`] = `
 {
-  "pages/about": {
-    "componentName": "PagesAbout",
-    "file": "pages/about.tsx",
-    "id": "pages/about",
+  "about": {
+    "componentName": "about",
+    "file": "about.tsx",
+    "id": "about",
     "index": undefined,
-    "parentId": "pages/layout",
-    "path": "/about",
+    "parentId": "layout",
+    "path": "about",
   },
-  "pages/blog/$id": {
-    "componentName": "PagesBlog$id",
-    "file": "pages/blog/$id.tsx",
-    "id": "pages/blog/$id",
+  "blog/$id": {
+    "componentName": "blog-$id",
+    "file": "blog/$id.tsx",
+    "id": "blog/$id",
     "index": undefined,
-    "parentId": "pages/blog/layout",
-    "path": "/:id",
+    "parentId": "blog/layout",
+    "path": ":id",
   },
-  "pages/blog/index": {
-    "componentName": "PagesBlogIndex",
-    "file": "pages/blog/index.tsx",
-    "id": "pages/blog/index",
+  "blog/index": {
+    "componentName": "blog-index",
+    "file": "blog/index.tsx",
+    "id": "blog/index",
     "index": true,
-    "parentId": "pages/blog/layout",
+    "parentId": "blog/layout",
     "path": undefined,
   },
-  "pages/blog/layout": {
-    "componentName": "PagesBlogLayout",
-    "file": "pages/blog/layout.tsx",
-    "id": "pages/blog/layout",
+  "blog/layout": {
+    "componentName": "blog-layout",
+    "file": "blog/layout.tsx",
+    "id": "blog/layout",
     "index": undefined,
-    "parentId": "pages/layout",
-    "path": "/blog",
+    "parentId": "layout",
+    "path": "blog",
   },
-  "pages/home/index": {
-    "componentName": "PagesHomeIndex",
-    "file": "pages/home/index.tsx",
-    "id": "pages/home/index",
+  "home/index": {
+    "componentName": "home-index",
+    "file": "home/index.tsx",
+    "id": "home/index",
     "index": true,
-    "parentId": "pages/home/layout",
+    "parentId": "home/layout",
     "path": undefined,
   },
-  "pages/home/layout": {
-    "componentName": "PagesHomeLayout",
-    "file": "pages/home/layout.tsx",
-    "id": "pages/home/layout",
+  "home/layout": {
+    "componentName": "home-layout",
+    "file": "home/layout.tsx",
+    "id": "home/layout",
     "index": undefined,
-    "parentId": "pages/layout",
-    "path": "/home",
+    "parentId": "layout",
+    "path": "home",
   },
-  "pages/home/layout/index": {
-    "componentName": "PagesHomeLayoutIndex",
-    "file": "pages/home/layout/index.tsx",
-    "id": "pages/home/layout/index",
+  "home/layout/index": {
+    "componentName": "home-layout-index",
+    "file": "home/layout/index.tsx",
+    "id": "home/layout/index",
     "index": true,
-    "parentId": "pages/home/layout",
-    "path": "/layout",
+    "parentId": "home/layout",
+    "path": "layout",
   },
-  "pages/index": {
-    "componentName": "PagesIndex",
-    "file": "pages/index.tsx",
-    "id": "pages/index",
+  "index": {
+    "componentName": "index",
+    "file": "index.tsx",
+    "id": "index",
     "index": true,
-    "parentId": "pages/layout",
+    "parentId": "layout",
     "path": undefined,
   },
-  "pages/layout": {
-    "componentName": "PagesLayout",
-    "file": "pages/layout.tsx",
-    "id": "pages/layout",
+  "layout": {
+    "componentName": "layout",
+    "file": "layout.tsx",
+    "id": "layout",
     "index": undefined,
     "parentId": undefined,
     "path": undefined,
@@ -182,235 +264,26 @@ exports[`generateRouteManifest function > layout-routes 1`] = `
 
 exports[`generateRouteManifest function > splat-routes 1`] = `
 {
-  "pages/$": {
-    "componentName": "Pages$",
-    "file": "pages/$.tsx",
-    "id": "pages/$",
+  "$": {
+    "componentName": "$",
+    "file": "$.tsx",
+    "id": "$",
     "index": undefined,
-    "parentId": "pages/layout",
-    "path": "/*",
+    "parentId": "layout",
+    "path": "*",
   },
-  "pages/home": {
-    "componentName": "PagesHome",
-    "file": "pages/home.tsx",
-    "id": "pages/home",
+  "home": {
+    "componentName": "home",
+    "file": "home.tsx",
+    "id": "home",
     "index": undefined,
-    "parentId": "pages/layout",
-    "path": "/home",
+    "parentId": "layout",
+    "path": "home",
   },
-  "pages/layout": {
-    "componentName": "PagesLayout",
-    "file": "pages/layout.tsx",
-    "id": "pages/layout",
-    "index": undefined,
-    "parentId": undefined,
-    "path": undefined,
-  },
-}
-`;
-
-exports[`generateRouteManifest function basic-routes 1`] = `
-Object {
-  "pages/About/index": Object {
-    "componentName": "PagesAboutIndex",
-    "file": "pages/About/index.tsx",
-    "id": "pages/About/index",
-    "index": true,
-    "parentId": "pages/layout",
-    "path": "/About",
-  },
-  "pages/About/me/index": Object {
-    "componentName": "PagesAboutMeIndex",
-    "file": "pages/About/me/index.tsx",
-    "id": "pages/About/me/index",
-    "index": true,
-    "parentId": "pages/layout",
-    "path": "/About/me",
-  },
-  "pages/home": Object {
-    "componentName": "PagesHome",
-    "file": "pages/home.tsx",
-    "id": "pages/home",
-    "index": undefined,
-    "parentId": "pages/layout",
-    "path": "/home",
-  },
-  "pages/index": Object {
-    "componentName": "PagesIndex",
-    "file": "pages/index.tsx",
-    "id": "pages/index",
-    "index": true,
-    "parentId": "pages/layout",
-    "path": undefined,
-  },
-  "pages/layout": Object {
-    "componentName": "PagesLayout",
-    "file": "pages/layout.tsx",
-    "id": "pages/layout",
-    "index": undefined,
-    "parentId": undefined,
-    "path": undefined,
-  },
-}
-`;
-
-exports[`generateRouteManifest function doc-delimeters-routes 1`] = `
-Object {
-  "pages/home.news": Object {
-    "componentName": "PagesHomeNews",
-    "file": "pages/home.news.tsx",
-    "id": "pages/home.news",
-    "index": undefined,
-    "parentId": "pages/layout",
-    "path": "/home/news",
-  },
-  "pages/layout": Object {
-    "componentName": "PagesLayout",
-    "file": "pages/layout.tsx",
-    "id": "pages/layout",
-    "index": undefined,
-    "parentId": undefined,
-    "path": undefined,
-  },
-}
-`;
-
-exports[`generateRouteManifest function dynamic-routes 1`] = `
-Object {
-  "pages/about": Object {
-    "componentName": "PagesAbout",
-    "file": "pages/about.tsx",
-    "id": "pages/about",
-    "index": undefined,
-    "parentId": undefined,
-    "path": "/about",
-  },
-  "pages/blog/$id": Object {
-    "componentName": "PagesBlog$id",
-    "file": "pages/blog/$id.tsx",
-    "id": "pages/blog/$id",
-    "index": undefined,
-    "parentId": undefined,
-    "path": "/blog/:id",
-  },
-  "pages/blog/index": Object {
-    "componentName": "PagesBlogIndex",
-    "file": "pages/blog/index.tsx",
-    "id": "pages/blog/index",
-    "index": true,
-    "parentId": undefined,
-    "path": "/blog",
-  },
-  "pages/index": Object {
-    "componentName": "PagesIndex",
-    "file": "pages/index.tsx",
-    "id": "pages/index",
-    "index": true,
-    "parentId": undefined,
-    "path": undefined,
-  },
-}
-`;
-
-exports[`generateRouteManifest function layout-routes 1`] = `
-Object {
-  "pages/about": Object {
-    "componentName": "PagesAbout",
-    "file": "pages/about.tsx",
-    "id": "pages/about",
-    "index": undefined,
-    "parentId": "pages/layout",
-    "path": "/about",
-  },
-  "pages/blog/$id": Object {
-    "componentName": "PagesBlog$id",
-    "file": "pages/blog/$id.tsx",
-    "id": "pages/blog/$id",
-    "index": undefined,
-    "parentId": "pages/blog/layout",
-    "path": "/:id",
-  },
-  "pages/blog/index": Object {
-    "componentName": "PagesBlogIndex",
-    "file": "pages/blog/index.tsx",
-    "id": "pages/blog/index",
-    "index": true,
-    "parentId": "pages/blog/layout",
-    "path": undefined,
-  },
-  "pages/blog/layout": Object {
-    "componentName": "PagesBlogLayout",
-    "file": "pages/blog/layout.tsx",
-    "id": "pages/blog/layout",
-    "index": undefined,
-    "parentId": "pages/layout",
-    "path": "/blog",
-  },
-  "pages/home/index": Object {
-    "componentName": "PagesHomeIndex",
-    "file": "pages/home/index.tsx",
-    "id": "pages/home/index",
-    "index": true,
-    "parentId": "pages/home/layout",
-    "path": undefined,
-  },
-  "pages/home/layout": Object {
-    "componentName": "PagesHomeLayout",
-    "file": "pages/home/layout.tsx",
-    "id": "pages/home/layout",
-    "index": undefined,
-    "parentId": "pages/layout",
-    "path": "/home",
-  },
-  "pages/home/layout/index": Object {
-    "componentName": "PagesHomeLayoutIndex",
-    "file": "pages/home/layout/index.tsx",
-    "id": "pages/home/layout/index",
-    "index": true,
-    "parentId": "pages/home/layout",
-    "path": "/layout",
-  },
-  "pages/index": Object {
-    "componentName": "PagesIndex",
-    "file": "pages/index.tsx",
-    "id": "pages/index",
-    "index": true,
-    "parentId": "pages/layout",
-    "path": undefined,
-  },
-  "pages/layout": Object {
-    "componentName": "PagesLayout",
-    "file": "pages/layout.tsx",
-    "id": "pages/layout",
-    "index": undefined,
-    "parentId": undefined,
-    "path": undefined,
-  },
-}
-`;
-
-exports[`generateRouteManifest function splat-routes 1`] = `
-Object {
-  "pages/$": Object {
-    "componentName": "Pages$",
-    "file": "pages/$.tsx",
-    "id": "pages/$",
-    "index": undefined,
-    "parentId": "pages/layout",
-    "path": "/*",
-  },
-  "pages/home": Object {
-    "componentName": "PagesHome",
-    "file": "pages/home.tsx",
-    "id": "pages/home",
-    "index": undefined,
-    "parentId": "pages/layout",
-    "path": "/home",
-  },
-  "pages/layout": Object {
-    "componentName": "PagesLayout",
-    "file": "pages/layout.tsx",
-    "id": "pages/layout",
+  "layout": {
+    "componentName": "layout",
+    "file": "layout.tsx",
+    "id": "layout",
     "index": undefined,
     "parentId": undefined,
     "path": undefined,

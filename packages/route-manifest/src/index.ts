@@ -5,9 +5,10 @@ import minimatch from 'minimatch';
 import { createRouteId, defineRoutes } from './routes.js';
 import type { RouteManifest, DefineRouteFunction, NestedRouteManifest } from './routes.js';
 
-export {
+export type {
   RouteManifest,
   NestedRouteManifest,
+  DefineRouteFunction,
 };
 
 const validRouteChar = ['-', '\\w', '/', ':', '*'];
@@ -26,14 +27,18 @@ export function isRouteModuleFile(filename: string): boolean {
   return routeModuleExts.includes(path.extname(filename));
 }
 
-export function generateRouteManifest(rootDir: string) {
+export function generateRouteManifest(
+  rootDir: string,
+  ignoreFiles: string[] = [],
+  defineExtraRoutes?: (defineRoute: DefineRouteFunction) => void,
+) {
   const srcDir = path.join(rootDir, 'src');
   const routeManifest: RouteManifest = {};
   // 2. find routes in `src/pages` directory
   if (fs.existsSync(path.resolve(srcDir, 'pages'))) {
     const conventionalRoutes = defineConventionalRoutes(
       rootDir,
-      [], // TODO: add ignoredFilePatterns defined in ice.config.js
+      ignoreFiles,
     );
 
     for (const key of Object.keys(conventionalRoutes)) {
@@ -44,7 +49,17 @@ export function generateRouteManifest(rootDir: string) {
       };
     }
   }
-
+  // 3. add extra routes from user config
+  if (defineExtraRoutes) {
+    const extraRoutes = defineRoutes(defineExtraRoutes);
+    for (const key of Object.keys(extraRoutes)) {
+      const route = extraRoutes[key];
+      routeManifest[route.id] = {
+        ...route,
+        parentId: route.parentId || undefined,
+      };
+    }
+  }
   return routeManifest;
 }
 
@@ -66,7 +81,6 @@ function defineConventionalRoutes(
   ignoredFilePatterns?: string[],
 ): RouteManifest {
   const files: { [routeId: string]: string } = {};
-
   // 1. find all route components in src/pages
   visitFiles(
     path.join(rootDir, 'src', 'pages'),
@@ -78,10 +92,9 @@ function defineConventionalRoutes(
         return;
       }
 
-      const filePath = path.join('pages', file);
       if (isRouteModuleFile(file)) {
-        let routeId = createRouteId(filePath);
-        files[routeId] = filePath;
+        let routeId = createRouteId(file);
+        files[routeId] = file;
         return;
       }
     },
@@ -102,24 +115,25 @@ function defineConventionalRoutes(
     });
 
     for (let routeId of childRouteIds) {
+      const parentRoutePath = removeLastLayoutStrFromId(parentId) || '';
       const routePath: string | undefined = createRoutePath(
-        routeId.slice((removeLayoutStrFromId(parentId) || 'pages').length),
+        // parentRoutePath = 'home', routeId = 'home/me', the new routeId is 'me'
+        // in order to escape the child route path is absolute path
+        routeId.slice(parentRoutePath.length + (parentRoutePath ? 1 : 0)),
       );
+      const routeFilePath = path.join('src', 'pages', files[routeId]);
       if (RegExp(`[^${validRouteChar.join(',')}]`).test(routePath)) {
-        throw new Error(`invalid character in '${routeId}'. Only support char: ${validRouteChar.join(', ')}`);
+        throw new Error(`invalid character in '${routeFilePath}'. Only support char: ${validRouteChar.join(', ')}`);
       }
-      const isIndexRoute = routeId.endsWith('/index');
-      let fullPath = createRoutePath(routeId.slice('pages'.length + 1));
-      let uniqueRouteId = (fullPath || '') + (isIndexRoute ? '?index' : '');
+      const isIndexRoute = routeId === 'index' || routeId.endsWith('/index');
+      const fullPath = createRoutePath(routeId);
+      const uniqueRouteId = (fullPath || '') + (isIndexRoute ? '?index' : '');
 
       if (uniqueRouteId) {
         if (uniqueRoutes.has(uniqueRouteId)) {
           throw new Error(
-            `Path ${JSON.stringify(fullPath)} defined by route ${JSON.stringify(
-              routeId,
-            )} conflicts with route ${JSON.stringify(
-              uniqueRoutes.get(uniqueRouteId),
-            )}`,
+            `Path ${JSON.stringify(fullPath)} defined by route ${JSON.stringify(routeFilePath)} 
+            conflicts with route ${JSON.stringify(uniqueRoutes.get(uniqueRouteId))}`,
           );
         } else {
           uniqueRoutes.set(uniqueRouteId, routeId);
@@ -155,7 +169,7 @@ export function createRoutePath(routeId: string): string | undefined {
   let result = '';
   let rawSegmentBuffer = '';
 
-  const partialRouteId = removeLayoutStrFromId(routeId);
+  const partialRouteId = removeLastLayoutStrFromId(routeId);
 
   for (let i = 0; i < partialRouteId.length; i++) {
     const char = partialRouteId.charAt(i);
@@ -196,7 +210,7 @@ function findParentRouteId(
   return routeIds.find((id) => {
     // childRouteId is `pages/about` and id is `pages/layout` will match
     // childRouteId is `pages/about/index` and id is `pages/about/layout` will match
-    return childRouteId !== id && id.endsWith('layout') && childRouteId.startsWith(`${id.slice(0, id.length - '/layout'.length)}`);
+    return childRouteId !== id && id.endsWith('layout') && childRouteId.startsWith(`${id.slice(0, id.length - 'layout'.length)}`);
   });
 }
 
@@ -224,9 +238,12 @@ function visitFiles(
 /**
  * remove `/layout` str if the routeId has it
  *
- * /About/layout -> /About
- * /About/layout/index -> /About/layout/index
+ * 'layout' -> ''
+ * 'About/layout' -> 'About'
+ * 'About/layout/index' -> 'About/layout/index'
  */
-function removeLayoutStrFromId(id?: string) {
-  return id?.endsWith('/layout') ? id.slice(0, id.length - '/layout'.length) : id;
+function removeLastLayoutStrFromId(id?: string) {
+  const layoutStrs = ['/layout', 'layout'];
+  const currentLayoutStr = layoutStrs.find(layoutStr => id?.endsWith(layoutStr));
+  return currentLayoutStr ? id.slice(0, id.length - currentLayoutStr.length) : id;
 }

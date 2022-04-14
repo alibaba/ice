@@ -29,8 +29,8 @@ function createWatch(options: {
 
   return {
     watcher,
-    addWatchEvent: ([pattern, action, name]: WatchEvent) => {
-      watchEvents.push([pattern, action, name]);
+    addWatchEvent: (...args: WatchEvent[]) => {
+      watchEvents.push(...args);
     },
     removeWatchEvent: (name: string) => {
       const eventIndex = watchEvents.findIndex(([,,watchName]) => watchName === name);

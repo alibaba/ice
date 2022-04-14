@@ -1,6 +1,8 @@
 import {
   Link,
   Outlet,
+  useParams,
+  useSearchParams,
 } from 'react-router-dom';
 import Runtime from './runtime.js';
 import App from './App.js';
@@ -14,7 +16,7 @@ import {
   Scripts,
   Main,
 } from './Document.js';
-import {
+import type {
   RuntimePlugin,
   AppContext,
   AppConfig,
@@ -32,15 +34,20 @@ export {
   runServerApp,
   renderDocument,
   useAppContext,
-  Link,
-  Outlet,
   Meta,
   Title,
   Links,
   Scripts,
   Main,
   defineAppConfig,
-  // types
+  // react-router-dom API
+  Link,
+  Outlet,
+  useParams,
+  useSearchParams,
+};
+
+export type {
   RuntimePlugin,
   AppContext,
   AppConfig,
