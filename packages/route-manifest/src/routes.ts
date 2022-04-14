@@ -100,9 +100,10 @@ export function defineRoutes(
       // route(path, file, options)
       options = optionsOrChildren || {};
     }
+
     const id = createRouteId(file);
     const route: ConfigRoute = {
-      path: path || undefined,
+      path,
       index: options.index ? true : undefined,
       id,
       parentId:
@@ -144,6 +145,6 @@ function stripFileExtension(file: string) {
 function createComponentName(id: string) {
   return id.replace('.', '/') // 'pages/home.news' -> pages/home/news
     .split('/')
-    .map((item: string) => item[0].toUpperCase() + item.slice(1, item.length))
-    .join('');
+    .map((item: string) => item.toLowerCase())
+    .join('-');
 }

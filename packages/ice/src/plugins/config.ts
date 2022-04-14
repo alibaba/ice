@@ -112,6 +112,10 @@ const userConfig = [
       }
     },
   },
+  {
+    name: 'routes',
+    validation: 'object',
+  },
 ];
 
 const cliOptions = [

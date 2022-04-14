@@ -1,9 +1,10 @@
 import * as path from 'path';
 import { formatNestedRouteManifest, generateRouteManifest } from '@ice/route-manifest';
 import type { NestedRouteManifest } from '@ice/route-manifest';
+import type { UserConfig } from '@ice/types';
 
-export function generateRoutesInfo(rootDir: string) {
-  const routeManifest = generateRouteManifest(rootDir);
+export function generateRoutesInfo(rootDir: string, routesConfig: UserConfig['routes'] = {}) {
+  const routeManifest = generateRouteManifest(rootDir, routesConfig.ignoreFiles, routesConfig.defineRoutes);
   const routes = formatNestedRouteManifest(routeManifest);
   const str = generateNestRoutesStr(routes);
 
@@ -23,7 +24,7 @@ function generateNestRoutesStr(nestRouteManifest: NestedRouteManifest[]) {
 
     let str = `{
       path: '${routePath || ''}',
-      load: () => import(/* webpackChunkName: "${componentName}" */ '@/${componentFile}'),
+      load: () => import(/* webpackChunkName: "${componentName}" */ '@/pages/${componentFile}'),
       componentName: '${componentName}',
       index: ${index},
       id: '${id}',

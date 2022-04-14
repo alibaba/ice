@@ -16,7 +16,6 @@ describe(`build ${example}`, () => {
 
   test('open /', async () => {
     await buildFixture(example);
-
     const res = await setupBrowser({ example });
     page = res.page;
     browser = res.browser;

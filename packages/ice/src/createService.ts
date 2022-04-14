@@ -32,16 +32,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const templateDir = path.join(__dirname, '../template/');
   const configFile = 'ice.config.(mts|mjs|ts|js|cjs|json)';
   const dataCache = new Map<string, string>();
-
-  const routesRenderData = generateRoutesInfo(rootDir);
-  dataCache.set('routes', JSON.stringify(routesRenderData));
-
   const generator = new Generator({
     rootDir,
     targetDir,
-    defaultRenderData: {
-      ...routesRenderData,
-    },
     // add default template of ice
     templates: [templateDir],
   });
@@ -49,14 +42,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const { addWatchEvent, removeWatchEvent } = createWatch({
     watchDir: rootDir,
     command,
-    watchEvents: getWatchEvents({
-      generator,
-      rootDir,
-      targetDir,
-      templateDir,
-      configFile,
-      cache: dataCache,
-    }),
   });
 
   const generatorAPI = {
@@ -72,6 +57,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     addRenderFile: generator.addRenderFile,
     addRenderTemplate: generator.addTemplateFiles,
   };
+
   const ctx = new Context<any, ExtendsPluginAPI>({
     rootDir,
     command,
@@ -90,16 +76,32 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     },
   });
   await ctx.resolveConfig();
+  const { userConfig: { routes: routesConfig } } = ctx;
+  const routesRenderData = generateRoutesInfo(rootDir, routesConfig);
+  generator.modifyRenderData((renderData) => ({
+    ...renderData,
+    ...routesRenderData,
+  }));
+  dataCache.set('routes', JSON.stringify(routesRenderData.routeManifest));
+
   const runtimeModules = getRuntimeModules(ctx.getAllPlugin());
   generator.modifyRenderData((renderData) => ({
     ...renderData,
     runtimeModules,
   }));
   await ctx.setup();
+
   // render template before webpack compile
   const renderStart = new Date().getTime();
+
   generator.render();
+
+  addWatchEvent(
+    ...getWatchEvents({ generator, targetDir, templateDir, cache: dataCache, ctx }),
+  );
+
   consola.debug('template render cost:', new Date().getTime() - renderStart);
+
   // define runtime env before get webpack config
   defineRuntimeEnv();
   const compileIncludes = runtimeModules.map(({ name }) => `${name}/runtime`);

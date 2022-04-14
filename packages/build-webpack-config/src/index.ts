@@ -41,7 +41,7 @@ function getEntry(rootDir: string) {
   }
   return {
     runtime: ['react', 'react-dom', '@ice/runtime'],
-    index: {
+    main: {
       import: [entryFile],
       dependOn: 'runtime',
     },

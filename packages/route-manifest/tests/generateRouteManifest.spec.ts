@@ -33,6 +33,22 @@ describe('generateRouteManifest function', () => {
   });
 
   test('invalid-routes', () => {
-    expect(() => generateRouteManifest(path.join(fixturesDir, 'invalid-routes'))).toThrow(`invalid character in 'pages/[a.pdf]'. Only support char: -, \\w, /`);
+    expect(() => generateRouteManifest(path.join(fixturesDir, 'invalid-routes'))).toThrow(`invalid character in 'src/pages/[a.pdf].tsx'. Only support char: -, \\w, /`);
+  });
+
+  test('ignore-routes', () => {
+    const routeManifest = generateRouteManifest(path.join(fixturesDir, 'basic-routes'), ['About/index.tsx']);
+    expect(routeManifest).toMatchSnapshot();
+  });
+
+  test('define-extra-routes', () => {
+    const routeManifest = generateRouteManifest(
+      path.join(fixturesDir, 'basic-routes'), 
+      ['About/index.tsx'], 
+      (defineRoute) => {
+        defineRoute('/about-me', 'About/index.tsx');
+      }
+    );
+    expect(routeManifest).toMatchSnapshot();
   });
 });

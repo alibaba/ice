@@ -1,32 +1,34 @@
 import * as path from 'path';
 import consola from 'consola';
 import type { WatchEvent } from '@ice/types/esm/plugin.js';
+import type { Context } from 'build-scripts';
+import type { Config } from '@ice/types';
 import { generateRoutesInfo } from './routes.js';
 import type Generator from './service/runtimeGenerator';
 
 interface Options {
-  rootDir: string;
   targetDir: string;
   templateDir: string;
-  configFile: string;
   generator: Generator;
   cache: Map<string, string>;
+  ctx: Context<Config>;
 }
 
 const getWatchEvents = (options: Options): WatchEvent[] => {
-  const { rootDir, generator, targetDir, templateDir, configFile, cache } = options;
+  const { generator, targetDir, templateDir, cache, ctx } = options;
+  const { userConfig: { routes: routesConfig }, configFile, rootDir } = ctx;
   const watchRoutes: WatchEvent = [
     /src\/pages\/?[\w*-:.$]+$/,
     (eventName: string) => {
       if (eventName === 'add' || eventName === 'unlink') {
-        const routesRenderData = generateRoutesInfo(rootDir);
+        const routesRenderData = generateRoutesInfo(rootDir, routesConfig);
         const stringifiedData = JSON.stringify(routesRenderData);
         if (cache.get('routes') !== stringifiedData) {
           cache.set('routes', stringifiedData);
           consola.debug('[event]', `routes data regenerated: ${stringifiedData}`);
           generator.renderFile(
             path.join(templateDir, 'routes.ts.ejs'),
-            path.join(rootDir, targetDir, 'route.ts'),
+            path.join(rootDir, targetDir, 'routes.ts'),
             routesRenderData,
           );
           generator.renderFile(
@@ -38,6 +40,7 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
       }
     },
   ];
+
   const watchGlobalStyle: WatchEvent = [
     /src\/global.(scss|less|css)/,
     (event: string, filePath: string) => {
@@ -49,7 +52,7 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
   ];
 
   const watchConfigFile: WatchEvent = [
-    new RegExp(configFile),
+    new RegExp((typeof configFile === 'string' ? [configFile] : configFile).join('|')),
     (event: string, filePath: string) => {
       if (event === 'change') {
         consola.warn(`Found a change in ${path.basename(filePath)}. Restart the dev server to see the changes in effect.`);
