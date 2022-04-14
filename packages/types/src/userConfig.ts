@@ -18,5 +18,7 @@ export interface UserConfig {
     defineRoutes?: (defineRoute: DefineRouteFunction) => void;
   };
   plugins?: IPluginList;
+  dropLogLevel?: 'trace' | 'debug' | 'log' | 'info' | 'warn' | 'error';
+  minify?: boolean;
   compileDependencies?: boolean | string[] | RegExp[];
 }
