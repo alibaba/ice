@@ -16,10 +16,11 @@ const start = async (context: Context<Config>, contextConfig: ContextConfig[], e
   // TODO: task includes miniapp / kraken / pha
   const { webpackConfig, taskConfig } = contextConfig.find(({ name }) => name === 'web');
 
+  const { port, host, https = false } = commandArgs;
   let devServerConfig: Configuration = {
-    port: commandArgs.port || 3333,
-    host: commandArgs.host || '0.0.0.0',
-    https: commandArgs.https || false,
+    port,
+    host,
+    https,
   };
 
   // merge devServerConfig with webpackConfig.devServer
