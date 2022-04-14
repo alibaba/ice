@@ -1,11 +1,12 @@
 import * as path from 'path';
 import type { Plugin } from '@ice/types';
+import openBrowser from '../../utils/openBrowser.js';
 import createAssetsPlugin from '../../esbuild/assets.js';
 import generateHTML from './ssr/generateHTML.js';
 import { setupRenderServer } from './ssr/serverRender.js';
 
 const webPlugin: Plugin = ({ registerTask, context, onHook }) => {
-  const { command, rootDir, userConfig } = context;
+  const { command, rootDir, userConfig, commandArgs } = context;
   const { ssg = true, ssr = true } = userConfig;
   const outputDir = path.join(rootDir, 'build');
   const routeManifest = path.join(rootDir, '.ice/route-manifest.json');
@@ -28,6 +29,16 @@ const webPlugin: Plugin = ({ registerTask, context, onHook }) => {
       return `${serverEntry}?version=${new Date().getTime()}`;
     };
   });
+
+  if (commandArgs.open) {
+    onHook('after.start.compile', ({ urls, isFirstCompile }) => {
+      if (!isFirstCompile) {
+        return;
+      }
+      openBrowser(urls.localUrlForBrowser);
+    });
+  }
+
   onHook('after.build.compile', async () => {
     await serverCompiler();
     await generateHTML({

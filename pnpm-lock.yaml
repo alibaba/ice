@@ -168,6 +168,7 @@ importers:
       '@ice/runtime': ^1.0.0
       '@ice/types': ^1.0.0
       '@ice/webpack-config': ^1.0.0
+      '@types/cross-spawn': ^6.0.2
       '@types/ejs': ^3.1.0
       '@types/less': ^3.0.3
       '@types/lodash.debounce': ^4.0.6
@@ -180,6 +181,7 @@ importers:
       chokidar: ^3.5.3
       commander: ^9.0.0
       consola: ^2.15.3
+      cross-spawn: ^7.0.3
       ejs: ^3.1.6
       es-module-lexer: ^0.10.0
       esbuild: ^0.14.23
@@ -188,6 +190,7 @@ importers:
       fs-extra: ^10.0.0
       less: ^4.1.2
       lodash.merge: ^4.6.2
+      open: ^8.4.0
       mrmime: ^1.0.0
       postcss: ^8.4.7
       postcss-modules: ^4.3.1
@@ -208,6 +211,7 @@ importers:
       chalk: 4.1.2
       commander: 9.1.0
       consola: 2.15.3
+      cross-spawn: 7.0.3
       ejs: 3.1.6
       es-module-lexer: 0.10.5
       esbuild: 0.14.36
@@ -216,6 +220,7 @@ importers:
       fs-extra: 10.0.1
       less: 4.1.2
       lodash.merge: 4.6.2
+      open: 8.4.0
       mrmime: 1.0.0
       postcss: 8.4.12
       postcss-modules: 4.3.1_postcss@8.4.12
@@ -227,6 +232,7 @@ importers:
       webpack-dev-server: 4.8.1_webpack@5.72.0
     devDependencies:
       '@ice/types': link:../types
+      '@types/cross-spawn': 6.0.2
       '@types/ejs': 3.1.0
       '@types/less': 3.0.3
       '@types/lodash.debounce': 4.0.6
@@ -1248,6 +1254,12 @@ packages:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
     dependencies:
       '@types/node': 17.0.24
+
+  /@types/cross-spawn/6.0.2:
+    resolution: {integrity: sha512-KuwNhp3eza+Rhu8IFI5HUXRP0LIhqH5cAjubUvGXXthh4YYBuP2ntwEX+Cz8GJoZUHlKo247wPWOfA9LYEq4cw==}
+    dependencies:
+      '@types/node': 17.0.24
+    dev: true
 
   /@types/ejs/3.1.0:
     resolution: {integrity: sha512-DCg+Ka+uDQ31lJ/UtEXVlaeV3d6t81gifaVWKJy4MYVVgvJttyX/viREy+If7fz+tK/gVxTGMtyrFPnm4gjrVA==}
