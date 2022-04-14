@@ -23,6 +23,7 @@
     "event": "^1.0.0",
     "fast-glob": "^3.2.11",
     "less": "^4.1.2",
+    "lodash.merge": "^4.6.2",
     "magic-string": "^0.26.1",
     "postcss": "^8.4.7",
     "process": "^0.11.10",
@@ -33,6 +34,7 @@
   },
   "devDependencies": {
     "@ice/types": "^1.0.0",
+    "@types/lodash.merge": "^4.6.6",
     "build-scripts": "^2.0.0-16",
     "webpack": "^5.72.0",
     "webpack-dev-server": "^4.7.4"
