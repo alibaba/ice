@@ -1,5 +1,6 @@
 import * as path from 'path';
 import type { Plugin } from '@ice/types';
+import emptyDir from '../../utils/emptyDir.js';
 import openBrowser from '../../utils/openBrowser.js';
 import createAssetsPlugin from '../../esbuild/assets.js';
 import generateHTML from './ssr/generateHTML.js';
@@ -10,10 +11,14 @@ const webPlugin: Plugin = ({ registerTask, context, onHook }) => {
   const { ssg = true, ssr = true } = userConfig;
   const outputDir = path.join(rootDir, 'build');
   const routeManifest = path.join(rootDir, '.ice/route-manifest.json');
+  const mode = command === 'start' ? 'development' : 'production';
   const assetsManifest = path.join(rootDir, '.ice/assets-manifest.json');
   const serverEntry = path.join(outputDir, 'server/index.mjs');
   let serverCompiler = async () => '';
+
   onHook(`before.${command as 'start' | 'build'}.run`, async ({ esbuildCompile }) => {
+    await emptyDir(outputDir);
+
     serverCompiler = async () => {
       await esbuildCompile({
         entryPoints: [path.join(rootDir, '.ice/entry.server')],
@@ -49,7 +54,7 @@ const webPlugin: Plugin = ({ registerTask, context, onHook }) => {
       ssr,
     });
   });
-  const mode = command === 'start' ? 'development' : 'production';
+
   registerTask('web', {
     mode,
     outputDir,
