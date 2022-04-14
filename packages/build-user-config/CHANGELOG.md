@@ -1,9 +1,5 @@
 # Changelog
 
-## 2.2.3
-
-- [fix] revert postcss options merge
-
 ## 2.2.2
 
 - [fix] compatible with rax-app devServer when config `webpack5`

@@ -235,7 +235,6 @@ module.exports = [
   {
     name: 'postcssOptions',
     validation: 'object',
-    defaultValue: {}
   },
   {
     name: 'modularImportRuntime',
