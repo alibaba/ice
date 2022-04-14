@@ -62,14 +62,13 @@ function getSwcTransformOptions({
   rootDir,
   dev,
 }: {
-    suffix: JSXSuffix;
-    rootDir: string;
-    dev: boolean;
-    isServer?: boolean;
-  }) {
+  suffix: JSXSuffix;
+  rootDir: string;
+  dev: boolean;
+}) {
   const baseReactTransformConfig = {
     refresh: dev,
-   };
+  };
   const reactTransformConfig = merge(baseReactTransformConfig, hasJsxRuntime(rootDir) ? { runtime: 'automatic' } : {});
 
   const commonOptions: SwcConfig = {

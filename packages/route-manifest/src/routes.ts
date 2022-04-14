@@ -143,7 +143,7 @@ function stripFileExtension(file: string) {
 
 function createComponentName(id: string) {
   return id.replace('.', '/') // 'pages/home.news' -> pages/home/news
-  .split('/')
+    .split('/')
     .map((item: string) => item[0].toUpperCase() + item.slice(1, item.length))
     .join('');
 }
