@@ -143,7 +143,8 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, commandArgs = {} 
     output: {
       publicPath,
       path: path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir),
-      filename: hashKey ? `[name]-[${hashKey}].js` : '[name].js',
+      filename: `js/${hashKey ? `[name]-[${hashKey}].js` : '[name].js'}`,
+      assetModuleFilename: 'assets/[name].[hash:8][ext]',
     },
     context: rootDir,
     module: {
@@ -160,7 +161,8 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, commandArgs = {} 
       },
     },
     watchOptions: {
-      // add a delay before rebuilding once routes changed webpack can not found routes component after it is been deleted
+      // add a delay before rebuilding once routes changed
+      // webpack can not found routes component after it is been deleted
       aggregateTimeout: 200,
       ignored: watchIgnoredRegexp,
     },

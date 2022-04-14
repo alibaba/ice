@@ -1,18 +1,22 @@
 import type { ModifyWebpackConfig } from '@ice/types/esm/config';
 
-type AssetRuleConfig = [RegExp, Record<string, any>?];
+type AssetRuleConfig = [RegExp, Record<string, any>?, boolean?];
 
 function configAssetsRule(config: AssetRuleConfig) {
-  const [test, dataUrl] = config;
+  const [test, dataUrl = {}, inlineLimit = true] = config;
+
   return {
     test,
+    type: 'asset',
+    parser: {
+      ...(inlineLimit ? {
+        dataUrlCondition: {
+          maxSize: 8 * 1024, // 8kb
+        },
+      } : {}),
+    },
     generator: {
       dataUrl,
-    },
-    parser: {
-      dataUrlCondition: {
-        maxSize: 8 * 1024, // 8kb
-      },
     },
   };
 }
@@ -22,19 +26,9 @@ const assets: ModifyWebpackConfig = (config) => {
     [/\.woff2?$/, { mimetype: 'application/font-woff' }],
     [/\.ttf$/, { mimetype: 'application/octet-stream' }],
     [/\.eot$/, { mimetype: 'application/vnd.ms-fontobject' }],
-    [/\.svg$/, { mimetype: 'image/svg+xml' }],
+    [/\.svg$/, { mimetype: 'image/svg+xml' }, false],
     [/\.(png|jpg|webp|jpeg|gif)$/i],
   ] as AssetRuleConfig[]).map((config) => configAssetsRule(config));
-  config.module.parser = {
-    javascript: {
-      url: 'relative',
-    },
-  };
-  config.module.generator = {
-    asset: {
-      filename: 'assets/[name].[hash:8][ext]',
-    },
-  };
   config.module.rules.push(...assetsRule);
   return config;
 };

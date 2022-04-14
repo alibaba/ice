@@ -51,6 +51,7 @@ export function createEsbuildCompiler(options: Options) {
             return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);
           }),
         }),
+        ...(buildOptions.plugins || []),
         ...transformPlugins
           // ignore compilation-plugin while esbuild has it's own transform
           .filter(({ name }) => name !== 'compilation-plugin')

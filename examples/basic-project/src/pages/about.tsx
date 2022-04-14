@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { Link } from 'ice';
+// @ts-expect-error
+import url from './ice.png';
 
 export default function About() {
   return (
     <>
       <h2>About Page</h2>
       <Link to="/">home</Link>
+      <img src={url} height="40" width="40" />
       <span className="mark">new</span>
     </>
   );

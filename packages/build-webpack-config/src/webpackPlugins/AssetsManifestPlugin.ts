@@ -29,8 +29,16 @@ export default class AssetsManifestPlugin {
   public createAssets(compilation: Compilation) {
     const entries = {};
     const pages = {};
+    const assets = {};
 
     const entrypoints = compilation.entrypoints.values();
+    const assetsInfo = compilation.assetsInfo.values();
+
+    for (const asset of assetsInfo) {
+      if (asset.sourceFilename) {
+        assets[asset.sourceFilename] = asset.contenthash;
+      }
+    }
 
     for (const entrypoint of entrypoints) {
       const entryName = entrypoint.name;
@@ -50,6 +58,7 @@ export default class AssetsManifestPlugin {
       publicPath: compilation.outputOptions?.publicPath,
       entries,
       pages,
+      assets,
     };
 
     const manifestFileName = resolve(this.outputDir, this.fileName);

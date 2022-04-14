@@ -38,11 +38,12 @@
     "postcss": "^8.4.7",
     "postcss-modules": "^4.3.1",
     "lodash.merge": "^4.6.2",
+    "mrmime": "^1.0.0",
     "prettier": "^2.5.1",
     "sass": "^1.49.9",
     "semver": "^7.3.5",
+    "webpack": "^5.72.0",
     "temp": "^0.9.4",
-    "webpack": "^5.69.1",
     "webpack-dev-server": "^4.7.4"
   },
   "devDependencies": {

@@ -84,7 +84,7 @@ function configCSSRule(config: CSSRuleConfig, options: Options) {
 
 const css: ModifyWebpackConfig = (config, ctx) => {
   const { supportedBrowsers, publicPath, hashKey } = ctx;
-
+  const cssOutputFolder = 'css';
   config.module.rules.push(...([
     ['css'],
     ['less', require.resolve('@builder/pack/deps/less-loader'), ({ lessOptions: { javascriptEnabled: true } })],
@@ -92,7 +92,7 @@ const css: ModifyWebpackConfig = (config, ctx) => {
   ] as CSSRuleConfig[]).map((config) => configCSSRule(config, { publicPath, browsers: supportedBrowsers })));
   config.plugins.push(
     new MiniCssExtractPlugin({
-      filename: hashKey ? `[name]-[${hashKey}].css` : '[name].css',
+      filename: `${cssOutputFolder}/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`,
       // If the warning is triggered, it seen to be unactionable for the user,
       ignoreOrder: true,
     }),
