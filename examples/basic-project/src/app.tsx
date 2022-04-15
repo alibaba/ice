@@ -1,8 +1,23 @@
-import * as React from 'react';
-import { runApp } from 'ice';
+import { defineAppConfig } from 'ice';
 
-runApp({
+if (process.env.ICE_RUNTIME_ERROR_BOUNDARY) {
+  console.error('__REMOVED__');
+}
+
+console.log('__LOG__');
+console.warn('__WARN__');
+console.error('__ERROR__');
+
+export default defineAppConfig({
   app: {
-    renderComponent: () => <><h2>Simple App</h2></>,
+    // @ts-expect-error loss tslib dependency
+    getData: async (ctx) => {
+      return {
+        title: 'gogogo',
+        auth: {
+          admin: true,
+        },
+      };
+    },
   },
 });

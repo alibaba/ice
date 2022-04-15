@@ -10,13 +10,7 @@
 
 import url from 'url';
 import address from 'address';
-
-export interface Urls {
-  lanUrlForConfig: any;
-  lanUrlForTerminal: string;
-  localUrlForTerminal: string;
-  localUrlForBrowser: string;
-}
+import type { Urls } from '@ice/types/esm/plugin.js';
 
 export default function prepareUrls(
   protocol: string,

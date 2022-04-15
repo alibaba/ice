@@ -1,9 +1,11 @@
-import type { RuntimePlugin } from './runtime';
-import type { Config } from './config';
-import type { Plugin } from './plugin';
+import type { Config } from './config.js';
+import type { Plugin } from './plugin.js';
+import type { UserConfig } from './userConfig.js';
 
 export {
-  RuntimePlugin,
   Config,
   Plugin,
+  UserConfig,
 };
+
+export * from './runtime.js';

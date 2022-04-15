@@ -3,8 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "rootDir": "src",
-    "outDir": "lib",
-    "esModuleInterop": true
+    "outDir": "esm"
   },
   "include": ["src"]
 }

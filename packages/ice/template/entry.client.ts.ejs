@@ -1,0 +1,12 @@
+import { runClientApp } from '@ice/runtime';
+import appConfig from '@/app';
+import runtimeModules from './runtimeModules';
+import routes from './routes';
+import Document from '@/document';
+
+runClientApp({
+  appConfig,
+  runtimeModules,
+  routes,
+  Document
+});

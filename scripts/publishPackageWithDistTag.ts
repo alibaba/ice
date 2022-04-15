@@ -1,9 +1,9 @@
 /**
  * Scripts to check unpublished version and run publish
  */
-import * as path from 'path';
-import fse from 'fs-extra';
+import path from 'path';
 import { spawnSync } from 'child_process';
+import fse from 'fs-extra';
 import { setPublishedPackages } from './publishedInfo';
 import { getPackageInfos, getVersionPrefix } from './getPackageInfos';
 import type { IPackageInfo } from './getPackageInfos';

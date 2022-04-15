@@ -1,6 +1,6 @@
-import * as path from 'path';
-import * as fse from 'fs-extra';
-import * as findUp from 'find-up';
+import path from 'path';
+import fse from 'fs-extra';
+import findUp from 'find-up';
 
 export interface RuntimeModule {
   staticModule: boolean;
@@ -9,7 +9,7 @@ export interface RuntimeModule {
 }
 
 export interface Plugin {
-  pluginPath: string;
+  pluginPath?: string;
 }
 
 function getRuntimeModules(plugins: Plugin[]) {
@@ -27,7 +27,7 @@ function getRuntimeModules(plugins: Plugin[]) {
         const pkgInfo = fse.readJSONSync(pkgPath);
         return {
           staticModule: !!pkgInfo?.pluginConfig?.staticModule,
-          path: `${packageDir}/runtime`,
+          path: `${pkgInfo.name}/runtime`,
           name: pkgInfo.name as string,
         };
       } catch (error) {

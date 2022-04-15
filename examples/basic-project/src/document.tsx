@@ -1,18 +1,29 @@
-/* eslint-disable react/self-closing-comp */
-import React from 'react';
+import { Meta, Title, Links, Main, Scripts, useAppData } from 'ice';
+import type { AppData } from './types';
 
-function Document() {
+function Document(props) {
+  const appData = useAppData<AppData>();
+
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="description" content="ICE 3.0 Demo" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>ICE Demo</title>
+        <Meta />
+        <Title />
+        <Links />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `console.log('${appData.title}')`,
+          }}
+        />
       </head>
       <body>
-        <div id="root"></div>
-        <script src="./main.js"></script>
+        <Main>
+          {props.children}
+        </Main>
+        <Scripts />
       </body>
     </html>
   );

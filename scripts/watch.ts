@@ -1,7 +1,7 @@
 /* eslint @typescript-eslint/explicit-function-return-type:0, no-shadow: 0 */
+import path from 'path';
 import glob from 'glob';
 import fse from 'fs-extra';
-import * as path from 'path';
 import * as chokidar from 'chokidar';
 import { run } from './shell';
 
@@ -36,6 +36,6 @@ import { run } from './shell';
 
 async function copyOneFile(file, cwd) {
   const from = path.join(cwd, file);
-  const to = path.join(cwd, file.replace(/\/src\//, '/lib/'));
+  const to = path.join(cwd, file.replace(/\/src\//, '/esm/'));
   await fse.copy(from, to);
 }

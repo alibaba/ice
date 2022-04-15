@@ -2,8 +2,9 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "lib",
-    "esModuleInterop": true
+    "outDir": "esm",
+    "preserveSymlinks": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["src/shims/*"]
 }

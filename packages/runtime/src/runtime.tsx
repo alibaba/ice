@@ -1,59 +1,59 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import type { ComponentType } from 'react';
 import type {
-  AppConfig,
-  BuildConfig,
   PageWrapper,
-  DOMRender,
-  Context,
-  RenderApp,
+  Renderer,
+  AppContext,
   RuntimePlugin,
   CommonJsRuntime,
   RuntimeAPI,
-  SetRenderApp,
+  SetAppRouter,
   AddProvider,
-  AddDOMRender,
+  SetRender,
   WrapperPageComponent,
   GetWrapperPageRegistration,
-  GetAppComponent,
-} from '@ice/types/lib/runtime';
+  AppRouterProps,
+} from './types.js';
+import DefaultAppRouter from './AppRouter.js';
+import { useData, useConfig } from './RouteContext.js';
 
 class Runtime {
-  private appConfig: AppConfig;
+  private appContext: AppContext;
 
-  private buildConfig: BuildConfig;
-
-  private context: Context;
-
-  private renderApp: RenderApp;
+  private AppRouter: ComponentType<AppRouterProps>;
 
   private AppProvider: ComponentType[];
 
   private wrapperPageRegistration: PageWrapper<any>[];
 
-  public modifyDOMRender: DOMRender;
+  private render: Renderer;
 
-  public constructor(appConfig: AppConfig, buildConfig: BuildConfig, context: Context) {
+  public constructor(appContext: AppContext) {
     this.AppProvider = [];
-    this.appConfig = appConfig;
-    this.buildConfig = buildConfig;
-    this.context = context;
-    this.modifyDOMRender = null;
-    this.renderApp = () => null;
+    this.appContext = appContext;
+    this.render = ReactDOM.render;
+    this.AppRouter = DefaultAppRouter;
     this.wrapperPageRegistration = [];
   }
 
-  public getAppConfig = () => this.appConfig;
+  public getAppContext = () => this.appContext;
+
+  public getRender = () => {
+    return ReactDOM.hydrate;
+  };
+
+  public getAppRouter = () => this.AppRouter;
 
   public loadModule(module: RuntimePlugin | CommonJsRuntime) {
     let runtimeAPI: RuntimeAPI = {
-      appConfig: this.appConfig,
       addProvider: this.addProvider,
-      addDOMRender: this.addDOMRender,
+      setRender: this.setRender,
       wrapperPageComponent: this.wrapperPageComponent,
-      buildConfig: this.buildConfig,
-      context: this.context,
-      setRenderApp: this.setRenderApp,
+      appContext: this.appContext,
+      setAppRouter: this.setAppRouter,
+      useData,
+      useConfig,
     };
 
     const runtimeModule = (module as CommonJsRuntime).default || module as RuntimePlugin;
@@ -72,17 +72,13 @@ class Runtime {
     });
   }
 
-  private setRenderApp: SetRenderApp = (renderApp) => {
-    this.renderApp = renderApp;
-  };
-
   private addProvider: AddProvider = (Provider) => {
     // must promise user's providers are wrapped by the plugins' providers
     this.AppProvider.unshift(Provider);
   };
 
-  private addDOMRender: AddDOMRender = (render) => {
-    this.modifyDOMRender = render;
+  private setRender: SetRender = (render) => {
+    this.render = render;
   };
 
   private wrapperPageComponent: WrapperPageComponent = (wrapperPage) => {
@@ -93,16 +89,9 @@ class Runtime {
     return this.wrapperPageRegistration;
   };
 
-  public getAppComponent: GetAppComponent = () => {
-    const { enableRouter, routeManifest } = this.context;
-    const renderComponent = this.appConfig.app?.renderComponent;
-    return this.renderApp(enableRouter ? {
-      routeManifest,
-      pageWrappers: this.wrapperPageRegistration,
-    } : {
-      pageWrappers: this.wrapperPageRegistration,
-      renderComponent,
-    });
+  // for plugin-icestark
+  public setAppRouter: SetAppRouter = (AppRouter) => {
+    this.AppRouter = AppRouter;
   };
 }
 

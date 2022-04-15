@@ -1,51 +1,57 @@
-import * as path from 'path';
-import * as fse from 'fs-extra';
+import path from 'path';
+import fse from 'fs-extra';
 import consola from 'consola';
 import fg from 'fast-glob';
-import * as ejs from 'ejs';
-import * as prettier from 'prettier';
-import debounce from 'lodash.debounce';
-import getRuntimeModules from '../utils/getRuntimeModules';
-import formatPath from '../utils/formatPath';
+import ejs from 'ejs';
+import prettier from 'prettier';
+import lodash from '@builder/pack/deps/lodash/lodash.js';
 import type {
-  SetPlugins,
   AddExport,
   RemoveExport,
   AddContent,
   GetExportStr,
   ParseRenderData,
-  GenerateImportStr,
   Render,
   RenderFile,
   ModifyRenderData,
   AddRenderFile,
   AddTemplateFiles,
-  AddDisableRuntimePlugin,
   RenderDataRegistration,
   RenderTemplate,
   RenderData,
   ExportData,
   Registration,
-} from '@ice/types/lib/generator';
+  TemplateOptions,
+} from '@ice/types/esm/generator.js';
+import formatPath from '../utils/formatPath.js';
+
+const { debounce } = lodash;
 
 const RENDER_WAIT = 150;
 
-function generateExports(exportList: ExportData[], isTypes: boolean) {
+interface Options {
+  rootDir: string;
+  targetDir: string;
+  defaultRenderData?: RenderData;
+  templates?: (string | TemplateOptions)[];
+}
+
+export function generateExports(exportList: ExportData[]) {
   const importStatements = [];
-  const exportStatements = [];
+  let exportStatements = [];
   exportList.forEach(data => {
-    const { specifier, source, exportName } = data;
-    if (exportName) {
-      let exportStr = exportName;
-      if (source) {
-        const symbol = source.includes('types') ? ';' : ',';
-        importStatements.push(`import ${isTypes ? 'type ' : ''}${specifier || exportName} from '${source}';`);
-        exportStr = `${exportName}${symbol}`;
+    const { specifier, source, exportAlias, type } = data;
+    const isDefaultImport = !Array.isArray(specifier);
+    const specifiers = isDefaultImport ? [specifier] : specifier;
+    const symbol = type ? ';' : ',';
+    importStatements.push(`import ${type ? 'type ' : ''}${isDefaultImport ? specifier : `{ ${specifier.join(', ')} }`} from '${source}';`);
+    exportStatements = specifiers.map((specifierStr) => {
+      if (exportAlias && exportAlias[specifierStr]) {
+        return `${exportAlias[specifierStr]}: ${specifierStr}${symbol}`;
+      } else {
+        return `${specifierStr}${symbol}`;
       }
-      exportStatements.push(exportStr);
-    } else if (source) {
-      importStatements.push(`export ${specifier || '*'} from '${source}';`);
-    }
+    });
   });
   return {
     importStr: importStatements.join('\n'),
@@ -53,27 +59,29 @@ function generateExports(exportList: ExportData[], isTypes: boolean) {
   };
 }
 
-function checkExportData(currentList: ExportData[], exportData: ExportData | ExportData[], apiName: string) {
+export function checkExportData(currentList: ExportData[], exportData: ExportData | ExportData[], apiName: string) {
   (Array.isArray(exportData) ? exportData : [exportData]).forEach((data) => {
-    currentList.forEach(({ specifier, exportName }) => {
+    const exportNames = (Array.isArray(data.specifier) ? data.specifier : [data.specifier]).map((specifierStr) => {
+      return data?.exportAlias?.[specifierStr] || specifierStr;
+    });
+    currentList.forEach(({ specifier, exportAlias }) => {
       // check exportName and specifier
-      if (specifier || exportName) {
-        const defaultSpecifierName = specifier || exportName;
-        if ((exportName && exportName === data.exportName) || defaultSpecifierName === data.specifier) {
-          throw new Error(`duplicate export data added by ${apiName},
-            ${data.exportName ? `exportName: ${data.exportName}, ` : ''}specifier: ${data.specifier}
-          `);
-        }
+      const currentExportNames = (Array.isArray(specifier) ? specifier : [specifier]).map((specifierStr) => {
+        return exportAlias?.[specifierStr] || specifierStr;
+      });
+      if (currentExportNames.some((name) => exportNames.includes(name))) {
+        consola.error('specifier:', specifier, 'exportAlias:', exportAlias);
+        consola.error('duplicate with', data);
+        throw new Error(`duplicate export data added by ${apiName}`);
       }
     });
   });
 }
 
-function removeExportData(exportList: ExportData[], removeExportName: string | string[]) {
-  const removeExportNames = Array.isArray(removeExportName) ? removeExportName : [removeExportName];
-  return exportList.filter(({ exportName, specifier }) => {
-    const needRemove = removeExportNames.includes(exportName) ||
-      !exportName && removeExportNames.includes(specifier);
+export function removeExportData(exportList: ExportData[], removeSource: string | string[]) {
+  const removeSourceNames = Array.isArray(removeSource) ? removeSource : [removeSource];
+  return exportList.filter(({ source }) => {
+    const needRemove = removeSourceNames.includes(source);
     return !needRemove;
   });
 }
@@ -95,31 +103,26 @@ export default class Generator {
 
   private showPrettierError: boolean;
 
-  private disableRuntimePlugins: string[];
-
   private contentTypes: string[];
 
-  private plugins: any[];
-
-  public constructor({ rootDir, targetDir, defaultData }) {
+  public constructor(options: Options) {
+    const { rootDir, targetDir, defaultRenderData = {}, templates } = options;
     this.rootDir = rootDir;
     this.targetDir = targetDir;
-    this.renderData = defaultData;
+    this.renderData = defaultRenderData;
     this.contentRegistration = {};
     this.rerender = false;
     this.showPrettierError = true;
     this.renderTemplates = [];
     this.renderDataRegistration = [];
-    this.disableRuntimePlugins = [];
     this.contentTypes = ['framework', 'frameworkTypes', 'configTypes'];
-    this.plugins = [];
     // empty .ice before render
     fse.emptyDirSync(path.join(rootDir, targetDir));
+    // add initial templates
+    if (templates) {
+      templates.forEach(template => this.addTemplateFiles(template));
+    }
   }
-
-  public setPlugins: SetPlugins = (plugins) => {
-    this.plugins = plugins;
-  };
 
   private debounceRender = debounce(() => {
     this.render();
@@ -128,12 +131,16 @@ export default class Generator {
   public addExport: AddExport = (registerKey, exportData) => {
     const exportList = this.contentRegistration[registerKey] || [];
     checkExportData(exportList, exportData, registerKey);
+    // remove export before add
+    this.removeExport(
+      registerKey,
+      Array.isArray(exportData) ? exportData.map((data) => data.source) : exportData.source);
     this.addContent(registerKey, exportData);
   };
 
-  public removeExport: RemoveExport = (registerKey, removeExportName) => {
+  public removeExport: RemoveExport = (registerKey, removeSource) => {
     const exportList = this.contentRegistration[registerKey] || [];
-    this.contentRegistration[registerKey] = removeExportData(exportList, removeExportName);
+    this.contentRegistration[registerKey] = removeExportData(exportList, removeSource);
   };
 
   public addContent: AddContent = (apiName, ...args) => {
@@ -154,8 +161,7 @@ export default class Generator {
 
   private getExportStr: GetExportStr = (registerKey, dataKeys) => {
     const exportList = this.contentRegistration[registerKey] || [];
-    const isTypes = registerKey.endsWith('Types');
-    const { importStr, exportStr } = generateExports(exportList, isTypes);
+    const { importStr, exportStr } = generateExports(exportList);
     const [importStrKey, exportStrKey] = dataKeys;
     return {
       [importStrKey]: importStr,
@@ -182,14 +188,6 @@ export default class Generator {
     };
   };
 
-  public generateImportStr: GenerateImportStr = (apiName) => {
-    const imports = this.contentRegistration[apiName] || [];
-    return imports.map(({ source, specifier }) => {
-      return specifier
-        ? `import ${specifier} from '${source}';` : `import '${source}'`;
-    }).join('\n');
-  };
-
   public render: Render = () => {
     this.rerender = true;
     this.renderData = this.renderDataRegistration.reduce((previousValue, currentValue) => {
@@ -198,11 +196,6 @@ export default class Generator {
       }
       return previousValue;
     }, this.parseRenderData());
-    // 生成所有运行时插件，在 load 阶段判断是否需要加载，确保 index 中的 exports 路径永远可以获取引用
-    this.renderData.runtimeModules = getRuntimeModules(this.plugins)
-      .filter((plugin) => {
-        return !this.disableRuntimePlugins.includes(plugin?.name);
-      });
 
     this.renderTemplates.forEach((args) => {
       this.renderFile(...args);
@@ -253,7 +246,10 @@ export default class Generator {
 
   public renderFile: RenderFile = (templatePath, targetPath, extraData = {}) => {
     const renderExt = '.ejs';
-    if (path.extname(templatePath) === '.ejs') {
+    const realTargetPath = path.isAbsolute(targetPath) ? targetPath : path.join(this.rootDir, targetPath);
+    // example: templatePath = 'routes.ts.ejs'
+    const { name, ext } = path.parse(templatePath);
+    if (ext === renderExt) {
       const templateContent = fse.readFileSync(templatePath, 'utf-8');
       let renderData = { ...this.renderData };
       if (typeof extraData === 'function') {
@@ -265,29 +261,25 @@ export default class Generator {
         };
       }
       let content = ejs.render(templateContent, renderData);
-      try {
-        content = prettier.format(content, {
-          parser: 'typescript',
-          singleQuote: true,
-        });
-      } catch (error) {
-        if (this.showPrettierError) {
-          consola.warn(`Prettier format error: ${error.message}`);
-          this.showPrettierError = false;
+      // example: name = 'routes.ts'
+      const realExtname = path.extname(name);
+      if (realExtname === '.ts' || realExtname === '.tsx') {
+        try {
+          content = prettier.format(content, {
+            parser: 'typescript',
+            singleQuote: true,
+          });
+        } catch (error) {
+          if (this.showPrettierError) {
+            consola.warn(`Prettier format error: ${error.message}`);
+            this.showPrettierError = false;
+          }
         }
       }
-      const realTargetPath = targetPath.replace(renderExt, '');
-      fse.ensureDirSync(path.dirname(realTargetPath));
-      fse.writeFileSync(realTargetPath, content, 'utf-8');
+      fse.writeFileSync(realTargetPath.replace(renderExt, ''), content, 'utf-8');
     } else {
-      fse.ensureDirSync(path.dirname(targetPath));
-      fse.copyFileSync(templatePath, targetPath);
-    }
-  };
-
-  public addDisableRuntimePlugin: AddDisableRuntimePlugin = (pluginName) => {
-    if (!this.disableRuntimePlugins.includes(pluginName)) {
-      this.disableRuntimePlugins.push(pluginName);
+      fse.ensureDirSync(path.dirname(realTargetPath));
+      fse.copyFileSync(templatePath, realTargetPath);
     }
   };
 }

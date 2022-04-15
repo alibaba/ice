@@ -1,25 +1,32 @@
 import webpack from 'webpack';
 import consola from 'consola';
+import chalk from 'chalk';
 import type { CommandArgs } from 'build-scripts';
 import type { Compiler, Configuration } from 'webpack';
-import type { Urls } from '../utils/prepareURLs';
-import formatWebpackMessages from '../utils/formatWebpackMessages';
+import type { Urls, EsbuildCompile } from '@ice/types/esm/plugin.js';
+import type { Config } from '@ice/types';
+import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 
 async function webpackCompiler(options: {
-  config: Configuration;
+  webpackConfigs: Configuration | Configuration[];
+  taskConfig: Config;
   command: string;
   commandArgs: CommandArgs;
   applyHook: (key: string, opts?: {}) => Promise<void>;
+  rootDir: string;
   urls?: Urls;
+  esbuildCompile: EsbuildCompile;
 }) {
-  const { config, urls, applyHook, command, commandArgs } = options;
+  const { taskConfig, urls, applyHook, command, commandArgs, esbuildCompile, webpackConfigs } = options;
   await applyHook(`before.${command}.run`, {
     commandArgs,
-    config,
+    taskConfig,
+    webpackConfigs,
+    esbuildCompile,
   });
   let compiler: Compiler;
   try {
-    compiler = webpack(config);
+    compiler = webpack(webpackConfigs as Configuration);
   } catch (err) {
     consola.error('Failed to compile.');
     consola.log('');
@@ -33,12 +40,23 @@ async function webpackCompiler(options: {
       all: false,
       warnings: true,
       errors: true,
+      timings: true,
+      assets: true,
     });
     const messages = formatWebpackMessages(statsData);
     const isSuccessful = !messages.errors.length && !messages.warnings.length;
-    if (isSuccessful) {
-      consola.success('Compiled successfully');
-      isFirstCompile = false;
+    if (isSuccessful && !process.env.DISABLE_STATS) {
+      const assetsStatsOptions = {
+        errors: false,
+        warnings: false,
+        colors: true,
+        assets: true,
+        chunks: false,
+        entrypoints: false,
+        modules: false,
+        timings: false,
+      };
+      consola.log(stats.toString(assetsStatsOptions));
     }
     if (messages.errors.length) {
       // Only keep the first error. Others are often indicative
@@ -53,11 +71,36 @@ async function webpackCompiler(options: {
       consola.warn('Compiled with warnings.\n');
       consola.warn(messages.warnings.join('\n\n'));
     }
-    await applyHook(`after.${command}.compile`, {
-      stats,
-      isFirstCompile,
-      urls,
-    });
+    if (command === 'start') {
+      if (isSuccessful) {
+        let logoutMessage = '\n';
+        logoutMessage += chalk.green(' Starting the development server at:');
+        if (process.env.CLOUDIDE_ENV) {
+          logoutMessage += `\n   - IDE server: https://${process.env.WORKSPACE_UUID}-${commandArgs.port}.${process.env.WORKSPACE_HOST}`;
+        } else {
+          logoutMessage += `\n
+   - Local  : ${chalk.underline.white(urls.localUrlForBrowser)}
+   - Network:  ${chalk.underline.white(urls.lanUrlForTerminal)}`;
+        }
+        consola.log(`${logoutMessage}\n`);
+      }
+      // compiler.hooks.done is AsyncSeriesHook which does not support async function
+      await applyHook('after.start.compile', {
+        stats,
+        isSuccessful,
+        isFirstCompile,
+        urls,
+        messages,
+        taskConfig,
+        esbuildCompile,
+      });
+    }
+
+    if (isSuccessful) {
+      consola.success(`Compiled successfully in ${(statsData.children ? statsData.children[0] : statsData).time} ms`);
+      // if compiled successfully reset first compile flag after been posted to lifecycle hooks
+      isFirstCompile = false;
+    }
   });
 
   return compiler;

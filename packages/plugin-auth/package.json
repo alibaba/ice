@@ -1,0 +1,30 @@
+{
+  "name": "@ice/plugin-auth",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "type": "module",
+  "main": "./esm/index.js",
+  "exports": {
+    ".": "./esm/index.js",
+    "./runtime": "./runtime/index.tsx",
+    "./runtime/Auth": "./runtime/Auth.tsx",
+    "./runtime/types": "./runtime/types.ts"
+  },
+  "files": [
+    "esm",
+    "runtime",
+    "!esm/**/*.map"
+  ],
+  "dependencies": {
+    "@ice/types": "^1.0.0"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-auth"
+  }
+}

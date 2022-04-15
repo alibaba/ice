@@ -1,8 +1,37 @@
+import {
+  defineAppConfig,
+  useAppData,
+  useData,
+  useConfig,
+  Link,
+  Outlet,
+  useParams,
+  useSearchParams,
+  Meta,
+  Title,
+  Links,
+  Scripts,
+  Main,
+} from '@ice/runtime';
 <%- framework.imports %>
 
-<% if (framework.exports) { %>
-  export {
-    <%- framework.exports %>
-  }
-<% } %>
-export * from './runApp';
+export {
+  defineAppConfig,
+  useAppData,
+  useData,
+  useConfig,
+  Link,
+  Outlet,
+  useParams,
+  useSearchParams,
+  Meta,
+  Title,
+  Links,
+  Scripts,
+  Main,
+  <% if (framework.exports) { %>
+  <%- framework.exports %>
+  <% } %>
+};
+
+export * from './types';

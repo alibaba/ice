@@ -1,46 +1,26 @@
 import WebpackDevServer from 'webpack-dev-server';
+import type { Configuration } from 'webpack-dev-server';
 import type { Context } from 'build-scripts';
-import { getWebpackConfig } from '@builder/webpack-config';
-import defaultsDeep from 'lodash.defaultsdeep';
-import webpackCompiler from '../service/webpackCompiler';
-import prepareURLs from '../utils/prepareURLs';
+import lodash from '@builder/pack/deps/lodash/lodash.js';
 import type { Config } from '@ice/types';
+import type { EsbuildCompile } from '@ice/types/esm/plugin.js';
+import webpackCompiler from '../service/webpackCompiler.js';
+import prepareURLs from '../utils/prepareURLs.js';
+import type { ContextConfig } from '../utils/getContextConfig.js';
 
-interface IWebTaskConfig {
-  name: string;
-  config: Config;
-}
+const { defaultsDeep } = lodash;
 
-type DevServerConfig = Record<string, any>;
-// TODO config type of ice.js
-const start = async (context: Context<any>) => {
-  const { getConfig, applyHook, commandArgs, command, rootDir } = context;
+const start = async (context: Context<Config>, contextConfig: ContextConfig[], esbuildCompile: EsbuildCompile) => {
+  const { applyHook, commandArgs, command, rootDir } = context;
 
-  // FIXME: getConfig -> getConfigs, because getConfig will return an array
-  const configs = getConfig();
-  if (!configs.length) {
-    const errMsg = 'Task config is not found';
-    await applyHook('error', { err: new Error(errMsg) });
-    return;
-  }
-  const webConfig = configs.find(({ name }) => name === 'web');
-  if (!webConfig) {
-    const errMsg = 'Web task config is not found';
-    await applyHook('error', { err: new Error(errMsg) });
-    return;
-  }
-  const { config } = webConfig as IWebTaskConfig;
+  // TODO: task includes miniapp / kraken / pha
+  const { webpackConfig, taskConfig } = contextConfig.find(({ name }) => name === 'web');
 
-  // transform config to webpack config
-  const webpackConfig = getWebpackConfig({
-    rootDir,
-    config,
-  });
-
-  let devServerConfig: DevServerConfig = {
-    port: commandArgs.port || 3333,
-    host: commandArgs.host || '0.0.0.0',
-    https: commandArgs.https || false,
+  const { port, host, https = false } = commandArgs;
+  let devServerConfig: Configuration = {
+    port,
+    host,
+    https,
   };
 
   // merge devServerConfig with webpackConfig.devServer
@@ -50,23 +30,26 @@ const start = async (context: Context<any>) => {
   const urls = prepareURLs(
     protocol,
     devServerConfig.host,
-    devServerConfig.port,
+    devServerConfig.port as number,
   );
-
   const compiler = await webpackCompiler({
-    config: webpackConfig,
+    rootDir,
+    webpackConfigs: contextConfig.map(({ webpackConfig }) => webpackConfig),
+    taskConfig,
     urls,
     commandArgs,
     command,
     applyHook,
+    esbuildCompile,
   });
   const devServer = new WebpackDevServer(devServerConfig, compiler);
   devServer.startCallback(() => {
     applyHook('after.start.devServer', {
-      urls, devServer,
+      urls,
+      devServer,
     });
   });
-  return devServer;
+  return { compiler, devServer };
 };
 
 export default start;

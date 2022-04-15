@@ -2,18 +2,26 @@
   "name": "@ice/runtime",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "type": "module",
+  "types": "./esm/index.d.ts",
+  "main": "./esm/index.js",
+  "exports": "./esm/index.js",
+  "files": [
+    "esm"
+  ],
   "author": "ICE",
   "license": "MIT",
   "repository": "ice-lab/ice-next",
   "bugs": "https://github.com/ice-lab/ice-next/issues",
   "homepage": "https://next.ice.work",
   "devDependencies": {
-    "@ice/types": "^1.0.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.0"
+    "react-dom": "^17.0.2",
+    "regenerator-runtime": "^0.13.9"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "history": "^5.3.0",
+    "react-router-dom": "^6.2.2"
   }
 }
