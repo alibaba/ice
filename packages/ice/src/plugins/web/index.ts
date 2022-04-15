@@ -56,6 +56,7 @@ const webPlugin: Plugin = ({ registerTask, context, onHook }) => {
   });
 
   registerTask('web', {
+    sourceMap: command === 'start' ? 'cheap-module-source-map' : false,
     cacheDirectory: path.join(rootDir, 'node_modules', '.cache', 'webpack'),
     mode,
     outputDir,
