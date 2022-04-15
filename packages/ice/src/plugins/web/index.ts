@@ -56,6 +56,7 @@ const webPlugin: Plugin = ({ registerTask, context, onHook }) => {
   });
 
   registerTask('web', {
+    cacheDirectory: path.join(rootDir, 'node_modules', '.cache', 'webpack'),
     mode,
     outputDir,
     alias: {

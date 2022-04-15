@@ -3,13 +3,13 @@ import { createRequire } from 'module';
 import fg from 'fast-glob';
 import consola from 'consola';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import merge from 'lodash.merge';
 import CssMinimizerPlugin from '@builder/pack/deps/css-minimizer-webpack-plugin/cjs.js';
 import TerserPlugin from '@builder/pack/deps/terser-webpack-plugin/cjs.js';
 import webpack, { type Configuration } from 'webpack';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import type { Config } from '@ice/types';
-import type { CommandArgs } from 'build-scripts';
 import { createUnplugin } from 'unplugin';
 import browserslist from 'browserslist';
 import configAssets from './config/assets.js';
@@ -25,7 +25,6 @@ const watchIgnoredRegexp = ['**/.git/**', '**/node_modules/**'];
 interface GetWebpackConfigOptions {
   rootDir: string;
   config: Config;
-  commandArgs?: CommandArgs;
 }
 type WebpackConfig = Configuration & { devServer?: DevServerConfiguration };
 type GetWebpackConfig = (options: GetWebpackConfigOptions) => WebpackConfig;
@@ -49,7 +48,7 @@ function getEntry(rootDir: string) {
   };
 }
 
-const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, commandArgs = {} }) => {
+const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
   const {
     mode,
     define,
@@ -66,6 +65,10 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, commandArgs = {} 
     hash,
     minify,
     minimizerOptions = {},
+    port,
+    cacheDirectory,
+    https,
+    analyzer,
   } = config;
 
   const dev = mode !== 'production';
@@ -80,7 +83,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, commandArgs = {} 
   const defineStaticVariables = {
     ...define || {},
     'process.env.NODE_ENV': mode || 'development',
-    'process.env.SERVER_PORT': commandArgs.port,
+    'process.env.SERVER_PORT': port,
   };
   // formate define variables
   Object.keys(defineStaticVariables).forEach((key) => {
@@ -187,7 +190,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, commandArgs = {} 
       type: 'filesystem',
       version: `${process.env.__ICE_VERSION__}|${JSON.stringify(config)}`,
       buildDependencies: { config: [path.join(rootDir, 'package.json')] },
-      cacheDirectory: path.join(rootDir, 'node_modules', '.cache', 'webpack'),
+      cacheDirectory,
     },
     // custom stat output by stats.toJson() calls in plugin-app
     stats: 'none',
@@ -207,6 +210,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, commandArgs = {} 
         fileName: 'assets-manifest.json',
         outputDir: path.join(rootDir, '.ice'),
       }),
+      analyzer && new BundleAnalyzerPlugin(),
     ].filter(Boolean),
     devServer: {
       allowedHosts: 'all',
@@ -232,6 +236,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, commandArgs = {} 
         logging: 'info',
       },
       setupMiddlewares: middlewares,
+      https,
     },
   };
 

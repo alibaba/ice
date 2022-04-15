@@ -1,5 +1,5 @@
 import type { RuleSetRule, Configuration } from 'webpack';
-import type { ProxyConfigArray, ProxyConfigArrayItem, ProxyConfigMap, Middleware } from 'webpack-dev-server';
+import type { ProxyConfigArray, ProxyConfigArrayItem, ProxyConfigMap, Middleware, ServerOptions } from 'webpack-dev-server';
 import type { UnpluginOptions } from 'unplugin';
 import type Server from 'webpack-dev-server';
 import type { MinimizerOptions, CustomOptions } from 'terser-webpack-plugin';
@@ -53,4 +53,12 @@ export interface Config {
   minify?: boolean;
 
   minimizerOptions?: MinimizerOptions<CustomOptions>;
+
+  analyzer?: boolean;
+
+  https?: boolean | ServerOptions;
+
+  port?: string | number;
+
+  cacheDirectory?: string;
 }
