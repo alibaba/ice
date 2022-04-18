@@ -76,6 +76,7 @@ async function render(runtime: Runtime, Document: React.ComponentType<React.Prop
   const history = (appContext.appConfig?.router?.type === 'hash' ? createHashHistory : createBrowserHistory)({ window });
 
   render(
+    document,
     <BrowserEntry
       history={history}
       appContext={appContext}
@@ -84,7 +85,6 @@ async function render(runtime: Runtime, Document: React.ComponentType<React.Prop
       AppRouter={AppRouter}
       Document={Document}
     />,
-    document,
   );
 }
 
