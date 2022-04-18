@@ -63,12 +63,14 @@ class Runtime {
   public composeAppProvider() {
     if (!this.AppProvider.length) return null;
     return this.AppProvider.reduce((ProviderComponent, CurrentProvider) => {
-      return ({ children, ...rest }) => {
+      const Component: React.FC<React.PropsWithChildren<any>> = ({ children, ...rest }) => {
         const element = CurrentProvider
           ? <CurrentProvider {...rest}>{children}</CurrentProvider>
           : children;
         return <ProviderComponent {...rest}>{element}</ProviderComponent>;
       };
+
+      return Component;
     });
   }
 

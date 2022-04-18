@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDOMServer from 'react-dom/server.js';
+import * as ReactDOMServer from 'react-dom/server';
 import type { Location, To } from 'history';
 import { Action, createPath, parsePath } from 'history';
 import { createSearchParams } from 'react-router-dom';
@@ -18,7 +18,7 @@ interface RenderOptions {
   assetsManifest: AssetsManifest;
   routes: RouteItem[];
   runtimeModules: (RuntimePlugin | CommonJsRuntime)[];
-  Document: React.ComponentType<{}>;
+  Document: React.ComponentType<React.PropsWithChildren<{}>>;
 }
 
 export default async function runServerApp(requestContext: ServerContext, options: RenderOptions): Promise<string> {
