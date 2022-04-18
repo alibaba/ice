@@ -66,7 +66,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
   render(runtime, Document);
 }
 
-async function render(runtime: Runtime, Document: React.ComponentType<{}>) {
+async function render(runtime: Runtime, Document: React.ComponentType<React.PropsWithChildren<{}>>) {
   const appContext = runtime.getAppContext();
   const render = runtime.getRender();
   const AppProvider = runtime.composeAppProvider() || React.Fragment;
@@ -94,7 +94,7 @@ interface BrowserEntryProps {
   AppProvider: React.ComponentType<any>;
   PageWrappers: PageWrapper<{}>[];
   AppRouter: React.ComponentType<AppRouterProps>;
-  Document: React.ComponentType<{}>;
+  Document: React.ComponentType<React.PropsWithChildren<{}>>;
 }
 
 interface HistoryState {
