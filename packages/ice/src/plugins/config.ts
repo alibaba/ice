@@ -1,3 +1,5 @@
+import { certificateFor } from 'trusted-cert';
+import fse from 'fs-extra';
 import consola from 'consola';
 import type { UserConfig, Config, Plugin } from '@ice/types';
 import type { UserConfigContext } from 'build-scripts';
@@ -178,12 +180,61 @@ const userConfig = [
     name: 'routes',
     validation: 'object',
   },
+  {
+    name: 'sourceMap',
+    validation: 'string|boolean',
+    setConfig: (config: Config, sourceMap: UserConfig['sourceMap']) => {
+      return mergeDefaultValue(config, 'sourceMap', sourceMap);
+    },
+  },
 ];
 
 const cliOptions = [
   {
     name: 'open',
     commands: ['start'],
+  },
+  {
+    name: 'analyzer',
+    commands: ['start'],
+    setConfig: (config: Config, analyzer: boolean) => {
+      return mergeDefaultValue(config, 'analyzer', analyzer);
+    },
+  },
+  {
+    name: 'force',
+    commands: ['start'],
+    setConfig: (config: Config, force: boolean) => {
+      if (force && fse.existsSync(config.cacheDirectory)) {
+        fse.emptyDirSync(config.cacheDirectory);
+      }
+      return config;
+    },
+  },
+  {
+    name: 'https',
+    commands: ['start'],
+    setConfig: async (config: Config, https: boolean | 'self-signed', context) => {
+      let httpsConfig: Config['https'] = false;
+      if (https === 'self-signed') {
+        const hosts = ['localhost'];
+        const { host } = context.commandArgs;
+        if (host && host !== 'localhost') {
+          hosts.push(host);
+        }
+        // @ts-expect-error certificateFor types
+        const certInfo = await certificateFor(hosts, { silent: true });
+        const key = await fse.readFile(certInfo.keyFilePath, 'utf8');
+        const cert = await fse.readFile(certInfo.certFilePath, 'utf8');
+        httpsConfig = {
+          key,
+          cert,
+        };
+      } else if (https === true) {
+        httpsConfig = true;
+      }
+      return mergeDefaultValue(config, 'https', httpsConfig);
+    },
   },
 ];
 
