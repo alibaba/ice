@@ -11,6 +11,7 @@ import { loadRouteModules, loadRoutesData, getRoutesConfig, matchRoutes } from '
 import type {
   AppContext, InitialContext, RouteItem, ServerContext,
   AppConfig, RuntimePlugin, CommonJsRuntime, AssetsManifest,
+  ComponentWithChildren,
 } from './types';
 
 interface RenderOptions {
@@ -18,7 +19,7 @@ interface RenderOptions {
   assetsManifest: AssetsManifest;
   routes: RouteItem[];
   runtimeModules: (RuntimePlugin | CommonJsRuntime)[];
-  Document: React.ComponentType<React.PropsWithChildren<{}>>;
+  Document: ComponentWithChildren<{}>;
 }
 
 export default async function runServerApp(requestContext: ServerContext, options: RenderOptions): Promise<string> {
