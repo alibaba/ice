@@ -8,7 +8,7 @@ import { AppContextProvider } from './AppContext.js';
 import { AppDataProvider } from './AppData.js';
 import type {
   AppContext, AppConfig, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
-  PageWrapper, RuntimeModules, InitialContext, RouteMatch,
+  PageWrapper, RuntimeModules, InitialContext, RouteMatch, ComponentWithChildren,
 } from './types';
 import { loadRouteModules, loadRoutesData, getRoutesConfig, matchRoutes, filterMatchesToLoad } from './routes.js';
 import { loadStyleLinks, loadScripts } from './assets.js';
@@ -18,7 +18,7 @@ interface RunClientAppOptions {
   appConfig: AppConfig;
   routes: RouteItem[];
   runtimeModules: RuntimeModules;
-  Document: React.ComponentType<{}>;
+  Document: ComponentWithChildren<{}>;
 }
 
 export default async function runClientApp(options: RunClientAppOptions) {
@@ -66,7 +66,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
   render(runtime, Document);
 }
 
-async function render(runtime: Runtime, Document: React.ComponentType<React.PropsWithChildren<{}>>) {
+async function render(runtime: Runtime, Document: ComponentWithChildren<{}>) {
   const appContext = runtime.getAppContext();
   const render = runtime.getRender();
   const AppProvider = runtime.composeAppProvider() || React.Fragment;
@@ -94,7 +94,7 @@ interface BrowserEntryProps {
   AppProvider: React.ComponentType<any>;
   PageWrappers: PageWrapper<{}>[];
   AppRouter: React.ComponentType<AppRouterProps>;
-  Document: React.ComponentType<React.PropsWithChildren<{}>>;
+  Document: ComponentWithChildren<{}>;
 }
 
 interface HistoryState {

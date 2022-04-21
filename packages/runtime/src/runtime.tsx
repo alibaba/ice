@@ -14,6 +14,7 @@ import type {
   WrapperPageComponent,
   GetWrapperPageRegistration,
   AppRouterProps,
+  ComponentWithChildren,
 } from './types.js';
 import DefaultAppRouter from './AppRouter.js';
 import { useData, useConfig } from './RouteContext.js';
@@ -63,7 +64,7 @@ class Runtime {
   public composeAppProvider() {
     if (!this.AppProvider.length) return null;
     return this.AppProvider.reduce((ProviderComponent, CurrentProvider) => {
-      const Component: React.FC<React.PropsWithChildren<any>> = ({ children, ...rest }) => {
+      const Component: ComponentWithChildren<any> = ({ children, ...rest }) => {
         const element = CurrentProvider
           ? <CurrentProvider {...rest}>{children}</CurrentProvider>
           : children;
