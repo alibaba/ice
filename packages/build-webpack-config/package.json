@@ -30,10 +30,12 @@
     "react-refresh": "^0.11.0",
     "regenerator-runtime": "^0.13.9",
     "sass": "^1.49.9",
-    "unplugin": "^0.3.2"
+    "unplugin": "^0.3.2",
+    "webpack-bundle-analyzer": "^4.5.0"
   },
   "devDependencies": {
     "@ice/types": "^1.0.0",
+    "@types/webpack-bundle-analyzer": "^4.4.1",
     "@types/lodash.merge": "^4.6.6",
     "build-scripts": "^2.0.0-16",
     "webpack": "^5.72.0",

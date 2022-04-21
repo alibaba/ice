@@ -21,4 +21,5 @@ export interface UserConfig {
   dropLogLevel?: 'trace' | 'debug' | 'log' | 'info' | 'warn' | 'error';
   minify?: boolean;
   compileDependencies?: boolean | string[] | RegExp[];
+  sourceMap?: string | boolean;
 }

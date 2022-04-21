@@ -36,11 +36,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .command('start')
     .description('start server')
     .allowUnknownOption()
-    .option('--config <config>', 'use custom config')
+    .option('--config <config>', 'custom config path')
     .option('-h, --host <host>', 'dev server host', '0.0.0.0')
     .option('-p, --port <port>', 'dev server port', 3333)
     .option('--no-open', 'don\'t open browser')
     .option('--rootDir <rootDir>', 'project root directory', cwd)
+    .option('--analyzer', 'visualize size of output files', false)
+    .option('--https [https]', 'enable https', false)
+    .option('--force', 'force remove cache directory', false)
     .action(async ({ rootDir, ...commandArgs }) => {
       commandArgs.port = await detectPort(commandArgs.port);
       const service = await createService({ rootDir, command: 'start', commandArgs });
