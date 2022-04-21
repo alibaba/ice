@@ -3913,6 +3913,25 @@ buffer@^5.2.1, buffer@^5.5.0:
     base64-js "^1.3.1"
     ieee754 "^1.1.13"
 
+build-plugin-ice-ssr@3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/build-plugin-ice-ssr/-/build-plugin-ice-ssr-3.1.1.tgz#e3c7f383b8b54f6ce9044087737a7c89963705c6"
+  integrity sha512-WCe/XVGKW2giRZY5itAuwxOj9hzzFw3zkmnZyDGEt4bA3l4OvpueBkaxjdqQrXunfjj+ltZFr0eJQTyoB8GdkQ==
+  dependencies:
+    "@builder/app-helpers" "^2.5.2"
+    "@builder/webpack-config" "^2.0.1"
+    "@ice/runtime" "^0.1.0"
+    "@loadable/babel-plugin" "^5.13.2"
+    "@loadable/webpack-plugin" "^5.14.0"
+    chalk "^4.0.0"
+    cheerio "^1.0.0-rc.3"
+    deepmerge "^4.2.2"
+    fs-extra "^8.1.0"
+    html-minifier "^4.0.0"
+    parseurl "^1.3.3"
+    query-string "^6.13.7"
+    vite "^2.0.0"
+
 build-scripts-config@^3.0.0:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/build-scripts-config/-/build-scripts-config-3.0.3.tgz#bd97743a87f7f19fc36e799a2de06168352cd046"

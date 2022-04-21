@@ -25,6 +25,16 @@ describe('add-routes-by-locales', () => {
     ];
     const expectedRoutes = [
       {
+        path: '/zh-CN',
+        exact: true,
+        component: ComponentA,
+      },
+      {
+        path: '/zh-CN/b',
+        exact: true,
+        component: ComponentB,
+      },
+      {
         path: '/en-US',
         exact: true,
         component: ComponentA,
@@ -69,6 +79,22 @@ describe('add-routes-by-locales', () => {
       },
     ];
     const expectedRoutes = [
+      {
+        path: '/zh-CN',
+        component: Layout,
+        children: [
+          {
+            exact: true,
+            path: '/zh-CN/a',
+            component: ComponentA,
+          },
+          {
+            path: '/zh-CN/b',
+            exact: true,
+            component: ComponentB,
+          },
+        ],
+      },
       {
         path: '/en-US',
         component: Layout,
@@ -138,6 +164,33 @@ describe('add-routes-by-locales', () => {
       },
     ];
     const expectedRoutes = [
+      {
+        path: '/zh-CN',
+        component: Layout,
+        children: [
+          {
+            path: '/zh-CN/a',
+            children: [
+              {
+                exact: true,
+                component: ComponentA,
+                path: '/zh-CN/a/about'
+              }
+            ]
+          },
+          {
+            path: '/zh-CN',
+            exact: true,
+            children: [
+              {
+                exact: true,
+                component: ComponentB,
+                path: '/zh-CN'
+              }
+            ]
+          }
+        ]
+      },
       {
         path: '/en-US',
         component: Layout,
