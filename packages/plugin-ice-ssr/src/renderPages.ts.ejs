@@ -25,7 +25,7 @@ export default async function ssgRender(options) {
 
   let allRoutes = routes;
   if (buildConfig.i18n.locales?.length > 0 && buildConfig.i18n.defaultLocale) {
-    allRoutes = addRoutesByLocales(routes, buildConfig.i18n.locales, buildConfig.i18n.defaultLocale);
+    allRoutes = addRoutesByLocales(routes, buildConfig.i18n);
   }
 
   const flatRoutes = await getFlatRoutes(allRoutes);
@@ -91,16 +91,18 @@ async function getFlatRoutes(routes, parentPath = '') {
   }, Promise.resolve([]));
 }
 
-function addRoutesByLocales(originRoutes: any[], locales: string[], defaultLocale: string) {
-  const modifiedRoutes = [...originRoutes];
+function addRoutesByLocales(originRoutes: any[], i18nConfig) {
+  const { locales } = i18nConfig;
+  if (!locales.length) {
+    return originRoutes;
+  }
 
-  // the locales which are need to add the prefix to the route(e.g.: /home -> /en-US/home).
-  const prefixRouteLocales = locales.filter(locale => locale !== defaultLocale);
+  const modifiedRoutes = [...originRoutes];
 
   originRoutes.forEach((route) => {
     const { path, redirect } = route;
     if(path && !redirect && typeof path === 'string') {
-      prefixRouteLocales.forEach((prefixRouteLocale: string) => {
+      locales.forEach((prefixRouteLocale: string) => {
         modifiedRoutes.unshift({ 
           ...route, 
           path: `/${prefixRouteLocale}${path[0] === '/' ? path :`/${path}`}`,

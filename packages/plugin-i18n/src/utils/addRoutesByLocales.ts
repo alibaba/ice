@@ -7,16 +7,14 @@ import { I18nConfig } from '../types';
  * /home 路由会生成 /en-US/home /en-UK/home
  */
 function addRoutesByLocales(originRoutes: any[], i18nConfig: I18nConfig) {
-  const { locales, defaultLocale } = i18nConfig;
-  // the locales which are need to add the prefix to the route(e.g.: /home -> /en-US/home).
-  const prefixRouteLocales = locales.filter(locale => locale !== defaultLocale);
-
-  if (!prefixRouteLocales.length) {
+  const { locales } = i18nConfig;
+  if (!locales.length) {
     return originRoutes;
   }
+
   const modifiedRoutes = [...originRoutes];
 
-  prefixRouteLocales.forEach((prefixRouteLocale: string) => {
+  locales.forEach((prefixRouteLocale: string) => {
     function addRoutesByLocale(routes) {
       const result = routes.map((route) => {
         // path 设置默认值为空字符串是为了适配 NoMatch(NotFound) 组件
