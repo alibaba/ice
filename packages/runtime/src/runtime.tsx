@@ -24,7 +24,7 @@ class Runtime {
 
   private AppRouter: ComponentType<AppRouterProps>;
 
-  private AppProvider: ComponentType[];
+  private AppProvider: ComponentWithChildren[];
 
   private wrapperPageRegistration: PageWrapper<any>[];
 
@@ -64,14 +64,12 @@ class Runtime {
   public composeAppProvider() {
     if (!this.AppProvider.length) return null;
     return this.AppProvider.reduce((ProviderComponent, CurrentProvider) => {
-      const Component: ComponentWithChildren<any> = ({ children, ...rest }) => {
+      return ({ children, ...rest }) => {
         const element = CurrentProvider
           ? <CurrentProvider {...rest}>{children}</CurrentProvider>
           : children;
         return <ProviderComponent {...rest}>{element}</ProviderComponent>;
       };
-
-      return Component;
     });
   }
 
