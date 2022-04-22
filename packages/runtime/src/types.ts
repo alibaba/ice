@@ -1,6 +1,6 @@
 import type { Action, Location } from 'history';
 import type { ComponentType, ReactNode } from 'react';
-import type { Renderer } from 'react-dom';
+import type { Root, HydrationOptions } from 'react-dom/client';
 import type { Navigator, Params } from 'react-router-dom';
 import type { useConfig, useData } from './RouteContext';
 
@@ -60,9 +60,11 @@ export interface AppContext {
   documentOnly?: boolean;
 }
 
-export {
-  Renderer,
-};
+export type Renderer = (
+  container: Element | Document,
+  initialChildren: React.ReactChild | Iterable<React.ReactNode>,
+  options?: HydrationOptions,
+) => Root;
 
 export interface ServerContext {
   req?: Request;
@@ -94,9 +96,10 @@ export interface RouteItem {
   children?: RouteItem[];
 }
 
+export type ComponentWithChildren<P = {}> = React.ComponentType<React.PropsWithChildren<P>>;
 export type PageWrapper<InjectProps> = (<Props>(Component: ComponentType<Props & InjectProps>) => ComponentType<Props>);
 export type SetAppRouter = (AppRouter: ComponentType<AppRouterProps>) => void;
-export type AddProvider = (Provider: ComponentType) => void;
+export type AddProvider = (Provider: ComponentWithChildren<any>) => void;
 export type SetRender = (render: Renderer) => void;
 export type WrapperPageComponent = (pageWrapper: PageWrapper<any>) => void;
 

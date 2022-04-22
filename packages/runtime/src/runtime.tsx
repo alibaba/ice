@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import * as ReactDOM from 'react-dom/client';
 import type { ComponentType } from 'react';
 import type {
   PageWrapper,
@@ -14,6 +14,7 @@ import type {
   WrapperPageComponent,
   GetWrapperPageRegistration,
   AppRouterProps,
+  ComponentWithChildren,
 } from './types.js';
 import DefaultAppRouter from './AppRouter.js';
 import { useData, useConfig } from './RouteContext.js';
@@ -23,7 +24,7 @@ class Runtime {
 
   private AppRouter: ComponentType<AppRouterProps>;
 
-  private AppProvider: ComponentType[];
+  private AppProvider: ComponentWithChildren[];
 
   private wrapperPageRegistration: PageWrapper<any>[];
 
@@ -32,7 +33,7 @@ class Runtime {
   public constructor(appContext: AppContext) {
     this.AppProvider = [];
     this.appContext = appContext;
-    this.render = ReactDOM.render;
+    this.render = ReactDOM.hydrateRoot;
     this.AppRouter = DefaultAppRouter;
     this.wrapperPageRegistration = [];
   }
@@ -40,7 +41,7 @@ class Runtime {
   public getAppContext = () => this.appContext;
 
   public getRender = () => {
-    return ReactDOM.hydrate;
+    return this.render;
   };
 
   public getAppRouter = () => this.AppRouter;
