@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.3
+
+- [fix] resolve process/browser with fully specified path for esm package
+
 ## 2.2.2
 
 - [fix] compatible with rax-app devServer when config `webpack5`
