@@ -1,8 +1,8 @@
 import { Link, useAppData, useData, useConfig } from 'ice';
 // not recommended but works
 import { useAppContext } from '@ice/runtime';
-import type { AppData } from '@/types';
 import styles from './index.module.css';
+import type { AppData } from '@/types';
 
 export default function Home(props) {
   console.log('render Home', props);

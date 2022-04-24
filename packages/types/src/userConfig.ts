@@ -22,4 +22,6 @@ export interface UserConfig {
   minify?: boolean;
   compileDependencies?: boolean | string[] | RegExp[];
   sourceMap?: string | boolean;
+  tsChecker?: boolean;
+  eslint?: Config['eslintOptions'] | boolean;
 }

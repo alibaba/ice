@@ -14,7 +14,10 @@ const SKIP_COMPILE = [
 const getTransformPlugins = (config: Config): UnpluginOptions[] => {
   const { sourceMap, transformPlugins = [], transforms = [], mode, compileIncludes } = config;
   // create regexp for ignore dependencies
-  const compileExcludes = [new RegExp(SKIP_COMPILE.map((dep) => `node_modules/?.+${dep}/`).join('|'))];
+  const compileExcludes = [
+    new RegExp(SKIP_COMPILE.map((dep) => `node_modules/?.+${dep}/`).join('|')),
+    /bundles\/compiled/,
+  ];
 
   return [
     compilationPlugin({ sourceMap, mode, compileIncludes, compileExcludes }),

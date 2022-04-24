@@ -1,6 +1,5 @@
 import { mkdirSync, writeFileSync } from 'fs';
 import { dirname, resolve } from 'path';
-import webpack from 'webpack';
 import type { Compiler, Compilation } from 'webpack';
 
 const pluginName = 'AssetsManifestPlugin';
@@ -75,7 +74,7 @@ export default class AssetsManifestPlugin {
       compilation.hooks.processAssets.tap(
         {
           name: pluginName,
-          stage: webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONS,
+          stage: compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONS,
         },
         () => {
           this.createAssets(compilation);

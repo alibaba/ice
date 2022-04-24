@@ -2,9 +2,10 @@
   "files": [],
   "references": [
     { "path": "packages/runtime" },
+    { "path": "packages/bundles" },
     { "path": "packages/route-manifest" },
     { "path": "packages/types" },
-    { "path": "packages/build-webpack-config" },
+    { "path": "packages/webpack-config" },
     { "path": "packages/ice" },
     { "path": "packages/plugin-auth" }
   ]

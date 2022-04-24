@@ -42,6 +42,7 @@ examples/*/.ice
 build
 dist
 .history
+compiled
 
 # website
 .docusaurus

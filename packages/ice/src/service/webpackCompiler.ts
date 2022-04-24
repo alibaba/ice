@@ -1,4 +1,4 @@
-import webpack from 'webpack';
+import webpack from '@ice/bundles/compiled/webpack/index.js';
 import consola from 'consola';
 import chalk from 'chalk';
 import type { CommandArgs } from 'build-scripts';
@@ -6,9 +6,10 @@ import type { Compiler, Configuration } from 'webpack';
 import type { Urls, EsbuildCompile } from '@ice/types/esm/plugin.js';
 import type { Config } from '@ice/types';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
+import type { WebpackConfig } from '../utils/getContextConfig';
 
 async function webpackCompiler(options: {
-  webpackConfigs: Configuration | Configuration[];
+  webpackConfigs: WebpackConfig | WebpackConfig[];
   taskConfig: Config;
   command: string;
   commandArgs: CommandArgs;
@@ -26,6 +27,7 @@ async function webpackCompiler(options: {
   });
   let compiler: Compiler;
   try {
+    // @ts-expect-error ignore error with different webpack referer
     compiler = webpack(webpackConfigs as Configuration);
   } catch (err) {
     consola.error('Failed to compile.');
