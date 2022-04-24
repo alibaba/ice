@@ -47,7 +47,14 @@ export default (plugins: any = [], targetDir: string, hasJsxRuntime: boolean) =>
     imports.forEach((importName) => {
       if (importName.startsWith('.')) {
         const importPath = formatPath(path.join(path.dirname(filePath), importName));
-        const importFile = globby.sync(path.extname(importPath) ? importPath : [`${importPath}.@((t|j)s?(x))`, `${importPath}/index.@((t|j)s?(x))`]);
+        const basename = path.basename(importPath);
+        // escape user folder with parentheses and spaces by glob file basename
+        const importFile = globby.sync(path.extname(importPath) ? basename : [`${basename}.@((t|j)s?(x))`, `${basename}/index.@((t|j)s?(x))`],
+          {
+            cwd: path.dirname(importPath),
+            absolute: true,
+          },
+        );
         if (importFile.length > 0) {
           relativeFiles.push(importFile[0]);
           if (!analyzeMap.has(importFile[0])) {

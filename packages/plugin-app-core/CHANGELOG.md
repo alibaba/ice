@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.4
+
+- [fix] compatible with folder which has parentheses and spaces
+
 ## 2.1.3
 
 - [fix] filter runtime modules after file generation
