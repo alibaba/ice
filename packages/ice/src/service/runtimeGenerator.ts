@@ -4,7 +4,7 @@ import consola from 'consola';
 import fg from 'fast-glob';
 import ejs from 'ejs';
 import prettier from 'prettier';
-import lodash from '@builder/pack/deps/lodash/lodash.js';
+import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type {
   AddExport,
   RemoveExport,

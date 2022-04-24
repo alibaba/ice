@@ -2,12 +2,16 @@ import * as path from 'path';
 import { createRequire } from 'module';
 import fg from 'fast-glob';
 import consola from 'consola';
+// FIXME when prepack @pmmmwh/react-refresh-webpack-plugin
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import merge from 'lodash.merge';
-import CssMinimizerPlugin from '@builder/pack/deps/css-minimizer-webpack-plugin/cjs.js';
-import TerserPlugin from '@builder/pack/deps/terser-webpack-plugin/cjs.js';
-import webpack, { type Configuration } from 'webpack';
+import bundleAnalyzer from '@ice/bundles/compiled/webpack-bundle-analyzer/index.js';
+import lodash from '@ice/bundles/compiled/lodash/index.js';
+import CssMinimizerPlugin from '@ice/bundles/compiled/css-minimizer-webpack-plugin/index.js';
+import TerserPlugin from '@ice/bundles/compiled/terser-webpack-plugin/index.js';
+import ForkTsCheckerPlugin from '@ice/bundles/compiled/fork-ts-checker-webpack-plugin/index.js';
+import ESlintPlugin from '@ice/bundles/compiled/eslint-webpack-plugin/index.js';
+import type { Configuration, WebpackPluginInstance } from 'webpack';
+import type webpack from 'webpack';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import type { Config } from '@ice/types';
 import { createUnplugin } from 'unplugin';
@@ -19,12 +23,14 @@ import AssetsManifestPlugin from './webpackPlugins/AssetsManifestPlugin.js';
 import getTransformPlugins from './unPlugins/index.js';
 
 const require = createRequire(import.meta.url);
-
+const { merge } = lodash;
+const { BundleAnalyzerPlugin } = bundleAnalyzer;
 const watchIgnoredRegexp = ['**/.git/**', '**/node_modules/**'];
 
 interface GetWebpackConfigOptions {
   rootDir: string;
   config: Config;
+  webpack: typeof webpack;
 }
 type WebpackConfig = Configuration & { devServer?: DevServerConfiguration };
 type GetWebpackConfig = (options: GetWebpackConfigOptions) => WebpackConfig;
@@ -48,7 +54,7 @@ function getEntry(rootDir: string) {
   };
 }
 
-const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
+const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
   const {
     mode,
     define,
@@ -69,6 +75,8 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
     cacheDirectory,
     https,
     analyzer,
+    tsCheckerOptions,
+    eslintOptions,
   } = config;
 
   const dev = mode !== 'production';
@@ -98,17 +106,12 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
     // set true to flag the module as uncacheable
     defineRuntimeVariables[key] = webpack.DefinePlugin.runtimeValue(runtimeValue, true);
   });
-
   // create plugins
   const webpackPlugins = getTransformPlugins(config).map((plugin) => createUnplugin(() => plugin).webpack());
 
   const terserOptions: any = merge({
-    parse: {
-      ecma: 8,
-    },
     compress: {
       ecma: 5,
-      warnings: false,
       unused: false,
       // The following two options are known to break valid JavaScript code
       // https://github.com/vercel/next.js/issues/7178#issuecomment-493048965
@@ -118,23 +121,13 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
     mangle: {
       safari10: true,
     },
-    output: {
-      ecma: 5,
+    format: {
       safari10: true,
       comments: false,
       // Fixes usage of Emoji and certain Regex
       ascii_only: true,
     },
   }, minimizerOptions);
-
-  const cssMinimizerOptions = {
-    preset: [
-      'default',
-      {
-        discardComments: { removeAll: true },
-      },
-    ],
-  };
 
   const webpackConfig: WebpackConfig = {
     mode,
@@ -176,13 +169,21 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
       minimizer: minify === false ? [] : [
         new TerserPlugin({
           // keep same with compilation
-          minify: TerserPlugin.swcMinify,
+          // use swcMinify with fix error of pure_funcs
+          // minify: TerserPlugin.swcMinify
           extractComments: false,
           terserOptions,
         }),
         new CssMinimizerPlugin({
           parallel: false,
-          minimizerOptions: cssMinimizerOptions,
+          minimizerOptions: {
+            preset: [
+              'default',
+              {
+                discardComments: { removeAll: true },
+              },
+            ],
+          },
         }),
       ],
     },
@@ -201,7 +202,9 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
     devtool: getDevtoolValue(sourceMap),
     plugins: [
       ...webpackPlugins,
-      dev && new ReactRefreshWebpackPlugin(),
+      dev && new ReactRefreshWebpackPlugin({
+        exclude: [/node_modules/, /bundles\/compiled/],
+      }),
       new webpack.DefinePlugin({
         ...defineStaticVariables,
         ...defineRuntimeVariables,
@@ -211,7 +214,9 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
         outputDir: path.join(rootDir, '.ice'),
       }),
       analyzer && new BundleAnalyzerPlugin(),
-    ].filter(Boolean),
+      tsCheckerOptions && new ForkTsCheckerPlugin(tsCheckerOptions),
+      eslintOptions && new ESlintPlugin(eslintOptions),
+    ].filter(Boolean) as unknown as WebpackPluginInstance[],
     devServer: {
       allowedHosts: 'all',
       headers: {
@@ -262,6 +267,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config }) => {
     ...config,
     supportedBrowsers,
     hashKey,
+    webpack,
   };
   const finalWebpackConfig = [configCss, configAssets, ...(configureWebpack || [])].reduce((result, next) => {
     return next(result, ctx);

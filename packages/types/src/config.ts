@@ -1,12 +1,27 @@
+import type webpack from 'webpack';
 import type { RuleSetRule, Configuration } from 'webpack';
 import type { ProxyConfigArray, ProxyConfigArrayItem, ProxyConfigMap, Middleware, ServerOptions } from 'webpack-dev-server';
+import type { Options } from 'eslint-webpack-plugin';
+import type { ForkTsCheckerWebpackPluginOptions } from 'fork-ts-checker-webpack-plugin/lib/plugin-options';
 import type { UnpluginOptions } from 'unplugin';
 import type Server from 'webpack-dev-server';
-import type { MinimizerOptions, CustomOptions } from 'terser-webpack-plugin';
+import type { ECMA } from 'terser';
 
-interface ConfigurationCtx extends Omit<Config, 'webpack'> {
+// get type definitions from terser-webpack-plugin
+type CustomOptions = {
+  [key: string]: any;
+};
+type InferDefaultType<T> = T extends infer U ? U : CustomOptions;
+type PredefinedOptions = {
+  module?: boolean | undefined;
+  ecma?: ECMA | undefined;
+};
+type MinimizerOptions<T> = PredefinedOptions & InferDefaultType<T>;
+
+interface ConfigurationCtx extends Config {
   supportedBrowsers: string[];
   hashKey: string;
+  webpack: typeof webpack;
 }
 
 type Experimental = Pick<Configuration, 'experiments'>;
@@ -61,4 +76,8 @@ export interface Config {
   port?: string | number;
 
   cacheDirectory?: string;
+
+  tsCheckerOptions?: ForkTsCheckerWebpackPluginOptions;
+
+  eslintOptions?: Options;
 }

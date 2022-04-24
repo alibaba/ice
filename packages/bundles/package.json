@@ -1,0 +1,49 @@
+{
+  "name": "@ice/bundles",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "ICE",
+  "description": "basic dependencies for ice",
+  "files": [
+    "compiled"
+  ],
+  "main": "./esm/index.js",
+  "type": "module",
+  "dependencies": {
+    "@swc/core": "1.2.168",
+    "caniuse-lite": "^1.0.30001332",
+    "chokidar": "3.5.3",
+    "events": "3.3.0",
+    "jest-worker": "27.5.1",
+    "less": "4.1.2",
+    "postcss": "8.4.12",
+    "sass": "1.50.0"
+  },
+  "devDependencies": {
+    "@types/less": "^3.0.3",
+    "@types/lodash": "^4.14.181",
+    "@types/webpack-bundle-analyzer": "^4.4.1",
+    "css-loader": "6.7.1",
+    "css-minimizer-webpack-plugin": "3.4.1",
+    "cssnano": "^5.1.7",
+    "es-module-lexer": "0.10.5",
+    "eslint-webpack-plugin": "3.1.1",
+    "fork-ts-checker-webpack-plugin": "7.2.6",
+    "fs-extra": "^10.0.0",
+    "less-loader": "10.2.0",
+    "lodash": "4.17.21",
+    "mini-css-extract-plugin": "2.6.0",
+    "postcss-loader": "6.2.1",
+    "postcss-modules": "4.3.1",
+    "postcss-nested": "5.0.6",
+    "postcss-preset-env": "7.4.3",
+    "sass-loader": "12.6.0",
+    "tapable": "2.2.1",
+    "terser": "5.12.1",
+    "terser-webpack-plugin": "5.3.1",
+    "webpack": "5.72.0",
+    "webpack-bundle-analyzer": "4.5.0",
+    "webpack-dev-server": "4.8.1",
+    "webpack-sources": "3.2.3"
+  }
+}

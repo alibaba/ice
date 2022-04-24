@@ -2,7 +2,7 @@ import { createRequire } from 'module';
 import type { ReactConfig } from '@builder/swc';
 import { transform, type Config as SwcConfig } from '@builder/swc';
 import type { UnpluginOptions } from 'unplugin';
-import lodash from '@builder/pack/deps/lodash/lodash.js';
+import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { Config } from '@ice/types';
 
 const { merge } = lodash;

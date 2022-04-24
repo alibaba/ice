@@ -1,8 +1,12 @@
+import * as path from 'path';
+import { createRequire } from 'module';
 import { certificateFor } from 'trusted-cert';
 import fse from 'fs-extra';
 import consola from 'consola';
 import type { UserConfig, Config, Plugin } from '@ice/types';
 import type { UserConfigContext } from 'build-scripts';
+
+const require = createRequire(import.meta.url);
 
 const mergeDefaultValue = <T>(config: Config, key: string, value: T): Config => {
   if (value) {
@@ -150,7 +154,7 @@ const userConfig = [
   {
     name: 'compileDependencies',
     validation: 'array|boolean',
-    setConfig: (config: Config, customValue: UserConfig['compileDependencies'], context) => {
+    setConfig: (config: Config, customValue: UserConfig['compileDependencies'], context: UserConfigContext<Config>) => {
       const { command } = context;
       let compileRegex: RegExp | false;
       if (customValue === undefined) {
@@ -185,6 +189,65 @@ const userConfig = [
     validation: 'string|boolean',
     setConfig: (config: Config, sourceMap: UserConfig['sourceMap']) => {
       return mergeDefaultValue(config, 'sourceMap', sourceMap);
+    },
+  },
+  {
+    name: 'tsChecker',
+    setConfig: (config: Config, tsChecker: UserConfig['tsChecker']) => {
+      if (tsChecker) {
+        return mergeDefaultValue(config, 'tsCheckerOptions', {
+          issue: {
+            include: [
+              // only check for source code
+              { file: '**/src/**/*' },
+            ],
+          },
+        });
+      }
+    },
+  },
+  {
+    name: 'eslint',
+    validation: 'boolean|object',
+    setConfig: (config: Config, eslint: UserConfig['eslint'], context: UserConfigContext<Config>) => {
+      const { command } = context;
+      if (eslint) {
+        let dependencyError = false;
+        try {
+          const { ESLint } = require('eslint');
+          const [mainVersion] = ESLint.version.split('.');
+          if (mainVersion < 7) {
+            dependencyError = true;
+          }
+        } catch (e) {
+          dependencyError = false;
+        }
+        const dependenciesMsg = 'Please check dependencies of eslint(> 7.0.0)';
+
+        if (dependencyError) {
+          consola.warn(dependenciesMsg);
+          return;
+        }
+        let eslintOptions = {
+          extensions: ['js', 'ts', 'jsx', 'tsx'],
+          lintDirtyModulesOnly: false,
+          failOnError: true,
+        };
+        if (command === 'build') {
+          // do not break build when lint error
+          eslintOptions.failOnError = false;
+        } else {
+          // lint only changed files, skip lint on start
+          eslintOptions.lintDirtyModulesOnly = true;
+        }
+        if (typeof eslint === 'object') {
+          eslintOptions = {
+            ...eslintOptions,
+            ...eslint,
+          };
+        }
+        return mergeDefaultValue(config, 'eslintOptions', eslintOptions);
+      }
     },
   },
 ];

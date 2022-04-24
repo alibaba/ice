@@ -5,6 +5,7 @@ tests/
 node_modules/
 dist/
 out/
+compiled/
 
 # node 覆盖率文件
 coverage/
