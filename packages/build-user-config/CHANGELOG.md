@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.3
+
+- [fix] escape the empty rules.
+
 ## 2.2.2
 
 - [fix] compatible with rax-app devServer when config `webpack5`

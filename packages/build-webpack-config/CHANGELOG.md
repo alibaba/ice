@@ -1,5 +1,9 @@
 # changelog
 
+## 2.1.0
+
+- [feat] be able to resolve `.mjs` and `.mts`
+
 ## 2.0.1
 
 - [fix] bump version of `@builder/pack`(^0.6.0)

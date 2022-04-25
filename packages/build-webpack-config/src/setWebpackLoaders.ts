@@ -104,7 +104,7 @@ export default (config) => {
   const babelLoader = require.resolve('@builder/pack/deps/babel-loader');
   const babelConfig = getBabelConfig();
   ['jsx', 'tsx'].forEach(ruleName => {
-    const testRegx = new RegExp(`\\.${ruleName}?$`);
+    const testRegx = new RegExp(`\\.m?${ruleName}?$`);
     config.module.rule(ruleName)
       .test(testRegx)
       .exclude

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.1.3
+
+- [feat] be able to resolve `.mts`
+
 ## 2.1.2
 
 - [chore] optimize compile log

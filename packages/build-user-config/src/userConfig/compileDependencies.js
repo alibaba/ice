@@ -44,9 +44,11 @@ module.exports = (config, compileDependencies) => {
   };
 
   ['jsx', 'tsx', 'swc-tsx', 'swc-jsx'].forEach((rule) => {
-    config.module
+    if (config.module.rules.get(rule)) {
+      config.module
       .rule(rule)
       .exclude.clear()
       .add(matchExclude);
+    }
   });
 };
