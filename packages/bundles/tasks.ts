@@ -72,7 +72,7 @@ const tasks = [
     pkgName: 'css-minimizer-webpack-plugin',
     matchCopyFiles: (data: { resolvePath: string; resolveId: string }): boolean => {
       const { resolvePath, resolveId } = data;
-      return resolvePath.endsWith('./utils') && resolveId.endsWith('css-minimizer-webpack-plugin/dist/index.js');
+      return resolvePath.includes('./utils') && resolveId.includes('css-minimizer-webpack-plugin/dist');
     },
   },
   {
