@@ -2,8 +2,8 @@ import React from 'react';
 import type { Location } from 'history';
 import type { RouteObject } from 'react-router-dom';
 import { matchRoutes as originMatchRoutes } from 'react-router-dom';
-import PageWrapper from './PageWrapper.js';
-import type { RouteItem, RouteModules, PageWrapper as IPageWrapper, RouteMatch, InitialContext, RoutesConfig, RoutesData } from './types';
+import RouteWrapper from './RouteWrapper.js';
+import type { RouteItem, RouteModules, RouteWrapper as IRouteWrapper, RouteMatch, InitialContext, RoutesConfig, RoutesData } from './types';
 
 // global route modules cache
 const routeModules: RouteModules = {};
@@ -84,21 +84,16 @@ export function getRoutesConfig(matches: RouteMatch[], routesData: RoutesData): 
 /**
  * Create elements in routes which will be consumed by react-router-dom
  */
-export function createRouteElements(routes: RouteItem[], PageWrappers?: IPageWrapper<any>[]) {
+export function createRouteElements(routes: RouteItem[], RouteWrappers?: IRouteWrapper[]) {
   return routes.map((routeItem: RouteItem) => {
-    let { path, children, index, id, element, ...rest } = routeItem;
-    const idParts = id.split('/');
-    const isLayout = idParts[idParts.length - 1] === 'layout';
-    // Layout components don't need to wrap the Provider(for example: AuthProvider)
-    element = isLayout ? (
-      <RouteComponent id={id} />
-    ) : (
-      <PageWrapper
-        PageComponent={(props) => <RouteComponent id={id} {...props} />}
-        PageWrappers={PageWrappers}
-        id={id}
-      />
+    let { path, children, index, id, layout, element, ...rest } = routeItem;
+
+    element = (
+      <RouteWrapper id={id} isLayout={layout} wrappers={RouteWrappers}>
+        <RouteComponent id={id} />
+      </RouteWrapper>
     );
+
     const route: RouteItem = {
       path,
       element,
@@ -106,8 +101,9 @@ export function createRouteElements(routes: RouteItem[], PageWrappers?: IPageWra
       id,
       ...rest,
     };
+
     if (children) {
-      route.children = createRouteElements(children, PageWrappers);
+      route.children = createRouteElements(children, RouteWrappers);
     }
 
     return route;

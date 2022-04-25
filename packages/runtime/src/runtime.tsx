@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import type { ComponentType } from 'react';
 import type {
-  PageWrapper,
   Renderer,
   AppContext,
   RuntimePlugin,
@@ -10,9 +9,9 @@ import type {
   RuntimeAPI,
   SetAppRouter,
   AddProvider,
+  AddWrapper,
+  RouteWrapper,
   SetRender,
-  WrapperPageComponent,
-  GetWrapperPageRegistration,
   AppRouterProps,
   ComponentWithChildren,
 } from './types.js';
@@ -26,7 +25,7 @@ class Runtime {
 
   private AppProvider: ComponentWithChildren[];
 
-  private wrapperPageRegistration: PageWrapper<any>[];
+  private RouteWrappers: RouteWrapper[];
 
   private render: Renderer;
 
@@ -35,7 +34,7 @@ class Runtime {
     this.appContext = appContext;
     this.render = ReactDOM.hydrateRoot;
     this.AppRouter = DefaultAppRouter;
-    this.wrapperPageRegistration = [];
+    this.RouteWrappers = [];
   }
 
   public getAppContext = () => this.appContext;
@@ -46,11 +45,13 @@ class Runtime {
 
   public getAppRouter = () => this.AppRouter;
 
+  public getWrappers = () => this.RouteWrappers;
+
   public loadModule(module: RuntimePlugin | CommonJsRuntime) {
     let runtimeAPI: RuntimeAPI = {
       addProvider: this.addProvider,
       setRender: this.setRender,
-      wrapperPageComponent: this.wrapperPageComponent,
+      addWrapper: this.addWrapper,
       appContext: this.appContext,
       setAppRouter: this.setAppRouter,
       useData,
@@ -82,12 +83,11 @@ class Runtime {
     this.render = render;
   };
 
-  private wrapperPageComponent: WrapperPageComponent = (wrapperPage) => {
-    this.wrapperPageRegistration.push(wrapperPage);
-  };
-
-  public getWrapperPageRegistration: GetWrapperPageRegistration = () => {
-    return this.wrapperPageRegistration;
+  private addWrapper: AddWrapper = (Wrapper, forLayout?: boolean) => {
+    this.RouteWrappers.push({
+      Wrapper,
+      layout: forLayout,
+    });
   };
 
   // for plugin-icestark

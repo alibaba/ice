@@ -17,7 +17,7 @@ export function generateRoutesInfo(rootDir: string, routesConfig: UserConfig['ro
 
 function generateNestRoutesStr(nestRouteManifest: NestedRouteManifest[]) {
   return nestRouteManifest.reduce((prev, route) => {
-    const { children, path: routePath, index, componentName, file, id } = route;
+    const { children, path: routePath, index, componentName, file, id, layout } = route;
 
     const fileExtname = path.extname(file);
     const componentFile = file.replace(new RegExp(`${fileExtname}$`), '');
@@ -29,6 +29,7 @@ function generateNestRoutesStr(nestRouteManifest: NestedRouteManifest[]) {
       index: ${index},
       id: '${id}',
       exact: true,
+      ${layout ? 'layout: true,' : ''}
     `;
     if (children) {
       str += `children: [${generateNestRoutesStr(children)}],`;

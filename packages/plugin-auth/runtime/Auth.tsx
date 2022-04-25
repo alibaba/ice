@@ -10,7 +10,7 @@ const AuthProvider = Context.Provider;
 
 interface InjectProps {
   auth: ContextType[0];
-  useAuth: ContextType[1];
+  setAuth: ContextType[1];
 }
 
 const useAuth = (): ContextType => {
@@ -19,12 +19,10 @@ const useAuth = (): ContextType => {
 };
 
 // class 组件支持 Hoc 用法
-function withAuth<Props extends InjectProps>(Component: React.ComponentType<Props>) {
-  type OriginalProps = Omit<Props, keyof InjectProps>;
-  const AuthWrapped = (props: OriginalProps) => {
+function withAuth<Props>(Component: React.ComponentType<Props>) {
+  const AuthWrapped = (props: Props) => {
     const [auth, setAuth] = useAuth();
-    const WrappedComponent = Component as React.ComponentType<OriginalProps>;
-    return <WrappedComponent {...props} auth={auth} setAuth={setAuth} />;
+    return <Component {...props} auth={auth} setAuth={setAuth} />;
   };
   return AuthWrapped;
 }
