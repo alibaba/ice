@@ -3,6 +3,7 @@
 ## 2.2.3
 
 - [fix] escape the empty rules.
+- [fix] resolve process/browser with fully specified path for esm package
 
 ## 2.2.2
 
