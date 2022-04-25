@@ -29,6 +29,10 @@ export interface ConfigRoute {
    * Should be `true` if it is an index route. This disallows child routes.
    */
   index?: boolean;
+  /**
+   * Should be `true` if route is layout component.
+   */
+  layout?: boolean;
 }
 
 export interface DefineRouteOptions {
@@ -112,6 +116,7 @@ export function defineRoutes(
           : undefined,
       file,
       componentName: createComponentName(id),
+      layout: id.endsWith('layout'),
     };
 
     routes[route.id] = route;
