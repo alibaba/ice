@@ -8,14 +8,14 @@ import type Server from 'webpack-dev-server';
 import type { ECMA } from 'terser';
 
 // get type definitions from terser-webpack-plugin
-type CustomOptions = {
+interface CustomOptions {
   [key: string]: any;
-};
+}
 type InferDefaultType<T> = T extends infer U ? U : CustomOptions;
-type PredefinedOptions = {
+interface PredefinedOptions {
   module?: boolean | undefined;
   ecma?: ECMA | undefined;
-};
+}
 type MinimizerOptions<T> = PredefinedOptions & InferDefaultType<T>;
 
 interface ConfigurationCtx extends Config {

@@ -1,13 +1,17 @@
+import type { ServerResponse } from 'http';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
-import type { Location, To } from 'history';
-import { Action, createPath, parsePath } from 'history';
+import { Action, parsePath } from 'history';
+import type { Location } from 'history';
 import { createSearchParams } from 'react-router-dom';
 import Runtime from './runtime.js';
 import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
 import { AppDataProvider } from './AppData.js';
 import { loadRouteModules, loadRoutesData, getRoutesConfig, matchRoutes } from './routes.js';
+import { piperToString, renderToNodeStream } from './server/streamRender.js';
+import { createStaticNavigator } from './server/navigator.js';
+import type { NodeWritablePiper } from './server/streamRender.js';
 import type {
   AppContext, InitialContext, RouteItem, ServerContext,
   AppConfig, RuntimePlugin, CommonJsRuntime, AssetsManifest,
@@ -20,21 +24,136 @@ interface RenderOptions {
   routes: RouteItem[];
   runtimeModules: (RuntimePlugin | CommonJsRuntime)[];
   Document: ComponentWithChildren<{}>;
+  documentOnly?: boolean;
 }
 
-export default async function runServerApp(requestContext: ServerContext, options: RenderOptions): Promise<string> {
-  try {
-    return await renderServerApp(requestContext, options);
-  } catch (error) {
-    console.error('renderServerApp error: ', error);
-    return await renderDocument(requestContext, options);
+interface Piper {
+  pipe: NodeWritablePiper;
+  fallback: Function;
+}
+interface RenderResult {
+  statusCode?: number;
+  value?: string | Piper;
+}
+
+/**
+ * Render and return the result as html string.
+ */
+export async function renderToHTML(requestContext: ServerContext, options: RenderOptions): Promise<RenderResult> {
+  const result = await doRender(requestContext, options);
+
+  const { value } = result;
+
+  if (typeof value === 'string') {
+    return result;
   }
+
+  const { pipe, fallback } = value;
+
+  try {
+    const html = await piperToString(pipe);
+
+    return {
+      value: html,
+      statusCode: 200,
+    };
+  } catch (error) {
+    console.error('Warning: piperToString error, downgrade to csr.', error);
+    // downgrade to csr.
+    const result = fallback();
+    return result;
+  }
+}
+
+/**
+ * Render and send the result to ServerResponse.
+ */
+export async function renderToResponse(requestContext: ServerContext, options: RenderOptions) {
+  const { res } = requestContext;
+  const result = await doRender(requestContext, options);
+
+  const { value } = result;
+
+  if (typeof value === 'string') {
+    sendResult(res, result);
+  } else {
+    const { pipe, fallback } = value;
+
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+
+    try {
+      await pipeToResponse(res, pipe);
+    } catch (error) {
+      console.error('Warning: piperToResponse error, downgrade to csr.', error);
+      // downgrade to csr.
+      const result = await fallback();
+      sendResult(res, result);
+    }
+  }
+}
+
+/**
+ * Send string result to ServerResponse.
+ */
+async function sendResult(res: ServerResponse, result: RenderResult) {
+  res.statusCode = result.statusCode;
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.end(result.value);
+}
+
+/**
+ * Send stream result to ServerResponse.
+ */
+function pipeToResponse(res, pipe: NodeWritablePiper) {
+  return new Promise((resolve, reject) => {
+    pipe(res, (err) => (err ? reject(err) : resolve(null)));
+  });
+}
+
+async function doRender(requestContext: ServerContext, options: RenderOptions): Promise<RenderResult> {
+  const { req } = requestContext;
+
+  const {
+    routes,
+    documentOnly,
+  } = options;
+
+  const location = getLocation(req.url);
+  const matches = matchRoutes(routes, location);
+
+  if (!matches.length) {
+    return render404();
+  }
+
+  await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
+
+  if (documentOnly) {
+    return renderDocument(matches, options);
+  }
+
+  try {
+    return await renderServerEntry(requestContext, options, matches, location);
+  } catch (err) {
+    console.error('Warning: render server entry error, downgrade to csr.', err);
+    return renderDocument(matches, options);
+  }
+}
+
+// https://github.com/ice-lab/ice-next/issues/133
+function render404(): RenderResult {
+  return {
+    value: 'Page is Not Found',
+    statusCode: 404,
+  };
 }
 
 /**
  * Render App by SSR.
  */
-export async function renderServerApp(requestContext: ServerContext, options: RenderOptions): Promise<string> {
+export async function renderServerEntry(
+  requestContext: ServerContext, options: RenderOptions, matches, location,
+): Promise<RenderResult> {
   const { req } = requestContext;
 
   const {
@@ -44,16 +163,6 @@ export async function renderServerApp(requestContext: ServerContext, options: Re
     routes,
     Document,
   } = options;
-
-  const location = getLocation(req.url);
-  const matches = matchRoutes(routes, location);
-
-  if (!matches.length) {
-    // TODO: Render 404
-    throw new Error('No matched page found.');
-  }
-
-  await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
 
   const initialContext: InitialContext = {
     ...requestContext,
@@ -90,7 +199,7 @@ export async function renderServerApp(requestContext: ServerContext, options: Re
   const RouteWrappers = runtime.getWrappers();
   const AppRouter = runtime.getAppRouter();
 
-  const result = ReactDOMServer.renderToString(
+  const element = (
     <AppContextProvider value={appContext}>
       <AppDataProvider value={appData}>
         <Document>
@@ -105,19 +214,27 @@ export async function renderServerApp(requestContext: ServerContext, options: Re
           />
         </Document>
       </AppDataProvider>
-    </AppContextProvider>,
+    </AppContextProvider>
   );
 
-  // TODO: send html in render function.
-  return result;
+  const pipe = await renderToNodeStream(element, false);
+
+  const fallback = () => {
+    renderDocument(matches, options);
+  };
+
+  return {
+    value: {
+      pipe,
+      fallback,
+    },
+  };
 }
 
 /**
  * Render Document for CSR.
  */
-export async function renderDocument(requestContext: ServerContext, options: RenderOptions): Promise<string> {
-  const { req } = requestContext;
-
+export function renderDocument(matches, options: RenderOptions): RenderResult {
   const {
     routes,
     assetsManifest,
@@ -125,19 +242,10 @@ export async function renderDocument(requestContext: ServerContext, options: Ren
     Document,
   } = options;
 
-  const location = getLocation(req.url);
-  const matches = matchRoutes(routes, location);
-
-  if (!matches.length) {
-    throw new Error('No matched page found.');
-  }
-
-  await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
-
-  const routesConfig = getRoutesConfig(matches, {});
   // renderDocument needn't to load routesData and appData.
-  const routesData = {};
   const appData = {};
+  const routesData = {};
+  const routesConfig = getRoutesConfig(matches, {});
 
   const appContext: AppContext = {
     assetsManifest,
@@ -150,7 +258,7 @@ export async function renderDocument(requestContext: ServerContext, options: Ren
     documentOnly: true,
   };
 
-  const result = ReactDOMServer.renderToString(
+  const html = ReactDOMServer.renderToString(
     <AppContextProvider value={appContext}>
       <AppDataProvider value={appData}>
         <Document />
@@ -158,7 +266,10 @@ export async function renderDocument(requestContext: ServerContext, options: Ren
     </AppContextProvider>,
   );
 
-  return result;
+  return {
+    value: html,
+    statusCode: 200,
+  };
 }
 
 /**
@@ -176,52 +287,4 @@ function getLocation(url: string) {
   };
 
   return location;
-}
-
-function createStaticNavigator() {
-  return {
-    createHref(to: To) {
-      return typeof to === 'string' ? to : createPath(to);
-    },
-    push(to: To) {
-      throw new Error(
-        'You cannot use navigator.push() on the server because it is a stateless ' +
-          'environment. This error was probably triggered when you did a ' +
-          `\`navigate(${JSON.stringify(to)})\` somewhere in your app.`,
-      );
-    },
-    replace(to: To) {
-      throw new Error(
-        'You cannot use navigator.replace() on the server because it is a stateless ' +
-          'environment. This error was probably triggered when you did a ' +
-          `\`navigate(${JSON.stringify(to)}, { replace: true })\` somewhere ` +
-          'in your app.',
-      );
-    },
-    go(delta: number) {
-      throw new Error(
-        'You cannot use navigator.go() on the server because it is a stateless ' +
-          'environment. This error was probably triggered when you did a ' +
-          `\`navigate(${delta})\` somewhere in your app.`,
-      );
-    },
-    back() {
-      throw new Error(
-        'You cannot use navigator.back() on the server because it is a stateless ' +
-          'environment.',
-      );
-    },
-    forward() {
-      throw new Error(
-        'You cannot use navigator.forward() on the server because it is a stateless ' +
-          'environment.',
-      );
-    },
-    block() {
-      throw new Error(
-        'You cannot use navigator.block() on the server because it is a stateless ' +
-          'environment.',
-      );
-    },
-  };
 }
