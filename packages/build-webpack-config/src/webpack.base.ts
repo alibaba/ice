@@ -7,7 +7,7 @@ export default (mode) => {
 
   config.mode(mode);
   config.resolve.extensions
-    .merge(['.js', '.json', '.jsx', '.ts', '.tsx']);
+    .merge(['.js', '.json', '.jsx', '.ts', '.tsx', '.mjs', '.mts']);
   // webpack loaders
   setWebpackLoaders(config);
   // webpack plugins

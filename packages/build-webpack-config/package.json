@@ -1,6 +1,6 @@
 {
   "name": "@builder/webpack-config",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Basic webpack config for build-scripts",
   "main": "lib/index.js",
   "types": "types/index.d.ts",

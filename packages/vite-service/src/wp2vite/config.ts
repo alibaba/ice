@@ -164,7 +164,7 @@ const configMap: ConfigMap = {
   },
   'resolve.extensions': {
     name: 'resolve.extensions',
-    transform: (value) => ['.mjs', ...value],
+    transform: (value) => ['.mjs', '.mts', ...value],
   },
   // minify
   'optimization.minimize': {
