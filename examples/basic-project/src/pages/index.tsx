@@ -1,8 +1,11 @@
+import { Suspense, lazy } from 'react';
 import { Link, useAppData, useData, useConfig } from 'ice';
 // not recommended but works
 import { useAppContext } from '@ice/runtime';
 import styles from './index.module.css';
 import type { AppData } from '@/types';
+
+const Bar = lazy(() => import('../components/bar'));
 
 export default function Home(props) {
   console.log('render Home', props);
@@ -22,6 +25,9 @@ export default function Home(props) {
     <>
       <h2 className={styles.title}>Home Page</h2>
       <Link to="/about">about</Link>
+      <Suspense fallback={<div>hello</div>}>
+        <Bar />
+      </Suspense>
     </>
   );
 }

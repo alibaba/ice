@@ -147,6 +147,12 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
     },
     context: rootDir,
     module: {
+      parser: {
+        javascript: {
+          importExportsPresence: 'warn',
+          exportsPresence: 'warn',
+        },
+      },
       rules: [
         ...loaders,
       ],
@@ -157,6 +163,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
       fallback: {
         // TODO: add more fallback module
         events: require.resolve('events'),
+        stream: false,
       },
     },
     watchOptions: {

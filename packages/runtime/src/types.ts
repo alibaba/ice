@@ -1,3 +1,4 @@
+import type { IncomingMessage, ServerResponse } from 'http';
 import type { Action, Location } from 'history';
 import type { ComponentType, ReactNode } from 'react';
 import type { Root, HydrationOptions } from 'react-dom/client';
@@ -67,8 +68,8 @@ export type Renderer = (
 ) => Root;
 
 export interface ServerContext {
-  req?: Request;
-  res?: Response;
+  req?: IncomingMessage;
+  res?: ServerResponse;
 }
 
 export interface InitialContext extends ServerContext {
