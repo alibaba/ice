@@ -25,9 +25,6 @@ export async function loadRouteModule(route: RouteModule) {
     return routeModule;
   } catch (error) {
     console.error(error);
-    if (typeof window !== 'undefined') {
-      window.location.reload();
-    }
   }
 }
 
