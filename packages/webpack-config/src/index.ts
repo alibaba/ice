@@ -173,7 +173,8 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
       ignored: watchIgnoredRegexp,
     },
     optimization: {
-      minimizer: minify === false ? [] : [
+      minimize: minify,
+      minimizer: [
         new TerserPlugin({
           // keep same with compilation
           // use swcMinify with fix error of pure_funcs
