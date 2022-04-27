@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.2
+
+- [feat] support generate defaultLocale HTML in SSG
+
 ## 3.1.1
 
 - [fix] compatible with the latest API of `webpack-dev-server`
