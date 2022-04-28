@@ -202,7 +202,7 @@ importers:
       '@types/sass': ^1.43.1
       '@types/temp': ^0.9.1
       address: ^1.1.2
-      build-scripts: ^2.0.0-16
+      build-scripts: 2.0.0-17
       chalk: ^4.0.0
       chokidar: ^3.5.3
       commander: ^9.0.0
@@ -293,7 +293,7 @@ importers:
     specifiers:
       '@ice/route-manifest': ^1.0.0
       '@ice/runtime': ^1.0.0
-      build-scripts: ^2.0.0-16
+      build-scripts: 2.0.0-17
       esbuild: ^0.14.23
       eslint-webpack-plugin: 3.1.1
       fork-ts-checker-webpack-plugin: 7.2.6
@@ -323,7 +323,7 @@ importers:
       '@pmmmwh/react-refresh-webpack-plugin': ^0.5.4
       '@rollup/pluginutils': ^4.2.0
       browserslist: ^4.19.3
-      build-scripts: ^2.0.0-16
+      build-scripts: 2.0.0-17
       consola: ^2.15.3
       event: ^1.0.0
       fast-glob: ^3.2.11
@@ -8204,7 +8204,7 @@ packages:
   /wide-align/1.1.5:
     resolution: {integrity: sha512-eDMORYaPNZ4sQIuuYPDHdQvf4gyCF9rEEV/yPxGfwPkRodwEgiMUUXTx/dex+Me0wxx53S+NgUHaP7y3MGlDmg==}
     dependencies:
-      string-width: 1.0.2
+      string-width: 4.2.3
 
   /word-wrap/1.2.3:
     resolution: {integrity: sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==}

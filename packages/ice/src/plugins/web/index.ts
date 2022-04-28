@@ -1,10 +1,13 @@
 import * as path from 'path';
+import { createRequire } from 'module';
 import type { Plugin } from '@ice/types';
 import emptyDir from '../../utils/emptyDir.js';
 import openBrowser from '../../utils/openBrowser.js';
 import createAssetsPlugin from '../../esbuild/assets.js';
 import generateHTML from './ssr/generateHTML.js';
 import { setupRenderServer } from './ssr/serverRender.js';
+
+const require = createRequire(import.meta.url);
 
 const webPlugin: Plugin = ({ registerTask, context, onHook }) => {
   const { command, rootDir, userConfig, commandArgs } = context;
@@ -63,6 +66,7 @@ const webPlugin: Plugin = ({ registerTask, context, onHook }) => {
     alias: {
       ice: path.join(rootDir, '.ice', 'index.ts'),
       '@': path.join(rootDir, 'src'),
+      'webpack/hot': path.join(require.resolve('@ice/bundles'), '../../compiled/webpack/hot'),
     },
     middlewares: (middlewares, devServer) => {
       if (!devServer) {

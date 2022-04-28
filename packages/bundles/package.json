@@ -5,6 +5,7 @@
   "author": "ICE",
   "description": "basic dependencies for ice",
   "files": [
+    "esm",
     "compiled"
   ],
   "main": "./esm/index.js",
