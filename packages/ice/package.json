@@ -24,7 +24,7 @@
     "@ice/runtime": "^1.0.0",
     "@ice/webpack-config": "^1.0.0",
     "address": "^1.1.2",
-    "build-scripts": "^2.0.0-16",
+    "build-scripts": "2.0.0-17",
     "chalk": "^4.0.0",
     "commander": "^9.0.0",
     "consola": "^2.15.3",

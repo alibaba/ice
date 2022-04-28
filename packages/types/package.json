@@ -28,7 +28,7 @@
   "devDependencies": {
     "@ice/route-manifest": "^1.0.0",
     "@ice/runtime": "^1.0.0",
-    "build-scripts": "^2.0.0-16",
+    "build-scripts": "2.0.0-17",
     "esbuild": "^0.14.23",
     "eslint-webpack-plugin": "3.1.1",
     "fork-ts-checker-webpack-plugin": "7.2.6",
