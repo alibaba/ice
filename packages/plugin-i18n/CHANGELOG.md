@@ -1,5 +1,9 @@
 # build-plugin-ice-i18n
 
+## 0.2.1
+
+- feat: add defaultLocale prefix routes
+
 ## 0.2.0
 
 - feat: provide `setLocale` API which can update locale value to cookie
