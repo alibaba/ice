@@ -3,6 +3,7 @@
   "workspaces": [
     "packages/*"
   ],
+  "version": "0.0.1",
   "description": "A universal framework based on React",
   "scripts": {
     "prepare": "husky install",
