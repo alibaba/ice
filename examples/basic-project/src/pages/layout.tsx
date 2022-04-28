@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Outlet, useData, useConfig } from 'ice';
 
 export default () => {

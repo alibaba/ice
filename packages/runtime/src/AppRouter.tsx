@@ -1,7 +1,7 @@
 import * as React from 'react';
 import type { RouteObject } from 'react-router-dom';
 import { Router, useRoutes } from 'react-router-dom';
-import type { AppRouterProps, AppRouteProps } from './types.js';
+import type { AppRouterProps } from './types.js';
 
 const AppRouter: React.ComponentType<AppRouterProps> = (props) => {
   const { action, location, navigator, static: staticProps, routes } = props;

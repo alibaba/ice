@@ -1,6 +1,7 @@
+import type { IncomingMessage, ServerResponse } from 'http';
 import type { Action, Location } from 'history';
 import type { ComponentType, ReactNode } from 'react';
-import type { Renderer } from 'react-dom';
+import type { Root, HydrationOptions } from 'react-dom/client';
 import type { Navigator, Params } from 'react-router-dom';
 import type { useConfig, useData } from './RouteContext';
 
@@ -60,13 +61,15 @@ export interface AppContext {
   documentOnly?: boolean;
 }
 
-export {
-  Renderer,
-};
+export type Renderer = (
+  container: Element | Document,
+  initialChildren: React.ReactChild | Iterable<React.ReactNode>,
+  options?: HydrationOptions,
+) => Root;
 
 export interface ServerContext {
-  req?: Request;
-  res?: Response;
+  req?: IncomingMessage;
+  res?: ServerResponse;
 }
 
 export interface InitialContext extends ServerContext {
@@ -76,7 +79,7 @@ export interface InitialContext extends ServerContext {
   ssrError?: any;
 }
 
-export interface PageComponent {
+export interface RouteComponent {
   default: ComponentType<any>;
   getData?: GetData;
   getConfig?: GetConfig;
@@ -90,18 +93,25 @@ export interface RouteItem {
   index?: false;
   exact?: boolean;
   strict?: boolean;
-  load?: () => Promise<PageComponent>;
+  load?: () => Promise<RouteComponent>;
   children?: RouteItem[];
+  layout?: boolean;
 }
 
-export type PageWrapper<InjectProps> = (<Props>(Component: ComponentType<Props & InjectProps>) => ComponentType<Props>);
+export type ComponentWithChildren<P = {}> = React.ComponentType<React.PropsWithChildren<P>>;
+
+export interface RouteWrapper {
+  Wrapper: ComponentWithChildren;
+  layout?: boolean;
+}
+
 export type SetAppRouter = (AppRouter: ComponentType<AppRouterProps>) => void;
-export type AddProvider = (Provider: ComponentType) => void;
+export type AddProvider = (Provider: ComponentWithChildren<any>) => void;
 export type SetRender = (render: Renderer) => void;
-export type WrapperPageComponent = (pageWrapper: PageWrapper<any>) => void;
+export type AddWrapper = (wrapper: ComponentType, forLayout?: boolean) => void;
 
 export interface RouteModules {
-  [routeId: string]: PageComponent;
+  [routeId: string]: RouteComponent;
 }
 
 export interface AssetsManifest {
@@ -113,12 +123,11 @@ export interface AssetsManifest {
   };
 }
 
-
 export interface RuntimeAPI {
   setAppRouter: SetAppRouter;
   addProvider: AddProvider;
   setRender: SetRender;
-  wrapperPageComponent: WrapperPageComponent;
+  addWrapper: AddWrapper;
   appContext: AppContext;
   useData: typeof useData;
   useConfig: typeof useConfig;
@@ -133,8 +142,6 @@ export interface RuntimePlugin {
 export interface CommonJsRuntime {
   default: RuntimePlugin;
 }
-
-export type GetWrapperPageRegistration = () => PageWrapper<any>[];
 
 export type RuntimeModules = (RuntimePlugin | CommonJsRuntime)[];
 

@@ -5,6 +5,7 @@ import consola from 'consola';
 import type { CommandArgs, CommandName } from 'build-scripts';
 import type { ExportData } from '@ice/types/esm/generator.js';
 import type { ExtendsPluginAPI } from '@ice/types/esm/plugin.js';
+import webpack from '@ice/bundles/compiled/webpack/index.js';
 import Generator from './service/runtimeGenerator.js';
 import { createEsbuildCompiler } from './service/compile.js';
 import createWatch from './service/watchSource.js';
@@ -69,7 +70,10 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         addEvent: addWatchEvent,
         removeEvent: removeWatchEvent,
       },
-      context: {},
+      context: {
+        // @ts-expect-error repack type can not match with original type
+        webpack,
+      },
     },
     getBuiltInPlugins: () => {
       return [webPlugin, configPlugin];

@@ -1,7 +1,7 @@
 import WebpackDevServer from 'webpack-dev-server';
 import type { Configuration } from 'webpack-dev-server';
 import type { Context } from 'build-scripts';
-import lodash from '@builder/pack/deps/lodash/lodash.js';
+import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { Config } from '@ice/types';
 import type { EsbuildCompile } from '@ice/types/esm/plugin.js';
 import webpackCompiler from '../service/webpackCompiler.js';

@@ -1,7 +1,7 @@
 import * as path from 'path';
 import fs from 'fs-extra';
 import fg from 'fast-glob';
-import { init, parse } from 'es-module-lexer';
+import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
 import { transform } from 'esbuild';
 import type { Loader } from 'esbuild';
 import consola from 'consola';
@@ -15,6 +15,8 @@ interface Options {
 export interface Alias {
   [x: string]: string | false;
 }
+
+const { init, parse } = moduleLexer;
 
 function addLastSlash(filePath: string) {
   return filePath.endsWith('/') ? filePath : `${filePath}/`;

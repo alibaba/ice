@@ -4,7 +4,7 @@ import type { Navigator } from 'react-router-dom';
 import AppErrorBoundary from './AppErrorBoundary.js';
 import { useAppContext } from './AppContext.js';
 import { createRouteElements } from './routes.js';
-import type { PageWrapper, AppRouterProps } from './types';
+import type { RouteWrapper, AppRouterProps } from './types';
 
 interface Props {
   action: Action;
@@ -12,7 +12,7 @@ interface Props {
   navigator: Navigator;
   static?: boolean;
   AppProvider: React.ComponentType<any>;
-  PageWrappers: PageWrapper<{}>[];
+  RouteWrappers: RouteWrapper[];
   AppRouter: React.ComponentType<AppRouterProps>;
 }
 
@@ -24,7 +24,7 @@ export default function App(props: Props) {
     static: staticProp = false,
     AppProvider,
     AppRouter,
-    PageWrappers,
+    RouteWrappers,
   } = props;
 
   const { appConfig, routes: originRoutes } = useAppContext();
@@ -36,8 +36,8 @@ export default function App(props: Props) {
   }
 
   const routes = useMemo(
-    () => createRouteElements(originRoutes, PageWrappers),
-    // `originRoutes` and `PageWrappers` will not be changed
+    () => createRouteElements(originRoutes, RouteWrappers),
+    // `originRoutes` and `RouteWrappers` will not be changed
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );

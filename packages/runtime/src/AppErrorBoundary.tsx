@@ -4,7 +4,11 @@ interface State {
   error: Error;
 }
 
-export default class AppErrorBoundary extends React.Component<{}, State> {
+interface Props {
+  children?: React.ReactNode;
+}
+
+export default class AppErrorBoundary extends React.Component<Props, State> {
   public state: State = {
     error: null,
   };

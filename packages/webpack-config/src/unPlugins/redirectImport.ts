@@ -1,4 +1,5 @@
-import { init, parse, type ImportSpecifier } from 'es-module-lexer';
+import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
+import type { ImportSpecifier } from '@ice/bundles/compiled/es-module-lexer';
 import type { UnpluginOptions } from 'unplugin';
 import consola from 'consola';
 import MagicString from 'magic-string';
@@ -33,6 +34,8 @@ interface ImportData {
 interface MatchedImports {
   [x: string]: ImportData[];
 }
+
+const { init, parse } = moduleLexer;
 
 const AS_ALIAS_REG_EXP = /^(\w+)\s+as\s+(\w+)/;
 const ICE_REG_EXP = /import\s?(?:type)?\s?\{([\w*\s{},]*)\}\s+from\s+['"](.*)['"]/;

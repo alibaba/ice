@@ -1,10 +1,8 @@
 import * as path from 'path';
 import fse from 'fs-extra';
 import temp from 'temp';
-import cssModules from 'postcss-modules';
-import less from 'less';
-import sass from 'sass';
-import postcss from 'postcss';
+import cssModules from '@ice/bundles/compiled/postcss-modules/index.js';
+import { less, sass, postcss } from '@ice/bundles';
 import type { Plugin, PluginBuild, OnResolveArgs, OnResolveResult, OnLoadArgs, OnLoadResult } from 'esbuild';
 
 const styleFilter = /.\.(css|sass|scss|less)$/;

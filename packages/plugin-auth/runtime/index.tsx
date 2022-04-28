@@ -1,19 +1,18 @@
 import * as React from 'react';
-import type { RuntimePlugin, PageWrapper } from '@ice/types';
+import type { RuntimePlugin } from '@ice/types';
 import { AuthProvider, useAuth } from './Auth';
 import type { InjectProps } from './Auth';
 import type { AuthConfig, AuthType } from './types';
 
-const runtime: RuntimePlugin = ({ appContext, useConfig, addProvider, wrapperPageComponent }) => {
+const runtime: RuntimePlugin = ({ appContext, useConfig, addProvider, addWrapper }) => {
   const { appConfig, appData = {} } = appContext;
   const initialAuth = appData.auth || {};
-  const authConfig = appConfig.auth || {};
+  const authConfig: AuthConfig = appConfig.auth || {};
 
   const AuthProviderWrapper: React.ComponentType = ({ children }) => {
     const [state, setState] = React.useState<AuthType>(initialAuth);
 
-    // TODO: 没看懂 InjectProps
-    const updateState: InjectProps['useAuth'] = (newState = {}) => {
+    const updateState: InjectProps['setAuth'] = (newState = {}) => {
       setState({
         ...state,
         ...newState,
@@ -22,42 +21,36 @@ const runtime: RuntimePlugin = ({ appContext, useConfig, addProvider, wrapperPag
     return <AuthProvider value={[state, updateState]}>{children}</AuthProvider>;
   };
 
-  const wrapperComponentFn = (authConfig: AuthConfig): PageWrapper<any> => {
-    return (PageComponent) => {
-      const AuthWrappedComponent = (props) => {
-        const [auth] = useAuth();
-        const pageConfig = useConfig();
-        const pageConfigAuth = pageConfig?.auth;
+  const AuthRouteWrapper: React.ComponentType = ({ children }) => {
+    const [auth] = useAuth();
+    const routeConfig = useConfig();
+    const routeConfigAuth = routeConfig?.auth;
 
-        if (pageConfigAuth && !Array.isArray(pageConfigAuth)) {
-          throw new Error('pageConfig.auth must be an array');
-        }
+    if (routeConfigAuth && !Array.isArray(routeConfigAuth)) {
+      throw new Error('config.auth must be an array');
+    }
 
-        const hasAuth =
-          Array.isArray(pageConfigAuth) && pageConfigAuth.length
-            ? Object.keys(auth).filter((item) =>
-              (pageConfigAuth.includes(item) ? auth[item] : false),
-            ).length
-            : true;
+    const hasAuth =
+      Array.isArray(routeConfigAuth) && routeConfigAuth.length
+        ? Object.keys(auth).filter((item) =>
+          (routeConfigAuth.includes(item) ? auth[item] : false),
+        ).length
+        : true;
 
-        if (!hasAuth) {
-          if (authConfig.NoAuthFallback) {
-            return <authConfig.NoAuthFallback {...Object.assign({}, props, { pageConfig })} />;
-          }
-          return <>No Auth</>;
-        }
-        return <PageComponent {...props} />;
-      };
+    if (!hasAuth) {
+      if (authConfig.NoAuthFallback) {
+        return <authConfig.NoAuthFallback routeConfig={routeConfig} />;
+      }
 
-      return AuthWrappedComponent;
-    };
+      return <>No Auth</>;
+    }
+
+    return <>{children}</>;
   };
 
   addProvider(AuthProviderWrapper);
 
-  wrapperPageComponent(
-    wrapperComponentFn(authConfig),
-  );
+  addWrapper(AuthRouteWrapper);
 };
 
 export default runtime;
