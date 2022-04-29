@@ -1,0 +1,8 @@
+import { dataLoader } from '@ice/runtime';
+import appConfig from '@/app';
+
+<%- loaders %>
+
+loaders['__app'] = appConfig?.app.getData;
+
+dataLoader.init(loaders);

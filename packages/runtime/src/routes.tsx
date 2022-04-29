@@ -4,7 +4,7 @@ import type { RouteObject } from 'react-router-dom';
 import { matchRoutes as originMatchRoutes } from 'react-router-dom';
 import { matchRoutesSingle } from './utils/history-single.js';
 import RouteWrapper from './RouteWrapper.js';
-import type { RouteItem, RouteModules, RouteWrapperConfig, RouteMatch, InitialContext, RoutesConfig, RoutesData } from './types';
+import type { RouteItem, RouteModules, RouteWrapperConfig, RouteMatch, RequestContext, RoutesConfig, RoutesData } from './types';
 
 // global route modules cache
 const routeModules: RouteModules = {};
@@ -25,7 +25,7 @@ export async function loadRouteModule(route: RouteModule) {
     routeModules[id] = routeModule;
     return routeModule;
   } catch (error) {
-    console.error(error);
+    console.error('loadRouteModule', error);
   }
 }
 
@@ -39,8 +39,23 @@ export async function loadRouteModules(routes: RouteModule[]) {
 /**
 * get data for the matched routes.
 */
-export async function loadRoutesData(matches: RouteMatch[], initialContext: InitialContext): Promise<RoutesData> {
+export async function loadRoutesData(matches: RouteMatch[], requestContext: RequestContext): Promise<RoutesData> {
   const routesData: RoutesData = {};
+
+  const hasGlobalLoader = typeof window !== 'undefined' && (window as any).__ICE_DATA_LOADER__;
+
+  if (hasGlobalLoader) {
+    const load = (window as any).__ICE_DATA_LOADER__;
+
+    await Promise.all(
+      matches.map(async (match) => {
+        const { id } = match.route;
+        routesData[id] = await load(id);
+      }),
+    );
+
+    return routesData;
+  }
 
   await Promise.all(
     matches.map(async (match) => {
@@ -49,8 +64,7 @@ export async function loadRoutesData(matches: RouteMatch[], initialContext: Init
       const { getData } = routeModule;
 
       if (getData) {
-        const initialData = await getData(initialContext);
-        routesData[id] = initialData;
+        routesData[id] = await getData(requestContext);
       }
     }),
   );

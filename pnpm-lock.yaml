@@ -239,6 +239,7 @@ importers:
     specifiers:
       '@ice/bundles': ^0.1.0
       '@ice/route-manifest': ^1.0.0
+      '@ice/runtime': ^1.0.0
       '@ice/types': ^1.0.0
       '@ice/webpack-config': ^1.0.0
       '@types/cross-spawn': ^6.0.2
@@ -276,6 +277,7 @@ importers:
     dependencies:
       '@ice/bundles': link:../bundles
       '@ice/route-manifest': link:../route-manifest
+      '@ice/runtime': link:../runtime
       '@ice/webpack-config': link:../webpack-config
       address: 1.1.2
       build-scripts: 2.0.0-17

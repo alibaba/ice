@@ -25,6 +25,7 @@ export default function Home(props) {
     <>
       <h2 className={styles.title}>Home Page</h2>
       <Link to="/about">about</Link>
+      <div>count: {data.count}</div>
       <Suspense fallback={<div>hello</div>}>
         <Bar />
       </Suspense>
@@ -49,11 +50,14 @@ export function getConfig() {
   };
 }
 
-export function getData() {
+export function getData({ pathname, query }) {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         name: 'Home',
+        count: 100,
+        pathname,
+        query,
       });
     }, 1 * 100);
   });

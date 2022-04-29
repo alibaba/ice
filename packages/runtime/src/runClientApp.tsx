@@ -3,17 +3,17 @@ import * as ReactDOM from 'react-dom/client';
 import { createHashHistory, createBrowserHistory } from 'history';
 import type { HashHistory, BrowserHistory, Action, Location } from 'history';
 import { createHistorySingle } from './utils/history-single.js';
-import { createSearchParams } from './utils/createSearchParams.js';
 import Runtime from './runtime.js';
 import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
-import { AppDataProvider } from './AppData.js';
+import { AppDataProvider, getAppData } from './AppData.js';
 import type {
   AppContext, AppConfig, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
-  RouteWrapperConfig, RuntimeModules, InitialContext, RouteMatch, ComponentWithChildren,
+  RouteWrapperConfig, RuntimeModules, RouteMatch, ComponentWithChildren,
 } from './types';
 import { loadRouteModules, loadRoutesData, getRoutesConfig, matchRoutes, filterMatchesToLoad } from './routes.js';
 import { updateRoutesConfig } from './routesConfig.js';
+import getRequestContext from './requestContext.js';
 
 interface RunClientAppOptions {
   appConfig: AppConfig;
@@ -36,13 +36,14 @@ export default async function runClientApp(options: RunClientAppOptions) {
   const appContextFromServer: AppContext = (window as any).__ICE_APP_CONTEXT__ || {};
   let { appData, routesData, routesConfig, assetsManifest } = appContextFromServer;
 
-  const initialContext = getInitialContext();
-  if (!appData && appConfig.app?.getData) {
-    appData = await appConfig.app.getData(initialContext);
+  const requestContext = getRequestContext(window.location);
+
+  if (!appData) {
+    appData = await getAppData(appConfig, requestContext);
   }
 
   if (!routesData) {
-    routesData = await loadRoutesData(matches, initialContext);
+    routesData = await loadRoutesData(matches, requestContext);
   }
 
   if (!routesConfig) {
@@ -189,7 +190,7 @@ async function loadNextPage(currentMatches: RouteMatch[], prevHistoryState: Hist
   await loadRouteModules(currentMatches.map(({ route: { id, load } }) => ({ id, load })));
 
   // load data for changed route.
-  const initialContext = getInitialContext();
+  const initialContext = getRequestContext(window.location);
   const matchesToLoad = filterMatchesToLoad(preMatches, currentMatches);
   const data = await loadRoutesData(matchesToLoad, initialContext);
 
@@ -207,17 +208,4 @@ async function loadNextPage(currentMatches: RouteMatch[], prevHistoryState: Hist
     routesData,
     routesConfig,
   };
-}
-
-function getInitialContext() {
-  const { href, origin, pathname, search } = window.location;
-  const path = href.replace(origin, '');
-  const query = Object.fromEntries(createSearchParams(search));
-  const initialContext: InitialContext = {
-    pathname,
-    path,
-    query,
-  };
-
-  return initialContext;
 }

@@ -36,6 +36,11 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
             path.join(rootDir, targetDir, 'route-manifest.json'),
             routesRenderData,
           );
+          generator.renderFile(
+            path.join(templateDir, 'data-loader.json.ejs'),
+            path.join(rootDir, targetDir, 'data-loader.json'),
+            routesRenderData,
+          );
         }
       }
     },

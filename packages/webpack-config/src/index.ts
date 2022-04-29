@@ -45,6 +45,7 @@ function getEntry(rootDir: string) {
     entryFile = path.join(rootDir, '.ice/entry.client.ts');
   }
   return {
+    loader: [path.join(rootDir, '.ice/data-loader.ts')],
     runtime: ['react', 'react-dom', '@ice/runtime'],
     main: {
       import: [entryFile],

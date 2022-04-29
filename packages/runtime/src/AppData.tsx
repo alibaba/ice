@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { AppData } from './types';
+import type { AppConfig, AppData, RequestContext } from './types';
 
 const Context = React.createContext<AppData | undefined>(undefined);
 
@@ -12,7 +12,24 @@ function useAppData <T = AppData>(): T {
 
 const AppDataProvider = Context.Provider;
 
+/**
+ * Call the getData of app config.
+ */
+async function getAppData(appConfig: AppConfig, requestContext: RequestContext): Promise<AppData> {
+  const hasGlobalLoader = typeof window !== 'undefined' && (window as any).__ICE_DATA_LOADER__;
+
+  if (hasGlobalLoader) {
+    const load = (window as any).__ICE_DATA_LOADER__;
+    return await load('__app');
+  }
+
+  if (appConfig?.app.getData) {
+    return await appConfig.app.getData(requestContext);
+  }
+}
+
 export {
+  getAppData,
   useAppData,
   AppDataProvider,
 };

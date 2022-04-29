@@ -29,11 +29,13 @@ import type {
   AppConfig,
   RouteConfig,
   RouteItem,
+  ServerContext,
   AppProvider,
   RouteWrapper,
 } from './types.js';
 import defineAppConfig from './defineAppConfig.js';
 import { matchRoutes } from './routes.js';
+import dataLoader from './dataLoader.js';
 
 export {
   matchRoutes,
@@ -55,6 +57,7 @@ export {
   Outlet,
   useParams,
   useSearchParams,
+  dataLoader,
   LinkSingle,
   OutletSingle,
   useParamsSingle,
@@ -67,6 +70,7 @@ export type {
   AppConfig,
   RouteConfig,
   RouteItem,
+  ServerContext,
   AppProvider,
   RouteWrapper,
 };
