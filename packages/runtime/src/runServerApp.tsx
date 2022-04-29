@@ -8,6 +8,7 @@ import Runtime from './runtime.js';
 import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
 import { AppDataProvider } from './AppData.js';
+import { DocumentContextProvider } from './Document.js';
 import { loadRouteModules, loadRoutesData, getRoutesConfig, matchRoutes } from './routes.js';
 import { piperToString, renderToNodeStream } from './server/streamRender.js';
 import { createStaticNavigator } from './server/navigator.js';
@@ -199,20 +200,24 @@ export async function renderServerEntry(
   const RouteWrappers = runtime.getWrappers();
   const AppRouter = runtime.getAppRouter();
 
+  const documentContext = {
+    main: <App
+      action={Action.Pop}
+      location={location}
+      navigator={staticNavigator}
+      static
+      AppProvider={AppProvider}
+      RouteWrappers={RouteWrappers}
+      AppRouter={AppRouter}
+    />,
+  };
+
   const element = (
     <AppContextProvider value={appContext}>
       <AppDataProvider value={appData}>
-        <Document>
-          <App
-            action={Action.Pop}
-            location={location}
-            navigator={staticNavigator}
-            static
-            AppProvider={AppProvider}
-            RouteWrappers={RouteWrappers}
-            AppRouter={AppRouter}
-          />
-        </Document>
+        <DocumentContextProvider value={documentContext}>
+          <Document />
+        </DocumentContextProvider>
       </AppDataProvider>
     </AppContextProvider>
   );
@@ -243,8 +248,8 @@ export function renderDocument(matches, options: RenderOptions): RenderResult {
   } = options;
 
   // renderDocument needn't to load routesData and appData.
-  const appData = {};
-  const routesData = {};
+  const appData = null;
+  const routesData = null;
   const routesConfig = getRoutesConfig(matches, {});
 
   const appContext: AppContext = {
@@ -258,10 +263,16 @@ export function renderDocument(matches, options: RenderOptions): RenderResult {
     documentOnly: true,
   };
 
+  const documentContext = {
+    main: null,
+  };
+
   const html = ReactDOMServer.renderToString(
     <AppContextProvider value={appContext}>
       <AppDataProvider value={appData}>
-        <Document />
+        <DocumentContextProvider value={documentContext}>
+          <Document />
+        </DocumentContextProvider>
       </AppDataProvider>
     </AppContextProvider>,
   );

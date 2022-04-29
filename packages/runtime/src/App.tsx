@@ -4,7 +4,7 @@ import type { Navigator } from 'react-router-dom';
 import AppErrorBoundary from './AppErrorBoundary.js';
 import { useAppContext } from './AppContext.js';
 import { createRouteElements } from './routes.js';
-import type { RouteWrapper, AppRouterProps } from './types';
+import type { RouteWrapperConfig, AppRouterProps } from './types';
 
 interface Props {
   action: Action;
@@ -12,7 +12,7 @@ interface Props {
   navigator: Navigator;
   static?: boolean;
   AppProvider: React.ComponentType<any>;
-  RouteWrappers: RouteWrapper[];
+  RouteWrappers: RouteWrapperConfig[];
   AppRouter: React.ComponentType<AppRouterProps>;
 }
 

@@ -97,6 +97,31 @@ importers:
       regenerator-runtime: 0.13.9
       speed-measure-webpack-plugin: 1.5.0
 
+  examples/csr-project:
+    specifiers:
+      '@ice/app': file:../../packages/ice
+      '@ice/plugin-auth': ^1.0.0
+      '@ice/runtime': ^1.0.0
+      '@types/react': ^18.0.0
+      '@types/react-dom': ^18.0.0
+      browserslist: ^4.19.3
+      react: ^18.0.0
+      react-dom: ^18.0.0
+      regenerator-runtime: ^0.13.9
+      speed-measure-webpack-plugin: ^1.5.0
+    dependencies:
+      '@ice/app': link:../../packages/ice
+      '@ice/plugin-auth': link:../../packages/plugin-auth
+      '@ice/runtime': link:../../packages/runtime
+      react: 18.0.0
+      react-dom: 18.0.0_react@18.0.0
+    devDependencies:
+      '@types/react': 18.0.7
+      '@types/react-dom': 18.0.2
+      browserslist: 4.20.3
+      regenerator-runtime: 0.13.9
+      speed-measure-webpack-plugin: 1.5.0
+
   examples/routes-generate:
     specifiers:
       '@ice/app': file:../../packages/ice

@@ -1,3 +1,3 @@
-import type { RuntimePlugin, RouteConfig, AppConfig } from '@ice/runtime';
+import type { RuntimePlugin, RouteConfig, AppConfig, AppProvider, RouteWrapper } from '@ice/runtime';
 
-export { RuntimePlugin, RouteConfig, AppConfig };
+export { RuntimePlugin, RouteConfig, AppConfig, AppProvider, RouteWrapper };

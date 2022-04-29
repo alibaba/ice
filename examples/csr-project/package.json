@@ -1,0 +1,25 @@
+{
+  "name": "basic-project",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "ice start",
+    "build": "ice build"
+  },
+  "description": "",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@ice/app": "file:../../packages/ice",
+    "@ice/plugin-auth": "^1.0.0",
+    "@ice/runtime": "^1.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "browserslist": "^4.19.3",
+    "regenerator-runtime": "^0.13.9",
+    "speed-measure-webpack-plugin": "^1.5.0"
+  }
+}

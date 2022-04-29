@@ -41,10 +41,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     templates: [templateDir],
   });
 
-  // load dotenv, set to process.env
-  await initProcessEnv(rootDir, command, commandArgs);
-  const coreEnvKeys = getCoreEnvKeys();
-
   const { addWatchEvent, removeWatchEvent } = createWatch({
     watchDir: rootDir,
     command,
@@ -86,6 +82,11 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   });
   await ctx.resolveConfig();
   const { userConfig } = ctx;
+
+  // load dotenv, set to process.env
+  await initProcessEnv(rootDir, command, commandArgs, userConfig);
+  const coreEnvKeys = getCoreEnvKeys();
+
   const { routes: routesConfig } = userConfig;
   const routesRenderData = generateRoutesInfo(rootDir, routesConfig);
   const { routeManifest } = routesRenderData;
