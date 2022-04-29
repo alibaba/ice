@@ -7,6 +7,7 @@ import Runtime from './runtime.js';
 import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
 import { AppDataProvider, getAppData } from './AppData.js';
+import getAppConfig from './appConfig.js';
 import { DocumentContextProvider } from './Document.js';
 import { loadRouteModules, loadRoutesData, getRoutesConfig, matchRoutes } from './routes.js';
 import { piperToString, renderToNodeStream } from './server/streamRender.js';
@@ -14,13 +15,13 @@ import { createStaticNavigator } from './server/navigator.js';
 import type { NodeWritablePiper } from './server/streamRender.js';
 import type {
   AppContext, RouteItem, ServerContext,
-  AppConfig, RuntimePlugin, CommonJsRuntime, AssetsManifest,
+  AppEntry, RuntimePlugin, CommonJsRuntime, AssetsManifest,
   ComponentWithChildren,
 } from './types';
 import getRequestContext from './requestContext.js';
 
 interface RenderOptions {
-  appConfig: AppConfig;
+  app: AppEntry;
   assetsManifest: AssetsManifest;
   routes: RouteItem[];
   runtimeModules: (RuntimePlugin | CommonJsRuntime)[];
@@ -157,7 +158,7 @@ export async function renderServerEntry(
 ): Promise<RenderResult> {
   const {
     assetsManifest,
-    appConfig,
+    app,
     runtimeModules,
     routes,
     Document,
@@ -165,7 +166,8 @@ export async function renderServerEntry(
 
   const requestContext = getRequestContext(location, serverContext);
 
-  const appData = await getAppData(appConfig, requestContext);
+  const appData = await getAppData(app, requestContext);
+  const appConfig = getAppConfig(app, appData);
   const routesData = await loadRoutesData(matches, requestContext);
   const routesConfig = getRoutesConfig(matches, routesData);
 
@@ -232,13 +234,14 @@ export function renderDocument(matches, options: RenderOptions): RenderResult {
   const {
     routes,
     assetsManifest,
-    appConfig,
+    app,
     Document,
   } = options;
 
   // renderDocument needn't to load routesData and appData.
   const appData = null;
   const routesData = null;
+  const appConfig = getAppConfig(app, appData);
   const routesConfig = getRoutesConfig(matches, {});
 
   const appContext: AppContext = {

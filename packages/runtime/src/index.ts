@@ -32,8 +32,9 @@ import type {
   ServerContext,
   AppProvider,
   RouteWrapper,
+  GetAppData,
+  GetAppConfig,
 } from './types.js';
-import defineAppConfig from './defineAppConfig.js';
 import { matchRoutes } from './routes.js';
 import dataLoader from './dataLoader.js';
 
@@ -51,7 +52,6 @@ export {
   Links,
   Scripts,
   Main,
-  defineAppConfig,
   // react-router-dom API
   Link,
   Outlet,
@@ -73,4 +73,6 @@ export type {
   ServerContext,
   AppProvider,
   RouteWrapper,
+  GetAppData,
+  GetAppConfig,
 };
