@@ -250,6 +250,10 @@ const userConfig = [
       }
     },
   },
+  {
+    name: 'removeHistoryDeadCode',
+    validation: 'boolean',
+  },
 ];
 
 const cliOptions = [
@@ -258,8 +262,12 @@ const cliOptions = [
     commands: ['start'],
   },
   {
+    name: 'mode',
+    commands: ['start', 'build', 'test'],
+  },
+  {
     name: 'analyzer',
-    commands: ['start'],
+    commands: ['start', 'build'],
     setConfig: (config: Config, analyzer: boolean) => {
       return mergeDefaultValue(config, 'analyzer', analyzer);
     },

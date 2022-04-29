@@ -27,11 +27,12 @@ interface ConfigurationCtx extends Config {
 type Experimental = Pick<Configuration, 'experiments'>;
 
 export type ModifyWebpackConfig = (config: Configuration, ctx: ConfigurationCtx) => Configuration;
-
 export interface Config {
   mode: 'none' | 'development' | 'production';
 
-  define?: Record<string, string | boolean>;
+  define?: {
+    [key: string]: string | boolean;
+  };
 
   experimental?: Experimental;
 

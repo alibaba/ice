@@ -2,6 +2,7 @@ import React from 'react';
 import type { Location } from 'history';
 import type { RouteObject } from 'react-router-dom';
 import { matchRoutes as originMatchRoutes } from 'react-router-dom';
+import { matchRoutesSingle } from './utils/history-single.js';
 import RouteWrapper from './RouteWrapper.js';
 import type { RouteItem, RouteModules, RouteWrapper as IRouteWrapper, RouteMatch, InitialContext, RoutesConfig, RoutesData } from './types';
 
@@ -126,7 +127,8 @@ export function matchRoutes(
   location: Partial<Location> | string,
   basename?: string,
 ): RouteMatch[] {
-  let matches = originMatchRoutes(routes as unknown as RouteObject[], location, basename);
+  const matchRoutesFn = process.env.ICE_CORE_ROUTER === 'true' ? originMatchRoutes : matchRoutesSingle;
+  let matches = matchRoutesFn(routes as unknown as RouteObject[], location, basename);
   if (!matches) return [];
 
   return matches.map(({ params, pathname, pathnameBase, route }) => ({

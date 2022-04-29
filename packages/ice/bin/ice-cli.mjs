@@ -25,6 +25,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .command('build')
     .description('build project')
     .allowUnknownOption()
+    .option('--mode <mode>', 'set mode', 'production')
+    .option('--analyzer', 'visualize size of output files', false)
     .option('--config <config>', 'use custom config')
     .option('--rootDir <rootDir>', 'project root directory', cwd)
     .action(async ({ rootDir, ...commandArgs }) => {
@@ -36,6 +38,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .command('start')
     .description('start server')
     .allowUnknownOption()
+    .option('--mode <mode>', 'set mode', 'development')
     .option('--config <config>', 'custom config path')
     .option('-h, --host <host>', 'dev server host', '0.0.0.0')
     .option('-p, --port <port>', 'dev server port', 3333)
@@ -54,6 +57,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .command('test')
     .description('run tests with jest')
     .allowUnknownOption() // allow jest config
+    .option('--mode <mode>', 'set mode', 'test')
     .option('--config <config>', 'use custom config')
     .option('--rootDir <rootDir>', 'project root directory', cwd)
     .action(async ({ rootDir, ...commandArgs }) => {

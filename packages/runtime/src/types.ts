@@ -90,7 +90,7 @@ export interface RouteItem {
   path: string;
   element?: ReactNode;
   componentName: string;
-  index?: false;
+  index?: boolean;
   exact?: boolean;
   strict?: boolean;
   load?: () => Promise<RouteComponent>;
