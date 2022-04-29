@@ -46,7 +46,7 @@ async function webpackCompiler(options: {
       assets: true,
     });
     const messages = formatWebpackMessages(statsData);
-    const isSuccessful = !messages.errors.length && !messages.warnings.length;
+    const isSuccessful = !messages.errors.length;
     if (isSuccessful && !process.env.DISABLE_STATS) {
       const assetsStatsOptions = {
         errors: false,

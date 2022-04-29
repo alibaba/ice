@@ -41,7 +41,7 @@ const build = async (context: Context<Config>, contextConfig: ContextConfig[], e
         return;
       } else {
         compiler?.close?.(() => {});
-        const isSuccessful = !messages.errors.length && !messages.warnings.length;
+        const isSuccessful = !messages.errors.length;
         resolve({
           stats,
           messages,

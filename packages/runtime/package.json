@@ -5,7 +5,11 @@
   "type": "module",
   "types": "./esm/index.d.ts",
   "main": "./esm/index.js",
-  "exports": "./esm/index.js",
+  "exports": {
+    ".": "./esm/index.js",
+    "./client": "./esm/index.js",
+    "./server": "./esm/index.server.js"
+  },
   "files": [
     "esm"
   ],
