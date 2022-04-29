@@ -10,7 +10,7 @@ import type {
   SetAppRouter,
   AddProvider,
   AddWrapper,
-  RouteWrapper,
+  RouteWrapperConfig,
   SetRender,
   AppRouterProps,
   ComponentWithChildren,
@@ -25,14 +25,17 @@ class Runtime {
 
   private AppProvider: ComponentWithChildren[];
 
-  private RouteWrappers: RouteWrapper[];
+  private RouteWrappers: RouteWrapperConfig[];
 
   private render: Renderer;
 
   public constructor(appContext: AppContext) {
     this.AppProvider = [];
     this.appContext = appContext;
-    this.render = ReactDOM.hydrateRoot;
+    this.render = (container, element) => {
+      const root = ReactDOM.createRoot(container);
+      root.render(element);
+    };
     this.AppRouter = DefaultAppRouter;
     this.RouteWrappers = [];
   }
@@ -79,7 +82,7 @@ class Runtime {
     this.AppProvider.unshift(Provider);
   };
 
-  private setRender: SetRender = (render) => {
+  public setRender: SetRender = (render) => {
     this.render = render;
   };
 

@@ -4,7 +4,7 @@ import type { RouteObject } from 'react-router-dom';
 import { matchRoutes as originMatchRoutes } from 'react-router-dom';
 import { matchRoutesSingle } from './utils/history-single.js';
 import RouteWrapper from './RouteWrapper.js';
-import type { RouteItem, RouteModules, RouteWrapper as IRouteWrapper, RouteMatch, InitialContext, RoutesConfig, RoutesData } from './types';
+import type { RouteItem, RouteModules, RouteWrapperConfig, RouteMatch, InitialContext, RoutesConfig, RoutesData } from './types';
 
 // global route modules cache
 const routeModules: RouteModules = {};
@@ -82,7 +82,7 @@ export function getRoutesConfig(matches: RouteMatch[], routesData: RoutesData): 
 /**
  * Create elements in routes which will be consumed by react-router-dom
  */
-export function createRouteElements(routes: RouteItem[], RouteWrappers?: IRouteWrapper[]) {
+export function createRouteElements(routes: RouteItem[], RouteWrappers?: RouteWrapperConfig[]) {
   return routes.map((routeItem: RouteItem) => {
     let { path, children, index, id, layout, element, ...rest } = routeItem;
 

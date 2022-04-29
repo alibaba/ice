@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { RuntimePlugin } from '@ice/types';
+import type { RuntimePlugin, AppProvider, RouteWrapper } from '@ice/types';
 import { AuthProvider, useAuth } from './Auth';
 import type { InjectProps } from './Auth';
 import type { AuthConfig, AuthType } from './types';
@@ -9,7 +9,7 @@ const runtime: RuntimePlugin = ({ appContext, useConfig, addProvider, addWrapper
   const initialAuth = appData.auth || {};
   const authConfig: AuthConfig = appConfig.auth || {};
 
-  const AuthProviderWrapper: React.ComponentType = ({ children }) => {
+  const AuthProviderWrapper: AppProvider = ({ children }) => {
     const [state, setState] = React.useState<AuthType>(initialAuth);
 
     const updateState: InjectProps['setAuth'] = (newState = {}) => {
@@ -21,7 +21,7 @@ const runtime: RuntimePlugin = ({ appContext, useConfig, addProvider, addWrapper
     return <AuthProvider value={[state, updateState]}>{children}</AuthProvider>;
   };
 
-  const AuthRouteWrapper: React.ComponentType = ({ children }) => {
+  const AuthRouteWrapper: RouteWrapper = ({ children }) => {
     const [auth] = useAuth();
     const routeConfig = useConfig();
     const routeConfigAuth = routeConfig?.auth;
