@@ -42,21 +42,15 @@ export default function App(props: Props) {
     [],
   );
 
-  let element: React.ReactNode;
-  if (routes.length === 1 && !routes[0].children) {
-    // TODO: 去除 react-router-dom history 等依赖
-    element = routes[0].element;
-  } else {
-    element = (
-      <AppRouter
-        action={action}
-        location={location}
-        navigator={navigator}
-        static={staticProp}
-        routes={routes}
-      />
-    );
-  }
+  let element: React.ReactNode = (
+    <AppRouter
+      action={action}
+      location={location}
+      navigator={navigator}
+      static={staticProp}
+      routes={routes}
+    />
+  );
 
   return (
     <StrictMode>

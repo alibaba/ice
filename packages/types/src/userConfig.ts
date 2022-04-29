@@ -24,4 +24,5 @@ export interface UserConfig {
   sourceMap?: string | boolean;
   tsChecker?: boolean;
   eslint?: Config['eslintOptions'] | boolean;
+  removeHistoryDeadCode?: boolean;
 }

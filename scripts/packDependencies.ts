@@ -60,6 +60,7 @@ export async function packDependency(options: Options): Promise<void> {
         filesToCopy.push(require.resolve(filePath, {
           paths: [path.dirname(id)],
         }));
+
         return `'./${path.basename(filePath)}'`;
       }
     },

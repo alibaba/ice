@@ -22,6 +22,17 @@ const webPlugin: Plugin = ({ registerTask, context, onHook }) => {
   onHook(`before.${command as 'start' | 'build'}.run`, async ({ esbuildCompile }) => {
     await emptyDir(outputDir);
 
+    // same as webpack define runtimeEnvs in build-webpack-config
+    const runtimeDefineVars = {};
+    Object.keys(process.env).forEach((key) => {
+      if (/^ICE_CORE_/i.test(key)) {
+        // in server.entry
+        runtimeDefineVars[`__process.env.${key}__`] = JSON.stringify(process.env[key]);
+      } else if (/^ICE_/i.test(key)) {
+        runtimeDefineVars[`process.env.${key}`] = JSON.stringify(process.env[key]);
+      }
+    });
+
     serverCompiler = async () => {
       await esbuildCompile({
         entryPoints: [path.join(rootDir, '.ice/entry.server')],
@@ -29,6 +40,7 @@ const webPlugin: Plugin = ({ registerTask, context, onHook }) => {
         // platform: 'node',
         format: 'esm',
         outExtension: { '.js': '.mjs' },
+        define: runtimeDefineVars,
         plugins: [
           createAssetsPlugin(assetsManifest, rootDir),
         ],

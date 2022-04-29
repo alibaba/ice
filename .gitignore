@@ -47,3 +47,5 @@ compiled
 # website
 .docusaurus
 .cache-loader
+
+.env*.local
