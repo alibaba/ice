@@ -20,6 +20,7 @@
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
     "lint:fix": "npm run lint -- --fix",
     "publish:alpha": "PUBLISH_TYPE=alpha esmo ./scripts/publishPackageWithDistTag.ts",
+    "publish:beta": "PUBLISH_TYPE=beta esmo ./scripts/publishPackageWithDistTag.ts",
     "test": "vitest run --coverage",
     "test:watch": "vitest"
   },
