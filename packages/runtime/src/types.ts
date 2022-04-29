@@ -10,7 +10,6 @@ type AppLifecycle = 'onShow' | 'onHide' | 'onPageNotFound' | 'onShareAppMessage'
 type App = Partial<{
   strict?: boolean;
   addProvider?: ({ children }: { children: ReactNode }) => ReactNode;
-  getData?: GetData;
 } & Record<AppLifecycle, VoidFunction>>;
 
 export type AppData = any;
@@ -27,6 +26,14 @@ export interface RouteConfig {
   // plugin extends
   auth?: string[];
 }
+
+export interface AppEntry {
+  getAppConfig?: GetAppConfig;
+  getAppData?: GetAppData;
+}
+
+export type GetAppData = (ctx: RequestContext) => Promise<AppData> | AppData;
+export type GetAppConfig = (appData: AppData) => AppConfig;
 
 // app.getData & route.getData
 export type GetData = (ctx: RequestContext) => Promise<RouteData> | RouteData;

@@ -6,7 +6,6 @@ export default () => {
 
   console.log('render Layout', 'data', data, 'config', config);
 
-
   return (
     <div>
       <h1>Layout</h1>

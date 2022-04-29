@@ -8,15 +8,16 @@ import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
 import { AppDataProvider, getAppData } from './AppData.js';
 import type {
-  AppContext, AppConfig, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
+  AppContext, AppEntry, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
   RouteWrapperConfig, RuntimeModules, RouteMatch, ComponentWithChildren,
 } from './types';
 import { loadRouteModules, loadRoutesData, getRoutesConfig, matchRoutes, filterMatchesToLoad } from './routes.js';
 import { updateRoutesConfig } from './routesConfig.js';
 import getRequestContext from './requestContext.js';
+import getAppConfig from './appConfig.js';
 
 interface RunClientAppOptions {
-  appConfig: AppConfig;
+  app: AppEntry;
   routes: RouteItem[];
   runtimeModules: RuntimeModules;
   Document: ComponentWithChildren<{}>;
@@ -24,7 +25,7 @@ interface RunClientAppOptions {
 
 export default async function runClientApp(options: RunClientAppOptions) {
   const {
-    appConfig,
+    app,
     routes,
     runtimeModules,
     Document,
@@ -39,8 +40,10 @@ export default async function runClientApp(options: RunClientAppOptions) {
   const requestContext = getRequestContext(window.location);
 
   if (!appData) {
-    appData = await getAppData(appConfig, requestContext);
+    appData = await getAppData(app, requestContext);
   }
+
+  const appConfig = getAppConfig(app, appData);
 
   if (!routesData) {
     routesData = await loadRoutesData(matches, requestContext);
