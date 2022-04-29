@@ -3,21 +3,21 @@ import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { Action, parsePath } from 'history';
 import type { Location } from 'history';
-import { createSearchParams } from './utils/createSearchParams.js';
 import Runtime from './runtime.js';
 import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
-import { AppDataProvider } from './AppData.js';
+import { AppDataProvider, getAppData } from './AppData.js';
 import { DocumentContextProvider } from './Document.js';
 import { loadRouteModules, loadRoutesData, getRoutesConfig, matchRoutes } from './routes.js';
 import { piperToString, renderToNodeStream } from './server/streamRender.js';
 import { createStaticNavigator } from './server/navigator.js';
 import type { NodeWritablePiper } from './server/streamRender.js';
 import type {
-  AppContext, InitialContext, RouteItem, ServerContext,
+  AppContext, RouteItem, ServerContext,
   AppConfig, RuntimePlugin, CommonJsRuntime, AssetsManifest,
   ComponentWithChildren,
 } from './types';
+import getRequestContext from './requestContext.js';
 
 interface RenderOptions {
   appConfig: AppConfig;
@@ -112,8 +112,8 @@ function pipeToResponse(res, pipe: NodeWritablePiper) {
   });
 }
 
-async function doRender(requestContext: ServerContext, options: RenderOptions): Promise<RenderResult> {
-  const { req } = requestContext;
+async function doRender(serverContext: ServerContext, options: RenderOptions): Promise<RenderResult> {
+  const { req } = serverContext;
 
   const {
     routes,
@@ -134,7 +134,7 @@ async function doRender(requestContext: ServerContext, options: RenderOptions): 
   }
 
   try {
-    return await renderServerEntry(requestContext, options, matches, location);
+    return await renderServerEntry(serverContext, options, matches, location);
   } catch (err) {
     console.error('Warning: render server entry error, downgrade to csr.', err);
     return renderDocument(matches, options);
@@ -153,10 +153,8 @@ function render404(): RenderResult {
  * Render App by SSR.
  */
 export async function renderServerEntry(
-  requestContext: ServerContext, options: RenderOptions, matches, location,
+  serverContext: ServerContext, options: RenderOptions, matches, location,
 ): Promise<RenderResult> {
-  const { req } = requestContext;
-
   const {
     assetsManifest,
     appConfig,
@@ -165,19 +163,10 @@ export async function renderServerEntry(
     Document,
   } = options;
 
-  const initialContext: InitialContext = {
-    ...requestContext,
-    pathname: location.pathname,
-    query: Object.fromEntries(createSearchParams(location.search)),
-    path: req.url,
-  };
+  const requestContext = getRequestContext(location, serverContext);
 
-  let appData;
-  if (appConfig.app?.getData) {
-    appData = await appConfig.app.getData(initialContext);
-  }
-
-  const routesData = await loadRoutesData(matches, initialContext);
+  const appData = await getAppData(appConfig, requestContext);
+  const routesData = await loadRoutesData(matches, requestContext);
   const routesConfig = getRoutesConfig(matches, routesData);
 
   const appContext: AppContext = {

@@ -19,6 +19,7 @@
   "bugs": "https://github.com/ice-lab/ice-next/issues",
   "homepage": "https://next.ice.work",
   "dependencies": {
+    "@ice/runtime": "^1.0.0",
     "@ice/bundles": "^0.1.0",
     "@ice/route-manifest": "^1.0.0",
     "@ice/webpack-config": "^1.0.0",

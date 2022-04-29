@@ -29,7 +29,7 @@ export interface RouteConfig {
 }
 
 // app.getData & route.getData
-export type GetData = (ctx: InitialContext) => Promise<RouteData> | RouteData;
+export type GetData = (ctx: RequestContext) => Promise<RouteData> | RouteData;
 // route.getConfig
 export type GetConfig = (args: { data: RouteData }) => RouteConfig;
 
@@ -59,6 +59,7 @@ export interface AppContext {
   matches?: RouteMatch[];
   routes?: RouteItem[];
   documentOnly?: boolean;
+  matchedIds?: string[];
 }
 
 export type Renderer = (
@@ -72,11 +73,9 @@ export interface ServerContext {
   res?: ServerResponse;
 }
 
-export interface InitialContext extends ServerContext {
+export interface RequestContext extends ServerContext {
   pathname: string;
-  path: string;
   query: Record<string, any>;
-  ssrError?: any;
 }
 
 export interface RouteComponent {

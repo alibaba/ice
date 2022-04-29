@@ -1,6 +1,8 @@
 import * as path from 'path';
-import type { RouteObject } from 'react-router';
 import fse from 'fs-extra';
+import type { IncomingMessage } from 'http';
+import type { ServerContext } from '@ice/runtime';
+import type { RouteObject } from 'react-router';
 
 interface Options {
   entry: string;
@@ -33,15 +35,17 @@ export default async function generateHTML(options: Options) {
 
   for (let i = 0, n = paths.length; i < n; i++) {
     const routePath = paths[i];
-    const requestContext = {
-      req: {
-        url: routePath,
-        path: routePath,
-      },
+
+    const req = {
+      url: routePath,
+    };
+
+    const serverContext: ServerContext = {
+      req: req as IncomingMessage,
     };
 
     const documentOnly = !(ssg || ssr);
-    const { value: html } = await serverEntry.renderToHTML(requestContext, documentOnly);
+    const { value: html } = await serverEntry.renderToHTML(serverContext, documentOnly);
 
     const fileName = routePath === '/' ? 'index.html' : `${routePath}.html`;
     const contentPath = path.join(outDir, fileName);
