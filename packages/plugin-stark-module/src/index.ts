@@ -78,6 +78,28 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, re
   // set umd
   setUMDConfig({ context, onGetWebpackConfig }, options as any as Options);
 
+  if (options.cssNamespace) {
+    ['css', 'scss', 'scss-module'].forEach((rule) => {
+      baseConfig.module
+        .rule(rule)
+        .use('postcss-loader')
+        .tap((postLoaderOptions) => {
+          const { plugins = [] } = postLoaderOptions;
+          return {
+            ...options,
+            plugins: [
+              ...plugins,
+              [require.resolve('postcss-prefix-selector '), {
+                prefix:options.cssNamespace,
+              }]
+            ],
+          };
+
+        });
+    });
+
+  }
+
   // set moduleExternals
   if (moduleExternals) {
     setExternals({ onGetWebpackConfig }, { moduleExternals });
