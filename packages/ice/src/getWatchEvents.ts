@@ -37,8 +37,8 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
             routesRenderData,
           );
           generator.renderFile(
-            path.join(templateDir, 'data-loader.json.ejs'),
-            path.join(rootDir, targetDir, 'data-loader.json'),
+            path.join(templateDir, 'data-loader.ts.ejs'),
+            path.join(rootDir, targetDir, 'data-loader.ts'),
             routesRenderData,
           );
         }
