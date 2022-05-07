@@ -299,6 +299,7 @@ importers:
       '@ice/bundles': link:../bundles
       '@ice/route-manifest': link:../route-manifest
       '@ice/runtime': link:../runtime
+      '@ice/types': link:../types
       '@ice/webpack-config': link:../webpack-config
       address: 1.1.2
       body-parser: 1.20.0
@@ -330,7 +331,6 @@ importers:
       trusted-cert: 1.1.3
       webpack-dev-server: 4.8.1_webpack@5.72.0
     devDependencies:
-      '@ice/types': link:../types
       '@types/cross-spawn': 6.0.2
       '@types/ejs': 3.1.0
       '@types/less': 3.0.3
