@@ -17,8 +17,8 @@
   "exports": {
     ".": {
       "web": "./lib/web/index.js",
+      "kraken": "./lib/web/index.js",
       "weex": "./lib/weex/index.js",
-      "kraken": "./lib/weex/index.js",
       "miniapp": "./lib/miniapp/index.js",
       "wechat-miniprogram": "./lib/miniapp/index.js",
       "bytedance-microapp": "./lib/miniapp/index.js",
