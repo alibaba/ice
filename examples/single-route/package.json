@@ -9,8 +9,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@ice/app": "file:../../packages/ice",
-    "@ice/runtime": "^1.0.0",
+    "@ice/app": "workspace:*",
+    "@ice/runtime": "workspace:*",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },
