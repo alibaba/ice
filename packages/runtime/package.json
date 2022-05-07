@@ -11,7 +11,8 @@
     "./server": "./esm/index.server.js"
   },
   "files": [
-    "esm"
+    "esm",
+    "!esm/**/*.map"
   ],
   "author": "ICE",
   "license": "MIT",

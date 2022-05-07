@@ -1,6 +1,6 @@
 import * as path from 'path';
-import fse from 'fs-extra';
 import type { IncomingMessage } from 'http';
+import fse from 'fs-extra';
 import type { ServerContext } from '@ice/runtime';
 import type { RouteObject } from 'react-router';
 

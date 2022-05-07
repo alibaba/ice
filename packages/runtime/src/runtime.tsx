@@ -77,7 +77,7 @@ class Runtime {
     });
   }
 
-  private addProvider: AddProvider = (Provider) => {
+  public addProvider: AddProvider = (Provider) => {
     // must promise user's providers are wrapped by the plugins' providers
     this.AppProvider.unshift(Provider);
   };
