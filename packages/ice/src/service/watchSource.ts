@@ -1,4 +1,5 @@
 import * as chokidar from 'chokidar';
+import micromatch from 'micromatch';
 import type { WatchOptions } from 'chokidar';
 import type { WatchEvent } from '@ice/types/esm/plugin.js';
 import formatPath from '../utils/formatPath.js';
@@ -21,7 +22,7 @@ function createWatch(options: {
       const formattedPath = formatPath(filePath);
       if (pattern instanceof RegExp && pattern.test(formattedPath)) {
         action(event, formattedPath);
-      } else if (typeof pattern === 'string' && formattedPath.includes(pattern)) {
+      } else if (typeof pattern === 'string' && micromatch.contains(formattedPath, pattern)) {
         action(event, formattedPath);
       }
     });

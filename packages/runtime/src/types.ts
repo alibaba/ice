@@ -9,7 +9,7 @@ type VoidFunction = () => void;
 type AppLifecycle = 'onShow' | 'onHide' | 'onPageNotFound' | 'onShareAppMessage' | 'onUnhandledRejection' | 'onLaunch' | 'onError' | 'onTabItemClick';
 type App = Partial<{
   strict?: boolean;
-  addProvider?: ({ children }: { children: ReactNode }) => ReactNode;
+  addProvider?: ComponentWithChildren;
 } & Record<AppLifecycle, VoidFunction>>;
 
 export type AppData = any;

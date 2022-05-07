@@ -260,6 +260,10 @@ const userConfig = [
     name: 'removeHistoryDeadCode',
     validation: 'boolean',
   },
+  {
+    name: 'mock',
+    validation: 'object',
+  },
 ];
 
 const cliOptions = [
@@ -312,6 +316,10 @@ const cliOptions = [
       }
       return mergeDefaultValue(config, 'https', httpsConfig);
     },
+  },
+  {
+    name: 'mock',
+    commands: ['start'],
   },
 ];
 

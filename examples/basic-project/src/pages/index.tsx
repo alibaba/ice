@@ -2,6 +2,7 @@ import { Suspense, lazy } from 'react';
 import { Link, useAppData, useData, useConfig } from 'ice';
 // not recommended but works
 import { useAppContext } from '@ice/runtime';
+import { useRequest } from 'ahooks';
 import styles from './index.module.css';
 import type { AppData } from '@/types';
 
@@ -21,6 +22,9 @@ export default function Home(props) {
 
   console.log('render Home', 'data', data, 'config', config);
 
+  const { data: foo } = useRequest(() => fetch('/api/foo').then(res => res.json()));
+  const { data: users } = useRequest(() => fetch('/api/users').then(res => res.json()));
+  const { data: userInfo } = useRequest(() => fetch('/api/users/a', { method: 'POST' }).then(res => res.json()));
   return (
     <>
       <h2 className={styles.title}>Home Page</h2>
@@ -29,6 +33,11 @@ export default function Home(props) {
       <Suspense fallback={<div>hello</div>}>
         <Bar />
       </Suspense>
+      <div className={styles.data}>
+        <div>foo: {JSON.stringify(foo)}</div>
+        <div>users: {JSON.stringify(users)}</div>
+        <div>userInfo: {JSON.stringify(userInfo)}</div>
+      </div>
     </>
   );
 }
