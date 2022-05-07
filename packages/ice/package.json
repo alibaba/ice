@@ -25,8 +25,9 @@
   "bugs": "https://github.com/ice-lab/ice-next/issues",
   "homepage": "https://next.ice.work",
   "dependencies": {
-    "@ice/runtime": "^1.0.0",
     "@ice/bundles": "^0.1.0",
+    "@ice/types": "^1.0.0",
+    "@ice/runtime": "^1.0.0",
     "@ice/route-manifest": "^1.0.0",
     "@ice/webpack-config": "^1.0.0",
     "address": "^1.1.2",
@@ -61,7 +62,6 @@
   },
   "devDependencies": {
     "express": "^4.18.0",
-    "@ice/types": "^1.0.0",
     "@types/cross-spawn": "^6.0.2",
     "@types/ejs": "^3.1.0",
     "@types/less": "^3.0.3",
