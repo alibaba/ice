@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fse from 'fs-extra';
 import { program } from 'commander';
 import detectPort from 'detect-port';
 // hijack webpack before import other modules
@@ -12,7 +12,7 @@ import checkNodeVersion from './checkNodeVersion.mjs';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 (async function () {
-  const icePackageInfo = JSON.parse(await fs.readFile(path.join(__dirname, '../package.json'), 'utf-8'));
+  const icePackageInfo = await fse.readJSON(path.join(__dirname, '../package.json'));
   checkNodeVersion(icePackageInfo.engines.node, icePackageInfo.name);
   process.env.__ICE_VERSION__ = icePackageInfo.version;
   const cwd = process.cwd();
