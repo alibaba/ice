@@ -196,6 +196,7 @@ importers:
       postcss-loader: 6.2.1
       postcss-modules: 4.3.1
       postcss-nested: 5.0.6
+      postcss-plugin-rpx2vw: ^0.0.3
       postcss-preset-env: 7.4.3
       sass: 1.50.0
       sass-loader: 12.6.0
@@ -234,6 +235,7 @@ importers:
       postcss-loader: 6.2.1_ophkbroklgd6jdvupnp5h6xq4i
       postcss-modules: 4.3.1_postcss@8.4.12
       postcss-nested: 5.0.6_postcss@8.4.12
+      postcss-plugin-rpx2vw: 0.0.3
       postcss-preset-env: 7.4.3_postcss@8.4.12
       sass-loader: 12.6.0_sass@1.50.0+webpack@5.72.0
       tapable: 2.2.1
@@ -5885,6 +5887,10 @@ packages:
     resolution: {integrity: sha1-elfrVQpng/kRUzH89GY9XI4AelA=}
     dev: true
 
+  /picocolors/0.2.1:
+    resolution: {integrity: sha512-cMlDqaLEqfSaW8Z7N5Jw+lyIW869EzT73/F5lhtY9cLGoVxSXznfgfXMO0Z5K0o0Q2TkTXq+0KFsdnSe3jDViA==}
+    dev: true
+
   /picocolors/1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
 
@@ -6488,6 +6494,12 @@ packages:
       postcss-value-parser: 4.2.0
     dev: true
 
+  /postcss-plugin-rpx2vw/0.0.3:
+    resolution: {integrity: sha512-AxlNldVz3ECNqkyJOuytVAERQxkb2512XIOBIBHq/LvbrvmvvWrH10qIilEiBQ1ECxsQVhqO5lYtRIdg6e9iQA==}
+    dependencies:
+      postcss: 7.0.39
+    dev: true
+
   /postcss-preset-env/7.4.3_postcss@8.4.12:
     resolution: {integrity: sha512-dlPA65g9KuGv7YsmGyCKtFkZKCPLkoVMUE3omOl6yM+qrynVHxFvf0tMuippIrXB/sB/MyhL1FgTIbrO+qMERg==}
     engines: {node: ^12 || ^14 || >=16}
@@ -6641,6 +6653,14 @@ packages:
 
   /postcss-value-parser/4.2.0:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
+    dev: true
+
+  /postcss/7.0.39:
+    resolution: {integrity: sha512-yioayjNbHn6z1/Bywyb2Y4s3yvDAeXGOyxqD+LnVOinq6Mdmd++SW2wUNVzavyyHxd6+DxzWGIuosg6P1Rj8uA==}
+    engines: {node: '>=6.0.0'}
+    dependencies:
+      picocolors: 0.2.1
+      source-map: 0.6.1
     dev: true
 
   /postcss/8.4.12:

@@ -2,7 +2,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs-extra';
 
-// @ts-expect-error
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const taskExternals = {
@@ -44,7 +43,7 @@ const tasks = [
   // simple task
   ...['cssnano', 'tapable', 'schema-utils', 'lodash',
     'less-loader', 'postcss-loader', 'sass-loader', 'css-loader',
-    'postcss-preset-env', 'postcss-nested', 'postcss-modules',
+    'postcss-preset-env', 'postcss-nested', 'postcss-modules', 'postcss-plugin-rpx2vw',
     'webpack-bundle-analyzer', 'es-module-lexer', 'terser',
     'eslint-webpack-plugin',
   ].map((pkgName) => ({ pkgName })),
