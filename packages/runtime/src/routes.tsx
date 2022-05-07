@@ -81,12 +81,16 @@ export function getRoutesConfig(matches: RouteMatch[], routesData: RoutesData): 
   matches.forEach(async (match) => {
     const { id } = match.route;
     const routeModule = routeModules[id];
-    const { getConfig } = routeModule;
-    const data = routesData[id];
 
-    if (getConfig) {
-      const value = getConfig({ data });
-      routesConfig[id] = value;
+    if (typeof routeModule === 'object') {
+      const { getConfig } = routeModule;
+      const data = routesData[id];
+      if (getConfig) {
+        const value = getConfig({ data });
+        routesConfig[id] = value;
+      }
+    } else {
+      routesConfig[id] = {};
     }
   });
 
