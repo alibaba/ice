@@ -35,7 +35,7 @@ if (isMiniAppPlatform) {
   emitLifeCycles = emitMiniappLifeCycles;
   withPageLifeCycle = miniappWithPageLifeCycle;
   createUsePageLifeCycle = miniappCreateUsePageLifeCycle;
-}  else if (isWeex || isKraken) {
+}  else if (isWeex) {
   createHistory = createWeexHistory;
   initAppLifeCycles = initWeexLifeCycles;
   initHistory = initWeexHistory;
