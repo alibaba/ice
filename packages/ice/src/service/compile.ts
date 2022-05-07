@@ -46,7 +46,7 @@ export function createEsbuildCompiler(options: Options) {
 
     const buildResult = await esbuild.build({
       bundle: true,
-      target: 'node12.19.0',
+      target: 'node12.20.0',
       ...buildOptions,
       define,
       inject: [path.resolve(__dirname, '../polyfills/react.js')],

@@ -128,11 +128,13 @@ async function doRender(serverContext: ServerContext, options: RenderOptions): P
     return render404();
   }
 
-  await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
-
   if (documentOnly) {
     return renderDocument(matches, options);
   }
+
+  // FIXME: 原来是在 renderDocument 之前执行这段逻辑。
+  // 现在为了避免 CSR 时把页面组件都加载进来导致资源（比如 css）加载报错，带来的问题是调用 renderHTML 的时候 getConfig 失效了
+  await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
 
   try {
     return await renderServerEntry(serverContext, options, matches, location);
