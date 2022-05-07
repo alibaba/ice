@@ -44,11 +44,17 @@ function getEntry(rootDir: string) {
     // use generated file in template directory
     entryFile = path.join(rootDir, '.ice/entry.client.ts');
   }
+  const dataLoaderFile = path.join(rootDir, '.ice/data-loader.ts');
   return {
-    loader: [path.join(rootDir, '.ice/data-loader.ts')],
     runtime: ['react', 'react-dom', '@ice/runtime'],
     main: {
       import: [entryFile],
+      dependOn: 'runtime',
+    },
+    // Should set `dependOn` property to avoid hmr fail.
+    // ref: https://github.com/pmmmwh/react-refresh-webpack-plugin/issues/88#issuecomment-627558799
+    loader: {
+      import: [dataLoaderFile],
       dependOn: 'runtime',
     },
   };
