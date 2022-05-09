@@ -4,9 +4,13 @@ import type { Compiler, Compilation } from 'webpack';
 
 const pluginName = 'AssetsManifestPlugin';
 
-function getEntrypointFiles(entrypoint: any): string[] {
+interface Assets {
+  getFiles: () => string[];
+}
+
+function filterAssets(assets: Assets): string[] {
   return (
-    entrypoint
+    assets
       ?.getFiles()
       .filter((file: string) => {
         // We don't want to include `.hot-update.js` files into the initial page
@@ -41,14 +45,13 @@ export default class AssetsManifestPlugin {
 
     for (const entrypoint of entrypoints) {
       const entryName = entrypoint.name;
-      const mainFiles = getEntrypointFiles(entrypoint);
-
+      const mainFiles = filterAssets(entrypoint);
       entries[entryName] = mainFiles;
 
       const chunks = entrypoint?.getChildren();
-      chunks.forEach((chunk: any) => {
+      chunks.forEach((chunk) => {
         const chunkName = chunk.name;
-        const chunkFiles = chunk.getFiles();
+        const chunkFiles = filterAssets(chunk);
         pages[chunkName] = chunkFiles;
       });
     }
