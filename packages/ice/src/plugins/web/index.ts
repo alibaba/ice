@@ -69,6 +69,7 @@ const webPlugin: Plugin = ({ registerTask, context, onHook, watch }) => {
   onHook('after.build.compile', async () => {
     await serverCompiler();
     await generateHTML({
+      rootDir,
       outDir: outputDir,
       entry: serverEntry,
       routeManifest,
@@ -91,6 +92,17 @@ const webPlugin: Plugin = ({ registerTask, context, onHook, watch }) => {
       if (!devServer) {
         throw new Error('webpack-dev-server is not defined');
       }
+      const staticMiddlewaresIndex = middlewares.findIndex(({ name }) => name === 'serve-index');
+      // add ssr middleware before static
+      middlewares.splice(staticMiddlewaresIndex, 0, {
+        name: 'document-render-server',
+        middleware: setupRenderServer({
+          serverCompiler,
+          routeManifest,
+          ssg,
+          ssr,
+        }),
+      });
 
       if (commandArgs.mock) {
         // mock
@@ -110,19 +122,6 @@ const webPlugin: Plugin = ({ registerTask, context, onHook, watch }) => {
           },
         );
       }
-
-      // document
-      middlewares.push(
-        {
-          name: 'document-render-server',
-          middleware: setupRenderServer({
-            serverCompiler,
-            routeManifest,
-            ssg,
-            ssr,
-          }),
-        },
-      );
 
       return middlewares;
     },
