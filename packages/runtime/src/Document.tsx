@@ -69,7 +69,8 @@ export function Scripts() {
   const routeScripts = getScripts(matches, routesConfig);
   const pageAssets = getPageAssets(matches, assetsManifest);
   const entryAssets = getEntryAssets(assetsManifest);
-  const scripts = pageAssets.concat(entryAssets).filter(path => path.indexOf('.js') > -1);
+  // entry assets need to be load before page assets
+  const scripts = entryAssets.concat(pageAssets).filter(path => path.indexOf('.js') > -1);
 
   const matchedIds = matches.map(match => match.route.id);
 
