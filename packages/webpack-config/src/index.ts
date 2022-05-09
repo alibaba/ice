@@ -10,6 +10,7 @@ import CssMinimizerPlugin from '@ice/bundles/compiled/css-minimizer-webpack-plug
 import TerserPlugin from '@ice/bundles/compiled/terser-webpack-plugin/index.js';
 import ForkTsCheckerPlugin from '@ice/bundles/compiled/fork-ts-checker-webpack-plugin/index.js';
 import ESlintPlugin from '@ice/bundles/compiled/eslint-webpack-plugin/index.js';
+import CopyPlugin from '@ice/bundles/compiled/copy-webpack-plugin/index.js';
 import type { Configuration, WebpackPluginInstance } from 'webpack';
 import type webpack from 'webpack';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
@@ -228,6 +229,21 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
       analyzer && new BundleAnalyzerPlugin(),
       tsCheckerOptions && new ForkTsCheckerPlugin(tsCheckerOptions),
       eslintOptions && new ESlintPlugin(eslintOptions),
+      // copy plugin only active in production
+      // otherwise it will add assets to webpack compilation
+      !dev && new CopyPlugin({
+        patterns: [{
+          from: path.join(rootDir, 'public'),
+          to: outputDir,
+          // ignore assets already in compilation.assets such as js and css files
+          force: false,
+          noErrorOnMissing: true,
+          globOptions: {
+            dot: true,
+            gitignore: true,
+          },
+        }],
+      }),
     ].filter(Boolean) as unknown as WebpackPluginInstance[],
     devServer: {
       allowedHosts: 'all',
