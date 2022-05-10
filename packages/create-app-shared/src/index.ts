@@ -1,5 +1,5 @@
 /* eslint-disable import/no-mutable-exports */
-import { isMiniAppPlatform, isWeex, isKraken } from './env';
+import { isMiniAppPlatform, isWeex } from './env';
 import miniappCreateWithRouter from './miniapp/miniappCreateWithRouter';
 import { addAppLifeCycle } from './appLifeCycles';
 import { withPageLifeCycle as defaultWithPageLifeCycle, createUsePageLifeCycle as defaultCreateUsePageLifeCycle } from './pageLifeCycles';
