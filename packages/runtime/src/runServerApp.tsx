@@ -17,6 +17,11 @@ import type {
   AppContext, RouteItem, ServerContext,
   AppEntry, RuntimePlugin, CommonJsRuntime, AssetsManifest,
   ComponentWithChildren,
+  RouteMatch,
+  RequestContext,
+  AppData,
+  AppConfig,
+  RouteModules,
 } from './types';
 import getRequestContext from './requestContext.js';
 
@@ -41,8 +46,8 @@ interface RenderResult {
 /**
  * Render and return the result as html string.
  */
-export async function renderToHTML(requestContext: ServerContext, options: RenderOptions): Promise<RenderResult> {
-  const result = await doRender(requestContext, options);
+export async function renderToHTML(requestContext: ServerContext, renderOptions: RenderOptions): Promise<RenderResult> {
+  const result = await doRender(requestContext, renderOptions);
 
   const { value } = result;
 
@@ -70,9 +75,9 @@ export async function renderToHTML(requestContext: ServerContext, options: Rende
 /**
  * Render and send the result to ServerResponse.
  */
-export async function renderToResponse(requestContext: ServerContext, options: RenderOptions) {
+export async function renderToResponse(requestContext: ServerContext, renderOptions: RenderOptions) {
   const { res } = requestContext;
-  const result = await doRender(requestContext, options);
+  const result = await doRender(requestContext, renderOptions);
 
   const { value } = result;
 
@@ -107,40 +112,51 @@ async function sendResult(res: ServerResponse, result: RenderResult) {
 /**
  * Send stream result to ServerResponse.
  */
-function pipeToResponse(res, pipe: NodeWritablePiper) {
+function pipeToResponse(res: ServerResponse, pipe: NodeWritablePiper) {
   return new Promise((resolve, reject) => {
     pipe(res, (err) => (err ? reject(err) : resolve(null)));
   });
 }
 
-async function doRender(serverContext: ServerContext, options: RenderOptions): Promise<RenderResult> {
+async function doRender(serverContext: ServerContext, renderOptions: RenderOptions): Promise<RenderResult> {
   const { req } = serverContext;
-
-  const {
-    routes,
-    documentOnly,
-  } = options;
-
+  const { routes, documentOnly, app } = renderOptions;
   const location = getLocation(req.url);
-  const matches = matchRoutes(routes, location);
+
+  const requestContext = getRequestContext(location, serverContext);
+  let appData = {};
+  // don't need to execute getAppData in CSR
+  if (!documentOnly) {
+    appData = await getAppData(app, requestContext);
+  }
+  const appConfig = getAppConfig(app, appData);
+  const matches = matchRoutes(routes, location, appConfig?.router?.basename);
 
   if (!matches.length) {
     return render404();
   }
 
   if (documentOnly) {
-    return renderDocument(matches, options);
+    return renderDocument(matches, renderOptions, {});
   }
 
   // FIXME: 原来是在 renderDocument 之前执行这段逻辑。
   // 现在为了避免 CSR 时把页面组件都加载进来导致资源（比如 css）加载报错，带来的问题是调用 renderHTML 的时候 getConfig 失效了
-  await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
+  const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
 
   try {
-    return await renderServerEntry(serverContext, options, matches, location);
+    return await renderServerEntry({
+      requestContext,
+      renderOptions,
+      matches,
+      location,
+      appConfig,
+      appData,
+      routeModules,
+    });
   } catch (err) {
     console.error('Warning: render server entry error, downgrade to csr.', err);
-    return renderDocument(matches, options);
+    return renderDocument(matches, renderOptions, {});
   }
 }
 
@@ -155,32 +171,44 @@ function render404(): RenderResult {
 /**
  * Render App by SSR.
  */
-export async function renderServerEntry(
-  serverContext: ServerContext, options: RenderOptions, matches, location,
+async function renderServerEntry(
+  {
+    requestContext,
+    matches,
+    location,
+    appData,
+    appConfig,
+    renderOptions,
+    routeModules,
+  }: {
+    requestContext: RequestContext;
+    renderOptions: RenderOptions;
+    matches: RouteMatch[];
+    location: Location;
+    appData: AppData;
+    appConfig: AppConfig;
+    routeModules: RouteModules;
+  },
 ): Promise<RenderResult> {
   const {
     assetsManifest,
-    app,
     runtimeModules,
     routes,
     Document,
-  } = options;
+  } = renderOptions;
 
-  const requestContext = getRequestContext(location, serverContext);
-
-  const appData = await getAppData(app, requestContext);
-  const appConfig = getAppConfig(app, appData);
-  const routesData = await loadRoutesData(matches, requestContext);
-  const routesConfig = getRoutesConfig(matches, routesData);
+  const routesData = await loadRoutesData(matches, requestContext, routeModules);
+  const routesConfig = getRoutesConfig(matches, routesData, routeModules);
 
   const appContext: AppContext = {
-    appConfig,
     assetsManifest,
     appData,
+    appConfig,
     routesData,
     routesConfig,
     matches,
     routes,
+    routeModules,
   };
 
   const runtime = new Runtime(appContext);
@@ -218,10 +246,10 @@ export async function renderServerEntry(
     </AppContextProvider>
   );
 
-  const pipe = await renderToNodeStream(element, false);
+  const pipe = renderToNodeStream(element, false);
 
   const fallback = () => {
-    renderDocument(matches, options);
+    renderDocument(matches, renderOptions, routeModules);
   };
 
   return {
@@ -235,7 +263,7 @@ export async function renderServerEntry(
 /**
  * Render Document for CSR.
  */
-export function renderDocument(matches, options: RenderOptions): RenderResult {
+function renderDocument(matches: RouteMatch[], options: RenderOptions, routeModules: RouteModules): RenderResult {
   const {
     routes,
     assetsManifest,
@@ -247,7 +275,7 @@ export function renderDocument(matches, options: RenderOptions): RenderResult {
   const appData = null;
   const routesData = null;
   const appConfig = getAppConfig(app, appData);
-  const routesConfig = getRoutesConfig(matches, {});
+  const routesConfig = getRoutesConfig(matches, {}, routeModules);
 
   const appContext: AppContext = {
     assetsManifest,
@@ -258,6 +286,7 @@ export function renderDocument(matches, options: RenderOptions): RenderResult {
     matches,
     routes,
     documentOnly: true,
+    routeModules,
   };
 
   const documentContext = {

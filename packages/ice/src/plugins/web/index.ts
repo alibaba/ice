@@ -98,7 +98,6 @@ const webPlugin: Plugin = ({ registerTask, context, onHook, watch }) => {
         name: 'document-render-server',
         middleware: setupRenderServer({
           serverCompiler,
-          routeManifest,
           ssg,
           ssr,
         }),
