@@ -1,4 +1,4 @@
-import type { RequestHandler, Request } from 'express';
+import type { ExpressRequestHandler, Request } from 'webpack-dev-server';
 import { pathToRegexp } from 'path-to-regexp';
 import type { Key } from 'path-to-regexp';
 import bodyParser from 'body-parser';
@@ -7,7 +7,7 @@ import type { MockConfig } from './getConfigs';
 
 export default function createMiddleware(
   context: { mockConfigs: MockConfig[] },
-): RequestHandler {
+): ExpressRequestHandler {
   return (req, res, next) => {
     const matchResult = matchPath(req, context.mockConfigs);
     if (matchResult) {
@@ -51,7 +51,10 @@ export default function createMiddleware(
   };
 }
 
-function matchPath(req: Request, mockConfigs: MockConfig[]): undefined | { keys: Key[]; mockConfig: MockConfig; match: RegExpExecArray } {
+function matchPath(
+  req: Request,
+  mockConfigs: MockConfig[],
+): undefined | { keys: Key[]; mockConfig: MockConfig; match: RegExpExecArray } {
   for (const mockConfig of mockConfigs) {
     const keys = [];
     if (req.method.toLocaleUpperCase() === mockConfig.method) {

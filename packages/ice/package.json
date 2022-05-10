@@ -26,9 +26,9 @@
   "homepage": "https://next.ice.work",
   "dependencies": {
     "@ice/bundles": "^0.1.0",
-    "@ice/types": "^1.0.0",
-    "@ice/runtime": "^1.0.0",
     "@ice/route-manifest": "^1.0.0",
+    "@ice/runtime": "^1.0.0",
+    "@ice/types": "^1.0.0",
     "@ice/webpack-config": "^1.0.0",
     "address": "^1.1.2",
     "body-parser": "^1.20.0",
@@ -47,11 +47,11 @@
     "find-up": "^5.0.0",
     "fs-extra": "^10.0.0",
     "less": "^4.1.2",
-    "open": "^8.4.0",
-    "path-to-regexp": "^6.2.0",
     "micromatch": "^4.0.5",
     "mrmime": "^1.0.0",
     "multer": "^1.4.4",
+    "open": "^8.4.0",
+    "path-to-regexp": "^6.2.0",
     "prettier": "^2.5.1",
     "react-router": "^6.3.0",
     "sass": "^1.49.9",
@@ -61,7 +61,6 @@
     "webpack-dev-server": "^4.7.4"
   },
   "devDependencies": {
-    "express": "^4.18.0",
     "@types/cross-spawn": "^6.0.2",
     "@types/ejs": "^3.1.0",
     "@types/less": "^3.0.3",
@@ -71,8 +70,8 @@
     "@types/temp": "^0.9.1",
     "chokidar": "^3.5.3",
     "react": "^18.0.0",
-    "webpack": "^5.72.0",
-    "unplugin": "^0.3.2"
+    "unplugin": "^0.3.2",
+    "webpack": "^5.72.0"
   },
   "peerDependencies": {
     "react": ">=18.0.0",

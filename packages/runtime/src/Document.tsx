@@ -63,7 +63,7 @@ export function Links() {
 }
 
 export function Scripts() {
-  const { routesData, routesConfig, matches, assetsManifest, documentOnly } = useAppContext();
+  const { routesData, routesConfig, matches, assetsManifest, documentOnly, routeModules } = useAppContext();
   const appData = useAppData();
 
   const routeScripts = getScripts(matches, routesConfig);
@@ -81,6 +81,7 @@ export function Scripts() {
     assetsManifest,
     appConfig: {},
     matchedIds,
+    routeModules,
   };
 
   return (

@@ -5,11 +5,12 @@ import { RouterSingle, useRoutesSingle } from './utils/history-single.js';
 import type { AppRouterProps } from './types.js';
 
 const AppRouter: React.ComponentType<AppRouterProps> = (props) => {
-  const { action, location, navigator, static: staticProps, routes } = props;
+  const { action, location, navigator, static: staticProps, routes, basename } = props;
   const IceRouter = process.env.ICE_CORE_ROUTER === 'true' ? Router : RouterSingle;
 
   return (
     <IceRouter
+      basename={basename}
       navigationType={action}
       location={location}
       navigator={navigator}

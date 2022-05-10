@@ -1,5 +1,5 @@
 import * as path from 'path';
-import type { IncomingMessage } from 'http';
+import type { Request } from 'webpack-dev-server';
 import fse from 'fs-extra';
 import consola from 'consola';
 import type { ServerContext } from '@ice/runtime';
@@ -44,7 +44,7 @@ export default async function generateHTML(options: Options) {
     };
 
     const serverContext: ServerContext = {
-      req: req as IncomingMessage,
+      req: req as Request,
     };
 
     const documentOnly = !(ssg || ssr);

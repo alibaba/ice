@@ -7,7 +7,7 @@
   "description": "A universal framework based on React",
   "scripts": {
     "prepare": "husky install",
-    "setup": " rm -rf node_modules packages/*/node_modules && pnpm install && pnpm run prebundle && pnpm run build",
+    "setup": "rm -rf node_modules packages/*/node_modules && pnpm install && pnpm run prebundle && pnpm run build",
     "rebuild": "pnpm install && pnpm run build",
     "watch": "esmo ./scripts/watch.ts",
     "build": "esmo ./scripts/build.ts",
