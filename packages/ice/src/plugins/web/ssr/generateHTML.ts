@@ -1,8 +1,12 @@
 import * as path from 'path';
+import type { Request } from 'webpack-dev-server';
 import fse from 'fs-extra';
-import type { RouteItem } from '@ice/runtime';
+import consola from 'consola';
+import type { ServerContext } from '@ice/runtime';
+import type { RouteObject } from 'react-router';
 
 interface Options {
+  rootDir: string;
   entry: string;
   routeManifest: string;
   outDir: string;
@@ -12,6 +16,7 @@ interface Options {
 
 export default async function generateHTML(options: Options) {
   const {
+    rootDir,
     entry,
     routeManifest,
     outDir,
@@ -19,23 +24,36 @@ export default async function generateHTML(options: Options) {
     ssr,
   } = options;
 
-  const serverEntry = await import(entry);
+  let serverEntry;
+
+  try {
+    serverEntry = await import(entry);
+  } catch (err) {
+    // make error clearly, notice typeof err === 'string'
+    throw new Error(`import ${entry} error: ${err}`);
+  }
+
   const routes = JSON.parse(fse.readFileSync(routeManifest, 'utf8'));
   const paths = getPaths(routes);
 
   for (let i = 0, n = paths.length; i < n; i++) {
     const routePath = paths[i];
-    const requestContext = {
-      req: {
-        url: routePath,
-        path: routePath,
-      },
+
+    const req = {
+      url: routePath,
+    };
+
+    const serverContext: ServerContext = {
+      req: req as Request,
     };
 
     const documentOnly = !(ssg || ssr);
-    const { value: html } = await serverEntry.renderToHTML(requestContext, documentOnly);
+    const { value: html } = await serverEntry.renderToHTML(serverContext, documentOnly);
 
     const fileName = routePath === '/' ? 'index.html' : `${routePath}.html`;
+    if (fse.existsSync(path.join(rootDir, 'public', fileName))) {
+      consola.warn(`${fileName} is overwrite by framework, rename file name if it is necessary`);
+    }
     const contentPath = path.join(outDir, fileName);
     await fse.ensureFile(contentPath);
     await fse.writeFile(contentPath, html);
@@ -47,7 +65,7 @@ export default async function generateHTML(options: Options) {
  * @param routes
  * @returns
  */
-function getPaths(routes: RouteItem[], parentPath = ''): string[] {
+function getPaths(routes: RouteObject[], parentPath = ''): string[] {
   let pathList = [];
 
   routes.forEach(route => {

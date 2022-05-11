@@ -5,9 +5,14 @@
   "type": "module",
   "types": "./esm/index.d.ts",
   "main": "./esm/index.js",
-  "exports": "./esm/index.js",
+  "exports": {
+    ".": "./esm/index.js",
+    "./client": "./esm/index.js",
+    "./server": "./esm/index.server.js"
+  },
   "files": [
-    "esm"
+    "esm",
+    "!esm/**/*.map"
   ],
   "author": "ICE",
   "license": "MIT",
@@ -17,6 +22,8 @@
   "devDependencies": {
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "@types/react": "^18.0.8",
+    "@types/react-dom": "^18.0.3",
     "regenerator-runtime": "^0.13.9"
   },
   "sideEffects": false,

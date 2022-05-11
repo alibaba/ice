@@ -10,6 +10,7 @@ import CssMinimizerPlugin from '@ice/bundles/compiled/css-minimizer-webpack-plug
 import TerserPlugin from '@ice/bundles/compiled/terser-webpack-plugin/index.js';
 import ForkTsCheckerPlugin from '@ice/bundles/compiled/fork-ts-checker-webpack-plugin/index.js';
 import ESlintPlugin from '@ice/bundles/compiled/eslint-webpack-plugin/index.js';
+import CopyPlugin from '@ice/bundles/compiled/copy-webpack-plugin/index.js';
 import type { Configuration, WebpackPluginInstance } from 'webpack';
 import type webpack from 'webpack';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
@@ -18,7 +19,6 @@ import { createUnplugin } from 'unplugin';
 import browserslist from 'browserslist';
 import configAssets from './config/assets.js';
 import configCss from './config/css.js';
-import { getRuntimeEnvironment } from './clientEnv.js';
 import AssetsManifestPlugin from './webpackPlugins/AssetsManifestPlugin.js';
 import getTransformPlugins from './unPlugins/index.js';
 
@@ -45,10 +45,17 @@ function getEntry(rootDir: string) {
     // use generated file in template directory
     entryFile = path.join(rootDir, '.ice/entry.client.ts');
   }
+  const dataLoaderFile = path.join(rootDir, '.ice/data-loader.ts');
   return {
     runtime: ['react', 'react-dom', '@ice/runtime'],
     main: {
       import: [entryFile],
+      dependOn: 'runtime',
+    },
+    // Should set `dependOn` property to avoid hmr fail.
+    // ref: https://github.com/pmmmwh/react-refresh-webpack-plugin/issues/88#issuecomment-627558799
+    loader: {
+      import: [dataLoaderFile],
       dependOn: 'runtime',
     },
   };
@@ -57,7 +64,7 @@ function getEntry(rootDir: string) {
 const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
   const {
     mode,
-    define,
+    define = {},
     externals = {},
     publicPath = '/',
     outputDir = path.join(rootDir, 'build'),
@@ -71,7 +78,6 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
     hash,
     minify,
     minimizerOptions = {},
-    port,
     cacheDirectory,
     https,
     analyzer,
@@ -88,23 +94,22 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
     aliasWithRoot[key] = alias[key].startsWith('.') ? path.join(rootDir, alias[key]) : alias[key];
   });
 
-  const defineStaticVariables = {
-    ...define || {},
-    'process.env.NODE_ENV': mode || 'development',
-    'process.env.SERVER_PORT': port,
-  };
-  // formate define variables
-  Object.keys(defineStaticVariables).forEach((key) => {
-    defineStaticVariables[key] = typeof defineStaticVariables[key] === 'boolean'
-      ? defineStaticVariables[key]
-      : JSON.stringify(defineStaticVariables[key]);
+  // auto stringify define value
+  const defineVars = {};
+  Object.keys(define).forEach((key) => {
+    defineVars[key] = JSON.stringify(define[key]);
   });
-  const runtimeEnv = getRuntimeEnvironment();
-  const defineRuntimeVariables = {};
-  Object.keys(runtimeEnv).forEach((key) => {
-    const runtimeValue = runtimeEnv[key];
-    // set true to flag the module as uncacheable
-    defineRuntimeVariables[key] = webpack.DefinePlugin.runtimeValue(runtimeValue, true);
+
+  const runtimeDefineVars = {};
+  const RUNTIME_PREFIX = /^ICE_/i;
+  Object.keys(process.env).filter((key) => {
+    return RUNTIME_PREFIX.test(key) || ['NODE_ENV'].includes(key);
+  }).forEach((key) => {
+    runtimeDefineVars[`process.env.${key}`] =
+      /^ICE_CORE_/i.test(key)
+        // ICE_CORE_* will be updated dynamically, so we need to make it effectively
+        ? webpack.DefinePlugin.runtimeValue(() => JSON.stringify(process.env[key]), true)
+        : JSON.stringify(process.env[key]);
   });
   // create plugins
   const webpackPlugins = getTransformPlugins(config).map((plugin) => createUnplugin(() => plugin).webpack());
@@ -214,8 +219,8 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
         exclude: [/node_modules/, /bundles\/compiled/],
       }),
       new webpack.DefinePlugin({
-        ...defineStaticVariables,
-        ...defineRuntimeVariables,
+        ...defineVars,
+        ...runtimeDefineVars,
       }),
       new AssetsManifestPlugin({
         fileName: 'assets-manifest.json',
@@ -224,6 +229,21 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
       analyzer && new BundleAnalyzerPlugin(),
       tsCheckerOptions && new ForkTsCheckerPlugin(tsCheckerOptions),
       eslintOptions && new ESlintPlugin(eslintOptions),
+      // copy plugin only active in production
+      // otherwise it will add assets to webpack compilation
+      !dev && new CopyPlugin({
+        patterns: [{
+          from: path.join(rootDir, 'public'),
+          to: outputDir,
+          // ignore assets already in compilation.assets such as js and css files
+          force: false,
+          noErrorOnMissing: true,
+          globOptions: {
+            dot: true,
+            gitignore: true,
+          },
+        }],
+      }),
     ].filter(Boolean) as unknown as WebpackPluginInstance[],
     devServer: {
       allowedHosts: 'all',

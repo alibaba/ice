@@ -2,35 +2,36 @@ import React from 'react';
 import type { Location } from 'history';
 import type { RouteObject } from 'react-router-dom';
 import { matchRoutes as originMatchRoutes } from 'react-router-dom';
+import { matchRoutesSingle } from './utils/history-single.js';
 import RouteWrapper from './RouteWrapper.js';
-import type { RouteItem, RouteModules, RouteWrapper as IRouteWrapper, RouteMatch, InitialContext, RoutesConfig, RoutesData } from './types';
-
-// global route modules cache
-const routeModules: RouteModules = {};
+import type { RouteItem, RouteModules, RouteWrapperConfig, RouteMatch, RequestContext, RoutesConfig, RoutesData } from './types';
+import { useAppContext } from './AppContext.js';
 
 type RouteModule = Pick<RouteItem, 'id' | 'load'>;
 
-export async function loadRouteModule(route: RouteModule) {
+export async function loadRouteModule(route: RouteModule, routeModulesCache: RouteModules) {
   const { id, load } = route;
   if (
     typeof window !== 'undefined' && // Don't use module cache and should load again in ssr. Ref: https://github.com/ice-lab/ice-next/issues/82
-    id in routeModules
+    id in routeModulesCache
   ) {
-    return routeModules[id];
+    return routeModulesCache[id];
   }
 
   try {
     const routeModule = await load();
-    routeModules[id] = routeModule;
+    routeModulesCache[id] = routeModule;
     return routeModule;
   } catch (error) {
-    console.error(error);
+    console.error('loadRouteModule', error);
   }
 }
 
-export async function loadRouteModules(routes: RouteModule[]) {
+export async function loadRouteModules(routes: RouteModule[], originRouteModules: RouteModules = {}) {
+  const routeModules = { ...originRouteModules };
   for (const route of routes) {
-    await loadRouteModule(route);
+    const routeModule = await loadRouteModule(route, routeModules);
+    routeModules[route.id] = routeModule;
   }
   return routeModules;
 }
@@ -38,8 +39,27 @@ export async function loadRouteModules(routes: RouteModule[]) {
 /**
 * get data for the matched routes.
 */
-export async function loadRoutesData(matches: RouteMatch[], initialContext: InitialContext): Promise<RoutesData> {
+export async function loadRoutesData(
+  matches: RouteMatch[],
+  requestContext: RequestContext,
+  routeModules: RouteModules,
+): Promise<RoutesData> {
   const routesData: RoutesData = {};
+
+  const hasGlobalLoader = typeof window !== 'undefined' && (window as any).__ICE_DATA_LOADER__;
+
+  if (hasGlobalLoader) {
+    const load = (window as any).__ICE_DATA_LOADER__;
+
+    await Promise.all(
+      matches.map(async (match) => {
+        const { id } = match.route;
+        routesData[id] = await load(id);
+      }),
+    );
+
+    return routesData;
+  }
 
   await Promise.all(
     matches.map(async (match) => {
@@ -48,8 +68,7 @@ export async function loadRoutesData(matches: RouteMatch[], initialContext: Init
       const { getData } = routeModule;
 
       if (getData) {
-        const initialData = await getData(initialContext);
-        routesData[id] = initialData;
+        routesData[id] = await getData(requestContext);
       }
     }),
   );
@@ -60,18 +79,26 @@ export async function loadRoutesData(matches: RouteMatch[], initialContext: Init
 /**
  * Get page config for matched routes.
  */
-export function getRoutesConfig(matches: RouteMatch[], routesData: RoutesData): RoutesConfig {
+export function getRoutesConfig(
+  matches: RouteMatch[],
+  routesData: RoutesData,
+  routeModules: RouteModules,
+): RoutesConfig {
   const routesConfig: RoutesConfig = {};
 
   matches.forEach(async (match) => {
     const { id } = match.route;
     const routeModule = routeModules[id];
-    const { getConfig } = routeModule;
-    const data = routesData[id];
 
-    if (getConfig) {
-      const value = getConfig({ data });
-      routesConfig[id] = value;
+    if (typeof routeModule === 'object') {
+      const { getConfig } = routeModule;
+      const data = routesData[id];
+      if (getConfig) {
+        const value = getConfig({ data });
+        routesConfig[id] = value;
+      }
+    } else {
+      routesConfig[id] = {};
     }
   });
 
@@ -81,7 +108,10 @@ export function getRoutesConfig(matches: RouteMatch[], routesData: RoutesData): 
 /**
  * Create elements in routes which will be consumed by react-router-dom
  */
-export function createRouteElements(routes: RouteItem[], RouteWrappers?: IRouteWrapper[]) {
+export function createRouteElements(
+  routes: RouteItem[],
+  RouteWrappers?: RouteWrapperConfig[],
+) {
   return routes.map((routeItem: RouteItem) => {
     let { path, children, index, id, layout, element, ...rest } = routeItem;
 
@@ -107,8 +137,9 @@ export function createRouteElements(routes: RouteItem[], RouteWrappers?: IRouteW
   });
 }
 
-function RouteComponent({ id, ...props }: { id: string }) {
+function RouteComponent({ id }: { id: string }) {
   // get current route component from latest routeModules
+  const { routeModules } = useAppContext();
   const { default: Component } = routeModules[id];
   if (process.env.NODE_ENV === 'development') {
     if (!Component) {
@@ -118,7 +149,7 @@ function RouteComponent({ id, ...props }: { id: string }) {
       );
     }
   }
-  return <Component {...props} />;
+  return <Component />;
 }
 
 export function matchRoutes(
@@ -126,7 +157,8 @@ export function matchRoutes(
   location: Partial<Location> | string,
   basename?: string,
 ): RouteMatch[] {
-  let matches = originMatchRoutes(routes as unknown as RouteObject[], location, basename);
+  const matchRoutesFn = process.env.ICE_CORE_ROUTER === 'true' ? originMatchRoutes : matchRoutesSingle;
+  let matches = matchRoutesFn(routes as unknown as RouteObject[], location, basename);
   if (!matches) return [];
 
   return matches.map(({ params, pathname, pathnameBase, route }) => ({

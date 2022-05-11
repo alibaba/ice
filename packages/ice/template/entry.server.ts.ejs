@@ -1,5 +1,11 @@
-import * as runtime from '@ice/runtime';
-import appConfig from '@/app';
+// Define process.env in top make it possible to use ICE_CORE_* in @ice/runtime, esbuild define options doesn't have the ability
+// The runtime value such as __process.env.ICE_CORE_*__ will be replaced by esbuild define, so the value is real-time
+<% coreEnvKeys.forEach((key) => { %>
+process.env.<%= key %> = __process.env.<%= key %>__;
+<% }) %>
+
+import * as runtime from '@ice/runtime/server';
+import * as app from '@/app';
 import runtimeModules from './runtimeModules';
 import Document from '@/document';
 import assetsManifest from './assets-manifest.json';
@@ -7,7 +13,7 @@ import routes from './routes';
 
 export async function renderToHTML(requestContext, documentOnly) {
   return await runtime.renderToHTML(requestContext, {
-    appConfig,
+    app,
     assetsManifest,
     routes,
     runtimeModules,
@@ -18,7 +24,7 @@ export async function renderToHTML(requestContext, documentOnly) {
 
 export async function renderToResponse(requestContext, documentOnly) {
   runtime.renderToResponse(requestContext, {
-    appConfig,
+    app,
     assetsManifest,
     routes,
     runtimeModules,

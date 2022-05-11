@@ -4,7 +4,7 @@ import type { Navigator } from 'react-router-dom';
 import AppErrorBoundary from './AppErrorBoundary.js';
 import { useAppContext } from './AppContext.js';
 import { createRouteElements } from './routes.js';
-import type { RouteWrapper, AppRouterProps } from './types';
+import type { RouteWrapperConfig, AppRouterProps, RouteModules } from './types';
 
 interface Props {
   action: Action;
@@ -12,7 +12,7 @@ interface Props {
   navigator: Navigator;
   static?: boolean;
   AppProvider: React.ComponentType<any>;
-  RouteWrappers: RouteWrapper[];
+  RouteWrappers: RouteWrapperConfig[];
   AppRouter: React.ComponentType<AppRouterProps>;
 }
 
@@ -42,21 +42,16 @@ export default function App(props: Props) {
     [],
   );
 
-  let element: React.ReactNode;
-  if (routes.length === 1 && !routes[0].children) {
-    // TODO: 去除 react-router-dom history 等依赖
-    element = routes[0].element;
-  } else {
-    element = (
-      <AppRouter
-        action={action}
-        location={location}
-        navigator={navigator}
-        static={staticProp}
-        routes={routes}
-      />
-    );
-  }
+  let element: React.ReactNode = (
+    <AppRouter
+      action={action}
+      location={location}
+      navigator={navigator}
+      static={staticProp}
+      routes={routes}
+      basename={appConfig?.router?.basename}
+    />
+  );
 
   return (
     <StrictMode>

@@ -7,8 +7,10 @@ import { createUnplugin } from 'unplugin';
 import type { EsbuildCompile } from '@ice/types/esm/plugin.js';
 import { getTransformPlugins } from '@ice/webpack-config';
 import escapeLocalIdent from '../utils/escapeLocalIdent.js';
-import stylePlugin from '../esbuild/style.js';
+import cssModulesPlugin from '../esbuild/cssModules.js';
 import aliasPlugin from '../esbuild/alias.js';
+import emptyCSSPlugin from '../esbuild/emptyCSS.js';
+
 import type { ContextConfig } from '../utils/getContextConfig.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -23,39 +25,46 @@ export function createEsbuildCompiler(options: Options) {
   const { taskConfig, webpackConfig } = task;
   const transformPlugins = getTransformPlugins(taskConfig);
   const alias = (webpackConfig.resolve?.alias || {}) as Record<string, string | false>;
+  const { define = {} } = taskConfig;
+
+  // auto stringify define value
+  const defineVars = {};
+  Object.keys(define).forEach((key) => {
+    defineVars[key] = JSON.stringify(define[key]);
+  });
 
   const esbuildCompile: EsbuildCompile = async (buildOptions) => {
     const startTime = new Date().getTime();
     consola.debug('[esbuild]', `start compile for: ${buildOptions.entryPoints}`);
+    const define = {
+      // ref: https://github.com/evanw/esbuild/blob/master/CHANGELOG.md#01117
+      // in esm, this in the global should be undefined. Set the following config to avoid warning
+      this: undefined,
+      ...defineVars,
+      ...buildOptions.define,
+    };
+
     const buildResult = await esbuild.build({
       bundle: true,
-      target: 'node12.19.0',
+      target: 'node12.20.0',
       ...buildOptions,
-      define: {
-        // ref: https://github.com/evanw/esbuild/blob/master/CHANGELOG.md#01117
-        // in esm, this in the global should be undefined. Set the following config to avoid warning
-        this: undefined,
-        // TOOD: sync ice runtime env
-        'process.env.ICE_RUNTIME_SERVER': 'true',
-      },
+      define,
       inject: [path.resolve(__dirname, '../polyfills/react.js')],
       plugins: [
-        stylePlugin({
-          extract: false,
-          modules: {
-            auto: (filePath) => /\.module\.\w+$/i.test(filePath),
-            generateLocalIdentName: function (name: string, filename: string) {
-              const hash = createHash('md4');
-              hash.update(Buffer.from(filename + name, 'utf8'));
-              return escapeLocalIdent(`${name}--${hash.digest('base64').slice(0, 8)}`);
-            },
-          },
-        }),
+        emptyCSSPlugin(),
         aliasPlugin({
           alias,
           compileRegex: (taskConfig.compileIncludes || []).map((includeRule) => {
             return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);
           }),
+        }),
+        cssModulesPlugin({
+          extract: false,
+          generateLocalIdentName: function (name: string, filename: string) {
+            const hash = createHash('md4');
+            hash.update(Buffer.from(filename + name, 'utf8'));
+            return escapeLocalIdent(`${name}--${hash.digest('base64').slice(0, 8)}`);
+          },
         }),
         ...(buildOptions.plugins || []),
         ...transformPlugins
@@ -69,3 +78,5 @@ export function createEsbuildCompiler(options: Options) {
   };
   return esbuildCompile;
 }
+
+

@@ -1,21 +1,23 @@
 import React, { useLayoutEffect, useState } from 'react';
+import * as ReactDOM from 'react-dom/client';
 import { createHashHistory, createBrowserHistory } from 'history';
 import type { HashHistory, BrowserHistory, Action, Location } from 'history';
-import { createSearchParams } from 'react-router-dom';
+import { createHistorySingle } from './utils/history-single.js';
 import Runtime from './runtime.js';
 import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
-import { AppDataProvider } from './AppData.js';
+import { AppDataProvider, getAppData } from './AppData.js';
 import type {
-  AppContext, AppConfig, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
-  RouteWrapper, RuntimeModules, InitialContext, RouteMatch, ComponentWithChildren,
+  AppContext, AppEntry, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
+  RouteWrapperConfig, RuntimeModules, RouteMatch, ComponentWithChildren, RouteModules,
 } from './types';
 import { loadRouteModules, loadRoutesData, getRoutesConfig, matchRoutes, filterMatchesToLoad } from './routes.js';
-import { loadStyleLinks, loadScripts } from './assets.js';
-import { getLinks, getScripts } from './routesConfig.js';
+import { updateRoutesConfig } from './routesConfig.js';
+import getRequestContext from './requestContext.js';
+import getAppConfig from './appConfig.js';
 
 interface RunClientAppOptions {
-  appConfig: AppConfig;
+  app: AppEntry;
   routes: RouteItem[];
   runtimeModules: RuntimeModules;
   Document: ComponentWithChildren<{}>;
@@ -23,29 +25,30 @@ interface RunClientAppOptions {
 
 export default async function runClientApp(options: RunClientAppOptions) {
   const {
-    appConfig,
+    app,
     routes,
     runtimeModules,
     Document,
   } = options;
 
-  const matches = matchRoutes(routes, window.location);
-  await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
-
   const appContextFromServer: AppContext = (window as any).__ICE_APP_CONTEXT__ || {};
   let { appData, routesData, routesConfig, assetsManifest } = appContextFromServer;
 
-  const initialContext = getInitialContext();
-  if (!appData && appConfig.app?.getData) {
-    appData = await appConfig.app.getData(initialContext);
+  const requestContext = getRequestContext(window.location);
+
+  if (!appData) {
+    appData = await getAppData(app, requestContext);
   }
+  const appConfig = getAppConfig(app, appData);
+
+  const matches = matchRoutes(routes, window.location, appConfig?.router?.basename);
+  const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
 
   if (!routesData) {
-    routesData = await loadRoutesData(matches, initialContext);
+    routesData = await loadRoutesData(matches, requestContext, routeModules);
   }
-
   if (!routesConfig) {
-    routesConfig = getRoutesConfig(matches, routesConfig);
+    routesConfig = getRoutesConfig(matches, routesConfig, routeModules);
   }
 
   const appContext: AppContext = {
@@ -56,9 +59,19 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routesConfig,
     assetsManifest,
     matches,
+    routeModules,
   };
 
   const runtime = new Runtime(appContext);
+  if (appConfig?.app?.addProvider) {
+    runtime.addProvider(appConfig.app.addProvider);
+  }
+  if (process.env.ICE_CORE_SSR === 'true' || process.env.ICE_CORE_SSG === 'true') {
+    runtime.setRender((container, element) => {
+      ReactDOM.hydrateRoot(container, element);
+    });
+  }
+
   runtimeModules.forEach(m => {
     runtime.loadModule(m);
   });
@@ -73,10 +86,13 @@ async function render(runtime: Runtime, Document: ComponentWithChildren<{}>) {
   const RouteWrappers = runtime.getWrappers();
   const AppRouter = runtime.getAppRouter();
 
-  const history = (appContext.appConfig?.router?.type === 'hash' ? createHashHistory : createBrowserHistory)({ window });
+  const createHistory = process.env.ICE_CORE_ROUTER === 'true'
+    ? (appContext.appConfig?.router?.type === 'hash' ? createHashHistory : createBrowserHistory)
+    : createHistorySingle;
+  const history = createHistory({ window });
 
   render(
-    document,
+    document.getElementById('ice-container'),
     <BrowserEntry
       history={history}
       appContext={appContext}
@@ -89,10 +105,10 @@ async function render(runtime: Runtime, Document: ComponentWithChildren<{}>) {
 }
 
 interface BrowserEntryProps {
-  history: HashHistory | BrowserHistory;
+  history: HashHistory | BrowserHistory | null;
   appContext: AppContext;
   AppProvider: React.ComponentType<any>;
-  RouteWrappers: RouteWrapper[];
+  RouteWrappers: RouteWrapperConfig[];
   AppRouter: React.ComponentType<AppRouterProps>;
   Document: ComponentWithChildren<{}>;
 }
@@ -100,45 +116,70 @@ interface BrowserEntryProps {
 interface HistoryState {
   action: Action;
   location: Location;
+}
+
+interface RouteState {
   routesData: RoutesData;
   routesConfig: RoutesConfig;
   matches: RouteMatch[];
+  routeModules: RouteModules;
 }
 
-function BrowserEntry({ history, appContext, Document, ...rest }: BrowserEntryProps) {
+function BrowserEntry({
+  history,
+  appContext,
+  Document,
+  ...rest
+}: BrowserEntryProps) {
   const {
-    routes, matches: originMatches, routesData: initialRoutesData,
-    routesConfig: initialRoutesConfig, appData,
+    routes,
+    matches: originMatches,
+    routesData: initialRoutesData,
+    routesConfig: initialRoutesConfig,
+    appData,
+    appConfig,
+    routeModules: initialRouteModules,
   } = appContext;
 
   const [historyState, setHistoryState] = useState<HistoryState>({
     action: history.action,
     location: history.location,
+  });
+  const [routeState, setRouteState] = useState<RouteState>({
     routesData: initialRoutesData,
     routesConfig: initialRoutesConfig,
     matches: originMatches,
+    routeModules: initialRouteModules,
   });
 
-  const { action, location, routesData, routesConfig, matches } = historyState;
+  const { action, location } = historyState;
+  const { routesData, routesConfig, matches, routeModules } = routeState;
 
   // listen the history change and update the state which including the latest action and location
   useLayoutEffect(() => {
-    history.listen(({ action, location }) => {
-      const currentMatches = matchRoutes(routes, location);
-      if (!currentMatches.length) {
-        throw new Error(`Routes not found in location ${location.pathname}.`);
-      }
+    if (history) {
+      history.listen(({ action, location }) => {
+        const currentMatches = matchRoutes(routes, location, appConfig?.router?.basename);
+        if (!currentMatches.length) {
+          throw new Error(`Routes not found in location ${location.pathname}.`);
+        }
 
-      loadNextPage(currentMatches, historyState).then(({ routesData, routesConfig }) => {
-        setHistoryState({
-          action,
-          location,
-          routesData,
-          routesConfig,
-          matches: currentMatches,
+        loadNextPage(currentMatches, routeState).then(({ routesData, routesConfig, routeModules }) => {
+          setHistoryState({
+            action,
+            location,
+          });
+          setRouteState({
+            routesData,
+            routesConfig,
+            matches: currentMatches,
+            routeModules,
+          });
         });
       });
-    });
+    }
+    // just trigger once
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // update app context for the current route.
@@ -146,19 +187,18 @@ function BrowserEntry({ history, appContext, Document, ...rest }: BrowserEntryPr
     matches,
     routesData,
     routesConfig,
+    routeModules,
   });
 
   return (
     <AppContextProvider value={appContext}>
       <AppDataProvider value={appData}>
-        <Document>
-          <App
-            action={action}
-            location={location}
-            navigator={history}
-            {...rest}
-          />
-        </Document>
+        <App
+          action={action}
+          location={location}
+          navigator={history}
+          {...rest}
+        />
       </AppDataProvider>
     </AppContextProvider>
   );
@@ -168,18 +208,25 @@ function BrowserEntry({ history, appContext, Document, ...rest }: BrowserEntryPr
  * Prepare for the next pages.
  * Load modules、getPageData and preLoad the custom assets.
  */
-async function loadNextPage(currentMatches: RouteMatch[], prevHistoryState: HistoryState) {
+async function loadNextPage(
+  currentMatches: RouteMatch[],
+  preRouteState: RouteState,
+) {
   const {
     matches: preMatches,
     routesData: preRoutesData,
-  } = prevHistoryState;
+    routeModules: preRouteModules,
+  } = preRouteState;
 
-  await loadRouteModules(currentMatches.map(({ route: { id, load } }) => ({ id, load })));
+  const routeModules = await loadRouteModules(
+    currentMatches.map(({ route: { id, load } }) => ({ id, load })),
+    preRouteModules,
+  );
 
   // load data for changed route.
-  const initialContext = getInitialContext();
+  const initialContext = getRequestContext(window.location);
   const matchesToLoad = filterMatchesToLoad(preMatches, currentMatches);
-  const data = await loadRoutesData(matchesToLoad, initialContext);
+  const data = await loadRoutesData(matchesToLoad, initialContext, routeModules);
 
   const routesData: RoutesData = {};
   // merge page data.
@@ -188,31 +235,12 @@ async function loadNextPage(currentMatches: RouteMatch[], prevHistoryState: Hist
     routesData[id] = data[id] || preRoutesData[id];
   });
 
-  const routesConfig = getRoutesConfig(currentMatches, routesData);
-
-  const links = getLinks(currentMatches, routesConfig);
-  const scripts = getScripts(currentMatches, routesConfig);
-
-  await Promise.all([
-    loadStyleLinks(links),
-    loadScripts(scripts),
-  ]);
+  const routesConfig = getRoutesConfig(currentMatches, routesData, routeModules);
+  await updateRoutesConfig(currentMatches, routesConfig);
 
   return {
     routesData,
     routesConfig,
+    routeModules,
   };
-}
-
-function getInitialContext() {
-  const { href, origin, pathname, search } = window.location;
-  const path = href.replace(origin, '');
-  const query = Object.fromEntries(createSearchParams(search));
-  const initialContext: InitialContext = {
-    pathname,
-    path,
-    query,
-  };
-
-  return initialContext;
 }

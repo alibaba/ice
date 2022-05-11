@@ -4,10 +4,15 @@ import {
   useParams,
   useSearchParams,
 } from 'react-router-dom';
+import {
+  LinkSingle,
+  OutletSingle,
+  useParamsSingle,
+  useSearchParamsSingle,
+} from './utils/history-single.js';
 import Runtime from './runtime.js';
 import App from './App.js';
 import runClientApp from './runClientApp.js';
-import { renderToHTML, renderToResponse } from './runServerApp.js';
 import { useAppContext } from './AppContext.js';
 import { useAppData } from './AppData.js';
 import { useData, useConfig } from './RouteContext.js';
@@ -24,17 +29,20 @@ import type {
   AppConfig,
   RouteConfig,
   RouteItem,
+  ServerContext,
+  AppProvider,
+  RouteWrapper,
+  GetAppData,
+  GetAppConfig,
 } from './types.js';
-import defineAppConfig from './defineAppConfig.js';
 import { matchRoutes } from './routes.js';
+import dataLoader from './dataLoader.js';
 
 export {
   matchRoutes,
   Runtime,
   App,
   runClientApp,
-  renderToHTML,
-  renderToResponse,
   useAppContext,
   useAppData,
   useData,
@@ -44,12 +52,16 @@ export {
   Links,
   Scripts,
   Main,
-  defineAppConfig,
   // react-router-dom API
   Link,
   Outlet,
   useParams,
   useSearchParams,
+  dataLoader,
+  LinkSingle,
+  OutletSingle,
+  useParamsSingle,
+  useSearchParamsSingle,
 };
 
 export type {
@@ -58,4 +70,9 @@ export type {
   AppConfig,
   RouteConfig,
   RouteItem,
+  ServerContext,
+  AppProvider,
+  RouteWrapper,
+  GetAppData,
+  GetAppConfig,
 };

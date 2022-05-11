@@ -24,10 +24,12 @@
     "@types/less": "^3.0.3",
     "@types/lodash": "^4.14.181",
     "@types/webpack-bundle-analyzer": "^4.4.1",
+    "copy-webpack-plugin": "10.2.4",
     "css-loader": "6.7.1",
     "css-minimizer-webpack-plugin": "3.4.1",
     "cssnano": "^5.1.7",
     "es-module-lexer": "0.10.5",
+    "eslint": "^8.14.0",
     "eslint-webpack-plugin": "3.1.1",
     "fork-ts-checker-webpack-plugin": "7.2.6",
     "fs-extra": "^10.0.0",
@@ -38,6 +40,7 @@
     "postcss-modules": "4.3.1",
     "postcss-nested": "5.0.6",
     "postcss-preset-env": "7.4.3",
+    "postcss-plugin-rpx2vw": "^0.0.3",
     "sass-loader": "12.6.0",
     "tapable": "2.2.1",
     "terser": "5.12.1",
@@ -45,6 +48,7 @@
     "webpack": "5.72.0",
     "webpack-bundle-analyzer": "4.5.0",
     "webpack-dev-server": "4.8.1",
-    "webpack-sources": "3.2.3"
+    "webpack-sources": "3.2.3",
+    "typescript": "^4.6.4"
   }
 }

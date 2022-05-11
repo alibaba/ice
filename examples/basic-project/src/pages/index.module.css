@@ -1,3 +1,8 @@
 .title {
   color: red;
+  margin-left: 10rpx;
+}
+
+.data {
+  margin-top: 10px;
 }

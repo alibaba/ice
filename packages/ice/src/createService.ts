@@ -14,11 +14,12 @@ import build from './commands/build.js';
 import getContextConfig from './utils/getContextConfig.js';
 import getWatchEvents from './getWatchEvents.js';
 import { getAppConfig } from './analyzeRuntime.js';
-import { defineRuntimeEnv, updateRuntimeEnv } from './utils/runtimeEnv.js';
+import { initProcessEnv, updateRuntimeEnv, getCoreEnvKeys } from './utils/runtimeEnv.js';
 import getRuntimeModules from './utils/getRuntimeModules.js';
 import { generateRoutesInfo } from './routes.js';
 import webPlugin from './plugins/web/index.js';
 import configPlugin from './plugins/config.js';
+import type { AppConfig } from './utils/runtimeEnv.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -80,49 +81,85 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     },
   });
   await ctx.resolveConfig();
-  const { userConfig: { routes: routesConfig } } = ctx;
+  const { userConfig } = ctx;
+
+  // load dotenv, set to process.env
+  await initProcessEnv(rootDir, command, commandArgs, userConfig);
+  const coreEnvKeys = getCoreEnvKeys();
+
+  const { routes: routesConfig } = userConfig;
   const routesRenderData = generateRoutesInfo(rootDir, routesConfig);
+  const { routeManifest } = routesRenderData;
   generator.modifyRenderData((renderData) => ({
     ...renderData,
     ...routesRenderData,
+    coreEnvKeys,
   }));
-  dataCache.set('routes', JSON.stringify(routesRenderData.routeManifest));
+  dataCache.set('routes', JSON.stringify(routeManifest));
 
   const runtimeModules = getRuntimeModules(ctx.getAllPlugin());
-  generator.modifyRenderData((renderData) => ({
-    ...renderData,
-    runtimeModules,
-  }));
+
   await ctx.setup();
-
-  // render template before webpack compile
-  const renderStart = new Date().getTime();
-
-  generator.render();
 
   addWatchEvent(
     ...getWatchEvents({ generator, targetDir, templateDir, cache: dataCache, ctx }),
   );
 
+  const compileIncludes = runtimeModules.map(({ name }) => `${name}/runtime`);
+  const contextConfig = getContextConfig(ctx, {
+    compileIncludes,
+    port: commandArgs.port,
+  });
+  const webTask = contextConfig.find(({ name }) => name === 'web');
+
+  // render template before webpack compile
+  const renderStart = new Date().getTime();
+  generator.modifyRenderData((renderData) => ({
+    ...renderData,
+    runtimeModules,
+  }));
+  generator.render();
   consola.debug('template render cost:', new Date().getTime() - renderStart);
 
-  // define runtime env before get webpack config
-  defineRuntimeEnv();
-  const compileIncludes = runtimeModules.map(({ name }) => `${name}/runtime`);
-  const contextConfig = getContextConfig(ctx, { compileIncludes, port: commandArgs.port });
-  const webTask = contextConfig.find(({ name }) => name === 'web');
   const esbuildCompile = createEsbuildCompiler({
     rootDir,
     task: webTask,
   });
+
+  let appConfig: AppConfig;
+  if (command === 'build') {
+    try {
+      // should after generator, otherwise it will compile error
+      appConfig = await getAppConfig({ esbuildCompile, rootDir });
+    } catch (err) {
+      consola.warn('Failed to get app config:', err.message);
+      consola.debug(err);
+    }
+  }
+
+  let disableRouter = false;
+  if (userConfig.removeHistoryDeadCode) {
+    let routesCount = 0;
+    routeManifest && Object.keys(routeManifest).forEach((key) => {
+      const routeItem = routeManifest[key];
+      if (!routeItem.layout) {
+        routesCount += 1;
+      }
+    });
+
+    if (routesCount <= 1) {
+      consola.info('[ice] removeHistoryDeadCode is enabled and only have one route, ice build will remove history and react-router dead code.');
+      disableRouter = true;
+    }
+  }
+
+  updateRuntimeEnv(appConfig, disableRouter);
 
   return {
     run: async () => {
       if (command === 'start') {
         return await start(ctx, contextConfig, esbuildCompile);
       } else if (command === 'build') {
-        const appConfig = await getAppConfig({ esbuildCompile, rootDir });
-        updateRuntimeEnv(appConfig, routesRenderData.routeManifest);
         return await build(ctx, contextConfig, esbuildCompile);
       }
     },

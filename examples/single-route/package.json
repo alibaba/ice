@@ -1,0 +1,23 @@
+{
+  "name": "basic-project",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "ice start",
+    "build": "ice build"
+  },
+  "description": "",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@ice/app": "workspace:*",
+    "@ice/runtime": "workspace:*",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "browserslist": "^4.19.3",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "webpack-bundle-analyzer": "^4.5.0"
+  }
+}

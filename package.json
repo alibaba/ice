@@ -3,10 +3,11 @@
   "workspaces": [
     "packages/*"
   ],
+  "version": "0.0.1",
   "description": "A universal framework based on React",
   "scripts": {
     "prepare": "husky install",
-    "setup": " rm -rf node_modules packages/*/node_modules && pnpm install && pnpm run prebundle && pnpm run build",
+    "setup": "rm -rf node_modules packages/*/node_modules && pnpm install && pnpm run prebundle && pnpm run build",
     "rebuild": "pnpm install && pnpm run build",
     "watch": "esmo ./scripts/watch.ts",
     "build": "esmo ./scripts/build.ts",
@@ -19,6 +20,7 @@
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
     "lint:fix": "npm run lint -- --fix",
     "publish:alpha": "PUBLISH_TYPE=alpha esmo ./scripts/publishPackageWithDistTag.ts",
+    "publish:beta": "PUBLISH_TYPE=beta esmo ./scripts/publishPackageWithDistTag.ts",
     "test": "vitest run --coverage",
     "test:watch": "vitest"
   },

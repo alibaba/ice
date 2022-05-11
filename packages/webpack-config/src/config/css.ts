@@ -50,6 +50,7 @@ function configCSSRule(config: CSSRuleConfig, options: Options) {
           },
           browsers,
         }],
+        ['@ice/bundles/compiled/postcss-plugin-rpx2vw'],
       ],
     },
   };

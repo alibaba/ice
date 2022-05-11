@@ -1,34 +1,48 @@
 import {
-  defineAppConfig,
-  useAppData,
-  useData,
-  useConfig,
+  Link as OriginLink,
+  Outlet as OriginOutlet,
+  useParams as useOriginParams,
+  useSearchParams as useOriginSearchParams,
+  LinkSingle,
+  OutletSingle,
+  useParamsSingle,
+  useSearchParamsSingle,
+} from '@ice/runtime';
+
+let Link, Outlet, useParams, useSearchParams;
+if (process.env.ICE_CORE_ROUTER === 'true') {
+  Link = OriginLink;
+  Outlet = OriginOutlet;
+  useParams = useOriginParams;
+  useSearchParams = useOriginSearchParams;
+} else {
+  Link = LinkSingle;
+  Outlet = OutletSingle;
+  useParams = useParamsSingle;
+  useSearchParams = useSearchParamsSingle;
+}
+
+export {
   Link,
   Outlet,
   useParams,
   useSearchParams,
+};
+
+export {
+  useAppData,
+  useData,
+  useConfig,
   Meta,
   Title,
   Links,
   Scripts,
   Main,
 } from '@ice/runtime';
+
 <%- framework.imports %>
 
 export {
-  defineAppConfig,
-  useAppData,
-  useData,
-  useConfig,
-  Link,
-  Outlet,
-  useParams,
-  useSearchParams,
-  Meta,
-  Title,
-  Links,
-  Scripts,
-  Main,
   <% if (framework.exports) { %>
   <%- framework.exports %>
   <% } %>
