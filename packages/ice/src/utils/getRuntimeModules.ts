@@ -21,7 +21,7 @@ function getRuntimeModules(plugins: Plugin[]) {
     const pkgPath = findUp.sync('package.json', { cwd: pluginDir });
     // for example: xx/build-plugin-app/
     const packageDir = path.dirname(pkgPath);
-    const runtimeDir = path.join(packageDir, 'runtime');
+    const runtimeDir = path.join(pluginDir, 'runtime');
     if (fse.existsSync(runtimeDir)) {
       try {
         const pkgInfo = fse.readJSONSync(pkgPath);

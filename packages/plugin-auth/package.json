@@ -4,20 +4,40 @@
   "description": "",
   "license": "MIT",
   "type": "module",
-  "main": "./esm/index.js",
   "exports": {
-    ".": "./esm/index.js",
-    "./runtime": "./runtime/index.tsx",
-    "./runtime/Auth": "./runtime/Auth.tsx",
-    "./runtime/types": "./runtime/types.ts"
+    ".": {
+      "types": "./esm/index.d.ts",
+      "import": "./esm/index.js",
+      "default": "./esm/index.js"
+    },
+    "./runtime": {
+      "types": "./esm/runtime/index.d.ts",
+      "import": "./esm/runtime/index.js",
+      "default": "./esm/runtime/index.js"
+    },
+    "./runtime/Auth": {
+      "types": "./esm/runtime/Auth.d.ts",
+      "import": "./esm/runtime/Auth.js",
+      "default": "./esm/runtime/Auth.js"
+    },
+    "./runtime/types": {
+      "types": "./esm/runtime/types.d.ts",
+      "import": "./esm/runtime/types.js",
+      "default": "./esm/runtime/types.js"
+    }
   },
+  "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
   "files": [
     "esm",
-    "runtime",
     "!esm/**/*.map"
   ],
   "dependencies": {
     "@ice/types": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0"
   },
   "peerDependencies": {
     "react": "^18.0.0",
