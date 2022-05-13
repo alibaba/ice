@@ -105,9 +105,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     ...getWatchEvents({ generator, targetDir, templateDir, cache: dataCache, ctx }),
   );
 
-  const compileIncludes = runtimeModules.map(({ name }) => `${name}/runtime`);
   const contextConfig = getContextConfig(ctx, {
-    compileIncludes,
     port: commandArgs.port,
   });
   const webTask = contextConfig.find(({ name }) => name === 'web');

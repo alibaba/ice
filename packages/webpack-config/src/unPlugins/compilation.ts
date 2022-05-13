@@ -20,7 +20,7 @@ const require = createRequire(import.meta.url);
 const regeneratorRuntimePath = require.resolve('regenerator-runtime');
 
 const compilationPlugin = (options: Options): UnpluginOptions => {
-  const { sourceMap, mode, compileIncludes, compileExcludes } = options;
+  const { sourceMap, mode, compileIncludes = [], compileExcludes } = options;
   const dev = mode !== 'production';
   const compileRegex = compileIncludes.map((includeRule) => {
     return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);

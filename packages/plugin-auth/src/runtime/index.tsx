@@ -1,8 +1,8 @@
 import * as React from 'react';
 import type { RuntimePlugin, AppProvider, RouteWrapper } from '@ice/types';
-import { AuthProvider, useAuth } from './Auth';
-import type { InjectProps } from './Auth';
-import type { AuthConfig, AuthType } from './types';
+import { AuthProvider, useAuth } from './Auth.js';
+import type { InjectProps } from './Auth.js';
+import type { AuthConfig, AuthType } from './types.js';
 
 const runtime: RuntimePlugin = ({ appContext, useConfig, addProvider, addWrapper }) => {
   const { appConfig } = appContext;
