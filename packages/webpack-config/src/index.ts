@@ -21,6 +21,7 @@ import configAssets from './config/assets.js';
 import configCss from './config/css.js';
 import AssetsManifestPlugin from './webpackPlugins/AssetsManifestPlugin.js';
 import getTransformPlugins from './unPlugins/index.js';
+import getSplitChunksConfig from './config/splitChunks.js';
 
 const require = createRequire(import.meta.url);
 const { merge } = lodash;
@@ -47,17 +48,8 @@ function getEntry(rootDir: string) {
   }
   const dataLoaderFile = path.join(rootDir, '.ice/data-loader.ts');
   return {
-    runtime: ['react', 'react-dom', '@ice/runtime'],
-    main: {
-      import: [entryFile],
-      dependOn: 'runtime',
-    },
-    // Should set `dependOn` property to avoid hmr fail.
-    // ref: https://github.com/pmmmwh/react-refresh-webpack-plugin/issues/88#issuecomment-627558799
-    loader: {
-      import: [dataLoaderFile],
-      dependOn: 'runtime',
-    },
+    main: [entryFile],
+    loader: [dataLoaderFile],
   };
 }
 
@@ -178,6 +170,10 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
       ignored: watchIgnoredRegexp,
     },
     optimization: {
+      // share runtime chunk when dev, ref: https://github.com/pmmmwh/react-refresh-webpack-plugin/issues/88#issuecomment-627558799
+      // loader chunk will load before main chunk in production
+      runtimeChunk: dev ? 'single' : 'multiple',
+      splitChunks: getSplitChunksConfig(rootDir),
       minimize: minify,
       minimizer: [
         new TerserPlugin({
