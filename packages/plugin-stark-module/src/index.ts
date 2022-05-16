@@ -89,7 +89,7 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, re
             ...options,
             plugins: [
               ...plugins,
-              [require.resolve('postcss-prefix-selector '), {
+              [require.resolve('postcss-prefix-selector'), {
                 prefix:options.cssNamespace,
               }]
             ],
