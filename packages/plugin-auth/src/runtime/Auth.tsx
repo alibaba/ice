@@ -10,12 +10,12 @@ interface ProviderProps {
 
 interface InjectProps {
   auth: ContextType[0];
-  useAuth: ContextType[1];
+  setAuth: ContextType[1];
 }
 
 const Provider: FC<ProviderProps> = ({ value = {}, children }) => {
   const [state, setState] = useState<AuthType>(value);
-  const updateState: InjectProps['useAuth'] = (newState = {}) => {
+  const updateState: InjectProps['setAuth'] = (newState = {}) => {
     setState({
       ...state,
       ...newState,
