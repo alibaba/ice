@@ -4,24 +4,21 @@ import fse from 'fs-extra';
 import consola from 'consola';
 import type { ServerContext } from '@ice/runtime';
 import type { RouteObject } from 'react-router';
+import { ROUTER_MANIFEST } from '../constant.js';
 
 interface Options {
   rootDir: string;
   entry: string;
-  routeManifest: string;
-  outDir: string;
-  ssg: boolean;
-  ssr: boolean;
+  outputDir: string;
+  documentOnly: boolean;
 }
 
 export default async function generateHTML(options: Options) {
   const {
     rootDir,
     entry,
-    routeManifest,
-    outDir,
-    ssg,
-    ssr,
+    outputDir,
+    documentOnly,
   } = options;
 
   let serverEntry;
@@ -32,7 +29,8 @@ export default async function generateHTML(options: Options) {
     // make error clearly, notice typeof err === 'string'
     throw new Error(`import ${entry} error: ${err}`);
   }
-
+  // Read the latest routes info.
+  const routeManifest = path.join(rootDir, ROUTER_MANIFEST);
   const routes = JSON.parse(fse.readFileSync(routeManifest, 'utf8'));
   const paths = getPaths(routes);
 
@@ -46,15 +44,13 @@ export default async function generateHTML(options: Options) {
     const serverContext: ServerContext = {
       req: req as Request,
     };
-
-    const documentOnly = !(ssg || ssr);
     const { value: html } = await serverEntry.renderToHTML(serverContext, documentOnly);
 
     const fileName = routePath === '/' ? 'index.html' : `${routePath}.html`;
     if (fse.existsSync(path.join(rootDir, 'public', fileName))) {
       consola.warn(`${fileName} is overwrite by framework, rename file name if it is necessary`);
     }
-    const contentPath = path.join(outDir, fileName);
+    const contentPath = path.join(outputDir, fileName);
     await fse.ensureFile(contentPath);
     await fse.writeFile(contentPath, html);
   }

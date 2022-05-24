@@ -124,6 +124,10 @@ export default class Generator {
     }
   }
 
+  public setRenderData = (renderData: RenderData) => {
+    this.renderData = renderData;
+  };
+
   private debounceRender = debounce(() => {
     this.render();
   }, RENDER_WAIT);

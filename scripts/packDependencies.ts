@@ -85,8 +85,10 @@ export async function packDependency(options: Options): Promise<void> {
         `require('${externals[key]}/package.json')`,
       );
     }
+    const copyTarget = path.join(targetPath, path.basename(fileToCopy));
+    console.log(chalk.green(`fileToCopy ${copyTarget}`));
     fs.writeFileSync(
-      path.join(targetPath, path.basename(fileToCopy)),
+      copyTarget,
       content,
       'utf-8',
     );
