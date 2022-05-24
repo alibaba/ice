@@ -1,15 +1,31 @@
+import * as path from 'path';
 import type { ExpressRequestHandler, Request } from 'webpack-dev-server';
 import { pathToRegexp } from 'path-to-regexp';
 import type { Key } from 'path-to-regexp';
 import bodyParser from 'body-parser';
 import multer from 'multer';
+import createWatch from '../../service/watchSource.js';
+import getConfigs, { MOCK_FILE_PATTERN } from './getConfigs';
 import type { MockConfig } from './getConfigs';
 
-export default function createMiddleware(
-  context: { mockConfigs: MockConfig[] },
-): ExpressRequestHandler {
-  return (req, res, next) => {
-    const matchResult = matchPath(req, context.mockConfigs);
+interface MockOptions {
+  rootDir?: string;
+  exclude: string[];
+}
+
+export default function createMiddleware(options: MockOptions) {
+  const { exclude, rootDir } = options;
+  let mockConfigs = getConfigs(rootDir, exclude);
+
+  createWatch({
+    watchDir: path.join(rootDir, 'mock'),
+    watchEvents: [[MOCK_FILE_PATTERN, () => {
+      mockConfigs = getConfigs(rootDir, exclude);
+    }]],
+  });
+
+  const middleware: ExpressRequestHandler = (req, res, next) => {
+    const matchResult = matchPath(req, mockConfigs);
     if (matchResult) {
       const { match, mockConfig, keys } = matchResult;
       const { handler, method } = mockConfig;
@@ -48,6 +64,10 @@ export default function createMiddleware(
     } else {
       next();
     }
+  };
+  return {
+    name: 'mock',
+    middleware,
   };
 }
 

@@ -1,29 +1,31 @@
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import consola from 'consola';
 import chalk from 'chalk';
-import type { CommandArgs } from 'build-scripts';
+import type { CommandArgs, TaskConfig } from 'build-scripts';
 import type { Compiler, Configuration } from 'webpack';
-import type { Urls, EsbuildCompile } from '@ice/types/esm/plugin.js';
+import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
+import type { Urls, ServerCompiler } from '@ice/types/esm/plugin.js';
 import type { Config } from '@ice/types';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
-import type { WebpackConfig } from '../utils/getContextConfig';
+import openBrowser from '../utils/openBrowser.js';
 
+type WebpackConfig = Configuration & { devServer?: DevServerConfiguration };
 async function webpackCompiler(options: {
   webpackConfigs: WebpackConfig | WebpackConfig[];
-  taskConfig: Config;
+  taskConfigs: TaskConfig<Config>[];
   command: string;
   commandArgs: CommandArgs;
   applyHook: (key: string, opts?: {}) => Promise<void>;
   rootDir: string;
   urls?: Urls;
-  esbuildCompile: EsbuildCompile;
+  serverCompiler: ServerCompiler;
 }) {
-  const { taskConfig, urls, applyHook, command, commandArgs, esbuildCompile, webpackConfigs } = options;
+  const { taskConfigs, urls, applyHook, command, commandArgs, serverCompiler, webpackConfigs } = options;
   await applyHook(`before.${command}.run`, {
     commandArgs,
-    taskConfig,
+    taskConfigs,
     webpackConfigs,
-    esbuildCompile,
+    serverCompiler,
   });
   let compiler: Compiler;
   try {
@@ -85,6 +87,10 @@ async function webpackCompiler(options: {
    - Network:  ${chalk.underline.white(urls.lanUrlForTerminal)}`;
         }
         consola.log(`${logoutMessage}\n`);
+
+        if (commandArgs.open) {
+          openBrowser(urls.localUrlForBrowser);
+        }
       }
       // compiler.hooks.done is AsyncSeriesHook which does not support async function
       await applyHook('after.start.compile', {
@@ -93,8 +99,8 @@ async function webpackCompiler(options: {
         isFirstCompile,
         urls,
         messages,
-        taskConfig,
-        esbuildCompile,
+        taskConfigs,
+        serverCompiler,
       });
     }
 

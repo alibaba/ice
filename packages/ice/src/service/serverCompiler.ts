@@ -1,39 +1,53 @@
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { createHash } from 'crypto';
+import * as fs from 'fs';
 import consola from 'consola';
-import esbuild from 'esbuild';
-import { createUnplugin } from 'unplugin';
-import type { EsbuildCompile } from '@ice/types/esm/plugin.js';
-import { getTransformPlugins } from '@ice/webpack-config';
+import esbuild, { type BuildOptions } from 'esbuild';
+import type { Config } from '@ice/types';
+import type { ServerCompiler } from '@ice/types/esm/plugin.js';
+import type { TaskConfig } from 'build-scripts';
+import { getCompilerPlugins } from '@ice/webpack-config';
 import escapeLocalIdent from '../utils/escapeLocalIdent.js';
 import cssModulesPlugin from '../esbuild/cssModules.js';
 import aliasPlugin from '../esbuild/alias.js';
+import createAssetsPlugin from '../esbuild/assets.js';
+import { ASSETS_MANIFEST } from '../constant.js';
 import emptyCSSPlugin from '../esbuild/emptyCSS.js';
-
-import type { ContextConfig } from '../utils/getContextConfig.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 interface Options {
   rootDir: string;
-  task: ContextConfig;
+  task: TaskConfig<Config>;
 }
 
-export function createEsbuildCompiler(options: Options) {
-  const { task } = options;
-  const { taskConfig, webpackConfig } = task;
-  const transformPlugins = getTransformPlugins(taskConfig);
-  const alias = (webpackConfig.resolve?.alias || {}) as Record<string, string | false>;
-  const { define = {} } = taskConfig;
+type CompilerOptions = Pick<BuildOptions, 'entryPoints' | 'outfile' | 'plugins' | 'bundle'>;
+
+export function createServerCompiler(options: Options) {
+  const { task, rootDir } = options;
+  const transformPlugins = getCompilerPlugins(task.config, 'esbuild');
+  const alias = (task.config?.alias || {}) as Record<string, string | false>;
+  const assetsManifest = path.join(rootDir, ASSETS_MANIFEST);
+  const defineVars = task.config?.define || {};
 
   // auto stringify define value
-  const defineVars = {};
-  Object.keys(define).forEach((key) => {
-    defineVars[key] = JSON.stringify(define[key]);
+  Object.keys(defineVars).forEach((key) => {
+    defineVars[key] = JSON.stringify(defineVars[key]);
   });
 
-  const esbuildCompile: EsbuildCompile = async (buildOptions) => {
+  // get runtime variable for server build
+  const runtimeDefineVars = {};
+  Object.keys(process.env).forEach((key) => {
+    if (/^ICE_CORE_/i.test(key)) {
+      // in server.entry
+      runtimeDefineVars[`__process.env.${key}__`] = JSON.stringify(process.env[key]);
+    } else if (/^ICE_/i.test(key)) {
+      runtimeDefineVars[`process.env.${key}`] = JSON.stringify(process.env[key]);
+    }
+  });
+
+  const serverCompiler: ServerCompiler = async (buildOptions: CompilerOptions) => {
     const startTime = new Date().getTime();
     consola.debug('[esbuild]', `start compile for: ${buildOptions.entryPoints}`);
     const define = {
@@ -41,11 +55,12 @@ export function createEsbuildCompiler(options: Options) {
       // in esm, this in the global should be undefined. Set the following config to avoid warning
       this: undefined,
       ...defineVars,
-      ...buildOptions.define,
+      ...runtimeDefineVars,
     };
 
     const buildResult = await esbuild.build({
       bundle: true,
+      format: 'esm',
       target: 'node12.20.0',
       ...buildOptions,
       define,
@@ -54,7 +69,7 @@ export function createEsbuildCompiler(options: Options) {
         emptyCSSPlugin(),
         aliasPlugin({
           alias,
-          compileRegex: (taskConfig.compileIncludes || []).map((includeRule) => {
+          compileRegex: (task.config?.compileIncludes || []).map((includeRule) => {
             return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);
           }),
         }),
@@ -66,17 +81,15 @@ export function createEsbuildCompiler(options: Options) {
             return escapeLocalIdent(`${name}--${hash.digest('base64').slice(0, 8)}`);
           },
         }),
+        fs.existsSync(assetsManifest) && createAssetsPlugin(assetsManifest, rootDir),
+        ...transformPlugins,
         ...(buildOptions.plugins || []),
-        ...transformPlugins
-          // ignore compilation-plugin while esbuild has it's own transform
-          .filter(({ name }) => name !== 'compilation-plugin')
-          .map(plugin => createUnplugin(() => plugin).esbuild()),
-      ],
+      ].filter(Boolean),
     });
     consola.debug('[esbuild]', `time cost: ${new Date().getTime() - startTime}ms`);
     return buildResult;
   };
-  return esbuildCompile;
+  return serverCompiler;
 }
 
 

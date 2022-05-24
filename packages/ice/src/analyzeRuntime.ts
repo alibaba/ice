@@ -1,18 +1,17 @@
 import * as path from 'path';
 import consola from 'consola';
-import type { EsbuildCompile } from '@ice/types/esm/plugin.js';
+import type { ServerCompiler } from '@ice/types/esm/plugin.js';
 import type { AppConfig } from './utils/runtimeEnv.js';
 
 interface Options {
-  esbuildCompile: EsbuildCompile;
+  serverCompiler: ServerCompiler;
   rootDir: string;
 }
 
 export const getAppConfig = async (options: Options): Promise<AppConfig> => {
-  const { esbuildCompile, rootDir } = options;
+  const { serverCompiler, rootDir } = options;
   const outfile = path.join(rootDir, 'node_modules', 'entry.mjs');
-
-  await esbuildCompile({
+  await serverCompiler({
     // TODO: detect src/app if it is exists
     entryPoints: [path.join(rootDir, 'src/app')],
     outfile,

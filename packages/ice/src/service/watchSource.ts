@@ -6,11 +6,11 @@ import formatPath from '../utils/formatPath.js';
 
 function createWatch(options: {
   watchDir: string;
-  command: string;
+  command?: string;
   watchOptions?: WatchOptions;
   watchEvents?: WatchEvent[];
 }) {
-  const { watchDir, command, watchOptions } = options;
+  const { watchDir, command = 'start', watchOptions } = options;
   const watchEvents = options.watchEvents || [];
   // do not setup chokidar when run build
   const watcher = command === 'start' && chokidar.watch(watchDir, {

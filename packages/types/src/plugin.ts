@@ -1,5 +1,5 @@
 import type webpack from 'webpack';
-import type { IPluginAPI, CommandArgs } from 'build-scripts';
+import type { PluginAPI, CommandArgs, TaskConfig } from 'build-scripts';
 import type { Configuration, Stats } from 'webpack';
 import type WebpackDevServer from 'webpack-dev-server';
 import type { BuildOptions, BuildResult } from 'esbuild';
@@ -9,7 +9,7 @@ import type { ExportData, AddRenderFile, AddTemplateFiles } from './generator.js
 
 type AddExport = (exportData: ExportData) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
-export type EsbuildCompile = (buildOptions: BuildOptions, customConfig?: Partial<Config>) => Promise<BuildResult>;
+export type ServerCompiler = (buildOptions: Pick<BuildOptions, 'format' | 'entryPoints' | 'outfile' | 'bundle'>) => Promise<BuildResult>;
 export type WatchEvent = [
   pattern: RegExp | string,
   event: (eventName: EventName, filePath: string) => void,
@@ -26,8 +26,8 @@ export interface Urls {
 interface BeforeCommandRunOptions {
   commandArgs: CommandArgs;
   webpackConfigs: Configuration | Configuration[];
-  taskConfig: Config;
-  esbuildCompile: EsbuildCompile;
+  taskConfigs: TaskConfig<Config>[];
+  serverCompiler: ServerCompiler;
 }
 
 interface AfterCommandCompileOptions {
@@ -36,8 +36,8 @@ interface AfterCommandCompileOptions {
   isSuccessful: Boolean;
   isFirstCompile: Boolean;
   urls: Urls;
-  taskConfig: Config;
-  esbuildCompile: EsbuildCompile;
+  taskConfigs: TaskConfig<Config>[];
+  serverCompiler: ServerCompiler;
 }
 
 export interface HookLifecycle {
@@ -78,5 +78,5 @@ interface OverwritePluginAPI extends ExtendsPluginAPI {
 }
 
 export interface Plugin<T = undefined> {
-  (api: IPluginAPI<Config, OverwritePluginAPI>, options?: T): Promise<void> | void;
+  (api: PluginAPI<Config, OverwritePluginAPI>, options?: T): Promise<void> | void;
 }

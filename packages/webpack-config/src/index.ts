@@ -15,12 +15,11 @@ import type { Configuration, WebpackPluginInstance } from 'webpack';
 import type webpack from 'webpack';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import type { Config } from '@ice/types';
-import { createUnplugin } from 'unplugin';
 import browserslist from 'browserslist';
 import configAssets from './config/assets.js';
 import configCss from './config/css.js';
 import AssetsManifestPlugin from './webpackPlugins/AssetsManifestPlugin.js';
-import getTransformPlugins from './unPlugins/index.js';
+import getCompilerPlugins from './getCompilerPlugins.js';
 import getSplitChunksConfig from './config/splitChunks.js';
 
 const require = createRequire(import.meta.url);
@@ -33,7 +32,7 @@ interface GetWebpackConfigOptions {
   config: Config;
   webpack: typeof webpack;
 }
-type WebpackConfig = Configuration & { devServer?: DevServerConfiguration };
+export type WebpackConfig = Configuration & { devServer?: DevServerConfiguration };
 type GetWebpackConfig = (options: GetWebpackConfigOptions) => WebpackConfig;
 
 function getEntry(rootDir: string) {
@@ -103,8 +102,8 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
         ? webpack.DefinePlugin.runtimeValue(() => JSON.stringify(process.env[key]), true)
         : JSON.stringify(process.env[key]);
   });
-  // create plugins
-  const webpackPlugins = getTransformPlugins(config).map((plugin) => createUnplugin(() => plugin).webpack());
+  // get compile plugins
+  const webpackPlugins = getCompilerPlugins(config, 'webpack');
 
   const terserOptions: any = merge({
     compress: {
@@ -329,5 +328,5 @@ function getSupportedBrowsers(
 
 export {
   getWebpackConfig,
-  getTransformPlugins,
+  getCompilerPlugins,
 };

@@ -1,3 +1,5 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
 import type { Plugin } from '@ice/types';
 
 const plugin: Plugin = ({ generator }) => {
@@ -21,4 +23,8 @@ const plugin: Plugin = ({ generator }) => {
   });
 };
 
-export default plugin;
+export default () => ({
+  name: '@ice/plugin-auth',
+  plugin,
+  runtime: path.join(path.dirname(fileURLToPath(import.meta.url)), '../runtime'),
+});
