@@ -5,8 +5,8 @@ import type { Key } from 'path-to-regexp';
 import bodyParser from 'body-parser';
 import multer from 'multer';
 import createWatch from '../../service/watchSource.js';
-import getConfigs, { MOCK_FILE_PATTERN } from './getConfigs';
-import type { MockConfig } from './getConfigs';
+import getConfigs, { MOCK_FILE_PATTERN } from './getConfigs.js';
+import type { MockConfig } from './getConfigs.js';
 
 interface MockOptions {
   rootDir?: string;
