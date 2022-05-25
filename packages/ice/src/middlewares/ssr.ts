@@ -2,7 +2,7 @@ import * as path from 'path';
 import type { ServerContext } from '@ice/runtime';
 import type { ServerCompiler } from '@ice/types/esm/plugin.js';
 import type { ExpressRequestHandler } from 'webpack-dev-server';
-import { SERVER_ENTRY, SERVER_OUTPUT } from '../constant.js';
+import { SERVER_ENTRY, SERVER_OUTPUT, SERVER_OUTPUT_DIR } from '../constant.js';
 
 interface Options {
   rootDir: string;
@@ -21,8 +21,9 @@ export default function createSSRMiddleware(options: Options) {
   const ssrCompiler = async () => {
     const serverEntry = path.join(outputDir, SERVER_OUTPUT);
     await serverCompiler({
-      entryPoints: [path.join(rootDir, SERVER_ENTRY)],
-      outfile: serverEntry,
+      entryPoints: { index: path.join(rootDir, SERVER_ENTRY) },
+      outdir: path.join(outputDir, SERVER_OUTPUT_DIR),
+      splitting: true,
     });
     // timestamp for disable import cache
     return `${serverEntry}?version=${new Date().getTime()}`;

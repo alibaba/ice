@@ -8,7 +8,7 @@ import type { ServerCompiler } from '@ice/types/esm/plugin.js';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
-import { SERVER_ENTRY, SERVER_OUTPUT } from '../constant.js';
+import { SERVER_ENTRY, SERVER_OUTPUT, SERVER_OUTPUT_DIR } from '../constant.js';
 import generateHTML from '../utils/generateHTML.js';
 import emptyDir from '../utils/emptyDir.js';
 
@@ -57,8 +57,9 @@ const build = async (context: Context<Config>, taskConfigs: TaskConfig<Config>[]
         // compile server bundle
         const outfile = path.join(outputDir, SERVER_OUTPUT);
         await serverCompiler({
-          entryPoints: [path.join(rootDir, SERVER_ENTRY)],
-          outfile,
+          entryPoints: { index: path.join(rootDir, SERVER_ENTRY) },
+          outdir: path.join(outputDir, SERVER_OUTPUT_DIR),
+          splitting: true,
         });
         // generate html
         const { ssg = true, ssr = true } = userConfig;
