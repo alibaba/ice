@@ -64,6 +64,7 @@ export function createServerCompiler(options: Options) {
       target: 'node12.20.0',
       ...buildOptions,
       define,
+      outExtension: { '.js': '.mjs' },
       inject: [path.resolve(__dirname, '../polyfills/react.js')],
       plugins: [
         emptyCSSPlugin(),

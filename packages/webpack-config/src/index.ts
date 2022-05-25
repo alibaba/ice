@@ -45,10 +45,12 @@ function getEntry(rootDir: string) {
     // use generated file in template directory
     entryFile = path.join(rootDir, '.ice/entry.client.ts');
   }
-  const dataLoaderFile = path.join(rootDir, '.ice/data-loader.ts');
+
+  // const dataLoaderFile = path.join(rootDir, '.ice/data-loader.ts');
   return {
     main: [entryFile],
-    loader: [dataLoaderFile],
+    // FIXME: https://github.com/ice-lab/ice-next/issues/217, https://github.com/ice-lab/ice-next/issues/199
+    // loader: [dataLoaderFile],
   };
 }
 
