@@ -47,7 +47,7 @@ export function Links() {
   const routeLinks = getLinks(matches, routesConfig);
   const pageAssets = getPageAssets(matches, assetsManifest);
   const entryAssets = getEntryAssets(assetsManifest);
-  const styles = pageAssets.concat(entryAssets).filter(path => path.indexOf('.css') > -1);
+  const styles = entryAssets.concat(pageAssets).filter(path => path.indexOf('.css') > -1);
 
   return (
     <>
