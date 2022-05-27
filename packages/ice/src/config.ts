@@ -160,13 +160,9 @@ const userConfig = [
   {
     name: 'compileDependencies',
     validation: 'array|boolean',
-    setConfig: (config: Config, customValue: UserConfig['compileDependencies'], context: UserConfigContext) => {
-      const { command } = context;
+    defaultValue: process.env.NODE_ENV === 'development' ? false : [/node_modules\/*/],
+    setConfig: (config: Config, customValue: UserConfig['compileDependencies']) => {
       let compileRegex: RegExp | false;
-      if (customValue === undefined) {
-        // compile all node_modules dependencies when build
-        compileRegex = command === 'start' ? false : /node_modules\/*/;
-      }
       if (customValue === true) {
         compileRegex = /node_modules\/*/;
       } else if (customValue && customValue.length > 0) {
