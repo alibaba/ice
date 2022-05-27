@@ -76,7 +76,7 @@ async function webpackCompiler(options: {
       consola.warn(messages.warnings.join('\n\n'));
     }
     if (command === 'start') {
-      if (isSuccessful) {
+      if (isSuccessful && isFirstCompile) {
         let logoutMessage = '\n';
         logoutMessage += chalk.green(' Starting the development server at:');
         if (process.env.CLOUDIDE_ENV) {

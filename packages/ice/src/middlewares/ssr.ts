@@ -1,4 +1,5 @@
 import * as path from 'path';
+import consola from 'consola';
 import type { ServerContext } from '@ice/runtime';
 import type { ServerCompiler } from '@ice/types/esm/plugin.js';
 import type { ExpressRequestHandler } from 'webpack-dev-server';
@@ -28,15 +29,19 @@ export default function createSSRMiddleware(options: Options) {
     // timestamp for disable import cache
     return `${serverEntry}?version=${new Date().getTime()}`;
   };
-
+  let entry: string;
   const middleware: ExpressRequestHandler = async (req, res) => {
-    const entry = await ssrCompiler();
     let serverModule;
+    try {
+      entry = await ssrCompiler();
+    } catch (err) {
+      consola.error(`fail to compile in ssr middleware: ${err}`);
+    }
     try {
       serverModule = await import(entry);
     } catch (err) {
       // make error clearly, notice typeof err === 'string'
-      res.end(`import ${entry} error: ${err}`);
+      consola.error(`import ${entry} error: ${err}`);
       return;
     }
     const requestContext: ServerContext = {
