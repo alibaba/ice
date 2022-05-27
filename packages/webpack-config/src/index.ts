@@ -214,6 +214,8 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
       ...webpackPlugins,
       dev && new ReactRefreshWebpackPlugin({
         exclude: [/node_modules/, /bundles\/compiled/],
+        // use webpack-dev-server overlay instead
+        overlay: false,
       }),
       new webpack.DefinePlugin({
         ...defineVars,
