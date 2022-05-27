@@ -67,7 +67,6 @@ function getSwcTransformOptions({
 }: {
   suffix: JSXSuffix;
   dev: boolean;
-  isServer?: boolean;
 }) {
   const reactTransformConfig: ReactConfig = {
     refresh: dev,
