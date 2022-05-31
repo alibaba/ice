@@ -2,9 +2,23 @@ import * as path from 'path';
 import { formatNestedRouteManifest, generateRouteManifest } from '@ice/route-manifest';
 import type { NestedRouteManifest } from '@ice/route-manifest';
 import type { UserConfig } from '@ice/types';
+import { getRouteExports } from './service/analyze.js';
 
-export function generateRoutesInfo(rootDir: string, routesConfig: UserConfig['routes'] = {}) {
+export async function generateRoutesInfo(rootDir: string, routesConfig: UserConfig['routes'] = {}) {
   const routeManifest = generateRouteManifest(rootDir, routesConfig.ignoreFiles, routesConfig.defineRoutes);
+  const analyzeTasks = Object.keys(routeManifest).map(async (key) => {
+    const routeItem = routeManifest[key];
+    const routeId = routeItem.id;
+    // add exports filed for route manifest
+    routeItem.exports = await getRouteExports({
+      rootDir,
+      routeConfig: {
+        file: path.join('./src/pages', routeItem.file),
+        routeId,
+      },
+    });
+  });
+  await Promise.all(analyzeTasks);
   const routes = formatNestedRouteManifest(routeManifest);
   const str = generateNestRoutesStr(routes);
   let routesCount = 0;
@@ -26,7 +40,7 @@ export function generateRoutesInfo(rootDir: string, routesConfig: UserConfig['ro
 
 function generateNestRoutesStr(nestRouteManifest: NestedRouteManifest[]) {
   return nestRouteManifest.reduce((prev, route) => {
-    const { children, path: routePath, index, componentName, file, id, layout } = route;
+    const { children, path: routePath, index, componentName, file, id, layout, exports } = route;
 
     const fileExtname = path.extname(file);
     const componentFile = file.replace(new RegExp(`${fileExtname}$`), '');
@@ -38,6 +52,7 @@ function generateNestRoutesStr(nestRouteManifest: NestedRouteManifest[]) {
       index: ${index},
       id: '${id}',
       exact: true,
+      exports: ${JSON.stringify(exports)},
       ${layout ? 'layout: true,' : ''}
     `;
     if (children) {
