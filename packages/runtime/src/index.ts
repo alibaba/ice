@@ -3,12 +3,14 @@ import {
   Outlet,
   useParams,
   useSearchParams,
+  useLocation,
 } from 'react-router-dom';
 import {
   LinkSingle,
   OutletSingle,
   useParamsSingle,
   useSearchParamsSingle,
+  useLocationSingle,
 } from './utils/history-single.js';
 import Runtime from './runtime.js';
 import App from './App.js';
@@ -52,16 +54,19 @@ export {
   Links,
   Scripts,
   Main,
+  dataLoader,
   // react-router-dom API
   Link,
   Outlet,
   useParams,
   useSearchParams,
-  dataLoader,
+  useLocation,
+  // Single Route API
   LinkSingle,
   OutletSingle,
   useParamsSingle,
   useSearchParamsSingle,
+  useLocationSingle,
 };
 
 export type {
