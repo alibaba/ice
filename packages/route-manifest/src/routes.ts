@@ -33,6 +33,10 @@ export interface ConfigRoute {
    * Should be `true` if route is layout component.
    */
   layout?: boolean;
+  /**
+   * module exports key of route
+   */
+  exports?: string[];
 }
 
 export interface DefineRouteOptions {

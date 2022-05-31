@@ -19,9 +19,9 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
   const { userConfig: { routes: routesConfig }, configFile, rootDir } = ctx;
   const watchRoutes: WatchEvent = [
     /src\/pages\/?[\w*-:.$]+$/,
-    (eventName: string) => {
+    async (eventName: string) => {
       if (eventName === 'add' || eventName === 'unlink') {
-        const routesRenderData = generateRoutesInfo(rootDir, routesConfig);
+        const routesRenderData = await generateRoutesInfo(rootDir, routesConfig);
         const stringifiedData = JSON.stringify(routesRenderData);
         if (cache.get('routes') !== stringifiedData) {
           cache.set('routes', stringifiedData);
