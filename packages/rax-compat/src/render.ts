@@ -1,4 +1,5 @@
 import { createRoot } from 'react-dom/client';
+import { isFunction } from './util';
 
 /**
  * Compat render for rax export.
@@ -10,9 +11,16 @@ import { createRoot } from 'react-dom/client';
  * @returns componentInstance
  */
 export default function render(element: any, container: any, options: any, callback: Function) {
+  if (isFunction(options)) {
+    callback = options;
+    options = null;
+  }
+
   const root = createRoot(container);
   root.render(element);
   const componentInstance = '?'; // TODO..
-  callback.call(componentInstance);
+  if (isFunction(callback)) {
+    callback.call(componentInstance);
+  }
   return componentInstance;
 }
