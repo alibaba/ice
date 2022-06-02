@@ -1,0 +1,19 @@
+{
+  "routes": [
+    {
+      "path": "/",
+      "source": "pages/Home/index",
+      "spm": "27096393"
+    }
+  ],
+  "window": {
+    "title": "Rax App"
+  },
+  "builtInLibrary": {
+    "lib-mtop": false
+  },
+  "spm": "a21nfi",
+  "metas": [
+    "<meta name=\"aplus-waiting\" content=\"MAN\">"
+  ]
+}
