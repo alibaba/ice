@@ -76,6 +76,7 @@ importers:
     specifiers:
       '@ice/app': workspace:*
       '@ice/plugin-auth': workspace:*
+      '@ice/plugin-rax-compat': workspace:*
       '@ice/runtime': workspace:*
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.2
@@ -89,6 +90,7 @@ importers:
     dependencies:
       '@ice/app': link:../../packages/ice
       '@ice/plugin-auth': link:../../packages/plugin-auth
+      '@ice/plugin-rax-compat': link:../../packages/plugin-rax-compat
       '@ice/runtime': link:../../packages/runtime
       ahooks: 3.3.10_react@18.0.0
       react: 18.0.0
@@ -358,6 +360,12 @@ importers:
     devDependencies:
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
+
+  packages/plugin-rax-compat:
+    specifiers:
+      '@ice/types': ^1.0.0
+    devDependencies:
+      '@ice/types': link:../types
 
   packages/route-manifest:
     specifiers:

@@ -1,0 +1,26 @@
+{
+  "name": "@ice/plugin-rax-compat",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "default": "./esm/index.js"
+    }
+  },
+  "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
+  "files": [
+    "esm",
+    "!esm/**/*.map"
+  ],
+  "devDependencies": {
+    "@ice/types": "^1.0.0"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-rax-compat"
+  }
+}
