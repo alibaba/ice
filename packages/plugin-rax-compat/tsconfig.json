@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "rootDir": "src",
+    "outDir": "esm",
+    "jsx": "react"
+  },
+  "include": ["src"]
+}
