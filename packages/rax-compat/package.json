@@ -19,9 +19,8 @@
     "./create-factory": "./esm/create-factory.js",
     "./create-portal": "./esm/create-portal.js",
     "./find-dom-node": "./esm/find-dom-node.js",
-    "./is-valid-element": "./esm/is-valid-element",
-    "./set-native-props": "./esm/set-native-props",
-    "./unmount-component-at-node": "./esm/unmount-component-at-node",
+    "./is-valid-element": "./esm/is-valid-element.js",
+    "./unmount-component-at-node": "./esm/unmount-component-at-node.js",
     "./es2017": "./es2017/index.js"
   },
   "sideEffects": [
