@@ -1,4 +1,4 @@
-import { createElement, cloneElement, isValidElement, Children, createFactory } from './createElement';
+import { createElement, cloneElement, isValidElement, createFactory } from './create-element';
 import render from './render';
 import {
   useState,
@@ -17,16 +17,14 @@ import {
 import Fragment from './fragment';
 import { forwardRef, createRef } from './ref';
 import { Component, PureComponent, memo } from './component';
-import { createContext } from './contenxt';
+import { createContext } from './context';
 import { lazy, Suspense } from './suspense';
-import { startTransition } from './startTransition';
 
 export {
   render,
   createElement,
   cloneElement,
   isValidElement,
-  Children,
   createFactory,
   Component,
   PureComponent,
@@ -46,7 +44,6 @@ export {
   useMemo,
   useReducer,
   useImperativeHandle,
-  startTransition,
   useDebugValue,
   useInsertionEffect,
   useSyncExternalStore,

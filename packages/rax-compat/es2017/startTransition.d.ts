@@ -1,5 +1,2 @@
 import { startTransition } from 'react';
-
-export {
-  startTransition
-};
+export { startTransition };

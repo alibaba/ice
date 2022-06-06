@@ -1,0 +1,24 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# dependencies
+node_modules/
+
+# production
+.docusaurus/
+build/
+dist/
+tmp/
+cjs/
+esm/
+es2017/
+
+# misc
+.idea/
+.happypack
+.DS_Store
+*.swp
+*.dia~
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
