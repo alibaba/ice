@@ -1,4 +1,4 @@
-import { createElement, cloneElement, isValidElement, createFactory } from './create-element';
+import { createElement } from './create-element';
 import render from './render';
 import {
   useState,
@@ -10,41 +10,41 @@ import {
   useMemo,
   useReducer,
   useImperativeHandle,
-  useDebugValue,
-  useInsertionEffect,
-  useSyncExternalStore,
 } from './hooks';
 import Fragment from './fragment';
 import { forwardRef, createRef } from './ref';
 import { Component, PureComponent, memo } from './component';
 import { createContext } from './context';
-import { lazy, Suspense } from './suspense';
+import shared from './shared';
+
+// Mocked version for rax.
+const version = '1.2.2-compat';
 
 export {
-  render,
-  createElement,
-  cloneElement,
-  isValidElement,
-  createFactory,
   Component,
-  PureComponent,
-  memo,
   Fragment,
-  forwardRef,
-  createRef,
+  PureComponent,
+
   createContext,
-  lazy,
-  Suspense,
-  useState,
+  createElement,
+  createRef,
+  forwardRef,
+  memo,
+
+  render,
+
+  // This is mocked object for rax compatible.
+  shared,
+
+  useCallback,
   useContext,
   useEffect,
+  useImperativeHandle,
   useLayoutEffect,
-  useRef,
-  useCallback,
   useMemo,
   useReducer,
-  useImperativeHandle,
-  useDebugValue,
-  useInsertionEffect,
-  useSyncExternalStore,
+  useRef,
+  useState,
+
+  version,
 };
