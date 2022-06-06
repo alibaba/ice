@@ -45,7 +45,8 @@
     "compat"
   ],
   "dependencies": {
-    "@swc/helpers": "^0.3.8"
+    "@swc/helpers": "^0.3.8",
+    "appear-polyfill": "^0.1.2"
   },
   "devDependencies": {
     "@ice/pkg": "^1.0.0-rc.0",
