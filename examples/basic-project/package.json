@@ -14,6 +14,7 @@
     "@ice/plugin-rax-compat": "workspace:*",
     "@ice/runtime": "workspace:*",
     "ahooks": "^3.3.8",
+    "rax-is-valid-element": "^1.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },

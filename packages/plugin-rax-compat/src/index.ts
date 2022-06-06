@@ -1,23 +1,22 @@
 import type { Plugin } from '@ice/types';
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
 
 const plugin: Plugin = ({ onGetConfig }) => {
   onGetConfig((config) => {
-    // @ts-ignore
-    config.configureWebpack = [...(config.configureWebpack || []), (webpackConfig) => {
-      return Object.assign(webpackConfig.resolve.alias, {
-        // Add rax compat packages.
-        rax: 'rax-compat',
-        'rax-children': 'rax-compat/children',
-        'rax-clone-element': 'rax-compat/clone-element',
-        'rax-create-class': 'rax-compat/create-class',
-        'rax-create-factory': 'rax-compat/create-factory',
-        'rax-create-portal': 'rax-compat/create-portal',
-        'rax-find-dom-node': 'rax-compat/find-dom-node',
-        'rax-is-valid-element': 'rax-compat/is-valid-element',
-        'rax-set-native-props': 'rax-compat/set-native-props',
-        'rax-unmount-component-at-node': 'rax-compat/unmount-component-at-node',
-      });
-    }];
+    Object.assign(config.alias, {
+      // Add rax compat packages.
+      rax: require.resolve('rax-compat'),
+      'rax-children': require.resolve('rax-compat/children'),
+      'rax-clone-element': require.resolve('rax-compat/clone-element'),
+      'rax-create-class': require.resolve('rax-compat/create-class'),
+      'rax-create-factory': require.resolve('rax-compat/create-factory'),
+      'rax-create-portal': require.resolve('rax-compat/create-portal'),
+      'rax-find-dom-node': require.resolve('rax-compat/find-dom-node'),
+      'rax-is-valid-element': require.resolve('rax-compat/is-valid-element'),
+      'rax-unmount-component-at-node': require.resolve('rax-compat/unmount-component-at-node'),
+    });
   });
 };
 

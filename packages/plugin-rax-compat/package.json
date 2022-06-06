@@ -16,6 +16,9 @@
     "esm",
     "!esm/**/*.map"
   ],
+  "dependencies": {
+    "rax-compat": "workspace:*"
+  },
   "devDependencies": {
     "@ice/types": "^1.0.0"
   },
