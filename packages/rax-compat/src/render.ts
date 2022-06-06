@@ -1,12 +1,12 @@
 import { createRoot } from 'react-dom/client';
-import { isFunction } from './util';
+import { isFunction } from './type';
 
 /**
  * Compat render for rax export.
  * https://github.com/alibaba/rax/blob/master/packages/rax/src/render.js#L5
- * @param element 
- * @param container 
- * @param options 
+ * @param element
+ * @param container
+ * @param options
  * @param callback
  * @returns componentInstance
  */

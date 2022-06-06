@@ -2,7 +2,7 @@ import { defineConfig } from '@ice/pkg';
 
 export default defineConfig({
   bundle: {
-    filename: 'rax-compat',
+    filename: 'ice-compat',
     formats: ['umd', 'es2017'],
     externals: {
       react: 'React',
@@ -11,5 +11,5 @@ export default defineConfig({
   },
   transform: {
     formats: ['esm', 'es2017'],
-  },
+  }
 });
