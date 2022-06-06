@@ -61,7 +61,8 @@
   },
   "peerDependencies": {
     "create-react-class": "^15",
-    "react": "^18"
+    "react": "^18",
+    "react-dom": "^18"
   },
   "publishConfig": {
     "access": "public"
