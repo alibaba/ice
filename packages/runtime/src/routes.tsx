@@ -65,7 +65,7 @@ export async function loadRoutesData(
     matches.map(async (match) => {
       const { id } = match.route;
       const routeModule = routeModules[id];
-      const { getData } = routeModule;
+      const { getData } = routeModule ?? {};
 
       if (getData) {
         routesData[id] = await getData(requestContext);
