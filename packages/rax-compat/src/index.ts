@@ -1,4 +1,4 @@
-import { createElement, cloneElement, isValidElement, createFactory } from './create-element';
+import { createElement } from './create-element';
 import render from './render';
 import {
   useState,
@@ -10,9 +10,6 @@ import {
   useMemo,
   useReducer,
   useImperativeHandle,
-  useDebugValue,
-  useInsertionEffect,
-  useSyncExternalStore,
 } from './hooks';
 import Fragment from './fragment';
 import { forwardRef, createRef } from './ref';
@@ -21,20 +18,10 @@ import { createContext } from './context';
 import { lazy, Suspense } from './suspense';
 
 export {
-  render,
   createElement,
-  cloneElement,
-  isValidElement,
-  createFactory,
-  Component,
-  PureComponent,
-  memo,
-  Fragment,
-  forwardRef,
-  createRef,
   createContext,
-  lazy,
-  Suspense,
+  createRef,
+  forwardRef,
   useState,
   useContext,
   useEffect,
@@ -44,7 +31,9 @@ export {
   useMemo,
   useReducer,
   useImperativeHandle,
-  useDebugValue,
-  useInsertionEffect,
-  useSyncExternalStore,
+  memo,
+  render,
+  Component,
+  PureComponent,
+  Fragment,
 };

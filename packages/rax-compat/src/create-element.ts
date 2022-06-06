@@ -1,4 +1,4 @@
-import React, { cloneElement, isValidElement, createFactory } from 'react';
+import React from 'react';
 
 /**
  * Compat createElement for rax export.
@@ -12,9 +12,3 @@ import React, { cloneElement, isValidElement, createFactory } from 'react';
 export function createElement(type: any, props: Object, children: any, ...others: any) {
   return React.createElement(type, props, children, ...others);
 }
-
-export {
-  cloneElement,
-  isValidElement,
-  createFactory,
-};

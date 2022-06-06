@@ -97,19 +97,3 @@ export function useMemo<T>(create: () => T, inputs: React.DependencyList | undef
 export function useReducer<R extends React.ReducerWithoutAction<any>, I>(reducer: R, initialArg: I, init: (arg: I) => React.ReducerStateWithoutAction<R>): [React.ReducerStateWithoutAction<R>, React.DispatchWithoutAction] {
   return React.useReducer(reducer, initialArg, init);
 }
-
-export function useDebugValue<T>(value: T, format?: (value: T) => any): void {
-  return React.useDebugValue(value, format);
-}
-
-export function useInsertionEffect(effect: React.EffectCallback, deps?: React.DependencyList): void {
-  return React.useInsertionEffect(effect, deps);
-}
-
-export function useSyncExternalStore<Snapshot>(
-  subscribe: (onStoreChange: () => void) => () => void,
-  getSnapshot: () => Snapshot,
-  getServerSnapshot?: () => Snapshot,
-): Snapshot {
-  return React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
-}
