@@ -15,25 +15,36 @@ import Fragment from './fragment';
 import { forwardRef, createRef } from './ref';
 import { Component, PureComponent, memo } from './component';
 import { createContext } from './context';
-import { lazy, Suspense } from './suspense';
+import shared from './shared';
+
+// Mocked version for rax.
+const version = '1.2.2-compat';
 
 export {
-  createElement,
+  Component,
+  Fragment,
+  PureComponent,
+
   createContext,
+  createElement,
   createRef,
   forwardRef,
-  useState,
+  memo,
+
+  render,
+
+  // This is mocked object for rax compatible.
+  shared,
+
+  useCallback,
   useContext,
   useEffect,
+  useImperativeHandle,
   useLayoutEffect,
-  useRef,
-  useCallback,
   useMemo,
   useReducer,
-  useImperativeHandle,
-  memo,
-  render,
-  Component,
-  PureComponent,
-  Fragment,
+  useRef,
+  useState,
+
+  version,
 };
