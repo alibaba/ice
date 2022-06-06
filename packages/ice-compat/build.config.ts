@@ -11,5 +11,5 @@ export default defineConfig({
   },
   transform: {
     formats: ['esm', 'es2017'],
-  }
+  },
 });
