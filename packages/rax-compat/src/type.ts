@@ -5,3 +5,7 @@ export function isFunction(obj: any): obj is Function {
 export function isNull(obj: any): obj is null {
   return obj === null;
 }
+
+export function isObject(obj: any): obj is object {
+  return typeof obj === 'object';
+}

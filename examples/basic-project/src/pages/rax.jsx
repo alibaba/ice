@@ -8,7 +8,13 @@ import Logo from '@/components/Logo';
 
 export default function Home() {
   return (
-    <View className={styles.homeContainer} onAppear={() => { console.log('view appear'); }}>
+    <View
+      className={styles.homeContainer}
+      style={{
+        width: '750rpx',
+      }}
+      onAppear={() => { console.log('view appear'); }}
+    >
       <Logo uri="//gw.alicdn.com/tfs/TB1MRC_cvb2gK0jSZK9XXaEgFXa-1701-1535.png" />
       <Text className={styles.homeTitle}>Welcome to Your Rax App</Text>
       <Text className={styles.homeInfo}>More information about Rax</Text>
