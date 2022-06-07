@@ -2,17 +2,36 @@ import * as path from 'path';
 import * as mrmime from 'mrmime';
 import fs from 'fs-extra';
 
-const ASSET_TYPES = [
+export const ASSET_TYPES = [
   // images
   'png',
   'jpe?g',
   'gif',
   'svg',
+  'ico',
   'webp',
+  'avif',
+
+  // media
+  'mp4',
+  'webm',
+  'ogg',
+  'mp3',
+  'wav',
+  'flac',
+  'aac',
+
   // fonts
   'woff2?',
   'eot',
   'ttf',
+  'otf',
+
+  // other
+  'wasm',
+  'webmanifest',
+  'pdf',
+  'txt',
 ];
 
 const ASSETS_RE = new RegExp(`\\.(${ASSET_TYPES.join('|')})(\\?.*)?$`);

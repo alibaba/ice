@@ -1,4 +1,5 @@
 import * as path from 'path';
+import { performance } from 'perf_hooks';
 import fs from 'fs-extra';
 import fg from 'fast-glob';
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
@@ -7,6 +8,8 @@ import type { Loader } from 'esbuild';
 import consola from 'consola';
 import { getRouteCache, setRouteCache } from '../utils/persistentCache.js';
 import { getFileHash } from '../utils/hash.js';
+
+import scanPlugin from '../esbuild/scan.js';
 
 interface Options {
   parallel?: number;
@@ -152,6 +155,43 @@ export async function analyzeImports(files: string[], options: Options) {
   }
 }
 
+interface ScanOptions {
+  alias?: Alias;
+  depImports?: Record<string, string>;
+  exclude?: string[];
+}
+
+export async function scanImports(entries: string[], options?: ScanOptions) {
+  const start = performance.now();
+  const { alias = {}, depImports = {}, exclude = [] } = options;
+  const deps = { ...depImports };
+
+  await Promise.all(
+    entries.map((entry) =>
+      build({
+        absWorkingDir: process.cwd(),
+        write: false,
+        entryPoints: [entry],
+        bundle: true,
+        format: 'esm',
+        logLevel: 'silent',
+        plugins: [scanPlugin({
+          deps,
+          alias,
+          exclude,
+        })],
+      }),
+    ));
+  consola.debug(`Scan completed in ${(performance.now() - start).toFixed(2)}ms:`, deps);
+  return orderedDependencies(deps);
+}
+
+function orderedDependencies(deps: Record<string, string>) {
+  const depsList = Object.entries(deps);
+  // Ensure the same browserHash for the same set of dependencies
+  depsList.sort((a, b) => a[0].localeCompare(b[0]));
+  return Object.fromEntries(depsList);
+}
 interface RouteOptions {
   rootDir: string;
   routeConfig: {
