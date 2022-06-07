@@ -17,7 +17,7 @@ export default defineConfig({
   },
   dropLogLevel: 'warn',
   plugins: [pluginAuth(), pluginRaxCompat()],
-  // eslint: true,
+  eslint: true,
   ssr: false,
   ssg: false,
 });
