@@ -28,7 +28,7 @@ export default function App(props: Props) {
   } = props;
 
   const { appConfig, routes: originRoutes } = useAppContext();
-  const { strict } = appConfig.app;
+  const { strict, errorBoundary } = appConfig.app;
   const StrictMode = strict ? React.StrictMode : React.Fragment;
 
   if (!originRoutes || originRoutes.length === 0) {
@@ -41,6 +41,8 @@ export default function App(props: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
+
+  const ErrorBoundary = errorBoundary ? AppErrorBoundary : React.Fragment;
 
   let element: React.ReactNode = (
     <AppRouter
@@ -55,11 +57,11 @@ export default function App(props: Props) {
 
   return (
     <StrictMode>
-      <AppErrorBoundary>
+      <ErrorBoundary>
         <AppProvider>
           {element}
         </AppProvider>
-      </AppErrorBoundary>
+      </ErrorBoundary>
     </StrictMode>
   );
 }

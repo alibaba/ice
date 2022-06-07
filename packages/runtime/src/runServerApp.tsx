@@ -201,9 +201,6 @@ async function renderServerEntry(
   };
 
   const runtime = new Runtime(appContext);
-  if (appConfig?.app?.addProvider) {
-    runtime.addProvider(appConfig.app.addProvider);
-  }
   runtimeModules.forEach(m => {
     runtime.loadModule(m);
   });
