@@ -1,4 +1,4 @@
-import type { AppConfig, AppEntry } from './types';
+import type { AppConfig, AppExport } from './types';
 
 const defaultAppConfig: AppConfig = {
   app: {
@@ -10,8 +10,8 @@ const defaultAppConfig: AppConfig = {
   },
 };
 
-export default function getAppConfig(appEntry: AppEntry): AppConfig {
-  const appConfig = appEntry?.default || {};
+export default function getAppConfig(appExport: AppExport): AppConfig {
+  const appConfig = appExport?.default || {};
 
   const { app, router, ...others } = appConfig;
 

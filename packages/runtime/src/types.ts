@@ -28,7 +28,7 @@ export interface RouteConfig {
   auth?: string[];
 }
 
-export interface AppEntry {
+export interface AppExport {
   default?: AppConfig;
   [key: string]: any;
 }
@@ -65,6 +65,7 @@ export interface AppContext {
   routes?: RouteItem[];
   documentOnly?: boolean;
   matchedIds?: string[];
+  appExport?: AppExport;
 }
 
 export type Renderer = (
@@ -143,7 +144,7 @@ export interface RuntimeAPI {
 export interface RuntimePlugin {
   (
     apis: RuntimeAPI
-  ): void;
+  ): Promise<void> | void;
 }
 
 export interface CommonJsRuntime {

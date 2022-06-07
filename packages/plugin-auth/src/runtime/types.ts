@@ -9,3 +9,4 @@ export interface AuthConfig {
 
 export type AuthType = Record<string, boolean>;
 export type ContextType = [AuthType, React.Dispatch<React.SetStateAction<AuthType>>];
+export type Auth = () => Promise<AuthConfig> | AuthConfig;

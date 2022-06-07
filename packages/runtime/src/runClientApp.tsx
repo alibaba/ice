@@ -7,7 +7,7 @@ import Runtime from './runtime.js';
 import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
 import type {
-  AppContext, AppEntry, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
+  AppContext, AppExport, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
   RouteWrapperConfig, RuntimeModules, RouteMatch, ComponentWithChildren, RouteModules,
 } from './types';
 import { loadRouteModules, loadRoutesData, getRoutesConfig, matchRoutes, filterMatchesToLoad } from './routes.js';
@@ -16,7 +16,7 @@ import getRequestContext from './requestContext.js';
 import getAppConfig from './appConfig.js';
 
 interface RunClientAppOptions {
-  app: AppEntry;
+  app: AppExport;
   routes: RouteItem[];
   runtimeModules: RuntimeModules;
   Document: ComponentWithChildren<{}>;
@@ -48,6 +48,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
   }
 
   const appContext: AppContext = {
+    appExport: app,
     routes,
     appConfig,
     routesData,
@@ -64,9 +65,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     });
   }
 
-  runtimeModules.forEach(m => {
-    runtime.loadModule(m);
-  });
+  await Promise.all(runtimeModules.map(m => runtime.loadModule(m)).filter(Boolean));
 
   render(runtime, Document);
 }
