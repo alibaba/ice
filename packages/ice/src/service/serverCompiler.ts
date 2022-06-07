@@ -62,6 +62,9 @@ export function createServerCompiler(options: Options) {
       bundle: true,
       format: 'esm',
       target: 'node12.20.0',
+      // enable JSX syntax in .js files by default for compatible with migrate project
+      // while it is not recommended
+      loader: { '.js': 'jsx' },
       ...buildOptions,
       define,
       outExtension: { '.js': '.mjs' },
