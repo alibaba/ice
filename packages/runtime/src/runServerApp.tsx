@@ -14,7 +14,7 @@ import { createStaticNavigator } from './server/navigator.js';
 import type { NodeWritablePiper } from './server/streamRender.js';
 import type {
   AppContext, RouteItem, ServerContext,
-  AppEntry, RuntimePlugin, CommonJsRuntime, AssetsManifest,
+  AppExport, RuntimePlugin, CommonJsRuntime, AssetsManifest,
   ComponentWithChildren,
   RouteMatch,
   RequestContext,
@@ -24,7 +24,7 @@ import type {
 import getRequestContext from './requestContext.js';
 
 interface RenderOptions {
-  app: AppEntry;
+  app: AppExport;
   assetsManifest: AssetsManifest;
   routes: RouteItem[];
   runtimeModules: (RuntimePlugin | CommonJsRuntime)[];

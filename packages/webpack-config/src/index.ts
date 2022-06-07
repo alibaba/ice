@@ -173,8 +173,8 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
     optimization: {
       // share runtime chunk when dev, ref: https://github.com/pmmmwh/react-refresh-webpack-plugin/issues/88#issuecomment-627558799
       // loader chunk will load before main chunk in production
-      runtimeChunk: dev ? 'single' : 'multiple',
-      splitChunks: getSplitChunksConfig(rootDir),
+      // runtimeChunk: dev ? 'single' : 'multiple',
+      // splitChunks: getSplitChunksConfig(rootDir),
       minimize: minify,
       minimizer: [
         new TerserPlugin({
