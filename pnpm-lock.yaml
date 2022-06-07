@@ -353,11 +353,13 @@ importers:
       '@ice/types': ^1.0.0
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
+      regenerator-runtime: ^0.13.9
     dependencies:
       '@ice/types': link:../types
     devDependencies:
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
+      regenerator-runtime: 0.13.9
 
   packages/route-manifest:
     specifiers:
