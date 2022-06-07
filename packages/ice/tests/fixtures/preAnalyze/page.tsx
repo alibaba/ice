@@ -6,3 +6,5 @@ import component from './component';
 store();
 app();
 component();
+
+export default () => (<>test</>);
