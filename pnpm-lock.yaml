@@ -75,6 +75,7 @@ importers:
   examples/basic-project:
     specifiers:
       '@ice/app': workspace:*
+      '@ice/jsx-runtime': workspace:*
       '@ice/plugin-auth': workspace:*
       '@ice/plugin-rax-compat': workspace:*
       '@ice/runtime': workspace:*
@@ -82,6 +83,10 @@ importers:
       '@types/react-dom': ^18.0.2
       ahooks: ^3.3.8
       browserslist: ^4.19.3
+      rax-image: ^2.4.1
+      rax-is-valid-element: ^1.0.0
+      rax-text: ^2.2.0
+      rax-view: ^2.3.0
       react: ^18.0.0
       react-dom: ^18.0.0
       regenerator-runtime: ^0.13.9
@@ -89,10 +94,15 @@ importers:
       webpack: ^5.72.0
     dependencies:
       '@ice/app': link:../../packages/ice
+      '@ice/jsx-runtime': link:../../packages/jsx-runtime
       '@ice/plugin-auth': link:../../packages/plugin-auth
       '@ice/plugin-rax-compat': link:../../packages/plugin-rax-compat
       '@ice/runtime': link:../../packages/runtime
       ahooks: 3.3.10_react@18.0.0
+      rax-image: registry.npmjs.org/rax-image/2.4.1
+      rax-is-valid-element: registry.npmjs.org/rax-is-valid-element/1.0.0
+      rax-text: registry.npmjs.org/rax-text/2.2.0
+      rax-view: registry.npmjs.org/rax-view/2.3.0
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
     devDependencies:
@@ -350,7 +360,7 @@ importers:
       unplugin: 0.3.3_7m4vrr5pcg6juvld3psuif5zsi
       webpack: 5.72.0_esbuild@0.14.38
 
-  packages/ice-compat:
+  packages/jsx-runtime:
     specifiers:
       '@ice/pkg': ^1.0.0-rc.0
       '@ice/pkg-plugin-docusaurus': ^1.0.0-rc.0
@@ -403,12 +413,16 @@ importers:
       '@swc/helpers': ^0.3.8
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
+      appear-polyfill: ^0.1.2
       eslint: ^7.0.0
       react: ^18.0.0
       react-dom: ^18.0.0
+      style-unit: ^3.0.4
       stylelint: ^13.7.2
     dependencies:
       '@swc/helpers': registry.npmjs.org/@swc/helpers/0.3.17
+      appear-polyfill: registry.npmjs.org/appear-polyfill/0.1.2
+      style-unit: registry.npmjs.org/style-unit/3.0.4
     devDependencies:
       '@ice/pkg': registry.npmjs.org/@ice/pkg/1.0.0-rc.5
       '@ice/pkg-plugin-docusaurus': registry.npmjs.org/@ice/pkg-plugin-docusaurus/1.0.0-rc.5s_odlaausotkceep6dlrlm24exna
@@ -10483,7 +10497,6 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: registry.npmjs.org/regenerator-runtime/0.13.9
-    dev: true
 
   registry.npmjs.org/@babel/template/7.16.7:
     resolution: {integrity: sha512-I8j/x8kHUrbYRTUxXrrMbfCa7jxkE7tZre39x3kjr9hvI82cK1FfqLygotcWN5kdPGWcLdWMHpSBavse5tWw3w==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@babel/template/-/template-7.16.7.tgz}
@@ -12656,6 +12669,12 @@ packages:
       eslint-visitor-keys: registry.npmjs.org/eslint-visitor-keys/3.3.0
     dev: true
 
+  registry.npmjs.org/@uni/env/1.1.0:
+    resolution: {integrity: sha512-2GVgUzxIaO2vGElXEuc45+I7L6Jbw8inLDDFuC0K4htjKtPmYywKSE6oDhvmdAXb4GCOH8hmxECYtAh1rjsgoQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@uni/env/-/env-1.1.0.tgz}
+    name: '@uni/env'
+    version: 1.1.0
+    dev: false
+
   registry.npmjs.org/@webassemblyjs/ast/1.11.1:
     resolution: {integrity: sha512-ukBh14qFLjxTQNTXocdyksN5QdM28S1CxHt2rdskFyL+xFV7VremuBLVbmCePj+URalXBENx/9Lm7lnhihtCSw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@webassemblyjs/ast/-/ast-1.11.1.tgz}
     name: '@webassemblyjs/ast'
@@ -13043,6 +13062,15 @@ packages:
       normalize-path: registry.npmjs.org/normalize-path/3.0.0
       picomatch: registry.npmjs.org/picomatch/2.3.1
     dev: true
+
+  registry.npmjs.org/appear-polyfill/0.1.2:
+    resolution: {integrity: sha512-s2113Awjp9pyyczgFqNK7DTjKCwfzwkerhHqa6YbsSQvi5ZuRYgirjzuPn9JJi/b0GE2R4lY9LrhoW5YDa65Ug==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/appear-polyfill/-/appear-polyfill-0.1.2.tgz}
+    name: appear-polyfill
+    version: 0.1.2
+    engines: {npm: '>=3.0.0'}
+    peerDependencies:
+      rax: ^1.0.0
+    dev: false
 
   registry.npmjs.org/aproba/1.2.0:
     resolution: {integrity: sha512-Y9J6ZjXtoYh8RnXVCMOU/ttDmk1aBjunq9vO0ta5x85WDQiQfUF9sIPBITdbiiIVcBo03Hi3jMxigBtsddlXRw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/aproba/-/aproba-1.2.0.tgz}
@@ -13738,6 +13766,12 @@ packages:
     name: ci-info
     version: 2.0.0
     dev: true
+
+  registry.npmjs.org/classnames/2.3.1:
+    resolution: {integrity: sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/classnames/-/classnames-2.3.1.tgz}
+    name: classnames
+    version: 2.3.1
+    dev: false
 
   registry.npmjs.org/clean-css/5.3.0:
     resolution: {integrity: sha512-YYuuxv4H/iNb1Z/5IbMRoxgrzjWGhOEFfd+groZ5dMCVkpENiMZmwspdrzBo9286JjM1gZJPAyL7ZIdzuvu2AQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/clean-css/-/clean-css-5.3.0.tgz}
@@ -20439,6 +20473,44 @@ packages:
       unpipe: registry.npmjs.org/unpipe/1.0.0
     dev: true
 
+  registry.npmjs.org/rax-image/2.4.1:
+    resolution: {integrity: sha512-IVpFELlcj5LH3QfkfNE0hpOp28M4sPxB+4k3Y3Sq/8mUOuO1dhzM/C2+gfEz6UUB+rhFkTYKmmloguk9VtFAiQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/rax-image/-/rax-image-2.4.1.tgz}
+    name: rax-image
+    version: 2.4.1
+    peerDependencies:
+      rax: ^1.0.0
+    dependencies:
+      universal-env: registry.npmjs.org/universal-env/3.3.3
+    dev: false
+
+  registry.npmjs.org/rax-is-valid-element/1.0.0:
+    resolution: {integrity: sha512-MM3IUAQRKn3EJ0D2vjxgobOJLplLAw3YxE7/IRM6ytDYzlPq5iIZ8wsXoPAp/qW3Y+n23HLQUIljmLKywcCEIA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/rax-is-valid-element/-/rax-is-valid-element-1.0.0.tgz}
+    name: rax-is-valid-element
+    version: 1.0.0
+    engines: {npm: '>=3.0.0'}
+    dev: false
+
+  registry.npmjs.org/rax-text/2.2.0:
+    resolution: {integrity: sha512-Li2Db3Q2o1gbo8D7gUDAvCONJkjQH7b1SjBL+FPLxIaQ6BZJ8KMYjBXzzbVneUR8VhXe4qBgNfsTonm8Lpvjkg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/rax-text/-/rax-text-2.2.0.tgz}
+    name: rax-text
+    version: 2.2.0
+    peerDependencies:
+      rax: ^1.0.0
+    dependencies:
+      universal-env: registry.npmjs.org/universal-env/3.3.3
+    dev: false
+
+  registry.npmjs.org/rax-view/2.3.0:
+    resolution: {integrity: sha512-8mzCiNvGu4RtcvWkZoFuWZNSTFac9peWwS+p+UtEsr8fLjhlgVmEFDTo+DbuQLDFtMIj8qfBdBJ9h6IRHCFXdg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/rax-view/-/rax-view-2.3.0.tgz}
+    name: rax-view
+    version: 2.3.0
+    peerDependencies:
+      rax: ^1.0.0
+    dependencies:
+      classnames: registry.npmjs.org/classnames/2.3.1
+      universal-env: registry.npmjs.org/universal-env/3.3.3
+    dev: false
+
   registry.npmjs.org/rc/1.2.8:
     resolution: {integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/rc/-/rc-1.2.8.tgz}
     name: rc
@@ -20796,7 +20868,6 @@ packages:
     resolution: {integrity: sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.13.9.tgz}
     name: regenerator-runtime
     version: 0.13.9
-    dev: true
 
   registry.npmjs.org/regenerator-transform/0.15.0:
     resolution: {integrity: sha512-LsrGtPmbYg19bcPHwdtmXwbW+TqNvtY4riE3P83foeHRroMbH6/2ddFBfab3t7kbzc7v7p4wbkIecHImqt0QNg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/regenerator-transform/-/regenerator-transform-0.15.0.tgz}
@@ -21980,6 +22051,15 @@ packages:
       inline-style-parser: registry.npmjs.org/inline-style-parser/0.1.1
     dev: true
 
+  registry.npmjs.org/style-unit/3.0.4:
+    resolution: {integrity: sha512-jGYAsSmFvJGEAocNFmxsryWG+YUqtLZ8R8KmQtoVhBnhEVEaZE/53Yrg8I/2WLBrGxHC30wxGd4w9T+A7VxbfA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/style-unit/-/style-unit-3.0.4.tgz}
+    name: style-unit
+    version: 3.0.4
+    dependencies:
+      '@babel/runtime': registry.npmjs.org/@babel/runtime/7.17.9
+      universal-env: registry.npmjs.org/universal-env/3.3.3
+    dev: false
+
   registry.npmjs.org/stylehacks/5.1.0_postcss@8.4.12:
     resolution: {integrity: sha512-SzLmvHQTrIWfSgljkQCw2++C9+Ne91d/6Sp92I8c5uHTcy/PgeHamwITIbBW9wnFTY/3ZfSXR9HIL6Ikqmcu6Q==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/stylehacks/-/stylehacks-5.1.0.tgz}
     id: registry.npmjs.org/stylehacks/5.1.0
@@ -22619,6 +22699,15 @@ packages:
       unist-util-is: registry.npmjs.org/unist-util-is/4.1.0
       unist-util-visit-parents: registry.npmjs.org/unist-util-visit-parents/3.1.1
     dev: true
+
+  registry.npmjs.org/universal-env/3.3.3:
+    resolution: {integrity: sha512-4ZyITvWhtcurCEA66Cb7jcd4zpEiAAo91wSwbEscbiu033pIsC2yjgT8LYyasFgsst6jZHD1gtVoSyYcL8oH1Q==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/universal-env/-/universal-env-3.3.3.tgz}
+    name: universal-env
+    version: 3.3.3
+    engines: {npm: '>=3.0.0'}
+    dependencies:
+      '@uni/env': registry.npmjs.org/@uni/env/1.1.0
+    dev: false
 
   registry.npmjs.org/universalify/0.1.2:
     resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/universalify/-/universalify-0.1.2.tgz}

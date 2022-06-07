@@ -8,9 +8,8 @@ import React, {
 } from 'react';
 // @ts-ignore
 import { setupAppear } from 'appear-polyfill';
-// @ts-ignore
-import { convertUnit } from 'style-unit';
-import { isFunction, isObject } from './type';
+import { cached } from 'style-unit';
+import { isFunction, isObject, isNumber } from './type';
 
 let appearSetup = false;
 function setupAppearOnce() {
@@ -19,6 +18,25 @@ function setupAppearOnce() {
     appearSetup = true;
   }
 }
+
+const hasOwn = {}.hasOwnProperty;
+
+// https://github.com/alibaba/rax/blob/master/packages/driver-dom/src/index.js
+// opacity -> opa
+// fontWeight -> ntw
+// lineHeight|lineClamp -> ne[ch]
+// flex|flexGrow|flexPositive|flexShrink|flexNegative|boxFlex|boxFlexGroup|zIndex -> ex(?:s|g|n|p|$)
+// order -> ^ord
+// zoom -> zoo
+// gridArea|gridRow|gridRowEnd|gridRowSpan|gridRowStart|gridColumn|gridColumnEnd|gridColumnSpan|gridColumnStart -> grid
+// columnCount -> mnc
+// tabSize -> bs
+// orphans -> orp
+// windows -> ows
+// animationIterationCount -> onit
+// borderImageOutset|borderImageSlice|borderImageWidth -> erim
+const NON_DIMENSIONAL_REG = /opa|ntw|ne[ch]|ex(?:s|g|n|p|$)|^ord|zoo|grid|orp|ows|mnc|^columns$|bs|erim|onit/i;
+
 
 /**
  * Compat createElement for rax export.
@@ -57,16 +75,17 @@ export function createElement<P extends {
   return element;
 }
 
+const isDimensionalProp = cached((prop: string) => !NON_DIMENSIONAL_REG.test(prop));
 
-const hasOwn = {}.hasOwnProperty;
-
+// Convert numeric value into rpx.
+// eg. width: 2px ->
 function compatStyle(style?: object): any {
   if (isObject(style)) {
     const result = {};
     for (let key in style) {
       if (hasOwn.call(style, key)) {
         // @ts-ignore
-        result[key] = convertUnit(style[key]);
+        if (isNumber(style[key]) && isDimensionalProp(key)) result[key] = `${style[key]}rpx`;
       }
     }
     return result;

@@ -71,6 +71,7 @@ function getSwcTransformOptions({
   const reactTransformConfig: ReactConfig = {
     refresh: dev,
     runtime: 'automatic',
+    importSource: '@ice', // The exact import source is '@ice/jsx-runtime'
   };
 
   const commonOptions: SwcConfig = {
