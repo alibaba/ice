@@ -20,9 +20,10 @@ export default function createSSRMiddleware(options: Options) {
     documentOnly,
   } = options;
   const ssrCompiler = async () => {
+    const entryPoint = path.join(rootDir, SERVER_ENTRY);
     const serverEntry = path.join(outputDir, SERVER_OUTPUT);
     await serverCompiler({
-      entryPoints: { index: path.join(rootDir, SERVER_ENTRY) },
+      entryPoints: { index: entryPoint },
       outdir: path.join(outputDir, SERVER_OUTPUT_DIR),
       splitting: true,
     });
