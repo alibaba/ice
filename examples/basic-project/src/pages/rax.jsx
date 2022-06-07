@@ -1,14 +1,19 @@
-import { createElement } from 'rax';
+import { createElement, useEffect, useRef } from 'rax';
 import View from 'rax-view';
 import Text from 'rax-text';
-
+import Logo from '@/components/Logo';
 import styles from './index.module.css';
 
-import Logo from '@/components/Logo';
-
 export default function Home() {
+  const ref = useRef();
+  useEffect(() => {
+    if (ref.current) {
+      console.log('ref for View', ref);
+    }
+  }, []);
   return (
     <View
+      ref={ref}
       className={styles.homeContainer}
       style={{
         width: '750rpx',

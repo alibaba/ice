@@ -9,3 +9,7 @@ export function isNull(obj: any): obj is null {
 export function isObject(obj: any): obj is object {
   return typeof obj === 'object';
 }
+
+export function isNumber(num: any): num is number {
+  return typeof num === 'number';
+}

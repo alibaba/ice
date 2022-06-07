@@ -1,7 +1,7 @@
 {
-  "name": "@ali/ice-compat",
+  "name": "@ice/jsx-runtime",
   "version": "0.1.0",
-  "description": "组件功能描述",
+  "description": "JSX runtime for ice.",
   "files": [
     "esm",
     "cjs",
@@ -32,10 +32,11 @@
   "keywords": [
     "ice",
     "react",
-    "component"
+    "jsx-runtime"
   ],
   "dependencies": {
-    "@swc/helpers": "^0.3.8"
+    "@swc/helpers": "^0.3.8",
+    "style-unit": "^3.0.4"
   },
   "devDependencies": {
     "@ice/pkg": "^1.0.0-rc.0",
@@ -50,9 +51,6 @@
   },
   "peerDependencies": {
     "react": "^16 || ^17 || ^18"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npm.alibaba-inc.com"
   },
   "license": "MIT"
 }
