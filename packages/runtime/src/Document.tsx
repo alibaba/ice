@@ -105,9 +105,9 @@ export function Scripts() {
 
 export function Main() {
   const { main } = useDocumentContext();
-
+  const { appConfig } = useAppContext();
   return (
-    <div id="ice-container" >
+    <div id={appConfig.app.rootId} >
       {main}
     </div>
   );

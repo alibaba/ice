@@ -58,9 +58,6 @@ export default async function runClientApp(options: RunClientAppOptions) {
   };
 
   const runtime = new Runtime(appContext);
-  if (appConfig?.app?.addProvider) {
-    runtime.addProvider(appConfig.app.addProvider);
-  }
   if (process.env.ICE_CORE_SSR === 'true' || process.env.ICE_CORE_SSG === 'true') {
     runtime.setRender((container, element) => {
       ReactDOM.hydrateRoot(container, element);
@@ -87,7 +84,7 @@ async function render(runtime: Runtime, Document: ComponentWithChildren<{}>) {
   const history = createHistory({ window });
 
   render(
-    document.getElementById('ice-container'),
+    document.getElementById(appContext.appConfig.app.rootId),
     <BrowserEntry
       history={history}
       appContext={appContext}

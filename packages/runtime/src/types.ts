@@ -8,8 +8,9 @@ import type { useConfig, useData } from './RouteContext';
 type VoidFunction = () => void;
 type AppLifecycle = 'onShow' | 'onHide' | 'onPageNotFound' | 'onShareAppMessage' | 'onUnhandledRejection' | 'onLaunch' | 'onError' | 'onTabItemClick';
 type App = Partial<{
+  rootId: string;
   strict?: boolean;
-  addProvider?: ComponentWithChildren;
+  errorBoundary?: boolean;
 } & Record<AppLifecycle, VoidFunction>>;
 
 export type AppData = any;
