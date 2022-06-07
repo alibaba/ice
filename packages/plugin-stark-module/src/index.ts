@@ -92,27 +92,25 @@ const plugin: IPlugin = (
   setUMDConfig({ context, onGetWebpackConfig }, options as any as Options);
 
   if (options.cssNamespace) {
-    ['css', 'css-module', 'scss', 'scss-module', 'less', 'less-module'].forEach(
-      (rule) => {
-        baseConfig.module
-          .rule(rule)
-          .use('postcss-loader')
-          .loader(require.resolve('postcss-loader'))
-          .options((option) => option)
-          .tap((postLoaderOptions) => {
-            return {
-              ...postLoaderOptions,
-              postcssOptions: {
-                plugins: {
-                  'postcss-prefix-selector': {
-                    prefix: '.' + options.cssNamespace,
-                  },
+    ['css', 'scss', 'less'].forEach((rule) => {
+      baseConfig.module
+        .rule(rule)
+        .use('postcss-loader')
+        .loader(require.resolve('postcss-loader'))
+        .options((option) => option)
+        .tap((postLoaderOptions) => {
+          return {
+            ...postLoaderOptions,
+            postcssOptions: {
+              plugins: {
+                'postcss-prefix-selector': {
+                  prefix: '.' + options.cssNamespace,
                 },
               },
-            };
-          });
-      }
-    );
+            },
+          };
+        });
+    });
   }
   // set moduleExternals
   if (moduleExternals) {
