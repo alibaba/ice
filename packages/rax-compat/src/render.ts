@@ -16,11 +16,10 @@ export default function render(element: any, container: any, options: any, callb
     options = null;
   }
 
-  const root = createRoot(container);
+  const root = createRoot(container, options);
   root.render(element);
-  const componentInstance = '?'; // TODO..
   if (isFunction(callback)) {
-    callback.call(componentInstance);
+    callback.call(element);
   }
-  return componentInstance;
+  return element;
 }
