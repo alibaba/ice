@@ -169,6 +169,7 @@ export async function scanImports(entries: string[], options?: ScanOptions) {
   await Promise.all(
     entries.map((entry) =>
       build({
+        loader: { '.js': 'jsx' },
         absWorkingDir: process.cwd(),
         write: false,
         entryPoints: [entry],

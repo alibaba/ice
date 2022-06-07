@@ -139,6 +139,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
 
   try {
     return await renderServerEntry({
+      appExport: app,
       requestContext,
       renderOptions,
       matches,
@@ -165,6 +166,7 @@ function render404(): RenderResult {
  */
 async function renderServerEntry(
   {
+    appExport,
     requestContext,
     matches,
     location,
@@ -172,6 +174,7 @@ async function renderServerEntry(
     renderOptions,
     routeModules,
   }: {
+    appExport: AppExport;
     requestContext: RequestContext;
     renderOptions: RenderOptions;
     matches: RouteMatch[];
@@ -191,6 +194,7 @@ async function renderServerEntry(
   const routesConfig = getRoutesConfig(matches, routesData, routeModules);
 
   const appContext: AppContext = {
+    appExport,
     assetsManifest,
     appConfig,
     routesData,
@@ -201,9 +205,7 @@ async function renderServerEntry(
   };
 
   const runtime = new Runtime(appContext);
-  runtimeModules.forEach(m => {
-    runtime.loadModule(m);
-  });
+  await Promise.all(runtimeModules.map(m => runtime.loadModule(m)).filter(Boolean));
 
   const staticNavigator = createStaticNavigator();
   const AppProvider = runtime.composeAppProvider() || React.Fragment;
