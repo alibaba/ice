@@ -55,9 +55,10 @@ const build = async (context: Context<Config>, taskConfigs: TaskConfig<Config>[]
         const isSuccessful = !messages.errors.length;
         const { outputDir } = taskConfigs.find(({ name }) => name === 'web').config;
         // compile server bundle
+        const serverEntry = path.join(rootDir, SERVER_ENTRY);
         const outfile = path.join(outputDir, SERVER_OUTPUT);
         await serverCompiler({
-          entryPoints: { index: path.join(rootDir, SERVER_ENTRY) },
+          entryPoints: { index: serverEntry },
           outdir: path.join(outputDir, SERVER_OUTPUT_DIR),
           splitting: true,
         });

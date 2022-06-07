@@ -12,8 +12,9 @@ import escapeLocalIdent from '../utils/escapeLocalIdent.js';
 import cssModulesPlugin from '../esbuild/cssModules.js';
 import aliasPlugin from '../esbuild/alias.js';
 import createAssetsPlugin from '../esbuild/assets.js';
-import { ASSETS_MANIFEST } from '../constant.js';
+import { ASSETS_MANIFEST, SERVER_ENTRY } from '../constant.js';
 import emptyCSSPlugin from '../esbuild/emptyCSS.js';
+import { scanImports } from './analyze.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -48,6 +49,12 @@ export function createServerCompiler(options: Options) {
   });
 
   const serverCompiler: ServerCompiler = async (buildOptions: CompilerOptions) => {
+    const serverEntry = path.join(rootDir, SERVER_ENTRY);
+    const deps = await scanImports([serverEntry], {
+      alias: (task.config?.alias || {}) as Record<string, string | false>,
+    });
+    console.log('depImport', deps);
+
     const startTime = new Date().getTime();
     consola.debug('[esbuild]', `start compile for: ${buildOptions.entryPoints}`);
     const define = {
