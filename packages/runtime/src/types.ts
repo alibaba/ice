@@ -28,12 +28,9 @@ export interface RouteConfig {
 }
 
 export interface AppEntry {
-  getAppConfig?: GetAppConfig;
-  getAppData?: GetAppData;
+  default?: AppConfig;
+  [key: string]: any;
 }
-
-export type GetAppData = (ctx: RequestContext) => Promise<AppData> | AppData;
-export type GetAppConfig = (appData: AppData) => AppConfig;
 
 // app.getData & route.getData
 export type GetData = (ctx: RequestContext) => Promise<RouteData> | RouteData;
@@ -62,7 +59,6 @@ export interface AppContext {
   assetsManifest: AssetsManifest;
   routesData: RoutesData;
   routesConfig: RoutesConfig;
-  appData: any;
   routeModules: RouteModules;
   matches?: RouteMatch[];
   routes?: RouteItem[];

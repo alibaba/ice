@@ -6,7 +6,6 @@ import { createHistorySingle } from './utils/history-single.js';
 import Runtime from './runtime.js';
 import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
-import { AppDataProvider, getAppData } from './AppData.js';
 import type {
   AppContext, AppEntry, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
   RouteWrapperConfig, RuntimeModules, RouteMatch, ComponentWithChildren, RouteModules,
@@ -32,14 +31,11 @@ export default async function runClientApp(options: RunClientAppOptions) {
   } = options;
 
   const appContextFromServer: AppContext = (window as any).__ICE_APP_CONTEXT__ || {};
-  let { appData, routesData, routesConfig, assetsManifest } = appContextFromServer;
+  let { routesData, routesConfig, assetsManifest } = appContextFromServer;
 
   const requestContext = getRequestContext(window.location);
 
-  if (!appData) {
-    appData = await getAppData(app, requestContext);
-  }
-  const appConfig = getAppConfig(app, appData);
+  const appConfig = getAppConfig(app);
 
   const matches = matchRoutes(routes, window.location, appConfig?.router?.basename);
   const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
@@ -54,7 +50,6 @@ export default async function runClientApp(options: RunClientAppOptions) {
   const appContext: AppContext = {
     routes,
     appConfig,
-    appData,
     routesData,
     routesConfig,
     assetsManifest,
@@ -136,7 +131,6 @@ function BrowserEntry({
     matches: originMatches,
     routesData: initialRoutesData,
     routesConfig: initialRoutesConfig,
-    appData,
     appConfig,
     routeModules: initialRouteModules,
   } = appContext;
@@ -192,14 +186,12 @@ function BrowserEntry({
 
   return (
     <AppContextProvider value={appContext}>
-      <AppDataProvider value={appData}>
-        <App
-          action={action}
-          location={location}
-          navigator={history}
-          {...rest}
-        />
-      </AppDataProvider>
+      <App
+        action={action}
+        location={location}
+        navigator={history}
+        {...rest}
+      />
     </AppContextProvider>
   );
 }
