@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 // @ts-ignore
 import { setupAppear } from 'appear-polyfill';
+// @ts-ignore
 import { cached } from 'style-unit';
 import { isFunction, isObject, isNumber } from './type';
 
