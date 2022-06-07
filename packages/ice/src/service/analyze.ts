@@ -175,6 +175,7 @@ export async function getRouteExports(options: RouteOptions): Promise<string[]> 
   if (!cached || cached.hash !== fileHash) {
     // get route export by esbuild
     const result = await build({
+      loader: { '.js': 'jsx' },
       entryPoints: [routePath],
       platform: 'neutral',
       format: 'esm',
