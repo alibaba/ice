@@ -1,23 +1,41 @@
-import * as React from 'react';
+import {
+  useState as _useState,
+  useContext as _useContext,
+  useEffect as _useEffect,
+  useLayoutEffect as _useLayoutEffect,
+  useImperativeHandle as _useImperativeHandle,
+  useReducer as _useReducer,
+  useRef as _useRef,
+  useCallback as _useCallback,
+  useMemo as _useMemo,
+  Context,
+  DependencyList,
+  EffectCallback,
+  ReducerWithoutAction,
+  Ref,
+  DispatchWithoutAction,
+  MutableRefObject,
+  ReducerStateWithoutAction,
+} from 'react';
 
 /**
  * Compat useState for rax export.
  * https://github.com/alibaba/rax/blob/master/packages/rax/src/hooks.js#L39
- * @param initialState 
+ * @param initialState
  * @returns [ value, dispatch ]
  */
-export function useState<S>(initialState: S | (() => S)): ReturnType<typeof React.useState> {
-  return React.useState(initialState);
+export function useState<S>(initialState: S | (() => S)): ReturnType<typeof _useState> {
+  return _useState(initialState);
 }
 
 /**
  * Compat useContext for rax export.
  * https://github.com/alibaba/rax/blob/master/packages/rax/src/hooks.js#L93
- * @param context 
+ * @param context
  * @returns context
  */
-export function useContext<T>(context: React.Context<T>): ReturnType<typeof React.useContext> {
-  return React.useContext(context);
+export function useContext<T>(context: Context<T>): ReturnType<typeof _useContext> {
+  return _useContext(context);
 }
 
 /**
@@ -27,8 +45,8 @@ export function useContext<T>(context: React.Context<T>): ReturnType<typeof Reac
  * @param inputs
  * @returns void
  */
-export function useEffect(effect: React.EffectCallback, inputs: React.DependencyList): void {
-  return React.useEffect(effect, inputs);
+export function useEffect(effect: EffectCallback, inputs: DependencyList): void {
+  return _useEffect(effect, inputs);
 }
 
 /**
@@ -38,8 +56,8 @@ export function useEffect(effect: React.EffectCallback, inputs: React.Dependency
  * @param inputs
  * @returns void
  */
-export function useLayoutEffect(effect: React.EffectCallback, inputs: React.DependencyList): void {
-  return React.useLayoutEffect(effect, inputs);
+export function useLayoutEffect(effect: EffectCallback, inputs: DependencyList): void {
+  return _useLayoutEffect(effect, inputs);
 }
 
 /**
@@ -50,8 +68,9 @@ export function useLayoutEffect(effect: React.EffectCallback, inputs: React.Depe
  * @param inputs
  * @returns void
  */
-export function useImperativeHandle<T, R extends T>(ref: React.Ref<T> | undefined, create: () => R, inputs?: React.DependencyList): void {
-  return React.useImperativeHandle(ref, create, inputs);
+export function useImperativeHandle<T, R extends T>(
+  ref: Ref<T> | undefined, create: () => R, inputs?: DependencyList): void {
+  return _useImperativeHandle(ref, create, inputs);
 }
 
 /**
@@ -60,8 +79,8 @@ export function useImperativeHandle<T, R extends T>(ref: React.Ref<T> | undefine
  * @param initialValue
  * @returns MutableRefObject
  */
-export function useRef<T>(initialValue: T): React.MutableRefObject<T> {
-  return React.useRef(initialValue);
+export function useRef<T>(initialValue: T): MutableRefObject<T> {
+  return _useRef(initialValue);
 }
 
 /**
@@ -71,8 +90,8 @@ export function useRef<T>(initialValue: T): React.MutableRefObject<T> {
  * @param inputs
  * @returns callback
  */
-export function useCallback<T extends Function>(callback: T, inputs: React.DependencyList): T {
-  return React.useCallback(callback, inputs);
+export function useCallback<T extends Function>(callback: T, inputs: DependencyList): T {
+  return _useCallback(callback, inputs);
 }
 
 /**
@@ -82,8 +101,8 @@ export function useCallback<T extends Function>(callback: T, inputs: React.Depen
  * @param inputs
  * @returns create
  */
-export function useMemo<T>(create: () => T, inputs: React.DependencyList | undefined): T {
-  return React.useMemo(create, inputs);
+export function useMemo<T>(create: () => T, inputs: DependencyList | undefined): T {
+  return _useMemo(create, inputs);
 }
 
 /**
@@ -94,6 +113,10 @@ export function useMemo<T>(create: () => T, inputs: React.DependencyList | undef
  * @param init
  * @returns [ state, dispatch ]
  */
-export function useReducer<R extends React.ReducerWithoutAction<any>, I>(reducer: R, initialArg: I, init: (arg: I) => React.ReducerStateWithoutAction<R>): [React.ReducerStateWithoutAction<R>, React.DispatchWithoutAction] {
-  return React.useReducer(reducer, initialArg, init);
+export function useReducer<R extends ReducerWithoutAction<any>, I>(
+  reducer: R,
+  initialArg: I,
+  init: (arg: I) => ReducerStateWithoutAction<R>,
+): [ReducerStateWithoutAction<R>, DispatchWithoutAction] {
+  return _useReducer(reducer, initialArg, init);
 }
