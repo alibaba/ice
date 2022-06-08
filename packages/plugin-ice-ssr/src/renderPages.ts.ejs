@@ -73,7 +73,13 @@ async function getFlatRoutes(routes, parentPath = '') {
         route.component = loadable(route.component.dynamicImport);
       }
       prev.push(route);
-      const getStaticPaths = route.getStaticPaths || route.component.getStaticPaths;
+      // normal import component
+      let getStaticPaths = route.getStaticPaths || route.component.getStaticPaths;
+      if (route.component.load) {
+        // dynamic import component
+        const loadedPageComponent = await route.component.load();
+        getStaticPaths = (loadedPageComponent.default || loadedPageComponent).getStaticPaths;
+      }
       if (typeof getStaticPaths === 'function') {
         const staticPaths = await getStaticPaths();
         if (Array.isArray(staticPaths)) {
