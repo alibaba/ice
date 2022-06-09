@@ -26,6 +26,10 @@ export interface UserConfig {
   eslint?: Config['eslintOptions'] | boolean;
   ssr?: boolean;
   ssg?: boolean;
+  server?: {
+    format: 'esm' | 'cjs';
+    bundle: boolean;
+  };
   removeHistoryDeadCode?: boolean;
   mock?: { exclude?: string[] };
 }

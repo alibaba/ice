@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url';
 import { createHash } from 'crypto';
 import * as fs from 'fs';
 import consola from 'consola';
-import esbuild, { type BuildOptions } from 'esbuild';
+import esbuild from 'esbuild';
 import type { Config } from '@ice/types';
 import type { ServerCompiler } from '@ice/types/esm/plugin.js';
 import type { TaskConfig } from 'build-scripts';
@@ -12,25 +12,29 @@ import escapeLocalIdent from '../utils/escapeLocalIdent.js';
 import cssModulesPlugin from '../esbuild/cssModules.js';
 import aliasPlugin from '../esbuild/alias.js';
 import createAssetsPlugin from '../esbuild/assets.js';
-import { ASSETS_MANIFEST, SERVER_ENTRY } from '../constant.js';
+import { ASSETS_MANIFEST, CACHE_DIR, SERVER_ENTRY } from '../constant.js';
 import emptyCSSPlugin from '../esbuild/emptyCSS.js';
+import createDepRedirectPlugin from '../esbuild/depRedirect.js';
+import isExternalBuiltinDep from '../utils/isExternalBuiltinDep.js';
 import { scanImports } from './analyze.js';
+import preBundleCJSDeps from './preBundleCJSDeps.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 interface Options {
   rootDir: string;
   task: TaskConfig<Config>;
+  command: string;
+  serverBundle: boolean;
 }
 
-type CompilerOptions = Pick<BuildOptions, 'entryPoints' | 'outfile' | 'plugins' | 'bundle'>;
-
 export function createServerCompiler(options: Options) {
-  const { task, rootDir } = options;
+  const { task, rootDir, command, serverBundle } = options;
   const transformPlugins = getCompilerPlugins(task.config, 'esbuild');
   const alias = (task.config?.alias || {}) as Record<string, string | false>;
   const assetsManifest = path.join(rootDir, ASSETS_MANIFEST);
   const defineVars = task.config?.define || {};
+  const dev = command === 'start';
 
   // auto stringify define value
   Object.keys(defineVars).forEach((key) => {
@@ -48,12 +52,35 @@ export function createServerCompiler(options: Options) {
     }
   });
 
-  const serverCompiler: ServerCompiler = async (buildOptions: CompilerOptions) => {
+  const serverCompiler: ServerCompiler = async (buildOptions: Parameters<ServerCompiler>[0]) => {
     const serverEntry = path.join(rootDir, SERVER_ENTRY);
-    const deps = await scanImports([serverEntry], {
-      alias: (task.config?.alias || {}) as Record<string, string | false>,
-    });
-    console.log('depImport', deps);
+    let metadata;
+    if (buildOptions?.format === 'esm') {
+      const deps = await scanImports([serverEntry], {
+        alias: (task.config?.alias || {}) as Record<string, string | false>,
+      });
+
+      function filterPreBundleDeps(deps: Record<string, string>) {
+        const preBundleDepsInfo = {};
+        for (const dep in deps) {
+          if (!isExternalBuiltinDep(dep, buildOptions?.format)) {
+            preBundleDepsInfo[dep] = deps[dep];
+          }
+        }
+        return preBundleDepsInfo;
+      }
+      // don't pre bundle the deps because they can run in node env.
+      // For examples: react, react-dom, @ice/runtime
+      const preBundleDepsInfo = filterPreBundleDeps(deps);
+      const cacheDir = path.join(rootDir, CACHE_DIR);
+      const ret = await preBundleCJSDeps({
+        depsInfo: preBundleDepsInfo,
+        rootDir,
+        cacheDir,
+        taskConfig: task.config,
+      });
+      metadata = ret.metadata;
+    }
 
     const startTime = new Date().getTime();
     consola.debug('[esbuild]', `start compile for: ${buildOptions.entryPoints}`);
@@ -74,15 +101,14 @@ export function createServerCompiler(options: Options) {
       loader: { '.js': 'jsx' },
       ...buildOptions,
       define,
-      outExtension: { '.js': '.mjs' },
       inject: [path.resolve(__dirname, '../polyfills/react.js')],
       plugins: [
         emptyCSSPlugin(),
+        dev && buildOptions?.format === 'esm' && createDepRedirectPlugin(metadata),
         aliasPlugin({
           alias,
-          compileRegex: (task.config?.compileIncludes || []).map((includeRule) => {
-            return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);
-          }),
+          serverBundle,
+          format: buildOptions?.format || 'esm',
         }),
         cssModulesPlugin({
           extract: false,

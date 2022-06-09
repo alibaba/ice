@@ -92,7 +92,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   // get userConfig after setup because of userConfig maybe modified by plugins
   const { userConfig } = ctx;
-  const { routes: routesConfig } = userConfig;
+  const { routes: routesConfig, server } = userConfig;
 
   // load dotenv, set to process.env
   await initProcessEnv(rootDir, command, commandArgs, userConfig);
@@ -118,6 +118,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const serverCompiler = createServerCompiler({
     rootDir,
     task: taskConfigs.find(({ name }) => name === 'web'),
+    command,
+    serverBundle: server.bundle,
   });
 
   let appConfig: AppConfig;
