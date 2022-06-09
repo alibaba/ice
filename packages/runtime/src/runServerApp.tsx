@@ -249,7 +249,7 @@ async function renderServerEntry(
   const pipe = renderToNodeStream(element, false);
 
   const fallback = () => {
-    renderDocument(matches, renderOptions, routeModules);
+    return renderDocument(matches, renderOptions, routeModules);
   };
 
   return {

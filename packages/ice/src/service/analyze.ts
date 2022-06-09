@@ -175,6 +175,7 @@ export async function scanImports(entries: string[], options?: ScanOptions) {
         bundle: true,
         format: 'esm',
         logLevel: 'silent',
+        loader: { '.js': 'jsx' },
         plugins: [scanPlugin({
           deps,
           alias,

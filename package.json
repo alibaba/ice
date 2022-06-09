@@ -58,6 +58,7 @@
     "prettier-plugin-packagejson": "^2.2.15",
     "puppeteer": "^13.1.2",
     "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "rimraf": "^3.0.2",
     "semver": "^7.3.5",
     "stylelint": "^14.3.0",

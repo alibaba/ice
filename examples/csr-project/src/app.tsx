@@ -1,4 +1,4 @@
-import { GetAppData, GetAppConfig } from 'ice';
+import type { GetAppData, GetAppConfig } from 'ice';
 
 console.log('__LOG__');
 console.warn('__WARN__');
