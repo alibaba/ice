@@ -78,28 +78,33 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       },
     },
   });
-  // get userConfig from ice.config.ts
-  const userConfig = await ctx.resolveUserConfig();
-  const { routes: routesConfig } = userConfig;
+
+  // resolve userConfig from ice.config.ts before registerConfig
+  await ctx.resolveUserConfig();
 
   // get plugins include built-in plugins and custom plugins
   const plugins = await ctx.resolvePlugins();
   const runtimeModules = getRuntimeModules(plugins);
 
-  // load dotenv, set to process.env
-  await initProcessEnv(rootDir, command, commandArgs, userConfig);
-  const coreEnvKeys = getCoreEnvKeys();
-
   // register web
   ctx.registerTask('web', getWebTask({ rootDir, command }));
   // register config
   ['userConfig', 'cliOption'].forEach((configType) => ctx.registerConfig(configType, config[configType]));
+
+  let taskConfigs = await ctx.setup();
+
+  // get userConfig after setup because of userConfig maybe modified by plugins
+  const { userConfig } = ctx;
+  const { routes: routesConfig } = userConfig;
+
+  // load dotenv, set to process.env
+  await initProcessEnv(rootDir, command, commandArgs, userConfig);
+  const coreEnvKeys = getCoreEnvKeys();
+
   const routesInfo = await generateRoutesInfo(rootDir, routesConfig);
   // add render data
   generator.setRenderData({ ...routesInfo, runtimeModules, coreEnvKeys });
   dataCache.set('routes', JSON.stringify(routesInfo.routeManifest));
-
-  let taskConfigs = await ctx.setup();
 
   // render template before webpack compile
   const renderStart = new Date().getTime();
