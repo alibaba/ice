@@ -92,7 +92,7 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
     try {
       await pipeToResponse(res, pipe);
     } catch (error) {
-      console.error('Warning: piperToResponse error, downgrade to csr.', error);
+      console.error('PiperToResponse error, downgrade to csr.', error);
       // downgrade to csr.
       const result = await fallback();
       sendResult(res, result);
@@ -163,7 +163,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
 // https://github.com/ice-lab/ice-next/issues/133
 function render404(): RenderResult {
   return {
-    value: 'Page is Not Found',
+    value: 'Not Found',
     statusCode: 404,
   };
 }
@@ -249,7 +249,7 @@ async function renderServerEntry(
   const pipe = renderToNodeStream(element, false);
 
   const fallback = () => {
-    renderDocument(matches, renderOptions, routeModules);
+    return renderDocument(matches, renderOptions, routeModules);
   };
 
   return {

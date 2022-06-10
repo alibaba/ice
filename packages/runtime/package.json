@@ -30,5 +30,9 @@
   "dependencies": {
     "history": "^5.3.0",
     "react-router-dom": "^6.2.2"
+  },
+  "peerDependencies": {
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
   }
 }

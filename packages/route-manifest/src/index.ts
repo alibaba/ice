@@ -3,12 +3,13 @@ import fs from 'fs';
 import path from 'path';
 import minimatch from 'minimatch';
 import { createRouteId, defineRoutes } from './routes.js';
-import type { RouteManifest, DefineRouteFunction, NestedRouteManifest } from './routes.js';
+import type { RouteManifest, DefineRouteFunction, NestedRouteManifest, ConfigRoute } from './routes.js';
 
 export type {
   RouteManifest,
   NestedRouteManifest,
   DefineRouteFunction,
+  ConfigRoute,
 };
 
 const validRouteChar = ['-', '\\w', '/', ':', '*'];
