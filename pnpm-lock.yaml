@@ -371,9 +371,11 @@ importers:
       eslint: ^7.0.0
       react: ^18.0.0
       react-dom: ^18.0.0
+      style-unit: ^3.0.4
       stylelint: ^13.7.2
     dependencies:
       '@swc/helpers': registry.npmjs.org/@swc/helpers/0.3.17
+      style-unit: registry.npmjs.org/style-unit/3.0.4
     devDependencies:
       '@ice/pkg': registry.npmjs.org/@ice/pkg/1.0.0-rc.5
       '@ice/pkg-plugin-docusaurus': registry.npmjs.org/@ice/pkg-plugin-docusaurus/1.0.0-rc.5s_odlaausotkceep6dlrlm24exna
@@ -414,6 +416,7 @@ importers:
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
       appear-polyfill: ^0.1.2
+      create-react-class: ^15.7.0
       eslint: ^7.0.0
       react: ^18.0.0
       react-dom: ^18.0.0
@@ -422,6 +425,7 @@ importers:
     dependencies:
       '@swc/helpers': registry.npmjs.org/@swc/helpers/0.3.17
       appear-polyfill: registry.npmjs.org/appear-polyfill/0.1.2
+      create-react-class: registry.npmjs.org/create-react-class/15.7.0
       style-unit: registry.npmjs.org/style-unit/3.0.4
     devDependencies:
       '@ice/pkg': registry.npmjs.org/@ice/pkg/1.0.0-rc.5
@@ -14168,6 +14172,15 @@ packages:
       yaml: registry.npmjs.org/yaml/1.10.2
     dev: true
 
+  registry.npmjs.org/create-react-class/15.7.0:
+    resolution: {integrity: sha512-QZv4sFWG9S5RUvkTYWbflxeZX+JG7Cz0Tn33rQBJ+WFQTqTfUTjMjiv9tnfXazjsO5r0KhPs+AqCjyrQX6h2ng==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/create-react-class/-/create-react-class-15.7.0.tgz}
+    name: create-react-class
+    version: 15.7.0
+    dependencies:
+      loose-envify: registry.npmjs.org/loose-envify/1.4.0
+      object-assign: registry.npmjs.org/object-assign/4.1.1
+    dev: false
+
   registry.npmjs.org/cross-fetch/3.1.5:
     resolution: {integrity: sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/cross-fetch/-/cross-fetch-3.1.5.tgz}
     name: cross-fetch
@@ -17595,7 +17608,6 @@ packages:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz}
     name: js-tokens
     version: 4.0.0
-    dev: true
 
   registry.npmjs.org/js-yaml/3.14.1:
     resolution: {integrity: sha512-okMH7OXXJ7YrN9Ok3/SXrnu4iX9yOk+25nqX4imS2npuvTYDmo/QEZoqwZkYaIDk3jVvBOTOIEgEhaLOynBS9g==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/js-yaml/-/js-yaml-3.14.1.tgz}
@@ -17945,7 +17957,6 @@ packages:
     hasBin: true
     dependencies:
       js-tokens: registry.npmjs.org/js-tokens/4.0.0
-    dev: true
 
   registry.npmjs.org/lower-case/2.0.2:
     resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/lower-case/-/lower-case-2.0.2.tgz}
@@ -18565,7 +18576,6 @@ packages:
     name: object-assign
     version: 4.1.1
     engines: {node: '>=0.10.0'}
-    dev: true
 
   registry.npmjs.org/object-inspect/1.12.0:
     resolution: {integrity: sha512-Ho2z80bVIvJloH+YzRmpZVQe87+qASmBUKZDWgx9cu+KDrX2ZDH/3tMy+gXbZETVGs2M8YdxObOh7XAtim9Y0g==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/object-inspect/-/object-inspect-1.12.0.tgz}

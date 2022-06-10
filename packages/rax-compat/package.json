@@ -47,7 +47,8 @@
   "dependencies": {
     "@swc/helpers": "^0.3.8",
     "appear-polyfill": "^0.1.2",
-    "style-unit": "^3.0.4"
+    "style-unit": "^3.0.4",
+    "create-react-class": "^15.7.0"
   },
   "devDependencies": {
     "@ice/pkg": "^1.0.0-rc.0",
@@ -61,7 +62,6 @@
     "stylelint": "^13.7.2"
   },
   "peerDependencies": {
-    "create-react-class": "^15",
     "react": "^18",
     "react-dom": "^18"
   },
