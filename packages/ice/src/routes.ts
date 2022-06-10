@@ -1,11 +1,12 @@
 import * as path from 'path';
 import { formatNestedRouteManifest, generateRouteManifest } from '@ice/route-manifest';
-import type { NestedRouteManifest } from '@ice/route-manifest';
+import type { NestedRouteManifest, ConfigRoute, RouteManifest } from '@ice/route-manifest';
 import type { UserConfig } from '@ice/types';
 import { getRouteExports } from './service/analyze.js';
 
 export async function generateRoutesInfo(rootDir: string, routesConfig: UserConfig['routes'] = {}) {
   const routeManifest = generateRouteManifest(rootDir, routesConfig.ignoreFiles, routesConfig.defineRoutes);
+
   const analyzeTasks = Object.keys(routeManifest).map(async (key) => {
     const routeItem = routeManifest[key];
     const routeId = routeItem.id;
@@ -19,6 +20,13 @@ export async function generateRoutesInfo(rootDir: string, routesConfig: UserConf
     });
   });
   await Promise.all(analyzeTasks);
+
+  if (!routeManifest['$']) {
+    // create default 404 page
+    const defaultNotFoundRoute = createDefaultNotFoundRoute(routeManifest);
+    routeManifest['$'] = defaultNotFoundRoute;
+  }
+
   const routes = formatNestedRouteManifest(routeManifest);
   const str = generateNestRoutesStr(routes);
   let routesCount = 0;
@@ -42,12 +50,10 @@ function generateNestRoutesStr(nestRouteManifest: NestedRouteManifest[]) {
   return nestRouteManifest.reduce((prev, route) => {
     const { children, path: routePath, index, componentName, file, id, layout, exports } = route;
 
-    const fileExtname = path.extname(file);
-    const componentFile = file.replace(new RegExp(`${fileExtname}$`), '');
-
+    const componentPath = id.startsWith('__') ? file : `@/pages/${file}`.replace(new RegExp(`${path.extname(file)}$`), '');
     let str = `{
       path: '${routePath || ''}',
-      load: () => import(/* webpackChunkName: "${componentName}" */ '@/pages/${componentFile}'),
+      load: () => import(/* webpackChunkName: "${componentName}" */ '${componentPath}'),
       componentName: '${componentName}',
       index: ${index},
       id: '${id}',
@@ -64,6 +70,18 @@ function generateNestRoutesStr(nestRouteManifest: NestedRouteManifest[]) {
   }, '');
 }
 
+function createDefaultNotFoundRoute(routeManifest: RouteManifest): ConfigRoute {
+  return {
+    path: '*',
+    // TODO: git warning if the id startsWith __
+    id: '__404',
+    parentId: routeManifest['layout'] ? 'layout' : null,
+    file: './404.tsx',
+    componentName: '__404',
+    layout: false,
+  };
+}
+
 /**
  * generate loader template for routes
  */
@@ -76,11 +94,11 @@ function generateLoadersStr(routes: NestedRouteManifest[]) {
 
       const fileExtname = path.extname(file);
       const componentFile = file.replace(new RegExp(`${fileExtname}$`), '');
+      const componentPath = path.isAbsolute(componentFile) ? componentFile : `@/pages/${componentFile}`;
 
       const loaderName = `getData_${id}`.replace('/', '_');
       loaders.push([id, loaderName]);
-
-      let str = `import { getData as ${loaderName} } from '@/pages/${componentFile}';\n`;
+      let str = `import { getData as ${loaderName} } from '${componentPath}';\n`;
 
       if (children) {
         str += importLoaders(children);

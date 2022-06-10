@@ -1,5 +1,5 @@
 import * as path from 'path';
-import type { ExpressRequestHandler, Request } from 'webpack-dev-server';
+import type { ExpressRequestHandler, Request, Middleware } from 'webpack-dev-server';
 import { pathToRegexp } from 'path-to-regexp';
 import type { Key } from 'path-to-regexp';
 import bodyParser from 'body-parser';
@@ -13,7 +13,7 @@ interface MockOptions {
   exclude: string[];
 }
 
-export default function createMiddleware(options: MockOptions) {
+export default function createMiddleware(options: MockOptions): Middleware {
   const { exclude, rootDir } = options;
   let mockConfigs = getConfigs(rootDir, exclude);
 
