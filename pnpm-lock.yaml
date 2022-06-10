@@ -446,6 +446,7 @@ importers:
       '@ice/pkg-plugin-docusaurus': ^1.0.0-rc.0
       '@iceworks/spec': ^1.0.0
       '@swc/helpers': ^0.3.8
+      '@types/rax': ^1.0.8
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
       appear-polyfill: ^0.1.2
@@ -464,6 +465,7 @@ importers:
       '@ice/pkg': registry.npmjs.org/@ice/pkg/1.0.0-rc.5
       '@ice/pkg-plugin-docusaurus': registry.npmjs.org/@ice/pkg-plugin-docusaurus/1.0.0-rc.5s_odlaausotkceep6dlrlm24exna
       '@iceworks/spec': registry.npmjs.org/@iceworks/spec/1.6.0_4v3jurpbcga7euorjuu2q7wmki
+      '@types/rax': registry.npmjs.org/@types/rax/1.0.8
       '@types/react': registry.npmjs.org/@types/react/18.0.8
       '@types/react-dom': registry.npmjs.org/@types/react-dom/18.0.3
       eslint: registry.npmjs.org/eslint/7.32.0
@@ -12577,6 +12579,15 @@ packages:
     resolution: {integrity: sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@types/range-parser/-/range-parser-1.2.4.tgz}
     name: '@types/range-parser'
     version: 1.2.4
+    dev: true
+
+  registry.npmjs.org/@types/rax/1.0.8:
+    resolution: {integrity: sha512-spTfZ6p1XYVurfimLpNIA+MBUaQ1dXAk2fNcvgxRVGF36uvGsx/Y8d3ikG9WNfFOdxkN/XIzvPtfqd1a3HotLQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@types/rax/-/rax-1.0.8.tgz}
+    name: '@types/rax'
+    version: 1.0.8
+    dependencies:
+      '@types/prop-types': registry.npmjs.org/@types/prop-types/15.7.5
+      csstype: registry.npmjs.org/csstype/3.0.11
     dev: true
 
   registry.npmjs.org/@types/react-dom/18.0.3:
