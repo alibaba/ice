@@ -1,5 +1,9 @@
 # changelog
 
+## 2.1.1
+
+- [fix] fix problems with parse paths specified in `url` of css files
+
 ## 2.1.0
 
 - [feat] be able to resolve `.mjs` and `.mts`
