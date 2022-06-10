@@ -530,6 +530,7 @@ importers:
     specifiers:
       '@builder/swc': ^0.1.3
       '@ice/bundles': ^0.1.0
+      '@ice/jsx-runtime': workspace:*
       '@ice/types': ^1.0.0
       '@pmmmwh/react-refresh-webpack-plugin': ^0.5.7
       '@rollup/pluginutils': ^4.2.0
@@ -549,6 +550,7 @@ importers:
     dependencies:
       '@builder/swc': 0.1.3
       '@ice/bundles': link:../bundles
+      '@ice/jsx-runtime': link:../jsx-runtime
       '@pmmmwh/react-refresh-webpack-plugin': 0.5.7_bztoarqhvh7yes5xglqu4xqupe
       '@rollup/pluginutils': 4.2.1
       browserslist: 4.20.3
