@@ -22,8 +22,7 @@ export default (api: IPluginAPI, { remoteName, bootstrap, remoteEntry, compilePa
       babelPlugins: Array.isArray(modifyConfig.babelPlugins) ? modifyConfig.babelPlugins.concat(remotePlugins) : remotePlugins,
       moduleFederation: {
         name: 'app',
-        remoteType: 'window',
-        remotes: [remoteName],
+        remotes: { [remoteName]: `${remoteName}@/${runtimePublicPath}/${remoteEntry}` },
         shared: [
           'react',
           'react-dom',
