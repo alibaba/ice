@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 
 // Mocked `Rax.shared`.
 const shared = {
