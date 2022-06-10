@@ -1,11 +1,11 @@
-import React, {
+import type {
   Attributes,
   FunctionComponent,
   ReactElement,
   ReactNode,
   RefObject,
-  useEffect, useRef, forwardRef,
 } from 'react';
+import { createElement as _createElement, useEffect, useRef, forwardRef } from 'react';
 // @ts-ignore
 import { setupAppear } from 'appear-polyfill';
 // @ts-ignore
@@ -62,11 +62,11 @@ export function createElement<P extends {
   rest.style = compatStyle(rest.style);
 
   rest.ref = props.ref || useRef(null);
-  let element: any = React.createElement(type, rest as Attributes & P | null, propsChildren, ...children);
+  let element: any = _createElement(type, rest as Attributes & P | null, propsChildren, ...children);
   // Polyfill onAppear and onDisappear.
   if (isFunction(onAppear) || isFunction(onDisappear)) {
     setupAppearOnce();
-    element = React.createElement(forwardRef(AppearOrDisappear), {
+    element = _createElement(forwardRef(AppearOrDisappear), {
       onAppear: onAppear,
       onDisappear: onDisappear,
       ref: rest.ref,
