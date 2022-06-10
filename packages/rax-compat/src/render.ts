@@ -1,3 +1,6 @@
+import type { RaxElement, RenderOption } from 'rax';
+import type { ReactNode } from 'react';
+import type { RootOptions } from 'react-dom/client';
 import { createRoot } from 'react-dom/client';
 import { isFunction } from './type';
 
@@ -10,14 +13,19 @@ import { isFunction } from './type';
  * @param callback
  * @returns componentInstance
  */
-export default function render(element: any, container: any, options: any, callback: Function) {
+export default function render(
+  element: RaxElement,
+  container: Element | DocumentFragment | null,
+  options?: RenderOption,
+  callback?: Function,
+): RaxElement {
   if (isFunction(options)) {
     callback = options;
     options = null;
   }
 
-  const root = createRoot(container, options);
-  root.render(element);
+  const root = createRoot(container, options as RootOptions);
+  root.render(element as ReactNode);
   if (isFunction(callback)) {
     callback.call(element);
   }
