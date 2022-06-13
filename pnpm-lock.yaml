@@ -431,7 +431,7 @@ importers:
 
   packages/plugin-rax-compat:
     specifiers:
-      '@ice/types': ^1.0.0
+      '@ice/types': workspace:*
       rax-compat: workspace:*
     dependencies:
       rax-compat: link:../rax-compat

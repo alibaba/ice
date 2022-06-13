@@ -20,7 +20,7 @@
     "rax-compat": "workspace:*"
   },
   "devDependencies": {
-    "@ice/types": "^1.0.0"
+    "@ice/types": "workspace:*"
   },
   "repository": {
     "type": "http",
