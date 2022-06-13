@@ -6,7 +6,8 @@ import type { AuthConfig, AuthType, Auth } from './types.js';
 
 const runtime: RuntimePlugin = async ({ appContext, useConfig, addProvider, addWrapper }) => {
   const { appExport } = appContext;
-  const authConfig: AuthConfig = appExport.auth ? (await appExport.auth()) : {};
+  const authConfig: AuthConfig = (typeof appExport.auth === 'function'
+    ? (await appExport.auth()) : appExport.auth) || {};
   const initialAuth = authConfig.initialAuth || {};
   const AuthProviderWrapper: AppProvider = ({ children }) => {
     const [state, setState] = React.useState<AuthType>(initialAuth);
