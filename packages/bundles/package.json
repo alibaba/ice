@@ -8,6 +8,9 @@
     "esm",
     "compiled"
   ],
+  "scripts": {
+    "build": "esmo scripts/build.ts && tsc --build tsconfig.json"
+  },
   "main": "./esm/index.js",
   "type": "module",
   "dependencies": {
