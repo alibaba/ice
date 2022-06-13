@@ -47,7 +47,7 @@ importers:
       '@types/glob': 7.2.0
       '@types/node': 17.0.27
       '@types/semver': 7.3.9
-      '@vercel/ncc': 0.33.4
+      '@vercel/ncc': registry.npmjs.org/@vercel/ncc/0.33.4
       c8: 7.11.2
       chalk: 4.1.2
       chokidar: 3.5.3
@@ -2018,11 +2018,6 @@ packages:
     dependencies:
       '@use-gesture/core': 10.2.15
     dev: false
-
-  /@vercel/ncc/0.33.4:
-    resolution: {integrity: sha512-ln18hs7dMffelP47tpkaR+V5Tj6coykNyxJrlcmCormPqRQjB/Gv4cu2FfBG+PMzIfdZp2CLDsrrB1NPU22Qhg==}
-    hasBin: true
-    dev: true
 
   /@webassemblyjs/ast/1.11.1:
     resolution: {integrity: sha512-ukBh14qFLjxTQNTXocdyksN5QdM28S1CxHt2rdskFyL+xFV7VremuBLVbmCePj+URalXBENx/9Lm7lnhihtCSw==}
@@ -13018,6 +13013,13 @@ packages:
     name: '@uni/env'
     version: 1.1.0
     dev: false
+
+  registry.npmjs.org/@vercel/ncc/0.33.4:
+    resolution: {integrity: sha512-ln18hs7dMffelP47tpkaR+V5Tj6coykNyxJrlcmCormPqRQjB/Gv4cu2FfBG+PMzIfdZp2CLDsrrB1NPU22Qhg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@vercel/ncc/-/ncc-0.33.4.tgz}
+    name: '@vercel/ncc'
+    version: 0.33.4
+    hasBin: true
+    dev: true
 
   registry.npmjs.org/@webassemblyjs/ast/1.11.1:
     resolution: {integrity: sha512-ukBh14qFLjxTQNTXocdyksN5QdM28S1CxHt2rdskFyL+xFV7VremuBLVbmCePj+URalXBENx/9Lm7lnhihtCSw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@webassemblyjs/ast/-/ast-1.11.1.tgz}

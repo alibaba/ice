@@ -11,6 +11,7 @@ import { run } from './shell';
   await run('npm run build', { cwd: './packages/ice' });
   await run('npm run build', { cwd: './packages/plugin-auth' });
   await run('npm run build', { cwd: './packages/rax-compat' });
+  await run('npm run build', { cwd: './packages/plugin-rax-compat' });
 })().catch((e) => {
   console.trace(e);
   process.exit(128);
