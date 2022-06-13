@@ -38,3 +38,15 @@ config multi library
   ]]
 }
 ```
+
+config custom style regexp
+
+```json
+{
+  "plugins": ["build-plugin-ignore-style", [
+    {
+      "rule": "@alifd/next/.*\\.scss"
+    },
+  ]]
+}
+```

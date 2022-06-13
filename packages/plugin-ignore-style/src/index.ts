@@ -4,6 +4,7 @@ import type { Plugin } from 'vite';
 interface Options {
   libraryName: string;
   style?: string;
+  rule?:string;
 }
 
 const getStyleRule = (libraryName: string, style = 'style'): string => `${libraryName}/(es|lib)/[-\\w+]+/(${style}|${style}.js|${style}/index.js)$`;
@@ -17,8 +18,8 @@ const plugin: IPlugin = ({ onGetWebpackConfig, modifyUserConfig, log, context },
     const libraryConfigs = Array.isArray(options) ? options : [options];
     // default rule for external style
     const externalRule = libraryConfigs.map((value) => {
-      const {libraryName, style = 'style'} = value as unknown as Options;
-      return getStyleRule(libraryName, style);
+      const {libraryName, style = 'style', rule} = value as unknown as Options;
+      return rule??getStyleRule(libraryName, style);
     }).join('|');
     onGetWebpackConfig((config) => {
       config.module
