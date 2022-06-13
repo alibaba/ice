@@ -7,7 +7,7 @@ import chalk from 'chalk';
 import * as dts from 'dts-bundle';
 import glob from 'glob';
 import findUp from 'find-up';
-import tasks, { taskExternals } from '../packages/bundles/tasks';
+import tasks, { taskExternals } from './tasks';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -162,7 +162,7 @@ export async function packDependency(options: Options): Promise<void> {
 (async () => {
   for (let task of tasks) {
     await packDependency({
-      rootDir: path.join(__dirname, '../packages/bundles'),
+      rootDir: path.join(__dirname, '..'),
       externals: taskExternals,
       target: `compiled/${task.pkgName}`,
       ...task,

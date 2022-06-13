@@ -93,10 +93,10 @@ const tasks = [
     },
     patch: () => {
       // copy packages
-      const pkgPath = path.join(__dirname, 'node_modules/webpack');
-      const targetPath = path.join(__dirname, 'compiled/webpack');
+      const pkgPath = path.join(__dirname, '../node_modules/webpack');
+      const targetPath = path.join(__dirname, '../compiled/webpack');
       fs.copySync(path.join(pkgPath, 'hot'), path.join(targetPath, 'hot'));
-      fs.copySync(path.join(__dirname, 'webpack/packages'), targetPath);
+      fs.copySync(path.join(__dirname, '../webpack/packages'), targetPath);
     },
   },
 ];

@@ -12,9 +12,7 @@
   "module": "esm/index.js",
   "types": "./esm/index.d.ts",
   "exports": {
-    ".": "./esm/index.js",
-    "es2017": "./es2017/index.js",
-    "import": "./esm/index.js"
+    ".": "./esm/index.js"
   },
   "sideEffects": [
     "dist/*",

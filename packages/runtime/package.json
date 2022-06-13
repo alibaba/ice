@@ -20,6 +20,9 @@
   "repository": "ice-lab/ice-next",
   "bugs": "https://github.com/ice-lab/ice-next/issues",
   "homepage": "https://next.ice.work",
+  "scripts": {
+    "build": "tsc --build tsconfig.json"
+  },
   "devDependencies": {
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
