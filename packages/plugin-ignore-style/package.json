@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ignore-style",
-  "version": "0.2.0",
+  "version": "0.1.2",
   "description": "plugin for ignore style",
   "main": "lib/index.js",
   "scripts": {
