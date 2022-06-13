@@ -473,8 +473,10 @@ importers:
 
   packages/route-manifest:
     specifiers:
+      '@ice/runtime': workspace:*
       minimatch: ^5.0.1
     dependencies:
+      '@ice/runtime': link:../runtime
       minimatch: 5.0.1
 
   packages/runtime:
