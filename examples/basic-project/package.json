@@ -13,7 +13,6 @@
     "@ice/plugin-auth": "workspace:*",
     "@ice/plugin-rax-compat": "workspace:*",
     "@ice/runtime": "workspace:*",
-    "@ice/jsx-runtime": "workspace:*",
     "ahooks": "^3.3.8",
     "rax-image": "^2.4.1",
     "rax-is-valid-element": "^1.0.0",
