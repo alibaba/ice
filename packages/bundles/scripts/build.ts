@@ -9,6 +9,10 @@ import glob from 'glob';
 import findUp from 'find-up';
 import tasks, { taskExternals } from './tasks';
 
+const cwd = process.cwd();
+// @NOTE: Make ncc work, due to loader recognize cwd as resolving working directory.
+process.cwd = () => path.join(cwd, '..');
+
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -30,8 +34,7 @@ interface Options {
 }
 
 export async function packDependency(options: Options): Promise<void> {
-  const {
-    pkgName, file, rootDir, target, externals, matchCopyFiles, patch, emptyDir = true,
+  const { pkgName, file, rootDir, target, externals, matchCopyFiles, patch, emptyDir = true,
     bundleName = 'index.js', minify = true, declaration = true } = options;
   console.log(chalk.green(`start pack ${pkgName || file}`));
 
@@ -45,7 +48,7 @@ export async function packDependency(options: Options): Promise<void> {
   });
 
   fs.ensureDirSync(targetPath);
-  let { code, assets } = await ncc(packEntry, {
+  const { code, assets } = await ncc(packEntry, {
     cache: false,
     externals,
     minify,

@@ -9,7 +9,7 @@
     "dist",
     "build"
   ],
-  "module": "esm/index.js",
+  "module": "./esm/index.js",
   "types": "./esm/index.d.ts",
   "exports": {
     ".": "./esm/index.js"
