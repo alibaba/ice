@@ -9,8 +9,8 @@ type VoidFunction = () => void;
 type AppLifecycle = 'onShow' | 'onHide' | 'onPageNotFound' | 'onShareAppMessage' | 'onUnhandledRejection' | 'onLaunch' | 'onError' | 'onTabItemClick';
 type App = Partial<{
   rootId: string;
-  strict?: boolean;
-  errorBoundary?: boolean;
+  strict: boolean;
+  errorBoundary: boolean;
 } & Record<AppLifecycle, VoidFunction>>;
 
 export type AppData = any;
