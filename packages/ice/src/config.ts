@@ -106,6 +106,20 @@ const userConfig = [
     defaultValue: true,
   },
   {
+    name: 'server',
+    validation: 'object',
+    defaultValue: {
+      format: 'esm',
+      bundle: false,
+    },
+    setConfig: (_config: Config, server: UserConfig['server']) => {
+      if (server.format === 'esm' && server.bundle) {
+        consola.error('Do not support bundle in ESM mode. Please set `server.bundle` to false.');
+        process.exit(1);
+      }
+    },
+  },
+  {
     name: 'webpack',
     validation: 'function',
     setConfig: (config: Config, configureWebpack: UserConfig['webpack']) => {
@@ -282,8 +296,8 @@ const cliOption = [
     name: 'force',
     commands: ['start'],
     setConfig: (config: Config, force: boolean) => {
-      if (force && fse.existsSync(config.cacheDirectory)) {
-        fse.emptyDirSync(config.cacheDirectory);
+      if (force && fse.existsSync(config.cacheDir)) {
+        fse.emptyDirSync(config.cacheDir);
       }
       return config;
     },

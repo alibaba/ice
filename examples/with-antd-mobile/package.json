@@ -1,0 +1,24 @@
+{
+  "name": "with-antd-mobile",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "start": "ice start",
+    "build": "ice build"
+  },
+  "description": "",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@ice/app": "workspace:*",
+    "@ice/runtime": "workspace:*",
+    "antd-mobile": "^5.12.4",
+    "constate": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.2",
+    "browserslist": "^4.19.3",
+    "regenerator-runtime": "^0.13.9"
+  }
+}
