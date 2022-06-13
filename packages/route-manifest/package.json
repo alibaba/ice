@@ -15,7 +15,6 @@
   "bugs": "https://github.com/ice-lab/ice-next/issues",
   "homepage": "https://next.ice.work",
   "dependencies": {
-    "minimatch": "^5.0.1",
-    "@ice/runtime": "workspace:*"
+    "minimatch": "^5.0.1"
   }
 }
