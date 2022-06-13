@@ -1,0 +1,20 @@
+{
+  "name": "@ice/plugin-pha",
+  "version": "1.0.0",
+  "description": "plugin for PHA",
+  "license": "MIT",
+  "type": "module",
+  "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
+  "files": [
+    "esm",
+    "!esm/**/*.map"
+  ],
+  "dependencies": {
+    "@ice/types": "^1.0.0"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-pha"
+  }
+}
