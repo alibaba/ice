@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-rax-compat",
-  "version": "1.0.0",
+  "version": "0.1.0-beta.0",
   "description": "",
   "license": "MIT",
   "type": "module",
