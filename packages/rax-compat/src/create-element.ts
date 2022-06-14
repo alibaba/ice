@@ -55,7 +55,7 @@ export function createElement<P extends {
   type: FunctionComponent<P>,
   props?: Attributes & P | null,
   ...children: ReactNode[]): ReactElement {
-  const { children: propsChildren, onAppear, onDisappear } = props;
+  const { children: propsChildren, onAppear, onDisappear } = props || {};
   const rest = Object.assign({}, props);
   delete rest.children;
   delete rest.onAppear;
