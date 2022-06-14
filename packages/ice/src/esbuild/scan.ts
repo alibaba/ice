@@ -113,7 +113,8 @@ const scanPlugin = (options: Options): Plugin => {
               path: resolved,
               external: true,
             };
-          } else if (path.isAbsolute(resolved)) {
+          // deal with aliased absolute path
+          } else if (id !== resolved && path.isAbsolute(resolved)) {
             if (
               // dependencies with absolute path
               resolved.includes('node_modules') ||
