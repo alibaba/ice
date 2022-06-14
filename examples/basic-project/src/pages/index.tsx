@@ -23,14 +23,7 @@ export default function Home(props) {
   const { data: userInfo } = useRequest(() => fetch('/api/users/a', { method: 'POST' }).then(res => res.json()));
   return (
     <>
-      <h2
-        className={styles.title}
-        style={{
-          fontSize: '75rpx',
-          zIndex: 2,
-          height: 200,
-        }}
-      >Home Page</h2>
+      <h2 className={styles.title}>Home Page</h2>
       <Link to="/about">about</Link>
       <div>count: {data.count}</div>
       <Suspense fallback={<div>hello</div>}>
