@@ -285,7 +285,7 @@ function renderDocument(matches: RouteMatch[], options: RenderOptions, routeModu
   );
 
   return {
-    value: html,
+    value: `<!DOCTYPE html>${html}`,
     statusCode: 200,
   };
 }
