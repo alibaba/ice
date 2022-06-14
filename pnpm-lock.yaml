@@ -84,6 +84,7 @@ importers:
       '@types/react-dom': ^18.0.2
       ahooks: ^3.3.8
       browserslist: ^4.19.3
+      rax: ^1.2.2
       rax-image: ^2.4.1
       rax-is-valid-element: ^1.0.0
       rax-text: ^2.2.0
@@ -99,10 +100,11 @@ importers:
       '@ice/plugin-rax-compat': link:../../packages/plugin-rax-compat
       '@ice/runtime': link:../../packages/runtime
       ahooks: 3.4.0_react@18.0.0
-      rax-image: registry.npmjs.org/rax-image/2.4.1
+      rax: registry.npmjs.org/rax/1.2.2
+      rax-image: registry.npmjs.org/rax-image/2.4.1_rax@1.2.2
       rax-is-valid-element: registry.npmjs.org/rax-is-valid-element/1.0.0
-      rax-text: registry.npmjs.org/rax-text/2.2.0
-      rax-view: registry.npmjs.org/rax-view/2.3.0
+      rax-text: registry.npmjs.org/rax-text/2.2.0_rax@1.2.2
+      rax-view: registry.npmjs.org/rax-view/2.3.0_rax@1.2.2
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
     devDependencies:
@@ -441,7 +443,6 @@ importers:
       '@ice/pkg': ^1.0.0-rc.0
       '@ice/pkg-plugin-docusaurus': ^1.0.0-rc.0
       '@iceworks/spec': ^1.0.0
-      '@swc/helpers': ^0.3.8
       '@types/rax': ^1.0.8
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
@@ -453,7 +454,6 @@ importers:
       style-unit: ^3.0.4
       stylelint: ^13.7.2
     dependencies:
-      '@swc/helpers': registry.npmjs.org/@swc/helpers/0.3.17
       appear-polyfill: registry.npmjs.org/appear-polyfill/0.1.2
       create-react-class: registry.npmjs.org/create-react-class/15.7.0
       style-unit: registry.npmjs.org/style-unit/3.0.4
@@ -10679,6 +10679,15 @@ packages:
     dependencies:
       regenerator-runtime: registry.npmjs.org/regenerator-runtime/0.13.9
 
+  registry.npmjs.org/@babel/runtime/7.18.3:
+    resolution: {integrity: sha512-38Y8f7YUhce/K7RMwTp7m0uCumpv9hZkitCbBClqQIow1qSbCvGkcegKOXpEWCQLfWmevgRiWokZ1GkpfhbZug==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@babel/runtime/-/runtime-7.18.3.tgz}
+    name: '@babel/runtime'
+    version: 7.18.3
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      regenerator-runtime: registry.npmjs.org/regenerator-runtime/0.13.9
+    dev: false
+
   registry.npmjs.org/@babel/template/7.16.7:
     resolution: {integrity: sha512-I8j/x8kHUrbYRTUxXrrMbfCa7jxkE7tZre39x3kjr9hvI82cK1FfqLygotcWN5kdPGWcLdWMHpSBavse5tWw3w==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@babel/template/-/template-7.16.7.tgz}
     name: '@babel/template'
@@ -12364,6 +12373,7 @@ packages:
     version: 0.3.17
     dependencies:
       tslib: registry.npmjs.org/tslib/2.4.0
+    dev: true
 
   registry.npmjs.org/@szmarczak/http-timer/1.1.2:
     resolution: {integrity: sha512-XIB2XbzHTN6ieIjfIMV9hlVcfPU26s2vafYWQcZHWXHOxiaRZYEDKEwdl129Zyg50+foYV2jCgtrqSA6qNuNSA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@szmarczak/http-timer/-/http-timer-1.1.2.tgz}
@@ -15117,6 +15127,12 @@ packages:
     dependencies:
       is-obj: registry.npmjs.org/is-obj/2.0.0
     dev: true
+
+  registry.npmjs.org/driver-server/1.0.0:
+    resolution: {integrity: sha512-H5nhMzsSJYaug+PDPyXiVW2KvK5k7B7K+yVW3FuHESq494Soh1cfomquJ2pk5RiApQr1z0e+0tif11TVRlM+PQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/driver-server/-/driver-server-1.0.0.tgz}
+    name: driver-server
+    version: 1.0.0
+    dev: false
 
   registry.npmjs.org/duplexer/0.1.2:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/duplexer/-/duplexer-0.1.2.tgz}
@@ -20535,7 +20551,6 @@ packages:
       loose-envify: registry.npmjs.org/loose-envify/1.4.0
       object-assign: registry.npmjs.org/object-assign/4.1.1
       react-is: registry.npmjs.org/react-is/16.13.1
-    dev: true
 
   registry.npmjs.org/property-information/5.6.0:
     resolution: {integrity: sha512-YUHSPk+A30YPv+0Qf8i9Mbfe/C0hdPXk1s1jPVToV8pk8BQtpw10ct89Eo7OWkutrwqvT0eicAxlOg3dOAu8JA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/property-information/-/property-information-5.6.0.tgz}
@@ -20661,13 +20676,52 @@ packages:
       unpipe: registry.npmjs.org/unpipe/1.0.0
     dev: true
 
-  registry.npmjs.org/rax-image/2.4.1:
+  registry.npmjs.org/rax-children/1.0.0_rax@1.2.2:
+    resolution: {integrity: sha512-sBKEXAMj9ik6SsPfPGgcQnqggmbWFyBdvAV/Cz/0f04bRA86BtWgbMri/9Dce0k8nkEC/BGWiiTdyA8Q49zIiw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/rax-children/-/rax-children-1.0.0.tgz}
+    id: registry.npmjs.org/rax-children/1.0.0
+    name: rax-children
+    version: 1.0.0
+    engines: {npm: '>=3.0.0'}
+    peerDependencies:
+      rax: ^1.0.0
+    dependencies:
+      rax: registry.npmjs.org/rax/1.2.2
+    dev: false
+
+  registry.npmjs.org/rax-clone-element/1.0.0_rax@1.2.2:
+    resolution: {integrity: sha512-TaQMVuzoglvCTjbWATlvvwARmeWnG8kpENWNXrNDv0++x29GHNND/TBbx7sdtVs/QmYwYc8YmwRUhaBwKQi5eQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/rax-clone-element/-/rax-clone-element-1.0.0.tgz}
+    id: registry.npmjs.org/rax-clone-element/1.0.0
+    name: rax-clone-element
+    version: 1.0.0
+    engines: {npm: '>=3.0.0'}
+    peerDependencies:
+      rax: ^1.0.0
+    dependencies:
+      rax: registry.npmjs.org/rax/1.2.2
+      rax-is-valid-element: registry.npmjs.org/rax-is-valid-element/1.0.0
+    dev: false
+
+  registry.npmjs.org/rax-create-factory/1.0.0_rax@1.2.2:
+    resolution: {integrity: sha512-blBaVrurj/BOWelJhQWiuc0Kk8Ons1jsNsX78omaPBLkSOL7OkyJ3NC/0iKXHu425yWrGB6e5vho/qabROC7VQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/rax-create-factory/-/rax-create-factory-1.0.0.tgz}
+    id: registry.npmjs.org/rax-create-factory/1.0.0
+    name: rax-create-factory
+    version: 1.0.0
+    engines: {npm: '>=3.0.0'}
+    peerDependencies:
+      rax: ^1.0.0
+    dependencies:
+      rax: registry.npmjs.org/rax/1.2.2
+    dev: false
+
+  registry.npmjs.org/rax-image/2.4.1_rax@1.2.2:
     resolution: {integrity: sha512-IVpFELlcj5LH3QfkfNE0hpOp28M4sPxB+4k3Y3Sq/8mUOuO1dhzM/C2+gfEz6UUB+rhFkTYKmmloguk9VtFAiQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/rax-image/-/rax-image-2.4.1.tgz}
+    id: registry.npmjs.org/rax-image/2.4.1
     name: rax-image
     version: 2.4.1
     peerDependencies:
       rax: ^1.0.0
     dependencies:
+      rax: registry.npmjs.org/rax/1.2.2
       universal-env: registry.npmjs.org/universal-env/3.3.3
     dev: false
 
@@ -20678,25 +20732,44 @@ packages:
     engines: {npm: '>=3.0.0'}
     dev: false
 
-  registry.npmjs.org/rax-text/2.2.0:
+  registry.npmjs.org/rax-text/2.2.0_rax@1.2.2:
     resolution: {integrity: sha512-Li2Db3Q2o1gbo8D7gUDAvCONJkjQH7b1SjBL+FPLxIaQ6BZJ8KMYjBXzzbVneUR8VhXe4qBgNfsTonm8Lpvjkg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/rax-text/-/rax-text-2.2.0.tgz}
+    id: registry.npmjs.org/rax-text/2.2.0
     name: rax-text
     version: 2.2.0
     peerDependencies:
       rax: ^1.0.0
     dependencies:
+      rax: registry.npmjs.org/rax/1.2.2
       universal-env: registry.npmjs.org/universal-env/3.3.3
     dev: false
 
-  registry.npmjs.org/rax-view/2.3.0:
+  registry.npmjs.org/rax-view/2.3.0_rax@1.2.2:
     resolution: {integrity: sha512-8mzCiNvGu4RtcvWkZoFuWZNSTFac9peWwS+p+UtEsr8fLjhlgVmEFDTo+DbuQLDFtMIj8qfBdBJ9h6IRHCFXdg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/rax-view/-/rax-view-2.3.0.tgz}
+    id: registry.npmjs.org/rax-view/2.3.0
     name: rax-view
     version: 2.3.0
     peerDependencies:
       rax: ^1.0.0
     dependencies:
       classnames: registry.npmjs.org/classnames/2.3.1
+      rax: registry.npmjs.org/rax/1.2.2
       universal-env: registry.npmjs.org/universal-env/3.3.3
+    dev: false
+
+  registry.npmjs.org/rax/1.2.2:
+    resolution: {integrity: sha512-SKUKSXoG2Dp+sFyiFyYzTGmhZlYGxusRSigcokAYTN3r4WTySreXs2WE+6nBBGg26aFyiCsBVHNeI86SQbVsQg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/rax/-/rax-1.2.2.tgz}
+    name: rax
+    version: 1.2.2
+    engines: {npm: '>=3.0.0'}
+    dependencies:
+      '@babel/runtime': registry.npmjs.org/@babel/runtime/7.18.3
+      driver-server: registry.npmjs.org/driver-server/1.0.0
+      prop-types: registry.npmjs.org/prop-types/15.8.1
+      rax-children: registry.npmjs.org/rax-children/1.0.0_rax@1.2.2
+      rax-clone-element: registry.npmjs.org/rax-clone-element/1.0.0_rax@1.2.2
+      rax-create-factory: registry.npmjs.org/rax-create-factory/1.0.0_rax@1.2.2
+      rax-is-valid-element: registry.npmjs.org/rax-is-valid-element/1.0.0
     dev: false
 
   registry.npmjs.org/rc/1.2.8:
@@ -20808,7 +20881,6 @@ packages:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz}
     name: react-is
     version: 16.13.1
-    dev: true
 
   registry.npmjs.org/react-json-view/1.21.3_ca3iilkt5tbo43h35hmeecyxuu:
     resolution: {integrity: sha512-13p8IREj9/x/Ye4WI/JpjhoIwuzEgUAtgJZNBJckfzJt1qyh24BdTm6UQNGnyTq9dapQdrqvquZTo3dz1X6Cjw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/react-json-view/-/react-json-view-1.21.3.tgz}
@@ -22664,6 +22736,7 @@ packages:
     resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/tslib/-/tslib-2.4.0.tgz}
     name: tslib
     version: 2.4.0
+    dev: true
 
   registry.npmjs.org/tsutils/3.21.0:
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/tsutils/-/tsutils-3.21.0.tgz}
