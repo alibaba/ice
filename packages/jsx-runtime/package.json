@@ -35,7 +35,6 @@
     "jsx-runtime"
   ],
   "dependencies": {
-    "@swc/helpers": "^0.3.8",
     "style-unit": "^3.0.4"
   },
   "devDependencies": {
