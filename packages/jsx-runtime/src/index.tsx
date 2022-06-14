@@ -26,16 +26,16 @@ function isObject(obj: any): obj is object {
 // Support rpx unit.
 function hijackElementProps(props: { style?: object } | object): object {
   if (props && STYLE in props) {
-    const { style, ...rest } = props;
+    const { style } = props;
     if (isObject(style)) {
-      const result = {};
+      const result = Object.assign({}, props);
+      const convertedStyle = {};
       for (const prop in style) {
         // @ts-ignore
-        result[prop] = convertUnit(style[prop]);
+        convertedStyle[prop] = convertUnit(style[prop]);
       }
-      // @ts-ignore
-      rest['style'] = result;
-      return rest;
+      result['style'] = convertedStyle;
+      return result;
     }
   }
   return props;

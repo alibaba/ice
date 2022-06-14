@@ -392,7 +392,6 @@ importers:
       '@ice/pkg': ^1.0.0-rc.0
       '@ice/pkg-plugin-docusaurus': ^1.0.0-rc.0
       '@iceworks/spec': ^1.0.0
-      '@swc/helpers': ^0.3.8
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
       eslint: ^7.0.0
@@ -401,7 +400,6 @@ importers:
       style-unit: ^3.0.4
       stylelint: ^13.7.2
     dependencies:
-      '@swc/helpers': registry.npmjs.org/@swc/helpers/0.3.17
       style-unit: registry.npmjs.org/style-unit/3.0.4
     devDependencies:
       '@ice/pkg': registry.npmjs.org/@ice/pkg/1.0.0-rc.5
