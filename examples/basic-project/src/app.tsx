@@ -1,4 +1,4 @@
-import type { GetAppData, GetAppConfig } from 'ice';
+import type { Auth } from '@ice/plugin-auth/esm/runtime';
 
 if (process.env.ICE_CORE_ERROR_BOUNDARY === 'true') {
   console.error('__REMOVED__');
@@ -9,21 +9,18 @@ console.warn('__WARN__');
 console.error('__ERROR__');
 console.log('process.env.HAHA', process.env.HAHA);
 
-export const getAppData: GetAppData = () => {
+export const auth: Auth = () => {
   return new Promise((resolve) => {
     resolve({
-      title: 'gogogogo',
-      auth: {
+      initialAuth: {
         admin: true,
       },
     });
   });
 };
 
-export const getAppConfig: GetAppConfig = (appData) => {
-  return {
-    auth: {
-      initialAuth: appData?.auth,
-    },
-  };
+export default {
+  app: {
+    rootId: 'app',
+  },
 };

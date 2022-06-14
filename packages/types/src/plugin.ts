@@ -65,7 +65,6 @@ export interface ExtendsPluginAPI {
   generator: {
     addExport: AddExport;
     addExportTypes: AddExport;
-    addConfigTypes: AddExport;
     addRenderFile: AddRenderFile;
     addRenderTemplate: AddTemplateFiles;
   };
