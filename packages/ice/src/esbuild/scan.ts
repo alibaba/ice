@@ -2,9 +2,11 @@ import * as path from 'path';
 import type { Plugin } from 'esbuild';
 import fg from 'fast-glob';
 import { resolveId } from '../service/analyze.js';
+import formatPath from '../utils/formatPath.js';
 import { ASSET_TYPES } from './assets.js';
 
 interface Options {
+  rootDir: string;
   alias: Record<string, string | false>;
   deps: Record<string, string>;
   exclude: string[];
@@ -15,7 +17,7 @@ interface Options {
  */
 const scanPlugin = (options: Options): Plugin => {
   // deps for record scanned imports
-  const { deps, exclude, alias } = options;
+  const { deps, exclude, alias, rootDir } = options;
   const dataUrlRE = /^\s*data:/i;
   const httpUrlRE = /^(https?:)?\/\//;
   const cache = new Map<string, string | false>();
@@ -94,7 +96,16 @@ const scanPlugin = (options: Options): Plugin => {
               external: true,
             };
           } else if (path.isAbsolute(resolved)) {
-            // return absolute path of aliased path
+            if (
+              // dependencies with absolute path
+              resolved.includes('node_modules') ||
+              // in case of package with system link when development
+              !formatPath(resolved).includes(formatPath(rootDir))) {
+              return {
+                path: resolved,
+                external: true,
+              };
+            }
             return {
               path: resolved,
             };

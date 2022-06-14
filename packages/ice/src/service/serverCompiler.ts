@@ -57,6 +57,7 @@ export function createServerCompiler(options: Options) {
     let metadata;
     if (buildOptions?.format === 'esm') {
       const deps = await scanImports([serverEntry], {
+        rootDir,
         alias: (task.config?.alias || {}) as Record<string, string | false>,
       });
 
