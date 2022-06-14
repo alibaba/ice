@@ -8,7 +8,7 @@ import type { ServerCompiler } from '@ice/types/esm/plugin.js';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
-import { SERVER_ENTRY, SERVER_OUTPUT, SERVER_OUTPUT_DIR } from '../constant.js';
+import { SERVER_ENTRY, SERVER_OUTPUT_DIR } from '../constant.js';
 import generateHTML from '../utils/generateHTML.js';
 import emptyDir from '../utils/emptyDir.js';
 
@@ -54,19 +54,25 @@ const build = async (context: Context<Config>, taskConfigs: TaskConfig<Config>[]
         compiler?.close?.(() => {});
         const isSuccessful = !messages.errors.length;
         const { outputDir } = taskConfigs.find(({ name }) => name === 'web').config;
+        const { ssg, ssr, server } = userConfig;
         // compile server bundle
-        const outfile = path.join(outputDir, SERVER_OUTPUT);
+        const entryPoint = path.join(rootDir, SERVER_ENTRY);
+        const esm = server?.format === 'esm';
+        const outJSExtension = esm ? '.mjs' : '.cjs';
+        const serverEntry = path.join(outputDir, SERVER_OUTPUT_DIR, `index${outJSExtension}`);
         await serverCompiler({
-          entryPoints: { index: path.join(rootDir, SERVER_ENTRY) },
+          entryPoints: { index: entryPoint },
           outdir: path.join(outputDir, SERVER_OUTPUT_DIR),
-          splitting: true,
+          splitting: esm,
+          format: server?.format,
+          platform: esm ? 'browser' : 'node',
+          outExtension: { '.js': outJSExtension },
         });
         // generate html
-        const { ssg = true, ssr = true } = userConfig;
         await generateHTML({
           rootDir,
           outputDir,
-          entry: outfile,
+          entry: serverEntry,
           documentOnly: !ssg && !ssr,
         });
         resolve({

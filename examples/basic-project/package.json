@@ -11,8 +11,14 @@
   "dependencies": {
     "@ice/app": "workspace:*",
     "@ice/plugin-auth": "workspace:*",
+    "@ice/plugin-rax-compat": "workspace:*",
     "@ice/runtime": "workspace:*",
     "ahooks": "^3.3.8",
+    "rax": "^1.2.2",
+    "rax-image": "^2.4.1",
+    "rax-is-valid-element": "^1.0.0",
+    "rax-text": "^2.2.0",
+    "rax-view": "^2.3.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },

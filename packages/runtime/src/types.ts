@@ -1,6 +1,6 @@
 import type { IncomingMessage, ServerResponse } from 'http';
 import type { Action, Location } from 'history';
-import type { ComponentType, ReactNode, ReactChild, PropsWithChildren } from 'react';
+import type { ComponentType, ReactNode, PropsWithChildren } from 'react';
 import type { HydrationOptions } from 'react-dom/client';
 import type { Navigator, Params } from 'react-router-dom';
 import type { useConfig, useData } from './RouteContext';
@@ -72,7 +72,7 @@ export interface AppContext {
 
 export type Renderer = (
   container: Element | Document,
-  initialChildren: ReactChild | Iterable<ReactNode>,
+  initialChildren: React.ReactNode,
   options?: HydrationOptions,
 ) => void;
 

@@ -8,7 +8,7 @@ export default () => {
 
   return (
     <div>
-      <h1>Layout</h1>
+      <h1>ICE 3.0 Layout</h1>
       <Outlet />
     </div>
   );

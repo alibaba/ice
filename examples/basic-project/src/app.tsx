@@ -1,4 +1,4 @@
-import { GetAppData, GetAppConfig } from 'ice';
+import type { GetAppData, GetAppConfig } from 'ice';
 
 if (process.env.ICE_CORE_ERROR_BOUNDARY === 'true') {
   console.error('__REMOVED__');

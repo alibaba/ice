@@ -41,6 +41,7 @@ module.exports = getESLintConfig('react-ts', {
     '@typescript-eslint/no-unnecessary-type-arguments': 0,
     '@typescript-eslint/await-thenable': 0,
     '@typescript-eslint/prefer-nullish-coalescing': 0,
+    '@typescript-eslint/consistent-type-imports': 2,
   },
   parserOptions: {
     project: [],
