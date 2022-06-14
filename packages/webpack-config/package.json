@@ -32,5 +32,8 @@
     "esbuild": "^0.14.23",
     "webpack": "^5.72.0",
     "webpack-dev-server": "^4.7.4"
+  },
+  "scripts": {
+    "build": "tsc --build tsconfig.json"
   }
 }

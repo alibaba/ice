@@ -6,20 +6,20 @@ function checkPackageVersion(publishPackages: IPackageInfo[]) {
   publishPackages.forEach((publishPackage: IPackageInfo) => {
     const { publishVersion, localVersion, name, packageInfo } = publishPackage;
     if (publishVersion !== localVersion) {
-      throw new Error(`[ERROR] version of package ${name} is not valid local verison: ${localVersion}`);
+      throw new Error(`[ERROR] Package ${name} has an invalid local version: ${localVersion}, publish version is ${publishVersion}`);
     }
     for (let i = 0; i < publishPackages.length; i++) {
       const dependenceName = publishPackages[i].name;
       const dependenceVersion = publishPackages[i].publishVersion;
       if (packageInfo.dependencies && packageInfo.dependencies[dependenceName]) {
         if (!semver.satisfies(dependenceVersion, packageInfo.dependencies[dependenceName])) {
-          throw new Error(`[ERROR] dependency ${dependenceName}${packageInfo.dependencies[dependenceName]} of package ${name}
-            is not satisfied with verison ${dependenceVersion}`);
+          throw new Error(`[ERROR] Dependency ${dependenceName}@${packageInfo.dependencies[dependenceName]} of package ${name}
+            is not satisfied with version ${dependenceVersion}`);
         }
       } else if (packageInfo.devDependencies && packageInfo.devDependencies[dependenceName]) {
         if (!semver.satisfies(dependenceVersion, packageInfo.devDependencies[dependenceName])) {
-          throw new Error(`[ERROR] devDependency ${dependenceName}${packageInfo.devDependencies[dependenceName]} of package ${name}
-            is not satisfied with verison ${dependenceVersion}`);
+          throw new Error(`[ERROR] devDependency ${dependenceName}@${packageInfo.devDependencies[dependenceName]} of package ${name}
+            is not satisfied with version ${dependenceVersion}`);
         }
       }
     }
