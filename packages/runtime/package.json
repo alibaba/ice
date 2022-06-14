@@ -8,7 +8,8 @@
   "exports": {
     ".": "./esm/index.js",
     "./client": "./esm/index.js",
-    "./server": "./esm/index.server.js"
+    "./server": "./esm/index.server.js",
+    "./jsx-runtime": "./esm/jsx-runtime.js"
   },
   "files": [
     "esm",
@@ -19,6 +20,9 @@
   "repository": "ice-lab/ice-next",
   "bugs": "https://github.com/ice-lab/ice-next/issues",
   "homepage": "https://next.ice.work",
+  "scripts": {
+    "build": "tsc --build tsconfig.json"
+  },
   "devDependencies": {
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -28,6 +32,7 @@
   },
   "sideEffects": false,
   "dependencies": {
+    "@ice/jsx-runtime": "^0.1.0",
     "history": "^5.3.0",
     "react-router-dom": "^6.2.2"
   },

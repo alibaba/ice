@@ -69,7 +69,7 @@ export async function getPackageInfos(distTag = ''): Promise<IPackageInfo[]> {
             packageInfo,
             // If localVersion not exist, publish it
             shouldPublish:
-              checkBuildSuccess(packageFolder, packageInfo.main) &&
+              checkBuildSuccess(packageFolder, packageInfo.main ?? 'index.js') &&
               !await checkVersionExists(packageName, publishVersion, distTag),
           });
         } catch (e) {

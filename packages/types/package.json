@@ -20,6 +20,9 @@
       "types": "./esm/generator.d.ts"
     }
   },
+  "scripts": {
+    "build": "tsc --build tsconfig.json"
+  },
   "author": "ICE",
   "license": "MIT",
   "repository": "ice-lab/ice-next",

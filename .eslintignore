@@ -14,6 +14,7 @@ coverage/
 /packages/*/__tests__
 /packages/*/lib/
 /packages/*/esm/
+/packages/*/es2017/
 
 # 忽略第三方包
 /vendor/loader.js
