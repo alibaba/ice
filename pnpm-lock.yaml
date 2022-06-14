@@ -433,8 +433,8 @@ importers:
 
   packages/plugin-rax-compat:
     specifiers:
-      '@ice/types': workspace:*
-      rax-compat: workspace:*
+      '@ice/types': ^1.0.0
+      rax-compat: ^0.1.0
     dependencies:
       rax-compat: link:../rax-compat
     devDependencies:
@@ -488,7 +488,7 @@ importers:
 
   packages/runtime:
     specifiers:
-      '@ice/jsx-runtime': workspace:*
+      '@ice/jsx-runtime': ^0.1.0
       '@types/react': ^18.0.8
       '@types/react-dom': ^18.0.3
       history: ^5.3.0
