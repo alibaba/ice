@@ -55,12 +55,18 @@ export function createElement<P extends {
   type: FunctionComponent<P>,
   props?: Attributes & P | null,
   ...children: ReactNode[]): ReactElement {
-  const { children: propsChildren, onAppear, onDisappear, ...rest } = props;
+  const { children: propsChildren, onAppear, onDisappear } = props;
+  const rest = Object.assign({}, props);
+  delete rest.children;
+  delete rest.onAppear;
+  delete rest.onDisappear;
+
   // Compat for style unit.
   rest.style = compatStyle(rest.style);
 
   rest.ref = props.ref || useRef(null);
-  let element: any = _createElement(type, rest as Attributes & P | null, propsChildren, ...children);
+  const args = [type, rest as Attributes & P | null, propsChildren];
+  let element: any = _createElement.apply(null, args.concat(children));
   // Polyfill onAppear and onDisappear.
   if (isFunction(onAppear) || isFunction(onDisappear)) {
     setupAppearOnce();
