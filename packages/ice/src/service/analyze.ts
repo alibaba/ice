@@ -156,6 +156,7 @@ export async function analyzeImports(files: string[], options: Options) {
 }
 
 interface ScanOptions {
+  rootDir: string;
   alias?: Alias;
   depImports?: Record<string, string>;
   exclude?: string[];
@@ -163,13 +164,13 @@ interface ScanOptions {
 
 export async function scanImports(entries: string[], options?: ScanOptions) {
   const start = performance.now();
-  const { alias = {}, depImports = {}, exclude = [] } = options;
+  const { alias = {}, depImports = {}, exclude = [], rootDir } = options;
   const deps = { ...depImports };
 
   await Promise.all(
     entries.map((entry) =>
       build({
-        absWorkingDir: process.cwd(),
+        absWorkingDir: rootDir,
         write: false,
         entryPoints: [entry],
         bundle: true,
@@ -177,6 +178,7 @@ export async function scanImports(entries: string[], options?: ScanOptions) {
         logLevel: 'silent',
         loader: { '.js': 'jsx' },
         plugins: [scanPlugin({
+          rootDir,
           deps,
           alias,
           exclude,

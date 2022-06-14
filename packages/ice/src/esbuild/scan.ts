@@ -1,10 +1,15 @@
 import * as path from 'path';
+import fse from 'fs-extra';
 import type { Plugin } from 'esbuild';
 import fg from 'fast-glob';
+import findUp from 'find-up';
+import consola from 'consola';
 import { resolveId } from '../service/analyze.js';
+import formatPath from '../utils/formatPath.js';
 import { ASSET_TYPES } from './assets.js';
 
 interface Options {
+  rootDir: string;
   alias: Record<string, string | false>;
   deps: Record<string, string>;
   exclude: string[];
@@ -15,10 +20,11 @@ interface Options {
  */
 const scanPlugin = (options: Options): Plugin => {
   // deps for record scanned imports
-  const { deps, exclude, alias } = options;
+  const { deps, exclude, alias, rootDir } = options;
   const dataUrlRE = /^\s*data:/i;
   const httpUrlRE = /^(https?:)?\/\//;
   const cache = new Map<string, string | false>();
+  const pkgNameCache = new Map<string, string>();
   const resolve = (id: string, importer: string) => {
     const cacheKey = `${id}${importer && path.dirname(importer)}`;
     if (cache.has(cacheKey)) {
@@ -36,6 +42,20 @@ const scanPlugin = (options: Options): Plugin => {
     }
     cache.set(cacheKey, resolved);
     return resolved;
+  };
+
+  const getPackageName = (resolved: string) => {
+    if (pkgNameCache.has(resolved)) {
+      return pkgNameCache.get(resolved);
+    }
+    try {
+      const pkgPath = findUp.sync('package.json', { cwd: resolved });
+      const pkgInfo = fse.readJSONSync(pkgPath);
+      pkgNameCache.set(resolved, pkgInfo.name);
+      return pkgInfo.name;
+    } catch (err) {
+      consola.error(`cant resolve package of path: ${resolved}`, err);
+    }
   };
 
   return {
@@ -93,8 +113,19 @@ const scanPlugin = (options: Options): Plugin => {
               path: resolved,
               external: true,
             };
-          } else if (path.isAbsolute(resolved)) {
-            // return absolute path of aliased path
+          // deal with aliased absolute path
+          } else if (id !== resolved && path.isAbsolute(resolved)) {
+            if (
+              // dependencies with absolute path
+              resolved.includes('node_modules') ||
+              // in case of package with system link when development
+              !formatPath(resolved).includes(formatPath(rootDir))) {
+              deps[id] = getPackageName(resolved);
+              return {
+                path: resolved,
+                external: true,
+              };
+            }
             return {
               path: resolved,
             };
