@@ -1,6 +1,6 @@
 {
   "name": "@ice/jsx-runtime",
-  "version": "0.1.0-beta.0",
+  "version": "0.1.0",
   "description": "JSX runtime for ice.",
   "files": [
     "esm",
@@ -9,6 +9,7 @@
     "dist",
     "build"
   ],
+  "main": "./esm/index.js",
   "module": "./esm/index.js",
   "types": "./esm/index.d.ts",
   "exports": {

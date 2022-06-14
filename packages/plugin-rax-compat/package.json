@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-rax-compat",
-  "version": "0.1.0-beta.0",
+  "version": "0.1.0",
   "description": "",
   "license": "MIT",
   "type": "module",
@@ -17,10 +17,10 @@
     "!esm/**/*.map"
   ],
   "dependencies": {
-    "rax-compat": "workspace:*"
+    "rax-compat": "^0.1.0"
   },
   "devDependencies": {
-    "@ice/types": "workspace:*"
+    "@ice/types": "^1.0.0"
   },
   "repository": {
     "type": "http",
