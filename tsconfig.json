@@ -9,5 +9,6 @@
     { "path": "packages/ice" },
     { "path": "packages/plugin-auth" },
     { "path": "packages/plugin-rax-compat" }
+    { "path": "packages/plugin-pha" }
   ]
 }
