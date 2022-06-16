@@ -17,6 +17,8 @@ interface Icon {
 
 interface AppWorker {
   url: string;
+  source: string;
+  prefetch: boolean;
 }
 
 interface DataPrefetchConfig {
@@ -31,29 +33,52 @@ interface DataPrefetchConfig {
 type DataPrefetch = Partial<DataPrefetchConfig>;
 
 interface TabItem {
-  pageName: string;
+  pagePath: string;
+  path?: string;
   text?: string;
   icon: string;
   activeIcon: string;
 }
 
 type TabBar = Partial<{
-  items?: TabItem[];
-  textColor?: string;
-  selectedColor?: string;
-  backgroundColor?: string;
-  borderStyle?: string;
-  selectedIndex?: number;
-  iconSize?: number;
-  fontSize?: number;
-  lineHeight?: number;
-  height?: number;
-  spacing?: number;
-  position?: 'static' | 'absolute';
+  // list convert to items
+  items: (string | TabItem)[];
+  textColor: string;
+  selectedColor: string;
+  backgroundColor: string;
+  borderStyle: string;
+  selectedIndex: number;
+  iconSize: number;
+  fontSize: number;
+  lineHeight: number;
+  height: number;
+  spacing: number;
+  position: 'static' | 'absolute';
   name: string;
   url: string;
   html: string;
   custom: boolean;
+}>;
+
+type PHAItem = Partial<Pick<TabItem, 'path' | 'icon'> & {
+  name: string;
+  page_key: string;
+  active_icon: string;
+}>;
+
+type PHATabBar = Partial<Pick<TabBar, 'html' | 'url' | 'position' | 'spacing'> & {
+  key: string;
+  text_color: string;
+  selected_color: string;
+  selected_index: number;
+  background_color: string;
+  border_style: string;
+  icon_size: number;
+  font_size: number;
+  line_height: number;
+  height: number;
+  spacing: number;
+  items: PHAItem[];
 }>;
 
 type Priority = 'high' | 'normal' | 'low';
@@ -64,14 +89,6 @@ type FrameConfig = Partial<{
 }> & WindowConfig;
 
 type WindowConfig = Partial<{
-  backgroundColor: string;
-  enablePullRefresh: boolean;
-  name: string;
-  icons: Icon[];
-  title: string;
-}>;
-
-type PHAWindowConfig = Partial<{
   backgroundColor: string;
   enablePullRefresh: boolean;
   name: string;
@@ -99,6 +116,8 @@ export interface PHAPage {
 }
 
 export type Manifest = Partial<{
+  enablePoplayer: boolean;
+  disableCapture: boolean;
   tabBar: TabBar;
   queryParamsPassKeys: string[];
   queryParamsPassIgnoreKeys: string[];
@@ -111,5 +130,16 @@ export type Manifest = Partial<{
 }> & WindowConfig & Record<string, any>;
 
 export type PHAManifest = Partial<{
-
+  name: string;
+  background_color: string;
+  splash_view_timeout: number;
+  enable_poplayer: boolean;
+  disable_capture: boolean;
+  icons: Icon[];
+  data_prefetch: Omit<DataPrefetch, 'prefetchType' | 'extHeaders'> & {
+    prefetch_type: string;
+    ext_headers: Record<string, string>;
+  };
+  app_worker: AppWorker;
+  tab_bar: PHATabBar;
 }>;

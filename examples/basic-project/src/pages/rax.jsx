@@ -1,8 +1,8 @@
 import { createElement, useEffect, useRef } from 'rax';
 import View from 'rax-view';
 import Text from 'rax-text';
-import Logo from '@/components/Logo';
 import styles from './index.module.css';
+import Logo from '@/components/Logo';
 
 export default function Home() {
   const ref = useRef();

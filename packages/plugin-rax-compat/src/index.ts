@@ -1,5 +1,5 @@
-import type { Plugin } from '@ice/types';
 import { createRequire } from 'module';
+import type { Plugin } from '@ice/types';
 
 const require = createRequire(import.meta.url);
 
