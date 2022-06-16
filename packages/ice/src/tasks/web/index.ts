@@ -15,6 +15,11 @@ const getWebTask = ({ rootDir, command }): Config => {
       // set alias for webpack/hot while webpack has been prepacked
       'webpack/hot': '@ice/bundles/compiled/webpack/hot',
     },
+    swcOptions: {
+      // getData is built by data-loader
+      removeExportExprs: ['getData'],
+    },
+    assetsManifest: true,
   };
 };
 

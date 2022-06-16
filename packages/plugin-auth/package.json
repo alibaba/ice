@@ -37,7 +37,8 @@
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0"
+    "@types/react-dom": "^18.0.0",
+    "regenerator-runtime": "^0.13.9"
   },
   "peerDependencies": {
     "react": "^18.0.0",
@@ -46,5 +47,8 @@
   "repository": {
     "type": "http",
     "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-auth"
+  },
+  "scripts": {
+    "build": "tsc --build tsconfig.json"
   }
 }

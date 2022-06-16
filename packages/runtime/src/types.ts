@@ -1,6 +1,6 @@
 import type { IncomingMessage, ServerResponse } from 'http';
 import type { Action, Location } from 'history';
-import type { ComponentType, ReactNode, ReactChild, PropsWithChildren } from 'react';
+import type { ComponentType, ReactNode, PropsWithChildren } from 'react';
 import type { HydrationOptions } from 'react-dom/client';
 import type { Navigator, Params } from 'react-router-dom';
 import type { useConfig, useData } from './RouteContext';
@@ -8,8 +8,9 @@ import type { useConfig, useData } from './RouteContext';
 type VoidFunction = () => void;
 type AppLifecycle = 'onShow' | 'onHide' | 'onPageNotFound' | 'onShareAppMessage' | 'onUnhandledRejection' | 'onLaunch' | 'onError' | 'onTabItemClick';
 type App = Partial<{
-  strict?: boolean;
-  addProvider?: ComponentWithChildren;
+  rootId: string;
+  strict: boolean;
+  errorBoundary: boolean;
 } & Record<AppLifecycle, VoidFunction>>;
 
 export type AppData = any;
@@ -27,13 +28,10 @@ export interface RouteConfig {
   auth?: string[];
 }
 
-export interface AppEntry {
-  getAppConfig?: GetAppConfig;
-  getAppData?: GetAppData;
+export interface AppExport {
+  default?: AppConfig;
+  [key: string]: any;
 }
-
-export type GetAppData = (ctx: RequestContext) => Promise<AppData> | AppData;
-export type GetAppConfig = (appData: AppData) => AppConfig;
 
 // app.getData & route.getData
 export type GetData = (ctx: RequestContext) => Promise<RouteData> | RouteData;
@@ -62,17 +60,17 @@ export interface AppContext {
   assetsManifest: AssetsManifest;
   routesData: RoutesData;
   routesConfig: RoutesConfig;
-  appData: any;
   routeModules: RouteModules;
   matches?: RouteMatch[];
   routes?: RouteItem[];
   documentOnly?: boolean;
   matchedIds?: string[];
+  appExport?: AppExport;
 }
 
 export type Renderer = (
   container: Element | Document,
-  initialChildren: ReactChild | Iterable<ReactNode>,
+  initialChildren: React.ReactNode,
   options?: HydrationOptions,
 ) => void;
 
@@ -146,7 +144,7 @@ export interface RuntimeAPI {
 export interface RuntimePlugin {
   (
     apis: RuntimeAPI
-  ): void;
+  ): Promise<void> | void;
 }
 
 export interface CommonJsRuntime {

@@ -16,5 +16,8 @@
   "homepage": "https://next.ice.work",
   "dependencies": {
     "minimatch": "^5.0.1"
+  },
+  "scripts": {
+    "build": "tsc --build tsconfig.json"
   }
 }

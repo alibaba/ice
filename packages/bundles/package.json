@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "license": "MIT",
   "author": "ICE",
-  "description": "basic dependencies for ice",
+  "description": "Basic dependencies for ice.",
   "files": [
     "esm",
     "compiled"
   ],
+  "scripts": {
+    "build": "esmo scripts/build.ts && tsc --build tsconfig.json"
+  },
   "main": "./esm/index.js",
   "type": "module",
   "dependencies": {

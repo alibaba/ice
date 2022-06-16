@@ -6,7 +6,6 @@ import type { Location } from 'history';
 import Runtime from './runtime.js';
 import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
-import { AppDataProvider, getAppData } from './AppData.js';
 import getAppConfig from './appConfig.js';
 import { DocumentContextProvider } from './Document.js';
 import { loadRouteModules, loadRoutesData, getRoutesConfig, matchRoutes } from './routes.js';
@@ -15,18 +14,17 @@ import { createStaticNavigator } from './server/navigator.js';
 import type { NodeWritablePiper } from './server/streamRender.js';
 import type {
   AppContext, RouteItem, ServerContext,
-  AppEntry, RuntimePlugin, CommonJsRuntime, AssetsManifest,
+  AppExport, RuntimePlugin, CommonJsRuntime, AssetsManifest,
   ComponentWithChildren,
   RouteMatch,
   RequestContext,
-  AppData,
   AppConfig,
   RouteModules,
 } from './types';
 import getRequestContext from './requestContext.js';
 
 interface RenderOptions {
-  app: AppEntry;
+  app: AppExport;
   assetsManifest: AssetsManifest;
   routes: RouteItem[];
   runtimeModules: (RuntimePlugin | CommonJsRuntime)[];
@@ -92,7 +90,7 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
     try {
       await pipeToResponse(res, pipe);
     } catch (error) {
-      console.error('Warning: piperToResponse error, downgrade to csr.', error);
+      console.error('PiperToResponse error, downgrade to csr.', error);
       // downgrade to csr.
       const result = await fallback();
       sendResult(res, result);
@@ -124,12 +122,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
   const location = getLocation(req.url);
 
   const requestContext = getRequestContext(location, serverContext);
-  let appData = {};
-  // don't need to execute getAppData in CSR
-  if (!documentOnly) {
-    appData = await getAppData(app, requestContext);
-  }
-  const appConfig = getAppConfig(app, appData);
+  const appConfig = getAppConfig(app);
   const matches = matchRoutes(routes, location, appConfig?.router?.basename);
 
   if (!matches.length) {
@@ -146,12 +139,12 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
 
   try {
     return await renderServerEntry({
+      appExport: app,
       requestContext,
       renderOptions,
       matches,
       location,
       appConfig,
-      appData,
       routeModules,
     });
   } catch (err) {
@@ -163,7 +156,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
 // https://github.com/ice-lab/ice-next/issues/133
 function render404(): RenderResult {
   return {
-    value: 'Page is Not Found',
+    value: 'Not Found',
     statusCode: 404,
   };
 }
@@ -173,19 +166,19 @@ function render404(): RenderResult {
  */
 async function renderServerEntry(
   {
+    appExport,
     requestContext,
     matches,
     location,
-    appData,
     appConfig,
     renderOptions,
     routeModules,
   }: {
+    appExport: AppExport;
     requestContext: RequestContext;
     renderOptions: RenderOptions;
     matches: RouteMatch[];
     location: Location;
-    appData: AppData;
     appConfig: AppConfig;
     routeModules: RouteModules;
   },
@@ -201,8 +194,8 @@ async function renderServerEntry(
   const routesConfig = getRoutesConfig(matches, routesData, routeModules);
 
   const appContext: AppContext = {
+    appExport,
     assetsManifest,
-    appData,
     appConfig,
     routesData,
     routesConfig,
@@ -212,12 +205,7 @@ async function renderServerEntry(
   };
 
   const runtime = new Runtime(appContext);
-  if (appConfig?.app?.addProvider) {
-    runtime.addProvider(appConfig.app.addProvider);
-  }
-  runtimeModules.forEach(m => {
-    runtime.loadModule(m);
-  });
+  await Promise.all(runtimeModules.map(m => runtime.loadModule(m)).filter(Boolean));
 
   const staticNavigator = createStaticNavigator();
   const AppProvider = runtime.composeAppProvider() || React.Fragment;
@@ -238,11 +226,9 @@ async function renderServerEntry(
 
   const element = (
     <AppContextProvider value={appContext}>
-      <AppDataProvider value={appData}>
-        <DocumentContextProvider value={documentContext}>
-          <Document />
-        </DocumentContextProvider>
-      </AppDataProvider>
+      <DocumentContextProvider value={documentContext}>
+        <Document />
+      </DocumentContextProvider>
     </AppContextProvider>
   );
 
@@ -271,16 +257,13 @@ function renderDocument(matches: RouteMatch[], options: RenderOptions, routeModu
     Document,
   } = options;
 
-  // renderDocument needn't to load routesData and appData.
-  const appData = null;
   const routesData = null;
-  const appConfig = getAppConfig(app, appData);
+  const appConfig = getAppConfig(app);
   const routesConfig = getRoutesConfig(matches, {}, routeModules);
 
   const appContext: AppContext = {
     assetsManifest,
     appConfig,
-    appData,
     routesData,
     routesConfig,
     matches,
@@ -295,16 +278,14 @@ function renderDocument(matches: RouteMatch[], options: RenderOptions, routeModu
 
   const html = ReactDOMServer.renderToString(
     <AppContextProvider value={appContext}>
-      <AppDataProvider value={appData}>
-        <DocumentContextProvider value={documentContext}>
-          <Document />
-        </DocumentContextProvider>
-      </AppDataProvider>
+      <DocumentContextProvider value={documentContext}>
+        <Document />
+      </DocumentContextProvider>
     </AppContextProvider>,
   );
 
   return {
-    value: html,
+    value: `<!DOCTYPE html>${html}`,
     statusCode: 200,
   };
 }

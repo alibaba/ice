@@ -1,0 +1,56 @@
+{
+  "name": "@ice/jsx-runtime",
+  "version": "0.1.0",
+  "description": "JSX runtime for ice.",
+  "files": [
+    "esm",
+    "cjs",
+    "es2017",
+    "dist",
+    "build"
+  ],
+  "main": "./esm/index.js",
+  "module": "./esm/index.js",
+  "types": "./esm/index.d.ts",
+  "exports": {
+    ".": "./esm/index.js"
+  },
+  "sideEffects": [
+    "dist/*",
+    "*.scss",
+    "*.less",
+    "*.css"
+  ],
+  "scripts": {
+    "start": "ice-pkg start",
+    "build": "ice-pkg build",
+    "prepublishOnly": "npm run build",
+    "eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
+    "eslint:fix": "npm run eslint -- --fix",
+    "stylelint": "stylelint \"**/*.{css,scss,less}\"",
+    "lint": "npm run eslint && npm run stylelint"
+  },
+  "keywords": [
+    "ice",
+    "react",
+    "jsx-runtime"
+  ],
+  "dependencies": {
+    "style-unit": "^3.0.4"
+  },
+  "devDependencies": {
+    "@ice/pkg": "^1.0.0-rc.0",
+    "@ice/pkg-plugin-docusaurus": "^1.0.0-rc.0",
+    "@iceworks/spec": "^1.0.0",
+    "eslint": "^7.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "stylelint": "^13.7.2"
+  },
+  "peerDependencies": {
+    "react": "^16 || ^17 || ^18"
+  },
+  "license": "MIT"
+}

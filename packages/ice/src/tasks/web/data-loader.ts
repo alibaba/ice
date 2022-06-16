@@ -1,0 +1,28 @@
+import * as path from 'path';
+import type { Config } from '@ice/types';
+import { CACHE_DIR } from '../../constant.js';
+
+const getTask = ({ rootDir, command }): Config => {
+  // basic task config of data-loader
+  return {
+    entry: {
+      'data-loader': path.join(rootDir, '.ice/data-loader'),
+    },
+    mode: command === 'start' ? 'development' : 'production',
+    sourceMap: command === 'start' ? 'cheap-module-source-map' : false,
+    outputDir: path.join(rootDir, 'build'),
+    cacheDir: path.join(rootDir, CACHE_DIR),
+    alias: {
+      ice: path.join(rootDir, '.ice', 'index.ts'),
+      '@': path.join(rootDir, 'src'),
+    },
+    swcOptions: {
+      removeExportExprs: ['default', 'getConfig'],
+    },
+    splitChunks: false,
+    // enable concatenateModules will tree shaking unused `react/react-dom` in dev mod.
+    concatenateModules: true,
+  };
+};
+
+export default getTask;

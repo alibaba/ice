@@ -12,6 +12,7 @@
     "@ice/app": "workspace:*",
     "@ice/plugin-auth": "workspace:*",
     "@ice/runtime": "workspace:*",
+    "antd-mobile": "^5.12.6",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },

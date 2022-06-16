@@ -50,7 +50,7 @@ class Runtime {
 
   public getWrappers = () => this.RouteWrappers;
 
-  public loadModule(module: RuntimePlugin | CommonJsRuntime) {
+  public async loadModule(module: RuntimePlugin | CommonJsRuntime) {
     let runtimeAPI: RuntimeAPI = {
       addProvider: this.addProvider,
       setRender: this.setRender,
@@ -62,7 +62,9 @@ class Runtime {
     };
 
     const runtimeModule = (module as CommonJsRuntime).default || module as RuntimePlugin;
-    if (module) runtimeModule(runtimeAPI);
+    if (module) {
+      return await runtimeModule(runtimeAPI);
+    }
   }
 
   public composeAppProvider() {

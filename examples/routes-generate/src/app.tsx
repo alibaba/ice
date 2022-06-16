@@ -1,3 +1,1 @@
-export function getAppConfig() {
-  return {};
-}
+export default {};

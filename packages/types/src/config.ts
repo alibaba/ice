@@ -24,6 +24,11 @@ interface ConfigurationCtx extends Config {
   webpack: typeof webpack;
 }
 
+interface SwcOptions {
+  jsxTransform?: boolean;
+  removeExportExprs?: string[];
+}
+
 type Experimental = Pick<Configuration, 'experiments'>;
 
 export type ModifyWebpackConfig = (config: Configuration, ctx: ConfigurationCtx) => Configuration;
@@ -81,4 +86,16 @@ export interface Config {
   tsCheckerOptions?: ForkTsCheckerWebpackPluginOptions;
 
   eslintOptions?: Options;
+
+  swcOptions?: SwcOptions;
+
+  entry?: {
+    [key: string]: string;
+  };
+
+  splitChunks?: boolean;
+
+  assetsManifest?: boolean;
+
+  concatenateModules?: boolean;
 }
