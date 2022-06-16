@@ -14,7 +14,8 @@
     "humps": "^2.0.1"
   },
   "devDependencies": {
-    "@ice/types": "^1.0.0"
+    "@ice/types": "^1.0.0",
+    "webpack": "^5.73.0"
   },
   "repository": {
     "type": "http",

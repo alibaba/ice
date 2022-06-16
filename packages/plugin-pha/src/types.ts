@@ -11,20 +11,24 @@ interface PageHeader {
 
 interface Icon {
   src: string;
+  type: string;
+  sizes: string;
 }
 
 interface AppWorker {
   url: string;
 }
 
-type DataPrefetch = Partial<{
+interface DataPrefetchConfig {
   key: string;
   prefetchType: string;
   api: string;
   v: string;
   data: Record<string, any>;
   extHeaders: Record<string, string>;
-}>;
+}
+
+type DataPrefetch = Partial<DataPrefetchConfig>;
 
 interface TabItem {
   pageName: string;
@@ -52,9 +56,12 @@ type TabBar = Partial<{
   custom: boolean;
 }>;
 
-type Frame = 'string' | (Partial<{
+type Priority = 'high' | 'normal' | 'low';
+
+type FrameConfig = Partial<{
   url: string;
-}> & WindowConfig);
+  priority?: Priority;
+}> & WindowConfig;
 
 type WindowConfig = Partial<{
   backgroundColor: string;
@@ -64,8 +71,34 @@ type WindowConfig = Partial<{
   title: string;
 }>;
 
-export type PHAManifest = Partial<{
-  pageHeader: PageHeader;
+type PHAWindowConfig = Partial<{
+  backgroundColor: string;
+  enablePullRefresh: boolean;
+  name: string;
+  icons: Icon[];
+  title: string;
+}>;
+
+export interface PageConfig extends FrameConfig {
+  pageHeader?: PageHeader;
+  frames?: Frame;
+  defaultFrameIndex?: number;
+  // query_params should be queryParams?
+  query_params?: string;
+}
+
+export type Page = 'string' | PageConfig;
+export type Frame = 'string' | FrameConfig;
+export interface PHAPage {
+  key?: string;
+  document?: string;
+  path?: string;
+  background_color?: string;
+  pull_refresh?: boolean;
+  priority?: Priority;
+}
+
+export type Manifest = Partial<{
   tabBar: TabBar;
   queryParamsPassKeys: string[];
   queryParamsPassIgnoreKeys: string[];
@@ -74,5 +107,9 @@ export type PHAManifest = Partial<{
   expires: string;
   maxAge: number;
   appWorker: AppWorker;
-  frames: Frame;
+  pages: Page[];
 }> & WindowConfig & Record<string, any>;
+
+export type PHAManifest = Partial<{
+
+}>;
