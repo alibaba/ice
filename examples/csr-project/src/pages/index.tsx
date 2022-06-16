@@ -2,6 +2,7 @@ import { Suspense, lazy } from 'react';
 import { Link, useData, useConfig } from 'ice';
 // not recommended but works
 import { useAppContext } from '@ice/runtime';
+import { Button } from 'antd-mobile';
 import styles from './index.module.css';
 
 const Bar = lazy(() => import('../components/bar'));
@@ -23,6 +24,7 @@ export default function Home(props) {
       <Link to="/about">about</Link>
       <Suspense fallback={<div>hello</div>}>
         <Bar />
+        <Button />
       </Suspense>
     </>
   );

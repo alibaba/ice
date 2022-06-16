@@ -26,11 +26,18 @@ interface Options {
   task: TaskConfig<Config>;
   command: string;
   serverBundle: boolean;
+  swcOptions: Config['swcOptions'];
 }
 
 export function createServerCompiler(options: Options) {
-  const { task, rootDir, command, serverBundle } = options;
-  const transformPlugins = getCompilerPlugins(task.config, 'esbuild');
+  const { task, rootDir, command, serverBundle, swcOptions } = options;
+  const { config } = task;
+
+  const transformPlugins = getCompilerPlugins({
+    ...config,
+    swcOptions,
+  }, 'esbuild');
+
   const alias = (task.config?.alias || {}) as Record<string, string | false>;
   const assetsManifest = path.join(rootDir, ASSETS_MANIFEST);
   const defineVars = task.config?.define || {};

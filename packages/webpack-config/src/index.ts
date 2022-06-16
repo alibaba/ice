@@ -76,6 +76,10 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
     analyzer,
     tsCheckerOptions,
     eslintOptions,
+    entry,
+    splitChunks,
+    assetsManifest,
+    concatenateModules,
   } = config;
 
   const dev = mode !== 'production';
@@ -110,7 +114,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
   const terserOptions: any = merge({
     compress: {
       ecma: 5,
-      unused: false,
+      unused: true,
       // The following two options are known to break valid JavaScript code
       // https://github.com/vercel/next.js/issues/7178#issuecomment-493048965
       comparisons: false,
@@ -135,7 +139,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
       topLevelAwait: true,
       ...(experimental || {}),
     },
-    entry: () => getEntry(rootDir),
+    entry: entry || (() => getEntry(rootDir)),
     externals,
     output: {
       publicPath,
@@ -171,10 +175,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
       ignored: watchIgnoredRegexp,
     },
     optimization: {
-      // share runtime chunk when dev, ref: https://github.com/pmmmwh/react-refresh-webpack-plugin/issues/88#issuecomment-627558799
-      // loader chunk will load before main chunk in production
-      runtimeChunk: dev ? 'single' : 'multiple',
-      splitChunks: getSplitChunksConfig(rootDir),
+      splitChunks: splitChunks == false ? undefined : getSplitChunksConfig(rootDir),
       minimize: minify,
       minimizer: [
         new TerserPlugin({
@@ -221,7 +222,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
         ...defineVars,
         ...runtimeDefineVars,
       }),
-      new AssetsManifestPlugin({
+      assetsManifest && new AssetsManifestPlugin({
         fileName: 'assets-manifest.json',
         outputDir: path.join(rootDir, '.ice'),
       }),
@@ -283,7 +284,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
       immutablePaths: [nodeModulesPath],
     };
   }
-  if (dev) {
+  if (dev && !concatenateModules) {
     if (!webpackConfig.optimization) {
       webpackConfig.optimization = {};
     }

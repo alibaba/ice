@@ -28,6 +28,14 @@ describe(`build ${example}`, () => {
     expect(bundleContent.includes('__WARN__')).toBe(false);
     expect(bundleContent.includes('__ERROR__')).toBe(true);
     expect(fs.existsSync(path.join(__dirname, `../../examples/${example}/build/favicon.ico`))).toBe(true);
+
+    const dataLoaderPath = path.join(__dirname, `../../examples/${example}/build/js/data-loader.js`);
+    // should not contain react
+    const dataLoaderContent = fs.readFileSync(dataLoaderPath, 'utf-8');
+    expect(dataLoaderContent.includes('createElement')).toBe(false);
+    // size of data loader should be less than 14kib
+    const stats = fs.statSync(dataLoaderPath);
+    expect(stats.size).toBeLessThan(1024 * 14);
   }, 120000);
 
   afterAll(async () => {

@@ -79,6 +79,7 @@ function createDefaultNotFoundRoute(routeManifest: RouteManifest): ConfigRoute {
     file: './404.tsx',
     componentName: '__404',
     layout: false,
+    exports: ['default'],
   };
 }
 
@@ -90,7 +91,11 @@ function generateLoadersStr(routes: NestedRouteManifest[]) {
 
   function importLoaders(routes) {
     return routes.reduce((prev, route) => {
-      const { children, file, id } = route;
+      const { children, file, id, exports } = route;
+
+      if (exports.indexOf('getData') === -1) {
+        return prev;
+      }
 
       const fileExtname = path.extname(file);
       const componentFile = file.replace(new RegExp(`${fileExtname}$`), '');
