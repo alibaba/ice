@@ -19,6 +19,7 @@ import { initProcessEnv, updateRuntimeEnv, getCoreEnvKeys } from './utils/runtim
 import getRuntimeModules from './utils/getRuntimeModules.js';
 import { generateRoutesInfo } from './routes.js';
 import getWebTask from './tasks/web/index.js';
+import getDataLoaderTask from './tasks/web/data-loader.js';
 import * as config from './config.js';
 import type { AppConfig } from './utils/runtimeEnv.js';
 
@@ -85,6 +86,10 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   // register web
   ctx.registerTask('web', getWebTask({ rootDir, command }));
+
+  // register data-loader
+  ctx.registerTask('data-loader', getDataLoaderTask({ rootDir, command }));
+
   // register config
   ['userConfig', 'cliOption'].forEach((configType) => ctx.registerConfig(configType, config[configType]));
 
@@ -114,12 +119,18 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   // merge task config with built-in config
   taskConfigs = mergeTaskConfig(taskConfigs, { port: commandArgs.port });
 
+  const isCSR = process.env.ICE_CORE_SSG == 'false' && process.env.ICE_CORE_SSR == 'false';
+
   // create serverCompiler with task config
   const serverCompiler = createServerCompiler({
     rootDir,
     task: taskConfigs.find(({ name }) => name === 'web'),
     command,
     serverBundle: server.bundle,
+    swcOptions: {
+      removeExportExprs: isCSR ? ['default', 'getData'] : [],
+      jsxTransform: false,
+    },
   });
 
   let appConfig: AppConfig;

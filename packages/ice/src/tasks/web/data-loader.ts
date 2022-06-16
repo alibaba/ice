@@ -2,25 +2,27 @@ import * as path from 'path';
 import type { Config } from '@ice/types';
 import { CACHE_DIR } from '../../constant.js';
 
-const getWebTask = ({ rootDir, command }): Config => {
-  // basic task config of web task
+const getTask = ({ rootDir, command }): Config => {
+  // basic task config of data-loader
   return {
+    entry: {
+      'data-loader': path.join(rootDir, '.ice/data-loader'),
+    },
     mode: command === 'start' ? 'development' : 'production',
     sourceMap: command === 'start' ? 'cheap-module-source-map' : false,
-    cacheDir: path.join(rootDir, CACHE_DIR),
     outputDir: path.join(rootDir, 'build'),
+    cacheDir: path.join(rootDir, CACHE_DIR),
     alias: {
       ice: path.join(rootDir, '.ice', 'index.ts'),
       '@': path.join(rootDir, 'src'),
-      // set alias for webpack/hot while webpack has been prepacked
-      'webpack/hot': '@ice/bundles/compiled/webpack/hot',
     },
     swcOptions: {
-      // getData is built by data-loader
-      removeExportExprs: ['getData'],
+      removeExportExprs: ['default', 'getConfig'],
     },
-    assetsManifest: true,
+    splitChunks: false,
+    // enable concatenateModules will tree shaking unused `react/react-dom` in dev mod.
+    concatenateModules: true,
   };
 };
 
-export default getWebTask;
+export default getTask;

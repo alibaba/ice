@@ -18,21 +18,20 @@ const SKIP_COMPILE = [
 function getCompilerPlugins(config: Config, compiler: 'webpack'): WebpackConfig['plugins'];
 function getCompilerPlugins(config: Config, compiler: 'esbuild'): BuildOptions['plugins'];
 function getCompilerPlugins(config: Config, compiler: Compiler) {
-  const { sourceMap, transformPlugins = [], transforms = [], mode, compileIncludes } = config;
+  const { sourceMap, transformPlugins = [], transforms = [], mode, compileIncludes, swcOptions } = config;
   const compilerPlugins = [];
-  if (compiler === 'webpack') {
-    // create regexp for ignore dependencies
-    const compileExcludes = [
-      new RegExp(SKIP_COMPILE.map((dep) => `node_modules/?.+${dep}/`).join('|')),
-      /bundles\/compiled/,
-    ];
-    // compilationPlugin only works for webpack, esbuild has it's own compilation
-    compilerPlugins.push(compilationPlugin({ sourceMap, mode, compileIncludes, compileExcludes }));
-  }
+  const compileExcludes = [
+    new RegExp(SKIP_COMPILE.map((dep) => `node_modules/?.+${dep}/`).join('|')),
+    /bundles\/compiled/,
+  ];
+
+  compilerPlugins.push(compilationPlugin({ sourceMap, mode, compileIncludes, compileExcludes, swcOptions }));
+
   compilerPlugins.push(
     ...transformPlugins,
     ...transforms.map((transform, index) => ({ name: `transform_${index}`, transform })),
   );
+
   return compiler === 'webpack'
     ? compilerPlugins.map(plugin => createUnplugin(() => plugin).webpack())
     : compilerPlugins.map(plugin => createUnplugin(() => plugin).esbuild());

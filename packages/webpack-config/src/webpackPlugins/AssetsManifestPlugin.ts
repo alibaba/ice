@@ -1,4 +1,4 @@
-import { mkdirSync, writeFileSync } from 'fs';
+import { mkdirSync, writeFileSync, existsSync } from 'fs';
 import { dirname, resolve } from 'path';
 import type { Compiler, Compilation } from 'webpack';
 
@@ -64,6 +64,13 @@ export default class AssetsManifestPlugin {
     };
 
     const manifestFileName = resolve(this.outputDir, this.fileName);
+
+    // FIXME: append data-loader to the entry by hard code
+    // data-loader is built by another webpack task
+    const dataLoader = resolve(this.outputDir, './data-loader.ts');
+    if (existsSync(dataLoader)) {
+      manifest.entries['main']?.unshift('js/data-loader.js');
+    }
 
     const output = JSON.stringify(manifest, null, 2);
 
