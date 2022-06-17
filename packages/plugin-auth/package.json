@@ -49,6 +49,7 @@
     "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-auth"
   },
   "scripts": {
-    "build": "tsc --build tsconfig.json"
+    "watch": "tsc -w",
+    "build": "tsc"
   }
 }

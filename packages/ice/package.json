@@ -19,7 +19,8 @@
     "npm": ">=3.0.0"
   },
   "scripts": {
-    "build": "tsc --build tsconfig.json"
+    "watch": "tsc -w",
+    "build": "tsc"
   },
   "author": "ice-admin",
   "license": "MIT",

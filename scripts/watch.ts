@@ -1,21 +1,17 @@
-/* eslint @typescript-eslint/explicit-function-return-type:0, no-shadow: 0 */
 import path from 'path';
 import glob from 'glob';
-import fse from 'fs-extra';
+import concurrently from 'concurrently';
 import * as chokidar from 'chokidar';
-import { run } from './shell';
+import { ICE_PKG_PACKAGES } from '../constants';
+import copyFile from './copyFile';
 
 (async () => {
-  await run('npm run clean');
-
   const filePatten = '*/src/**/!(*.ts|*.tsx|*.rs)';
   console.log(`[COPY]: ${filePatten}`);
   const cwd = path.join(process.cwd(), 'packages');
   const files = glob.sync(filePatten, { cwd, nodir: true });
-  /* eslint no-restricted-syntax:0 */
   for (const file of files) {
-    /* eslint no-await-in-loop:0 */
-    await copyOneFile(file, cwd);
+    await copyFile(file, cwd);
   }
 
   const watcher = chokidar.watch(cwd, { ignoreInitial: true });
@@ -25,17 +21,17 @@ import { run } from './shell';
       if (availableEvents.includes(event) &&
         filePath.match(/.+[\\/]src[\\/].+\.(?!ts$|tsx$|rs$)/)) {
         console.log('non-ts change detected:', filePath);
-        copyOneFile(path.relative(cwd, filePath), cwd);
+        copyFile(path.relative(cwd, filePath), cwd);
       }
     });
-  await run('npx tsc --build ./tsconfig.json -w');
+
+  const waitOnPackagesCompiledCommand = `wait-on ${ICE_PKG_PACKAGES.map(p => `./packages/${p}/esm`).join(' ')}`;
+  const { result } = concurrently([
+    ...(ICE_PKG_PACKAGES.map(p => ({ command: 'pnpm watch', cwd: path.join(`./packages/${p}`) }))),
+    { command: `${waitOnPackagesCompiledCommand} && pnpm tsc --build ./tsconfig.json -w`, cwd: process.cwd() },
+  ]);
+  await result;
 })().catch((e) => {
   console.trace(e);
   process.exit(128);
 });
-
-async function copyOneFile(file, cwd) {
-  const from = path.join(cwd, file);
-  const to = path.join(cwd, file.replace(/\/src\//, '/esm/'));
-  await fse.copy(from, to);
-}
