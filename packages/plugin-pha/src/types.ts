@@ -106,14 +106,33 @@ export interface PageConfig extends FrameConfig {
 
 export type Page = 'string' | PageConfig;
 export type Frame = 'string' | FrameConfig;
-export interface PHAPage {
-  key?: string;
-  document?: string;
-  path?: string;
-  background_color?: string;
-  pull_refresh?: boolean;
-  priority?: Priority;
-}
+
+export type PHAFrame = Partial<{
+  key: string;
+  path: string;
+  background_color: string;
+  header_position: 'absolute' | 'static';
+  enable_pull_refresh: boolean;
+  priority: Priority;
+} & Omit<PHAPage, 'frames' | 'default_frame_index'>>;
+
+export type PHAPage = Partial<{
+  key: string;
+  document: string;
+  path: string;
+  background_color: string;
+  enable_pull_refresh: boolean;
+  priority: Priority;
+  script: string;
+  stylesheet: string;
+  title: string;
+  title_image: string;
+  title_bar_color: string;
+  external: string;
+  request_headers: Record<string, string>;
+  default_frame_index: number;
+  frames: PHAFrame[];
+}>;
 
 export type Manifest = Partial<{
   enablePoplayer: boolean;
@@ -142,4 +161,12 @@ export type PHAManifest = Partial<{
   };
   app_worker: AppWorker;
   tab_bar: PHATabBar;
+  pages: PHAPage[];
+  query_params_pass_keys: string[];
+  query_params_pass_ignore_keys: string[];
+  offline_resources: string[];
+  built_in_library: string[];
+  expires: string;
+  max_age: number;
+  package_resources: Record<string, string>;
 }>;
