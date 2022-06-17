@@ -5,6 +5,8 @@ interface PageHeader {
   position: 'absolute' | 'static';
   source: string;
   html: string;
+  name: string;
+  // only support Android 10.3.0+，iOS 10.2.0+
   includedSafeArea: boolean;
   heightUnit: 'rpx' | 'px';
 }
@@ -27,13 +29,20 @@ interface DataPrefetchConfig {
   api: string;
   v: string;
   data: Record<string, any>;
-  extHeaders: Record<string, string>;
+  extHeaders: Record<string, any>;
+  [key: string]: any;
 }
 
 type DataPrefetch = Partial<DataPrefetchConfig>;
+type PHADataPrefetch = Partial<Omit<DataPrefetchConfig, 'prefetchType' | 'extHeaders'> & {
+  prefetch_type: string;
+  ext_headers: Record<string, any>;
+  [key: string]: any;
+}>;
 
 interface TabItem {
-  pagePath: string;
+  name?: string;
+  pagePath?: string;
   path?: string;
   text?: string;
   icon: string;
@@ -42,6 +51,7 @@ interface TabItem {
 
 type TabBar = Partial<{
   // list convert to items
+  source: string;
   items: (string | TabItem)[];
   textColor: string;
   selectedColor: string;
@@ -98,14 +108,15 @@ type WindowConfig = Partial<{
 
 export interface PageConfig extends FrameConfig {
   pageHeader?: PageHeader;
-  frames?: Frame;
+  frames?: Frame[];
   defaultFrameIndex?: number;
+  dataPrefetch?: DataPrefetch[];
   // query_params should be queryParams?
   query_params?: string;
 }
 
-export type Page = 'string' | PageConfig;
-export type Frame = 'string' | FrameConfig;
+export type Page = string | PageConfig;
+export type Frame = string | FrameConfig;
 
 export type PHAFrame = Partial<{
   key: string;
@@ -115,6 +126,16 @@ export type PHAFrame = Partial<{
   enable_pull_refresh: boolean;
   priority: Priority;
 } & Omit<PHAPage, 'frames' | 'default_frame_index'>>;
+
+type TabHeader = Partial<{
+  key: string;
+  html: string;
+  url: string;
+  height: number;
+  background_color: string;
+  position: 'absolute' | 'static';
+  selected_index: number;
+}>;
 
 export type PHAPage = Partial<{
   key: string;
@@ -130,7 +151,9 @@ export type PHAPage = Partial<{
   title_bar_color: string;
   external: string;
   request_headers: Record<string, string>;
+  tab_header: TabHeader;
   default_frame_index: number;
+  data_prefetch: PHADataPrefetch[];
   frames: PHAFrame[];
 }>;
 
@@ -141,11 +164,11 @@ export type Manifest = Partial<{
   queryParamsPassKeys: string[];
   queryParamsPassIgnoreKeys: string[];
   offlineResources: string[];
-  dataPrefetch: DataPrefetch;
+  dataPrefetch: (DataPrefetch & Record<string, any>)[];
   expires: string;
   maxAge: number;
   appWorker: AppWorker;
-  pages: Page[];
+  routes: Page[];
 }> & WindowConfig & Record<string, any>;
 
 export type PHAManifest = Partial<{
@@ -155,10 +178,7 @@ export type PHAManifest = Partial<{
   enable_poplayer: boolean;
   disable_capture: boolean;
   icons: Icon[];
-  data_prefetch: Omit<DataPrefetch, 'prefetchType' | 'extHeaders'> & {
-    prefetch_type: string;
-    ext_headers: Record<string, string>;
-  };
+  data_prefetch: PHADataPrefetch[];
   app_worker: AppWorker;
   tab_bar: PHATabBar;
   pages: PHAPage[];

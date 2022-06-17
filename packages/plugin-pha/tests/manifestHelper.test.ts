@@ -1,31 +1,33 @@
 import { expect, it, describe } from 'vitest';
-import { parseManifest } from '../src/manifestHelpers';
+import { transformManifestKeys } from '../src/manifestHelpers';
 
 describe('transformAppConfig', () => {
-  it('should transform document fields', () => {
-    const manifestJSON = parseManifest(
+  it('should transform decamelize keys fields', () => {
+    const manifestJSON = transformManifestKeys(
       {
-        spm: 'A-123',
-        metas: ['<meta name="apple-mobile-web-app-status-bar-style" content="black" />'],
-        links: ['<link rel="dns-prefetch" href="//g.alicdn.com" />'],
-        scripts: ['<script defer src="xxx/index.js"></script>'],
         offlineResources: ['//g.alicdn.com/.*'],
+        name: 'name',
+        pages: [
+          {
+            pageHeader: {
+              includedSafeArea: true,
+            }
+          }
+        ]
       },
       { isRoot: true }
     );
-    expect(manifestJSON.spm).toBe('A-123');
-    expect(manifestJSON.metas[0]).toBe('<meta name="apple-mobile-web-app-status-bar-style" content="black" />');
-    expect(manifestJSON.links[0]).toBe('<link rel="dns-prefetch" href="//g.alicdn.com" />');
-    expect(manifestJSON.scripts[0]).toBe('<script defer src="xxx/index.js"></script>');
-    expect(manifestJSON.offline_resources[0]).toBe('//g.alicdn.com/.*');
+    expect(manifestJSON.name).toStrictEqual('name');
+    expect(manifestJSON.offline_resources).toStrictEqual(['//g.alicdn.com/.*']);
+    expect(manifestJSON?.pages![0].tab_header).toStrictEqual({ included_safe_area: true });
   });
 
-  it('should transform dataPrefetch', () => {
-    const manifestJSON = parseManifest(
+  it('should transform dataPrefetch to data_prefetch', () => {
+    const manifestJSON = transformManifestKeys(
       {
         dataPrefetch: [
           {
-            url: '/a.com',
+            api: '/a.com',
             data: {
               id: 123,
               taskId: 233,
@@ -48,40 +50,26 @@ describe('transformAppConfig', () => {
       },
       { isRoot: true }
     );
-    expect(manifestJSON.data_prefetch.length).toBe(1);
-    expect(manifestJSON.data_prefetch[0].data).toMatchObject({
+    expect(manifestJSON?.data_prefetch?.length).toBe(1);
+    expect(manifestJSON?.data_prefetch![0].data).toMatchObject({
       id: 123,
       taskId: 233,
       cId: {
         dId: true,
       },
     });
-    expect(manifestJSON.data_prefetch[0].header).toMatchObject({
+    expect(manifestJSON?.data_prefetch![0].header).toMatchObject({
       taskId: 455,
     });
-    expect(manifestJSON.data_prefetch[0].ext_headers).toMatchObject({ id: 123, test_id: 234 });
-    expect(manifestJSON.data_prefetch[0].dataType).toBe('json');
-    expect(manifestJSON.data_prefetch[0].appKey).toBe('12345');
-    expect(manifestJSON.data_prefetch[0].LoginRequest).toBe(true);
-    expect(manifestJSON.data_prefetch[0].prefetch_key).toBe('mtop');
-  });
-
-  it('should transform window to flat object', () => {
-    const manifestJSON = parseManifest(
-      {
-        window: {
-          title: '',
-          backgroundColor: '',
-          pullRefresh: true,
-        },
-      },
-      { isRoot: true }
-    );
-    expect(manifestJSON).toMatchObject({ title: '', background_color: '', pull_refresh: true });
+    expect(manifestJSON?.data_prefetch![0].ext_headers).toMatchObject({ id: 123, test_id: 234 });
+    expect(manifestJSON?.data_prefetch![0].dataType).toBe('json');
+    expect(manifestJSON?.data_prefetch![0].appKey).toBe('12345');
+    expect(manifestJSON?.data_prefetch![0].LoginRequest).toBe(true);
+    expect(manifestJSON?.data_prefetch![0].prefetch_key).toBe('mtop');
   });
 
   it('should transform tabBar to tab_bar', () => {
-    const manifestJSON = parseManifest(
+    const manifestJSON = transformManifestKeys(
       {
         tabBar: {
           textColor: '',
@@ -94,6 +82,12 @@ describe('transformAppConfig', () => {
               icon: '',
               activeIcon: '',
             },
+            {
+              // transform text to name
+              text: 'text-name',
+              icon: '',
+              activeIcon: '',
+            }
           ],
         },
       },
@@ -101,13 +95,13 @@ describe('transformAppConfig', () => {
     );
 
     expect(manifestJSON.tab_bar).toBeTruthy();
-    expect(manifestJSON.tab_bar.items[0]).toMatchObject({ path: 'tab1', name: '主会场', icon: '', active_icon: '' });
+    expect(manifestJSON?.tab_bar?.items![0]).toMatchObject({ path: 'tab1', name: '主会场', icon: '', active_icon: '' });
   });
 
-  it('should transform routes to pages', () => {
-    const manifestJSON = parseManifest(
+  it('should transform pages keys', () => {
+    const manifestJSON = transformManifestKeys(
       {
-        routes: [
+        pages: [
           {
             path: '/',
             name: 'home',
@@ -130,8 +124,8 @@ describe('transformAppConfig', () => {
       },
       { isRoot: true }
     );
-    expect(manifestJSON.pages.length).toBe(2);
-    expect(manifestJSON.pages[0].data_prefetch).toMatchObject([
+    expect(manifestJSON?.pages?.length).toBe(2);
+    expect(manifestJSON?.pages![0].data_prefetch).toMatchObject([
       {
         url: '/a.com',
         data: {
@@ -144,56 +138,42 @@ describe('transformAppConfig', () => {
   });
 
   it('should not filter whitelist fields', () => {
-    const manifestJSON = parseManifest(
+    const manifestJSON = transformManifestKeys(
+      {
+        a: 123,
+      },
+      { isRoot: false }
+    );
+
+    expect(manifestJSON).toMatchObject({ a: 123 });
+  });
+
+  it('should filter unknown fields in root', () => {
+    const manifestJSON = transformManifestKeys(
       {
         a: 123,
       },
       { isRoot: true }
     );
 
-    expect(manifestJSON).toMatchObject({ a: 123 });
+    expect(manifestJSON).toMatchObject({});
   });
 
   it('should not transform requestHeaders', () => {
-    const manifestJSON = parseManifest(
+    const manifestJSON = transformManifestKeys(
       {
         requestHeaders: {
           'U-Tag': '${storage.uTag}',
         },
       },
-      { isRoot: true }
+      { isRoot: false }
     );
     expect(manifestJSON).toMatchObject({ request_headers: { 'U-Tag': '${storage.uTag}' } });
   });
 });
-
-describe('getPageManifestByPath', () => {
-  const config = {
-    pages: [
-      {
-        path: '/',
-        name: 'home',
-        source: 'pages/Home/index',
-        data_prefetch: [
-          {
-            url: '/a.com',
-            data: {
-              id: 123,
-            },
-          },
-        ],
-      },
-      {
-        path: '/home1',
-        name: 'home1',
-        source: 'pages/Home1/index',
-      },
-    ],
-  };
-});
-
-describe('setRealUrlToManifest', () => {
-  const config = {
+/* 
+describe('parseManifest', () => {
+  const manifest = {
     app_worker: {
       url: 'pha-worker.js',
     },
@@ -252,7 +232,7 @@ describe('setRealUrlToManifest', () => {
     ]
   };
 
-  it('should change real url to manifest', () => {
+  it('should transfto manifest', () => {
     const manifest = setRealUrlToManifest(options, cloneDeep(config));
 
     expect(manifest.pages[0].path).toBe('https://abc.com/home3');
@@ -454,4 +434,4 @@ describe('setRealUrlToManifest', () => {
     expect(manifest.pages[0].stylesheet).toBeUndefined();
   })
 });
-
+ */

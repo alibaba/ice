@@ -1,5 +1,5 @@
 // appConfig keys need transform to manifest
-export const retainKeys = [
+export const decamelizeKeys = [
   'name',
   'startUrl',
   'shortName',

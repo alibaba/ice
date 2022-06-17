@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { decamelize } from 'humps';
-import { retainKeys, camelizeKeys } from './constants.js';
+import { decamelizeKeys, camelizeKeys } from './constants.js';
 import type { Page, PHAPage, PageConfig, Manifest, PHAManifest } from './types';
 
 interface TransformOptions {
@@ -10,17 +10,22 @@ interface TransformOptions {
 
 interface ParseOptions {
   publicPath: string;
+  configEntry: string;
+  serverEntry: string;
   template?: boolean;
   urlSuffix?: string;
+  ssr?: boolean;
 }
+
+type MixedPage = PHAPage & PageConfig;
 
 export function transformManifestKeys(manifest: Manifest, options?: TransformOptions): PHAManifest {
   const { parentKey, isRoot } = options;
   const data = {};
 
   for (let key in manifest) {
-    // filter not need key
-    if (isRoot && !retainKeys.includes(key)) {
+    // filter not need transform key
+    if (isRoot && !decamelizeKeys.includes(key)) {
       continue;
     }
     const value = manifest[key];
@@ -49,7 +54,6 @@ export function transformManifestKeys(manifest: Manifest, options?: TransformOpt
             if (!item.header) {
               item.header = {};
             }
-
             // no prefetchKey will crash in Android TaoBao 9.26.0
             if (!item.prefetchKey) {
               item.prefetchKey = 'mtop';
@@ -76,33 +80,42 @@ function getPageUrl(routeId: string, options: ParseOptions) {
   return `${publicPath}${routeId}${urlSuffix}`;
 }
 
-function getPageConfig(routeId: string): PageConfig {
-  // filter valid configs
-  return {};
+async function getPageConfig(routeId: string, configEntry: string): Promise<MixedPage> {
+  const routeConfig = await import(configEntry);
+  // TODO: filter valid configs
+  return routeConfig[routeId] as MixedPage;
 }
 
-function renderPageDocument(routeId: string): string {
-  return '';
+async function renderPageDocument(routeId: string, serverEntry: string): Promise<string> {
+  const serverContext = {
+    req: {
+      url: routeId,
+    },
+  };
+  const serverModule = await import(serverEntry);
+  const { value } = await serverModule.renderToHTML(serverContext, true);
+  return value;
 }
 
-function getPageManifest(page: Page, options: ParseOptions): PHAPage {
-  const { template } = options;
+async function getPageManifest(page: string | Page, options: ParseOptions): Promise<MixedPage> {
+  const { template, serverEntry, configEntry } = options;
   // source frame
   if (typeof page === 'string') {
     // get html content by render document
-    const pageConfig = getPageConfig(page);
+    const pageConfig = await getPageConfig(page, configEntry);
     const { name, query_params = '', ...rest } = pageConfig;
-    const pageManifest: PHAPage = {
+    const pageManifest = {
       key: name || page,
       ...rest,
     };
     if (template && !Array.isArray(pageConfig.frames)) {
-      pageManifest.document = renderPageDocument(page);
+      pageManifest.document = await renderPageDocument(page, serverEntry);
     } else {
       pageManifest.path = `${getPageUrl(page, options)}${query_params ? `?${query_params}` : ''}`;
     }
-  // url frame
+    return pageManifest;
   } else if (page.url) {
+    // url frame
     const { url, ...rest } = page;
     return {
       path: url,
@@ -110,7 +123,7 @@ function getPageManifest(page: Page, options: ParseOptions): PHAPage {
     };
   }
   // return page config while it may config as pha manifest standard
-  return page as PHAPage;
+  return page;
 }
 
 const PAGE_SOURCE_REGEX = /^\.?\/?pages\//;
@@ -126,76 +139,76 @@ function parseRouteId(id: string): string {
   return id.replace(PAGE_SOURCE_REGEX, '');
 }
 
-function parseManifest(manifest: Record<string, any>, options: ParseOptions) {
-  const { publicPath } = options;
+export async function parseManifest(manifest: Manifest, options: ParseOptions): Promise<PHAManifest> {
+  const { publicPath, serverEntry } = options;
 
-  const { app_worker, tab_bar, pages } = manifest;
+  const { appWorker, tabBar, routes } = manifest;
 
-  if (app_worker?.url && !app_worker.url.startsWith('http')) {
-    app_worker.url = `${publicPath}${app_worker.url}`;
+  if (appWorker?.url && !appWorker.url.startsWith('http')) {
+    appWorker.url = `${publicPath}${appWorker.url}`;
   }
 
-  if (tab_bar?.source && validateSource(tab_bar.source, 'tabBar')) {
-    if (!tab_bar.url) {
+  if (tabBar?.source && validateSource(tabBar.source, 'tabBar')) {
+    if (!tabBar.url) {
       // TODO: iOS issue
       // TODO: should remove it in PHA 2.x
       // PHA 1.x should inject `url` to be a base url to load assets
-      const tabBarRouteId = parseRouteId(tab_bar.source);
-      tab_bar.url = getPageUrl(tabBarRouteId, options);
-
+      const tabBarRouteId = parseRouteId(tabBar.source);
+      tabBar.url = getPageUrl(tabBarRouteId, options);
       // TODO: Android issue
       // TODO: should remove it in PHA 2.x
       // same as iOS issue
       try {
-        tab_bar.name = new URL(tab_bar.url).origin;
+        tabBar.name = new URL(tabBar.url).origin;
       } catch (e) {
         // HACK: build type of Weex will inject an invalid URL,
         // which will throw Error when stringify using `new URL()`
         // invalid URL: {{xxx}}/path
         // {{xxx}} will replace by server
-        [tab_bar.name] = tab_bar.url.split('/');
+        [tabBar.name] = tabBar.url.split('/');
       }
     }
     // remove tab_bar.source because pha manifest do not recognize it
-    delete tab_bar.source;
+    delete tabBar.source;
   }
-
   // items is `undefined` will crash in PHA
-  if (!tab_bar.items) {
-    tab_bar.items = [];
+  if (!tabBar.items) {
+    tabBar.items = [];
   }
-
-  if (pages && pages.length > 0) {
-    manifest.pages = pages.map((page) => {
-      // deal with frames
-      if (page.frames && page.frames.length > 0) {
-        page.frames = page.frames.map((frame) => getPageManifest(frame, options));
-      }
-
-      if (page?.tab_header?.source) {
-        const headerRouteId = parseRouteId(page.tab_header.source);
-        if (!page.tab_header.url) {
-          page.tab_header.html = renderPageDocument(headerRouteId);
+  if (routes && routes.length > 0) {
+    manifest.pages = await Promise.all(routes.map(async (page) => {
+      if (typeof page !== 'string') {
+        // deal with frames
+        if (page.frames && page.frames.length > 0) {
+          page.frames = await Promise.all(page.frames.map((frame) => getPageManifest(frame, options)));
         }
-        // TODO: iOS issue
-        // TODO: should remove it in PHA 2.x
-        // PHA 1.x should inject `url` to be a base url to load assets
-        page.tab_header.url = getPageUrl(headerRouteId, options);
-        // TODO: Android issue
-        // TODO: should remove it in PHA 2.x
-        // same as iOS issue
-        try {
-          page.tab_header.name = new URL(page.tab_header.url).origin;
-        } catch (e) {
-          // HACK: build type of Weex will inject an invalid URL,
-          // which will throw Error when stringify using `new URL()`
-          // invalid URL: {{xxx}}/path
-          // {{xxx}} will replace by server
-          [page.tab_header.name] = page.tab_header.url.split('/');
+        if (page?.pageHeader?.source) {
+          const headerRouteId = parseRouteId(page.pageHeader.source);
+          if (!page.pageHeader.url) {
+            page.pageHeader.html = await renderPageDocument(headerRouteId, serverEntry);
+          }
+          // TODO: iOS issue
+          // TODO: should remove it in PHA 2.x
+          // PHA 1.x should inject `url` to be a base url to load assets
+          page.pageHeader.url = getPageUrl(headerRouteId, options);
+          // TODO: Android issue
+          // TODO: should remove it in PHA 2.x
+          // same as iOS issue
+          try {
+            page.pageHeader.name = new URL(page.pageHeader.url).origin;
+          } catch (e) {
+            // HACK: build type of Weex will inject an invalid URL,
+            // which will throw Error when stringify using `new URL()`
+            // invalid URL: {{xxx}}/path
+            // {{xxx}} will replace by server
+            [page.pageHeader.name] = page.pageHeader.url.split('/');
+          }
+          delete page.pageHeader.source;
         }
-        delete page.tab_header.source;
       }
       return getPageManifest(page, options);
-    });
+    }));
   }
+
+  return transformManifestKeys(manifest, { isRoot: true });
 }
