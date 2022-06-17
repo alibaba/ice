@@ -22,6 +22,10 @@ const getTask = ({ rootDir, command }): Config => {
     splitChunks: false,
     // enable concatenateModules will tree shaking unused `react/react-dom` in dev mod.
     concatenateModules: true,
+    devServer: {
+      hot: false,
+      client: false,
+    },
   };
 };
 
