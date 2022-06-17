@@ -62,6 +62,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
     publicPath = '/',
     outputDir = path.join(rootDir, 'build'),
     loaders = [],
+    plugins = [],
     alias = {},
     sourceMap,
     middlewares,
@@ -109,7 +110,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
         : JSON.stringify(process.env[key]);
   });
   // get compile plugins
-  const webpackPlugins = getCompilerPlugins(config, 'webpack');
+  const compilerWebpackPlugins = getCompilerPlugins(config, 'webpack');
 
   const terserOptions: any = merge({
     compress: {
@@ -212,7 +213,8 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
     performance: false,
     devtool: getDevtoolValue(sourceMap),
     plugins: [
-      ...webpackPlugins,
+      ...plugins,
+      ...compilerWebpackPlugins,
       dev && new ReactRefreshWebpackPlugin({
         exclude: [/node_modules/, /bundles\/compiled/],
         // use webpack-dev-server overlay instead
