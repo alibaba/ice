@@ -22,7 +22,8 @@
   "bugs": "https://github.com/ice-lab/ice-next/issues",
   "homepage": "https://next.ice.work",
   "scripts": {
-    "build": "tsc --build tsconfig.json"
+    "watch": "tsc -w",
+    "build": "tsc"
   },
   "devDependencies": {
     "react": "^18.0.0",

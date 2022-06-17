@@ -7,11 +7,11 @@
   "description": "A universal framework based on React",
   "scripts": {
     "prepare": "husky install",
-    "setup": "rm -rf node_modules packages/*/node_modules && pnpm install && pnpm run build",
+    "setup": "rm -rf node_modules packages/*/node_modules && pnpm install && pnpm prebundle && pnpm build",
     "rebuild": "pnpm install && pnpm run build",
-    "watch": "esmo ./scripts/watch.ts",
-    "build": "esmo ./scripts/build.ts",
-    "prebundle": "esmo packages/bundles/scripts/packDependencies.ts",
+    "watch": "pnpm clean && esmo ./scripts/watch.ts",
+    "build": "pnpm clean && esmo ./scripts/build.ts",
+    "prebundle": "cd packages/bundles && pnpm build",
     "clean": "rimraf packages/*/esm",
     "dependency:check": "esmo ./scripts/dependencyCheck.ts",
     "version:check": "esmo ./scripts/versionCheck.ts",
@@ -41,6 +41,7 @@
     "c8": "^7.11.0",
     "chalk": "^4.1.2",
     "chokidar": "^3.5.3",
+    "concurrently": "^7.2.2",
     "dependency-check": "^4.1.0",
     "dts-bundle": "^0.7.3",
     "eslint": "^8.7.0",
@@ -62,7 +63,8 @@
     "semver": "^7.3.5",
     "stylelint": "^14.3.0",
     "typescript": "^4.7.0",
-    "vitest": "^0.9.2"
+    "vitest": "^0.9.2",
+    "wait-on": "^6.0.1"
   },
   "packageManager": "pnpm"
 }

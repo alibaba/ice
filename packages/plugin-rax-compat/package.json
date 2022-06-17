@@ -27,6 +27,7 @@
     "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-rax-compat"
   },
   "scripts": {
-    "build": "tsc --build tsconfig.json"
+    "watch": "tsc -w",
+    "build": "tsc"
   }
 }

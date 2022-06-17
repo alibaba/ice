@@ -30,7 +30,7 @@
     "*.css"
   ],
   "scripts": {
-    "start": "ice-pkg start",
+    "watch": "ice-pkg start",
     "build": "ice-pkg build",
     "prepublishOnly": "npm run build",
     "eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
