@@ -1,5 +1,5 @@
 import type webpack from 'webpack';
-import type { RuleSetRule, Configuration } from 'webpack';
+import type { RuleSetRule, Configuration, Compiler, WebpackPluginInstance } from 'webpack';
 import type { ProxyConfigArray, ProxyConfigArrayItem, ProxyConfigMap, Middleware, ServerOptions } from 'webpack-dev-server';
 import type { Options } from 'eslint-webpack-plugin';
 import type { ForkTsCheckerWebpackPluginOptions } from 'fork-ts-checker-webpack-plugin/lib/plugin-options';
@@ -54,6 +54,11 @@ export interface Config {
   publicPath?: string;
 
   loaders?: (RuleSetRule | '...')[];
+
+  plugins?: (
+    | ((this: Compiler, compiler: Compiler) => void)
+    | WebpackPluginInstance
+  )[];
 
   alias?: Record<string, any>;
 
