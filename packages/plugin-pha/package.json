@@ -15,6 +15,8 @@
   },
   "devDependencies": {
     "@ice/types": "^1.0.0",
+    "@types/lodash.clonedeep": "^4.5.7",
+    "lodash.clonedeep": "^4.5.0",
     "webpack": "^5.73.0"
   },
   "repository": {

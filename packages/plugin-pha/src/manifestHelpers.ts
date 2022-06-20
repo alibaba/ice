@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import { decamelize } from 'humps';
 import { decamelizeKeys, camelizeKeys } from './constants.js';
-import type { Page, PHAPage, PageConfig, Manifest, PHAManifest } from './types';
+import type { Page, PHAPage, PageHeader, PageConfig, Manifest, PHAManifest } from './types';
 
 interface TransformOptions {
   isRoot?: boolean;
@@ -15,6 +15,12 @@ interface ParseOptions {
   template?: boolean;
   urlSuffix?: string;
   ssr?: boolean;
+}
+
+interface TabConfig {
+  name: string;
+  url: string;
+  html?: string;
 }
 
 type MixedPage = PHAPage & PageConfig;
@@ -81,9 +87,9 @@ function getPageUrl(routeId: string, options: ParseOptions) {
 }
 
 async function getPageConfig(routeId: string, configEntry: string): Promise<MixedPage> {
-  const routeConfig = await import(configEntry);
+  const routeConfig = (await import(configEntry)).default;
   // TODO: filter valid configs
-  return routeConfig[routeId] as MixedPage;
+  return routeConfig[routeId] as MixedPage || {};
 }
 
 async function renderPageDocument(routeId: string, serverEntry: string): Promise<string> {
@@ -116,10 +122,11 @@ async function getPageManifest(page: string | Page, options: ParseOptions): Prom
     return pageManifest;
   } else if (page.url) {
     // url frame
+    // url has the highest priority to overwrite config path
     const { url, ...rest } = page;
     return {
-      path: url,
       ...rest,
+      path: url,
     };
   }
   // return page config while it may config as pha manifest standard
@@ -136,11 +143,42 @@ function validateSource(source: string, key: string): boolean {
 }
 
 function parseRouteId(id: string): string {
+  // TODO: deal with route path which ends with index
   return id.replace(PAGE_SOURCE_REGEX, '');
 }
 
+async function getTabConfig(tabManifest: Manifest['tabBar'] | PageHeader, generateDocument: boolean, options: ParseOptions): Promise<TabConfig> {
+  const tabConfig: TabConfig = {
+    name: '',
+    url: '',
+  };
+  const tabRouteId = parseRouteId(tabManifest!.source);
+  if (generateDocument && options.serverEntry) {
+    tabConfig.html = await renderPageDocument(tabRouteId, options.serverEntry);
+  }
+
+  // TODO: iOS issue
+  // TODO: should remove it in PHA 2.x
+  // PHA 1.x should inject `url` to be a base url to load assets
+  tabConfig.url = getPageUrl(tabRouteId, options);
+  // TODO: Android issue
+  // TODO: should remove it in PHA 2.x
+  // same as iOS issue
+  try {
+    tabConfig.name = new URL(tabConfig.url).origin;
+  } catch (e) {
+    // HACK: build type of Weex will inject an invalid URL,
+    // which will throw Error when stringify using `new URL()`
+    // invalid URL: {{xxx}}/path
+    // {{xxx}} will replace by server
+    [tabConfig.name] = tabConfig.url.split('/');
+  }
+
+  return tabConfig;
+}
+
 export async function parseManifest(manifest: Manifest, options: ParseOptions): Promise<PHAManifest> {
-  const { publicPath, serverEntry } = options;
+  const { publicPath } = options;
 
   const { appWorker, tabBar, routes } = manifest;
 
@@ -150,63 +188,37 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
 
   if (tabBar?.source && validateSource(tabBar.source, 'tabBar')) {
     if (!tabBar.url) {
-      // TODO: iOS issue
-      // TODO: should remove it in PHA 2.x
-      // PHA 1.x should inject `url` to be a base url to load assets
-      const tabBarRouteId = parseRouteId(tabBar.source);
-      tabBar.url = getPageUrl(tabBarRouteId, options);
-      // TODO: Android issue
-      // TODO: should remove it in PHA 2.x
-      // same as iOS issue
-      try {
-        tabBar.name = new URL(tabBar.url).origin;
-      } catch (e) {
-        // HACK: build type of Weex will inject an invalid URL,
-        // which will throw Error when stringify using `new URL()`
-        // invalid URL: {{xxx}}/path
-        // {{xxx}} will replace by server
-        [tabBar.name] = tabBar.url.split('/');
-      }
+      manifest.tabBar = {
+        ...tabBar,
+        ...(await getTabConfig(tabBar, false, options)),
+      };
     }
     // remove tab_bar.source because pha manifest do not recognize it
-    delete tabBar.source;
+    delete manifest.tabBar.source;
   }
-  // items is `undefined` will crash in PHA
-  if (!tabBar.items) {
+  // items is `undefined` will crash in PHA and it is not supported to config list
+  if (tabBar && !tabBar.items) {
     tabBar.items = [];
   }
+
   if (routes && routes.length > 0) {
     manifest.pages = await Promise.all(routes.map(async (page) => {
-      if (typeof page !== 'string') {
-        // deal with frames
-        if (page.frames && page.frames.length > 0) {
-          page.frames = await Promise.all(page.frames.map((frame) => getPageManifest(frame, options)));
-        }
-        if (page?.pageHeader?.source) {
-          const headerRouteId = parseRouteId(page.pageHeader.source);
-          if (!page.pageHeader.url) {
-            page.pageHeader.html = await renderPageDocument(headerRouteId, serverEntry);
-          }
-          // TODO: iOS issue
-          // TODO: should remove it in PHA 2.x
-          // PHA 1.x should inject `url` to be a base url to load assets
-          page.pageHeader.url = getPageUrl(headerRouteId, options);
-          // TODO: Android issue
-          // TODO: should remove it in PHA 2.x
-          // same as iOS issue
-          try {
-            page.pageHeader.name = new URL(page.pageHeader.url).origin;
-          } catch (e) {
-            // HACK: build type of Weex will inject an invalid URL,
-            // which will throw Error when stringify using `new URL()`
-            // invalid URL: {{xxx}}/path
-            // {{xxx}} will replace by server
-            [page.pageHeader.name] = page.pageHeader.url.split('/');
-          }
-          delete page.pageHeader.source;
-        }
+      const pageManifest = await getPageManifest(page, options);
+      // deal with frames
+      if (pageManifest.frames && pageManifest.frames.length > 0) {
+        pageManifest.frames = await Promise.all(pageManifest.frames.map((frame) => getPageManifest(frame, options)));
       }
-      return getPageManifest(page, options);
+      if (pageManifest?.pageHeader?.source) {
+        if (!pageManifest.pageHeader.url) {
+          pageManifest.pageHeader = {
+            ...pageManifest.pageHeader,
+            // generate document logic is different from tabBar
+            ...(await getTabConfig(pageManifest.pageHeader, true, options)),
+          };
+        }
+        delete pageManifest.pageHeader.source;
+      }
+      return pageManifest;
     }));
   }
 

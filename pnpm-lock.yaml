@@ -437,6 +437,21 @@ importers:
       '@types/react-dom': 18.0.3
       regenerator-runtime: 0.13.9
 
+  packages/plugin-pha:
+    specifiers:
+      '@ice/types': ^1.0.0
+      '@types/lodash.clonedeep': ^4.5.7
+      humps: ^2.0.1
+      lodash.clonedeep: ^4.5.0
+      webpack: ^5.73.0
+    dependencies:
+      humps: 2.0.1
+    devDependencies:
+      '@ice/types': link:../types
+      '@types/lodash.clonedeep': 4.5.7
+      lodash.clonedeep: 4.5.0
+      webpack: 5.73.0
+
   packages/plugin-rax-compat:
     specifiers:
       '@ice/types': ^1.0.0
@@ -4277,8 +4292,14 @@ packages:
     resolution: {integrity: sha512-1YXyYH83h6We1djyoUEqTlVyQtCfJAFXELSKW2ZRtjHD4hQ82CC4lvrv5D0l0FLcKBaiPbXyi3MpMsI9ZRgKsw==}
     dev: true
 
+  /@types/lodash.clonedeep/4.5.7:
+    resolution: {integrity: sha512-ccNqkPptFIXrpVqUECi60/DFxjNKsfoQxSQsgcBJCX/fuX1wgyQieojkcWH/KpE3xzLoWN/2k+ZeGqIN3paSvw==, tarball: https://registry.npm.alibaba-inc.com/@types/lodash.clonedeep/download/@types/lodash.clonedeep-4.5.7.tgz}
+    dependencies:
+      '@types/lodash': 4.14.182
+    dev: true
+
   /@types/lodash/4.14.182:
-    resolution: {integrity: sha512-/THyiqyQAP9AfARo4pF+aCGcyiQ94tX/Is2I7HofNRqoYLgN1PBoOWu2/zTA5zMxzP5EFutMtWtGAFRKUe961Q==}
+    resolution: {integrity: sha512-/THyiqyQAP9AfARo4pF+aCGcyiQ94tX/Is2I7HofNRqoYLgN1PBoOWu2/zTA5zMxzP5EFutMtWtGAFRKUe961Q==, tarball: https://registry.npm.alibaba-inc.com/@types/lodash/download/@types/lodash-4.14.182.tgz}
     dev: true
 
   /@types/mdast/3.0.10:
@@ -9764,6 +9785,10 @@ packages:
 
   /lodash.camelcase/4.3.0:
     resolution: {integrity: sha1-soqmKIorn8ZRA1x3EfZathkDMaY=}
+    dev: true
+
+  /lodash.clonedeep/4.5.0:
+    resolution: {integrity: sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=, tarball: https://registry.npm.alibaba-inc.com/lodash.clonedeep/download/lodash.clonedeep-4.5.0.tgz}
     dev: true
 
   /lodash.curry/4.1.1:

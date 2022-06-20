@@ -1,7 +1,11 @@
+import * as path from 'path';
+import { fileURLToPath } from 'url';
 import { expect, it, describe } from 'vitest';
-import { transformManifestKeys } from '../src/manifestHelpers';
+import { transformManifestKeys, parseManifest } from '../src/manifestHelpers';
 
-describe('transformAppConfig', () => {
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+describe('transform config keys', () => {
   it('should transform decamelize keys fields', () => {
     const manifestJSON = transformManifestKeys(
       {
@@ -171,267 +175,211 @@ describe('transformAppConfig', () => {
     expect(manifestJSON).toMatchObject({ request_headers: { 'U-Tag': '${storage.uTag}' } });
   });
 });
-/* 
-describe('parseManifest', () => {
-  const manifest = {
-    app_worker: {
-      url: 'pha-worker.js',
-    },
-    pages: [
-      {
-        path: '/',
-        name: 'home3',
-        source: 'pages/Home/index',
-        data_prefetch: [
-          {
-            url: '/a.com',
-            data: {
-              id: 123,
-            },
-          },
-        ],
-      },
-      {
-        tab_header: {
-          source: 'pages/Header/index',
-          query_params: 'b=true',
-        },
-        path: '/home1',
-        source: 'pages/Home1/index',
-        query_params: 'c=123',
-      },
-      {
-        frames: [
-          {
-            path: '/frame1',
-            source: 'pages/frame1/index',
-          },
-        ],
-      },
-    ],
-    tab_bar: {
-      source: 'pages/TabBar/index',
-      query_params: 'a=2',
-    },
-  };
+
+describe('parse manifest', () => {
   const options = {
-    urlPrefix: 'https://abc.com/',
-    cdnPrefix: 'https://cdn.com/',
-    isTemplate: true,
-    inlineStyle: false,
-    api: {
-      applyMethod: () => {
-        return {};
-      },
-    },
-    assetNames: [
-      'home3.js',
-      'home3.css',
-      'about.js',
-      'about.css'
-    ]
+    publicPath: 'https://cdn-path.com/',
+    configEntry: path.join(__dirname, './mockConfig.mjs'),
+    serverEntry: path.join(__dirname, './mockServer.mjs'),
   };
 
-  it('should transfto manifest', () => {
-    const manifest = setRealUrlToManifest(options, cloneDeep(config));
-
-    expect(manifest.pages[0].path).toBe('https://abc.com/home3');
-    expect(manifest.pages[0].key).toBe('home3');
-    expect(manifest.pages[0].script).toBe('https://cdn.com/home3.js');
-    expect(manifest.pages[0].stylesheet).toBe('https://cdn.com/home3.css');
-    expect(manifest.pages[1].path).toBe('https://abc.com/home1?c=123');
-    expect(manifest.pages[2].frames[0].path).toBe('https://abc.com/frame1');
-    expect(manifest.pages[1].tab_header.url).toBe('https://abc.com/header?b=true');
-    expect(manifest.tab_bar.url).toBe('https://abc.com/tabbar?a=2');
-    expect(manifest.app_worker.url).toBe('https://cdn.com/pha-worker.js');
-  });
-
-  it('should set document to manifest', () => {
-    const manifest = setRealUrlToManifest(
-      {
-        ...options,
-        api: {
-          applyMethod: () => {
-            return {
-              custom: true,
-              document: '<html>123</html>',
-            };
-          },
-        },
+  it('should add publicPath to manifest', async () => {
+    const phaManifest = {
+      appWorker: {
+        url: 'pha-worker.js',
       },
-      cloneDeep(config),
-    );
-
-    expect(manifest.pages[0].document).toBe('<html>123</html>');
-    expect(manifest.pages[1].document).toBe('<html>123</html>');
-    expect(manifest.pages[2].frames[0].document).toBe('<html>123</html>');
+      routes: [
+        'home',
+        'about',
+        'app/nest',
+      ],
+    };
+    const manifest = await parseManifest(phaManifest, options);
+    expect(manifest?.pages![0].path).toBe('https://cdn-path.com/home');
+    expect(manifest?.pages![0].key).toBe('home');
+    expect(manifest?.pages![0].title).toBe('title-home');
+    expect(manifest?.pages![0].priority).toBe('low');
+    expect(manifest?.pages![1].path).toBe('https://cdn-path.com/about?c=123');
+    expect(manifest?.pages![2]?.frames![1].path).toBe('https://m.taobao.com');
+    expect(manifest?.app_worker?.url).toBe('https://cdn-path.com/pha-worker.js');
   });
 
-  it('should not support template', () => {
-    const manifest = setRealUrlToManifest(
-      {
-        ...options,
-        isTemplate: false,
-      },
-      cloneDeep(config),
-    );
+  it('should set document to manifest', async () => {
+    const phaManifest = {
+      routes: [
+        'home',
+        'about',
+        'app/nest',
+      ],
+    };
+    const manifest = await parseManifest(phaManifest, {
+      ...options,
+      template: true,
+    });
 
-    expect(manifest.pages[0].script).toBeUndefined();
-    expect(manifest.pages[0].stylesheet).toBeUndefined();
-    expect(manifest.pages[0].document).toBeUndefined();
+    expect(manifest?.pages![0].document).toBe('<html><body>home-document</body></html>');
+    expect(manifest?.pages![1].document).toBe('<html><body>about-document</body></html>');
+    expect(manifest?.pages![2]?.frames![0].document).toBe('<html><body>home-document</body></html>');
   });
 
-  it('should config url to path when user config page.url', () => {
-    const manifest = setRealUrlToManifest(options, {
-      ...cloneDeep(config),
-      pages: [
+
+  it('should not support template', async () => {
+    const phaManifest = {
+      routes: [
+        'home',
+        'about',
+        'app/nest',
+        '404'
+      ],
+    };
+    const manifest = await parseManifest(phaManifest, {
+      ...options,
+      template: false,
+    });
+
+    expect(manifest.pages![0].script).toBeUndefined();
+    expect(manifest.pages![0].stylesheet).toBeUndefined();
+    expect(manifest.pages![0].document).toBeUndefined();
+  });
+
+
+  it('should config url to path when user config page.url', async () => {
+    const phaManifest = {
+      routes: [
         {
           path: '/',
           name: 'home',
-          source: 'pages/Home/index',
           url: 'https://m.taobao.com',
         },
         {
-          tab_header: {
+          pageHeader: {
             url: 'https://m.taobao.com',
+            source: 'pages/Header',
           },
           frames: [
             {
               path: '/frame1',
               name: 'frame1',
-              source: 'pages/frame1/index',
               url: 'https://m.taobao.com',
             },
           ],
         },
-        {
-          path: '/about',
-          name: 'about',
-          source: 'pages/About/index',
-        },
+        'about',
       ],
-      tab_bar: {
+      tabBar: {
         custom: true,
-        list: ['home', 'frame1'],
+        items: ['home', 'frame1'],
         url: 'https://m.taobao.com',
       },
-    });
+    };
+    // @ts-ignore ignore type error with mix config key
+    const manifest = await parseManifest(phaManifest, options);
+    expect(manifest.pages![0].path).toBe('https://m.taobao.com');
+    // @ts-ignore
+    expect(manifest.pages![0].url).toBeUndefined();
+    expect(manifest.pages![0].script).toBeUndefined();
+    expect(manifest.pages![0].stylesheet).toBeUndefined();
 
-    expect(manifest.pages[0].path).toBe('https://m.taobao.com');
-    expect(manifest.pages[0].url).toBeUndefined();
-    expect(manifest.pages[0].script).toBeUndefined();
-    expect(manifest.pages[0].stylesheet).toBeUndefined();
+    expect(manifest.pages![1]?.tab_header?.url).toBe('https://m.taobao.com');
+    // @ts-ignore
+    expect(manifest.pages![1]?.tab_header?.source).toBeUndefined();
 
-    expect(manifest.pages[1].tab_header.url).toBe('https://m.taobao.com');
-    expect(manifest.pages[1].tab_header.source).toBeUndefined();
+    expect(manifest.pages![1]?.frames![0].path).toBe('https://m.taobao.com');
+    // @ts-ignore
+    expect(manifest.pages![1]?.frames![0].url).toBeUndefined();
+    expect(manifest.pages![1]?.frames![0].script).toBeUndefined();
+    expect(manifest.pages![1]?.frames![0].stylesheet).toBeUndefined();
 
-    expect(manifest.pages[1].frames[0].path).toBe('https://m.taobao.com');
-    expect(manifest.pages[1].frames[0].url).toBeUndefined();
-    expect(manifest.pages[1].frames[0].script).toBeUndefined();
-    expect(manifest.pages[1].frames[0].stylesheet).toBeUndefined();
+    expect(manifest?.tab_bar?.url).toBe('https://m.taobao.com');
+    // @ts-ignore
+    expect(manifest?.tab_bar?.source).toBeUndefined();
+    expect(manifest?.tab_bar?.items).toHaveLength(2);
 
-    expect(manifest.tab_bar.url).toBe('https://m.taobao.com');
-    expect(manifest.tab_bar.source).toBeUndefined();
-    expect(manifest.tab_bar.items).toHaveLength(2);
-
-    expect(manifest.pages[2].path).toBe('https://abc.com/about');
-    expect(manifest.pages[2].script).toBe('https://cdn.com/about.js');
-    expect(manifest.pages[2].stylesheet).toBe('https://cdn.com/about.css');
+    expect(manifest.pages![2].path).toBe('https://cdn-path.com/about?c=123');
   });
 
-  it('should not cover url by pageUrl', () => {
-    const manifest = setRealUrlToManifest(options, {
-      ...cloneDeep(config),
-      pages: [
+  it('should not cover url by pageUrl', async () => {
+    const phaManifest = {
+      routes: [
         {
-          tab_header: {
-            source: 'pages/Header/index',
+          pageHeader: {
+            source: 'pages/header',
           },
           frames: [
             {
-              path: '/frame1',
               name: 'frame1',
-              source: 'pages/frame1/index',
               url: 'https://m.taobao.com',
             },
           ],
         },
       ],
-      tab_bar: {
+      tabBar: {
         custom: true,
-        source: 'components/CustomTabBar/index',
-        list: ['home', 'frame1'],
+        source: 'pages/CustomTabBar',
+        items: ['home', 'frame1'],
       },
-    });
+    };
 
-    expect(manifest.pages[0].tab_header.url).toBe('https://abc.com/header');
-    expect(manifest.tab_bar.url).toBe('https://abc.com/customtabbar');
+    const manifest = await parseManifest(phaManifest, options);
+
+    expect(manifest.pages![0]?.tab_header?.url).toBe('https://cdn-path.com/header');
+    expect(manifest.pages![0]?.tab_header?.html).toBe('<html><body>header-document</body></html>');
+    expect(manifest?.tab_bar?.url).toBe('https://cdn-path.com/CustomTabBar');
   });
 
-  it('should not inject html when tabHeader & tabBar have url field', () => {
-    const manifest = setRealUrlToManifest(
-      {
-        ...options,
-        api: {
-          applyMethod: () => {
-            return {
-              document: '<html>123</html>',
-              custom: true,
-            };
-          },
-        },
+  it('error source without pages', async () => {
+    const phaManifest = {
+      tabBar: {
+        source: 'components/CustomTabBar',
       },
-      {
-        ...cloneDeep(config),
-        pages: [
-          {
-            tab_header: {
-              source: 'pages/Header/index',
-              url: 'https://m.taobao.com',
-            },
-            frames: [
-              {
-                path: '/frame1',
-                name: 'frame1',
-                source: 'pages/frame1/index',
-                url: 'https://m.taobao.com',
-              },
-            ],
-          },
-        ],
-        tab_bar: {
-          custom: true,
-          source: 'components/CustomTabBar/index',
-          list: ['home', 'frame1'],
-        },
-      },
-    );
-
-    expect(manifest.pages[0].tab_header.url).toBe('https://m.taobao.com');
-    expect(manifest.pages[0].tab_header.html).toBeUndefined();
-
-    expect(manifest.tab_bar.url).toBe('https://abc.com/customtabbar');
-  });
-
-  it('should not add script and stylesheet to page', () => {
-    const manifest = setRealUrlToManifest(
-      {
-        ...options,
-      },
-      {
-        ...cloneDeep(config),
-        pages: [
-          {
-            page: '/mine',
-            name: 'mine',
-            source: 'page/Mine/index',
-          },
-        ]
-      }
-    );
-
-    expect(manifest.pages[0].script).toBeUndefined();
-    expect(manifest.pages[0].stylesheet).toBeUndefined();
+    };
+    try {
+      await parseManifest(phaManifest, options);
+      expect(true).toBe(false);
+    } catch (err) {
+      expect(true).toBe(true);
+    }
   })
+
+  it('url failed with new URL', async () => {
+    const phaManifest = {
+      tabBar: {
+        source: 'pages/tabBar',
+      },
+    };
+    const manifest = await parseManifest(phaManifest, {
+      ...options,
+      publicPath: '{{xxx}}/',
+    });
+    console.log('manifest', manifest);
+    expect(manifest.tab_bar?.url).toBe('{{xxx}}/tabBar');
+    expect(manifest.tab_bar?.name).toBe('{{xxx}}');
+  })
+
+  it('should not inject html when tabHeader & tabBar have url field', async () => {
+    const phaManifest = {
+      routes: [
+        {
+          pageHeader: {
+            source: 'pages/Header',
+            url: 'https://m.taobao.com',
+          }
+        }
+      ],
+      tabBar: {
+        custom: true,
+        source: 'pages/CustomTabBar',
+        items: ['home', 'frame1'],
+      }
+    };
+
+    const manifest = await parseManifest(phaManifest, {
+      ...options,
+      template: true,
+    });
+    expect(manifest.pages![0].tab_header?.url).toBe('https://m.taobao.com');
+    expect(manifest.pages![0].tab_header?.html).toBeUndefined();
+
+    expect(manifest.tab_bar?.url).toBe('https://cdn-path.com/CustomTabBar');
+  });
 });
- */
