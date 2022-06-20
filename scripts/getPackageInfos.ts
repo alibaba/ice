@@ -38,11 +38,12 @@ async function checkVersionExists(pkg: string, version: string, distTag: string)
 }
 
 export function getVersionPrefix(version): string {
-  return isNaN(version[0]) ? version[0] : '';
+  return Number.isNaN(version[0]) ? version[0] : '';
 }
 
 export async function getPackageInfos(distTag = ''): Promise<IPackageInfo[]> {
   const packageInfos: IPackageInfo[] = [];
+  // eslint-disable-next-line no-negated-condition
   if (!existsSync(TARGET_DIRECTORY)) {
     console.log(`[ERROR] Directory ${TARGET_DIRECTORY} not exist!`);
   } else {
