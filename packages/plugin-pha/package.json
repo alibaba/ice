@@ -10,6 +10,10 @@
     "esm",
     "!esm/**/*.map"
   ],
+  "scripts": {
+    "watch": "tsc -w",
+    "build": "tsc"
+  },
   "dependencies": {
     "humps": "^2.0.1"
   },

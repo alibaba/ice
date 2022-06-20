@@ -44,7 +44,7 @@ export async function generateRoutesInfo(rootDir: string, routesConfig: UserConf
     routes,
     loaders: generateRouteConfig(routes, 'getData', (str, imports) => {
       return `${str}
-  export default {
+  const loaders = {
     ${
       imports.map((loader) => {
         return `'${loader[0]}': ${loader[1]},`;
@@ -54,7 +54,7 @@ export async function generateRoutesInfo(rootDir: string, routesConfig: UserConf
     }),
     routesConfig: generateRouteConfig(routes, 'getConfig', (str, imports) => {
       return `${str}
-  const configs = {
+  export default {
     ${
       imports.map(([id, importKey]) => {
         return `'${id}': ${importKey},`;
