@@ -207,6 +207,31 @@ importers:
       browserslist: 4.20.3
       regenerator-runtime: 0.13.9
 
+  examples/with-pha:
+    specifiers:
+      '@ice/app': workspace:*
+      '@ice/plugin-pha': workspace:*
+      '@ice/runtime': workspace:*
+      '@types/react': ^18.0.0
+      '@types/react-dom': ^18.0.2
+      browserslist: ^4.19.3
+      react: ^18.0.0
+      react-dom: ^18.0.0
+      regenerator-runtime: ^0.13.9
+      webpack: ^5.72.0
+    dependencies:
+      '@ice/app': link:../../packages/ice
+      '@ice/plugin-pha': link:../../packages/plugin-pha
+      '@ice/runtime': link:../../packages/runtime
+      react: 18.0.0
+      react-dom: 18.0.0_react@18.0.0
+    devDependencies:
+      '@types/react': 18.0.8
+      '@types/react-dom': 18.0.3
+      browserslist: 4.20.3
+      regenerator-runtime: 0.13.9
+      webpack: 5.73.0
+
   packages/bundles:
     specifiers:
       '@swc/core': 1.2.168
@@ -4390,7 +4415,7 @@ packages:
     dev: true
 
   /@types/estree/0.0.51:
-    resolution: {integrity: sha512-CuPgU6f3eT/XgKKPqKd/gLZV1Xmvf1a2R5POBOGQa6uv82xpls89HU5zKeVoyR8XzHd1RGNOlQlvUe3CFkjWNQ==}
+    resolution: {integrity: sha512-CuPgU6f3eT/XgKKPqKd/gLZV1Xmvf1a2R5POBOGQa6uv82xpls89HU5zKeVoyR8XzHd1RGNOlQlvUe3CFkjWNQ==, tarball: https://registry.npm.alibaba-inc.com/@types/estree/download/@types/estree-0.0.51.tgz}
 
   /@types/express-serve-static-core/4.17.28:
     resolution: {integrity: sha512-P1BJAEAW3E2DJUlkgq4tOL3RyMunoWXqbSCygWo5ZIWTjUgN1YnaXWW4VWl/oc8vs/XoYibEGBKP0uZyF4AHig==}
@@ -4534,7 +4559,7 @@ packages:
     dev: true
 
   /@types/prop-types/15.7.5:
-    resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.com/@types/prop-types/-/prop-types-15.7.5.tgz}
+    resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==, tarball: https://registry.npm.alibaba-inc.com/@types/prop-types/download/@types/prop-types-15.7.5.tgz}
     dev: true
 
   /@types/qs/6.9.7:
@@ -4551,7 +4576,7 @@ packages:
     dev: true
 
   /@types/react-dom/18.0.3:
-    resolution: {integrity: sha512-1RRW9kst+67gveJRYPxGmVy8eVJ05O43hg77G2j5m76/RFJtMbcfAs2viQ2UNsvvDg8F7OfQZx8qQcl6ymygaQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.com/@types/react-dom/-/react-dom-18.0.3.tgz}
+    resolution: {integrity: sha512-1RRW9kst+67gveJRYPxGmVy8eVJ05O43hg77G2j5m76/RFJtMbcfAs2viQ2UNsvvDg8F7OfQZx8qQcl6ymygaQ==, tarball: https://registry.npm.alibaba-inc.com/@types/react-dom/download/@types/react-dom-18.0.3.tgz}
     dependencies:
       '@types/react': 18.0.8
     dev: true
@@ -4580,7 +4605,7 @@ packages:
     dev: true
 
   /@types/react/18.0.8:
-    resolution: {integrity: sha512-+j2hk9BzCOrrOSJASi5XiOyBbERk9jG5O73Ya4M0env5Ixi6vUNli4qy994AINcEF+1IEHISYFfIT4zwr++LKw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.com/@types/react/-/react-18.0.8.tgz}
+    resolution: {integrity: sha512-+j2hk9BzCOrrOSJASi5XiOyBbERk9jG5O73Ya4M0env5Ixi6vUNli4qy994AINcEF+1IEHISYFfIT4zwr++LKw==, tarball: https://registry.npm.alibaba-inc.com/@types/react/download/@types/react-18.0.8.tgz}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
@@ -4615,7 +4640,7 @@ packages:
     dev: true
 
   /@types/scheduler/0.16.2:
-    resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.com/@types/scheduler/-/scheduler-0.16.2.tgz}
+    resolution: {integrity: sha1-GmL4lSVyPd4kuhsBsJK/XfitTTk=, tarball: https://registry.npm.alibaba-inc.com/@types/scheduler/download/@types/scheduler-0.16.2.tgz}
     dev: true
 
   /@types/semver/7.3.9:
@@ -5104,7 +5129,7 @@ packages:
     hasBin: true
 
   /acorn/8.7.1:
-    resolution: {integrity: sha512-Xx54uLJQZ19lKygFXOWsscKUbsBZW0CPykPhVQdhIeIwrbPmJzqeASDInc8nKBnp/JT6igTs82qPXz069H8I/A==}
+    resolution: {integrity: sha512-Xx54uLJQZ19lKygFXOWsscKUbsBZW0CPykPhVQdhIeIwrbPmJzqeASDInc8nKBnp/JT6igTs82qPXz069H8I/A==, tarball: https://registry.npm.alibaba-inc.com/acorn/download/acorn-8.7.1.tgz}
     engines: {node: '>=0.4.0'}
     hasBin: true
 
@@ -5776,7 +5801,7 @@ packages:
       fill-range: 7.0.1
 
   /browserslist/4.20.3:
-    resolution: {integrity: sha512-NBhymBQl1zM0Y5dQT/O+xiLP9/rzOIQdKM/eMJBAq7yBgaB6krIYLGejrwVYnSHZdqjscB1SPuAjHwxjvN6Wdg==}
+    resolution: {integrity: sha512-NBhymBQl1zM0Y5dQT/O+xiLP9/rzOIQdKM/eMJBAq7yBgaB6krIYLGejrwVYnSHZdqjscB1SPuAjHwxjvN6Wdg==, tarball: https://registry.npm.alibaba-inc.com/browserslist/download/browserslist-4.20.3.tgz}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
@@ -6849,7 +6874,7 @@ packages:
     dev: true
 
   /csstype/3.0.11:
-    resolution: {integrity: sha512-sa6P2wJ+CAbgyy4KFssIb/JNMLxFvKF1pCYCSXS8ZMuqZnMsrxqI2E5sPyoTpxoPU/gVZMzr2zjOfg8GIZOMsw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.com/csstype/-/csstype-3.0.11.tgz}
+    resolution: {integrity: sha512-sa6P2wJ+CAbgyy4KFssIb/JNMLxFvKF1pCYCSXS8ZMuqZnMsrxqI2E5sPyoTpxoPU/gVZMzr2zjOfg8GIZOMsw==, tarball: https://registry.npm.alibaba-inc.com/csstype/download/csstype-3.0.11.tgz}
     dev: true
 
   /damerau-levenshtein/1.0.8:
@@ -7275,7 +7300,7 @@ packages:
     dev: false
 
   /electron-to-chromium/1.4.120:
-    resolution: {integrity: sha512-H3ksXiGhoYVQCmoMT0JMN07kEDBzc6TSv1OSp7UUPxNiSvQl7NeQCyZiMZhLEmNJ89C5FnD4Eoe1ytZnMQxxaw==}
+    resolution: {integrity: sha512-H3ksXiGhoYVQCmoMT0JMN07kEDBzc6TSv1OSp7UUPxNiSvQl7NeQCyZiMZhLEmNJ89C5FnD4Eoe1ytZnMQxxaw==, tarball: https://registry.npm.alibaba-inc.com/electron-to-chromium/download/electron-to-chromium-1.4.120.tgz}
 
   /emoji-regex/8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.com/emoji-regex/-/emoji-regex-8.0.0.tgz}
@@ -7601,7 +7626,7 @@ packages:
       esbuild-windows-arm64: 0.14.38
 
   /escalade/3.1.1:
-    resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
+    resolution: {integrity: sha1-2M/ccACWXFoBdLSoLqpcBVJ0LkA=, tarball: https://registry.npm.alibaba-inc.com/escalade/download/escalade-3.1.1.tgz}
     engines: {node: '>=6'}
 
   /escape-goat/2.1.1:
@@ -9883,7 +9908,7 @@ packages:
     dev: false
 
   /js-tokens/4.0.0:
-    resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.com/js-tokens/-/js-tokens-4.0.0.tgz}
+    resolution: {integrity: sha1-GSA/tZmR35jjoocFDUZHzerzJJk=, tarball: https://registry.npm.alibaba-inc.com/js-tokens/download/js-tokens-4.0.0.tgz}
 
   /js-yaml/3.14.1:
     resolution: {integrity: sha512-okMH7OXXJ7YrN9Ok3/SXrnu4iX9yOk+25nqX4imS2npuvTYDmo/QEZoqwZkYaIDk3jVvBOTOIEgEhaLOynBS9g==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.com/js-yaml/-/js-yaml-3.14.1.tgz}
@@ -10186,7 +10211,7 @@ packages:
     dev: true
 
   /loose-envify/1.4.0:
-    resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.com/loose-envify/-/loose-envify-1.4.0.tgz}
+    resolution: {integrity: sha1-ce5R+nvkyuwaY4OffmgtgTLTDK8=, tarball: https://registry.npm.alibaba-inc.com/loose-envify/download/loose-envify-1.4.0.tgz}
     hasBin: true
     dependencies:
       js-tokens: 4.0.0
@@ -10685,7 +10710,7 @@ packages:
     engines: {node: '>= 6.13.0'}
 
   /node-releases/2.0.3:
-    resolution: {integrity: sha512-maHFz6OLqYxz+VQyCAtA3PTX4UP/53pa05fyDNc9CwjvJ0yEh6+xBwKsgCxMNhS8taUKBFYxfuiaD9U/55iFaw==}
+    resolution: {integrity: sha512-maHFz6OLqYxz+VQyCAtA3PTX4UP/53pa05fyDNc9CwjvJ0yEh6+xBwKsgCxMNhS8taUKBFYxfuiaD9U/55iFaw==, tarball: https://registry.npm.alibaba-inc.com/node-releases/download/node-releases-2.0.3.tgz}
 
   /normalize-package-data/2.5.0:
     resolution: {integrity: sha512-/5CMN3T0R4XTj4DcGaexo+roZSdSFW/0AOOTROrjxzCG1wrWXEsGbRKevjlIL+ZDE4sZlJr5ED4YW0yqmkK+eA==}
@@ -11131,7 +11156,7 @@ packages:
     dev: true
 
   /picocolors/1.0.0:
-    resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.com/picocolors/-/picocolors-1.0.0.tgz}
+    resolution: {integrity: sha1-y1vcdP8/UYkiNur3nWi8RFZKuBw=, tarball: https://registry.npm.alibaba-inc.com/picocolors/download/picocolors-1.0.0.tgz}
 
   /picomatch/2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.com/picomatch/-/picomatch-2.3.1.tgz}
@@ -12825,7 +12850,7 @@ packages:
     dev: true
 
   /react-dom/18.0.0_react@18.0.0:
-    resolution: {integrity: sha512-XqX7uzmFo0pUceWFCt7Gff6IyIMzFUn7QMZrbrQfGxtaxXZIcGQzoNpRLE3fQLnS4XzLLPMZX2T9TRcSrasicw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.com/react-dom/-/react-dom-18.0.0.tgz}
+    resolution: {integrity: sha512-XqX7uzmFo0pUceWFCt7Gff6IyIMzFUn7QMZrbrQfGxtaxXZIcGQzoNpRLE3fQLnS4XzLLPMZX2T9TRcSrasicw==, tarball: https://registry.npm.alibaba-inc.com/react-dom/download/react-dom-18.0.0.tgz}
     peerDependencies:
       react: ^18.0.0
     dependencies:
@@ -12994,7 +13019,7 @@ packages:
     dev: true
 
   /react/18.0.0:
-    resolution: {integrity: sha512-x+VL6wbT4JRVPm7EGxXhZ8w8LTROaxPXOqhlGyVSrv0sB1jkyFGgXxJ8LVoPRLvPR6/CIZGFmfzqUa2NYeMr2A==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.com/react/-/react-18.0.0.tgz}
+    resolution: {integrity: sha512-x+VL6wbT4JRVPm7EGxXhZ8w8LTROaxPXOqhlGyVSrv0sB1jkyFGgXxJ8LVoPRLvPR6/CIZGFmfzqUa2NYeMr2A==, tarball: https://registry.npm.alibaba-inc.com/react/download/react-18.0.0.tgz}
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
@@ -13105,7 +13130,7 @@ packages:
     dev: true
 
   /regenerator-runtime/0.13.9:
-    resolution: {integrity: sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==}
+    resolution: {integrity: sha1-iSV0Kpj/2QgUmI11Zq0wyjsmO1I=, tarball: https://registry.npm.alibaba-inc.com/regenerator-runtime/download/regenerator-runtime-0.13.9.tgz}
 
   /regenerator-transform/0.15.0:
     resolution: {integrity: sha512-LsrGtPmbYg19bcPHwdtmXwbW+TqNvtY4riE3P83foeHRroMbH6/2ddFBfab3t7kbzc7v7p4wbkIecHImqt0QNg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.com/regenerator-transform/-/regenerator-transform-0.15.0.tgz}
@@ -13571,7 +13596,7 @@ packages:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.com/sax/-/sax-1.2.4.tgz}
 
   /scheduler/0.21.0:
-    resolution: {integrity: sha512-1r87x5fz9MXqswA2ERLo0EbOAU74DpIUO090gIasYTqlVoJeMcl+Z1Rg7WHz+qtPujhS/hGIt9kxZOYBV3faRQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.com/scheduler/-/scheduler-0.21.0.tgz}
+    resolution: {integrity: sha512-1r87x5fz9MXqswA2ERLo0EbOAU74DpIUO090gIasYTqlVoJeMcl+Z1Rg7WHz+qtPujhS/hGIt9kxZOYBV3faRQ==, tarball: https://registry.npm.alibaba-inc.com/scheduler/download/scheduler-0.21.0.tgz}
     dependencies:
       loose-envify: 1.4.0
 
