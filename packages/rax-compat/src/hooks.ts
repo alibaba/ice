@@ -1,23 +1,23 @@
 import type {
   Context,
   DependencyList,
-  EffectCallback,
-  ReducerWithoutAction,
-  Ref,
   DispatchWithoutAction,
+  EffectCallback,
   MutableRefObject,
   ReducerStateWithoutAction,
+  ReducerWithoutAction,
+  Ref,
 } from 'react';
 import {
-  useState as _useState,
+  useCallback as _useCallback,
   useContext as _useContext,
   useEffect as _useEffect,
-  useLayoutEffect as _useLayoutEffect,
   useImperativeHandle as _useImperativeHandle,
+  useLayoutEffect as _useLayoutEffect,
+  useMemo as _useMemo,
   useReducer as _useReducer,
   useRef as _useRef,
-  useCallback as _useCallback,
-  useMemo as _useMemo,
+  useState as _useState,
 } from 'react';
 
 /**
@@ -27,7 +27,15 @@ import {
  * @returns [ value, dispatch ]
  */
 export function useState<S>(initialState: S | (() => S)): ReturnType<typeof _useState> {
-  return _useState(initialState);
+  const stateHook = _useState(initialState);
+  // @NOTE: Rax will not re-render if set a same value.
+  function updateState(newState: S) {
+    // Filter shallow-equal value set.
+    if (newState !== stateHook[0]) {
+      stateHook[1](newState);
+    }
+  }
+  return [stateHook[0], updateState];
 }
 
 /**
