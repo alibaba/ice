@@ -1,4 +1,7 @@
-export function renderHTML(requestContext, documentOnly) {
+export function renderToHTML(requestContext, documentOnly) {
   const { req } = requestContext;
-  return `<html><body>${req.url}${documentOnly ? '-document' : ''}</body></html>`;
+  return {
+    value: `<html><body>${req.url}${documentOnly ? '-document' : ''}</body></html>`,
+    code: 200,
+  };
 }

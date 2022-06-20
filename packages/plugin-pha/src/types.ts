@@ -1,4 +1,4 @@
-interface PageHeader {
+export type PageHeader = Partial<{
   url: string;
   height: number;
   backgroundColor: string;
@@ -9,7 +9,7 @@ interface PageHeader {
   // only support Android 10.3.0+，iOS 10.2.0+
   includedSafeArea: boolean;
   heightUnit: 'rpx' | 'px';
-}
+}>;
 
 interface Icon {
   src: string;
@@ -18,9 +18,9 @@ interface Icon {
 }
 
 interface AppWorker {
-  url: string;
-  source: string;
-  prefetch: boolean;
+  url?: string;
+  source?: string;
+  prefetch?: boolean;
 }
 
 interface DataPrefetchConfig {
@@ -77,6 +77,7 @@ type PHAItem = Partial<Pick<TabItem, 'path' | 'icon'> & {
 }>;
 
 type PHATabBar = Partial<Pick<TabBar, 'html' | 'url' | 'position' | 'spacing'> & {
+  name: string;
   key: string;
   text_color: string;
   selected_color: string;
@@ -107,6 +108,7 @@ type WindowConfig = Partial<{
 }>;
 
 export interface PageConfig extends FrameConfig {
+  name?: string;
   pageHeader?: PageHeader;
   frames?: Frame[];
   defaultFrameIndex?: number;

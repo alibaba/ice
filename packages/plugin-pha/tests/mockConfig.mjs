@@ -4,10 +4,11 @@ const configData = {
   },
   about: {
     defaultFrameIndex: 0,
+    query_params: 'c=123',
   },
   'app/nest': {
     frames: [
-      '/home',
+      'home',
       {
         url: 'https://m.taobao.com',
       },
