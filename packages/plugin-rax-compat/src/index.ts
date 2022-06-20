@@ -28,13 +28,17 @@ const ruleSetStylesheet = {
   ],
 };
 
+let warnOnce = false;
+
 function getPlugin(options: CompatRaxOptions): Plugin {
   return ({ onGetConfig }) => {
     onGetConfig((config) => {
       Object.assign(config.alias, alias);
       if (options.inlineStyle) {
-        consola.warn('[WARN] Enabling inline style is not recommended.');
-        consola.warn('       It is recommended to use CSS modules (as default). Only allow old projects to migrate and use.');
+        if (!warnOnce) {
+          consola.warn('Enabling inline style is not recommended.\n       It is recommended to use CSS modules (as default). Only allow old projects to migrate and use.');
+          warnOnce = true;
+        }
         config.configureWebpack ??= [];
         config.configureWebpack.unshift((config) => {
           const { rules } = config.module || {};
