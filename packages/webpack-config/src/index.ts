@@ -62,6 +62,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
     publicPath = '/',
     outputDir = path.join(rootDir, 'build'),
     loaders = [],
+    plugins = [],
     alias = {},
     sourceMap,
     middlewares,
@@ -80,6 +81,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
     splitChunks,
     assetsManifest,
     concatenateModules,
+    devServer,
   } = config;
 
   const dev = mode !== 'production';
@@ -109,7 +111,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
         : JSON.stringify(process.env[key]);
   });
   // get compile plugins
-  const webpackPlugins = getCompilerPlugins(config, 'webpack');
+  const compilerWebpackPlugins = getCompilerPlugins(config, 'webpack');
 
   const terserOptions: any = merge({
     compress: {
@@ -212,7 +214,8 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
     performance: false,
     devtool: getDevtoolValue(sourceMap),
     plugins: [
-      ...webpackPlugins,
+      ...plugins,
+      ...compilerWebpackPlugins,
       dev && new ReactRefreshWebpackPlugin({
         exclude: [/node_modules/, /bundles\/compiled/],
         // use webpack-dev-server overlay instead
@@ -245,7 +248,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
         }],
       }),
     ].filter(Boolean) as unknown as WebpackPluginInstance[],
-    devServer: {
+    devServer: merge({
       allowedHosts: 'all',
       headers: {
         'Access-Control-Allow-Origin': '*',
@@ -270,7 +273,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
       },
       setupMiddlewares: middlewares,
       https,
-    },
+    }, devServer || {}),
   };
   // tnpm / cnpm 安装时，webpack 5 的持久缓存无法生成，长时间将导致 OOM
   // 原因：[managedPaths](https://webpack.js.org/configuration/other-options/#managedpaths) 在 tnpm / cnpm 安装的情况下失效，导致持久缓存在处理 node_modules

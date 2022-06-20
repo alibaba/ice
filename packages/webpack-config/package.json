@@ -34,6 +34,7 @@
     "webpack-dev-server": "^4.7.4"
   },
   "scripts": {
-    "build": "tsc --build tsconfig.json"
+    "watch": "tsc -w",
+    "build": "tsc"
   }
 }

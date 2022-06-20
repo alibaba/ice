@@ -5,9 +5,9 @@ import type {
   ReactNode,
   RefObject,
 } from 'react';
-import { createElement as _createElement, useEffect, useRef, forwardRef } from 'react';
+import { createElement as _createElement, useEffect, forwardRef } from 'react';
 import { setupAppear } from 'appear-polyfill';
-import { cached } from 'style-unit';
+import { cached, convertUnit } from 'style-unit';
 import { isFunction, isObject, isNumber } from './type';
 
 let appearSetup = false;
@@ -17,8 +17,6 @@ function setupAppearOnce() {
     appearSetup = true;
   }
 }
-
-const hasOwn = {}.hasOwnProperty;
 
 // https://github.com/alibaba/rax/blob/master/packages/driver-dom/src/index.js
 // opacity -> opa
@@ -55,19 +53,23 @@ export function createElement<P extends {
   type: FunctionComponent<P>,
   props?: Attributes & P | null,
   ...children: ReactNode[]): ReactElement {
-  const { children: propsChildren, onAppear, onDisappear } = props || {};
   const rest = Object.assign({}, props);
+  const { children: propsChildren, onAppear, onDisappear } = rest;
   delete rest.children;
   delete rest.onAppear;
   delete rest.onDisappear;
 
   // Compat for style unit.
-  rest.style = compatStyle(rest.style);
+  const compatStyleProps = compatStyle(rest.style);
+  if (compatStyleProps) {
+    rest.style = compatStyleProps;
+  }
 
-  rest.ref = props.ref || useRef(null);
-  const args = [type, rest as Attributes & P | null, propsChildren];
+  // Create backend element.
+  const args = [type, rest, propsChildren];
   let element: any = _createElement.apply(null, args.concat(children));
-  // Polyfill onAppear and onDisappear.
+
+  // Polyfill for appear and disappear event.
   if (isFunction(onAppear) || isFunction(onDisappear)) {
     setupAppearOnce();
     element = _createElement(forwardRef(AppearOrDisappear), {
@@ -82,19 +84,24 @@ export function createElement<P extends {
 
 const isDimensionalProp = cached((prop: string) => !NON_DIMENSIONAL_REG.test(prop));
 
-// Convert numeric value into rpx.
-// eg. width: 2px ->
-function compatStyle(style?: object): any {
+// Convert unit as driver-dom does.
+// https://github.com/alibaba/rax/blob/master/packages/driver-dom/src/index.js#L346
+function compatStyle<S = object>(style?: S): S | void {
   if (isObject(style)) {
-    const result = {};
+    // Do not modify the original style object, copy results to another plain object.
+    const result = Object.create(null);
     for (let key in style) {
-      if (hasOwn.call(style, key)) {
-        // @ts-ignore
-        if (isNumber(style[key]) && isDimensionalProp(key)) result[key] = `${style[key]}rpx`;
+      const value = style[key];
+      if (isNumber(value) && isDimensionalProp(key)) {
+        // Transform rpx to vw.
+        result[key] = convertUnit(`${value}rpx`);
+      } else {
+        result[key] = convertUnit(value);
       }
     }
     return result;
   }
+  return style;
 }
 
 // Appear HOC Component.
@@ -106,6 +113,7 @@ function AppearOrDisappear(props: any, ref: RefObject<EventTarget>) {
 
   function listen(eventName: string, handler: EventListenerOrEventListenerObject) {
     if (isFunction(handler) && ref != null) {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
       useEffect(() => {
         const { current } = ref;
         if (current != null) {

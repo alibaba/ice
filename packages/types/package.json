@@ -21,7 +21,8 @@
     }
   },
   "scripts": {
-    "build": "tsc --build tsconfig.json"
+    "watch": "tsc -w",
+    "build": "tsc"
   },
   "author": "ICE",
   "license": "MIT",
