@@ -182,12 +182,12 @@ async function getTabConfig(tabManifest: Manifest['tabBar'] | PageHeader, genera
   return tabConfig;
 }
 
-export function getAppWorkerUrl(manifest: Manifest, rootDir: string): string {
+export function getAppWorkerUrl(manifest: Manifest, workerDir: string): string {
   let appWorkerPath: string;
-  const defaultAppWorker = path.join(rootDir, 'src', 'app-worker.ts');
-  if (manifest?.appWorker?.url && !manifest?.appWorker?.url.startsWith('http')) {
-    const appWorkUrl = path.join(rootDir, 'src', manifest.appWorker.url);
-    if (fs.existsSync(appWorkUrl)) {
+  const defaultAppWorker = path.join(workerDir, 'app-worker.ts');
+  if (manifest?.appWorker?.url) {
+    const appWorkUrl = path.join(workerDir, manifest.appWorker.url);
+    if (!manifest?.appWorker?.url.startsWith('http') && fs.existsSync(appWorkUrl)) {
       appWorkerPath = appWorkUrl;
     } else {
       consola.error(`PHA app worker url: ${manifest.appWorker.url} is not exists`);
@@ -261,6 +261,5 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
       return pageManifest;
     }));
   }
-  console.log('manifestmanifest', transformManifestKeys(manifest, { isRoot: true }));
   return transformManifestKeys(manifest, { isRoot: true });
 }

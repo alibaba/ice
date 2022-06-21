@@ -1,9 +1,72 @@
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { expect, it, describe } from 'vitest';
-import { transformManifestKeys, parseManifest } from '../src/manifestHelpers';
+import { transformManifestKeys, parseManifest, getAppWorkerUrl, rewriteAppWorker } from '../src/manifestHelpers';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+describe('get app work url', () => {
+  it('app worker config as remote url', () => {
+    const manifest = {
+      appWorker: {
+        url: 'http://remote/app-worker.js',
+      },
+    };
+    const appWorkerPath = getAppWorkerUrl(manifest, __dirname);
+    expect(appWorkerPath).toBeUndefined();
+  });
+
+  it('app worker config which do not exist', () => {
+    const manifest = {
+      appWorker: {
+        url: 'app-worker.js',
+      },
+    };
+    const appWorkerPath = getAppWorkerUrl(manifest, __dirname);
+    expect(appWorkerPath).toBeUndefined();
+  });
+
+  it('app worker config which exists', () => {
+    const manifest = {
+      appWorker: {
+        url: 'pha-work.js',
+      },
+    };
+    const appWorkerPath = getAppWorkerUrl(manifest, __dirname);
+    expect(appWorkerPath).toBe(path.join(__dirname, 'pha-work.js'));
+  });
+
+  it('found default app worker', () => {
+    const manifest = {};
+    const appWorkerPath = getAppWorkerUrl(manifest, __dirname);
+    expect(appWorkerPath).toBe(path.join(__dirname, 'app-worker.ts'));
+  });
+});
+
+describe('rewrite app worker url', () => {
+  it('over write appWorker.url', () => {
+    expect(rewriteAppWorker({
+      appWorker: {
+        url: 'pha-worker.js',
+        source: 'test',
+      }
+    })).toMatchObject({
+      appWorker: {
+        url: 'app-worker.js',
+        source: 'test',
+      }
+    });
+  });
+
+  it('config appWorker', () => {
+    expect(rewriteAppWorker({})).toMatchObject({
+      appWorker: {
+        url: 'app-worker.js',
+      }
+    });
+  });
+});
+
 
 describe('transform config keys', () => {
   it('should transform decamelize keys fields', () => {
