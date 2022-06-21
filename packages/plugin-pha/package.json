@@ -15,13 +15,15 @@
     "build": "tsc"
   },
   "dependencies": {
+    "consola": "^2.15.3",
     "humps": "^2.0.1"
   },
   "devDependencies": {
     "@ice/types": "^1.0.0",
     "@types/lodash.clonedeep": "^4.5.7",
     "lodash.clonedeep": "^4.5.0",
-    "webpack": "^5.73.0"
+    "webpack": "^5.73.0",
+    "webpack-dev-server": "^4.9.2"
   },
   "repository": {
     "type": "http",

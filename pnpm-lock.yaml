@@ -466,16 +466,20 @@ importers:
     specifiers:
       '@ice/types': ^1.0.0
       '@types/lodash.clonedeep': ^4.5.7
+      consola: ^2.15.3
       humps: ^2.0.1
       lodash.clonedeep: ^4.5.0
       webpack: ^5.73.0
+      webpack-dev-server: ^4.9.2
     dependencies:
+      consola: 2.15.3
       humps: 2.0.1
     devDependencies:
       '@ice/types': link:../types
       '@types/lodash.clonedeep': 4.5.7
       lodash.clonedeep: 4.5.0
       webpack: 5.73.0
+      webpack-dev-server: 4.9.2_webpack@5.73.0
 
   packages/plugin-rax-compat:
     specifiers:
@@ -14670,7 +14674,6 @@ packages:
       serialize-javascript: 6.0.0
       terser: 5.14.1
       webpack: 5.73.0
-    dev: true
 
   /terser/5.12.1:
     resolution: {integrity: sha512-NXbs+7nisos5E+yXwAD+y7zrcTkMqb0dEJxIGtSKPdCBzopf7ni4odPul2aechpV7EXNvOudYOX2bb5tln1jbQ==, tarball: https://registry.npm.alibaba-inc.com/terser/download/terser-5.12.1.tgz}
@@ -15509,7 +15512,7 @@ packages:
       mime-types: 2.1.35
       range-parser: 1.2.1
       schema-utils: 4.0.0
-      webpack: 5.73.0_@swc+core@1.2.168
+      webpack: 5.73.0
 
   /webpack-dev-server/4.8.1_webpack@5.73.0:
     resolution: {integrity: sha512-dwld70gkgNJa33czmcj/PlKY/nOy/BimbrgZRaR9vDATBQAYgLzggR0nxDtPLJiLrMgZwbE6RRfJ5vnBBasTyg==, tarball: https://registry.npm.alibaba-inc.com/webpack-dev-server/download/webpack-dev-server-4.8.1.tgz}
@@ -15597,7 +15600,7 @@ packages:
       serve-index: 1.9.1
       sockjs: 0.3.24
       spdy: 4.0.2
-      webpack: 5.73.0_esbuild@0.14.46
+      webpack: 5.73.0
       webpack-dev-middleware: 5.3.3_webpack@5.73.0
       ws: 8.8.0
     transitivePeerDependencies:
@@ -15659,7 +15662,6 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
-    dev: true
 
   /webpack/5.73.0_@swc+core@1.2.168:
     resolution: {integrity: sha512-svjudQRPPa0YiOYa2lM/Gacw0r6PvxptHj4FuEKQ2kX05ZLkjbVc5MnPs6its5j7IZljnIqSVo/OsY2X0IpHGA==, tarball: https://registry.npm.alibaba-inc.com/webpack/download/webpack-5.73.0.tgz}
