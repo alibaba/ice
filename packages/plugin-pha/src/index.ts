@@ -81,7 +81,7 @@ const plugin: Plugin = ({ onGetConfig, onHook, context, generator }) => {
   onHook('after.build.compile', async ({ serverEntry }) => {
     const [manifestEntry, routesConfigEntry] = await compileEntires();
     let manifest: Manifest = (await import(manifestEntry)).default;
-    const appWorkerPath = getAppWorkerUrl(manifest, rootDir);
+    const appWorkerPath = getAppWorkerUrl(manifest, path.join(rootDir, 'src'));
     if (appWorkerPath) {
       manifest = rewriteAppWorker(manifest);
       await getAppWorkerContent(appWorkerPath, appWorkerOutfile);
@@ -107,7 +107,7 @@ const plugin: Plugin = ({ onGetConfig, onHook, context, generator }) => {
           const { serverEntry } = req as any;
           const [manifestEntry, routesConfigEntry] = await compileEntires();
           let manifest: Manifest = (await import(manifestEntry)).default;
-          const appWorkerPath = getAppWorkerUrl(manifest, rootDir);
+          const appWorkerPath = getAppWorkerUrl(manifest, path.join(rootDir, 'src'));
           if (appWorkerPath) {
             // over rewrite appWorker.url to app-worker.js
             manifest = rewriteAppWorker(manifest);
@@ -126,6 +126,7 @@ const plugin: Plugin = ({ onGetConfig, onHook, context, generator }) => {
           next();
         }
       };
+      // add pha middleware after server-compile
       middlewares.splice(insertIndex + 1, 0, {
         name: 'pha-manifest',
         middleware: phaMiddleware,
