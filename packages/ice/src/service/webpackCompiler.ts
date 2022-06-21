@@ -70,6 +70,7 @@ async function webpackCompiler(options: {
       }
       consola.error('Failed to compile.\n');
       consola.error(messages.errors.join('\n\n'));
+      consola.log(stats.toString());
       return;
     } else if (messages.warnings.length) {
       consola.warn('Compiled with warnings.\n');

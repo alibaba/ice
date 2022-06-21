@@ -115,7 +115,7 @@ function generateRouteConfig(
     return routes.reduce((prev, route) => {
       const { children, file, id, exports } = route;
 
-      if (exports.indexOf('getData') === -1) {
+      if (exports.indexOf(exportKey) === -1) {
         return prev;
       }
 
@@ -123,9 +123,9 @@ function generateRouteConfig(
       const componentFile = file.replace(new RegExp(`${fileExtname}$`), '');
       const componentPath = path.isAbsolute(componentFile) ? componentFile : `@/pages/${componentFile}`;
 
-      const loaderName = `getData_${id}`.replace('/', '_');
+      const loaderName = `${exportKey}_${id}`.replace('/', '_');
       imports.push([id, loaderName]);
-      let str = `import { getData as ${loaderName} } from '${componentPath}';\n`;
+      let str = `import { ${exportKey} as ${loaderName} } from '${componentPath}';\n`;
 
       if (children) {
         str += importConfig(children);

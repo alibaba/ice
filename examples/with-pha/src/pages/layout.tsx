@@ -18,7 +18,6 @@ export function getConfig() {
         content: '#f00',
       },
     ],
-    auth: ['admin'],
   };
 }
 

@@ -17,6 +17,7 @@ const getTask = ({ rootDir, command }): Config => {
       '@': path.join(rootDir, 'src'),
     },
     swcOptions: {
+      jsxTransform: true,
       removeExportExprs: ['default', 'getConfig'],
     },
     splitChunks: false,

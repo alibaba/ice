@@ -1,7 +1,12 @@
 /* eslint-disable camelcase */
-import { decamelize } from 'humps';
+import * as path from 'path';
+import * as fs from 'fs';
+import humps from 'humps';
+import consola from 'consola';
 import { decamelizeKeys, camelizeKeys } from './constants.js';
 import type { Page, PHAPage, PageHeader, PageConfig, Manifest, PHAManifest } from './types';
+
+const { decamelize } = humps;
 
 interface TransformOptions {
   isRoot?: boolean;
@@ -177,6 +182,41 @@ async function getTabConfig(tabManifest: Manifest['tabBar'] | PageHeader, genera
   return tabConfig;
 }
 
+export function getAppWorkerUrl(manifest: Manifest, rootDir: string): string {
+  let appWorkerPath: string;
+  const defaultAppWorker = path.join(rootDir, 'src', 'app-worker.ts');
+  if (manifest?.appWorker?.url && !manifest?.appWorker?.url.startsWith('http')) {
+    const appWorkUrl = path.join(rootDir, 'src', manifest.appWorker.url);
+    if (fs.existsSync(appWorkUrl)) {
+      appWorkerPath = appWorkUrl;
+    } else {
+      consola.error(`PHA app worker url: ${manifest.appWorker.url} is not exists`);
+    }
+  } else if (fs.existsSync(defaultAppWorker)) {
+    appWorkerPath = defaultAppWorker;
+  }
+
+  return appWorkerPath;
+}
+
+export function rewriteAppWorker(manifest: Manifest): Manifest {
+  let appWorker: Manifest['appWorker'] = {};
+  if (manifest.appWorker) {
+    appWorker = {
+      ...manifest.appWorker,
+      url: 'app-worker.js',
+    };
+  } else {
+    appWorker = {
+      url: 'app-worker.js',
+    };
+  }
+  return {
+    ...manifest,
+    appWorker,
+  };
+}
+
 export async function parseManifest(manifest: Manifest, options: ParseOptions): Promise<PHAManifest> {
   const { publicPath } = options;
 
@@ -221,6 +261,6 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
       return pageManifest;
     }));
   }
-
+  console.log('manifestmanifest', transformManifestKeys(manifest, { isRoot: true }));
   return transformManifestKeys(manifest, { isRoot: true });
 }

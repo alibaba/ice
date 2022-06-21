@@ -49,7 +49,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
         filename: id,
       };
 
-      const { jsxTransform = true, removeExportExprs } = swcOptions;
+      const { jsxTransform, removeExportExprs } = swcOptions;
 
       let needTransform = false;
 

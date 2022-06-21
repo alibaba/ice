@@ -119,18 +119,12 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   // merge task config with built-in config
   taskConfigs = mergeTaskConfig(taskConfigs, { port: commandArgs.port });
 
-  const isCSR = process.env.ICE_CORE_SSG == 'false' && process.env.ICE_CORE_SSR == 'false';
-
   // create serverCompiler with task config
   const serverCompiler = createServerCompiler({
     rootDir,
     task: taskConfigs.find(({ name }) => name === 'web'),
     command,
     serverBundle: server.bundle,
-    swcOptions: {
-      removeExportExprs: isCSR ? ['default', 'getData'] : [],
-      jsxTransform: false,
-    },
   });
 
   let appConfig: AppConfig;

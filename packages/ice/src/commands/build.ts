@@ -30,6 +30,15 @@ const build = async (context: Context<Config>, taskConfigs: TaskConfig<Config>[]
     applyHook,
     serverCompiler,
   });
+  const { ssg, ssr, server } = userConfig;
+  const { outputDir } = taskConfigs.find(({ name }) => name === 'web').config;
+  // compile server bundle
+  const entryPoint = path.join(rootDir, SERVER_ENTRY);
+  const esm = server?.format === 'esm';
+  const outJSExtension = esm ? '.mjs' : '.cjs';
+  const serverEntry = path.join(outputDir, SERVER_OUTPUT_DIR, `index${outJSExtension}`);
+  const documentOnly = !ssg && !ssr;
+
   const { stats, isSuccessful, messages } = await new Promise((resolve, reject): void => {
     let messages: { errors: string[]; warnings: string[] };
     compiler.run(async (err, stats) => {
@@ -53,13 +62,6 @@ const build = async (context: Context<Config>, taskConfigs: TaskConfig<Config>[]
       } else {
         compiler?.close?.(() => {});
         const isSuccessful = !messages.errors.length;
-        const { outputDir } = taskConfigs.find(({ name }) => name === 'web').config;
-        const { ssg, ssr, server } = userConfig;
-        // compile server bundle
-        const entryPoint = path.join(rootDir, SERVER_ENTRY);
-        const esm = server?.format === 'esm';
-        const outJSExtension = esm ? '.mjs' : '.cjs';
-        const serverEntry = path.join(outputDir, SERVER_OUTPUT_DIR, `index${outJSExtension}`);
         await serverCompiler({
           entryPoints: { index: entryPoint },
           outdir: path.join(outputDir, SERVER_OUTPUT_DIR),
@@ -67,13 +69,16 @@ const build = async (context: Context<Config>, taskConfigs: TaskConfig<Config>[]
           format: server?.format,
           platform: esm ? 'browser' : 'node',
           outExtension: { '.js': outJSExtension },
+        }, {
+          // remove components and getData when document only
+          removeExportExprs: documentOnly ? ['default', 'getData'] : [],
         });
         // generate html
         await generateHTML({
           rootDir,
           outputDir,
           entry: serverEntry,
-          documentOnly: !ssg && !ssr,
+          documentOnly,
         });
         resolve({
           stats,
@@ -89,6 +94,7 @@ const build = async (context: Context<Config>, taskConfigs: TaskConfig<Config>[]
     messages,
     taskConfigs,
     serverCompiler,
+    serverEntry,
   });
   return { compiler };
 };
