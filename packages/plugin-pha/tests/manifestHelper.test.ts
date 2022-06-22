@@ -241,12 +241,12 @@ describe('transform config keys', () => {
 
 describe('parse manifest', () => {
   const options = {
-    publicPath: 'https://cdn-path.com/',
+    urlPrefix: 'https://cdn-path.com/',
     configEntry: path.join(__dirname, './mockConfig.mjs'),
     serverEntry: path.join(__dirname, './mockServer.mjs'),
   };
 
-  it('should add publicPath to manifest', async () => {
+  it('should add urlPrefix to manifest', async () => {
     const phaManifest = {
       appWorker: {
         url: 'pha-worker.js',
@@ -412,7 +412,7 @@ describe('parse manifest', () => {
     };
     const manifest = await parseManifest(phaManifest, {
       ...options,
-      publicPath: '{{xxx}}/',
+      urlPrefix: '{{xxx}}/',
     });
     console.log('manifest', manifest);
     expect(manifest.tab_bar?.url).toBe('{{xxx}}/tabBar');

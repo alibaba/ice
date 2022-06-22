@@ -14,7 +14,7 @@ interface TransformOptions {
 }
 
 interface ParseOptions {
-  publicPath: string;
+  urlPrefix: string;
   configEntry: string;
   serverEntry: string;
   template?: boolean;
@@ -87,8 +87,8 @@ export function transformManifestKeys(manifest: Manifest, options?: TransformOpt
 }
 
 function getPageUrl(routeId: string, options: ParseOptions) {
-  const { publicPath, urlSuffix = '' } = options;
-  return `${publicPath}${routeId}${urlSuffix}`;
+  const { urlPrefix, urlSuffix = '' } = options;
+  return `${urlPrefix}${routeId}${urlSuffix}`;
 }
 
 async function getPageConfig(routeId: string, configEntry: string): Promise<MixedPage> {
@@ -218,12 +218,12 @@ export function rewriteAppWorker(manifest: Manifest): Manifest {
 }
 
 export async function parseManifest(manifest: Manifest, options: ParseOptions): Promise<PHAManifest> {
-  const { publicPath } = options;
+  const { urlPrefix } = options;
 
   const { appWorker, tabBar, routes } = manifest;
 
   if (appWorker?.url && !appWorker.url.startsWith('http')) {
-    appWorker.url = `${publicPath}${appWorker.url}`;
+    appWorker.url = `${urlPrefix}${appWorker.url}`;
   }
 
   if (tabBar?.source && validateSource(tabBar.source, 'tabBar')) {
