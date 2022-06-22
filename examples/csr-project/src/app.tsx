@@ -1,18 +1,16 @@
-<<<<<<< HEAD
-=======
-import type { GetAppData, GetAppConfig } from 'ice';
+import { defineAppConfig } from 'ice';
+import { defineAuthConfig } from '@ice/plugin-auth/esm/types';
 
->>>>>>> 3e72b27e... feat: support bundle cjs deps (#250)
 console.log('__LOG__');
 console.warn('__WARN__');
 console.error('__ERROR__');
 
-export const auth = () => {
+export const auth = defineAuthConfig(() => {
   return {
     initialAuth: {
       admin: true,
     },
   };
-};
+});
 
-export default {};
+export default defineAppConfig({});

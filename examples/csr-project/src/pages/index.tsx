@@ -24,7 +24,7 @@ export default function Home(props) {
       <Link to="/about">about</Link>
       <Suspense fallback={<div>hello</div>}>
         <Bar />
-        <Button />
+        <Button onClick={() => alert('Hello ICE.')}>Click Me</Button>
       </Suspense>
     </>
   );

@@ -1,4 +1,5 @@
-import type { Auth } from '@ice/plugin-auth/esm/runtime';
+import { defineAppConfig } from 'ice';
+import { defineAuthConfig } from '@ice/plugin-auth/esm/types';
 
 if (process.env.ICE_CORE_ERROR_BOUNDARY === 'true') {
   console.error('__REMOVED__');
@@ -9,18 +10,17 @@ console.warn('__WARN__');
 console.error('__ERROR__');
 console.log('process.env.HAHA', process.env.HAHA);
 
-export const auth: Auth = () => {
-  return new Promise((resolve) => {
-    resolve({
-      initialAuth: {
-        admin: true,
-      },
-    });
-  });
-};
+export const auth = defineAuthConfig(() => {
+  // fetch auth data
+  return {
+    initialAuth: {
+      admin: true,
+    },
+  };
+});
 
-export default {
+export default defineAppConfig({
   app: {
     rootId: 'app',
   },
-};
+});

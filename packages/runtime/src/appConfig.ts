@@ -27,3 +27,7 @@ export default function getAppConfig(appExport: AppExport): AppConfig {
     ...others,
   };
 }
+
+export function defineAppConfig(appConfig: AppConfig) {
+  return appConfig;
+}

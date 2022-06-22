@@ -20,10 +20,15 @@
       "import": "./esm/runtime/Auth.js",
       "default": "./esm/runtime/Auth.js"
     },
-    "./runtime/types": {
-      "types": "./esm/runtime/types.d.ts",
-      "import": "./esm/runtime/types.js",
-      "default": "./esm/runtime/types.js"
+    "./types": {
+      "types": "./esm/types.d.ts",
+      "import": "./esm/types.js",
+      "default": "./esm/types.js"
+    },
+    "./esm/types": {
+      "types": "./esm/types.d.ts",
+      "import": "./esm/types.js",
+      "default": "./esm/types.js"
     }
   },
   "main": "./esm/index.js",

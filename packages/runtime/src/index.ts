@@ -36,8 +36,10 @@ import type {
 } from './types.js';
 import { matchRoutes } from './routes.js';
 import dataLoader from './dataLoader.js';
+import { defineAppConfig } from './appConfig.js';
 
 export {
+  defineAppConfig,
   matchRoutes,
   Runtime,
   App,
