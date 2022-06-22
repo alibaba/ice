@@ -21,8 +21,8 @@
     "lint:fix": "npm run lint -- --fix",
     "publish:alpha": "PUBLISH_TYPE=alpha esmo ./scripts/publishPackageWithDistTag.ts",
     "publish:beta": "PUBLISH_TYPE=beta esmo ./scripts/publishPackageWithDistTag.ts",
-    "test": "vitest run --coverage",
-    "test:watch": "vitest"
+    "cov": "vitest run --coverage",
+    "test": "vitest"
   },
   "author": "ice-admin@alibaba-inc.com",
   "license": "MIT",
@@ -64,8 +64,8 @@
     "semver": "^7.3.5",
     "stylelint": "^14.3.0",
     "typescript": "^4.7.0",
-    "vitest": "^0.9.2",
+    "vitest": "^0.15.2",
     "wait-on": "^6.0.1"
   },
-  "packageManager": "pnpm"
+  "packageManager": "pnpm@7.2.1"
 }
