@@ -125,6 +125,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     task: taskConfigs.find(({ name }) => name === 'web'),
     command,
     serverBundle: server.bundle,
+    swcOptions: {
+      removeExportExprs: isCSR ? ['default', 'getData'] : [],
+    },
   });
 
   let appConfig: AppConfig;
