@@ -32,6 +32,12 @@ export function createServerCompiler(options: Options) {
   const { task, rootDir, command, serverBundle } = options;
   const { config } = task;
 
+  const transformPlugins = getCompilerPlugins({
+    ...config,
+    fastRefresh: false,
+    swcOptions,
+  }, 'esbuild');
+
   const alias = (task.config?.alias || {}) as Record<string, string | false>;
   const assetsManifest = path.join(rootDir, ASSETS_MANIFEST);
   const defineVars = task.config?.define || {};

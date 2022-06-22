@@ -11,6 +11,7 @@ type JSXSuffix = 'jsx' | 'tsx';
 
 interface Options {
   mode: 'development' | 'production' | 'none';
+  fastRefresh: boolean;
   compileIncludes?: (string | RegExp)[];
   sourceMap?: Config['sourceMap'];
   compileExcludes?: RegExp[];
@@ -25,8 +26,7 @@ const require = createRequire(import.meta.url);
 const regeneratorRuntimePath = require.resolve('regenerator-runtime');
 
 const compilationPlugin = (options: Options): UnpluginOptions => {
-  const { sourceMap, mode, compileIncludes = [], compileExcludes, swcOptions = {} } = options;
-  const dev = mode !== 'production';
+  const { sourceMap, mode, fastRefresh, compileIncludes = [], compileExcludes, swcOptions = {} } = options;
   const compileRegex = compileIncludes.map((includeRule) => {
     return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);
   });
@@ -55,7 +55,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
 
       // common transform only works for webpack, esbuild has it's own compilation
       if (jsxTransform) {
-        const commonOptions = getJsxTransformOptions({ suffix, dev });
+        const commonOptions = getJsxTransformOptions({ suffix, fastRefresh });
 
         // auto detect development mode
         if (
@@ -82,8 +82,13 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
 
       try {
         const output = await transform(source, programmaticOptions);
-        const { code, map } = output;
-
+        const { code } = output;
+        let { map } = output;
+        // FIXME: swc transform should return the sourcemap which the type is object
+        if (typeof map === 'string') {
+          // map require object type
+          map = JSON.parse(map);
+        }
         return { code, map };
       } catch (e) {
         // catch error for Unhandled promise rejection
@@ -92,15 +97,17 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
   };
 };
 
+interface GetJsxTransformOptions {
+  suffix: JSXSuffix;
+  fastRefresh: boolean;
+}
+
 function getJsxTransformOptions({
   suffix,
-  dev,
-}: {
-  suffix: JSXSuffix;
-  dev: boolean;
-}) {
+  fastRefresh,
+}: GetJsxTransformOptions) {
   const reactTransformConfig: ReactConfig = {
-    refresh: dev,
+    refresh: fastRefresh,
     runtime: 'automatic',
     importSource: '@ice/runtime', // The exact import source is '@ice/runtime/jsx-runtime'
   };

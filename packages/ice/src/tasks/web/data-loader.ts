@@ -29,6 +29,7 @@ const getTask = ({ rootDir, command }): Config => {
       hot: false,
       client: false,
     },
+    fastRefresh: command === 'start',
   };
 };
 
