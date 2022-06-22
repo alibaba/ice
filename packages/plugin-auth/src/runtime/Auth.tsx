@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createContext, useContext } from 'react';
-import type { ContextType } from './types.js';
+import type { ContextType } from '../types.js';
 
 const Context = createContext<any>(null);
 
