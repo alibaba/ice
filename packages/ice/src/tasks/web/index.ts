@@ -20,6 +20,7 @@ const getWebTask = ({ rootDir, command }): Config => {
       removeExportExprs: ['getData'],
     },
     assetsManifest: true,
+    fastRefresh: command === 'start',
   };
 };
 

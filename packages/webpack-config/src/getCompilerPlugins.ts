@@ -18,14 +18,21 @@ const SKIP_COMPILE = [
 function getCompilerPlugins(config: Config, compiler: 'webpack'): WebpackConfig['plugins'];
 function getCompilerPlugins(config: Config, compiler: 'esbuild'): BuildOptions['plugins'];
 function getCompilerPlugins(config: Config, compiler: Compiler) {
-  const { sourceMap, transformPlugins = [], transforms = [], mode, compileIncludes, swcOptions } = config;
+  const { sourceMap, transformPlugins = [], transforms = [], mode, compileIncludes, swcOptions, fastRefresh } = config;
   const compilerPlugins = [];
   const compileExcludes = [
     new RegExp(SKIP_COMPILE.map((dep) => `node_modules/?.+${dep}/`).join('|')),
     /bundles\/compiled/,
   ];
 
-  compilerPlugins.push(compilationPlugin({ sourceMap, mode, compileIncludes, compileExcludes, swcOptions }));
+  compilerPlugins.push(compilationPlugin({
+    sourceMap,
+    fastRefresh,
+    mode,
+    compileIncludes,
+    compileExcludes,
+    swcOptions,
+  }));
 
   compilerPlugins.push(
     ...transformPlugins,
