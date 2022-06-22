@@ -20,7 +20,8 @@ const aliasPlugin = (options: PluginOptions): Plugin => {
         // ice do not support alias with config onlyModule
         const resolved = resolveId(id, alias);
         if (resolved && resolved !== id) {
-          if (!path.extname(resolved)) {
+          // glob specified file module aliased with absolute path
+          if (!path.extname(resolved) && path.isAbsolute(resolved)) {
             const basename = path.basename(resolved);
             const patterns = [`${basename}.{js,ts,jsx,tsx}`, `${basename}/index.{js,ts,jsx,tsx}`];
             const absoluteId = fg.sync(patterns, {
