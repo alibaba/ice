@@ -23,7 +23,7 @@ function sendResponse(res: ServerResponse, content: string, mime: string): void 
 }
 
 const plugin: Plugin = ({ onGetConfig, onHook, context, generator }) => {
-  const { command, rootDir, userConfig } = context;
+  const { command, rootDir } = context;
   let compiler: Compiler;
   let manifestOutfile: string;
   let routesConfigOutfile: string;
@@ -87,7 +87,7 @@ const plugin: Plugin = ({ onGetConfig, onHook, context, generator }) => {
       await getAppWorkerContent(appWorkerPath, appWorkerOutfile);
     }
     const phaManifest = await parseManifest(manifest, {
-      publicPath: userConfig.publicPath || '/',
+      urlPrefix: process.env.URL_PREFIX || '/',
       configEntry: routesConfigEntry,
       serverEntry,
     });
@@ -117,7 +117,7 @@ const plugin: Plugin = ({ onGetConfig, onHook, context, generator }) => {
             }
           }
           const phaManifest = await parseManifest(manifest, {
-            publicPath: userConfig.devPublicPath || '/',
+            urlPrefix: process.env.URL_PREFIX || '/',
             configEntry: routesConfigEntry,
             serverEntry: serverEntry,
           });
