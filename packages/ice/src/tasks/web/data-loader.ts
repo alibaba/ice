@@ -15,6 +15,8 @@ const getTask = ({ rootDir, command }): Config => {
     alias: {
       ice: path.join(rootDir, '.ice', 'index.ts'),
       '@': path.join(rootDir, 'src'),
+      // set alias for webpack/hot while webpack has been prepacked
+      'webpack/hot': '@ice/bundles/compiled/webpack/hot',
     },
     swcOptions: {
       removeExportExprs: ['default', 'getConfig'],

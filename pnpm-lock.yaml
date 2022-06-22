@@ -551,7 +551,6 @@ importers:
       build-scripts: ^2.0.0-21
       consola: ^2.15.3
       esbuild: ^0.14.23
-      event: ^1.0.0
       fast-glob: ^3.2.11
       magic-string: ^0.26.1
       mini-css-extract-plugin: 2.6.0
@@ -567,7 +566,6 @@ importers:
       '@rollup/pluginutils': 4.2.1
       browserslist: 4.20.3
       consola: 2.15.3
-      event: 1.0.0
       fast-glob: 3.2.11
       magic-string: 0.26.1
       mini-css-extract-plugin: 2.6.0_webpack@5.72.0
@@ -7762,14 +7760,6 @@ packages:
       require-like: 0.1.2
     dev: true
 
-  /event/1.0.0:
-    resolution: {integrity: sha1-tRIytnrU4P44xKjLr/L/hoUnjOM=}
-    requiresBuild: true
-    dependencies:
-      method: 1.0.2
-      reducible: 1.0.6
-    dev: false
-
   /eventemitter3/4.0.7:
     resolution: {integrity: sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==}
 
@@ -9985,14 +9975,6 @@ packages:
   /merge2/1.4.1:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
     engines: {node: '>= 8'}
-
-  /method/1.0.2:
-    resolution: {integrity: sha1-KR+MKe5EOEei+JBvifuqNy1NCRY=}
-    dev: false
-
-  /method/2.0.0:
-    resolution: {integrity: sha1-5EmEje+m2u8QuBY9nZqi0HG3UA8=}
-    dev: false
 
   /methods/1.1.2:
     resolution: {integrity: sha1-VSmk1nZUE07cxSZmVoNbD4Ua/O4=}
@@ -12669,12 +12651,6 @@ packages:
       indent-string: 4.0.0
       strip-indent: 3.0.0
     dev: true
-
-  /reducible/1.0.6:
-    resolution: {integrity: sha1-Mxci0UGJ+POS3JuINBrsYDslw14=}
-    dependencies:
-      method: 2.0.0
-    dev: false
 
   /regenerate-unicode-properties/10.0.1:
     resolution: {integrity: sha512-vn5DU6yg6h8hP/2OkQo3K7uVILvY4iu0oI4t3HFa81UPkhGJwkRwM10JEc3upjdhHjs/k8GJY1sRBhk5sr69Bw==}
