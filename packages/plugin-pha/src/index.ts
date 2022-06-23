@@ -97,13 +97,13 @@ const plugin: Plugin = ({ onGetConfig, onHook, context, generator }) => {
       configEntry: routesConfigEntry,
       serverEntry,
     });
-    if (!phaManifest?.tab_bar) {
+    if (phaManifest?.tab_bar) {
+      fs.writeFileSync(phaManifestJson, JSON.stringify(phaManifest), 'utf-8');
+    } else {
       const multipleManifest = getMultipleManifest(manifest);
       Object.keys(multipleManifest).forEach((key) => {
         fs.writeFileSync(path.join(outputDir, `${key}-manifest.json`), JSON.stringify(multipleManifest[key]), 'utf-8');
       });
-    } else {
-      fs.writeFileSync(phaManifestJson, JSON.stringify(phaManifest), 'utf-8');
     }
   });
 
