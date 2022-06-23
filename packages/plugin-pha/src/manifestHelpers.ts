@@ -3,7 +3,8 @@ import * as path from 'path';
 import * as fs from 'fs';
 import humps from 'humps';
 import consola from 'consola';
-import { decamelizeKeys, camelizeKeys } from './constants.js';
+import cloneDeep from 'lodash.clonedeep';
+import { decamelizeKeys, camelizeKeys, validPageConfigKeys } from './constants.js';
 import type { Page, PHAPage, PageHeader, PageConfig, Manifest, PHAManifest } from './types';
 
 const { decamelize } = humps;
@@ -15,6 +16,7 @@ interface TransformOptions {
 
 interface ParseOptions {
   urlPrefix: string;
+  publicPath: string;
   configEntry: string;
   serverEntry: string;
   template?: boolean;
@@ -92,9 +94,15 @@ function getPageUrl(routeId: string, options: ParseOptions) {
 }
 
 async function getPageConfig(routeId: string, configEntry: string): Promise<MixedPage> {
-  const routeConfig = (await import(configEntry)).default;
-  // TODO: filter valid configs
-  return routeConfig[routeId] as MixedPage || {};
+  const routesConfig = (await import(configEntry)).default;
+  const routeConfig = routesConfig![routeId]?.() as MixedPage || {};
+  const filteredConfig = {};
+  Object.keys(routeConfig).forEach((key) => {
+    if (validPageConfigKeys.includes(key)) {
+      filteredConfig[key] = routeConfig[key];
+    }
+  });
+  return filteredConfig;
 }
 
 async function renderPageDocument(routeId: string, serverEntry: string): Promise<string> {
@@ -114,15 +122,15 @@ async function getPageManifest(page: string | Page, options: ParseOptions): Prom
   if (typeof page === 'string') {
     // get html content by render document
     const pageConfig = await getPageConfig(page, configEntry);
-    const { name, query_params = '', ...rest } = pageConfig;
+    const { queryParams = '', ...rest } = pageConfig;
     const pageManifest = {
-      key: name || page,
+      key: page,
       ...rest,
     };
     if (template && !Array.isArray(pageConfig.frames)) {
       pageManifest.document = await renderPageDocument(page, serverEntry);
     } else {
-      pageManifest.path = `${getPageUrl(page, options)}${query_params ? `?${query_params}` : ''}`;
+      pageManifest.path = `${getPageUrl(page, options)}${queryParams ? `?${queryParams}` : ''}`;
     }
     return pageManifest;
   } else if (page.url) {
@@ -187,10 +195,12 @@ export function getAppWorkerUrl(manifest: Manifest, workerDir: string): string {
   const defaultAppWorker = path.join(workerDir, 'app-worker.ts');
   if (manifest?.appWorker?.url) {
     const appWorkUrl = path.join(workerDir, manifest.appWorker.url);
-    if (!manifest?.appWorker?.url.startsWith('http') && fs.existsSync(appWorkUrl)) {
-      appWorkerPath = appWorkUrl;
-    } else {
-      consola.error(`PHA app worker url: ${manifest.appWorker.url} is not exists`);
+    if (!manifest?.appWorker?.url.startsWith('http')) {
+      if (fs.existsSync(appWorkUrl)) {
+        appWorkerPath = appWorkUrl;
+      } else {
+        consola.error(`PHA app worker url: ${manifest.appWorker.url} is not exists`);
+      }
     }
   } else if (fs.existsSync(defaultAppWorker)) {
     appWorkerPath = defaultAppWorker;
@@ -218,12 +228,12 @@ export function rewriteAppWorker(manifest: Manifest): Manifest {
 }
 
 export async function parseManifest(manifest: Manifest, options: ParseOptions): Promise<PHAManifest> {
-  const { urlPrefix } = options;
+  const { publicPath } = options;
 
   const { appWorker, tabBar, routes } = manifest;
 
   if (appWorker?.url && !appWorker.url.startsWith('http')) {
-    appWorker.url = `${urlPrefix}${appWorker.url}`;
+    appWorker.url = `${publicPath}${appWorker.url}`;
   }
 
   if (tabBar?.source && validateSource(tabBar.source, 'tabBar')) {
@@ -260,6 +270,35 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
       }
       return pageManifest;
     }));
+    // delete manifest routes after transform
+    delete manifest.routes;
   }
   return transformManifestKeys(manifest, { isRoot: true });
+}
+
+export function getMultipleManifest(manifest: PHAManifest): Record<string, PHAManifest> {
+  const multipleManifest = {};
+  manifest.pages.forEach((page) => {
+    let pageKey = page.key;
+    // generate manifest for each route
+    const copiedManifest = cloneDeep(manifest);
+    // reduce routes config by matched source
+    copiedManifest.pages = copiedManifest.pages.filter((copiedPage) => {
+      if (page.frames && !pageKey) {
+        // TODO: frames key may conflict with other page keys
+        // https://github.com/raxjs/rax-app/blob/57a536723c8cc9ce7cd4892c1a5990854e395e2c/packages/plugin-rax-pha/src/plugins/AppToManifestPlugin.js#L110
+        pageKey = page.frames[page.default_frame_index || 0].key;
+        return pageKey === copiedPage.frames[copiedPage.default_frame_index || 0].key;
+      } else {
+        return pageKey === copiedPage.key;
+      }
+    });
+    // take out the page data prefetch and assign it to the root node
+    if (copiedManifest?.pages![0]?.data_prefetch) {
+      copiedManifest.data_prefetch = copiedManifest.pages[0].data_prefetch;
+      delete copiedManifest.pages[0].data_prefetch;
+    }
+    multipleManifest[pageKey] = copiedManifest;
+  });
+  return multipleManifest;
 }

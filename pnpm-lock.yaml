@@ -470,10 +470,10 @@ importers:
     dependencies:
       consola: 2.15.3
       humps: 2.0.1
+      lodash.clonedeep: 4.5.0
     devDependencies:
       '@ice/types': link:../types
       '@types/lodash.clonedeep': 4.5.7
-      lodash.clonedeep: 4.5.0
       webpack: 5.73.0
       webpack-dev-server: 4.9.2_webpack@5.73.0
 
@@ -10258,7 +10258,7 @@ packages:
 
   /lodash.clonedeep/4.5.0:
     resolution: {integrity: sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==}
-    dev: true
+    dev: false
 
   /lodash.curry/4.1.1:
     resolution: {integrity: sha512-/u14pXGviLaweY5JI0IUzgzF2J6Ne8INyzAZjImcryjgkZ+ebruBxy2/JaOOkTqScddcYtakjhSaeemV8lR0tA==}

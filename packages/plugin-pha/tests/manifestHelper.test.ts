@@ -1,7 +1,7 @@
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { expect, it, describe } from 'vitest';
-import { transformManifestKeys, parseManifest, getAppWorkerUrl, rewriteAppWorker } from '../src/manifestHelpers';
+import { transformManifestKeys, parseManifest, getAppWorkerUrl, rewriteAppWorker, getMultipleManifest } from '../src/manifestHelpers';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -241,7 +241,8 @@ describe('transform config keys', () => {
 
 describe('parse manifest', () => {
   const options = {
-    urlPrefix: 'https://cdn-path.com/',
+    publicPath: 'https://cdn-path.com/',
+    urlPrefix: 'https://url-prefix.com/',
     configEntry: path.join(__dirname, './mockConfig.mjs'),
     serverEntry: path.join(__dirname, './mockServer.mjs'),
   };
@@ -258,11 +259,11 @@ describe('parse manifest', () => {
       ],
     };
     const manifest = await parseManifest(phaManifest, options);
-    expect(manifest?.pages![0].path).toBe('https://cdn-path.com/home');
+    expect(manifest?.pages![0].path).toBe('https://url-prefix.com/home');
     expect(manifest?.pages![0].key).toBe('home');
     expect(manifest?.pages![0].title).toBe('title-home');
     expect(manifest?.pages![0].priority).toBe('low');
-    expect(manifest?.pages![1].path).toBe('https://cdn-path.com/about?c=123');
+    expect(manifest?.pages![1].path).toBe('https://url-prefix.com/about?c=123');
     expect(manifest?.pages![2]?.frames![1].path).toBe('https://m.taobao.com');
     expect(manifest?.app_worker?.url).toBe('https://cdn-path.com/pha-worker.js');
   });
@@ -358,7 +359,7 @@ describe('parse manifest', () => {
     expect(manifest?.tab_bar?.source).toBeUndefined();
     expect(manifest?.tab_bar?.items).toHaveLength(2);
 
-    expect(manifest.pages![2].path).toBe('https://cdn-path.com/about?c=123');
+    expect(manifest.pages![2].path).toBe('https://url-prefix.com/about?c=123');
   });
 
   it('should not cover url by pageUrl', async () => {
@@ -385,9 +386,9 @@ describe('parse manifest', () => {
 
     const manifest = await parseManifest(phaManifest, options);
 
-    expect(manifest.pages![0]?.tab_header?.url).toBe('https://cdn-path.com/header');
+    expect(manifest.pages![0]?.tab_header?.url).toBe('https://url-prefix.com/header');
     expect(manifest.pages![0]?.tab_header?.html).toBe('<html><body>header-document</body></html>');
-    expect(manifest?.tab_bar?.url).toBe('https://cdn-path.com/CustomTabBar');
+    expect(manifest?.tab_bar?.url).toBe('https://url-prefix.com/CustomTabBar');
   });
 
   it('error source without pages', async () => {
@@ -443,6 +444,50 @@ describe('parse manifest', () => {
     expect(manifest.pages![0].tab_header?.url).toBe('https://m.taobao.com');
     expect(manifest.pages![0].tab_header?.html).toBeUndefined();
 
-    expect(manifest.tab_bar?.url).toBe('https://cdn-path.com/CustomTabBar');
+    expect(manifest.tab_bar?.url).toBe('https://url-prefix.com/CustomTabBar');
+  });
+});
+
+describe('get multiple manifest', () => {
+  const options = {
+    publicPath: 'https://cdn-path.com/',
+    urlPrefix: 'https://url-prefix.com/',
+    configEntry: path.join(__dirname, './mockConfig.mjs'),
+    serverEntry: path.join(__dirname, './mockServer.mjs'),
+  };
+
+  it('simple routes', async () => {
+    const phaManifest = {
+      routes: [
+        'home',
+        'about',
+      ],
+    };
+    const manifest = await parseManifest(phaManifest, options);
+    const multipleManifest = getMultipleManifest(manifest);
+    expect(multipleManifest?.home?.pages?.length).toBe(1);
+    expect(multipleManifest?.home?.data_prefetch).toMatchObject({ api: 'test/api' });
+    expect(multipleManifest?.about?.pages?.length).toBe(1);
+  });
+
+  it('routes with frame', async () => {
+    const phaManifest = {
+      routes: [
+        {
+          frames: [
+            'app/nest',
+            {
+              url: 'https://m.taobao.com',
+            }
+          ]
+        },
+        'about',
+      ],
+    };
+    const manifest = await parseManifest(phaManifest, options);
+    const multipleManifest = getMultipleManifest(manifest);
+    expect(multipleManifest?.['app/nest']?.pages?.length).toBe(1);
+    expect(multipleManifest?.['app/nest']?.pages![0].frames?.length).toBe(2);
+    expect(multipleManifest?.about?.pages?.length).toBe(1);
   });
 });
