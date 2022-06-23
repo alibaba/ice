@@ -26,6 +26,12 @@ describe('resolveId', () => {
     const id = resolveId('ice', alias);
     expect(id).toBe(false);
   });
+
+  it('alias with relative path', () => {
+    const alias = { ice: 'rax' } as Alias;
+    const id = resolveId('ice', alias);
+    expect(id).toBe('rax');
+  });
 });
 
 describe('getImportPath', () => {

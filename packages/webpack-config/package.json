@@ -18,7 +18,6 @@
     "@rollup/pluginutils": "^4.2.0",
     "browserslist": "^4.19.3",
     "consola": "^2.15.3",
-    "event": "^1.0.0",
     "fast-glob": "^3.2.11",
     "magic-string": "^0.26.1",
     "mini-css-extract-plugin": "2.6.0",

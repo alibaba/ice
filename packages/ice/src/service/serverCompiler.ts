@@ -86,6 +86,7 @@ export function createServerCompiler(options: Options) {
 
     const transformPlugins = getCompilerPlugins({
       ...config,
+      fastRefresh: false,
       swcOptions,
     }, 'esbuild');
 

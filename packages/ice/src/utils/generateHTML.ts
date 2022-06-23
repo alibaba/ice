@@ -11,6 +11,7 @@ interface Options {
   entry: string;
   outputDir: string;
   documentOnly: boolean;
+  basename?: string;
 }
 
 export default async function generateHTML(options: Options) {
@@ -19,6 +20,7 @@ export default async function generateHTML(options: Options) {
     entry,
     outputDir,
     documentOnly,
+    basename,
   } = options;
 
   let serverEntry;
@@ -38,7 +40,7 @@ export default async function generateHTML(options: Options) {
     const routePath = paths[i];
 
     const req = {
-      url: routePath,
+      url: path.join(basename || '', routePath),
     };
 
     const serverContext: ServerContext = {

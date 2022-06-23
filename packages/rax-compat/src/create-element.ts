@@ -54,8 +54,7 @@ export function createElement<P extends {
   props?: Attributes & P | null,
   ...children: ReactNode[]): ReactElement {
   const rest = Object.assign({}, props);
-  const { children: propsChildren, onAppear, onDisappear } = rest;
-  delete rest.children;
+  const { onAppear, onDisappear } = rest;
   delete rest.onAppear;
   delete rest.onDisappear;
 
@@ -66,8 +65,8 @@ export function createElement<P extends {
   }
 
   // Create backend element.
-  const args = [type, rest, propsChildren];
-  let element: any = _createElement.apply(null, args.concat(children));
+  const args = [type, rest];
+  let element: any = _createElement.apply(null, args.concat(children as any));
 
   // Polyfill for appear and disappear event.
   if (isFunction(onAppear) || isFunction(onDisappear)) {
@@ -89,7 +88,7 @@ const isDimensionalProp = cached((prop: string) => !NON_DIMENSIONAL_REG.test(pro
 function compatStyle<S = object>(style?: S): S | void {
   if (isObject(style)) {
     // Do not modify the original style object, copy results to another plain object.
-    const result = Object.create(null);
+    const result = Object.create(Object.prototype);
     for (let key in style) {
       const value = style[key];
       if (isNumber(value) && isDimensionalProp(key)) {
