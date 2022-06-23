@@ -113,8 +113,7 @@ export interface PageConfig extends FrameConfig {
   frames?: Frame[];
   defaultFrameIndex?: number;
   dataPrefetch?: DataPrefetch[];
-  // query_params should be queryParams?
-  query_params?: string;
+  queryParams?: string;
 }
 
 export type Page = string | PageConfig;

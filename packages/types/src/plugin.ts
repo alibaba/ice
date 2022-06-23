@@ -11,8 +11,8 @@ type AddExport = (exportData: ExportData) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
 export type ServerCompiler = (
   buildOptions: Pick<
-    BuildOptions,
-    'inject' | 'format' | 'entryPoints' | 'outfile' | 'bundle' | 'outdir' | 'splitting' | 'platform' | 'outExtension' | 'plugins'>,
+  BuildOptions,
+  'inject' | 'format' | 'entryPoints' | 'outfile' | 'bundle' | 'outdir' | 'splitting' | 'platform' | 'outExtension' | 'plugins'>,
   swcOptions?: Config['swcOptions']
 ) => Promise<BuildResult>;
 export type WatchEvent = [

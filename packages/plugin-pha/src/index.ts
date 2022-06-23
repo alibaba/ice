@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import type { ServerResponse } from 'http';
 import type { Plugin } from '@ice/types';
 import type { ExpressRequestHandler } from 'webpack-dev-server';
-import { parseManifest, rewriteAppWorker, getAppWorkerUrl } from './manifestHelpers.js';
+import { parseManifest, rewriteAppWorker, getAppWorkerUrl, getMultipleManifest } from './manifestHelpers.js';
 import type { Manifest } from './types.js';
 
 type Compiler = (options: {
@@ -24,23 +24,28 @@ function sendResponse(res: ServerResponse, content: string, mime: string): void 
 
 const plugin: Plugin = ({ onGetConfig, onHook, context, generator }) => {
   const { command, rootDir } = context;
+  // get variable blows from task config
   let compiler: Compiler;
   let manifestOutfile: string;
   let routesConfigOutfile: string;
   let appWorkerOutfile: string;
   let phaManifestJson: string;
+  let publicPath: string;
+  let outputDir: string;
 
   const phaManifestPath = path.join(rootDir, '.ice/phaManifest.ts');
   const routesConfigPath = path.join(rootDir, '.ice/routes-config.ts');
   generator.addRenderFile(path.join(__dirname, '../template/manifest.ts'), path.join(rootDir, '.ice/phaManifest.ts'));
   // get server compiler by hooks
   onHook(`before.${command as 'start' | 'build'}.run`, async ({ serverCompiler, taskConfigs }) => {
-    const { outputDir } = taskConfigs.find(({ name }) => name === 'web').config;
+    const taskConfig = taskConfigs.find(({ name }) => name === 'web').config;
+    outputDir = taskConfig.outputDir;
+    publicPath = taskConfig.publicPath || '/';
     // declare outfile after getting final task config
     manifestOutfile = path.join(outputDir, 'pha-manifest.mjs');
     routesConfigOutfile = path.join(outputDir, 'routes-config.mjs');
     appWorkerOutfile = path.join(outputDir, 'app-work.js');
-    phaManifestJson = path.join(outputDir, 'pha-manifest.json');
+    phaManifestJson = path.join(outputDir, 'manifest.json');
 
     compiler = async (options) => {
       const { entry, outfile, removeExportExprs, timestamp = true } = options;
@@ -87,11 +92,19 @@ const plugin: Plugin = ({ onGetConfig, onHook, context, generator }) => {
       await getAppWorkerContent(appWorkerPath, appWorkerOutfile);
     }
     const phaManifest = await parseManifest(manifest, {
+      publicPath,
       urlPrefix: process.env.URL_PREFIX || '/',
       configEntry: routesConfigEntry,
       serverEntry,
     });
-    fs.writeFileSync(phaManifestJson, JSON.stringify(phaManifest), 'utf-8');
+    if (!phaManifest?.tab_bar) {
+      const multipleManifest = getMultipleManifest(manifest);
+      Object.keys(multipleManifest).forEach((key) => {
+        fs.writeFileSync(path.join(outputDir, `${key}-manifest.json`), JSON.stringify(multipleManifest[key]), 'utf-8');
+      });
+    } else {
+      fs.writeFileSync(phaManifestJson, JSON.stringify(phaManifest), 'utf-8');
+    }
   });
 
   onGetConfig('web', (config) => {
@@ -100,7 +113,10 @@ const plugin: Plugin = ({ onGetConfig, onHook, context, generator }) => {
       const currentMiddlewares = customMiddlewares ? customMiddlewares(middlewares, devServer) : middlewares;
       const insertIndex = currentMiddlewares.findIndex(({ name }) => name === 'server-compile');
       const phaMiddleware: ExpressRequestHandler = async (req, res, next) => {
-        const requestManifest = req.url === '/pha-manifest.json';
+        // @ts-ignore
+        const requestPath = req._parsedUrl.pathname;
+        const requestManifest = requestPath.endsWith('manifest.json');
+
         const requestAppWorker = req.url === '/app-worker.js';
         if (requestManifest || requestAppWorker) {
           // get serverEntry from middleware of server-compile
@@ -117,14 +133,24 @@ const plugin: Plugin = ({ onGetConfig, onHook, context, generator }) => {
             }
           }
           const phaManifest = await parseManifest(manifest, {
+            publicPath,
             urlPrefix: process.env.URL_PREFIX || '/',
             configEntry: routesConfigEntry,
             serverEntry: serverEntry,
           });
-          sendResponse(res, JSON.stringify(phaManifest), 'application/json');
-        } else {
-          next();
+          if (!phaManifest?.tab_bar) {
+            const multipleManifest = getMultipleManifest(manifest);
+            const manifestKey = requestPath.replace('-manifest.json', '').replace(/^\//, '');
+            if (multipleManifest[manifestKey]) {
+              sendResponse(res, JSON.stringify(multipleManifest[manifestKey]), 'application/json');
+              return;
+            }
+          } else if (requestPath === '/manifest.json') {
+            sendResponse(res, JSON.stringify(phaManifest), 'application/json');
+            return;
+          }
         }
+        next();
       };
       // add pha middleware after server-compile
       middlewares.splice(insertIndex + 1, 0, {

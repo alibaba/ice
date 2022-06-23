@@ -55,3 +55,22 @@ export const camelizeKeys = [
   'AntiFlood',
   'needLogin',
 ];
+
+export const validPageConfigKeys = [
+  'pageHeader',
+  'defaultFrameIndex',
+  'title',
+  'priority',
+  'titleImage',
+  'titleBarColor',
+  'backgroundColor',
+  'enablePullRefresh',
+  'external',
+  'requestHeaders',
+  'frames',
+  'dataPrefetch',
+  'spm',
+  'queryParams',
+  'queryParamsPassKeys',
+  'queryParamsPassIgnoreKeys',
+];
