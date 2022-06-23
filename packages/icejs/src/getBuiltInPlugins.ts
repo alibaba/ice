@@ -30,11 +30,11 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
     // for ice/react plugins
     'build-plugin-ice-helpers',
     'build-plugin-ice-logger',
+    'build-plugin-ice-router',
     'build-plugin-ice-config',
     'build-plugin-ice-mpa',
     'build-plugin-ice-request',
     'build-plugin-helmet',
-    'build-plugin-ice-router',
   ];
 
   if (userConfig.ssr) {
