@@ -22,7 +22,12 @@ function sendResponse(res: ServerResponse, content: string, mime: string): void 
   res.end(content);
 }
 
-const plugin: Plugin = ({ onGetConfig, onHook, context, generator }) => {
+interface PluginOptions {
+  template: boolean;
+}
+
+const plugin: Plugin<PluginOptions> = ({ onGetConfig, onHook, context, generator }, options) => {
+  const { template } = options;
   const { command, rootDir } = context;
   // get variable blows from task config
   let compiler: Compiler;
@@ -32,15 +37,18 @@ const plugin: Plugin = ({ onGetConfig, onHook, context, generator }) => {
   let phaManifestJson: string;
   let publicPath: string;
   let outputDir: string;
+  let urlPrefix: string;
 
   const phaManifestPath = path.join(rootDir, '.ice/phaManifest.ts');
   const routesConfigPath = path.join(rootDir, '.ice/routes-config.ts');
   generator.addRenderFile(path.join(__dirname, '../template/manifest.ts'), path.join(rootDir, '.ice/phaManifest.ts'));
   // get server compiler by hooks
-  onHook(`before.${command as 'start' | 'build'}.run`, async ({ serverCompiler, taskConfigs }) => {
+  onHook(`before.${command as 'start' | 'build'}.run`, async ({ serverCompiler, taskConfigs, urls }) => {
     const taskConfig = taskConfigs.find(({ name }) => name === 'web').config;
     outputDir = taskConfig.outputDir;
     publicPath = taskConfig.publicPath || '/';
+    // process.env.URL_PREFIX is defined by cloud environment such as DEF plugin
+    urlPrefix = command === 'start' ? urls.lanUrlForTerminal : process.env.URL_PREFIX;
     // declare outfile after getting final task config
     manifestOutfile = path.join(outputDir, 'pha-manifest.mjs');
     routesConfigOutfile = path.join(outputDir, 'routes-config.mjs');
@@ -93,9 +101,10 @@ const plugin: Plugin = ({ onGetConfig, onHook, context, generator }) => {
     }
     const phaManifest = await parseManifest(manifest, {
       publicPath,
-      urlPrefix: process.env.URL_PREFIX || '/',
+      urlPrefix,
       configEntry: routesConfigEntry,
       serverEntry,
+      template,
     });
     if (phaManifest?.tab_bar) {
       fs.writeFileSync(phaManifestJson, JSON.stringify(phaManifest), 'utf-8');
@@ -134,9 +143,10 @@ const plugin: Plugin = ({ onGetConfig, onHook, context, generator }) => {
           }
           const phaManifest = await parseManifest(manifest, {
             publicPath,
-            urlPrefix: process.env.URL_PREFIX || '/',
+            urlPrefix,
             configEntry: routesConfigEntry,
             serverEntry: serverEntry,
+            template,
           });
           if (!phaManifest?.tab_bar) {
             const multipleManifest = getMultipleManifest(manifest);
@@ -163,7 +173,7 @@ const plugin: Plugin = ({ onGetConfig, onHook, context, generator }) => {
   });
 };
 
-export default () => ({
+export default (options: PluginOptions) => ({
   name: '@ice/plugin-pha',
-  plugin,
+  plugin: (api) => plugin(api, options),
 });

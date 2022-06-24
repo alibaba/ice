@@ -22,6 +22,7 @@ async function webpackCompiler(options: {
 }) {
   const { taskConfigs, urls, applyHook, command, commandArgs, serverCompiler, webpackConfigs } = options;
   await applyHook(`before.${command}.run`, {
+    urls,
     commandArgs,
     taskConfigs,
     webpackConfigs,
