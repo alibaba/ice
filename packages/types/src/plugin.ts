@@ -32,6 +32,7 @@ interface BeforeCommandRunOptions {
   commandArgs: CommandArgs;
   webpackConfigs: Configuration | Configuration[];
   taskConfigs: TaskConfig<Config>[];
+  urls?: Urls;
   serverCompiler: ServerCompiler;
 }
 
