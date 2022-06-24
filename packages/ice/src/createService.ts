@@ -126,29 +126,25 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     command,
     serverBundle: server.bundle,
   });
-
   let appConfig: AppConfig;
-  if (command === 'build') {
-    try {
-      // should after generator, otherwise it will compile error
-      appConfig = await getAppConfig({ serverCompiler, rootDir });
-    } catch (err) {
-      consola.warn('Failed to get app config:', err.message);
-      consola.debug(err);
-    }
+  try {
+    // should after generator, otherwise it will compile error
+    appConfig = await getAppConfig({ serverCompiler, rootDir });
+  } catch (err) {
+    consola.warn('Failed to get app config:', err.message);
+    consola.debug(err);
   }
 
   const disableRouter = userConfig.removeHistoryDeadCode && routesInfo.routesCount <= 1;
   if (disableRouter) {
     consola.info('[ice] removeHistoryDeadCode is enabled and only have one route, ice build will remove history and react-router dead code.');
   }
-
   updateRuntimeEnv(appConfig, { disableRouter });
 
   return {
     run: async () => {
       if (command === 'start') {
-        return await start(ctx, taskConfigs, serverCompiler);
+        return await start(ctx, taskConfigs, serverCompiler, appConfig);
       } else if (command === 'build') {
         return await build(ctx, taskConfigs, serverCompiler, appConfig);
       }
