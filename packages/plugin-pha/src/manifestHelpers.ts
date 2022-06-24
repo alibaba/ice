@@ -14,7 +14,7 @@ interface TransformOptions {
   parentKey?: string;
 }
 
-interface ParseOptions {
+export interface ParseOptions {
   urlPrefix: string;
   publicPath: string;
   configEntry: string;
