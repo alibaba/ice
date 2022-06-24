@@ -4,6 +4,7 @@ import type { Context, TaskConfig } from 'build-scripts';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { Config } from '@ice/types';
 import type { ServerCompiler } from '@ice/types/esm/plugin.js';
+import type { AppConfig } from '@ice/runtime';
 import { getWebpackConfig } from '@ice/webpack-config';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import webpackCompiler from '../service/webpackCompiler.js';
@@ -14,7 +15,12 @@ import createMockMiddleware from '../middlewares/mock/createMiddleware.js';
 
 const { merge } = lodash;
 
-const start = async (context: Context<Config>, taskConfigs: TaskConfig<Config>[], serverCompiler: ServerCompiler) => {
+const start = async (
+  context: Context<Config>,
+  taskConfigs: TaskConfig<Config>[],
+  serverCompiler: ServerCompiler,
+  appConfig: AppConfig,
+) => {
   const { applyHook, commandArgs, command, rootDir, userConfig } = context;
   const { port, host, https = false } = commandArgs;
 
@@ -61,6 +67,7 @@ const start = async (context: Context<Config>, taskConfigs: TaskConfig<Config>[]
     protocol,
     devServerConfig.host,
     devServerConfig.port as number,
+    appConfig?.router?.basename || '/',
   );
   const compiler = await webpackCompiler({
     rootDir,
