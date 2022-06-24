@@ -1,13 +1,15 @@
 import * as path from 'path';
-import * as fs from 'fs';
 import { fileURLToPath } from 'url';
-import type { ServerResponse } from 'http';
+import consola from 'consola';
+import chalk from 'chalk';
 import type { Plugin } from '@ice/types';
-import type { ExpressRequestHandler } from 'webpack-dev-server';
-import { parseManifest, rewriteAppWorker, getAppWorkerUrl, getMultipleManifest } from './manifestHelpers.js';
+import generateManifest from './generateManifest.js';
+import createPHAMiddleware from './phaMiddleware.js';
+import { templateFile } from './constants.js';
+
 import type { Manifest } from './types.js';
 
-type Compiler = (options: {
+export type Compiler = (options: {
   entry: string;
   outfile: string;
   timestamp?: boolean;
@@ -16,32 +18,20 @@ type Compiler = (options: {
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-function sendResponse(res: ServerResponse, content: string, mime: string): void {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', `${mime}; charset=utf-8`);
-  res.end(content);
-}
-
 interface PluginOptions {
   template: boolean;
 }
 
 const plugin: Plugin<PluginOptions> = ({ onGetConfig, onHook, context, generator }, options) => {
-  const { template } = options;
+  const { template } = options || {};
   const { command, rootDir } = context;
   // get variable blows from task config
   let compiler: Compiler;
-  let manifestOutfile: string;
-  let routesConfigOutfile: string;
-  let appWorkerOutfile: string;
-  let phaManifestJson: string;
   let publicPath: string;
   let outputDir: string;
   let urlPrefix: string;
 
-  const phaManifestPath = path.join(rootDir, '.ice/phaManifest.ts');
-  const routesConfigPath = path.join(rootDir, '.ice/routes-config.ts');
-  generator.addRenderFile(path.join(__dirname, '../template/manifest.ts'), path.join(rootDir, '.ice/phaManifest.ts'));
+  generator.addRenderFile(path.join(__dirname, '../template/manifest.ts'), path.join(rootDir, templateFile));
   // get server compiler by hooks
   onHook(`before.${command as 'start' | 'build'}.run`, async ({ serverCompiler, taskConfigs, urls }) => {
     const taskConfig = taskConfigs.find(({ name }) => name === 'web').config;
@@ -49,11 +39,6 @@ const plugin: Plugin<PluginOptions> = ({ onGetConfig, onHook, context, generator
     publicPath = taskConfig.publicPath || '/';
     // process.env.URL_PREFIX is defined by cloud environment such as DEF plugin
     urlPrefix = command === 'start' ? urls.lanUrlForTerminal : process.env.URL_PREFIX;
-    // declare outfile after getting final task config
-    manifestOutfile = path.join(outputDir, 'pha-manifest.mjs');
-    routesConfigOutfile = path.join(outputDir, 'routes-config.mjs');
-    appWorkerOutfile = path.join(outputDir, 'app-work.js');
-    phaManifestJson = path.join(outputDir, 'manifest.json');
 
     compiler = async (options) => {
       const { entry, outfile, removeExportExprs, timestamp = true } = options;
@@ -67,52 +52,47 @@ const plugin: Plugin<PluginOptions> = ({ onGetConfig, onHook, context, generator
     };
   });
 
-  // compile task before parse pha manifest
-  async function compileEntires() {
-    return await Promise.all([
-      compiler({
-        entry: phaManifestPath,
-        outfile: manifestOutfile,
-      }),
-      compiler({
-        entry: routesConfigPath,
-        outfile: routesConfigOutfile,
-        removeExportExprs: ['default', 'getData'],
-      }),
-    ]);
-  }
-
-  async function getAppWorkerContent(entry: string, outfile: string): Promise<string> {
-    const appWorkerFile = await compiler({
-      entry,
-      outfile,
-      timestamp: false,
-    });
-    return fs.readFileSync(appWorkerFile, 'utf-8');
-  }
-
   onHook('after.build.compile', async ({ serverEntry }) => {
-    const [manifestEntry, routesConfigEntry] = await compileEntires();
-    let manifest: Manifest = (await import(manifestEntry)).default;
-    const appWorkerPath = getAppWorkerUrl(manifest, path.join(rootDir, 'src'));
-    if (appWorkerPath) {
-      manifest = rewriteAppWorker(manifest);
-      await getAppWorkerContent(appWorkerPath, appWorkerOutfile);
-    }
-    const phaManifest = await parseManifest(manifest, {
-      publicPath,
-      urlPrefix,
-      configEntry: routesConfigEntry,
-      serverEntry,
-      template,
+    await generateManifest({
+      rootDir,
+      outputDir,
+      compiler,
+      parseOptions: {
+        publicPath,
+        urlPrefix,
+        serverEntry,
+        template,
+      },
     });
-    if (phaManifest?.tab_bar) {
-      fs.writeFileSync(phaManifestJson, JSON.stringify(phaManifest), 'utf-8');
-    } else {
-      const multipleManifest = getMultipleManifest(manifest);
-      Object.keys(multipleManifest).forEach((key) => {
-        fs.writeFileSync(path.join(outputDir, `${key}-manifest.json`), JSON.stringify(multipleManifest[key]), 'utf-8');
+  });
+
+  onHook('after.start.compile', async ({ urls }) => {
+    // log out pha dev urls
+    const lanUrl = urls.lanUrlForTerminal;
+    const phaManifestPath = path.join(rootDir, templateFile);
+    const manifestOutfile = path.join(outputDir, 'pha-manifest.mjs');
+    const phaManifest: Manifest = (await import(
+      await compiler({ entry: phaManifestPath, outfile: manifestOutfile })
+    )).default;
+    const phaDevUrls = [];
+    if (phaManifest?.tabBar) {
+      phaDevUrls.push(`${lanUrl}manifest.json`);
+    } else if (phaManifest?.routes?.length > 0) {
+      phaManifest.routes.forEach((route) => {
+        if (typeof route === 'string') {
+          phaDevUrls.push(`${lanUrl}${route}-manifest.json`);
+        } else if (typeof route?.frames![0] === 'string') {
+          phaDevUrls.push(`${lanUrl}${route.frames[0]}-manifest.json`);
+        }
       });
+    }
+    let logoutMessage = '\n';
+    logoutMessage += chalk.green(' Serve PHA Manifest at:\n');
+    phaDevUrls.forEach((url) => {
+      logoutMessage += `\n   ${chalk.underline.white(url)}`;
+    });
+    if (phaDevUrls.length > 0) {
+      consola.log(`${logoutMessage}\n`);
     }
   });
 
@@ -121,47 +101,16 @@ const plugin: Plugin<PluginOptions> = ({ onGetConfig, onHook, context, generator
     config.middlewares = (middlewares, devServer) => {
       const currentMiddlewares = customMiddlewares ? customMiddlewares(middlewares, devServer) : middlewares;
       const insertIndex = currentMiddlewares.findIndex(({ name }) => name === 'server-compile');
-      const phaMiddleware: ExpressRequestHandler = async (req, res, next) => {
-        // @ts-ignore
-        const requestPath = req._parsedUrl.pathname;
-        const requestManifest = requestPath.endsWith('manifest.json');
-
-        const requestAppWorker = req.url === '/app-worker.js';
-        if (requestManifest || requestAppWorker) {
-          // get serverEntry from middleware of server-compile
-          const { serverEntry } = req as any;
-          const [manifestEntry, routesConfigEntry] = await compileEntires();
-          let manifest: Manifest = (await import(manifestEntry)).default;
-          const appWorkerPath = getAppWorkerUrl(manifest, path.join(rootDir, 'src'));
-          if (appWorkerPath) {
-            // over rewrite appWorker.url to app-worker.js
-            manifest = rewriteAppWorker(manifest);
-            if (requestAppWorker) {
-              sendResponse(res, await getAppWorkerContent(appWorkerPath, appWorkerOutfile), 'text/javascript');
-              return;
-            }
-          }
-          const phaManifest = await parseManifest(manifest, {
-            publicPath,
-            urlPrefix,
-            configEntry: routesConfigEntry,
-            serverEntry: serverEntry,
-            template,
-          });
-          if (!phaManifest?.tab_bar) {
-            const multipleManifest = getMultipleManifest(manifest);
-            const manifestKey = requestPath.replace('-manifest.json', '').replace(/^\//, '');
-            if (multipleManifest[manifestKey]) {
-              sendResponse(res, JSON.stringify(multipleManifest[manifestKey]), 'application/json');
-              return;
-            }
-          } else if (requestPath === '/manifest.json') {
-            sendResponse(res, JSON.stringify(phaManifest), 'application/json');
-            return;
-          }
-        }
-        next();
-      };
+      const phaMiddleware = createPHAMiddleware({
+        compiler,
+        rootDir,
+        outputDir,
+        parseOptions: {
+          publicPath,
+          urlPrefix,
+          template,
+        },
+      });
       // add pha middleware after server-compile
       middlewares.splice(insertIndex + 1, 0, {
         name: 'pha-manifest',

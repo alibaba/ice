@@ -462,12 +462,14 @@ importers:
     specifiers:
       '@ice/types': ^1.0.0
       '@types/lodash.clonedeep': ^4.5.7
+      chalk: ^4.0.0
       consola: ^2.15.3
       humps: ^2.0.1
       lodash.clonedeep: ^4.5.0
       webpack: ^5.73.0
       webpack-dev-server: ^4.9.2
     dependencies:
+      chalk: 4.1.2
       consola: 2.15.3
       humps: 2.0.1
       lodash.clonedeep: 4.5.0
@@ -14718,7 +14720,6 @@ packages:
       source-map: 0.6.1
       terser: 5.12.1
       webpack: 5.73.0
-    dev: true
 
   /terser/5.12.1:
     resolution: {integrity: sha512-NXbs+7nisos5E+yXwAD+y7zrcTkMqb0dEJxIGtSKPdCBzopf7ni4odPul2aechpV7EXNvOudYOX2bb5tln1jbQ==}
@@ -15564,7 +15565,7 @@ packages:
       mime-types: 2.1.35
       range-parser: 1.2.1
       schema-utils: 4.0.0
-      webpack: 5.73.0_@swc+core@1.2.168
+      webpack: 5.73.0
 
   /webpack-dev-server/4.8.1_webpack@5.72.0:
     resolution: {integrity: sha512-dwld70gkgNJa33czmcj/PlKY/nOy/BimbrgZRaR9vDATBQAYgLzggR0nxDtPLJiLrMgZwbE6RRfJ5vnBBasTyg==}
@@ -15842,7 +15843,6 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
-    dev: true
 
   /webpack/5.73.0_@swc+core@1.2.168:
     resolution: {integrity: sha512-svjudQRPPa0YiOYa2lM/Gacw0r6PvxptHj4FuEKQ2kX05ZLkjbVc5MnPs6its5j7IZljnIqSVo/OsY2X0IpHGA==}
