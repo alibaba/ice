@@ -2,7 +2,7 @@ import * as React from 'react';
 import type { ReactNode } from 'react';
 import { useAppContext } from './AppContext.js';
 import { getMeta, getTitle, getLinks, getScripts } from './routesConfig.js';
-import type { AppContext, RouteMatch, AssetsManifest } from './types';
+import type { AppContext, RouteMatch, AssetsManifest } from './types.js';
 
 interface DocumentContext {
   main: ReactNode | null;
