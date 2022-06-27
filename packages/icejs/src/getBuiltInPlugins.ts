@@ -34,7 +34,7 @@ const getBuiltInPlugins: IGetBuiltInPlugins = (userConfig) => {
     'build-plugin-ice-config',
     'build-plugin-ice-mpa',
     'build-plugin-ice-request',
-    'build-plugin-helmet',
+    'build-plugin-helmet'
   ];
 
   if (userConfig.ssr) {
