@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.11
+
+- fix: prettier format import/export order
+
 ## 1.4.10
 
 - [fix] globby pattern do not support path of win32
