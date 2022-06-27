@@ -33,6 +33,7 @@
     "@applint/spec": "^1.0.1",
     "@commitlint/cli": "^16.1.0",
     "@ice/bundles": "workspace:^0.1.0",
+    "@testing-library/react": "^13.3.0",
     "@types/eslint": "^8.4.1",
     "@types/fs-extra": "^9.0.13",
     "@types/glob": "^7.2.0",
@@ -53,6 +54,7 @@
     "glob": "^7.2.0",
     "husky": "^7.0.4",
     "ice-npm-utils": "^3.0.1",
+    "jsdom": "^20.0.0",
     "prettier": "^2.5.1",
     "prettier-plugin-organize-imports": "^2.3.4",
     "prettier-plugin-packagejson": "^2.2.15",
@@ -63,8 +65,7 @@
     "semver": "^7.3.5",
     "stylelint": "^14.3.0",
     "typescript": "^4.7.0",
-    "vitest": "^0.15.2",
-    "@testing-library/react": "^13.3.0"
+    "vitest": "^0.15.2"
   },
   "packageManager": "pnpm@7.2.1"
 }
