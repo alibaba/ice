@@ -7,13 +7,12 @@ describe('render', () => {
   it('basic', () => {
     class TextComponent extends Component {
       render() {
-        return <div data-testid="TextComponent" >render text</div>;
+        return <div data-testid="test" >render text</div>;
       }
     }
 
     const wrapper = render(<TextComponent />);
-    const node = wrapper.queryByTestId('TextComponent');
-
+    const node = wrapper.queryByTestId('test');
     expect(node.textContent).toBe('render text');
   });
 });
