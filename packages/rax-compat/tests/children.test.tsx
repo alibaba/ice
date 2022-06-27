@@ -53,6 +53,56 @@ describe('children', () => {
     render(instance);
   })
 
+  it('should work with count', () => {
+    function Hello({ children }) {
+      expect(React.Children.count(children)).toBe(arrText.length);
+      return children
+    }
+    
+    const instance = (
+      <Hello>
+        <span>{arrText[0]}</span>
+        <span>{arrText[1]}</span>
+      </Hello>
+    );
+
+    render(instance);
+  })
+
+  it('should work with only', () => {
+    let child = <span>{arrText[0]}</span>;
+    function Hello({ children }) {
+      expect(React.Children.only(children)).toBe(child);
+      return children
+    }
+    
+    const instance = (
+      <Hello>
+        {
+          child
+        }
+      </Hello>
+    );
+
+    render(instance);
+  })
+
+  it('should work with toArray', () => {
+    function Hello({ children }) {
+      expect(React.Children.toArray(children).length).toBe(arrText.length);
+      return children
+    }
+    
+    const instance = (
+      <Hello>
+        <span>{arrText[0]}</span>
+        <span>{arrText[1]}</span>
+      </Hello>
+    );
+
+    render(instance);
+  })
+
   it('should escape keys', () => {
     const zero = <div key="1" />;
     const one = <div key="1=::=2" />;
