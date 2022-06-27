@@ -7,16 +7,18 @@ const STYLE = 'style';
  * https://github.com/reactjs/rfcs/pull/107
  * @param {*} type
  * @param {object} props
- * @param {string} key
+ * @param {string} maybeKey
+ * @param {object} source
+ * @param {any} self
  */
-export function jsx(type: any, props: object, maybeKey: string) {
-  return _jsx(type, hijackElementProps(props), maybeKey);
+export function jsx(type: any, props: object, maybeKey: string, source: object, self: any) {
+  return _jsx(type, hijackElementProps(props), maybeKey, source, self);
 }
 
 // Same as jsx method, special case jsxs internally to take advantage of static children.
 // // for now we can ship identical prod functions.
-export function jsxs(type: any, props: object, maybeKey: string) {
-  return _jsxs(type, hijackElementProps(props), maybeKey);
+export function jsxs(type: any, props: object, maybeKey: string, source: object, self: any) {
+  return _jsxs(type, hijackElementProps(props), maybeKey, source, self);
 }
 
 function isObject(obj: any): obj is object {

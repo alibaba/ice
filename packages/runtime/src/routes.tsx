@@ -4,7 +4,7 @@ import type { RouteObject } from 'react-router-dom';
 import { matchRoutes as originMatchRoutes } from 'react-router-dom';
 import { matchRoutesSingle } from './utils/history-single.js';
 import RouteWrapper from './RouteWrapper.js';
-import type { RouteItem, RouteModules, RouteWrapperConfig, RouteMatch, RequestContext, RoutesConfig, RoutesData } from './types';
+import type { RouteItem, RouteModules, RouteWrapperConfig, RouteMatch, RequestContext, RoutesConfig, RoutesData } from './types.js';
 import { useAppContext } from './AppContext.js';
 
 type RouteModule = Pick<RouteItem, 'id' | 'load'>;

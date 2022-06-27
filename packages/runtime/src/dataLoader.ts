@@ -1,4 +1,4 @@
-import type { GetData } from './types';
+import type { GetData } from './types.js';
 import getRequestContext from './requestContext.js';
 
 interface Loaders {

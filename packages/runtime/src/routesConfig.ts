@@ -1,4 +1,4 @@
-import type { RouteMatch, RoutesConfig, RouteConfig } from './types';
+import type { RouteMatch, RoutesConfig, RouteConfig } from './types.js';
 
 export function getMeta(matches: RouteMatch[], routesConfig: RoutesConfig) {
   return getMergedValue('meta', matches, routesConfig) || [];

@@ -4,7 +4,7 @@ import type { Navigator } from 'react-router-dom';
 import AppErrorBoundary from './AppErrorBoundary.js';
 import { useAppContext } from './AppContext.js';
 import { createRouteElements } from './routes.js';
-import type { RouteWrapperConfig, AppRouterProps } from './types';
+import type { RouteWrapperConfig, AppRouterProps } from './types.js';
 
 interface Props {
   action: Action;
