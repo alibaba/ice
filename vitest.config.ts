@@ -27,5 +27,6 @@ export default defineConfig({
         '**/tests/**',
       ],
     },
+    environment: 'jsdom',
   },
 });
