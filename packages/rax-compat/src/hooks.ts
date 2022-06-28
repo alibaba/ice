@@ -18,6 +18,7 @@ import {
   useReducer as _useReducer,
   useRef as _useRef,
   useState as _useState,
+  createContext as _createContext,
 } from 'react';
 
 /**
@@ -129,4 +130,8 @@ export function useReducer<R extends ReducerWithoutAction<any>, I>(
   init: (arg: I) => ReducerStateWithoutAction<R>,
 ): [ReducerStateWithoutAction<R>, DispatchWithoutAction] {
   return _useReducer(reducer, initialArg, init);
+}
+
+export function createContext<T>(defaultValue: T): Context<T> {
+  return _createContext(defaultValue);
 }
