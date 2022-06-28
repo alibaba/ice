@@ -55,7 +55,7 @@ export function useContext<T>(context: Context<T>): ReturnType<typeof _useContex
  * @param inputs
  * @returns void
  */
-export function useEffect(effect: EffectCallback, inputs: DependencyList): void {
+export function useEffect(effect: EffectCallback, inputs?: DependencyList): void {
   return _useEffect(effect, inputs);
 }
 
