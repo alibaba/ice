@@ -41,6 +41,7 @@ export const decamelizeKeys = [
   'pullRefreshColorScheme',
   'pullRefresh',
   'cacheQueryParams',
+  'customDataSource',
 ];
 
 // do not decamelize list
