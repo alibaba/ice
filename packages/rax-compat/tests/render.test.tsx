@@ -1,18 +1,15 @@
 import React from 'react';
 import { expect, it, describe } from 'vitest';
-import { Component } from '../src/index';
-import { render } from '@testing-library/react';
+import { Component, render } from '../src/index';
 
 describe('render', () => {
   it('basic', () => {
     class TextComponent extends Component {
       render() {
-        return <div data-testid="test" >render text</div>;
+        return <div>render text</div>;
       }
     }
-
-    const wrapper = render(<TextComponent />);
-    const node = wrapper.queryByTestId('test');
-    expect(node.textContent).toBe('render text');
+    const ele = <TextComponent />;
+    expect(ele).toBe(render(ele, document.body));
   });
 });
