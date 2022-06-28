@@ -21,7 +21,6 @@ describe('createPortal', () => {
     }
 
     const wrapper = render(<App />);
-    const node = wrapper.queryByTestId('test');
     expect(div.childNodes.length).toBe(1);
   });
 });
