@@ -1,4 +1,4 @@
-import type { AppConfig, AppExport } from './types';
+import type { AppConfig, AppExport } from './types.js';
 
 const defaultAppConfig: AppConfig = {
   app: {

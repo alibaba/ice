@@ -1,3 +1,1 @@
-import { jsx, Fragment } from '@ice/jsx-runtime';
-export { Fragment };
-export const jsxDEV = jsx;
+export * from '@ice/jsx-runtime/dev';

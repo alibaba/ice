@@ -20,7 +20,7 @@ import type {
   RequestContext,
   AppConfig,
   RouteModules,
-} from './types';
+} from './types.js';
 import getRequestContext from './requestContext.js';
 
 interface RenderOptions {

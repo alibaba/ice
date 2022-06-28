@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { AppContext } from './types';
+import type { AppContext } from './types.js';
 
 const Context = React.createContext<AppContext | undefined>(undefined);
 
