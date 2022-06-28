@@ -12,6 +12,7 @@ class ExtractCssAssetsPlugin {
       {
         outputPath: '',
         relativeCssPath: '',
+        forceLocal: false,
         requsetOptions: {
           timeout: 5000,
         },

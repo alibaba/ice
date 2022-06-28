@@ -20,6 +20,7 @@ export default postcss.plugin(
   ({ outputOptions, options }: {outputOptions: any; options: any}, opts: any = {}) => {
     // 所有 css 中的网络请求
     const networkRequestMap = {};
+    const isForceLocal = options.forceLocal || false;
     const publicPath = outputOptions.publicPath || '';
     const isUrlPublicPath = /^(https?:)?\/\//.test(publicPath);
     return (root) => {
@@ -33,7 +34,7 @@ export default postcss.plugin(
                 if (urlReg.test(value)) {
                   const { url, urlIdentity } = getDeclUrl(value);
 
-                  if (isUrlPublicPath && url.startsWith(publicPath)) {
+                  if (!isForceLocal && isUrlPublicPath && url.startsWith(publicPath)) {
                     // 已经是 publicPath 名下的网络资源可以不用本地化
                     return;
                   }
@@ -49,7 +50,7 @@ export default postcss.plugin(
             if (decl.prop === 'background-image' || decl.prop === 'background') {
               if (urlReg.test(decl.value)) {
                 const { url, urlIdentity } = getDeclUrl(decl.value);
-                if (isUrlPublicPath && url.startsWith(publicPath)) {
+                if (!isForceLocal && isUrlPublicPath && url.startsWith(publicPath)) {
                   // 已经是 publicPath 名下的网络资源可以不用本地化
                   return;
                 }
@@ -130,7 +131,7 @@ export default postcss.plugin(
                       if (urlReg.test(value)) {
                         const { urlIdentity, url } = getDeclUrl(value);
 
-                        if (isUrlPublicPath && url.startsWith(publicPath)) {
+                        if (!isForceLocal && isUrlPublicPath && url.startsWith(publicPath)) {
                           // 已经是 publicPath 名下的网络资源可以不用本地化
                           return value;
                         }
@@ -167,7 +168,7 @@ export default postcss.plugin(
                 ) {
                   if (urlReg.test(decl.value)) {
                     const { urlIdentity, url } = getDeclUrl(decl.value);
-                    if (isUrlPublicPath && url.startsWith(publicPath)) {
+                    if (!isForceLocal && isUrlPublicPath && url.startsWith(publicPath)) {
                       // 已经是 publicPath 名下的网络资源可以不用本地化
                       return;
                     }
