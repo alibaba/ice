@@ -16,6 +16,6 @@ describe('findDomNode', () => {
       return <div ref={ref} >{str}</div>;
     }
 
-    const wrapper = render(<App />);
+    render(<App />);
   });
 });

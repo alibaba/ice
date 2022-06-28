@@ -20,7 +20,7 @@ describe('createPortal', () => {
       </div>
     }
 
-    const wrapper = render(<App />);
+    render(<App />);
     expect(div.childNodes.length).toBe(1);
   });
 });
