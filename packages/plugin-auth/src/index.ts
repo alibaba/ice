@@ -12,6 +12,6 @@ const plugin: Plugin = ({ generator }) => {
 
 export default () => ({
   name: '@ice/plugin-auth',
-  plugin,
-  runtime: path.join(path.dirname(fileURLToPath(import.meta.url)), 'runtime'),
+  setup: plugin,
+  runtime: path.join(path.dirname(fileURLToPath(import.meta.url)), 'runtime', 'index.js'),
 });
