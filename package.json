@@ -21,7 +21,7 @@
     "publish:alpha": "PUBLISH_TYPE=alpha esmo ./scripts/publishPackageWithDistTag.ts",
     "publish:beta": "PUBLISH_TYPE=beta esmo ./scripts/publishPackageWithDistTag.ts",
     "cov": "vitest run --coverage",
-    "test": "NODE_ENV=test vitest"
+    "test": "vitest"
   },
   "author": "ice-admin@alibaba-inc.com",
   "license": "MIT",
