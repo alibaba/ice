@@ -29,4 +29,5 @@ export default defineConfig({
     },
     environment: 'jsdom',
   },
+  mode: 'test',
 });
