@@ -1,9 +1,14 @@
 import * as fs from 'fs';
 import type { Plugin } from 'esbuild';
 import { parse, type ParserOptions } from '@babel/parser';
-import { default as traverse } from '@babel/traverse';
-import { default as generate } from '@babel/generator';
+import babelTraverse from '@babel/traverse';
+import babelGenerate from '@babel/generator';
 import removeTopLevelCode from './removeTopLevelCode.js';
+
+// @ts-ignore @babel/traverse is not a valid export in esm
+const { default: traverse } = babelTraverse;
+// @ts-ignore @babel/traverse is not a valid export in esm
+const { default: generate } = babelGenerate;
 
 const removeCodePlugin = (): Plugin => {
   const parserOptions: ParserOptions = {
