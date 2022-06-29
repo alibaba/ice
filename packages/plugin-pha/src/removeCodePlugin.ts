@@ -33,7 +33,6 @@ const removeCodePlugin = (): Plugin => {
         const ast = parse(source, parserOptions);
         traverse(ast, removeTopLevelCode());
         const contents = generate(ast).code;
-        console.log('contents ==>', contents);
         return {
           contents,
           loader: isTS ? 'tsx' : 'jsx',

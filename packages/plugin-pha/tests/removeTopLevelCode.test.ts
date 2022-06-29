@@ -47,7 +47,6 @@ describe('remove top level code', () => {
     const ast = parse(fs.readFileSync(path.join(__dirname, './fixtures/if.ts'), 'utf-8'), parserOptions);
     traverse(ast, removeTopLevelCodePlugin());
     const content = generate(ast).code;
-    console.log(content);
     expect(content).toBe('');
   });
   it('remove import statement', () => {

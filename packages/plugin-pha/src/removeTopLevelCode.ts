@@ -70,7 +70,6 @@ const removeTopLevelCode = () => {
       enter(nodePath: NodePath<t.ImportDeclaration>) {
         // remove import statement without specifiers
         if (nodePath.node.specifiers.length === 0) {
-          console.log('render');
           nodePath.remove();
         }
       },
