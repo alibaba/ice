@@ -63,11 +63,13 @@ const start = async (
   // merge devServerConfig with webpackConfig.devServer
   devServerConfig = merge(webpackConfigs[0].devServer, devServerConfig);
   const protocol = devServerConfig.https ? 'https' : 'http';
+  let urlPathname = appConfig?.router?.basename || '/';
+
   const urls = prepareURLs(
     protocol,
     devServerConfig.host,
     devServerConfig.port as number,
-    appConfig?.router?.basename || '/',
+    urlPathname.endsWith('/') ? urlPathname : `${urlPathname}/`,
   );
   const compiler = await webpackCompiler({
     rootDir,

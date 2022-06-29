@@ -99,7 +99,7 @@ export function createServerCompiler(options: Options) {
       ...defineVars,
       ...runtimeDefineVars,
     };
-
+    console.log('buildOptions', buildOptions);
     const buildResult = await esbuild.build({
       bundle: true,
       format: 'esm',
@@ -111,6 +111,7 @@ export function createServerCompiler(options: Options) {
       ...buildOptions,
       define,
       plugins: [
+        ...(buildOptions.plugins || []),
         emptyCSSPlugin(),
         dev && buildOptions?.format === 'esm' && createDepRedirectPlugin(metadata),
         aliasPlugin({
@@ -127,8 +128,7 @@ export function createServerCompiler(options: Options) {
           },
         }),
         fs.existsSync(assetsManifest) && createAssetsPlugin(assetsManifest, rootDir),
-        ...transformPlugins,
-        ...(buildOptions.plugins || []),
+        // ...transformPlugins,
       ].filter(Boolean),
     });
     consola.debug('[esbuild]', `time cost: ${new Date().getTime() - startTime}ms`);
