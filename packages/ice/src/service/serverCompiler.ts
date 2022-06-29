@@ -116,7 +116,6 @@ export function createServerCompiler(options: Options) {
       define,
       plugins: [
         ...(buildOptions.plugins || []),
-        ...transformPlugins,
         emptyCSSPlugin(),
         dev && buildOptions?.format === 'esm' && createDepRedirectPlugin(metadata),
         aliasPlugin({
@@ -133,6 +132,7 @@ export function createServerCompiler(options: Options) {
           },
         }),
         fs.existsSync(assetsManifest) && createAssetsPlugin(assetsManifest, rootDir),
+        ...transformPlugins,
       ].filter(Boolean),
     });
     consola.debug('[esbuild]', `time cost: ${new Date().getTime() - startTime}ms`);
