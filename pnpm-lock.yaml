@@ -308,7 +308,7 @@ importers:
       acorn: ^8.7.1
       address: ^1.1.2
       body-parser: ^1.20.0
-      build-scripts: ^2.0.0-21
+      build-scripts: ^2.0.0-22
       chalk: ^4.0.0
       chokidar: ^3.5.3
       commander: ^9.0.0
@@ -351,7 +351,7 @@ importers:
       acorn: 8.7.1
       address: 1.1.2
       body-parser: 1.20.0
-      build-scripts: 2.0.0-21
+      build-scripts: 2.0.0-22
       chalk: 4.1.2
       commander: 9.2.0
       consola: 2.15.3
@@ -510,7 +510,7 @@ importers:
     specifiers:
       '@ice/route-manifest': ^1.0.0
       '@ice/runtime': ^1.0.0
-      build-scripts: ^2.0.0-21
+      build-scripts: ^2.0.0-22
       esbuild: ^0.14.23
       eslint: ^8.14.0
       eslint-webpack-plugin: 3.1.1
@@ -524,7 +524,7 @@ importers:
     devDependencies:
       '@ice/route-manifest': link:../route-manifest
       '@ice/runtime': link:../runtime
-      build-scripts: 2.0.0-21
+      build-scripts: 2.0.0-22
       esbuild: 0.14.38
       eslint: 8.14.0
       eslint-webpack-plugin: 3.1.1_7obbsy7bvh46ulalj3j352unry
@@ -544,7 +544,7 @@ importers:
       '@pmmmwh/react-refresh-webpack-plugin': ^0.5.7
       '@rollup/pluginutils': ^4.2.0
       browserslist: ^4.19.3
-      build-scripts: ^2.0.0-21
+      build-scripts: ^2.0.0-22
       consola: ^2.15.3
       esbuild: ^0.14.23
       fast-glob: ^3.2.11
@@ -570,7 +570,7 @@ importers:
       unplugin: 0.3.3_7m4vrr5pcg6juvld3psuif5zsi
     devDependencies:
       '@ice/types': link:../types
-      build-scripts: 2.0.0-21
+      build-scripts: 2.0.0-22
       esbuild: 0.14.38
       webpack: 5.72.0_esbuild@0.14.38
       webpack-dev-server: 4.8.1_webpack@5.72.0
@@ -5255,7 +5255,7 @@ packages:
     hasBin: true
 
   /ansi-regex/2.1.1:
-    resolution: {integrity: sha512-TIGnTpdo+E3+pCyAluZvtED5p5wCqLdezCyhPZzKPcxvFplEt4i+W7OONCKgeZFT3+y5NZZfOOS/Bdcanm1MYA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.com/ansi-regex/-/ansi-regex-2.1.1.tgz}
+    resolution: {integrity: sha512-TIGnTpdo+E3+pCyAluZvtED5p5wCqLdezCyhPZzKPcxvFplEt4i+W7OONCKgeZFT3+y5NZZfOOS/Bdcanm1MYA==}
     engines: {node: '>=0.10.0'}
 
   /ansi-regex/5.0.1:
@@ -5810,8 +5810,8 @@ packages:
       semver: 7.3.7
     dev: true
 
-  /build-scripts/2.0.0-21:
-    resolution: {integrity: sha512-25VFaq+FRAGQEyM//7LB0QnGZmcLkCL8eDipnATzWq1b2A8t4/rJcm7dq5RypZXtowLVCrcBbf4gKJLb0GY4mA==}
+  /build-scripts/2.0.0-22:
+    resolution: {integrity: sha512-/MQR8quGXRsPlBCBL8AV6Srp2Q+aCHqo8Lr4F1FlNfQN6mqfYRPRlc7/YUe3jPMSHz/eGljXYcKrr9dJXK0uEA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       camelcase: 5.3.1
@@ -13745,7 +13745,7 @@ packages:
       - supports-color
 
   /set-blocking/2.0.0:
-    resolution: {integrity: sha1-BF+XgtARrppoA93TgrJDkrPYkPc=}
+    resolution: {integrity: sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw==}
 
   /setimmediate/1.0.5:
     resolution: {integrity: sha1-KQy7Iy4waULX1+qbg3Mqt4VvgoU=}
@@ -14044,7 +14044,7 @@ packages:
     dev: true
 
   /string-width/1.0.2:
-    resolution: {integrity: sha1-EYvfW4zcUaKn5w0hHgfisLmxB9M=}
+    resolution: {integrity: sha512-0XsVpQLnVCXHJfyEs8tC0zpTVIr5PKKsQtkT29IwupnPTjtPmQ3xT/4yCREF9hYkV/3M3kzcUTSAZT6a6h81tw==}
     engines: {node: '>=0.10.0'}
     dependencies:
       code-point-at: 1.1.0
@@ -14117,7 +14117,7 @@ packages:
     dev: true
 
   /strip-ansi/3.0.1:
-    resolution: {integrity: sha512-VhumSSbBqDTP8p2ZLKj40UjBCV4+v8bUSEpUb4KjRgWk9pbqGF4REFj6KEagidb2f/M6AzC0EmFyDNGaw9OCzg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.com/strip-ansi/-/strip-ansi-3.0.1.tgz}
+    resolution: {integrity: sha512-VhumSSbBqDTP8p2ZLKj40UjBCV4+v8bUSEpUb4KjRgWk9pbqGF4REFj6KEagidb2f/M6AzC0EmFyDNGaw9OCzg==}
     engines: {node: '>=0.10.0'}
     dependencies:
       ansi-regex: 2.1.1
@@ -15172,7 +15172,7 @@ packages:
     dev: false
 
   /util-deprecate/1.0.2:
-    resolution: {integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=}
+    resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
   /util/0.12.4:
     resolution: {integrity: sha512-bxZ9qtSlGUWSOy9Qa9Xgk11kSslpuZwaxCg4sNIDj6FLucDab2JxnHwyNTCpHMtK1MjoQiWQ6DiUMZYbSrO+Sw==}
