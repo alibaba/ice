@@ -2,4 +2,4 @@
 
 ## 1.0.0
 
-- [feat] first version
+- [feat] plugin to enable PHA features

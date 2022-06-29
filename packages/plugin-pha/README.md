@@ -1,6 +1,6 @@
 # @ice/plugin-pha
 
-ice plugin which make rax app have pha features.
+ICE plugin to enable PHA features
 
 ## Usage
 
