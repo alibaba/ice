@@ -27,7 +27,7 @@ const removeUnreferencedCode = (nodePath: NodePath<t.Program>) => {
   }
 };
 
-const removeTopLevelCodePlugin = () => {
+const removeTopLevelCode = () => {
   return {
     ExportNamedDeclaration: {
       enter(nodePath: NodePath<t.ExportNamedDeclaration>) {
@@ -90,4 +90,4 @@ const removeTopLevelCodePlugin = () => {
   };
 };
 
-export default removeTopLevelCodePlugin;
+export default removeTopLevelCode;

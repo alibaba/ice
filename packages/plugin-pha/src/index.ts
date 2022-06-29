@@ -6,7 +6,7 @@ import type { Plugin } from '@ice/types';
 import generateManifest from './generateManifest.js';
 import createPHAMiddleware from './phaMiddleware.js';
 import { templateFile } from './constants.js';
-import annotatePureCallsPlugin from './annotatePureCalls.js';
+import removeCodePlugin from './removeCodePlugin.js';
 
 import type { Manifest } from './types.js';
 
@@ -14,7 +14,7 @@ export type Compiler = (options: {
   entry: string;
   outfile: string;
   timestamp?: boolean;
-  removeExportExprs?: string[];
+  removeCode?: boolean;
 }) => Promise<string>;
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -42,14 +42,14 @@ const plugin: Plugin<PluginOptions> = ({ onGetConfig, onHook, context, generator
     urlPrefix = command === 'start' ? urls.lanUrlForTerminal : process.env.URL_PREFIX;
 
     compiler = async (options) => {
-      const { entry, outfile, removeExportExprs, timestamp = true } = options;
+      const { entry, outfile, removeCode, timestamp = true } = options;
       await serverCompiler({
         entryPoints: [entry],
         format: 'esm',
         outfile,
         inject: [],
-        plugins: [annotatePureCallsPlugin()],
-      }, removeExportExprs ? { removeExportExprs } : null);
+        plugins: removeCode ? [removeCodePlugin()] : [],
+      });
       return `${outfile}${timestamp ? `?version=${new Date().getTime()}` : ''}`;
     };
   });
