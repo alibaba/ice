@@ -126,5 +126,5 @@ const plugin: Plugin<PluginOptions> = ({ onGetConfig, onHook, context, generator
 
 export default (options: PluginOptions) => ({
   name: '@ice/plugin-pha',
-  plugin: (api) => plugin(api, options),
+  setup: (api) => plugin(api, options),
 });
