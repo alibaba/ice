@@ -6,6 +6,7 @@ import type { Plugin } from '@ice/types';
 import generateManifest from './generateManifest.js';
 import createPHAMiddleware from './phaMiddleware.js';
 import { templateFile } from './constants.js';
+import annotatePureCallsPlugin from './annotatePureCalls.js';
 
 import type { Manifest } from './types.js';
 
@@ -47,6 +48,7 @@ const plugin: Plugin<PluginOptions> = ({ onGetConfig, onHook, context, generator
         format: 'esm',
         outfile,
         inject: [],
+        plugins: [annotatePureCallsPlugin()],
       }, removeExportExprs ? { removeExportExprs } : null);
       return `${outfile}${timestamp ? `?version=${new Date().getTime()}` : ''}`;
     };
