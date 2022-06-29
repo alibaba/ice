@@ -33,7 +33,7 @@ export async function compileEntires(
     compiler({
       entry: path.join(rootDir, '.ice/routes-config.ts'),
       outfile: path.join(outputDir, 'routes-config.mjs'),
-      removeExportExprs: ['default', 'getData'],
+      removeCode: true,
     }),
   ]);
 }
