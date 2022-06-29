@@ -19,7 +19,7 @@ const createPHAMiddleware = ({
 }: Options): ExpressRequestHandler => {
   const phaMiddleware: ExpressRequestHandler = async (req, res, next) => {
     // @ts-ignore
-    const requestPath = req._parsedUrl.pathname;
+    const requestPath = path.basename(req._parsedUrl.pathname);
     const requestManifest = requestPath.endsWith('manifest.json');
 
     const requestAppWorker = req.url === '/app-worker.js';
@@ -47,7 +47,7 @@ const createPHAMiddleware = ({
         serverEntry: serverEntry,
       } as ParseOptions);
       if (!phaManifest?.tab_bar) {
-        const multipleManifest = getMultipleManifest(manifest);
+        const multipleManifest = getMultipleManifest(phaManifest);
         const manifestKey = requestPath.replace('-manifest.json', '').replace(/^\//, '');
         if (multipleManifest[manifestKey]) {
           sendResponse(res, JSON.stringify(multipleManifest[manifestKey]), 'application/json');
