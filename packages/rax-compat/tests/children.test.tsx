@@ -1,6 +1,5 @@
 import React from 'react';
 import { expect, it, describe } from 'vitest';
-import { Component } from '../src/index';
 import { render } from '@testing-library/react';
 
 const arrText = ['hello', 'rax'];
