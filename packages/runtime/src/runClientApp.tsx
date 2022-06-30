@@ -38,7 +38,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
 
   const appConfig = getAppConfig(app);
 
-  const matches = matchRoutes(routes, window.location, basename || appConfig?.router?.basename);
+  const matches = matchRoutes(routes, window.location, basename);
   const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
 
   if (!routesData) {
@@ -129,7 +129,6 @@ function BrowserEntry({
     matches: originMatches,
     routesData: initialRoutesData,
     routesConfig: initialRoutesConfig,
-    appConfig,
     routeModules: initialRouteModules,
     basename,
   } = appContext;
@@ -152,7 +151,7 @@ function BrowserEntry({
   useLayoutEffect(() => {
     if (history) {
       history.listen(({ action, location }) => {
-        const currentMatches = matchRoutes(routes, location, basename || appConfig?.router?.basename);
+        const currentMatches = matchRoutes(routes, location, basename);
         if (!currentMatches.length) {
           throw new Error(`Routes not found in location ${location.pathname}.`);
         }
