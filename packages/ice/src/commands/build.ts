@@ -68,6 +68,13 @@ const build = async (
       } else {
         compiler?.close?.(() => {});
         const isSuccessful = !messages.errors.length;
+        const { outputDir, basename } = taskConfigs.find(({ name }) => name === 'web').config;
+        const { ssg, ssr, server } = userConfig;
+        // compile server bundle
+        const entryPoint = path.join(rootDir, SERVER_ENTRY);
+        const esm = server?.format === 'esm';
+        const outJSExtension = esm ? '.mjs' : '.cjs';
+        const serverEntry = path.join(outputDir, SERVER_OUTPUT_DIR, `index${outJSExtension}`);
         await serverCompiler({
           entryPoints: { index: entryPoint },
           outdir: path.join(outputDir, SERVER_OUTPUT_DIR),
@@ -85,7 +92,7 @@ const build = async (
           outputDir,
           entry: serverEntry,
           documentOnly: !ssg && !ssr,
-          basename: appConfig?.router?.basename,
+          basename: basename || appConfig?.router?.basename,
         });
         resolve({
           stats,

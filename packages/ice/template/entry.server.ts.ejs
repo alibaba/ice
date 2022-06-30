@@ -11,7 +11,7 @@ import Document from '@/document';
 import assetsManifest from './assets-manifest.json';
 import routes from './routes';
 
-export async function renderToHTML(requestContext, documentOnly) {
+export async function renderToHTML(requestContext, documentOnly?: boolean) {
   return await runtime.renderToHTML(requestContext, {
     app,
     assetsManifest,
@@ -19,10 +19,13 @@ export async function renderToHTML(requestContext, documentOnly) {
     runtimeModules,
     Document,
     documentOnly,
+<% if (basename) { %>
+    basename: '<%- basename %>'
+<% } %>
   });
 }
 
-export async function renderToResponse(requestContext, documentOnly) {
+export async function renderToResponse(requestContext, documentOnly?: boolean) {
   runtime.renderToResponse(requestContext, {
     app,
     assetsManifest,
@@ -30,5 +33,8 @@ export async function renderToResponse(requestContext, documentOnly) {
     runtimeModules,
     Document,
     documentOnly,
+<% if (basename) { %>
+    basename: '<%- basename %>'
+<% } %>
   });
 }
