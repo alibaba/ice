@@ -8,7 +8,8 @@
   "types": "./esm/index.d.ts",
   "files": [
     "esm",
-    "!esm/**/*.map"
+    "!esm/**/*.map",
+    "template"
   ],
   "scripts": {
     "watch": "tsc -w",
