@@ -35,7 +35,7 @@ const build = async (
     serverCompiler,
   });
   const { ssg, ssr, server } = userConfig;
-  const { outputDir, basename } = taskConfigs.find(({ name }) => name === 'web').config;
+  const { outputDir } = taskConfigs.find(({ name }) => name === 'web').config;
   // compile server bundle
   const entryPoint = path.join(rootDir, SERVER_ENTRY);
   const esm = server?.format === 'esm';
