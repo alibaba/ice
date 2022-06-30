@@ -6,11 +6,30 @@ const removeUnreferencedCode = (nodePath: NodePath<t.Program>) => {
   // update bindings removed in enter hooks
   nodePath.scope.crawl();
   for (const [, binding] of Object.entries(nodePath.scope.bindings)) {
-    if (!binding.referenced) {
+    if (!binding.referenced && binding.path.node) {
       const nodeType = binding.path.node.type;
       if (['VariableDeclarator', 'ImportSpecifier', 'FunctionDeclaration'].includes(nodeType)) {
         if (nodeType === 'ImportSpecifier' && (binding.path.parentPath.node as t.ImportDeclaration).specifiers.length === 1) {
           binding.path.parentPath.remove();
+        } else if (nodeType === 'VariableDeclarator') {
+          if (binding.identifier === binding.path.node.id) {
+            binding.path.remove();
+          } else {
+            if (binding.path.node.id.type === 'ArrayPattern') {
+              binding.path.node.id.elements = binding.path.node.id.elements.filter((element) =>
+                (element !== binding.identifier && (element as t.RestElement)?.argument !== binding.identifier));
+              if (binding.path.node.id.elements.length === 0) {
+                binding.path.remove();
+              }
+            } else if (binding.path.node.id.type === 'ObjectPattern') {
+              binding.path.node.id.properties = binding.path.node.id.properties.filter((property) =>
+                ((property as t.ObjectProperty)?.value !== binding.identifier &&
+                  (property as t.RestElement)?.argument !== binding.identifier));
+              if (binding.path.node.id.properties.length === 0) {
+                binding.path.remove();
+              }
+            }
+          }
         } else {
           binding.path.remove();
         }

@@ -38,8 +38,8 @@ const plugin: Plugin<PluginOptions> = ({ onGetConfig, onHook, context, generator
     const taskConfig = taskConfigs.find(({ name }) => name === 'web').config;
     outputDir = taskConfig.outputDir;
     publicPath = taskConfig.publicPath || '/';
-    // process.env.URL_PREFIX is defined by cloud environment such as DEF plugin
-    urlPrefix = command === 'start' ? urls.lanUrlForTerminal : process.env.URL_PREFIX;
+    // process.env.DEPLOY_PATH is defined by cloud environment such as DEF plugin
+    urlPrefix = command === 'start' ? urls.lanUrlForTerminal : process.env.DEPLOY_PATH;
 
     compiler = async (options) => {
       const { entry, outfile, removeCode, timestamp = true } = options;
