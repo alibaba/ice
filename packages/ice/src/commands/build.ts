@@ -59,7 +59,7 @@ const build = async (
       } else {
         compiler?.close?.(() => {});
         const isSuccessful = !messages.errors.length;
-        const { outputDir } = taskConfigs.find(({ name }) => name === 'web').config;
+        const { outputDir, basename } = taskConfigs.find(({ name }) => name === 'web').config;
         const { ssg, ssr, server } = userConfig;
         // compile server bundle
         const entryPoint = path.join(rootDir, SERVER_ENTRY);
@@ -80,7 +80,7 @@ const build = async (
           outputDir,
           entry: serverEntry,
           documentOnly: !ssg && !ssr,
-          basename: appConfig?.router?.basename,
+          basename: basename || appConfig?.router?.basename,
         });
         resolve({
           stats,

@@ -94,6 +94,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   ['userConfig', 'cliOption'].forEach((configType) => ctx.registerConfig(configType, config[configType]));
 
   let taskConfigs = await ctx.setup();
+  // merge task config with built-in config
+  taskConfigs = mergeTaskConfig(taskConfigs, { port: commandArgs.port });
+  const webTaskConfig = taskConfigs.find(({ name }) => name === 'web');
 
   // get userConfig after setup because of userConfig maybe modified by plugins
   const { userConfig } = ctx;
@@ -104,8 +107,14 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const coreEnvKeys = getCoreEnvKeys();
 
   const routesInfo = await generateRoutesInfo(rootDir, routesConfig);
+
   // add render data
-  generator.setRenderData({ ...routesInfo, runtimeModules, coreEnvKeys });
+  generator.setRenderData({
+    ...routesInfo,
+    runtimeModules,
+    coreEnvKeys,
+    basename: webTaskConfig.config.basename,
+  });
   dataCache.set('routes', JSON.stringify(routesInfo.routeManifest));
 
   // render template before webpack compile
@@ -116,15 +125,13 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   );
   consola.debug('template render cost:', new Date().getTime() - renderStart);
 
-  // merge task config with built-in config
-  taskConfigs = mergeTaskConfig(taskConfigs, { port: commandArgs.port });
 
   const isCSR = process.env.ICE_CORE_SSG == 'false' && process.env.ICE_CORE_SSR == 'false';
 
   // create serverCompiler with task config
   const serverCompiler = createServerCompiler({
     rootDir,
-    task: taskConfigs.find(({ name }) => name === 'web'),
+    task: webTaskConfig,
     command,
     serverBundle: server.bundle,
     swcOptions: {
