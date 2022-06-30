@@ -1,5 +1,6 @@
 import React from 'react';
 import { expect, it, describe } from 'vitest';
+import Children from '../src/children';
 import { render } from '@testing-library/react';
 
 const arrText = ['hello', 'rax'];
@@ -9,7 +10,7 @@ describe('children', () => {
     function Hello({ children }) {
       return <div data-testid="test">
         {
-          React.Children.map(children, (child, i) => {
+          Children.map(children, (child, i) => {
             if (i === 0) {
               return <span>{arrText[1]}</span>
             }
@@ -35,7 +36,7 @@ describe('children', () => {
 
   it('should work with forEach', () => {
     function Hello({ children }) {
-      React.Children.forEach(children, (child, i) => {
+      Children.forEach(children, (child, i) => {
         expect(child.type).toBe('span');
         expect(child.props.children).toBe(arrText[i]);
       });
@@ -54,7 +55,7 @@ describe('children', () => {
 
   it('should work with count', () => {
     function Hello({ children }) {
-      expect(React.Children.count(children)).toBe(arrText.length);
+      expect(Children.count(children)).toBe(arrText.length);
       return children
     }
     
@@ -71,7 +72,7 @@ describe('children', () => {
   it('should work with only', () => {
     let child = <span>{arrText[0]}</span>;
     function Hello({ children }) {
-      expect(React.Children.only(children)).toBe(child);
+      expect(Children.only(children)).toBe(child);
       return children
     }
     
@@ -88,7 +89,7 @@ describe('children', () => {
 
   it('should work with toArray', () => {
     function Hello({ children }) {
-      expect(React.Children.toArray(children).length).toBe(arrText.length);
+      expect(Children.toArray(children).length).toBe(arrText.length);
       return children
     }
     
@@ -111,7 +112,7 @@ describe('children', () => {
         {one}
       </div>
     );
-    const mappedChildren = React.Children.map(
+    const mappedChildren = Children.map(
       instance.props.children,
       kid => kid,
     );
@@ -130,7 +131,7 @@ describe('children', () => {
         <p />
       </div>
     );
-    const mappedChildren = React.Children.map(
+    const mappedChildren = Children.map(
       instance.props.children,
       // Try a few things: keyed, unkeyed, hole, and a cloned element.
       kid => [
