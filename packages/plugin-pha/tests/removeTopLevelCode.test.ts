@@ -73,4 +73,11 @@ describe('remove top level code', () => {
     const content = generate(ast).code;
     expect(content).toBe('');
   });
+
+  it('remove variable declaration code', () => {
+    const ast = parse(fs.readFileSync(path.join(__dirname, './fixtures/vars.ts'), 'utf-8'), parserOptions);
+    traverse(ast, removeTopLevelCodePlugin());
+    const content = generate(ast).code;
+    expect(content.replace(/\n/g, '').replace(/\s+/g, ' ')).toBe(`import c from 'c';import d from 'd';const [x] = c;const { k} = d;export function getConfig() { return { x, k };}`);
+  });
 })
