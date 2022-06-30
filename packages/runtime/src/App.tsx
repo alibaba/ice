@@ -27,7 +27,7 @@ export default function App(props: Props) {
     RouteWrappers,
   } = props;
 
-  const { appConfig, routes: originRoutes } = useAppContext();
+  const { appConfig, routes: originRoutes, basename } = useAppContext();
   const { strict, errorBoundary } = appConfig.app;
   const StrictMode = strict ? React.StrictMode : React.Fragment;
 
@@ -51,7 +51,7 @@ export default function App(props: Props) {
       navigator={navigator}
       static={staticProp}
       routes={routes}
-      basename={appConfig?.router?.basename}
+      basename={basename || appConfig?.router?.basename}
     />
   );
 

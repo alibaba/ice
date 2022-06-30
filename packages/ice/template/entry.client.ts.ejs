@@ -8,5 +8,8 @@ runClientApp({
   app,
   runtimeModules,
   routes,
-  Document
+  Document,
+<% if (basename) { %>
+  basename: '<%- basename %>'
+<% } %>
 });

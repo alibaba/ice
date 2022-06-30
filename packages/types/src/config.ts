@@ -107,4 +107,6 @@ export interface Config {
   devServer?: DevServerConfiguration;
 
   fastRefresh?: boolean;
+
+  basename?: string;
 }
