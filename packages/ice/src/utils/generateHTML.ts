@@ -20,7 +20,6 @@ export default async function generateHTML(options: Options) {
     entry,
     outputDir,
     documentOnly,
-    basename,
   } = options;
 
   let serverEntry;
@@ -40,7 +39,7 @@ export default async function generateHTML(options: Options) {
     const routePath = paths[i];
 
     const req = {
-      url: path.join(basename || '', routePath),
+      url: routePath,
     };
 
     const serverContext: ServerContext = {

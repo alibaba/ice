@@ -5,7 +5,6 @@ import type { Context, TaskConfig } from 'build-scripts';
 import type { StatsError } from 'webpack';
 import type { Config } from '@ice/types';
 import type { ServerCompiler } from '@ice/types/esm/plugin.js';
-import type { AppConfig } from '@ice/runtime';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
@@ -17,7 +16,6 @@ const build = async (
   context: Context<Config>,
   taskConfigs: TaskConfig<Config>[],
   serverCompiler: ServerCompiler,
-  appConfig: AppConfig,
 ) => {
   const { applyHook, commandArgs, command, rootDir, userConfig } = context;
   const webpackConfigs = taskConfigs.map(({ config }) => getWebpackConfig({
@@ -68,7 +66,7 @@ const build = async (
       } else {
         compiler?.close?.(() => {});
         const isSuccessful = !messages.errors.length;
-        const { outputDir, basename } = taskConfigs.find(({ name }) => name === 'web').config;
+        const { outputDir } = taskConfigs.find(({ name }) => name === 'web').config;
         const { ssg, ssr, server } = userConfig;
         // compile server bundle
         const entryPoint = path.join(rootDir, SERVER_ENTRY);
@@ -92,7 +90,6 @@ const build = async (
           outputDir,
           entry: serverEntry,
           documentOnly: !ssg && !ssr,
-          basename: basename || appConfig?.router?.basename,
         });
         resolve({
           stats,
