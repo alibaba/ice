@@ -113,7 +113,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     ...routesInfo,
     runtimeModules,
     coreEnvKeys,
-    basename: webTaskConfig.config.basename,
+    basename: webTaskConfig.config.basename || '/',
   });
   dataCache.set('routes', JSON.stringify(routesInfo.routeManifest));
 
@@ -162,7 +162,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       if (command === 'start') {
         return await start(ctx, taskConfigs, serverCompiler);
       } else if (command === 'build') {
-        return await build(ctx, taskConfigs, serverCompiler, appConfig);
+        return await build(ctx, taskConfigs, serverCompiler);
       }
     },
   };

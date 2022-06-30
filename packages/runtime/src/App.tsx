@@ -51,7 +51,7 @@ export default function App(props: Props) {
       navigator={navigator}
       static={staticProp}
       routes={routes}
-      basename={basename || appConfig?.router?.basename}
+      basename={basename}
     />
   );
 
