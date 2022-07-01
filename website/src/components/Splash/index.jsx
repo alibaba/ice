@@ -8,9 +8,9 @@ function Splash() {
     <header>
       <div className={styles.splash}>
         <div className={styles['title-container']}>
-          <h1 className={styles.title}>飞冰（ICE） 3.0</h1>
+          <h1 className={styles.title}>飞冰 (ICE)</h1>
           <p className={styles.subtitle}>
-            基于 React 的应用研发框架
+            基于 React 的应用研发框架，开箱即用，同时支持移动端和桌面端
           </p>
           <div className={styles.githubStars}>
             <iframe
