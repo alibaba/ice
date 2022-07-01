@@ -43,7 +43,8 @@ jobs:
       # 部署到 GitHub Pages
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.0
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/release-next'
         with:
           BRANCH: gh-pages
           FOLDER: website/build
+          repositoryName: ice-lab/site-v3

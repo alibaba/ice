@@ -12,15 +12,18 @@ module.exports = function getDocsFromDir(dir) {
     return (matter(fs.readFileSync(filepath, 'utf-8')).data || {}).order || 100;
   }
 
+  function isDocHide(filepath) {
+    return (matter(fs.readFileSync(filepath, 'utf-8')).data || {}).hide || false;
+  }
+
   const docs = glob.sync('*.md', {
     cwd: docsDir,
     // ignore: 'README.md',
   });
 
   const result = docs
-    .map((doc) => {
-      return path.join(docsDir, doc);
-    })
+    .map((doc) => path.join(docsDir, doc))
+    .filter((doc) => !isDocHide(doc))
     .sort((a, b) => {
       const orderA = getMarkdownOrder(a);
       const orderB = getMarkdownOrder(b);

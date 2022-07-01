@@ -14533,7 +14533,7 @@ packages:
       uglify-js:
         optional: true
     dependencies:
-      '@swc/core': 1.2.168
+      esbuild: 0.14.38
       jest-worker: 27.5.1
       schema-utils: 3.1.1
       serialize-javascript: 6.0.0
@@ -15521,7 +15521,6 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
-    dev: true
 
   /webpack/5.72.0_@swc+core@1.2.168:
     resolution: {integrity: sha512-qmSmbspI0Qo5ld49htys8GY9XhS9CGqFoHTsOVAnjBdg0Zn79y135R+k4IR4rKK6+eKaabMhJwiVB7xw0SJu5w==}

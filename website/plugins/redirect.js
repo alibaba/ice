@@ -5,34 +5,34 @@ module.exports = function (context, options) {
       const { createData, addRoute } = actions;
 
       const routes = [
-        {
-          from: '/docs/guide/advance/fusion',
-          to: '/docs/plugin/list/fusion',
-        },
-        {
-          from: '/docs/guide/advance/antd',
-          to: '/docs/plugin/list/antd',
-        },
-        {
-          from: '/docs/guide/develop/plugin-dev',
-          to: '/docs/plugin/develop/start',
-        },
-        {
-          from: '/docs/guide/develop/plugin-build',
-          to: '/docs/plugin/develop/build',
-        },
-        {
-          from: '/docs/guide/develop/plugin-runtime',
-          to: '/docs/plugin/develop/runtime',
-        },
-        {
-          from: '/docs/guide/develop/plugin-list',
-          to: '/docs/plugin/list/moment-locales',
-        },
-        {
-          from: '/docs/guide/basic/api',
-          to: '/docs/config/about',
-        },
+        // {
+        //   from: '/docs/guide/advance/fusion',
+        //   to: '/docs/plugin/list/fusion',
+        // },
+        // {
+        //   from: '/docs/guide/advance/antd',
+        //   to: '/docs/plugin/list/antd',
+        // },
+        // {
+        //   from: '/docs/guide/develop/plugin-dev',
+        //   to: '/docs/plugin/develop/start',
+        // },
+        // {
+        //   from: '/docs/guide/develop/plugin-build',
+        //   to: '/docs/plugin/develop/build',
+        // },
+        // {
+        //   from: '/docs/guide/develop/plugin-runtime',
+        //   to: '/docs/plugin/develop/runtime',
+        // },
+        // {
+        //   from: '/docs/guide/develop/plugin-list',
+        //   to: '/docs/plugin/list/moment-locales',
+        // },
+        // {
+        //   from: '/docs/guide/basic/api',
+        //   to: '/docs/config/about',
+        // },
       ];
 
       const redirectConfigPath = await createData(

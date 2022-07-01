@@ -1,4 +1,4 @@
 ---
 title: 使用 fusion 组件
-order: 2
+order: 3
 ---
