@@ -5,7 +5,7 @@ on:
       - 'website/**'
     branches:
       - master
-      - release-next
+  workflow_dispatch:
 
 # 任务
 jobs:
