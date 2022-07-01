@@ -49,4 +49,3 @@ jobs:
         with:
           BRANCH: gh-pages
           FOLDER: website/build
-          repositoryName: ice-lab/site-v3
