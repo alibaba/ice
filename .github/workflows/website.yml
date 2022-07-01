@@ -5,6 +5,7 @@ on:
       - 'website/**'
     branches:
       - master
+      - release-next
 
 # 任务
 jobs:
