@@ -35,7 +35,10 @@ const createPHAMiddleware = ({
         if (requestAppWorker) {
           sendResponse(
             res,
-            await getAppWorkerContent(compiler, appWorkerPath, path.join(outputDir, 'app-worker.js')),
+            await getAppWorkerContent(compiler, {
+              entry: appWorkerPath,
+              outfile: path.join(outputDir, 'app-worker.js'),
+            }),
             'text/javascript',
           );
           return;
