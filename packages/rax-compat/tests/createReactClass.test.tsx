@@ -1,6 +1,5 @@
 import { expect, it, describe } from 'vitest';
 import React from 'react';
-import { Component, createElement } from '../src/index';
 import createReactClass from '../src/create-class';
 import { render } from '@testing-library/react';
 

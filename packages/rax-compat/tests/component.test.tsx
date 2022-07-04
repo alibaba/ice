@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect, it, describe } from 'vitest';
-import { Component, PureComponent, memo, createElement } from '../src/index';
+import { Component, PureComponent, memo } from '../src/index';
 import { render } from '@testing-library/react';
 
 describe('component', () => {

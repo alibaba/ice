@@ -1,5 +1,5 @@
 import { expect, it, describe } from 'vitest';
-import { Component, createElement } from '../src/index';
+import { Component } from '../src/index';
 import createFactory from '../src/create-factory';
 import { render } from '@testing-library/react';
 
