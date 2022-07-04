@@ -12,10 +12,18 @@ export interface Options {
   compiler: Compiler;
 }
 
-export async function getAppWorkerContent(compiler: Compiler, entry: string, outfile: string): Promise<string> {
+export async function getAppWorkerContent(
+  compiler: Compiler,
+  options: {
+    entry: string;
+    outfile: string;
+    minify?: boolean;
+  }): Promise<string> {
+  const { entry, outfile, minify = false } = options;
   const appWorkerFile = await compiler({
     entry,
     outfile,
+    minify,
     timestamp: false,
   });
   return fs.readFileSync(appWorkerFile, 'utf-8');
@@ -49,7 +57,11 @@ export default async function generateManifest({
   const appWorkerPath = getAppWorkerUrl(manifest, path.join(rootDir, 'src'));
   if (appWorkerPath) {
     manifest = rewriteAppWorker(manifest);
-    await getAppWorkerContent(compiler, appWorkerPath, path.join(outputDir, 'app-worker.js'));
+    await getAppWorkerContent(compiler, {
+      entry: appWorkerPath,
+      outfile: path.join(outputDir, 'app-worker.js'),
+      minify: true,
+    });
   }
   const phaManifest = await parseManifest(manifest, {
     ...parseOptions,

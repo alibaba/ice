@@ -13,6 +13,7 @@ import type { Manifest } from './types.js';
 export type Compiler = (options: {
   entry: string;
   outfile: string;
+  minify?: boolean;
   timestamp?: boolean;
   removeCode?: boolean;
 }) => Promise<string>;
@@ -47,11 +48,12 @@ const plugin: Plugin<PluginOptions> = ({ onGetConfig, onHook, context, generator
     urlPrefix = command === 'start' ? urls.lanUrlForTerminal : process.env.DEPLOY_PATH;
 
     compiler = async (options) => {
-      const { entry, outfile, removeCode, timestamp = true } = options;
+      const { entry, outfile, removeCode, timestamp = true, minify = false } = options;
       await serverCompiler({
         entryPoints: [entry],
         format: 'esm',
         outfile,
+        minify,
         inject: [],
         plugins: removeCode ? [removeCodePlugin()] : [],
       });
