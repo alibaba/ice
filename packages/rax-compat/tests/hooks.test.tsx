@@ -27,9 +27,8 @@ describe('hooks', () => {
         expect(useEffectFunc).toHaveBeenCalled();
       }
     }, 'func')
-    function func() {}
     function App() {
-      useEffect(func, []);
+      useEffect(useEffectFunc, []);
       
       return <div>useEffect</div>;
     }
@@ -43,9 +42,8 @@ describe('hooks', () => {
         expect(useEffectFunc).toHaveBeenCalled();
       }
     }, 'func')
-    function func() {}
     function App() {
-      useLayoutEffect(func, []);
+      useLayoutEffect(useEffectFunc, []);
       
       return <div>useEffect</div>;
     }
