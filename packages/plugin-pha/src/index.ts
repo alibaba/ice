@@ -42,7 +42,7 @@ const plugin: Plugin<PluginOptions> = ({ onGetConfig, onHook, context, generator
     const taskConfig = taskConfigs.find(({ name }) => name === 'web').config;
     outputDir = taskConfig.outputDir;
     // need absolute path for pha dev
-    publicPath = command === 'start' ? getDevPath(urls.lanUrlForTerminal) : taskConfig.publicPath;
+    publicPath = command === 'start' ? getDevPath(urls.lanUrlForTerminal) : (taskConfig.publicPath || '/');
     // process.env.DEPLOY_PATH is defined by cloud environment such as DEF plugin
     urlPrefix = command === 'start' ? urls.lanUrlForTerminal : process.env.DEPLOY_PATH;
 
