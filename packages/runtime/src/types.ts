@@ -35,6 +35,8 @@ export interface AppExport {
 
 // app.getData & route.getData
 export type GetData = (ctx: RequestContext) => Promise<RouteData> | RouteData;
+export type GetServerData = (ctx: RequestContext) => Promise<RouteData> | RouteData;
+export type GetStaticData = (ctx: RequestContext) => Promise<RouteData> | RouteData;
 // route.getConfig
 export type GetConfig = (args: { data: RouteData }) => RouteConfig;
 
@@ -87,6 +89,8 @@ export interface RequestContext extends ServerContext {
 
 export interface RouteComponent {
   default: ComponentType<any>;
+  getStaticData?: GetStaticData;
+  getServerData?: GetServerData;
   getData?: GetData;
   getConfig?: GetConfig;
 }
@@ -186,3 +190,5 @@ export interface RouteMatch {
    */
   route: RouteItem;
 }
+
+export type RenderMode = 'SSR' | 'SSG';

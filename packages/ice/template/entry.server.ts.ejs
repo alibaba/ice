@@ -1,13 +1,9 @@
-// Define process.env in top make it possible to use ICE_CORE_* in @ice/runtime, esbuild define options doesn't have the ability
-// The runtime value such as __process.env.ICE_CORE_*__ will be replaced by esbuild define, so the value is real-time
-<% coreEnvKeys.forEach((key) => { %>
-process.env.<%= key %> = __process.env.<%= key %>__;
-<% }) %>
-
+import './env.server';
 import * as runtime from '@ice/runtime/server';
 import * as app from '@/app';
 import runtimeModules from './runtimeModules';
 import Document from '@/document';
+import type { RenderMode } from '@ice/runtime';
 import assetsManifest from './assets-manifest.json';
 import routes from './routes';
 
@@ -16,30 +12,51 @@ const getRouterBasename = () => {
   return '<%- basename %>' || appConfig?.router?.basename;
 }
 
-export async function renderToHTML(requestContext, documentOnly?: boolean) {
+const setRuntimeEnv = (renderMode) => {
+  if (renderMode === 'SSG') {
+    process.env.ICE_CORE_SSG = 'true';
+  } else {
+    process.env.ICE_CORE_SSR = 'true';
+  }
+}
+
+interface RenderOptions {
+  documentOnly?: boolean;
+  renderMode?: RenderMode;
+}
+
+export async function renderToHTML(requestContext, options: RenderOptions = {}) {
+  const { documentOnly, renderMode = 'SSR' } = options;
+  setRuntimeEnv(renderMode);
+
   const basename = getRouterBasename();
   // add basename for req.url so we don't need to add basename for mocked url
   requestContext.req.url = `${basename}${requestContext.req.url.replace(/^\//, '')}`;
+
   return await runtime.renderToHTML(requestContext, {
     app,
     assetsManifest,
     routes,
     runtimeModules,
     Document,
-    documentOnly,
     basename,
+    documentOnly,
+    renderMode,
   });
 }
 
-export async function renderToResponse(requestContext, documentOnly?: boolean) {
-  const appConfig = runtime.getAppConfig(app);
+export async function renderToResponse(requestContext, options: RenderOptions = {}) {
+  const { documentOnly, renderMode = 'SSR' } = options;
+  setRuntimeEnv(options);
+
   runtime.renderToResponse(requestContext, {
     app,
     assetsManifest,
     routes,
     runtimeModules,
     Document,
-    documentOnly,
     basename: getRouterBasename(),
+    documentOnly,
+    renderMode,
   });
 }

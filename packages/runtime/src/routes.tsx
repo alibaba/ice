@@ -4,7 +4,7 @@ import type { RouteObject } from 'react-router-dom';
 import { matchRoutes as originMatchRoutes } from 'react-router-dom';
 import { matchRoutesSingle } from './utils/history-single.js';
 import RouteWrapper from './RouteWrapper.js';
-import type { RouteItem, RouteModules, RouteWrapperConfig, RouteMatch, RequestContext, RoutesConfig, RoutesData } from './types.js';
+import type { RouteItem, RouteModules, RouteWrapperConfig, RouteMatch, RequestContext, RoutesConfig, RoutesData, RenderMode } from './types.js';
 import { useAppContext } from './AppContext.js';
 
 type RouteModule = Pick<RouteItem, 'id' | 'load'>;
@@ -43,6 +43,7 @@ export async function loadRoutesData(
   matches: RouteMatch[],
   requestContext: RequestContext,
   routeModules: RouteModules,
+  renderMode?: RenderMode,
 ): Promise<RoutesData> {
   const routesData: RoutesData = {};
 
@@ -65,10 +66,23 @@ export async function loadRoutesData(
     matches.map(async (match) => {
       const { id } = match.route;
       const routeModule = routeModules[id];
-      const { getData } = routeModule ?? {};
+      const { getData, getServerData, getStaticData } = routeModule ?? {};
 
-      if (getData) {
-        routesData[id] = await getData(requestContext);
+      let dataLoader;
+
+      // SSG -> getStaticData
+      // SSR -> getServerData || getData
+      // CSR -> getData
+      if (renderMode === 'SSG') {
+        dataLoader = getStaticData;
+      } else if (renderMode === 'SSR') {
+        dataLoader = getServerData || getData;
+      } else {
+        dataLoader = getData;
+      }
+
+      if (dataLoader) {
+        routesData[id] = await dataLoader(requestContext);
       }
     }),
   );

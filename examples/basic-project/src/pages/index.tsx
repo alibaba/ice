@@ -33,6 +33,7 @@ export default function Home(props) {
         <div>foo: {JSON.stringify(foo)}</div>
         <div>users: {JSON.stringify(users)}</div>
         <div>userInfo: {JSON.stringify(userInfo)}</div>
+        <div>data from: <span id="data-from">{data.from}</span></div>
       </div>
     </>
   );
@@ -66,4 +67,20 @@ export function getData({ pathname, query }) {
       });
     }, 1 * 100);
   });
+}
+
+export function getServerData() {
+  return {
+    name: 'Home',
+    count: 100,
+    from: 'getServerData',
+  };
+}
+
+export function getStaticData() {
+  return {
+    name: 'Home',
+    count: 100,
+    from: 'getStaticData',
+  };
 }

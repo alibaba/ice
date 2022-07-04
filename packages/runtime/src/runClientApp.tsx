@@ -21,6 +21,7 @@ interface RunClientAppOptions {
   runtimeModules: RuntimeModules;
   Document: ComponentWithChildren<{}>;
   basename?: string;
+  hydrate: boolean;
 }
 
 export default async function runClientApp(options: RunClientAppOptions) {
@@ -30,6 +31,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     runtimeModules,
     Document,
     basename,
+    hydrate,
   } = options;
   const appContextFromServer: AppContext = (window as any).__ICE_APP_CONTEXT__ || {};
   let { routesData, routesConfig, assetsManifest } = appContextFromServer;
@@ -61,7 +63,8 @@ export default async function runClientApp(options: RunClientAppOptions) {
   };
 
   const runtime = new Runtime(appContext);
-  if (process.env.ICE_CORE_SSR === 'true' || process.env.ICE_CORE_SSG === 'true') {
+
+  if (hydrate) {
     runtime.setRender((container, element) => {
       ReactDOM.hydrateRoot(container, element);
     });
