@@ -103,10 +103,12 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const { routes: routesConfig, server } = userConfig;
 
   // load dotenv, set to process.env
-  await initProcessEnv(rootDir, command, commandArgs, userConfig);
+  await initProcessEnv(rootDir, command, commandArgs);
   const coreEnvKeys = getCoreEnvKeys();
 
   const routesInfo = await generateRoutesInfo(rootDir, routesConfig);
+
+  const csr = !userConfig.ssr && !userConfig.ssg;
 
   // add render data
   generator.setRenderData({
@@ -114,6 +116,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     runtimeModules,
     coreEnvKeys,
     basename: webTaskConfig.config.basename || '/',
+    hydrate: !csr,
   });
   dataCache.set('routes', JSON.stringify(routesInfo.routeManifest));
 
@@ -125,13 +128,15 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   );
   consola.debug('template render cost:', new Date().getTime() - renderStart);
 
-
   // create serverCompiler with task config
   const serverCompiler = createServerCompiler({
     rootDir,
     task: webTaskConfig,
     command,
     serverBundle: server.bundle,
+    swcOptions: {
+      removeExportExprs: csr ? ['default', 'getData', 'getServerData', 'getStaticData'] : [],
+    },
   });
   let appConfig: AppConfig;
   try {

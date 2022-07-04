@@ -3,7 +3,6 @@ import * as fs from 'fs';
 import * as dotenv from 'dotenv';
 import { expand as dotenvExpand } from 'dotenv-expand';
 import type { CommandArgs, CommandName } from 'build-scripts';
-import type { UserConfig } from '@ice/types';
 
 export type AppConfig = Record<string, any>;
 export interface Envs {
@@ -17,7 +16,6 @@ export async function initProcessEnv(
   rootDir: string,
   command: CommandName,
   commandArgs: CommandArgs,
-  userConfig: UserConfig,
 ): Promise<void> {
   const { mode } = commandArgs;
 
@@ -56,8 +54,10 @@ export async function initProcessEnv(
   process.env.ICE_CORE_ROUTER = 'true';
   process.env.ICE_CORE_ERROR_BOUNDARY = 'true';
   process.env.ICE_CORE_INITIAL_DATA = 'true';
-  process.env.ICE_CORE_SSG = userConfig.ssg ? 'true' : 'false';
-  process.env.ICE_CORE_SSR = userConfig.ssr ? 'true' : 'false';
+
+  // set ssr and ssg env to false, for remove dead code in CSR.
+  process.env.ICE_CORE_SSG = 'false';
+  process.env.ICE_CORE_SSR = 'false';
 }
 
 export const updateRuntimeEnv = (appConfig: AppConfig, options: EnvOptions) => {

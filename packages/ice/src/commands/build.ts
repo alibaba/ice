@@ -73,6 +73,7 @@ const build = async (
         const esm = server?.format === 'esm';
         const outJSExtension = esm ? '.mjs' : '.cjs';
         const serverEntry = path.join(outputDir, SERVER_OUTPUT_DIR, `index${outJSExtension}`);
+
         await serverCompiler({
           entryPoints: { index: entryPoint },
           outdir: path.join(outputDir, SERVER_OUTPUT_DIR),
@@ -85,12 +86,19 @@ const build = async (
           removeExportExprs: documentOnly ? ['default', 'getData'] : [],
           jsxTransform: true,
         });
+
+        let renderMode;
+        if (ssg) {
+          renderMode = 'SSG';
+        }
+
         // generate html
         await generateHTML({
           rootDir,
           outputDir,
           entry: serverEntry,
           documentOnly: !ssg && !ssr,
+          renderMode,
         });
         resolve({
           stats,

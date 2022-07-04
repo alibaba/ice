@@ -33,6 +33,7 @@ import type {
   ServerContext,
   AppProvider,
   RouteWrapper,
+  RenderMode,
 } from './types.js';
 import { matchRoutes } from './routes.js';
 import dataLoader from './dataLoader.js';
@@ -77,4 +78,5 @@ export type {
   ServerContext,
   AppProvider,
   RouteWrapper,
+  RenderMode,
 };

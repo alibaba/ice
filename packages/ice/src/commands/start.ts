@@ -38,15 +38,21 @@ const start = async (
     setupMiddlewares: (middlewares, devServer) => {
       const { outputDir } = taskConfigs.find(({ name }) => name === 'web').config;
       const { ssg, ssr, server } = userConfig;
-      const documentOnly = !ssr && !ssg;
-      const serverCompileMiddleware = createCompileMiddleware({
-        rootDir,
-        outputDir,
-        serverCompiler,
-        server,
-        documentOnly,
+
+      const serverCompileMiddleware = createCompileMiddleware({ rootDir, outputDir, serverCompiler, server });
+
+      let renderMode;
+      // If ssr is set to true, use ssr for preview.
+      if (ssr) {
+        renderMode = 'SSR';
+      } else if (ssg) {
+        renderMode = 'SSG';
+      }
+
+      const serverRenderMiddleware = createRenderMiddleware({
+        documentOnly: !ssr && !ssg,
+        renderMode,
       });
-      const serverRenderMiddleware = createRenderMiddleware({ documentOnly });
       const insertIndex = middlewares.findIndex(({ name }) => name === 'serve-index');
       middlewares.splice(
         insertIndex, 0,
