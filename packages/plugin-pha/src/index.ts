@@ -23,6 +23,10 @@ interface PluginOptions {
   template: boolean;
 }
 
+function getDevPath(url: string): string {
+  return url.startsWith('http') ? `${new URL(url).origin}/` : url;
+}
+
 const plugin: Plugin<PluginOptions> = ({ onGetConfig, onHook, context, generator }, options) => {
   const { template } = options || {};
   const { command, rootDir } = context;
@@ -37,7 +41,8 @@ const plugin: Plugin<PluginOptions> = ({ onGetConfig, onHook, context, generator
   onHook(`before.${command as 'start' | 'build'}.run`, async ({ serverCompiler, taskConfigs, urls }) => {
     const taskConfig = taskConfigs.find(({ name }) => name === 'web').config;
     outputDir = taskConfig.outputDir;
-    publicPath = taskConfig.publicPath || '/';
+    // need absolute path for pha dev
+    publicPath = command === 'start' ? getDevPath(urls.lanUrlForTerminal) : taskConfig.publicPath;
     // process.env.DEPLOY_PATH is defined by cloud environment such as DEF plugin
     urlPrefix = command === 'start' ? urls.lanUrlForTerminal : process.env.DEPLOY_PATH;
 
