@@ -83,6 +83,7 @@ const build = async (
         }, {
           // remove components and getData when document only
           removeExportExprs: documentOnly ? ['default', 'getData'] : [],
+          jsxTransform: true,
         });
         // generate html
         await generateHTML({
