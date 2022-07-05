@@ -28,32 +28,39 @@ export default defineAppConfig({
 ### app
 
 #### `rootId`
+
 根节点 id
 
 - 类型：`string`
 - 默认值 `ice-container`
 
 #### `strict`
+
 是否开启 React 的严格模式 (React.StrictMode)
 
 - 类型 `boolean`
 - 默认值 `false`
 
 #### `errorBoundary`
+
 是否启用内置的错误边界捕获能力
+
 - 类型 `boolean`
 - 默认值 `false`
 
 ### router
 
 #### `type` 
+
 路由类型
 
 - 类型 `string`，可选值为 `hash` 或 `browser`
 - 默认为 `browser`
 
 #### `basename`
+
 路由 basename
+
 - 类型 `string`
 - 默认值 `/`
 
