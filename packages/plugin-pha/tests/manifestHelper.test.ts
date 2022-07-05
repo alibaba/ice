@@ -415,7 +415,6 @@ describe('parse manifest', () => {
       ...options,
       urlPrefix: '{{xxx}}/',
     });
-    console.log('manifest', manifest);
     expect(manifest.tab_bar?.url).toBe('{{xxx}}/tabBar');
     expect(manifest.tab_bar?.name).toBe('{{xxx}}');
   })
