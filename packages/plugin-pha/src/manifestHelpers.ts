@@ -131,12 +131,11 @@ async function getPageManifest(page: string | Page, options: ParseOptions): Prom
     };
     if (template && !Array.isArray(pageConfig.frames)) {
       pageManifest.document = await renderPageDocument(page, serverEntry);
-    } else {
-      pageManifest.path = `${getPageUrl(page, options)}${queryParams ? `?${queryParams}` : ''}`;
     }
+    // always need path for page item
+    pageManifest.path = `${getPageUrl(page, options)}${queryParams ? `?${queryParams}` : ''}`;
     return pageManifest;
   } else if (page.url) {
-    // url frame
     // url has the highest priority to overwrite config path
     const { url, ...rest } = page;
     return {
