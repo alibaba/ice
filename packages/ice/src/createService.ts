@@ -113,7 +113,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     ...routesInfo,
     runtimeModules,
     coreEnvKeys,
-    basename: webTaskConfig.config.basename || '/',
+    basename: webTaskConfig.config.basename,
   });
   dataCache.set('routes', JSON.stringify(routesInfo.routeManifest));
 
