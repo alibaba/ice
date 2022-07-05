@@ -56,8 +56,8 @@ export async function generateRoutesInfo(rootDir: string, routesConfig: UserConf
       return `${str}
   export default {
     ${
-      imports.map(([id, importKey]) => {
-        return `'${id}': ${importKey},`;
+      imports.map(([, importKey, routePath]) => {
+        return `'${routePath}': ${importKey},`;
       }).join('\n')
     }
   };`;
@@ -108,12 +108,12 @@ function createDefaultNotFoundRoute(routeManifest: RouteManifest): ConfigRoute {
 function generateRouteConfig(
   routes: NestedRouteManifest[],
   exportKey: string,
-  template: (importStr: string, imports: [string, string][]) => string): string {
+  template: (importStr: string, imports: [string, string, string][]) => string): string {
   const imports = [];
 
   function importConfig(routes: NestedRouteManifest[]) {
     return routes.reduce((prev, route) => {
-      const { children, file, id, exports } = route;
+      const { children, file, id, exports, path: routePath } = route;
 
       if (exports.indexOf(exportKey) === -1) {
         return prev;
@@ -124,7 +124,7 @@ function generateRouteConfig(
       const componentPath = path.isAbsolute(componentFile) ? componentFile : `@/pages/${componentFile}`;
 
       const loaderName = `${exportKey}_${id}`.replace('/', '_');
-      imports.push([id, loaderName]);
+      imports.push([id, loaderName, routePath || '/']);
       let str = `import { ${exportKey} as ${loaderName} } from '${componentPath}';\n`;
 
       if (children) {
