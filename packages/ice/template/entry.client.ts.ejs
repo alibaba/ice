@@ -6,7 +6,7 @@ import Document from '@/document';
 
 const getRouterBasename = () => {
   const appConfig = getAppConfig(app);
-  return '<%- basename %>' || appConfig?.router?.basename;
+  return '<%- basename %>' || appConfig?.router?.basename || '';
 }
 
 runClientApp({
