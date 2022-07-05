@@ -111,10 +111,9 @@ function generateRouteConfig(
   template: (importStr: string, imports: [string, string, string][]) => string): string {
   const imports = [];
 
-  function importConfig(routes: NestedRouteManifest[]) {
+  function importConfig(routes: NestedRouteManifest[], parentPath: string) {
     return routes.reduce((prev, route) => {
-      const { children, file, id, exports, path: routePath } = route;
-
+      const { children, file, id, exports } = route;
       if (exports.indexOf(exportKey) === -1) {
         return prev;
       }
@@ -124,11 +123,13 @@ function generateRouteConfig(
       const componentPath = path.isAbsolute(componentFile) ? componentFile : `@/pages/${componentFile}`;
 
       const loaderName = `${exportKey}_${id}`.replace('/', '_');
-      imports.push([id, loaderName, routePath || '/']);
+      const routePath = route.path || (route.index ? 'index' : '/');
+      const fullPath = path.join(parentPath, routePath);
+      imports.push([id, loaderName, fullPath]);
       let str = `import { ${exportKey} as ${loaderName} } from '${componentPath}';\n`;
 
       if (children) {
-        str += importConfig(children);
+        str += importConfig(children, routePath);
       }
 
       prev += str;
@@ -136,5 +137,5 @@ function generateRouteConfig(
       return prev;
     }, '');
   }
-  return template(importConfig(routes), imports);
+  return template(importConfig(routes, ''), imports);
 }
