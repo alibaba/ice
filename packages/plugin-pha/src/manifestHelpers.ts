@@ -89,7 +89,7 @@ export function transformManifestKeys(manifest: Manifest, options?: TransformOpt
 }
 
 function getPageUrl(routeId: string, options: ParseOptions) {
-  const { urlPrefix, urlSuffix = '' } = options;
+  const { urlPrefix = '', urlSuffix = '' } = options;
   const splitCharacter = urlPrefix.endsWith('/') ? '' : '/';
   return `${urlPrefix}${splitCharacter}${routeId}${urlSuffix}`;
 }
