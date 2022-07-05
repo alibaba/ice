@@ -52,7 +52,7 @@ export function transformManifestKeys(manifest: Manifest, options?: TransformOpt
     if (!camelizeKeys.includes(key)) {
       transformKey = decamelize(key);
     }
-    // flatten window config
+
     if (typeof value === 'string' || typeof value === 'number') {
       data[transformKey] = value;
     } else if (Array.isArray(value)) {
@@ -158,7 +158,6 @@ function validateSource(source: string, key: string): boolean {
 }
 
 function parseRouteId(id: string): string {
-  // TODO: deal with route path which ends with index
   return id.replace(PAGE_SOURCE_REGEX, '');
 }
 

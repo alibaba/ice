@@ -1,5 +1,5 @@
 import { Link, useData, useConfig } from 'ice';
-console.log('test');
+
 export default function Blog() {
   const data = useData();
   const config = useConfig();
