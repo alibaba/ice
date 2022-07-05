@@ -7,7 +7,7 @@ import removeTopLevelCode from './removeTopLevelCode.js';
 
 // @ts-ignore @babel/traverse is not a valid export in esm
 const { default: traverse } = babelTraverse;
-// @ts-ignore @babel/traverse is not a valid export in esm
+// @ts-ignore @babel/generate is not a valid export in esm
 const { default: generate } = babelGenerate;
 
 const removeCodePlugin = (): Plugin => {
