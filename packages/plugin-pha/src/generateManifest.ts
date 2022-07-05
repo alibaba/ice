@@ -70,7 +70,7 @@ export default async function generateManifest({
   if (phaManifest?.tab_bar) {
     fs.writeFileSync(path.join(outputDir, 'manifest.json'), JSON.stringify(phaManifest), 'utf-8');
   } else {
-    const multipleManifest = getMultipleManifest(manifest);
+    const multipleManifest = getMultipleManifest(phaManifest);
     Object.keys(multipleManifest).forEach((key) => {
       fs.writeFileSync(path.join(outputDir, `${key}-manifest.json`), JSON.stringify(multipleManifest[key]), 'utf-8');
     });
