@@ -19,7 +19,7 @@ const getRouterBasename = () => {
 export async function renderToHTML(requestContext, documentOnly?: boolean) {
   const basename = getRouterBasename();
   // add basename for req.url so we don't need to add basename for mocked url
-  requestContext.req.url = `${basename}/${requestContext.req.url}`.replace(/^\/+/g, '/');
+  requestContext.req.url = `${basename}/${requestContext.req.url}`.replace(/\/+/g, '/');
   return await runtime.renderToHTML(requestContext, {
     app,
     assetsManifest,
