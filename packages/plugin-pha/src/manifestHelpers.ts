@@ -90,7 +90,8 @@ export function transformManifestKeys(manifest: Manifest, options?: TransformOpt
 
 function getPageUrl(routeId: string, options: ParseOptions) {
   const { urlPrefix, urlSuffix = '' } = options;
-  return `${urlPrefix}${routeId}${urlSuffix}`;
+  const splitCharacter = urlPrefix.endsWith('/') ? '' : '/';
+  return `${urlPrefix}${splitCharacter}${routeId}${urlSuffix}`;
 }
 
 async function getPageConfig(routeId: string, configEntry: string): Promise<MixedPage> {
