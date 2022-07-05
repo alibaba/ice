@@ -95,7 +95,7 @@ function getPageUrl(routeId: string, options: ParseOptions) {
 
 async function getPageConfig(routeId: string, configEntry: string): Promise<MixedPage> {
   const routesConfig = (await import(configEntry)).default;
-  const routeConfig = routesConfig![`/${routeId}`]?.() as MixedPage;
+  const routeConfig = routesConfig![`/${routeId}`]?.() as MixedPage || {};
   const filteredConfig = {};
   Object.keys(routeConfig).forEach((key) => {
     if (validPageConfigKeys.includes(key)) {
