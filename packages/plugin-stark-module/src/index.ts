@@ -96,18 +96,18 @@ const plugin: IPlugin = (
       baseConfig.module
         .rule(rule)
         .use('postcss-loader')
-        .loader(require.resolve('postcss-loader'))
-        .options((option) => option)
-        .tap((postLoaderOptions) => {
+        .tap((loaderOptions) => {
+          // eslint-disable-next-line import/no-dynamic-require, global-require
+          const postcssConfig = require(`${loaderOptions.config.path}/postcss.config`)();
           return {
-            ...postLoaderOptions,
-            postcssOptions: {
-              plugins: {
-                'postcss-prefix-selector': {
-                  prefix: '.' + options.cssNamespace,
-                },
-              },
-            },
+            ...postcssConfig,
+            plugins: [
+              ...postcssConfig.plugins,
+              // eslint-disable-next-line import/no-dynamic-require, global-require
+              require('postcss-prefix-selector')({
+                prefix: `.${options.cssNamespace}`,
+              }),
+            ],
           };
         });
     });
