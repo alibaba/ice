@@ -50,6 +50,10 @@ module.exports = (api, { target, webpackConfig }) => {
             from: path.resolve(rootDir, 'public'),
             to: path.resolve(rootDir, outputPath),
             noErrorOnMissing: true,
+            // skip for minimization
+            info: {
+              minimized: true,
+            },
             globOptions: {
               dot: true,
               gitignore: true,
