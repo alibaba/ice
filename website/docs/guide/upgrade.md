@@ -1,9 +1,9 @@
 ---
-title: 从 Rax 升级
+title: 从 Rax 迁移
 order: 20
 ---
 
-本文档面向的是使用 Rax App 的开发者，提供升级到 ICE 的方式。React 的社区生态显著优于 Rax，切换到 React 之后可以享受到更多的 React 生态，部分复杂场景（富文本、脑图等）可以大幅度降低成本。
+本文档面向的是使用 Rax App 的开发者，提供迁移到 ICE 的方式。React 的社区生态显著优于 Rax，切换到 React 之后可以享受到更多的 React 生态，部分复杂场景（富文本、脑图等）可以大幅度降低成本。
 
 ## 如何升级
 
@@ -37,9 +37,30 @@ export default defineConfig({
 
 ### Rax 核心 API
 
-@列一下 Rax 核心提供的 API 列表, 也包括之前 rax 1.0 移动到独立包的 API.
+`rax-compat` 会抹平 Rax 核心 API 与 React API 的诧异，用户使用 rax DSL 可以无缝衔接到 React Runtime 上，具体的 Rax 核心 API，可以参考[Rax 官网](https://rax.js.org/docs/api/DOM)。
 
 ### Appear & Disappear
+
+rax DSL 迁移用户依旧可以像之前一样使用 onAppear 以及 onDisapper 事件，如
+
+```jsx
+import { createElement } from "rax";
+
+function APP {
+  return <div
+    onAppear={() => {
+      alert('appear')
+    }}
+    onDisappear={() => {
+      alert('disappear')
+    }}
+  >
+    APP
+  </div>
+}
+```
+
+原 Rax DSL 迁移过来并使用兼容模式无需做任何改造，[appear-polyfill](https://www.npmjs.com/package/appear-polyfill) 会嵌入在 `rax-compat` 中自动做这部分处理。
 
 @ Rax 这边是直接支持了这个事件。
 @ 另外需要一篇文档来提供 ICE Appear 事件支持 (用组件支持).
