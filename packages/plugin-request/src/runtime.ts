@@ -33,7 +33,7 @@ function setAxiosInstance(requestConfig, axiosInstance) {
   });
 
   function isExist(handlers, [ fulfilled, rejected ]) {
-    return handlers.some(item => item.fulfilled === fulfilled && item.rejected === rejected)
+    return handlers.some(item => item.fulfilled === fulfilled && item.rejected === rejected);
   }
 
   // Add a request interceptor
