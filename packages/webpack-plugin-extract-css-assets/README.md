@@ -10,7 +10,7 @@
 
 - `outputPath` 默认值： `""` 提取后的文件目录前缀
 - `relativeCssPath` 默认值： `""` 提取的文件后相对于 css 的路径
-- `forceLocal` 默认值： `falsy` 是否 publicPath 为 http 网络路径时也强制生效
+- `forceLocal` 默认值： `false` 是否 publicPath 为 http 网络路径时也强制生效
 
 ## Usage
 
