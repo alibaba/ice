@@ -24,12 +24,17 @@ module.exports = (config, proxyConfig) => {
           },
           onError: function onError(err, req, res) {
             // proxy server error can't trigger onProxyRes
-            res.writeHead(500, {
-              'x-proxy-by': 'ice-proxy',
-              'x-proxy-match': match,
-              'x-proxy-target': target,
-            });
-            res.end(`proxy server error: ${err.message}`);
+            if (res) {
+              res.writeHead(500, {
+                'x-proxy-by': 'ice-proxy',
+                'x-proxy-match': match,
+                'x-proxy-target': target,
+              });
+              res.end(`proxy server error: ${err.message}`);
+            } else {
+              // res is undefined when proxy for websocket
+              console.log(`proxy server error: ${err.message}`);
+            }
           },
         }, proxyRule, { context: match });
       }
