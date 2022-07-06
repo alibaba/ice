@@ -60,10 +60,9 @@ function APP {
 }
 ```
 
-原 Rax DSL 迁移过来并使用兼容模式无需做任何改造，[appear-polyfill](https://www.npmjs.com/package/appear-polyfill) 会嵌入在 `rax-compat` 中自动做这部分处理。
+原 Rax DSL 迁移过来并使用兼容模式无需做任何改造，[appear-polyfill](https://www.npmjs.com/package/appear-polyfill) 会嵌入在 `rax-compat` 中自动做这部分处理，用户无需特殊处理以及引入。
 
-@ Rax 这边是直接支持了这个事件。
-@ 另外需要一篇文档来提供 ICE Appear 事件支持 (用组件支持).
+对于 React 用户，推荐使用 React 标准的方式，详情见[@待补充文档]()。
 
 ### 样式的处理
 
