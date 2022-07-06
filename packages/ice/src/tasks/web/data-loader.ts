@@ -28,7 +28,8 @@ const getTask = ({ rootDir, command }): Config => {
       hot: false,
       client: false,
     },
-    fastRefresh: command === 'start',
+    // always need reload when data loader is changed
+    fastRefresh: false,
   };
 };
 
