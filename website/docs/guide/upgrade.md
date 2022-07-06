@@ -66,12 +66,7 @@ function APP {
 
 ### 样式的处理
 
-@ inlineStyle 和 CSS Modules 特殊逻辑的解释。rpx 单位的解释。
+rpx 是什么？rpx（responsive pixel）: 可以根据屏幕宽度进行自适应。规定屏幕宽为750rpx。如在 iPhone6 上，屏幕宽度为 375px，共有 750 个物理像素，则 750rpx = 375px = 750 物理像素，1rpx = 0.5px = 1物理像素。
 
-### 差异补充
+当打开 @ice/plugin-rax-compat 插件的 `inlineStyle` 时，以 `.module.css` 结尾的文件会默认走 CSS Module 的模式。此外，当 `width` 等属性没有单位如 `width: 300`，该模式下会自动补齐 `rpx` 单位并最终转化成 `vw`，同理，写了 `rpx` 单位的值也一样会被转化成 `vw`。这块逻辑与之前 rax-driver 中处理的逻辑是一致的，rax DSL 用户无需做任何修改。
 
-@比如 DOM attributes 的处理。
-
-rax-picture + rax-compat
-
-@ice/picture + `<Appear />`
