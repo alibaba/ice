@@ -62,7 +62,9 @@ function APP {
 
 原 Rax DSL 迁移过来并使用兼容模式无需做任何改造，[appear-polyfill](https://www.npmjs.com/package/appear-polyfill) 会嵌入在 `rax-compat` 中自动做这部分处理，用户无需特殊处理以及引入。
 
-对于 React 用户，推荐使用 React 标准的方式，详情见[@待补充 Appear 组件文档]()。
+对于 React 用户，推荐使用 React 标准的方式，详情见 xxx 。
+
+@待补充 Appear 组件文档
 
 ### 样式的处理
 
