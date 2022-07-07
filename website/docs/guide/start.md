@@ -3,6 +3,8 @@ title: 快速开始
 order: 2
 ---
 
+> 需要保证已安装 [Node.js](https://nodejs.org)，并确保 Node 版本是 14 或以上。详见 [开发环境](./basic/env)。
+
 ## 创建应用
 
 在终端执行以下命令：

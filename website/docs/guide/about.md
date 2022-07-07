@@ -3,11 +3,12 @@ title: 关于
 order: 1
 ---
 
-![](https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg)
+![cover](https://gw.alicdn.com/tfs/TB1vBRYaVOWBuNjy0FiXXXFxVXa-2558-1306.jpg)
 
 飞冰 (ICE) 是一套基于 React 的前端解决方案，围绕应用研发框架 (ICE 3) 提供了应用的构建、路由、调试等基础能力以及微前端、一体化等领域能力，同时结合可视化操作、物料复用等方案降低研发门槛。
 
 ## 特性 🎉
+
 - 🐒 开箱即用：TypeScript/Webpack5/CSS Modules/Mock/SSR，各种方案 All in One
 - 🦊 贴合业务的最佳实践：目录规范、代码规范、路由方案、状态管理、数据请求等
 - 🐯 多种应用模式：支持服务端渲染 SSR 以及静态构建 SSG
@@ -49,6 +50,7 @@ ICE 3 相比之前的版本，增加了更多对移动端能力的优化和适�
 毫无疑问是需要的，同时我们也在努力降低前端开发的门槛，但一些基础的前端知识还是需要具备的，比如 JavaScript 的基础语法、前后端如何通信等。为了便于快速入门前端知识，我们整理了一份 [前端基础知识](https://ice.work/docs/resource/front-basic)，希望能帮助到开发者。
 
 ### 资深前端同学是否适合使用飞冰？
+
 适合，面向前端场景飞冰团队有大量的最佳实践，无论是构建、规范、状态管理还是微前端都可以开箱即用。
 
 ### 飞冰的浏览器兼容策略是怎样的？
@@ -67,7 +69,7 @@ ICE 3 相比之前的版本，增加了更多对移动端能力的优化和适�
 
 ## 联系我们 🧼
 
-- 反馈/建议：https://github.com/alibaba/ice/issues/new
+- 反馈/建议：<https://github.com/alibaba/ice/issues/new>
 - 答疑钉钉群：
 
 <img src="https://ice.alicdn.com/assets/images/qrcode.png" width="300px" align="left"/>
