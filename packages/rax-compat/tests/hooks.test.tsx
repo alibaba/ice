@@ -21,6 +21,22 @@ describe('hooks', () => {
     render(<App />);
   });
 
+  it.only('useState reset value', () => {
+    function App() {
+      const [loading, setLoading] = useState(false);
+      useEffect(() => {
+        setLoading(true);
+        setTimeout(() => {
+          setLoading(false);
+          expect(loading).toBe(false);
+        }, 1);
+      }, []);
+      return <div>{loading ? 'loading...' : 'load end'}</div>;
+    }
+
+    render(<App />);
+  });
+
   it('useEffect', () => {
     let useEffectFunc = vi.spyOn({
       func: () => {
