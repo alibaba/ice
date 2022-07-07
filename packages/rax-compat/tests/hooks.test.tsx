@@ -21,7 +21,7 @@ describe('hooks', () => {
     render(<App />);
   });
 
-  it.only('useState reset value', () => {
+  it('useState reset value', () => {
     function App() {
       const [loading, setLoading] = useState(false);
       useEffect(() => {
