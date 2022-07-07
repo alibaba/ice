@@ -37,21 +37,41 @@ export default defineConfig({
 
 ### Rax 核心 API
 
-@列一下 Rax 核心提供的 API 列表, 也包括之前 rax 1.0 移动到独立包的 API.
+`rax-compat` 会抹平 Rax 核心 API 与 React API 的差异，用户使用 Rax DSL 可以无缝衔接到 React Runtime 上，具体的 Rax 核心 API，可以参考[Rax 官网](https://rax.js.org/docs/api/DOM)。
 
 ### Appear & Disappear
 
-@ Rax 这边是直接支持了这个事件。
-@ 另外需要一篇文档来提供 ICE Appear 事件支持 (用组件支持).
+Rax DSL 迁移用户依旧可以像之前一样使用 onAppear 以及 onDisapper 事件，如
+
+```jsx
+import { createElement } from 'rax';
+
+function App {
+  return (<div
+    onAppear={() => {
+      alert('appear')
+    }}
+    onDisappear={() => {
+      alert('disappear')
+    }}
+  >
+    APP
+  </div>)
+}
+```
+
+原 Rax DSL 迁移过来并使用兼容模式无需做任何改造，[appear-polyfill](https://www.npmjs.com/package/appear-polyfill) 会嵌入在 `rax-compat` 中自动做这部分处理，用户无需特殊处理以及引入。
+
+对于 React 用户，推荐使用 React 标准的方式。
 
 ### 样式的处理
 
-@ inlineStyle 和 CSS Modules 特殊逻辑的解释。rpx 单位的解释。
+rpx 是什么？rpx（responsive pixel）: 可以根据屏幕宽度进行自适应。规定屏幕宽为750rpx。如在 iPhone6 上，屏幕宽度为 375px，共有 750 个物理像素，则 750rpx = 375px = 750 物理像素，1rpx = 0.5px = 1物理像素。
 
-### 差异补充
+当打开 @ice/plugin-rax-compat 插件的 `inlineStyle` 时，以 `.module.css` 结尾的文件会默认走 CSS Module 的模式。此外，当 `width` 等属性没有单位如 `width: 300`，该模式下会自动补齐 `rpx` 单位并最终转化成 `vw`，同理，写了 `rpx` 单位的值也一样会被转化成 `vw`。这块逻辑与之前 Rax Driver 中处理的逻辑是一致的，Rax DSL 用户无需做任何修改。
 
-@比如 DOM attributes 的处理。
+### 其他差异
 
-rax-picture + rax-compat
+`DOM attributes 处理`：
 
-@ice/picture + `<Appear />`
+在 React 中，Element 的 props 会存在白名单，而 Rax 中没有该判断。这差异导致使用非 `data-*` 的自定义属性在 React Runtime 中会被忽略（会有 warning），如果用户通过不合法的自定义属性存储在 attributes 中，在 React Runtime 中会无法从真实 Element 中通过 `getAttribute` 获取。如果用了这些非法自定义属性，推荐使用 `data-*` 来标识自定义属性。
