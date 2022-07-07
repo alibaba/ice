@@ -79,7 +79,7 @@
     "chokidar": "^3.5.3",
     "react": "^18.0.0",
     "unplugin": "^0.3.2",
-    "webpack": "^5.73.0"
+    "webpack": "^5.72.0"
   },
   "peerDependencies": {
     "react": ">=18.0.0",

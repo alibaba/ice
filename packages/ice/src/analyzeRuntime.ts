@@ -11,12 +11,11 @@ interface Options {
 export const getAppConfig = async (options: Options): Promise<AppConfig> => {
   const { serverCompiler, rootDir } = options;
   const outfile = path.join(rootDir, 'node_modules', 'entry.mjs');
-  // TODO: remove top level calls to ensure that appConfig is always returned successfully in build time
   await serverCompiler({
+    // TODO: detect src/app if it is exists
     entryPoints: [path.join(rootDir, 'src/app')],
     outfile,
     format: 'esm',
-    inject: [],
   });
 
   const appConfig = (await import(outfile)).default;

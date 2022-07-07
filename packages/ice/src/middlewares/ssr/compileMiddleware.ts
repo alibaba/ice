@@ -10,11 +10,10 @@ interface Options {
   outputDir: string;
   serverCompiler: ServerCompiler;
   server: UserConfig['server'];
-  documentOnly: boolean;
 }
 
 export default function createCompileMiddleware(options: Options): Middleware {
-  const { rootDir, outputDir, serverCompiler, server, documentOnly } = options;
+  const { rootDir, outputDir, serverCompiler, server } = options;
   const middleware: ExpressRequestHandler = async function (req, _, next) {
     try {
       const entryPoint = path.join(rootDir, SERVER_ENTRY);
@@ -29,8 +28,6 @@ export default function createCompileMiddleware(options: Options): Middleware {
         format,
         platform: esm ? 'browser' : 'node',
         outExtension: { '.js': outJSExtension },
-      }, {
-        removeExportExprs: documentOnly ? ['default', 'getData'] : [],
       });
       // @ts-ignore
       req.serverEntry = serverEntry;

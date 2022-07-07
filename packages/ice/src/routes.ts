@@ -42,26 +42,7 @@ export async function generateRoutesInfo(rootDir: string, routesConfig: UserConf
     routeManifest,
     routesStr: `[${str}]`,
     routes,
-    loaders: generateRouteConfig(routes, 'getData', (str, imports) => {
-      return `${str}
-  const loaders = {
-    ${
-      imports.map((loader) => {
-        return `'${loader[0]}': ${loader[1]},`;
-      }).join('\n')
-    }
-  };`;
-    }),
-    routesConfig: generateRouteConfig(routes, 'getConfig', (str, imports) => {
-      return `${str}
-  export default {
-    ${
-      imports.map(([, importKey, routePath]) => {
-        return `'${routePath}': ${importKey},`;
-      }).join('\n')
-    }
-  };`;
-    }),
+    loaders: generateLoadersStr(routes),
   };
 }
 
@@ -105,16 +86,14 @@ function createDefaultNotFoundRoute(routeManifest: RouteManifest): ConfigRoute {
 /**
  * generate loader template for routes
  */
-function generateRouteConfig(
-  routes: NestedRouteManifest[],
-  exportKey: string,
-  template: (importStr: string, imports: [string, string, string][]) => string): string {
-  const imports = [];
+function generateLoadersStr(routes: NestedRouteManifest[]) {
+  const loaders = [];
 
-  function importConfig(routes: NestedRouteManifest[], parentPath: string) {
+  function importLoaders(routes) {
     return routes.reduce((prev, route) => {
       const { children, file, id, exports } = route;
-      if (exports.indexOf(exportKey) === -1) {
+
+      if (exports.indexOf('getData') === -1) {
         return prev;
       }
 
@@ -122,14 +101,12 @@ function generateRouteConfig(
       const componentFile = file.replace(new RegExp(`${fileExtname}$`), '');
       const componentPath = path.isAbsolute(componentFile) ? componentFile : `@/pages/${componentFile}`;
 
-      const loaderName = `${exportKey}_${id}`.replace('/', '_');
-      const routePath = route.path || (route.index ? 'index' : '/');
-      const fullPath = path.join(parentPath, routePath);
-      imports.push([id, loaderName, fullPath]);
-      let str = `import { ${exportKey} as ${loaderName} } from '${componentPath}';\n`;
+      const loaderName = `getData_${id}`.replace('/', '_');
+      loaders.push([id, loaderName]);
+      let str = `import { getData as ${loaderName} } from '${componentPath}';\n`;
 
       if (children) {
-        str += importConfig(children, routePath);
+        str += importLoaders(children);
       }
 
       prev += str;
@@ -137,5 +114,17 @@ function generateRouteConfig(
       return prev;
     }, '');
   }
-  return template(importConfig(routes, ''), imports);
+
+  let str = importLoaders(routes);
+
+  str = `${str}
+  const loaders = {
+    ${
+      loaders.map((loader) => {
+        return `'${loader[0]}': ${loader[1]},`;
+      }).join('\n')
+    }
+  };`;
+
+  return str;
 }

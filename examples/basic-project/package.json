@@ -28,6 +28,6 @@
     "browserslist": "^4.19.3",
     "regenerator-runtime": "^0.13.9",
     "speed-measure-webpack-plugin": "^1.5.0",
-    "webpack": "^5.73.0"
+    "webpack": "^5.72.0"
   }
 }

@@ -4,7 +4,6 @@ import type { Context, TaskConfig } from 'build-scripts';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { Config } from '@ice/types';
 import type { ServerCompiler } from '@ice/types/esm/plugin.js';
-import type { AppConfig } from '@ice/runtime';
 import { getWebpackConfig } from '@ice/webpack-config';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import webpackCompiler from '../service/webpackCompiler.js';
@@ -15,12 +14,7 @@ import createMockMiddleware from '../middlewares/mock/createMiddleware.js';
 
 const { merge } = lodash;
 
-const start = async (
-  context: Context<Config>,
-  taskConfigs: TaskConfig<Config>[],
-  serverCompiler: ServerCompiler,
-  appConfig: AppConfig,
-) => {
+const start = async (context: Context<Config>, taskConfigs: TaskConfig<Config>[], serverCompiler: ServerCompiler) => {
   const { applyHook, commandArgs, command, rootDir, userConfig } = context;
   const { port, host, https = false } = commandArgs;
 
@@ -38,14 +32,8 @@ const start = async (
     setupMiddlewares: (middlewares, devServer) => {
       const { outputDir } = taskConfigs.find(({ name }) => name === 'web').config;
       const { ssg, ssr, server } = userConfig;
-      const documentOnly = !ssr && !ssg;
-      const serverCompileMiddleware = createCompileMiddleware({
-        rootDir,
-        outputDir,
-        serverCompiler,
-        server,
-        documentOnly,
-      });
+
+      const serverCompileMiddleware = createCompileMiddleware({ rootDir, outputDir, serverCompiler, server });
 
       let renderMode;
       // If ssr is set to true, use ssr for preview.
@@ -56,7 +44,7 @@ const start = async (
       }
 
       const serverRenderMiddleware = createRenderMiddleware({
-        documentOnly,
+        documentOnly: !ssr && !ssg,
         renderMode,
       });
       const insertIndex = middlewares.findIndex(({ name }) => name === 'serve-index');
@@ -75,13 +63,10 @@ const start = async (
   // merge devServerConfig with webpackConfig.devServer
   devServerConfig = merge(webpackConfigs[0].devServer, devServerConfig);
   const protocol = devServerConfig.https ? 'https' : 'http';
-  let urlPathname = appConfig?.router?.basename || '/';
-
   const urls = prepareURLs(
     protocol,
     devServerConfig.host,
     devServerConfig.port as number,
-    urlPathname.endsWith('/') ? urlPathname : `${urlPathname}/`,
   );
   const compiler = await webpackCompiler({
     rootDir,
