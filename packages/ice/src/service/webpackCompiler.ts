@@ -22,6 +22,7 @@ async function webpackCompiler(options: {
 }) {
   const { taskConfigs, urls, applyHook, command, commandArgs, serverCompiler, webpackConfigs } = options;
   await applyHook(`before.${command}.run`, {
+    urls,
     commandArgs,
     taskConfigs,
     webpackConfigs,
@@ -70,6 +71,7 @@ async function webpackCompiler(options: {
       }
       consola.error('Failed to compile.\n');
       consola.error(messages.errors.join('\n\n'));
+      consola.log(stats.toString());
       return;
     } else if (messages.warnings.length) {
       consola.warn('Compiled with warnings.\n');
