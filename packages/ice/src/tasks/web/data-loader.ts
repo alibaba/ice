@@ -20,6 +20,7 @@ const getTask = ({ rootDir, command }): Config => {
     },
     swcOptions: {
       removeExportExprs: ['default', 'getConfig', 'getServerData', 'getStaticData'],
+      jsxTransform: true,
     },
     splitChunks: false,
     // enable concatenateModules will tree shaking unused `react/react-dom` in dev mod.
