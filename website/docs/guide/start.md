@@ -44,9 +44,9 @@ $ npm install
 $ npm start
 ```
 
-此时会自动打开浏览器窗口并访问 <http://localhost:3333>，这时会看到默认页面。
+此时会自动打开浏览器窗口并访问 <http://localhost:3000>，这时会看到默认页面。
 
-![img](https://img.alicdn.com/imgextra/i1/O1CN01wu2tKv1vctzonOD8L_!!6000000006194-2-tps-1094-1132.png_790x10000.jpg)
+![img](https://img.alicdn.com/imgextra/i4/O1CN01OLXNy91dVsqNSM8x3_!!6000000003742-2-tps-654-792.png)
 
 ## 部署发布
 

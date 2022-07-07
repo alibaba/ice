@@ -41,7 +41,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .option('--mode <mode>', 'set mode', 'development')
     .option('--config <config>', 'custom config path')
     .option('-h, --host <host>', 'dev server host', '0.0.0.0')
-    .option('-p, --port <port>', 'dev server port', 3333)
+    .option('-p, --port <port>', 'dev server port', 3000)
     .option('--no-open', 'don\'t open browser on startup')
     .option('--no-mock', 'don\'t start mock service')
     .option('--rootDir <rootDir>', 'project root directory', cwd)
