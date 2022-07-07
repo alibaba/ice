@@ -14,6 +14,7 @@ module.exports = {
       position: 'right',
       label: '指南',
     },
+    // @TODO: 需要补充示例内容
     // {
     //   position: 'right',
     //   label: '示例',
