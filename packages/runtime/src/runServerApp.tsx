@@ -20,7 +20,8 @@ import type {
   RequestContext,
   AppConfig,
   RouteModules,
-} from './types';
+  RenderMode,
+} from './types.js';
 import getRequestContext from './requestContext.js';
 
 interface RenderOptions {
@@ -30,6 +31,8 @@ interface RenderOptions {
   runtimeModules: (RuntimePlugin | CommonJsRuntime)[];
   Document: ComponentWithChildren<{}>;
   documentOnly?: boolean;
+  renderMode?: RenderMode;
+  basename?: string;
 }
 
 interface Piper {
@@ -118,12 +121,13 @@ function pipeToResponse(res: ServerResponse, pipe: NodeWritablePiper) {
 
 async function doRender(serverContext: ServerContext, renderOptions: RenderOptions): Promise<RenderResult> {
   const { req } = serverContext;
-  const { routes, documentOnly, app } = renderOptions;
+  const { routes, documentOnly, app, basename } = renderOptions;
+
   const location = getLocation(req.url);
 
   const requestContext = getRequestContext(location, serverContext);
   const appConfig = getAppConfig(app);
-  const matches = matchRoutes(routes, location, appConfig?.router?.basename);
+  const matches = matchRoutes(routes, location, basename);
 
   if (!matches.length) {
     return render404();
@@ -146,6 +150,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
       location,
       appConfig,
       routeModules,
+      basename,
     });
   } catch (err) {
     console.error('Warning: render server entry error, downgrade to csr.', err);
@@ -161,6 +166,17 @@ function render404(): RenderResult {
   };
 }
 
+interface renderServerEntry {
+  appExport: AppExport;
+  requestContext: RequestContext;
+  renderOptions: RenderOptions;
+  matches: RouteMatch[];
+  location: Location;
+  appConfig: AppConfig;
+  routeModules: RouteModules;
+  basename?: string;
+}
+
 /**
  * Render App by SSR.
  */
@@ -173,24 +189,18 @@ async function renderServerEntry(
     appConfig,
     renderOptions,
     routeModules,
-  }: {
-    appExport: AppExport;
-    requestContext: RequestContext;
-    renderOptions: RenderOptions;
-    matches: RouteMatch[];
-    location: Location;
-    appConfig: AppConfig;
-    routeModules: RouteModules;
-  },
+    basename,
+  }: renderServerEntry,
 ): Promise<RenderResult> {
   const {
     assetsManifest,
     runtimeModules,
     routes,
+    renderMode,
     Document,
   } = renderOptions;
 
-  const routesData = await loadRoutesData(matches, requestContext, routeModules);
+  const routesData = await loadRoutesData(matches, requestContext, routeModules, renderMode);
   const routesConfig = getRoutesConfig(matches, routesData, routeModules);
 
   const appContext: AppContext = {
@@ -202,6 +212,7 @@ async function renderServerEntry(
     matches,
     routes,
     routeModules,
+    basename,
   };
 
   const runtime = new Runtime(appContext);

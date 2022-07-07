@@ -3,7 +3,7 @@ import type { Action, Location } from 'history';
 import type { ComponentType, ReactNode, PropsWithChildren } from 'react';
 import type { HydrationOptions } from 'react-dom/client';
 import type { Navigator, Params } from 'react-router-dom';
-import type { useConfig, useData } from './RouteContext';
+import type { useConfig, useData } from './RouteContext.js';
 
 type VoidFunction = () => void;
 type AppLifecycle = 'onShow' | 'onHide' | 'onPageNotFound' | 'onShareAppMessage' | 'onUnhandledRejection' | 'onLaunch' | 'onError' | 'onTabItemClick';
@@ -35,6 +35,8 @@ export interface AppExport {
 
 // app.getData & route.getData
 export type GetData = (ctx: RequestContext) => Promise<RouteData> | RouteData;
+export type GetServerData = (ctx: RequestContext) => Promise<RouteData> | RouteData;
+export type GetStaticData = (ctx: RequestContext) => Promise<RouteData> | RouteData;
 // route.getConfig
 export type GetConfig = (args: { data: RouteData }) => RouteConfig;
 
@@ -66,6 +68,7 @@ export interface AppContext {
   documentOnly?: boolean;
   matchedIds?: string[];
   appExport?: AppExport;
+  basename?: string;
 }
 
 export type Renderer = (
@@ -86,6 +89,8 @@ export interface RequestContext extends ServerContext {
 
 export interface RouteComponent {
   default: ComponentType<any>;
+  getStaticData?: GetStaticData;
+  getServerData?: GetServerData;
   getData?: GetData;
   getConfig?: GetConfig;
 }
@@ -185,3 +190,5 @@ export interface RouteMatch {
    */
   route: RouteItem;
 }
+
+export type RenderMode = 'SSR' | 'SSG';

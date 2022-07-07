@@ -14,7 +14,9 @@
   "module": "./esm/index.js",
   "types": "./esm/index.d.ts",
   "exports": {
-    ".": "./esm/index.js"
+    ".": "./esm/index.js",
+    "./dev": "./esm/dev.js",
+    "./prod": "./esm/prod.js"
   },
   "sideEffects": [
     "dist/*",

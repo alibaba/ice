@@ -1,4 +1,4 @@
-import type { ServerContext, RequestContext } from './types';
+import type { ServerContext, RequestContext } from './types.js';
 
 interface Location {
   pathname: string;

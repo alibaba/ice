@@ -5,7 +5,6 @@ import type { Context, TaskConfig } from 'build-scripts';
 import type { StatsError } from 'webpack';
 import type { Config } from '@ice/types';
 import type { ServerCompiler } from '@ice/types/esm/plugin.js';
-import type { AppConfig } from '@ice/runtime';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
@@ -17,7 +16,6 @@ const build = async (
   context: Context<Config>,
   taskConfigs: TaskConfig<Config>[],
   serverCompiler: ServerCompiler,
-  appConfig: AppConfig,
 ) => {
   const { applyHook, commandArgs, command, rootDir, userConfig } = context;
   const webpackConfigs = taskConfigs.map(({ config }) => getWebpackConfig({
@@ -66,6 +64,7 @@ const build = async (
         const esm = server?.format === 'esm';
         const outJSExtension = esm ? '.mjs' : '.cjs';
         const serverEntry = path.join(outputDir, SERVER_OUTPUT_DIR, `index${outJSExtension}`);
+
         await serverCompiler({
           entryPoints: { index: entryPoint },
           outdir: path.join(outputDir, SERVER_OUTPUT_DIR),
@@ -74,13 +73,19 @@ const build = async (
           platform: esm ? 'browser' : 'node',
           outExtension: { '.js': outJSExtension },
         });
+
+        let renderMode;
+        if (ssg) {
+          renderMode = 'SSG';
+        }
+
         // generate html
         await generateHTML({
           rootDir,
           outputDir,
           entry: serverEntry,
           documentOnly: !ssg && !ssr,
-          basename: appConfig?.router?.basename,
+          renderMode,
         });
         resolve({
           stats,

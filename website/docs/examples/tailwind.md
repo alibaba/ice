@@ -1,5 +1,5 @@
 ---
 title: 使用 Tailwind CSS
-order: 3
+order: 1
 ---
 

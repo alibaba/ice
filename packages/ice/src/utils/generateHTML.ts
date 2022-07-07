@@ -2,7 +2,7 @@ import * as path from 'path';
 import type { Request } from 'webpack-dev-server';
 import fse from 'fs-extra';
 import consola from 'consola';
-import type { ServerContext } from '@ice/runtime';
+import type { ServerContext, RenderMode } from '@ice/runtime';
 import type { RouteObject } from 'react-router';
 import { ROUTER_MANIFEST } from '../constant.js';
 
@@ -12,6 +12,7 @@ interface Options {
   outputDir: string;
   documentOnly: boolean;
   basename?: string;
+  renderMode?: RenderMode;
 }
 
 export default async function generateHTML(options: Options) {
@@ -20,7 +21,7 @@ export default async function generateHTML(options: Options) {
     entry,
     outputDir,
     documentOnly,
-    basename,
+    renderMode,
   } = options;
 
   let serverEntry;
@@ -40,13 +41,16 @@ export default async function generateHTML(options: Options) {
     const routePath = paths[i];
 
     const req = {
-      url: path.join(basename || '', routePath),
+      url: routePath,
     };
 
     const serverContext: ServerContext = {
       req: req as Request,
     };
-    const { value: html } = await serverEntry.renderToHTML(serverContext, documentOnly);
+    const { value: html } = await serverEntry.renderToHTML(serverContext, {
+      renderMode,
+      documentOnly,
+    });
 
     const fileName = routePath === '/' ? 'index.html' : `${routePath}.html`;
     if (fse.existsSync(path.join(rootDir, 'public', fileName))) {

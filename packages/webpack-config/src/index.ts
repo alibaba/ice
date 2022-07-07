@@ -82,6 +82,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
     assetsManifest,
     concatenateModules,
     devServer,
+    fastRefresh,
   } = config;
 
   const dev = mode !== 'production';
@@ -90,7 +91,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
   // formate alias
   const aliasWithRoot = {};
   Object.keys(alias).forEach((key) => {
-    aliasWithRoot[key] = alias[key].startsWith('.') ? path.join(rootDir, alias[key]) : alias[key];
+    aliasWithRoot[key] = alias[key] && alias[key].startsWith('.') ? path.join(rootDir, alias[key]) : alias[key];
   });
 
   // auto stringify define value
@@ -216,7 +217,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
     plugins: [
       ...plugins,
       ...compilerWebpackPlugins,
-      dev && new ReactRefreshWebpackPlugin({
+      dev && fastRefresh && new ReactRefreshWebpackPlugin({
         exclude: [/node_modules/, /bundles\/compiled/],
         // use webpack-dev-server overlay instead
         overlay: false,

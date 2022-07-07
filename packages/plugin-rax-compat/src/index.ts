@@ -71,5 +71,5 @@ export interface CompatRaxOptions {
 
 export default (options: CompatRaxOptions | void) => ({
   name: '@ice/plugin-rax-compat',
-  plugin: getPlugin(options || {}),
+  setup: getPlugin(options || {}),
 });

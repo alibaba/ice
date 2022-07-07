@@ -1,4 +1,4 @@
-import type { GetData } from './types';
+import type { GetData } from './types.js';
 import getRequestContext from './requestContext.js';
 
 interface Loaders {
@@ -17,9 +17,20 @@ const cache = new Map<string, Result>();
  */
 function loadInitialData(loaders: Loaders) {
   const context = (window as any).__ICE_APP_CONTEXT__ || {};
-  const matches = context.matchedIds || [];
+  const matchedIds = context.matchedIds || [];
+  const routesData = context.routesData || {};
 
-  matches.forEach(id => {
+  matchedIds.forEach(id => {
+    const dataFromSSR = routesData[id];
+    if (dataFromSSR) {
+      cache.set(id, {
+        value: dataFromSSR,
+        status: 'RESOLVED',
+      });
+
+      return dataFromSSR;
+    }
+
     const getData = loaders[id];
 
     if (getData) {

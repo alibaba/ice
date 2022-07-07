@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { RouteData, RouteConfig } from './types';
+import type { RouteData, RouteConfig } from './types.js';
 
 const DataContext = React.createContext<RouteData | undefined>(undefined);
 DataContext.displayName = 'Data';

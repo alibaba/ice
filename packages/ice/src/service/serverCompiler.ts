@@ -41,12 +41,13 @@ export function createServerCompiler(options: Options) {
 
   const alias = (task.config?.alias || {}) as Record<string, string | false>;
   const assetsManifest = path.join(rootDir, ASSETS_MANIFEST);
-  const defineVars = task.config?.define || {};
+  const define = task.config?.define || {};
   const dev = command === 'start';
 
+  const defineVars = {};
   // auto stringify define value
-  Object.keys(defineVars).forEach((key) => {
-    defineVars[key] = JSON.stringify(defineVars[key]);
+  Object.keys(define).forEach((key) => {
+    defineVars[key] = JSON.stringify(define[key]);
   });
 
   // get runtime variable for server build

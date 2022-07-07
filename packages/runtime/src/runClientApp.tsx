@@ -9,7 +9,7 @@ import { AppContextProvider } from './AppContext.js';
 import type {
   AppContext, AppExport, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
   RouteWrapperConfig, RuntimeModules, RouteMatch, ComponentWithChildren, RouteModules,
-} from './types';
+} from './types.js';
 import { loadRouteModules, loadRoutesData, getRoutesConfig, matchRoutes, filterMatchesToLoad } from './routes.js';
 import { updateRoutesConfig } from './routesConfig.js';
 import getRequestContext from './requestContext.js';
@@ -20,6 +20,8 @@ interface RunClientAppOptions {
   routes: RouteItem[];
   runtimeModules: RuntimeModules;
   Document: ComponentWithChildren<{}>;
+  basename?: string;
+  hydrate: boolean;
 }
 
 export default async function runClientApp(options: RunClientAppOptions) {
@@ -28,8 +30,9 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routes,
     runtimeModules,
     Document,
+    basename,
+    hydrate,
   } = options;
-
   const appContextFromServer: AppContext = (window as any).__ICE_APP_CONTEXT__ || {};
   let { routesData, routesConfig, assetsManifest } = appContextFromServer;
 
@@ -37,7 +40,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
 
   const appConfig = getAppConfig(app);
 
-  const matches = matchRoutes(routes, window.location, appConfig?.router?.basename);
+  const matches = matchRoutes(routes, window.location, basename);
   const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
 
   if (!routesData) {
@@ -56,10 +59,12 @@ export default async function runClientApp(options: RunClientAppOptions) {
     assetsManifest,
     matches,
     routeModules,
+    basename,
   };
 
   const runtime = new Runtime(appContext);
-  if (process.env.ICE_CORE_SSR === 'true' || process.env.ICE_CORE_SSG === 'true') {
+
+  if (hydrate) {
     runtime.setRender((container, element) => {
       ReactDOM.hydrateRoot(container, element);
     });
@@ -127,8 +132,8 @@ function BrowserEntry({
     matches: originMatches,
     routesData: initialRoutesData,
     routesConfig: initialRoutesConfig,
-    appConfig,
     routeModules: initialRouteModules,
+    basename,
   } = appContext;
 
   const [historyState, setHistoryState] = useState<HistoryState>({
@@ -149,7 +154,7 @@ function BrowserEntry({
   useLayoutEffect(() => {
     if (history) {
       history.listen(({ action, location }) => {
-        const currentMatches = matchRoutes(routes, location, appConfig?.router?.basename);
+        const currentMatches = matchRoutes(routes, location, basename);
         if (!currentMatches.length) {
           throw new Error(`Routes not found in location ${location.pathname}.`);
         }

@@ -8,5 +8,9 @@ runClientApp({
   app,
   runtimeModules,
   routes,
-  Document
+  Document,
+  hydrate: <%- hydrate %>,
+<% if (basename) { %>
+  basename: '<%- basename %>'
+<% } %>
 });
