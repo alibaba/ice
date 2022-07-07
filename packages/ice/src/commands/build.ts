@@ -34,15 +34,6 @@ const build = async (
     applyHook,
     serverCompiler,
   });
-  const { ssg, ssr, server } = userConfig;
-  const { outputDir } = taskConfigs.find(({ name }) => name === 'web').config;
-  // compile server bundle
-  const entryPoint = path.join(rootDir, SERVER_ENTRY);
-  const esm = server?.format === 'esm';
-  const outJSExtension = esm ? '.mjs' : '.cjs';
-  const serverEntry = path.join(outputDir, SERVER_OUTPUT_DIR, `index${outJSExtension}`);
-  const documentOnly = !ssg && !ssr;
-
   const { stats, isSuccessful, messages } = await new Promise((resolve, reject): void => {
     let messages: { errors: string[]; warnings: string[] };
     compiler.run(async (err, stats) => {
@@ -81,10 +72,6 @@ const build = async (
           format: server?.format,
           platform: esm ? 'browser' : 'node',
           outExtension: { '.js': outJSExtension },
-        }, {
-          // remove components and getData when document only
-          removeExportExprs: documentOnly ? ['default', 'getData'] : [],
-          jsxTransform: true,
         });
 
         let renderMode;
@@ -114,7 +101,6 @@ const build = async (
     messages,
     taskConfigs,
     serverCompiler,
-    serverEntry,
   });
   return { compiler };
 };

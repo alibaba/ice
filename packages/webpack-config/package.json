@@ -29,7 +29,7 @@
     "@ice/types": "^1.0.0",
     "build-scripts": "^2.0.0-22",
     "esbuild": "^0.14.23",
-    "webpack": "^5.73.0",
+    "webpack": "^5.72.0",
     "webpack-dev-server": "^4.7.4"
   },
   "scripts": {

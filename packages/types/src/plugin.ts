@@ -10,10 +10,7 @@ import type { ExportData, AddRenderFile, AddTemplateFiles } from './generator.js
 type AddExport = (exportData: ExportData) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
 export type ServerCompiler = (
-  buildOptions: Pick<
-  BuildOptions,
-  'minify' | 'inject' | 'format' | 'entryPoints' | 'outfile' | 'bundle' | 'outdir' | 'splitting' | 'platform' | 'outExtension' | 'plugins'>,
-  swcOptions?: Config['swcOptions']
+  buildOptions: Pick<BuildOptions, 'format' | 'entryPoints' | 'outfile' | 'bundle' | 'outdir' | 'splitting' | 'platform' | 'outExtension' | 'plugins'>
 ) => Promise<BuildResult>;
 export type WatchEvent = [
   pattern: RegExp | string,
@@ -32,7 +29,6 @@ interface BeforeCommandRunOptions {
   commandArgs: CommandArgs;
   webpackConfigs: Configuration | Configuration[];
   taskConfigs: TaskConfig<Config>[];
-  urls?: Urls;
   serverCompiler: ServerCompiler;
 }
 
@@ -50,7 +46,7 @@ export interface HookLifecycle {
   'before.start.run': BeforeCommandRunOptions;
   'before.build.run': BeforeCommandRunOptions;
   'after.start.compile': AfterCommandCompileOptions;
-  'after.build.compile': AfterCommandCompileOptions & { serverEntry: string };
+  'after.build.compile': AfterCommandCompileOptions;
   'after.start.devServer': {
     urls: Urls;
     devServer: WebpackDevServer;
