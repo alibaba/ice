@@ -46,10 +46,6 @@ module.exports = {
           label: 'AppWorks',
           href: 'https://appworks.site',
         },
-        // {
-        //   label: 'Kraken',
-        //   href: 'https://openkraken.com/',
-        // },
         {
           label: 'Midway',
           href: 'https://midwayjs.org/',
@@ -57,5 +53,5 @@ module.exports = {
       ],
     },
   ],
-  copyright: `Copyright © ${new Date().getFullYear()} 飞冰（ICE）. Built with Docusaurus.`,
+  copyright: `Copyright © ${new Date().getFullYear()} - Present 飞冰（ICE）.`,
 };
