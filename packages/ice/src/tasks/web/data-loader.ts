@@ -19,6 +19,7 @@ const getTask = ({ rootDir, command }): Config => {
       'webpack/hot': '@ice/bundles/compiled/webpack/hot',
     },
     swcOptions: {
+      jsxTransform: true,
       removeExportExprs: ['default', 'getConfig', 'getServerData', 'getStaticData'],
     },
     splitChunks: false,
@@ -28,7 +29,8 @@ const getTask = ({ rootDir, command }): Config => {
       hot: false,
       client: false,
     },
-    fastRefresh: command === 'start',
+    // always need reload when data loader is changed
+    fastRefresh: false,
   };
 };
 

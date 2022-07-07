@@ -2,7 +2,7 @@ import { Meta, Title, Links, Main, Scripts } from 'ice';
 
 function Document() {
   return (
-    <html lang="en">
+    <html>
       <head>
         <meta charSet="utf-8" />
         <link rel="icon" href="/favicon.ico" />

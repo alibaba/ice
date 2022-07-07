@@ -5,7 +5,7 @@ order: 20
 
 本文档面向的是使用 Rax App 的开发者，提供迁移到 ICE 的方式。React 的社区生态显著优于 Rax，切换到 React 之后可以享受到更多的 React 生态，部分复杂场景（富文本、脑图等）可以大幅度降低成本。
 
-## 如何升级
+## 如何迁移
 
 ICE 提供了 [rax-compat](https://github.com/ice-lab/ice-next/tree/master/packages/rax-compat) 以支持 [Rax](https://github.com/alibaba/rax) 到 React 运行时的切换。
 
@@ -83,3 +83,4 @@ rpx 是什么？rpx（responsive pixel）: 可以根据屏幕宽度进行自适�
 在 Rax DSL 以及兼容模式下，可以继续使用 `@rax-picture` 组件，如果是 React 用户，应使用 `@ice/picture` 组件。
 
 @待补充 ice/picture 文档
+

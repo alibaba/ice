@@ -1,0 +1,25 @@
+.title {
+  color: red;
+  margin-left: 10rpx;
+}
+
+.data {
+  margin-top: 10px;
+}
+
+.homeContainer {
+  align-items: center;
+  margin-top: 200rpx;
+}
+
+.homeTitle {
+  font-size: 45rpx;
+  font-weight: bold;
+  margin: 20rpx 0;
+}
+
+.homeInfo {
+  font-size: 36rpx;
+  margin: 8rpx 0;
+  color: #555;
+}
