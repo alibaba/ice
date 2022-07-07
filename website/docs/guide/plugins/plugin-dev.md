@@ -4,6 +4,7 @@ order: 1
 ---
 
 ICE 提供了插件机制，在提供丰富的框架能力的基础上也可以让开发者可以在框架能力不满足诉求的情况下进行定制：
+
 - 定制修改框架构建配置
 - 支持在整个构建生命周期定制行为，比如项目启动前拉取某些资源
 - 支持扩展运行时能力，比如统一为路由组件增加鉴权逻辑（添加高阶组件）
@@ -38,6 +39,7 @@ export default plugin;
 #### context
 
 context 包含构建时的上下文信息：
+
 - `command` 当前运行命令，start/build/test
 - `commandArgs` script 命令执行时接受到的参数
 - `rootDir` 项目根目录
@@ -93,6 +95,7 @@ const plugin = () => ({
 - `devServer` 配置 webpack dev server [配置](https://webpack.js.org/configuration/dev-server/)
 - `fastRefresh` 是否开启 fast-refresh 能力
 - `configureWebpack` 如果上述快捷配置项不满足定制需求，可以通过 configureWebpack 进行自定义
+
 ```js
 export default () => ({
   name: 'plugin-test',
@@ -126,6 +129,7 @@ export default () => ({
 ```
 
 目前支持的生命周期如下：
+
 - `before.start.run` 构建命令 start 执行前，该阶段可以获取各项构建任务最终配置
 - `before.build.run` 构建命令 build 执行前，同 start
 - `after.start.compile` 构建命令 start 执行结束，该阶段可以获取构建的执行结果
@@ -311,7 +315,6 @@ export default () => ({
 });
 ```
 
-
 ## 运行时能力定制
 
 插件运行时可以定制框架的运行时能力：
@@ -340,6 +343,7 @@ export default runtime;
 #### appContext
 
 appContext 上包含框架相关上下文配置信息，主要包括：
+
 - `appConfig` 应用配置，详细内容可以参考 [应用入口](/)
 - `assetsManifest` 应用资讯配置信息
 - `routesData` 路由信息

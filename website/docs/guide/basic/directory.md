@@ -21,7 +21,7 @@ ICE 的默认应用目录提供了良好的代码分层结构，约定的目录�
 │ ├── document.tsx   // HTML 模板
 │ └── app.ts         // 应用入口
 ├── .env             // 环境变量配置文件
-├── ice.config.mts    // 构建配置
+├── ice.config.mts   // 构建配置
 ├── package.json
 └── tsconfig.json    // TypeScript 配置文件
 ```

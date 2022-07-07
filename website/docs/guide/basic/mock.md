@@ -20,6 +20,19 @@ ICE 提供了开箱即用的 Mock 方案，支持 CRUD 等操作，在启动本�
 
 `mock` 目录下的 `index.ts` 和 `user.ts` 会被识别为 Mock 服务文件。
 
+如果某些文件不需要被 mock 服务解析，可以通过工程配置进行自定义：
+
+```js title="ice.config.mts"
+import { defineConfig } from '@ice/app';
+
+export default defineConfig({
+  mock: {
+    // 忽略 mock 目录中 custom 目录下的文件以及 api.ts 文件
+    exclude: ["custom/**", "api.ts"]
+  },
+});
+```
+
 ## 编写 Mock 接口
 
 在 mock 服务文件中写入以下代码：

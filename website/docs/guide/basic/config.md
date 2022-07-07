@@ -185,7 +185,7 @@ export default defineConfig({
 
 ### dropLogLevel
 
-- 类型：`'trace'|'debug'|'log'|'warn'|'error'`
+- 类型：`'trace' | 'debug' | 'log' | 'warn' | 'error'`
 - 默认值：`null`，不移除任何 console 代码
 
 压缩代码时移除 console.* 相关代码，比如配置了 log 则会移除 console.trace
@@ -193,7 +193,7 @@ export default defineConfig({
 
 ### compileDependencies
 
-- 类型：`array|boolean`
+- 类型：`array | boolean`
 - 默认值：`[]`
 
 默认情况下为了保证 dev 开发阶段的体验，`node_modules` 下文件不会进行编译，而考虑到 build 阶段对代码体积的极致优化以及兼容性保证，将会对 `node_modules` 下内容也进行编译。
@@ -294,16 +294,28 @@ export default defineConfig({
 - 默认值：`undefined`
 
 配置说明：
+
 - `false`：不检测 eslint 错误
 - `true`：将 eslint 错误展示在预览页面上
 - `object`: 仅 Webpack 模式支持，表现等同于 true，支持配置 [eslint-webpack-plugin](https://github.com/webpack-contrib/eslint-webpack-plugin) 的更多参数
 
 ### mock
 
-- 类型：`boolean`
-- 默认值：`true`
+- 类型：`{ exclude: string[] }`
+- 默认值：`{}`
 
-默认开启 mock 服务，如需关闭配置为 `false` 即可。
+配置忽略 mock 的文件。
+
+```js
+import { defineConfig } from '@ice/app';
+
+export default defineConfig({
+  mock: {
+    // 忽略 mock 目录中 custom 目录下的文件以及 api.ts 文件
+    exclude: ["custom/**", "api.ts"]
+  },
+});
+```
 
 ### webpack
 
@@ -328,4 +340,4 @@ export default defineConfig({
 ```
 
 > ICE 对 webpack 构建配置进行了定制，并借助 esbuild 等工具提升用户开发体验，直接修改 webpack 配置的方式并不推荐。
-> 如有定制需求欢迎👏 PR 或反馈：https://github.com/alibaba/ice/issues
+> 如有定制需求欢迎👏 PR 或反馈：<https://github.com/alibaba/ice/issues>
