@@ -29,6 +29,7 @@ import is from './is';
  * @returns [ value, dispatch ]
  */
 export function useState<S>(initialState: S | (() => S)): ReturnType<typeof _useState> | any {
+  // The eagerState should be saved for filter shallow-equal value set.
   const stateHook = _useState({
     state: initialState,
     eagerState: initialState,
@@ -45,6 +46,7 @@ export function useState<S>(initialState: S | (() => S)): ReturnType<typeof _use
 
     stateHook[0].eagerState = newState;
   }
+
   return [stateHook[0].state, updateState, stateHook[0].eagerState];
 }
 
