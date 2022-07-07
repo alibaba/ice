@@ -2,15 +2,6 @@ module.exports = {
   style: 'dark',
   links: [
     {
-      title: '参考',
-      items: [
-        {
-          to: 'https://iceteam.gitee.io',
-          label: '国内镜像站点',
-        },
-      ],
-    },
-    {
       title: '社区',
       items: [
         {
@@ -22,6 +13,10 @@ module.exports = {
           href: 'https://iceworks.oss-cn-hangzhou.aliyuncs.com/assets/images/ice-group-inside.JPG',
         },
         {
+          to: 'https://iceteam.gitee.io',
+          label: '国内镜像站点',
+        },
+        {
           label: 'GitHub Issue',
           href: 'https://github.com/alibaba/ice/issues',
         },
@@ -31,16 +26,12 @@ module.exports = {
       title: '生态',
       items: [
         {
-          label: '微前端 icestark',
-          href: 'http://micro-frontends.ice.work',
+          label: '微前端 ICESTARK',
+          href: 'https://micro-frontends.ice.work/',
         },
         {
-          label: 'ahooks',
-          href: 'https://ahooks.js.org/',
-        },
-        {
-          label: 'Formily',
-          href: 'https://v2.formilyjs.org/',
+          label: '包开发 ICE PKG',
+          href: 'https://pkg.ice.work/',
         },
       ],
     },
@@ -52,16 +43,8 @@ module.exports = {
           href: 'https://fed.taobao.org/',
         },
         {
-          label: 'Rax',
-          href: 'https://rax.js.org',
-        },
-        {
           label: 'AppWorks',
           href: 'https://appworks.site',
-        },
-        {
-          label: 'Kraken',
-          href: 'https://openkraken.com/',
         },
         {
           label: 'Midway',
@@ -70,5 +53,5 @@ module.exports = {
       ],
     },
   ],
-  copyright: `Copyright © ${new Date().getFullYear()} 飞冰（ICE）. Built with Docusaurus.`,
+  copyright: `Copyright © ${new Date().getFullYear()} - Present 飞冰（ICE）.`,
 };

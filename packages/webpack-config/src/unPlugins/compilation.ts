@@ -11,17 +11,22 @@ type JSXSuffix = 'jsx' | 'tsx';
 
 interface Options {
   mode: 'development' | 'production' | 'none';
+  fastRefresh: boolean;
   compileIncludes?: (string | RegExp)[];
   sourceMap?: Config['sourceMap'];
   compileExcludes?: RegExp[];
+  swcOptions?: Config['swcOptions'];
+}
+
+interface TransformOptions extends SwcConfig {
+  filename: string;
 }
 
 const require = createRequire(import.meta.url);
 const regeneratorRuntimePath = require.resolve('regenerator-runtime');
 
 const compilationPlugin = (options: Options): UnpluginOptions => {
-  const { sourceMap, mode, compileIncludes, compileExcludes } = options;
-  const dev = mode !== 'production';
+  const { sourceMap, mode, fastRefresh, compileIncludes = [], compileExcludes, swcOptions = {} } = options;
   const compileRegex = compileIncludes.map((includeRule) => {
     return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);
   });
@@ -39,36 +44,72 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
       }
 
       const suffix = (['jsx', 'tsx'] as JSXSuffix[]).find(suffix => new RegExp(`\\.${suffix}?$`).test(id));
-      const programmaticOptions = {
-        filename: id,
-        sourceMaps: !!sourceMap,
-        ...getSwcTransformOptions({ suffix, dev }),
-      };
-      // auto detect development mode
-      if (mode && programmaticOptions.jsc && programmaticOptions.jsc.transform &&
-              programmaticOptions.jsc.transform.react &&
-              !Object.prototype.hasOwnProperty.call(programmaticOptions.jsc.transform.react, 'development')) {
-        programmaticOptions.jsc.transform.react.development = mode === 'development';
-      }
-      const output = await transform(source, programmaticOptions);
-      const { code, map } = output;
 
-      return { code, map };
+      const programmaticOptions: TransformOptions = {
+        filename: id,
+      };
+
+      const { jsxTransform, removeExportExprs } = swcOptions;
+
+      let needTransform = false;
+
+      // common transform only works for webpack, esbuild has it's own compilation
+      if (jsxTransform) {
+        const commonOptions = getJsxTransformOptions({ suffix, fastRefresh });
+
+        // auto detect development mode
+        if (
+          mode &&
+          commonOptions?.jsc?.transform?.react &&
+          !Object.prototype.hasOwnProperty.call(commonOptions.jsc.transform.react, 'development')
+        ) {
+          commonOptions.jsc.transform.react.development = mode === 'development';
+        }
+
+        Object.assign(programmaticOptions, { sourceMaps: !!sourceMap }, commonOptions);
+        needTransform = true;
+      }
+
+      if (removeExportExprs && /(.*)pages(.*)\.(jsx?|tsx?|mjs)$/.test(id)) {
+        Object.assign(programmaticOptions, { removeExportExprs });
+        needTransform = true;
+      }
+
+      // Files other than page entries do not need to be transform in esbuild.
+      if (!needTransform) {
+        return false;
+      }
+
+      try {
+        const output = await transform(source, programmaticOptions);
+        const { code } = output;
+        let { map } = output;
+        // FIXME: swc transform should return the sourcemap which the type is object
+        if (typeof map === 'string') {
+          // map require object type
+          map = JSON.parse(map);
+        }
+        return { code, map };
+      } catch (e) {
+        // catch error for Unhandled promise rejection
+      }
     },
   };
 };
 
-function getSwcTransformOptions({
-  suffix,
-  dev,
-}: {
+interface GetJsxTransformOptions {
   suffix: JSXSuffix;
-  dev: boolean;
-  isServer?: boolean;
-}) {
+  fastRefresh: boolean;
+}
+
+function getJsxTransformOptions({
+  suffix,
+  fastRefresh,
+}: GetJsxTransformOptions) {
   const reactTransformConfig: ReactConfig = {
-    refresh: dev,
+    refresh: fastRefresh,
     runtime: 'automatic',
+    importSource: '@ice/runtime', // The exact import source is '@ice/runtime/jsx-runtime'
   };
 
   const commonOptions: SwcConfig = {
@@ -84,7 +125,6 @@ function getSwcTransformOptions({
       externalHelpers: false,
     },
     module: {
-      // @ts-expect-error module type only support cjs umd amd, fix me when @builder/swc fix type error
       type: 'es6',
       noInterop: false,
       // webpack will evaluate dynamic import, so there need preserve it

@@ -1,3 +1,3 @@
-export function getAppConfig() {
-  return {};
-}
+import { defineAppConfig } from 'ice';
+
+export default defineAppConfig({});

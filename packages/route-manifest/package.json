@@ -16,5 +16,9 @@
   "homepage": "https://next.ice.work",
   "dependencies": {
     "minimatch": "^5.0.1"
+  },
+  "scripts": {
+    "watch": "tsc -w",
+    "build": "tsc"
   }
 }

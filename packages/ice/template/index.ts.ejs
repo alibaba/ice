@@ -3,23 +3,31 @@ import {
   Outlet as OriginOutlet,
   useParams as useOriginParams,
   useSearchParams as useOriginSearchParams,
+  useLocation as useOriginLocation,
   LinkSingle,
   OutletSingle,
   useParamsSingle,
   useSearchParamsSingle,
+  useLocationSingle,
 } from '@ice/runtime';
 
-let Link, Outlet, useParams, useSearchParams;
+let Link: typeof OriginLink;
+let Outlet: typeof OriginOutlet;
+let useParams: typeof useOriginParams;
+let useSearchParams: typeof useOriginSearchParams;
+let useLocation: typeof useOriginLocation; 
 if (process.env.ICE_CORE_ROUTER === 'true') {
   Link = OriginLink;
   Outlet = OriginOutlet;
   useParams = useOriginParams;
   useSearchParams = useOriginSearchParams;
+  useLocation = useOriginLocation;
 } else {
-  Link = LinkSingle;
+  Link = LinkSingle as any;
   Outlet = OutletSingle;
-  useParams = useParamsSingle;
-  useSearchParams = useSearchParamsSingle;
+  useParams = useParamsSingle as typeof useParams;
+  useSearchParams = useSearchParamsSingle as any;
+  useLocation = useLocationSingle as typeof useLocation;
 }
 
 export {
@@ -27,10 +35,11 @@ export {
   Outlet,
   useParams,
   useSearchParams,
+  useLocation,
 };
 
 export {
-  useAppData,
+  defineAppConfig,
   useData,
   useConfig,
   Meta,

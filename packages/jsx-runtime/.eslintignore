@@ -1,0 +1,12 @@
+# 忽略目录
+.docusaurus/
+node_modules/
+**/*-min.js
+**/*.min.js
+coverage/
+cjs/
+esm/
+es2017/
+dist/
+build/
+tmp/

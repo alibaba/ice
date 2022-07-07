@@ -4,7 +4,7 @@ import { Meta, Title, Links, Main, Scripts } from 'ice';
 
 function Document() {
   return (
-    <html lang="en">
+    <html>
       <head>
         <meta charSet="utf-8" />
         <meta name="description" content="ICE 3.0 Demo" />

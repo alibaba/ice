@@ -15,12 +15,12 @@ import type { Configuration, WebpackPluginInstance } from 'webpack';
 import type webpack from 'webpack';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import type { Config } from '@ice/types';
-import { createUnplugin } from 'unplugin';
 import browserslist from 'browserslist';
 import configAssets from './config/assets.js';
 import configCss from './config/css.js';
 import AssetsManifestPlugin from './webpackPlugins/AssetsManifestPlugin.js';
-import getTransformPlugins from './unPlugins/index.js';
+import getCompilerPlugins from './getCompilerPlugins.js';
+import getSplitChunksConfig from './config/splitChunks.js';
 
 const require = createRequire(import.meta.url);
 const { merge } = lodash;
@@ -32,7 +32,7 @@ interface GetWebpackConfigOptions {
   config: Config;
   webpack: typeof webpack;
 }
-type WebpackConfig = Configuration & { devServer?: DevServerConfiguration };
+export type WebpackConfig = Configuration & { devServer?: DevServerConfiguration };
 type GetWebpackConfig = (options: GetWebpackConfigOptions) => WebpackConfig;
 
 function getEntry(rootDir: string) {
@@ -45,19 +45,12 @@ function getEntry(rootDir: string) {
     // use generated file in template directory
     entryFile = path.join(rootDir, '.ice/entry.client.ts');
   }
-  const dataLoaderFile = path.join(rootDir, '.ice/data-loader.ts');
+
+  // const dataLoaderFile = path.join(rootDir, '.ice/data-loader.ts');
   return {
-    runtime: ['react', 'react-dom', '@ice/runtime'],
-    main: {
-      import: [entryFile],
-      dependOn: 'runtime',
-    },
-    // Should set `dependOn` property to avoid hmr fail.
-    // ref: https://github.com/pmmmwh/react-refresh-webpack-plugin/issues/88#issuecomment-627558799
-    loader: {
-      import: [dataLoaderFile],
-      dependOn: 'runtime',
-    },
+    main: [entryFile],
+    // FIXME: https://github.com/ice-lab/ice-next/issues/217, https://github.com/ice-lab/ice-next/issues/199
+    // loader: [dataLoaderFile],
   };
 }
 
@@ -69,6 +62,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
     publicPath = '/',
     outputDir = path.join(rootDir, 'build'),
     loaders = [],
+    plugins = [],
     alias = {},
     sourceMap,
     middlewares,
@@ -78,11 +72,17 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
     hash,
     minify,
     minimizerOptions = {},
-    cacheDirectory,
+    cacheDir,
     https,
     analyzer,
     tsCheckerOptions,
     eslintOptions,
+    entry,
+    splitChunks,
+    assetsManifest,
+    concatenateModules,
+    devServer,
+    fastRefresh,
   } = config;
 
   const dev = mode !== 'production';
@@ -91,7 +91,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
   // formate alias
   const aliasWithRoot = {};
   Object.keys(alias).forEach((key) => {
-    aliasWithRoot[key] = alias[key].startsWith('.') ? path.join(rootDir, alias[key]) : alias[key];
+    aliasWithRoot[key] = alias[key] && alias[key].startsWith('.') ? path.join(rootDir, alias[key]) : alias[key];
   });
 
   // auto stringify define value
@@ -111,13 +111,13 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
         ? webpack.DefinePlugin.runtimeValue(() => JSON.stringify(process.env[key]), true)
         : JSON.stringify(process.env[key]);
   });
-  // create plugins
-  const webpackPlugins = getTransformPlugins(config).map((plugin) => createUnplugin(() => plugin).webpack());
+  // get compile plugins
+  const compilerWebpackPlugins = getCompilerPlugins(config, 'webpack');
 
   const terserOptions: any = merge({
     compress: {
       ecma: 5,
-      unused: false,
+      unused: true,
       // The following two options are known to break valid JavaScript code
       // https://github.com/vercel/next.js/issues/7178#issuecomment-493048965
       comparisons: false,
@@ -142,7 +142,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
       topLevelAwait: true,
       ...(experimental || {}),
     },
-    entry: () => getEntry(rootDir),
+    entry: entry || (() => getEntry(rootDir)),
     externals,
     output: {
       publicPath,
@@ -178,6 +178,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
       ignored: watchIgnoredRegexp,
     },
     optimization: {
+      splitChunks: splitChunks == false ? undefined : getSplitChunksConfig(rootDir),
       minimize: minify,
       minimizer: [
         new TerserPlugin({
@@ -204,7 +205,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
       type: 'filesystem',
       version: `${process.env.__ICE_VERSION__}|${JSON.stringify(config)}`,
       buildDependencies: { config: [path.join(rootDir, 'package.json')] },
-      cacheDirectory,
+      cacheDirectory: path.join(cacheDir, 'webpack'),
     },
     // custom stat output by stats.toJson() calls in plugin-app
     stats: 'none',
@@ -214,15 +215,18 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
     performance: false,
     devtool: getDevtoolValue(sourceMap),
     plugins: [
-      ...webpackPlugins,
-      dev && new ReactRefreshWebpackPlugin({
+      ...plugins,
+      ...compilerWebpackPlugins,
+      dev && fastRefresh && new ReactRefreshWebpackPlugin({
         exclude: [/node_modules/, /bundles\/compiled/],
+        // use webpack-dev-server overlay instead
+        overlay: false,
       }),
       new webpack.DefinePlugin({
         ...defineVars,
         ...runtimeDefineVars,
       }),
-      new AssetsManifestPlugin({
+      assetsManifest && new AssetsManifestPlugin({
         fileName: 'assets-manifest.json',
         outputDir: path.join(rootDir, '.ice'),
       }),
@@ -245,7 +249,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
         }],
       }),
     ].filter(Boolean) as unknown as WebpackPluginInstance[],
-    devServer: {
+    devServer: merge({
       allowedHosts: 'all',
       headers: {
         'Access-Control-Allow-Origin': '*',
@@ -270,10 +274,21 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack }) => {
       },
       setupMiddlewares: middlewares,
       https,
-    },
+    }, devServer || {}),
   };
+  // tnpm / cnpm 安装时，webpack 5 的持久缓存无法生成，长时间将导致 OOM
+  // 原因：[managedPaths](https://webpack.js.org/configuration/other-options/#managedpaths) 在 tnpm / cnpm 安装的情况下失效，导致持久缓存在处理 node_modules
+  // 通过指定 [immutablePaths](https://webpack.js.org/configuration/other-options/#immutablepaths) 进行兼容
+  // 依赖路径中同时包含包名和版本号即可满足 immutablePaths 的使用
 
-  if (dev) {
+  // 通过安装后的 package.json 中是否包含 __npminstall_done 字段来判断是否为 tnpm / cnpm 安装模式
+  if (require('../package.json').__npminstall_done) {
+    const nodeModulesPath = path.join(rootDir, 'node_modules');
+    webpackConfig.snapshot = {
+      immutablePaths: [nodeModulesPath],
+    };
+  }
+  if (dev && !concatenateModules) {
     if (!webpackConfig.optimization) {
       webpackConfig.optimization = {};
     }
@@ -333,5 +348,5 @@ function getSupportedBrowsers(
 
 export {
   getWebpackConfig,
-  getTransformPlugins,
+  getCompilerPlugins,
 };

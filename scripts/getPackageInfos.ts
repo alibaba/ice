@@ -38,11 +38,12 @@ async function checkVersionExists(pkg: string, version: string, distTag: string)
 }
 
 export function getVersionPrefix(version): string {
-  return isNaN(version[0]) ? version[0] : '';
+  return Number.isNaN(version[0]) ? version[0] : '';
 }
 
 export async function getPackageInfos(distTag = ''): Promise<IPackageInfo[]> {
   const packageInfos: IPackageInfo[] = [];
+  // eslint-disable-next-line no-negated-condition
   if (!existsSync(TARGET_DIRECTORY)) {
     console.log(`[ERROR] Directory ${TARGET_DIRECTORY} not exist!`);
   } else {
@@ -69,7 +70,7 @@ export async function getPackageInfos(distTag = ''): Promise<IPackageInfo[]> {
             packageInfo,
             // If localVersion not exist, publish it
             shouldPublish:
-              checkBuildSuccess(packageFolder, packageInfo.main) &&
+              checkBuildSuccess(packageFolder, packageInfo.main ?? 'index.js') &&
               !await checkVersionExists(packageName, publishVersion, distTag),
           });
         } catch (e) {

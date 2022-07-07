@@ -3,18 +3,19 @@ import {
   Outlet,
   useParams,
   useSearchParams,
+  useLocation,
 } from 'react-router-dom';
 import {
   LinkSingle,
   OutletSingle,
   useParamsSingle,
   useSearchParamsSingle,
+  useLocationSingle,
 } from './utils/history-single.js';
 import Runtime from './runtime.js';
 import App from './App.js';
 import runClientApp from './runClientApp.js';
 import { useAppContext } from './AppContext.js';
-import { useAppData } from './AppData.js';
 import { useData, useConfig } from './RouteContext.js';
 import {
   Meta,
@@ -32,19 +33,20 @@ import type {
   ServerContext,
   AppProvider,
   RouteWrapper,
-  GetAppData,
-  GetAppConfig,
+  RenderMode,
 } from './types.js';
 import { matchRoutes } from './routes.js';
 import dataLoader from './dataLoader.js';
+import getAppConfig, { defineAppConfig } from './appConfig.js';
 
 export {
+  getAppConfig,
+  defineAppConfig,
   matchRoutes,
   Runtime,
   App,
   runClientApp,
   useAppContext,
-  useAppData,
   useData,
   useConfig,
   Meta,
@@ -52,16 +54,19 @@ export {
   Links,
   Scripts,
   Main,
+  dataLoader,
   // react-router-dom API
   Link,
   Outlet,
   useParams,
   useSearchParams,
-  dataLoader,
+  useLocation,
+  // Single Route API
   LinkSingle,
   OutletSingle,
   useParamsSingle,
   useSearchParamsSingle,
+  useLocationSingle,
 };
 
 export type {
@@ -73,6 +78,5 @@ export type {
   ServerContext,
   AppProvider,
   RouteWrapper,
-  GetAppData,
-  GetAppConfig,
+  RenderMode,
 };

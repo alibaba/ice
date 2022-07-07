@@ -1,11 +1,7 @@
 import { Link, useData, useConfig } from 'ice';
 
-interface Data {
-  name: string;
-}
-
 export default function Blog() {
-  const data = useData<Data>();
+  const data = useData();
   const config = useConfig();
 
   console.log('render Blog', 'data', data, 'config', config);

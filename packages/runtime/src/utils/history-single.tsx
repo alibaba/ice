@@ -44,3 +44,6 @@ export const useParamsSingle = () => {
 export const useSearchParamsSingle = () => {
   return [{}, () => {}];
 };
+export const useLocationSingle = () => {
+  return {};
+};

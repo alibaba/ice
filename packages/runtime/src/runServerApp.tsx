@@ -6,7 +6,6 @@ import type { Location } from 'history';
 import Runtime from './runtime.js';
 import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
-import { AppDataProvider, getAppData } from './AppData.js';
 import getAppConfig from './appConfig.js';
 import { DocumentContextProvider } from './Document.js';
 import { loadRouteModules, loadRoutesData, getRoutesConfig, matchRoutes } from './routes.js';
@@ -15,23 +14,25 @@ import { createStaticNavigator } from './server/navigator.js';
 import type { NodeWritablePiper } from './server/streamRender.js';
 import type {
   AppContext, RouteItem, ServerContext,
-  AppEntry, RuntimePlugin, CommonJsRuntime, AssetsManifest,
+  AppExport, RuntimePlugin, CommonJsRuntime, AssetsManifest,
   ComponentWithChildren,
   RouteMatch,
   RequestContext,
-  AppData,
   AppConfig,
   RouteModules,
-} from './types';
+  RenderMode,
+} from './types.js';
 import getRequestContext from './requestContext.js';
 
 interface RenderOptions {
-  app: AppEntry;
+  app: AppExport;
   assetsManifest: AssetsManifest;
   routes: RouteItem[];
   runtimeModules: (RuntimePlugin | CommonJsRuntime)[];
   Document: ComponentWithChildren<{}>;
   documentOnly?: boolean;
+  renderMode?: RenderMode;
+  basename?: string;
 }
 
 interface Piper {
@@ -92,7 +93,7 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
     try {
       await pipeToResponse(res, pipe);
     } catch (error) {
-      console.error('Warning: piperToResponse error, downgrade to csr.', error);
+      console.error('PiperToResponse error, downgrade to csr.', error);
       // downgrade to csr.
       const result = await fallback();
       sendResult(res, result);
@@ -120,17 +121,13 @@ function pipeToResponse(res: ServerResponse, pipe: NodeWritablePiper) {
 
 async function doRender(serverContext: ServerContext, renderOptions: RenderOptions): Promise<RenderResult> {
   const { req } = serverContext;
-  const { routes, documentOnly, app } = renderOptions;
+  const { routes, documentOnly, app, basename } = renderOptions;
+
   const location = getLocation(req.url);
 
   const requestContext = getRequestContext(location, serverContext);
-  let appData = {};
-  // don't need to execute getAppData in CSR
-  if (!documentOnly) {
-    appData = await getAppData(app, requestContext);
-  }
-  const appConfig = getAppConfig(app, appData);
-  const matches = matchRoutes(routes, location, appConfig?.router?.basename);
+  const appConfig = getAppConfig(app);
+  const matches = matchRoutes(routes, location, basename);
 
   if (!matches.length) {
     return render404();
@@ -146,13 +143,14 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
 
   try {
     return await renderServerEntry({
+      appExport: app,
       requestContext,
       renderOptions,
       matches,
       location,
       appConfig,
-      appData,
       routeModules,
+      basename,
     });
   } catch (err) {
     console.error('Warning: render server entry error, downgrade to csr.', err);
@@ -163,9 +161,20 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
 // https://github.com/ice-lab/ice-next/issues/133
 function render404(): RenderResult {
   return {
-    value: 'Page is Not Found',
+    value: 'Not Found',
     statusCode: 404,
   };
+}
+
+interface renderServerEntry {
+  appExport: AppExport;
+  requestContext: RequestContext;
+  renderOptions: RenderOptions;
+  matches: RouteMatch[];
+  location: Location;
+  appConfig: AppConfig;
+  routeModules: RouteModules;
+  basename?: string;
 }
 
 /**
@@ -173,51 +182,41 @@ function render404(): RenderResult {
  */
 async function renderServerEntry(
   {
+    appExport,
     requestContext,
     matches,
     location,
-    appData,
     appConfig,
     renderOptions,
     routeModules,
-  }: {
-    requestContext: RequestContext;
-    renderOptions: RenderOptions;
-    matches: RouteMatch[];
-    location: Location;
-    appData: AppData;
-    appConfig: AppConfig;
-    routeModules: RouteModules;
-  },
+    basename,
+  }: renderServerEntry,
 ): Promise<RenderResult> {
   const {
     assetsManifest,
     runtimeModules,
     routes,
+    renderMode,
     Document,
   } = renderOptions;
 
-  const routesData = await loadRoutesData(matches, requestContext, routeModules);
+  const routesData = await loadRoutesData(matches, requestContext, routeModules, renderMode);
   const routesConfig = getRoutesConfig(matches, routesData, routeModules);
 
   const appContext: AppContext = {
+    appExport,
     assetsManifest,
-    appData,
     appConfig,
     routesData,
     routesConfig,
     matches,
     routes,
     routeModules,
+    basename,
   };
 
   const runtime = new Runtime(appContext);
-  if (appConfig?.app?.addProvider) {
-    runtime.addProvider(appConfig.app.addProvider);
-  }
-  runtimeModules.forEach(m => {
-    runtime.loadModule(m);
-  });
+  await Promise.all(runtimeModules.map(m => runtime.loadModule(m)).filter(Boolean));
 
   const staticNavigator = createStaticNavigator();
   const AppProvider = runtime.composeAppProvider() || React.Fragment;
@@ -238,18 +237,16 @@ async function renderServerEntry(
 
   const element = (
     <AppContextProvider value={appContext}>
-      <AppDataProvider value={appData}>
-        <DocumentContextProvider value={documentContext}>
-          <Document />
-        </DocumentContextProvider>
-      </AppDataProvider>
+      <DocumentContextProvider value={documentContext}>
+        <Document />
+      </DocumentContextProvider>
     </AppContextProvider>
   );
 
   const pipe = renderToNodeStream(element, false);
 
   const fallback = () => {
-    renderDocument(matches, renderOptions, routeModules);
+    return renderDocument(matches, renderOptions, routeModules);
   };
 
   return {
@@ -271,16 +268,13 @@ function renderDocument(matches: RouteMatch[], options: RenderOptions, routeModu
     Document,
   } = options;
 
-  // renderDocument needn't to load routesData and appData.
-  const appData = null;
   const routesData = null;
-  const appConfig = getAppConfig(app, appData);
+  const appConfig = getAppConfig(app);
   const routesConfig = getRoutesConfig(matches, {}, routeModules);
 
   const appContext: AppContext = {
     assetsManifest,
     appConfig,
-    appData,
     routesData,
     routesConfig,
     matches,
@@ -295,16 +289,14 @@ function renderDocument(matches: RouteMatch[], options: RenderOptions, routeModu
 
   const html = ReactDOMServer.renderToString(
     <AppContextProvider value={appContext}>
-      <AppDataProvider value={appData}>
-        <DocumentContextProvider value={documentContext}>
-          <Document />
-        </DocumentContextProvider>
-      </AppDataProvider>
+      <DocumentContextProvider value={documentContext}>
+        <Document />
+      </DocumentContextProvider>
     </AppContextProvider>,
   );
 
   return {
-    value: html,
+    value: `<!DOCTYPE html>${html}`,
     statusCode: 200,
   };
 }

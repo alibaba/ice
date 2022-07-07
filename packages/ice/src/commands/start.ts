@@ -1,46 +1,97 @@
 import WebpackDevServer from 'webpack-dev-server';
 import type { Configuration } from 'webpack-dev-server';
-import type { Context } from 'build-scripts';
+import type { Context, TaskConfig } from 'build-scripts';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { Config } from '@ice/types';
-import type { EsbuildCompile } from '@ice/types/esm/plugin.js';
+import type { ServerCompiler } from '@ice/types/esm/plugin.js';
+import type { AppConfig } from '@ice/runtime';
+import { getWebpackConfig } from '@ice/webpack-config';
+import webpack from '@ice/bundles/compiled/webpack/index.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import prepareURLs from '../utils/prepareURLs.js';
-import type { ContextConfig } from '../utils/getContextConfig.js';
+import createCompileMiddleware from '../middlewares/ssr/compileMiddleware.js';
+import createRenderMiddleware from '../middlewares/ssr/renderMiddleware.js';
+import createMockMiddleware from '../middlewares/mock/createMiddleware.js';
 
-const { defaultsDeep } = lodash;
+const { merge } = lodash;
 
-const start = async (context: Context<Config>, contextConfig: ContextConfig[], esbuildCompile: EsbuildCompile) => {
-  const { applyHook, commandArgs, command, rootDir } = context;
-
-  // TODO: task includes miniapp / kraken / pha
-  const { webpackConfig, taskConfig } = contextConfig.find(({ name }) => name === 'web');
-
+const start = async (
+  context: Context<Config>,
+  taskConfigs: TaskConfig<Config>[],
+  serverCompiler: ServerCompiler,
+  appConfig: AppConfig,
+) => {
+  const { applyHook, commandArgs, command, rootDir, userConfig } = context;
   const { port, host, https = false } = commandArgs;
+
+  const webpackConfigs = taskConfigs.map(({ config }) => getWebpackConfig({
+    config,
+    rootDir,
+    // @ts-expect-error fix type error of compiled webpack
+    webpack,
+  }));
+  const customMiddlewares = webpackConfigs[0].devServer?.setupMiddlewares;
   let devServerConfig: Configuration = {
     port,
     host,
     https,
+    setupMiddlewares: (middlewares, devServer) => {
+      const { outputDir } = taskConfigs.find(({ name }) => name === 'web').config;
+      const { ssg, ssr, server } = userConfig;
+      const documentOnly = !ssr && !ssg;
+      const serverCompileMiddleware = createCompileMiddleware({
+        rootDir,
+        outputDir,
+        serverCompiler,
+        server,
+        documentOnly,
+      });
+
+      let renderMode;
+      // If ssr is set to true, use ssr for preview.
+      if (ssr) {
+        renderMode = 'SSR';
+      } else if (ssg) {
+        renderMode = 'SSG';
+      }
+
+      const serverRenderMiddleware = createRenderMiddleware({
+        documentOnly,
+        renderMode,
+      });
+      const insertIndex = middlewares.findIndex(({ name }) => name === 'serve-index');
+      middlewares.splice(
+        insertIndex, 0,
+        serverCompileMiddleware,
+        serverRenderMiddleware,
+      );
+      if (commandArgs.mock) {
+        const mockMiddleware = createMockMiddleware({ rootDir, exclude: userConfig?.mock?.exclude });
+        middlewares.splice(insertIndex, 0, mockMiddleware);
+      }
+      return customMiddlewares ? customMiddlewares(middlewares, devServer) : middlewares;
+    },
   };
-
   // merge devServerConfig with webpackConfig.devServer
-  devServerConfig = defaultsDeep(webpackConfig.devServer, devServerConfig);
-
+  devServerConfig = merge(webpackConfigs[0].devServer, devServerConfig);
   const protocol = devServerConfig.https ? 'https' : 'http';
+  let urlPathname = appConfig?.router?.basename || '/';
+
   const urls = prepareURLs(
     protocol,
     devServerConfig.host,
     devServerConfig.port as number,
+    urlPathname.endsWith('/') ? urlPathname : `${urlPathname}/`,
   );
   const compiler = await webpackCompiler({
     rootDir,
-    webpackConfigs: contextConfig.map(({ webpackConfig }) => webpackConfig),
-    taskConfig,
+    webpackConfigs,
+    taskConfigs,
     urls,
     commandArgs,
     command,
     applyHook,
-    esbuildCompile,
+    serverCompiler,
   });
   const devServer = new WebpackDevServer(devServerConfig, compiler);
   devServer.startCallback(() => {

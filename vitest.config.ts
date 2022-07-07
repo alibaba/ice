@@ -19,5 +19,15 @@ export default defineConfig({
       '**/esm/**',
       '**/tests/fixtures/**',
     ],
+    coverage: {
+      reporter: ['cobertura', 'text'],
+      include: ['**/packages/**'],
+      exclude: [
+        '**/bundles/compiled/**',
+        '**/tests/**',
+      ],
+    },
+    environment: 'jsdom',
   },
+  mode: 'test',
 });

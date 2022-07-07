@@ -4,7 +4,7 @@ import type { Navigator } from 'react-router-dom';
 import AppErrorBoundary from './AppErrorBoundary.js';
 import { useAppContext } from './AppContext.js';
 import { createRouteElements } from './routes.js';
-import type { RouteWrapperConfig, AppRouterProps, RouteModules } from './types';
+import type { RouteWrapperConfig, AppRouterProps } from './types.js';
 
 interface Props {
   action: Action;
@@ -27,8 +27,8 @@ export default function App(props: Props) {
     RouteWrappers,
   } = props;
 
-  const { appConfig, routes: originRoutes } = useAppContext();
-  const { strict } = appConfig.app;
+  const { appConfig, routes: originRoutes, basename } = useAppContext();
+  const { strict, errorBoundary } = appConfig.app;
   const StrictMode = strict ? React.StrictMode : React.Fragment;
 
   if (!originRoutes || originRoutes.length === 0) {
@@ -42,6 +42,8 @@ export default function App(props: Props) {
     [],
   );
 
+  const ErrorBoundary = errorBoundary ? AppErrorBoundary : React.Fragment;
+
   let element: React.ReactNode = (
     <AppRouter
       action={action}
@@ -49,17 +51,17 @@ export default function App(props: Props) {
       navigator={navigator}
       static={staticProp}
       routes={routes}
-      basename={appConfig?.router?.basename}
+      basename={basename}
     />
   );
 
   return (
     <StrictMode>
-      <AppErrorBoundary>
+      <ErrorBoundary>
         <AppProvider>
           {element}
         </AppProvider>
-      </AppErrorBoundary>
+      </ErrorBoundary>
     </StrictMode>
   );
 }

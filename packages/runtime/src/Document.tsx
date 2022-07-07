@@ -1,9 +1,8 @@
 import * as React from 'react';
 import type { ReactNode } from 'react';
 import { useAppContext } from './AppContext.js';
-import { useAppData } from './AppData.js';
 import { getMeta, getTitle, getLinks, getScripts } from './routesConfig.js';
-import type { AppContext, RouteMatch, AssetsManifest } from './types';
+import type { AppContext, RouteMatch, AssetsManifest } from './types.js';
 
 interface DocumentContext {
   main: ReactNode | null;
@@ -47,7 +46,7 @@ export function Links() {
   const routeLinks = getLinks(matches, routesConfig);
   const pageAssets = getPageAssets(matches, assetsManifest);
   const entryAssets = getEntryAssets(assetsManifest);
-  const styles = pageAssets.concat(entryAssets).filter(path => path.indexOf('.css') > -1);
+  const styles = entryAssets.concat(pageAssets).filter(path => path.indexOf('.css') > -1);
 
   return (
     <>
@@ -64,7 +63,6 @@ export function Links() {
 
 export function Scripts() {
   const { routesData, routesConfig, matches, assetsManifest, documentOnly, routeModules } = useAppContext();
-  const appData = useAppData();
 
   const routeScripts = getScripts(matches, routesConfig);
   const pageAssets = getPageAssets(matches, assetsManifest);
@@ -75,7 +73,6 @@ export function Scripts() {
   const matchedIds = matches.map(match => match.route.id);
 
   const appContext: AppContext = {
-    appData,
     routesData,
     routesConfig,
     assetsManifest,
@@ -108,9 +105,9 @@ export function Scripts() {
 
 export function Main() {
   const { main } = useDocumentContext();
-
+  const { appConfig } = useAppContext();
   return (
-    <div id="ice-container" >
+    <div id={appConfig.app.rootId} >
       {main}
     </div>
   );

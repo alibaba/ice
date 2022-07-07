@@ -1,0 +1,78 @@
+{
+  "name": "rax-compat",
+  "version": "0.1.0",
+  "description": "Rax compatible mode, running rax project on the react runtime.",
+  "files": [
+    "esm",
+    "cjs",
+    "es2017",
+    "dist",
+    "build"
+  ],
+  "main": "esm/index.js",
+  "module": "esm/index.js",
+  "exports": {
+    ".": "./esm/index.js",
+    "./children": "./esm/children.js",
+    "./clone-element": "./esm/clone-element.js",
+    "./create-class": "./esm/create-class.js",
+    "./create-factory": "./esm/create-factory.js",
+    "./create-portal": "./esm/create-portal.js",
+    "./find-dom-node": "./esm/find-dom-node.js",
+    "./is-valid-element": "./esm/is-valid-element.js",
+    "./unmount-component-at-node": "./esm/unmount-component-at-node.js",
+    "./es2017": "./es2017/index.js"
+  },
+  "sideEffects": [
+    "dist/*",
+    "*.scss",
+    "*.less",
+    "*.css"
+  ],
+  "scripts": {
+    "watch": "ice-pkg start",
+    "build": "ice-pkg build",
+    "prepublishOnly": "npm run build",
+    "eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
+    "eslint:fix": "npm run eslint -- --fix",
+    "stylelint": "stylelint \"**/*.{css,scss,less}\"",
+    "lint": "npm run eslint && npm run stylelint"
+  },
+  "keywords": [
+    "ice",
+    "react",
+    "rax",
+    "compat"
+  ],
+  "dependencies": {
+    "appear-polyfill": "^0.1.2",
+    "style-unit": "^3.0.4",
+    "create-react-class": "^15.7.0"
+  },
+  "devDependencies": {
+    "@ice/pkg": "^1.0.0-rc.0",
+    "@ice/pkg-plugin-docusaurus": "^1.0.0-rc.0",
+    "@iceworks/spec": "^1.0.0",
+    "@types/rax": "^1.0.8",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "eslint": "^7.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "stylelint": "^13.7.2"
+  },
+  "peerDependencies": {
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ice-lab/ice-next.git"
+  },
+  "author": "ice-admin@alibaba-inc.com",
+  "license": "MIT",
+  "homepage": "https://github.com/ice-lab/ice-next#readme"
+}

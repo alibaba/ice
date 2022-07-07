@@ -1,15 +1,17 @@
 import path from 'path';
-import type { Plugin, PluginBuild } from 'esbuild';
+import type { Plugin, PluginBuild, BuildOptions } from 'esbuild';
 import fg from 'fast-glob';
 import { resolveId } from '../service/analyze.js';
+import isExternalBuiltinDep from '../utils/isExternalBuiltinDep.js';
 
 interface PluginOptions {
   alias: Record<string, string | false>;
-  compileRegex: RegExp[];
+  serverBundle: boolean;
+  format: BuildOptions['format'];
 }
 
 const aliasPlugin = (options: PluginOptions): Plugin => {
-  const { alias, compileRegex } = options;
+  const { alias, serverBundle, format } = options;
   return {
     name: 'esbuild-alias',
     setup(build: PluginBuild) {
@@ -18,7 +20,8 @@ const aliasPlugin = (options: PluginOptions): Plugin => {
         // ice do not support alias with config onlyModule
         const resolved = resolveId(id, alias);
         if (resolved && resolved !== id) {
-          if (!path.extname(resolved)) {
+          // glob specified file module aliased with absolute path
+          if (!path.extname(resolved) && path.isAbsolute(resolved)) {
             const basename = path.basename(resolved);
             const patterns = [`${basename}.{js,ts,jsx,tsx}`, `${basename}/index.{js,ts,jsx,tsx}`];
             const absoluteId = fg.sync(patterns, {
@@ -37,9 +40,7 @@ const aliasPlugin = (options: PluginOptions): Plugin => {
       build.onResolve({ filter: /.*/ }, (args) => {
         const id = args.path;
         // external ids which is third-party dependencies
-        if (id[0] !== '.' && !path.isAbsolute(id) &&
-                // runtime folder need to been bundled while it is not compiled
-                !compileRegex.some((regex) => regex.test(id))) {
+        if (id[0] !== '.' && !path.isAbsolute(id) && !serverBundle && isExternalBuiltinDep(id, format)) {
           return {
             external: true,
           };

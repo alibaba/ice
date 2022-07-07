@@ -6,21 +6,22 @@ import { createHistorySingle } from './utils/history-single.js';
 import Runtime from './runtime.js';
 import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
-import { AppDataProvider, getAppData } from './AppData.js';
 import type {
-  AppContext, AppEntry, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
+  AppContext, AppExport, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
   RouteWrapperConfig, RuntimeModules, RouteMatch, ComponentWithChildren, RouteModules,
-} from './types';
+} from './types.js';
 import { loadRouteModules, loadRoutesData, getRoutesConfig, matchRoutes, filterMatchesToLoad } from './routes.js';
 import { updateRoutesConfig } from './routesConfig.js';
 import getRequestContext from './requestContext.js';
 import getAppConfig from './appConfig.js';
 
 interface RunClientAppOptions {
-  app: AppEntry;
+  app: AppExport;
   routes: RouteItem[];
   runtimeModules: RuntimeModules;
   Document: ComponentWithChildren<{}>;
+  basename?: string;
+  hydrate: boolean;
 }
 
 export default async function runClientApp(options: RunClientAppOptions) {
@@ -29,19 +30,17 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routes,
     runtimeModules,
     Document,
+    basename,
+    hydrate,
   } = options;
-
   const appContextFromServer: AppContext = (window as any).__ICE_APP_CONTEXT__ || {};
-  let { appData, routesData, routesConfig, assetsManifest } = appContextFromServer;
+  let { routesData, routesConfig, assetsManifest } = appContextFromServer;
 
   const requestContext = getRequestContext(window.location);
 
-  if (!appData) {
-    appData = await getAppData(app, requestContext);
-  }
-  const appConfig = getAppConfig(app, appData);
+  const appConfig = getAppConfig(app);
 
-  const matches = matchRoutes(routes, window.location, appConfig?.router?.basename);
+  const matches = matchRoutes(routes, window.location, basename);
   const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
 
   if (!routesData) {
@@ -52,29 +51,26 @@ export default async function runClientApp(options: RunClientAppOptions) {
   }
 
   const appContext: AppContext = {
+    appExport: app,
     routes,
     appConfig,
-    appData,
     routesData,
     routesConfig,
     assetsManifest,
     matches,
     routeModules,
+    basename,
   };
 
   const runtime = new Runtime(appContext);
-  if (appConfig?.app?.addProvider) {
-    runtime.addProvider(appConfig.app.addProvider);
-  }
-  if (process.env.ICE_CORE_SSR === 'true' || process.env.ICE_CORE_SSG === 'true') {
+
+  if (hydrate) {
     runtime.setRender((container, element) => {
       ReactDOM.hydrateRoot(container, element);
     });
   }
 
-  runtimeModules.forEach(m => {
-    runtime.loadModule(m);
-  });
+  await Promise.all(runtimeModules.map(m => runtime.loadModule(m)).filter(Boolean));
 
   render(runtime, Document);
 }
@@ -92,7 +88,7 @@ async function render(runtime: Runtime, Document: ComponentWithChildren<{}>) {
   const history = createHistory({ window });
 
   render(
-    document.getElementById('ice-container'),
+    document.getElementById(appContext.appConfig.app.rootId),
     <BrowserEntry
       history={history}
       appContext={appContext}
@@ -136,9 +132,8 @@ function BrowserEntry({
     matches: originMatches,
     routesData: initialRoutesData,
     routesConfig: initialRoutesConfig,
-    appData,
-    appConfig,
     routeModules: initialRouteModules,
+    basename,
   } = appContext;
 
   const [historyState, setHistoryState] = useState<HistoryState>({
@@ -159,7 +154,7 @@ function BrowserEntry({
   useLayoutEffect(() => {
     if (history) {
       history.listen(({ action, location }) => {
-        const currentMatches = matchRoutes(routes, location, appConfig?.router?.basename);
+        const currentMatches = matchRoutes(routes, location, basename);
         if (!currentMatches.length) {
           throw new Error(`Routes not found in location ${location.pathname}.`);
         }
@@ -192,14 +187,12 @@ function BrowserEntry({
 
   return (
     <AppContextProvider value={appContext}>
-      <AppDataProvider value={appData}>
-        <App
-          action={action}
-          location={location}
-          navigator={history}
-          {...rest}
-        />
-      </AppDataProvider>
+      <App
+        action={action}
+        location={location}
+        navigator={history}
+        {...rest}
+      />
     </AppContextProvider>
   );
 }

@@ -1,17 +1,14 @@
 import { Suspense, lazy } from 'react';
-import { Link, useAppData, useData, useConfig } from 'ice';
+import { Link, useData, useConfig } from 'ice';
 // not recommended but works
 import { useAppContext } from '@ice/runtime';
+import { Button } from 'antd-mobile';
 import styles from './index.module.css';
-import type { AppData } from '@/types';
 
 const Bar = lazy(() => import('../components/bar'));
 
 export default function Home(props) {
   console.log('render Home', props);
-
-  const appData = useAppData<AppData>();
-  console.log('get AppData', appData);
 
   const appContext = useAppContext();
   console.log('get AppContext', appContext);
@@ -27,6 +24,7 @@ export default function Home(props) {
       <Link to="/about">about</Link>
       <Suspense fallback={<div>hello</div>}>
         <Bar />
+        <Button onClick={() => alert('Hello ICE.')}>Click Me</Button>
       </Suspense>
     </>
   );

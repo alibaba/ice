@@ -1,16 +1,17 @@
-import type { AppConfig, AppData, AppEntry } from './types';
+import type { AppConfig, AppExport } from './types.js';
 
 const defaultAppConfig: AppConfig = {
   app: {
     strict: true,
+    rootId: 'ice-container',
   },
   router: {
     type: 'browser',
   },
 };
 
-export default function getAppConfig(appEntry: AppEntry, appData: AppData): AppConfig {
-  const appConfig = appEntry.getAppConfig(appData);
+export default function getAppConfig(appExport: AppExport): AppConfig {
+  const appConfig = appExport?.default || {};
 
   const { app, router, ...others } = appConfig;
 
@@ -25,4 +26,8 @@ export default function getAppConfig(appEntry: AppEntry, appData: AppData): AppC
     },
     ...others,
   };
+}
+
+export function defineAppConfig(appConfig: AppConfig) {
+  return appConfig;
 }

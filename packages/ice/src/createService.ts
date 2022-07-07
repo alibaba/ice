@@ -3,22 +3,24 @@ import { fileURLToPath } from 'url';
 import { Context } from 'build-scripts';
 import consola from 'consola';
 import type { CommandArgs, CommandName } from 'build-scripts';
+import type { Config } from '@ice/types';
 import type { ExportData } from '@ice/types/esm/generator.js';
 import type { ExtendsPluginAPI } from '@ice/types/esm/plugin.js';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import Generator from './service/runtimeGenerator.js';
-import { createEsbuildCompiler } from './service/compile.js';
+import { createServerCompiler } from './service/serverCompiler.js';
 import createWatch from './service/watchSource.js';
 import start from './commands/start.js';
 import build from './commands/build.js';
-import getContextConfig from './utils/getContextConfig.js';
+import mergeTaskConfig from './utils/mergeTaskConfig.js';
 import getWatchEvents from './getWatchEvents.js';
 import { getAppConfig } from './analyzeRuntime.js';
 import { initProcessEnv, updateRuntimeEnv, getCoreEnvKeys } from './utils/runtimeEnv.js';
 import getRuntimeModules from './utils/getRuntimeModules.js';
 import { generateRoutesInfo } from './routes.js';
-import webPlugin from './plugins/web/index.js';
-import configPlugin from './plugins/config.js';
+import getWebTask from './tasks/web/index.js';
+import getDataLoaderTask from './tasks/web/data-loader.js';
+import * as config from './config.js';
 import type { AppConfig } from './utils/runtimeEnv.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -53,14 +55,11 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     addExportTypes: (exportData: ExportData) => {
       generator.addExport('frameworkTypes', exportData);
     },
-    addConfigTypes: (exportData: ExportData) => {
-      generator.addExport('configTypes', exportData);
-    },
     addRenderFile: generator.addRenderFile,
     addRenderTemplate: generator.addTemplateFiles,
   };
 
-  const ctx = new Context<any, ExtendsPluginAPI>({
+  const ctx = new Context<Config, ExtendsPluginAPI>({
     rootDir,
     command,
     commandArgs,
@@ -76,95 +75,90 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         webpack,
       },
     },
-    getBuiltInPlugins: () => {
-      return [webPlugin, configPlugin];
-    },
   });
-  await ctx.resolveConfig();
+
+  // resolve userConfig from ice.config.ts before registerConfig
+  await ctx.resolveUserConfig();
+
+  // get plugins include built-in plugins and custom plugins
+  const plugins = await ctx.resolvePlugins();
+  const runtimeModules = getRuntimeModules(plugins);
+
+  // register web
+  ctx.registerTask('web', getWebTask({ rootDir, command }));
+
+  // register data-loader
+  ctx.registerTask('data-loader', getDataLoaderTask({ rootDir, command }));
+
+  // register config
+  ['userConfig', 'cliOption'].forEach((configType) => ctx.registerConfig(configType, config[configType]));
+
+  let taskConfigs = await ctx.setup();
+  // merge task config with built-in config
+  taskConfigs = mergeTaskConfig(taskConfigs, { port: commandArgs.port });
+  const webTaskConfig = taskConfigs.find(({ name }) => name === 'web');
+
+  // get userConfig after setup because of userConfig maybe modified by plugins
   const { userConfig } = ctx;
+  const { routes: routesConfig, server } = userConfig;
 
   // load dotenv, set to process.env
-  await initProcessEnv(rootDir, command, commandArgs, userConfig);
+  await initProcessEnv(rootDir, command, commandArgs);
   const coreEnvKeys = getCoreEnvKeys();
 
-  const { routes: routesConfig } = userConfig;
-  const routesRenderData = generateRoutesInfo(rootDir, routesConfig);
-  const { routeManifest } = routesRenderData;
-  generator.modifyRenderData((renderData) => ({
-    ...renderData,
-    ...routesRenderData,
+  const routesInfo = await generateRoutesInfo(rootDir, routesConfig);
+
+  const csr = !userConfig.ssr && !userConfig.ssg;
+
+  // add render data
+  generator.setRenderData({
+    ...routesInfo,
+    runtimeModules,
     coreEnvKeys,
-  }));
-  dataCache.set('routes', JSON.stringify(routeManifest));
-
-  const runtimeModules = getRuntimeModules(ctx.getAllPlugin());
-
-  await ctx.setup();
-
-  addWatchEvent(
-    ...getWatchEvents({ generator, targetDir, templateDir, cache: dataCache, ctx }),
-  );
-
-  const compileIncludes = runtimeModules.map(({ name }) => `${name}/runtime`);
-  const contextConfig = getContextConfig(ctx, {
-    compileIncludes,
-    port: commandArgs.port,
+    basename: webTaskConfig.config.basename,
+    hydrate: !csr,
   });
-  const webTask = contextConfig.find(({ name }) => name === 'web');
+  dataCache.set('routes', JSON.stringify(routesInfo.routeManifest));
 
   // render template before webpack compile
   const renderStart = new Date().getTime();
-  generator.modifyRenderData((renderData) => ({
-    ...renderData,
-    runtimeModules,
-  }));
   generator.render();
+  addWatchEvent(
+    ...getWatchEvents({ generator, targetDir, templateDir, cache: dataCache, ctx }),
+  );
   consola.debug('template render cost:', new Date().getTime() - renderStart);
 
-  const esbuildCompile = createEsbuildCompiler({
+  // create serverCompiler with task config
+  const serverCompiler = createServerCompiler({
     rootDir,
-    task: webTask,
+    task: webTaskConfig,
+    command,
+    serverBundle: server.bundle,
   });
-
   let appConfig: AppConfig;
-  if (command === 'build') {
-    try {
-      // should after generator, otherwise it will compile error
-      appConfig = await getAppConfig({ esbuildCompile, rootDir });
-    } catch (err) {
-      consola.warn('Failed to get app config:', err.message);
-      consola.debug(err);
-    }
+  try {
+    // should after generator, otherwise it will compile error
+    appConfig = await getAppConfig({ serverCompiler, rootDir });
+  } catch (err) {
+    consola.warn('Failed to get app config:', err.message);
+    consola.debug(err);
   }
 
-  let disableRouter = false;
-  if (userConfig.removeHistoryDeadCode) {
-    let routesCount = 0;
-    routeManifest && Object.keys(routeManifest).forEach((key) => {
-      const routeItem = routeManifest[key];
-      if (!routeItem.layout) {
-        routesCount += 1;
-      }
-    });
-
-    if (routesCount <= 1) {
-      consola.info('[ice] removeHistoryDeadCode is enabled and only have one route, ice build will remove history and react-router dead code.');
-      disableRouter = true;
-    }
+  const disableRouter = userConfig.removeHistoryDeadCode && routesInfo.routesCount <= 1;
+  if (disableRouter) {
+    consola.info('[ice] removeHistoryDeadCode is enabled and only have one route, ice build will remove history and react-router dead code.');
   }
-
-  updateRuntimeEnv(appConfig, disableRouter);
+  updateRuntimeEnv(appConfig, { disableRouter });
 
   return {
     run: async () => {
       if (command === 'start') {
-        return await start(ctx, contextConfig, esbuildCompile);
+        return await start(ctx, taskConfigs, serverCompiler, appConfig);
       } else if (command === 'build') {
-        return await build(ctx, contextConfig, esbuildCompile);
+        return await build(ctx, taskConfigs, serverCompiler);
       }
     },
   };
 }
-
 
 export default createService;

@@ -93,8 +93,10 @@ export function piperToString(input): Promise<string> {
       reject(error);
     });
 
-    input(stream, () => {
-      // noop
+    input(stream, (error) => {
+      if (error) {
+        reject(error);
+      }
     });
   });
 }
