@@ -4,19 +4,14 @@ import styles from './feature.module.css';
 
 const data = [
   {
-    title: '规范',
-    decs: '从目录组织规范到代码风格，集成了结合阿里内部大量项目实践的研发规范',
-    url: '/docs/guide/basic/directory',
+    title: '移动 + 桌面',
+    decs: '同时支持移动端和桌面端，提供更多针对性的优化',
+    url: '/docs/guide/about',
   },
   {
     title: '开箱即用',
-    decs: '支持 Webpack5/TypeScript/CSS Modules/PostCSS 等构建能力，框架 API 具备良好的类型提示',
+    decs: '支持 Webpack5 / TypeScript / CSS Modules / PostCSS 等构建能力，API 具备良好的类型提示',
     url: '/docs/guide/start',
-  },
-  {
-    title: '移动+桌面',
-    decs: '同时支持移动端和桌面端，提供更多针对性的优化',
-    url: '/docs/guide/about',
   },
   {
     title: '最佳实践',
@@ -54,7 +49,7 @@ function Feature() {
             <h3>{item.title}</h3>
             <span>{item.decs}</span>
             <div style={{ flex: 1 }} />
-            <p>{'查看文档 >'}</p>
+            <p className={styles.link}>{'详情 >'}</p>
           </div>
         </a>
       ))}

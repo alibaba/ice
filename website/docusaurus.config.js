@@ -15,7 +15,7 @@ const config = {
   themeConfig: {
     announcementBar: {
       id: 'announcementBar-2',
-      content: 'ICE 3 Beta，不仅是 PC，更适配移动端能力，<a href="/docs/guide/upgrade">快速升级</a>',
+      content: 'ICE 3 Beta，不仅是 PC，更适配移动端能力，<a href="/docs/guide/about">更多</a>',
       isCloseable: true,
     },
     navbar,
