@@ -61,8 +61,8 @@ const data = [
 function Users() {
   return (
     <AreaWrapper
-      title={'谁在使用'}
-      decs={'飞冰广泛服务于阿里巴巴众多面向运营、商家以及消费者端的业务'}
+      title="谁在使用"
+      decs="飞冰广泛服务于阿里巴巴众多面向消费者、商家以及运营的业务"
       contentStyle={styles.content}
       style={{
         minHeight: 'auto',

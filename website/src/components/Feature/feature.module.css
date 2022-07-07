@@ -62,6 +62,10 @@
   overflow: hidden;
 }
 
+.card p.link {
+  font-size: 13px;
+}
+
 .card h3 {
   font-size: 21px;
   margin-bottom: 14px;
@@ -81,7 +85,6 @@
 }
 
 .card:hover p {
-  font-size: 16px;
   background: #fff;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

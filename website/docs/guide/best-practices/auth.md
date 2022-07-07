@@ -1,5 +1,5 @@
 ---
-title: 权限
+title: 权限管理
 order: 7
 hide: true
 ---

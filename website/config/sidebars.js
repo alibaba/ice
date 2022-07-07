@@ -19,12 +19,16 @@ module.exports = {
     },
     {
       type: 'category',
-      label: '进阶',
+      label: '最佳实践',
       collapsed: false,
-      items: getDocsFromDir('guide/advanced'),
+      items: getDocsFromDir('guide/best-practices'),
     },
-    'guide/plugin',
-    'guide/upgrade',
+    {
+      type: 'category',
+      label: '插件',
+      collapsed: false,
+      items: getDocsFromDir('guide/plugins'),
+    },
   ],
   examples: getDocsFromDir('examples'),
 };

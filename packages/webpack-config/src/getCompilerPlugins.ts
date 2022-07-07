@@ -24,15 +24,16 @@ function getCompilerPlugins(config: Config, compiler: Compiler) {
     new RegExp(SKIP_COMPILE.map((dep) => `node_modules/?.+${dep}/`).join('|')),
     /bundles\/compiled/,
   ];
-
-  compilerPlugins.push(compilationPlugin({
-    sourceMap,
-    fastRefresh,
-    mode,
-    compileIncludes,
-    compileExcludes,
-    swcOptions,
-  }));
+  if (swcOptions) {
+    compilerPlugins.push(compilationPlugin({
+      sourceMap,
+      fastRefresh,
+      mode,
+      compileIncludes,
+      compileExcludes,
+      swcOptions,
+    }));
+  }
 
   compilerPlugins.push(
     ...transformPlugins,

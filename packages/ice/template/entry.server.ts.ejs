@@ -9,7 +9,7 @@ import routes from './routes';
 
 const getRouterBasename = () => {
   const appConfig = runtime.getAppConfig(app);
-  return '<%- basename %>' || appConfig?.router?.basename;
+  return '<%- basename %>' || appConfig?.router?.basename || '';
 }
 
 const setRuntimeEnv = (renderMode) => {
@@ -31,8 +31,7 @@ export async function renderToHTML(requestContext, options: RenderOptions = {}) 
 
   const basename = getRouterBasename();
   // add basename for req.url so we don't need to add basename for mocked url
-  requestContext.req.url = `${basename}${requestContext.req.url.replace(/^\//, '')}`;
-
+  requestContext.req.url = `${basename}/${requestContext.req.url}`.replace(/\/+/g, '/');
   return await runtime.renderToHTML(requestContext, {
     app,
     assetsManifest,
