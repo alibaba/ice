@@ -75,7 +75,3 @@ rpx 是什么？rpx（responsive pixel）: 可以根据屏幕宽度进行自适�
 `DOM attributes 处理`：
 
 在 React 中，Element 的 props 会存在白名单，而 Rax 中没有该判断。这差异导致使用非 `data-*` 的自定义属性在 React Runtime 中会被忽略（会有 warning），如果用户通过不合法的自定义属性存储在 attributes 中，在 React Runtime 中会无法从真实 Element 中通过 `getAttribute` 获取。如果用了这些非法自定义属性，推荐使用 `data-*` 来标识自定义属性。
-
-`rax-picture`
-
-在 Rax DSL 以及兼容模式下，可以继续使用 `@rax-picture` 组件，如果是 React 用户，应使用 `@ice/picture` 组件。
