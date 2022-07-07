@@ -50,7 +50,7 @@ export function createElement<P extends {
   onAppear?: Function;
   onDisappear?: Function;
 }>(
-  type: FunctionComponent<P>,
+  type: FunctionComponent<P> | string,
   props?: Attributes & P | null,
   ...children: ReactNode[]): ReactElement {
   const rest = Object.assign({}, props);

@@ -18,7 +18,9 @@ import {
   useReducer as _useReducer,
   useRef as _useRef,
   useState as _useState,
+  createContext as _createContext,
 } from 'react';
+import is from './is';
 
 /**
  * Compat useState for rax export.
@@ -26,16 +28,26 @@ import {
  * @param initialState
  * @returns [ value, dispatch ]
  */
-export function useState<S>(initialState: S | (() => S)): ReturnType<typeof _useState> {
-  const stateHook = _useState(initialState);
+export function useState<S>(initialState: S | (() => S)): ReturnType<typeof _useState> | any {
+  // The eagerState should be saved for filter shallow-equal value set.
+  const stateHook = _useState({
+    state: initialState,
+    eagerState: initialState,
+  });
   // @NOTE: Rax will not re-render if set a same value.
   function updateState(newState: S) {
     // Filter shallow-equal value set.
-    if (newState !== stateHook[0]) {
-      stateHook[1](newState);
+    if (!is(newState, stateHook[0].eagerState)) {
+      stateHook[1]({
+        state: newState,
+        eagerState: newState,
+      });
     }
+
+    stateHook[0].eagerState = newState;
   }
-  return [stateHook[0], updateState];
+
+  return [stateHook[0].state, updateState, stateHook[0].eagerState];
 }
 
 /**
@@ -55,7 +67,7 @@ export function useContext<T>(context: Context<T>): ReturnType<typeof _useContex
  * @param inputs
  * @returns void
  */
-export function useEffect(effect: EffectCallback, inputs: DependencyList): void {
+export function useEffect(effect: EffectCallback, inputs?: DependencyList): void {
   return _useEffect(effect, inputs);
 }
 
@@ -129,4 +141,8 @@ export function useReducer<R extends ReducerWithoutAction<any>, I>(
   init: (arg: I) => ReducerStateWithoutAction<R>,
 ): [ReducerStateWithoutAction<R>, DispatchWithoutAction] {
   return _useReducer(reducer, initialArg, init);
+}
+
+export function createContext<T>(defaultValue: T): Context<T> {
+  return _createContext(defaultValue);
 }

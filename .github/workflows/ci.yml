@@ -36,6 +36,8 @@ jobs:
       - run: npm run dependency:check
       - run: npm run lint
       - run: npm run test
+        env:
+          TEST: true
       - run: npm run version:check
         env:
           ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}

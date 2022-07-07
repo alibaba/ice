@@ -41,10 +41,10 @@ export async function initProcessEnv(
   process.env.ICE_CORE_MODE = mode;
   process.env.ICE_CORE_DEV_PORT = commandArgs.port;
 
-  if (command === 'start') {
-    process.env.NODE_ENV = 'development';
-  } else if (command === 'test') {
+  if (process.env.TEST || command === 'test') {
     process.env.NODE_ENV = 'test';
+  } else if (command === 'start') {
+    process.env.NODE_ENV = 'development';
   } else {
     // build
     process.env.NODE_ENV = 'production';
