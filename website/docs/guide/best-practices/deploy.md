@@ -103,7 +103,7 @@ const app = (module.exports = new Koa());
 app.use(views(path.join(__dirname, '/views'), { extension: 'ejs' }));
 
 app.use(async function (ctx) {
-  await ctx.render('index', { publicPath: 'http://localhost:3333/' });
+  await ctx.render('index', { publicPath: 'http://localhost:3000/' });
 });
 
 const port = 3000;
