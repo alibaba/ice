@@ -8,7 +8,6 @@ const getWebTask = ({ rootDir, command }): Config => {
     mode: command === 'start' ? 'development' : 'production',
     sourceMap: command === 'start' ? 'cheap-module-source-map' : false,
     cacheDir: path.join(rootDir, CACHE_DIR),
-    outputDir: path.join(rootDir, 'build'),
     alias: {
       ice: path.join(rootDir, '.ice', 'index.ts'),
       '@': path.join(rootDir, 'src'),

@@ -21,10 +21,11 @@ export default function createCompileMiddleware(options: Options): Middleware {
       const { format } = server;
       const esm = format === 'esm';
       const outJSExtension = esm ? '.mjs' : '.cjs';
-      const serverEntry = path.join(outputDir, SERVER_OUTPUT_DIR, `index${outJSExtension}`);
+      const serverOutputDir = path.join(rootDir, outputDir, SERVER_OUTPUT_DIR);
+      const serverEntry = path.join(serverOutputDir, `index${outJSExtension}`);
       await serverCompiler({
         entryPoints: { index: entryPoint },
-        outdir: path.join(outputDir, SERVER_OUTPUT_DIR),
+        outdir: serverOutputDir,
         splitting: esm,
         format,
         platform: esm ? 'browser' : 'node',
