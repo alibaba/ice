@@ -11,7 +11,7 @@
   "files": [
     "bin",
     "esm",
-    "template",
+    "templates",
     "!esm/**/*.map"
   ],
   "engines": {

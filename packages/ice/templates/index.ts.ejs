@@ -10,6 +10,9 @@ import {
   useSearchParamsSingle,
   useLocationSingle,
 } from '@ice/runtime';
+<% if (globalStyle) {%>
+  import '<%= globalStyle %>'
+<% } %>
 
 let Link: typeof OriginLink;
 let Outlet: typeof OriginOutlet;

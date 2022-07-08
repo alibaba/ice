@@ -5,6 +5,7 @@ import type { Context } from 'build-scripts';
 import type { Config } from '@ice/types';
 import { generateRoutesInfo } from './routes.js';
 import type Generator from './service/runtimeGenerator';
+import getGlobalStyleGlobPattern from './utils/getGlobalStyleGlobPattern.js';
 
 interface Options {
   targetDir: string;
@@ -47,11 +48,23 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
   ];
 
   const watchGlobalStyle: WatchEvent = [
-    /src\/global.(scss|less|css)/,
+    getGlobalStyleGlobPattern(),
     (event: string, filePath: string) => {
-      if (event === 'unlink' || event === 'add') {
-        consola.debug('[event]', `style '${filePath}': ${event}`);
-        // TODO render global style template
+      if (event === 'unlink') {
+        consola.log('[event]', `style '${filePath}': ${event}`);
+        generator.renderFile(
+          path.join(templateDir, 'index.ts.ejs'),
+          path.join(rootDir, targetDir, 'index.ts'),
+          { globalStyle: undefined },
+        );
+      }
+      if (event === 'add') {
+        consola.log('[event]', `style '${filePath}': ${event}`);
+        generator.renderFile(
+          path.join(templateDir, 'index.ts.ejs'),
+          path.join(rootDir, targetDir, 'index.ts'),
+          { globalStyle: `@/${path.basename(filePath)}` },
+        );
       }
     },
   ];
