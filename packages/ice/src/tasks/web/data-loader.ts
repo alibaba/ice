@@ -10,7 +10,6 @@ const getTask = ({ rootDir, command }): Config => {
     },
     mode: command === 'start' ? 'development' : 'production',
     sourceMap: command === 'start' ? 'cheap-module-source-map' : false,
-    outputDir: path.join(rootDir, 'build'),
     cacheDir: path.join(rootDir, CACHE_DIR),
     alias: {
       ice: path.join(rootDir, '.ice', 'index.ts'),
