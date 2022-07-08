@@ -268,6 +268,13 @@ const userConfig = [
     },
   },
   {
+    name: 'transform',
+    validation: 'function',
+    setConfig: (config: Config, transform: UserConfig['transform']) => {
+      config.transforms = config.transforms ? [...config.transforms, transform] : [transform];
+    },
+  },
+  {
     name: 'removeHistoryDeadCode',
     validation: 'boolean',
   },
