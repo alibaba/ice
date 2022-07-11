@@ -1,3 +1,5 @@
+const toString = Object.prototype.toString;
+
 /**
  * Determine if a value is an Array
  *
