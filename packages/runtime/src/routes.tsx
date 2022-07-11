@@ -1,8 +1,4 @@
 import React from 'react';
-import type { Location } from 'history';
-import type { RouteObject } from 'react-router-dom';
-import { matchRoutes as originMatchRoutes } from 'react-router-dom';
-import { matchRoutesSingle } from './utils/history-single.js';
 import RouteWrapper from './RouteWrapper.js';
 import type { RouteItem, RouteModules, RouteWrapperConfig, RouteMatch, RequestContext, RoutesConfig, RoutesData, RenderMode } from './types.js';
 import { useAppContext } from './AppContext.js';
@@ -164,23 +160,6 @@ function RouteComponent({ id }: { id: string }) {
     }
   }
   return <Component />;
-}
-
-export function matchRoutes(
-  routes: RouteItem[],
-  location: Partial<Location> | string,
-  basename?: string,
-): RouteMatch[] {
-  const matchRoutesFn = process.env.ICE_CORE_ROUTER === 'true' ? originMatchRoutes : matchRoutesSingle;
-  let matches = matchRoutesFn(routes as unknown as RouteObject[], location, basename);
-  if (!matches) return [];
-
-  return matches.map(({ params, pathname, pathnameBase, route }) => ({
-    params,
-    pathname,
-    route: route as unknown as RouteItem,
-    pathnameBase,
-  }));
 }
 
 /**

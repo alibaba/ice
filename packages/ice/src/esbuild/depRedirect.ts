@@ -13,6 +13,9 @@ const { init, parse } = esModuleLexer;
 
 type ImportNameSpecifier = { importedName: string; localName: string };
 
+/**
+ * Redirect original dependency to the pre-bundle dependency(cjs) which is handled by preBundleCJSDeps function.
+ */
 const createDepRedirectPlugin = (metadata: DepsMetaData): Plugin => {
   return {
     name: 'esbuild-dep-redirect',

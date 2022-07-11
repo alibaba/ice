@@ -8,7 +8,7 @@ import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
 import getAppConfig from './appConfig.js';
 import { DocumentContextProvider } from './Document.js';
-import { loadRouteModules, loadRoutesData, getRoutesConfig, matchRoutes } from './routes.js';
+import { loadRouteModules, loadRoutesData, getRoutesConfig } from './routes.js';
 import { piperToString, renderToNodeStream } from './server/streamRender.js';
 import { createStaticNavigator } from './server/navigator.js';
 import type { NodeWritablePiper } from './server/streamRender.js';
@@ -23,6 +23,7 @@ import type {
   RenderMode,
 } from './types.js';
 import getRequestContext from './requestContext.js';
+import matchRoutes from './matchRoutes.js';
 
 interface RenderOptions {
   app: AppExport;

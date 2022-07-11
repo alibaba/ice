@@ -1,18 +1,18 @@
 import * as path from 'path';
 import type { Config } from '@ice/types';
-import { CACHE_DIR } from '../../constant.js';
+import { CACHE_DIR, DATA_LOADER_ENTRY, RUNTIME_TMP_DIR } from '../../constant.js';
 
 const getTask = ({ rootDir, command }): Config => {
   // basic task config of data-loader
   return {
     entry: {
-      'data-loader': path.join(rootDir, '.ice/data-loader'),
+      'data-loader': path.join(rootDir, DATA_LOADER_ENTRY),
     },
     mode: command === 'start' ? 'development' : 'production',
     sourceMap: command === 'start' ? 'cheap-module-source-map' : false,
     cacheDir: path.join(rootDir, CACHE_DIR),
     alias: {
-      ice: path.join(rootDir, '.ice', 'index.ts'),
+      ice: path.join(rootDir, RUNTIME_TMP_DIR, 'index.ts'),
       '@': path.join(rootDir, 'src'),
       // set alias for webpack/hot while webpack has been prepacked
       'webpack/hot': '@ice/bundles/compiled/webpack/hot',

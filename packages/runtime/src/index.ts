@@ -35,14 +35,12 @@ import type {
   RouteWrapper,
   RenderMode,
 } from './types.js';
-import { matchRoutes } from './routes.js';
 import dataLoader from './dataLoader.js';
 import getAppConfig, { defineAppConfig } from './appConfig.js';
 
 export {
   getAppConfig,
   defineAppConfig,
-  matchRoutes,
   Runtime,
   App,
   runClientApp,
