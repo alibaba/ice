@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-i18n",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "ICE i18n build-scripts plugin",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",

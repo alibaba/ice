@@ -19,9 +19,8 @@ function getDetectedLocaleFromPathname(
   const pathnameParts = normalizedPathname.split('/').filter(pathnamePart => pathnamePart);
 
   let detectedLocale = defaultLocale;
-
-  // eslint-disable-next-line no-restricted-syntax
-  for (const locale of locales) {
+  for (let index = 0; index < locales.length; index++) {
+    const locale = locales[index];
     if (pathnameParts[0] === locale) {
       detectedLocale = locale;
       break;

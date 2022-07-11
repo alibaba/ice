@@ -94,7 +94,7 @@ function getPreferredLocale(locales: string[], headers?: { [key: string]: string
     const acceptLanguageValue = headers?.['accept-language'];
     return acceptLanguagePick(locales, acceptLanguageValue);
   } else {
-    const acceptLanguages = window.navigator.languages;
+    const acceptLanguages = window.navigator.languages || [];
     return acceptLanguages.find(acceptLanguage => locales.includes(acceptLanguage));
   }
 }
