@@ -10,10 +10,11 @@ import type {
   AppContext, AppExport, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
   RouteWrapperConfig, RuntimeModules, RouteMatch, ComponentWithChildren, RouteModules,
 } from './types.js';
-import { loadRouteModules, loadRoutesData, getRoutesConfig, matchRoutes, filterMatchesToLoad } from './routes.js';
+import { loadRouteModules, loadRoutesData, getRoutesConfig, filterMatchesToLoad } from './routes.js';
 import { updateRoutesConfig } from './routesConfig.js';
 import getRequestContext from './requestContext.js';
 import getAppConfig from './appConfig.js';
+import matchRoutes from './matchRoutes.js';
 
 interface RunClientAppOptions {
   app: AppExport;

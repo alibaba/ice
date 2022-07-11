@@ -337,7 +337,7 @@ importers:
       acorn: ^8.7.1
       address: ^1.1.2
       body-parser: ^1.20.0
-      build-scripts: ^2.0.0-22
+      build-scripts: ^2.0.0-23
       chalk: ^4.0.0
       chokidar: ^3.5.3
       commander: ^9.0.0
@@ -380,7 +380,7 @@ importers:
       acorn: 8.7.1
       address: 1.1.2
       body-parser: 1.20.0
-      build-scripts: 2.0.0-22
+      build-scripts: 2.0.0-23
       chalk: 4.1.2
       commander: 9.2.0
       consola: 2.15.3
@@ -574,7 +574,7 @@ importers:
     specifiers:
       '@ice/route-manifest': ^1.0.0
       '@ice/runtime': ^1.0.0
-      build-scripts: ^2.0.0-22
+      build-scripts: ^2.0.0-23
       esbuild: ^0.14.23
       eslint: ^8.14.0
       eslint-webpack-plugin: 3.1.1
@@ -588,7 +588,7 @@ importers:
     devDependencies:
       '@ice/route-manifest': link:../route-manifest
       '@ice/runtime': link:../runtime
-      build-scripts: 2.0.0-22
+      build-scripts: 2.0.0-23
       esbuild: 0.14.38
       eslint: 8.14.0
       eslint-webpack-plugin: 3.1.1_7fh3pplfe77vb5lwiuqfjafe74
@@ -608,7 +608,7 @@ importers:
       '@pmmmwh/react-refresh-webpack-plugin': ^0.5.7
       '@rollup/pluginutils': ^4.2.0
       browserslist: ^4.19.3
-      build-scripts: ^2.0.0-22
+      build-scripts: ^2.0.0-23
       consola: ^2.15.3
       esbuild: ^0.14.23
       fast-glob: ^3.2.11
@@ -634,7 +634,7 @@ importers:
       unplugin: 0.3.3_4upc34oiflw3lduyjvrzpjntau
     devDependencies:
       '@ice/types': link:../types
-      build-scripts: 2.0.0-22
+      build-scripts: 2.0.0-23
       esbuild: 0.14.38
       webpack: 5.73.0_esbuild@0.14.38
       webpack-dev-server: 4.8.1_webpack@5.73.0
@@ -7148,14 +7148,13 @@ packages:
       semver: 7.3.7
     dev: true
 
-  /build-scripts/2.0.0-22:
-    resolution: {integrity: sha512-/MQR8quGXRsPlBCBL8AV6Srp2Q+aCHqo8Lr4F1FlNfQN6mqfYRPRlc7/YUe3jPMSHz/eGljXYcKrr9dJXK0uEA==}
+  /build-scripts/2.0.0-23:
+    resolution: {integrity: sha512-2hoh/Zhcjx1HuELEd3+tnuk8koN2aLgwZsXn2oJpGuAjf0IhsglzZKKyaVxFbkOstlKik0s4AA1tJsQTA4qVYA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       camelcase: 5.3.1
       commander: 2.20.3
       consola: 2.15.3
-      deepmerge: 4.2.2
       esbuild: 0.14.38
       fast-glob: 3.2.11
       fs-extra: 8.1.0
