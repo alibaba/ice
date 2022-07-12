@@ -1186,9 +1186,9 @@
     "@babel/preset-typescript" "^7.3.3"
 
 "@builder/pack@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.6.0.tgz#f21cd5bcdb29baf519bef99b75e753a47576cfc2"
-  integrity sha512-+NCcn8LOunJ8FC1awZHJTPKqK5LoI+LzX15wliU2O4aOnZGrHi2unSVfWDKOCOaUsDbboCpHhxUXdrALTFNPtw==
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/@builder/pack/-/pack-0.6.4.tgz#d75b50b22208e3d6c6fc04b795d06646c914e7d3"
+  integrity sha512-o89YSQW7bdFZwyPJIxDKK5HHC/kOwx+U5UfGw3aDkDxF8/eniByHRd9t7SzXmAX+AYNSRPEVP05YYAt0n/zr4w==
   dependencies:
     ansi-html "^0.0.7"
     ansi-html-community "^0.0.8"
@@ -1197,6 +1197,7 @@
     error-stack-parser "^2.0.6"
     html-entities "^2.1.0"
     jest-worker "27.0.6"
+    react-refresh "^0.10.0"
     workbox-background-sync "6.4.2"
     workbox-broadcast-update "6.4.2"
     workbox-cacheable-response "6.4.2"
