@@ -21,6 +21,8 @@ import { generateRoutesInfo } from './routes.js';
 import getWebTask from './tasks/web/index.js';
 import getDataLoaderTask from './tasks/web/data-loader.js';
 import * as config from './config.js';
+import createSpinner from './utils/createSpinner.js';
+import getRoutePaths from './utils/getRoutePaths.js';
 import { RUNTIME_TMP_DIR } from './constant.js';
 import ServerCompileTask from './utils/ServerCompileTask.js';
 
@@ -33,6 +35,7 @@ interface CreateServiceOptions {
 }
 
 async function createService({ rootDir, command, commandArgs }: CreateServiceOptions) {
+  const buildSpinner = createSpinner('loading config...');
   const templateDir = path.join(__dirname, '../templates/');
   const configFile = 'ice.config.(mts|mjs|ts|js|cjs|json)';
   const dataCache = new Map<string, string>();
@@ -164,10 +167,29 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   return {
     run: async () => {
-      if (command === 'start') {
-        return await start(ctx, taskConfigs, serverCompiler, appConfig);
-      } else if (command === 'build') {
-        return await build(ctx, taskConfigs, serverCompiler);
+      try {
+        if (command === 'start') {
+          const routePaths = getRoutePaths(routesInfo.routes)
+            .sort((a, b) =>
+              // Sort by length, shortest path first.
+              a.split('/').filter(Boolean).length - b.split('/').filter(Boolean).length);
+          return await start(ctx, {
+            taskConfigs,
+            serverCompiler,
+            appConfig,
+            devPath: (routePaths[0] || '').replace(/^\//, ''),
+            spinner: buildSpinner,
+          });
+        } else if (command === 'build') {
+          return await build(ctx, {
+            taskConfigs,
+            serverCompiler,
+            spinner: buildSpinner,
+          });
+        }
+      } catch (err) {
+        buildSpinner.stop();
+        throw err;
       }
     },
   };

@@ -1,4 +1,5 @@
 import webpack from '@ice/bundles/compiled/webpack/index.js';
+import type ora from '@ice/bundles/compiled/ora/index.js';
 import consola from 'consola';
 import chalk from 'chalk';
 import type { CommandArgs, TaskConfig } from 'build-scripts';
@@ -19,14 +20,35 @@ async function webpackCompiler(options: {
   rootDir: string;
   urls?: Urls;
   serverCompiler: ServerCompiler;
+  spinner: ora.Ora;
+  devPath?: string;
 }) {
-  const { taskConfigs, urls, applyHook, command, commandArgs, serverCompiler, webpackConfigs } = options;
+  const {
+    taskConfigs,
+    urls,
+    applyHook,
+    command,
+    commandArgs,
+    serverCompiler,
+    webpackConfigs,
+    spinner,
+    devPath,
+  } = options;
   await applyHook(`before.${command}.run`, {
     urls,
     commandArgs,
     taskConfigs,
     webpackConfigs,
     serverCompiler,
+  });
+  // Add default plugins for spinner
+  webpackConfigs[0].plugins.push((compiler: Compiler) => {
+    compiler.hooks.beforeCompile.tap('spinner', () => {
+      spinner.text = 'compiling...';
+    });
+    compiler.hooks.afterEmit.tap('spinner', () => {
+      spinner.stop();
+    });
   });
   let compiler: Compiler;
   try {
@@ -50,19 +72,6 @@ async function webpackCompiler(options: {
     });
     const messages = formatWebpackMessages(statsData);
     const isSuccessful = !messages.errors.length;
-    if (isSuccessful && !process.env.DISABLE_STATS) {
-      const assetsStatsOptions = {
-        errors: false,
-        warnings: false,
-        colors: true,
-        assets: true,
-        chunks: false,
-        entrypoints: false,
-        modules: false,
-        timings: false,
-      };
-      consola.log(stats.toString(assetsStatsOptions));
-    }
     if (messages.errors.length) {
       // Only keep the first error. Others are often indicative
       // of the same problem, but confuse the reader with noise.
@@ -82,11 +91,11 @@ async function webpackCompiler(options: {
         let logoutMessage = '\n';
         logoutMessage += chalk.green(' Starting the development server at:');
         if (process.env.CLOUDIDE_ENV) {
-          logoutMessage += `\n   - IDE server: https://${process.env.WORKSPACE_UUID}-${commandArgs.port}.${process.env.WORKSPACE_HOST}`;
+          logoutMessage += `\n   - IDE server: https://${process.env.WORKSPACE_UUID}-${commandArgs.port}.${process.env.WORKSPACE_HOST}${devPath}`;
         } else {
           logoutMessage += `\n
-   - Local  : ${chalk.underline.white(urls.localUrlForBrowser)}
-   - Network:  ${chalk.underline.white(urls.lanUrlForTerminal)}`;
+   - Local  : ${chalk.underline.white(urls.localUrlForBrowser)}${devPath}
+   - Network:  ${chalk.underline.white(urls.lanUrlForTerminal)}${devPath}`;
         }
         consola.log(`${logoutMessage}\n`);
 
@@ -107,7 +116,6 @@ async function webpackCompiler(options: {
     }
 
     if (isSuccessful) {
-      consola.success(`Compiled successfully in ${(statsData.children ? statsData.children[0] : statsData).time} ms`);
       // if compiled successfully reset first compile flag after been posted to lifecycle hooks
       isFirstCompile = false;
     }
