@@ -31,15 +31,17 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routes,
     runtimeModules,
     Document,
-    basename,
+    basename: defaultBasename,
     hydrate,
   } = options;
   const appContextFromServer: AppContext = (window as any).__ICE_APP_CONTEXT__ || {};
-  let { routesData, routesConfig, assetsManifest } = appContextFromServer;
+  let { routesData, routesConfig, assetsManifest, basename: basenameFromServer } = appContextFromServer;
 
   const requestContext = getRequestContext(window.location);
 
   const appConfig = getAppConfig(app);
+
+  const basename = basenameFromServer || defaultBasename;
 
   const matches = matchRoutes(routes, window.location, basename);
   const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));

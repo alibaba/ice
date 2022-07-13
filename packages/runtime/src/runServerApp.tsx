@@ -33,7 +33,10 @@ interface RenderOptions {
   Document: ComponentWithChildren<{}>;
   documentOnly?: boolean;
   renderMode?: RenderMode;
+  // basename is used both for server and client, once set, it will be sync to client.
   basename?: string;
+  // serverOnlyBasename is used when just want to change basename for server.
+  serverOnlyBasename?: string;
 }
 
 interface Piper {
@@ -122,13 +125,13 @@ function pipeToResponse(res: ServerResponse, pipe: NodeWritablePiper) {
 
 async function doRender(serverContext: ServerContext, renderOptions: RenderOptions): Promise<RenderResult> {
   const { req } = serverContext;
-  const { routes, documentOnly, app, basename } = renderOptions;
+  const { routes, documentOnly, app, basename, serverOnlyBasename } = renderOptions;
 
   const location = getLocation(req.url);
 
   const requestContext = getRequestContext(location, serverContext);
   const appConfig = getAppConfig(app);
-  const matches = matchRoutes(routes, location, basename);
+  const matches = matchRoutes(routes, location, serverOnlyBasename || basename);
 
   if (!matches.length) {
     return render404();
@@ -267,6 +270,7 @@ function renderDocument(matches: RouteMatch[], options: RenderOptions, routeModu
     assetsManifest,
     app,
     Document,
+    basename,
   } = options;
 
   const routesData = null;
@@ -282,6 +286,7 @@ function renderDocument(matches: RouteMatch[], options: RenderOptions, routeModu
     routes,
     documentOnly: true,
     routeModules,
+    basename,
   };
 
   const documentContext = {

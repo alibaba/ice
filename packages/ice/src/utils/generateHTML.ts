@@ -11,7 +11,6 @@ interface Options {
   entry: string;
   outputDir: string;
   documentOnly: boolean;
-  basename?: string;
   renderMode?: RenderMode;
 }
 
@@ -50,6 +49,7 @@ export default async function generateHTML(options: Options) {
     const { value: html } = await serverEntry.renderToHTML(serverContext, {
       renderMode,
       documentOnly,
+      serverOnlyBasename: '/',
     });
 
     const fileName = routePath === '/' ? 'index.html' : `${routePath}.html`;
