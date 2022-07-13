@@ -11,7 +11,7 @@ import TerserPlugin from '@ice/bundles/compiled/terser-webpack-plugin/index.js';
 import ForkTsCheckerPlugin from '@ice/bundles/compiled/fork-ts-checker-webpack-plugin/index.js';
 import ESlintPlugin from '@ice/bundles/compiled/eslint-webpack-plugin/index.js';
 import CopyPlugin from '@ice/bundles/compiled/copy-webpack-plugin/index.js';
-import type { Configuration, WebpackPluginInstance } from 'webpack';
+import type { Configuration, WebpackPluginInstance, Compiler } from 'webpack';
 import type webpack from 'webpack';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import type { Config } from '@ice/types';
@@ -84,6 +84,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
     concatenateModules,
     devServer,
     fastRefresh,
+    logging,
   } = config;
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
   const dev = mode !== 'production';
@@ -298,12 +299,47 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
     webpackConfig.optimization.usedExports = false;
   }
 
-  if (process.env.WEBPACK_LOGGING) {
-    webpackConfig.infrastructureLogging = {
-      level: 'verbose',
-      debug: /FileSystemInfo/,
-    };
-    webpackConfig.stats = 'verbose';
+  if (logging) {
+    const infra = logging.includes('infrastructure');
+    const profile = logging.includes('profile');
+    const summary = logging.includes('summary');
+    const assets = logging.includes('assets');
+
+    if (infra) {
+      webpackConfig.infrastructureLogging = {
+        level: 'verbose',
+        debug: /FileSystemInfo/,
+      };
+      webpackConfig.stats = 'verbose';
+    }
+
+    if (profile || summary) {
+      webpackConfig.plugins!.push((compiler: Compiler) => {
+        compiler.hooks.done.tap('webpack-logging', (stats) => {
+          console.log(
+            stats.toString(profile ? {
+              colors: true,
+              logging: 'verbose',
+            } : {
+              preset: 'summary',
+              assets,
+              colors: true,
+              timings: true,
+            }),
+          );
+        });
+      });
+    }
+
+    if (profile) {
+      const ProgressPlugin = webpack.ProgressPlugin as typeof webpack.ProgressPlugin;
+      webpackConfig.plugins!.push(
+        new ProgressPlugin({
+          profile: true,
+        }),
+      );
+      webpackConfig.profile = true;
+    }
   }
 
   // pipe webpack by built-in functions and custom functions

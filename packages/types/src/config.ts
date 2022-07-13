@@ -109,4 +109,6 @@ export interface Config {
   fastRefresh?: boolean;
 
   basename?: string;
+
+  logging?: string;
 }

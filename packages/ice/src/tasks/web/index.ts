@@ -4,6 +4,7 @@ import { CACHE_DIR, RUNTIME_TMP_DIR } from '../../constant.js';
 
 const getWebTask = ({ rootDir, command }): Config => {
   // basic task config of web task
+  const defaultLogging = command === 'start' ? 'summary' : 'summary assets';
   return {
     mode: command === 'start' ? 'development' : 'production',
     sourceMap: command === 'start' ? 'cheap-module-source-map' : false,
@@ -21,6 +22,7 @@ const getWebTask = ({ rootDir, command }): Config => {
     },
     assetsManifest: true,
     fastRefresh: command === 'start',
+    logging: process.env.WEBPACK_LOGGING || defaultLogging,
   };
 };
 

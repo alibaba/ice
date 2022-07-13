@@ -6,6 +6,7 @@ import type { StatsError } from 'webpack';
 import type { Config } from '@ice/types';
 import type { ServerCompiler } from '@ice/types/esm/plugin.js';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
+import type ora from '@ice/bundles/compiled/ora/index.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import { RUNTIME_TMP_DIR, SERVER_ENTRY, SERVER_OUTPUT_DIR } from '../constant.js';
@@ -14,9 +15,13 @@ import emptyDir from '../utils/emptyDir.js';
 
 const build = async (
   context: Context<Config>,
-  taskConfigs: TaskConfig<Config>[],
-  serverCompiler: ServerCompiler,
+  options: {
+    taskConfigs: TaskConfig<Config>[];
+    serverCompiler: ServerCompiler;
+    spinner: ora.Ora;
+  },
 ) => {
+  const { taskConfigs, serverCompiler, spinner } = options;
   const { applyHook, commandArgs, command, rootDir, userConfig } = context;
   const webpackConfigs = taskConfigs.map(({ config }) => getWebpackConfig({
     config,
@@ -37,6 +42,7 @@ const build = async (
     command,
     applyHook,
     serverCompiler,
+    spinner,
   });
   const { ssg, ssr, server: { format } } = userConfig;
   // compile server bundle
