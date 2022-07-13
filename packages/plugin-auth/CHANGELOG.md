@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.2
+
+- [chore] fix auth type declaration
+
 ## 2.0.1
 
 - [feat] pass page props to NoAuthFallback
