@@ -265,7 +265,7 @@ importers:
       postcss-loader: 6.2.1
       postcss-modules: 4.3.1
       postcss-nested: 5.0.6
-      postcss-plugin-rpx2vw: ^0.0.3
+      postcss-plugin-rpx2vw: 1.0.0
       postcss-preset-env: 7.4.3
       sass: 1.50.0
       sass-loader: 12.6.0
@@ -307,7 +307,7 @@ importers:
       postcss-loader: 6.2.1_x2aj2q6umelkzhlylaf35s6ot4
       postcss-modules: 4.3.1_postcss@8.4.12
       postcss-nested: 5.0.6_postcss@8.4.12
-      postcss-plugin-rpx2vw: 0.0.3
+      postcss-plugin-rpx2vw: 1.0.0_postcss@8.4.12
       postcss-preset-env: 7.4.3_postcss@8.4.12
       sass-loader: 12.6.0_sass@1.50.0+webpack@5.73.0
       tapable: 2.2.1
@@ -13881,10 +13881,12 @@ packages:
       postcss-value-parser: 4.2.0
     dev: true
 
-  /postcss-plugin-rpx2vw/0.0.3:
-    resolution: {integrity: sha512-AxlNldVz3ECNqkyJOuytVAERQxkb2512XIOBIBHq/LvbrvmvvWrH10qIilEiBQ1ECxsQVhqO5lYtRIdg6e9iQA==}
+  /postcss-plugin-rpx2vw/1.0.0_postcss@8.4.12:
+    resolution: {integrity: sha512-iH+2s+FD0S9KFrqTCBrlfPoYpCmNxoeK5A9mWX7C9astId8gWSX4grnF+tkgWLQhTP7F+96Q6eLyX4/hI3xpDQ==}
+    peerDependencies:
+      postcss: ^8.0.0
     dependencies:
-      postcss: 7.0.39
+      postcss: 8.4.12
     dev: true
 
   /postcss-preset-env/7.4.3_postcss@8.4.12:
