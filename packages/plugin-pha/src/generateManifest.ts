@@ -10,6 +10,7 @@ export interface Options {
   outputDir: string;
   parseOptions: Partial<ParseOptions>;
   compiler: Compiler;
+  compileTask?: () => Promise<{ serverEntry: string}>;
 }
 
 export async function getAppWorkerContent(

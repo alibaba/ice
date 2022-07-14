@@ -14,6 +14,7 @@ function sendResponse(res: ServerResponse, content: string, mime: string): void 
 const createPHAMiddleware = ({
   rootDir,
   outputDir,
+  compileTask,
   parseOptions,
   compiler,
 }: Options): ExpressRequestHandler => {
@@ -25,7 +26,7 @@ const createPHAMiddleware = ({
     const requestAppWorker = req.url === '/app-worker.js';
     if (requestManifest || requestAppWorker) {
       // Get serverEntry from middleware of server-compile.
-      const { serverEntry } = req as any;
+      const { serverEntry } = await compileTask();
       const [manifestEntry, routesConfigEntry] = await compileEntires(compiler, { rootDir, outputDir });
       let manifest: Manifest = (await import(manifestEntry)).default;
       const appWorkerPath = getAppWorkerUrl(manifest, path.join(rootDir, 'src'));

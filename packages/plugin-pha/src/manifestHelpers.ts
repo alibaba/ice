@@ -109,7 +109,7 @@ async function getPageConfig(routeId: string, configEntry: string): Promise<Mixe
 async function renderPageDocument(routeId: string, serverEntry: string): Promise<string> {
   const serverContext = {
     req: {
-      url: routeId,
+      url: `/${routeId}`,
     },
   };
   const serverModule = await import(serverEntry);
