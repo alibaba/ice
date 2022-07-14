@@ -3,7 +3,6 @@ import fse from 'fs-extra';
 import consola from 'consola';
 import fg from 'fast-glob';
 import ejs from 'ejs';
-import prettier from 'prettier';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type {
   AddExport,
@@ -55,7 +54,14 @@ export function generateExports(exportList: ExportData[]) {
   });
   return {
     importStr: importStatements.join('\n'),
-    exportStr: exportStatements.join('\n'),
+    /**
+     * Add two whitespace character in order to get the formatted code. For example:
+     *  export {
+          withAuth,
+          useAuth,
+        };
+     */
+    exportStr: exportStatements.join('\n  '),
   };
 }
 
@@ -101,8 +107,6 @@ export default class Generator {
 
   private renderDataRegistration: RenderDataRegistration[];
 
-  private showPrettierError: boolean;
-
   private contentTypes: string[];
 
   public constructor(options: Options) {
@@ -112,7 +116,6 @@ export default class Generator {
     this.renderData = defaultRenderData;
     this.contentRegistration = {};
     this.rerender = false;
-    this.showPrettierError = true;
     this.renderTemplates = [];
     this.renderDataRegistration = [];
     this.contentTypes = ['framework', 'frameworkTypes', 'configTypes'];
@@ -252,7 +255,7 @@ export default class Generator {
     const renderExt = '.ejs';
     const realTargetPath = path.isAbsolute(targetPath) ? targetPath : path.join(this.rootDir, targetPath);
     // example: templatePath = 'routes.ts.ejs'
-    const { name, ext } = path.parse(templatePath);
+    const { ext } = path.parse(templatePath);
     if (ext === renderExt) {
       const templateContent = fse.readFileSync(templatePath, 'utf-8');
       let renderData = { ...this.renderData };
@@ -264,22 +267,7 @@ export default class Generator {
           ...extraData,
         };
       }
-      let content = ejs.render(templateContent, renderData);
-      // example: name = 'routes.ts'
-      const realExtname = path.extname(name);
-      if (realExtname === '.ts' || realExtname === '.tsx') {
-        try {
-          content = prettier.format(content, {
-            parser: 'typescript',
-            singleQuote: true,
-          });
-        } catch (error) {
-          if (this.showPrettierError) {
-            consola.warn(`Prettier format error: ${error.message}`);
-            this.showPrettierError = false;
-          }
-        }
-      }
+      const content = ejs.render(templateContent, renderData);
       fse.writeFileSync(realTargetPath.replace(renderExt, ''), content, 'utf-8');
     } else {
       fse.ensureDirSync(path.dirname(realTargetPath));

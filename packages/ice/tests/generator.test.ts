@@ -26,7 +26,7 @@ describe('generateExports', () => {
       specifier: ['Switch', 'Route'],
     }]);
     expect(importStr).toBe('import { Switch, Route } from \'react-router\';');
-    expect(exportStr).toBe(['Switch,', 'Route,'].join('\n'));
+    expect(exportStr).toBe(['Switch,', 'Route,'].join('\n  '));
   });
 
   it('aliased exports', () => {
