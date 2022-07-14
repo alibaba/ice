@@ -28,7 +28,7 @@ export async function generateRoutesInfo(rootDir: string, routesConfig: UserConf
   }
 
   const routes = formatNestedRouteManifest(routeManifest);
-  const str = generateNestRoutesStr(routes);
+  const routesStr = generateRoutesStr(routes);
   let routesCount = 0;
   Object.keys(routeManifest).forEach((key) => {
     const routeItem = routeManifest[key];
@@ -40,53 +40,61 @@ export async function generateRoutesInfo(rootDir: string, routesConfig: UserConf
   return {
     routesCount,
     routeManifest,
-    routesStr: `[${str}]`,
+    routesStr,
     routes,
     loaders: generateRouteConfig(routes, 'getData', (str, imports) => {
       return `${str}
-  const loaders = {
-    ${
-      imports.map(([routeId, importKey]) => {
-        return `'${routeId}': ${importKey},`;
-      }).join('\n')
-    }
-  };`;
+const loaders = {
+  ${imports.map(([routeId, importKey]) => `'${routeId}': ${importKey},`).join('\n  ')}
+};`;
     }),
     routesConfig: generateRouteConfig(routes, 'getConfig', (str, imports) => {
       return `${str}
-  export default {
-    ${
-      imports.map(([, importKey, routePath]) => {
-        return `'${routePath}': ${importKey},`;
-      }).join('\n')
-    }
-  };`;
+export default {
+  ${imports.map(([, importKey, routePath]) => `'${routePath}': ${importKey},`).join('\n  ')}
+};`;
     }),
   };
 }
 
-function generateNestRoutesStr(nestRouteManifest: NestedRouteManifest[]) {
+function generateRoutesStr(nestRouteManifest: NestedRouteManifest[]) {
+  return `[
+  ${recurseRoutesStr(nestRouteManifest)}
+]`;
+}
+
+function recurseRoutesStr(nestRouteManifest: NestedRouteManifest[], depth = 0) {
   return nestRouteManifest.reduce((prev, route) => {
     const { children, path: routePath, index, componentName, file, id, layout, exports } = route;
 
     const componentPath = id.startsWith('__') ? file : `@/pages/${file}`.replace(new RegExp(`${path.extname(file)}$`), '');
-    let str = `{
-      path: '${routePath || ''}',
-      load: () => import(/* webpackChunkName: "${componentName}" */ '${componentPath}'),
-      componentName: '${componentName}',
-      index: ${index},
-      id: '${id}',
-      exact: true,
-      exports: ${JSON.stringify(exports)},
-      ${layout ? 'layout: true,' : ''}
-    `;
-    if (children) {
-      str += `children: [${generateNestRoutesStr(children)}],`;
+    const routeProperties: string[] = [
+      `path: '${routePath || ''}',`,
+      `load: () => import(/* webpackChunkName: "${componentName}" */ '${componentPath}'),`,
+      `componentName: '${componentName}',`,
+      `index: ${index},`,
+      `id: '${id}',`,
+      'exact: true,',
+      `exports: ${JSON.stringify(exports)},`,
+    ];
+    if (layout) {
+      routeProperties.push('layout: true,');
     }
-    str += '},';
-    prev += str;
+    if (children) {
+      routeProperties.push(`children: [${recurseRoutesStr(children, depth + 1)}]`);
+    }
+
+    prev += formatRoutesStr(depth, routeProperties);
     return prev;
   }, '');
+}
+
+function formatRoutesStr(deep: number, strs: string[]) {
+  const identSpaces = ' '.repeat(2 * (deep + 1));
+  const twoSpaces = ' '.repeat(2);
+  return `{
+${identSpaces + twoSpaces}${strs.join(`\n${`${identSpaces + twoSpaces}`}`)}
+${identSpaces}},`;
 }
 
 function createDefaultNotFoundRoute(routeManifest: RouteManifest): ConfigRoute {

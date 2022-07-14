@@ -10,9 +10,10 @@ import {
   useSearchParamsSingle,
   useLocationSingle,
 } from '@ice/runtime';
-<% if (globalStyle) {%>
-  import '<%= globalStyle %>'
-<% } %>
+
+<% if (globalStyle) {-%>
+import '<%= globalStyle %>'
+<% } -%>
 
 let Link: typeof OriginLink;
 let Outlet: typeof OriginOutlet;
@@ -55,9 +56,9 @@ export {
 <%- framework.imports %>
 
 export {
-  <% if (framework.exports) { %>
+<% if (framework.exports) { -%>
   <%- framework.exports %>
-  <% } %>
+<% } -%>
 };
 
 export * from './types';
