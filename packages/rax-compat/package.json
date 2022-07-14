@@ -45,7 +45,7 @@
     "compat"
   ],
   "dependencies": {
-    "appear-polyfill": "^0.1.2",
+    "@swc/helpers": "^0.4.3",
     "style-unit": "^3.0.4",
     "create-react-class": "^15.7.0"
   },

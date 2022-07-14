@@ -43,7 +43,7 @@ const plugin: Plugin<PluginOptions> = ({ onGetConfig, onHook, context, generator
   // Get server compiler by hooks
   onHook(`before.${command as 'start' | 'build'}.run`, async ({ serverCompiler, taskConfigs, urls }) => {
     const taskConfig = taskConfigs.find(({ name }) => name === 'web').config;
-    outputDir = taskConfig.outputDir;
+    outputDir = path.isAbsolute(taskConfig.outputDir) ? taskConfig.outputDir : path.join(rootDir, taskConfig.outputDir);
 
     // Need absolute path for pha dev.
     publicPath = command === 'start' ? getDevPath(urls.lanUrlForTerminal) : (taskConfig.publicPath || '/');

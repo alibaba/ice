@@ -18,6 +18,7 @@
   ],
   "dependencies": {
     "consola": "^2.15.3",
+    "lodash.merge": "^4.6.2",
     "rax-compat": "^0.1.0",
     "stylesheet-loader": "^0.9.1"
   },

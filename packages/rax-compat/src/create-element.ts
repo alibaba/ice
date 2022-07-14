@@ -5,18 +5,10 @@ import type {
   ReactNode,
   RefObject,
 } from 'react';
-import { createElement as _createElement, useEffect, forwardRef } from 'react';
-import { setupAppear } from 'appear-polyfill';
+import { createElement as _createElement, useEffect, useCallback, useRef } from 'react';
 import { cached, convertUnit } from 'style-unit';
+import { observerElement } from './visibility';
 import { isFunction, isObject, isNumber } from './type';
-
-let appearSetup = false;
-function setupAppearOnce() {
-  if (!appearSetup) {
-    setupAppear();
-    appearSetup = true;
-  }
-}
 
 // https://github.com/alibaba/rax/blob/master/packages/driver-dom/src/index.js
 // opacity -> opa
@@ -33,7 +25,6 @@ function setupAppearOnce() {
 // animationIterationCount -> onit
 // borderImageOutset|borderImageSlice|borderImageWidth -> erim
 const NON_DIMENSIONAL_REG = /opa|ntw|ne[ch]|ex(?:s|g|n|p|$)|^ord|zoo|grid|orp|ows|mnc|^columns$|bs|erim|onit/i;
-
 
 /**
  * Compat createElement for rax export.
@@ -53,8 +44,11 @@ export function createElement<P extends {
   type: FunctionComponent<P> | string,
   props?: Attributes & P | null,
   ...children: ReactNode[]): ReactElement {
+  // Get a shallow copy of props, to avoid mutating the original object.
   const rest = Object.assign({}, props);
   const { onAppear, onDisappear } = rest;
+
+  // Delete props that are not allowed in react.
   delete rest.onAppear;
   delete rest.onDisappear;
 
@@ -64,21 +58,53 @@ export function createElement<P extends {
     rest.style = compatStyleProps;
   }
 
-  // Create backend element.
-  const args = [type, rest];
-  let element: any = _createElement.apply(null, args.concat(children as any));
-
-  // Polyfill for appear and disappear event.
+  // Compat for visibility events.
   if (isFunction(onAppear) || isFunction(onDisappear)) {
-    setupAppearOnce();
-    element = _createElement(forwardRef(AppearOrDisappear), {
-      onAppear: onAppear,
-      onDisappear: onDisappear,
-      ref: rest.ref,
-    }, element);
+    return _createElement(
+      VisibilityChange,
+      {
+        onAppear,
+        onDisappear,
+        // Passing child ref to `VisibilityChange` to avoid creating a new ref.
+        childRef: rest.ref,
+        // Using forwardedRef as a prop to the backend react element.
+        forwardRef: (ref: RefObject<any>) => _createElement(type, Object.assign({ ref }, rest), ...children),
+      },
+    );
+  } else {
+    return _createElement(type, rest, ...children);
   }
+}
 
-  return element;
+function VisibilityChange({
+  onAppear,
+  onDisappear,
+  childRef,
+  forwardRef,
+}: any) {
+  const fallbackRef = useRef(null); // `fallbackRef` used if `childRef` is not provided.
+  const ref = childRef || fallbackRef;
+
+  const listen = useCallback((eventName: string, handler: Function) => {
+    const { current } = ref;
+    if (current != null) {
+      if (isFunction(handler)) {
+        observerElement(current as HTMLElement);
+        current.addEventListener(eventName, handler);
+      }
+    }
+    return () => {
+      const { current } = ref;
+      if (current) {
+        current.removeEventListener(eventName, handler);
+      }
+    };
+  }, [ref]);
+
+  useEffect(() => listen('appear', onAppear), [ref, onAppear, listen]);
+  useEffect(() => listen('disappear', onDisappear), [ref, onDisappear, listen]);
+
+  return forwardRef(ref);
 }
 
 const isDimensionalProp = cached((prop: string) => !NON_DIMENSIONAL_REG.test(prop));
@@ -101,32 +127,4 @@ function compatStyle<S = object>(style?: S): S | void {
     return result;
   }
   return style;
-}
-
-// Appear HOC Component.
-function AppearOrDisappear(props: any, ref: RefObject<EventTarget>) {
-  const { onAppear, onDisappear } = props;
-
-  listen('appear', onAppear);
-  listen('disappear', onDisappear);
-
-  function listen(eventName: string, handler: EventListenerOrEventListenerObject) {
-    if (isFunction(handler) && ref) {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      useEffect(() => {
-        const { current } = ref;
-        if (current != null) {
-          current.addEventListener(eventName, handler);
-        }
-        return () => {
-          const { current } = ref;
-          if (current) {
-            current.removeEventListener(eventName, handler);
-          }
-        };
-      }, [ref, handler]);
-    }
-  }
-
-  return props.children;
 }

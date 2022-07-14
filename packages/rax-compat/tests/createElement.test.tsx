@@ -40,7 +40,7 @@ describe('createElement', () => {
     render(createElement(
       'div',
       {
-        onDisappear: func
+        onDisappear: func,
       },
       str
     ));

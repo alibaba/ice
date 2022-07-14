@@ -30,6 +30,7 @@
   "bugs": "https://github.com/ice-lab/ice-next/issues",
   "homepage": "https://next.ice.work",
   "devDependencies": {
+    "@builder/swc": "^0.2.0",
     "@ice/route-manifest": "^1.0.0",
     "@ice/runtime": "^1.0.0",
     "build-scripts": "^2.0.0-23",
@@ -39,9 +40,9 @@
     "fork-ts-checker-webpack-plugin": "7.2.6",
     "react": "^18.0.0",
     "terser": "^5.12.1",
+    "typescript": "^4.6.4",
     "unplugin": "^0.3.2",
     "webpack": "^5.73.0",
-    "webpack-dev-server": "^4.7.4",
-    "typescript": "^4.6.4"
+    "webpack-dev-server": "^4.7.4"
   }
 }
