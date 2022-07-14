@@ -28,7 +28,7 @@ function getDevPath(url: string): string {
   return url.startsWith('http') ? `${new URL(url).origin}/` : url;
 }
 
-const plugin: Plugin<PluginOptions> = ({ onGetConfig, onHook, context, generator }, options) => {
+const plugin: Plugin<PluginOptions> = ({ onGetConfig, onHook, context, generator, serverCompileTask }, options) => {
   const { template } = options || {};
   const { command, rootDir } = context;
 
@@ -118,6 +118,7 @@ const plugin: Plugin<PluginOptions> = ({ onGetConfig, onHook, context, generator
         compiler,
         rootDir,
         outputDir,
+        compileTask: () => serverCompileTask.get(),
         parseOptions: {
           publicPath,
           urlPrefix,
