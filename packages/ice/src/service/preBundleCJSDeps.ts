@@ -45,6 +45,9 @@ interface PreBundleDepsOptions {
   taskConfig: Config;
 }
 
+/**
+ * Pre bundle dependencies from esm to cjs.
+ */
 export default async function preBundleCJSDeps(options: PreBundleDepsOptions): Promise<PreBundleDepsResult> {
   const { depsInfo, rootDir, cacheDir, taskConfig } = options;
   const metadata = createDepsMetadata(depsInfo, taskConfig);

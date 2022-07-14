@@ -1,9 +1,12 @@
-export const ROUTER_MANIFEST = '.ice/route-manifest.json';
-export const ASSETS_MANIFEST = '.ice/assets-manifest.json';
-export const SERVER_ENTRY = '.ice/entry.server.ts';
+import * as path from 'path';
+
+export const RUNTIME_TMP_DIR = '.ice';
+export const ROUTER_MANIFEST = path.join(RUNTIME_TMP_DIR, 'route-manifest.json');
+export const ASSETS_MANIFEST = path.join(RUNTIME_TMP_DIR, 'assets-manifest.json');
+export const SERVER_ENTRY = path.join(RUNTIME_TMP_DIR, 'entry.server.ts');
+export const DATA_LOADER_ENTRY = path.join(RUNTIME_TMP_DIR, 'data-loader.ts');
 export const SERVER_OUTPUT_DIR = 'server';
-export const SERVER_OUTPUT = `${SERVER_OUTPUT_DIR}/index.mjs`;
-export const CACHE_DIR = 'node_modules/.ice';
+export const CACHE_DIR = path.join('node_modules', RUNTIME_TMP_DIR);
 export const BUILDIN_ESM_DEPS = [
   '@ice/runtime',
 ];

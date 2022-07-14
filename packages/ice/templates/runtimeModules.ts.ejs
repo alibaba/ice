@@ -1,0 +1,15 @@
+<% const moduleNames = []; -%>
+<% if (runtimeModules.length) {-%>
+  <% runtimeModules.filter((moduleInfo) => !moduleInfo.staticModule).forEach((runtimeModule, index) => { -%>
+    <% moduleNames.push('module' + index) %>
+import module<%= index %> from '<%= runtimeModule.path %>';
+  <% }) -%>
+<% } -%>
+
+const modules = [
+<% moduleNames.forEach((moduleName, index) => { -%>
+  <%= moduleName %>,
+<% }) -%>
+];
+
+export default modules;

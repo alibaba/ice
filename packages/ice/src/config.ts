@@ -71,6 +71,7 @@ const userConfig = [
   {
     name: 'outputDir',
     validation: 'string',
+    defaultValue: 'build',
     setConfig: (config: Config, outputDir: UserConfig['outputDir']) => {
       return mergeDefaultValue(config, 'outputDir', outputDir);
     },
@@ -264,6 +265,13 @@ const userConfig = [
         }
         return mergeDefaultValue(config, 'eslintOptions', eslintOptions);
       }
+    },
+  },
+  {
+    name: 'transform',
+    validation: 'function',
+    setConfig: (config: Config, transform: UserConfig['transform']) => {
+      config.transforms = config.transforms ? [...config.transforms, transform] : [transform];
     },
   },
   {

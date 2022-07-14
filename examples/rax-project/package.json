@@ -1,0 +1,30 @@
+{
+  "name": "rax-project",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "ice start",
+    "build": "ice build"
+  },
+  "description": "",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@ice/app": "workspace:*",
+    "@ice/plugin-rax-compat": "workspace:*",
+    "@ice/runtime": "workspace:*",
+    "rax": "^1.2.2",
+    "rax-image": "^2.4.1",
+    "rax-is-valid-element": "^1.0.0",
+    "rax-text": "^2.2.0",
+    "rax-view": "^2.3.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.2",
+    "browserslist": "^4.19.3",
+    "regenerator-runtime": "^0.13.9",
+    "webpack": "^5.73.0"
+  }
+}

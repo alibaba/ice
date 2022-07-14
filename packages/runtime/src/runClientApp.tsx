@@ -10,10 +10,11 @@ import type {
   AppContext, AppExport, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
   RouteWrapperConfig, RuntimeModules, RouteMatch, ComponentWithChildren, RouteModules,
 } from './types.js';
-import { loadRouteModules, loadRoutesData, getRoutesConfig, matchRoutes, filterMatchesToLoad } from './routes.js';
+import { loadRouteModules, loadRoutesData, getRoutesConfig, filterMatchesToLoad } from './routes.js';
 import { updateRoutesConfig } from './routesConfig.js';
 import getRequestContext from './requestContext.js';
 import getAppConfig from './appConfig.js';
+import matchRoutes from './matchRoutes.js';
 
 interface RunClientAppOptions {
   app: AppExport;
@@ -30,15 +31,17 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routes,
     runtimeModules,
     Document,
-    basename,
+    basename: defaultBasename,
     hydrate,
   } = options;
   const appContextFromServer: AppContext = (window as any).__ICE_APP_CONTEXT__ || {};
-  let { routesData, routesConfig, assetsManifest } = appContextFromServer;
+  let { routesData, routesConfig, assetsManifest, basename: basenameFromServer } = appContextFromServer;
 
   const requestContext = getRequestContext(window.location);
 
   const appConfig = getAppConfig(app);
+
+  const basename = basenameFromServer || defaultBasename;
 
   const matches = matchRoutes(routes, window.location, basename);
   const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));

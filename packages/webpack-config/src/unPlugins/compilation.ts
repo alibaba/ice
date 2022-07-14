@@ -49,7 +49,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
         filename: id,
       };
 
-      const { jsxTransform, removeExportExprs } = swcOptions;
+      const { jsxTransform, removeExportExprs, compilationConfig } = swcOptions;
 
       let needTransform = false;
 
@@ -81,7 +81,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
       }
 
       try {
-        const output = await transform(source, programmaticOptions);
+        const output = await transform(source, merge(programmaticOptions, compilationConfig || {}));
         const { code } = output;
         let { map } = output;
         // FIXME: swc transform should return the sourcemap which the type is object

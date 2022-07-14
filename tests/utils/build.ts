@@ -12,6 +12,7 @@ interface SetupBrowser {
     example: string;
     outputDir?: string;
     defaultHtml?: string;
+    disableJS?: boolean;
   }): Promise<ReturnValue>;
 }
 
@@ -29,12 +30,12 @@ export const buildFixture = async function(example: string) {
 }
 
 export const setupBrowser: SetupBrowser = async (options) => {
-  const { example, outputDir = 'build', defaultHtml = 'index.html' } = options;
+  const { example, outputDir = 'build', defaultHtml = 'index.html', disableJS = true } = options;
   const rootDir = path.join(__dirname, `../../examples/${example}`);
   const port = await getPort();
   const browser = new Browser({ cwd: path.join(rootDir, outputDir), port });
-  await browser.start();
-  const disableJS = true;
+  await browser.start('disableJS', disableJS);
+  console.log()
   // when preview html generate by build, the path will not match the router info, so hydrate will not found the route component
   const page = await browser.page(`http://127.0.0.1:${port}/${defaultHtml}`, disableJS);
   return {

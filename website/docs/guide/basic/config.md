@@ -217,6 +217,32 @@ export default defineConfig({
 });
 ```
 
+### transform
+
+- 类型：`(code:string, id: string) => string | {code: string; map?: SourceMap | null;}`
+- 默认值：`undefined`
+
+通过 `transform` 配置实现代码的转化：
+
+```js
+import { defineConfig } from '@ice/app';
+import { transformSync } from '@babel/core';
+
+export default defineConfig({
+  transform: (originalCode, id) => {
+    if (!id.includes('node_modules')) {
+      // 借助 babel 编译
+      const { code, map } = transformSync(originalCode, {
+        plugins: ['transform-decorators-legacy'],
+      });
+      return { code, map };
+    }
+  },
+});
+```
+
+> ICE 内置通过 `swc` 提升编译体验，如果在 `transform` 配置上过多依赖 babel 等工具将可以能造成编译性能瓶颈
+
 ### ssr
 
 - 类型：`boolean`

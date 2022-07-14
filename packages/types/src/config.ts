@@ -6,6 +6,7 @@ import type { ForkTsCheckerWebpackPluginOptions } from 'fork-ts-checker-webpack-
 import type { UnpluginOptions } from 'unplugin';
 import type Server from 'webpack-dev-server';
 import type { ECMA } from 'terser';
+import type { Config as CompilationConfig } from '@builder/swc';
 
 // get type definitions from terser-webpack-plugin
 interface CustomOptions {
@@ -27,6 +28,7 @@ interface ConfigurationCtx extends Config {
 interface SwcOptions {
   jsxTransform?: boolean;
   removeExportExprs?: string[];
+  compilationConfig?: CompilationConfig;
 }
 
 type Experimental = Pick<Configuration, 'experiments'>;
@@ -109,4 +111,6 @@ export interface Config {
   fastRefresh?: boolean;
 
   basename?: string;
+
+  logging?: string;
 }
