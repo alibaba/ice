@@ -6,7 +6,7 @@ module.exports = (config, hash, context) => {
   // default is false
   if (hash) {
     // can not use [chunkhash] or [contenthash] for chunk in dev mode
-    const hashStr = typeof hash === 'boolean' || command === 'start' ? 'hash:6' : hash;
+    const hashStr = typeof hash === 'boolean' || command === 'start' ? 'fullhash:6' : hash;
     const fileName = config.output.get('filename');
     let pathArray = fileName.split('/');
     pathArray.pop(); // pop filename
