@@ -81,6 +81,7 @@ const start = async (
       }
       const appConfig = getAppConfig();
       const routeManifestPath = path.join(rootDir, ROUTER_MANIFEST);
+      // both ssr and ssg, should render the whole page in dev mode.
       const documentOnly = !ssr && !ssg;
 
       const serverRenderMiddleware = createRenderMiddleware({
