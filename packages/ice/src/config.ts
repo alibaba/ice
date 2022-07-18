@@ -43,6 +43,7 @@ const userConfig = [
   {
     name: 'devPublicPath',
     validation: 'string',
+    defaultValue: '/',
     setConfig: (config: Config, publicPath: UserConfig['publicPath'], context: UserConfigContext) => {
       return mergeDefaultValue(config, 'publicPath', context.command === 'start' && publicPath);
     },
@@ -50,6 +51,7 @@ const userConfig = [
   {
     name: 'publicPath',
     validation: 'string',
+    defaultValue: '/',
     setConfig: (config: Config, publicPath: UserConfig['publicPath'], context: UserConfigContext) => {
       return mergeDefaultValue(config, 'publicPath', context.command === 'build' && publicPath);
     },
