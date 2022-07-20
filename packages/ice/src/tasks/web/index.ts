@@ -1,6 +1,7 @@
 import * as path from 'path';
 import type { Config } from '@ice/types';
 import { CACHE_DIR, RUNTIME_TMP_DIR } from '../../constant.js';
+import keepPlatform from '../../utils/keepPlatform.js';
 
 const getWebTask = ({ rootDir, command }): Config => {
   // basic task config of web task
@@ -16,9 +17,20 @@ const getWebTask = ({ rootDir, command }): Config => {
       'webpack/hot': '@ice/bundles/compiled/webpack/hot',
     },
     swcOptions: {
-      jsxTransform: true,
       // getData is built by data-loader
       removeExportExprs: ['getData', 'getServerData', 'getStaticData'],
+      compilationConfig: {
+        jsc: {
+          transform: {
+            constModules: {
+              globals: {
+                '@uni/env': keepPlatform('web'),
+                'universal-env': keepPlatform('web'),
+              },
+            },
+          },
+        },
+      },
     },
     assetsManifest: true,
     fastRefresh: command === 'start',

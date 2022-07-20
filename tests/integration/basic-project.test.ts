@@ -29,6 +29,8 @@ describe(`build ${example}`, () => {
     expect(bundleContent.includes('__LOG__')).toBe(false);
     expect(bundleContent.includes('__WARN__')).toBe(false);
     expect(bundleContent.includes('__ERROR__')).toBe(true);
+    expect(bundleContent.includes('__IS_WEB__')).toBe(true);
+    expect(bundleContent.includes('__IS_NODE__')).toBe(false);
     expect(fs.existsSync(path.join(__dirname, `../../examples/${example}/build/favicon.ico`))).toBe(true);
 
     const dataLoaderPath = path.join(__dirname, `../../examples/${example}/build/js/data-loader.js`);

@@ -12,7 +12,8 @@
     "!esm/**/*.map"
   ],
   "dependencies": {
-    "@builder/swc": "^0.2.0",
+    "@ice/swc-plugin-remove-export": "^0.1.0",
+    "@swc/core": "^1.2.210",
     "@ice/bundles": "^0.1.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "@rollup/pluginutils": "^4.2.0",
