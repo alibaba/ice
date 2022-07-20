@@ -12,6 +12,7 @@ import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import { RUNTIME_TMP_DIR, SERVER_ENTRY, SERVER_OUTPUT_DIR } from '../constant.js';
 import generateHTML from '../utils/generateHTML.js';
 import emptyDir from '../utils/emptyDir.js';
+import keepPlatform from '../utils/keepPlatform.js';
 
 const build = async (
   context: Context<Config>,
@@ -90,7 +91,18 @@ const build = async (
             swc: {
               // Remove components and getData when document only.
               removeExportExprs: documentOnly ? ['default', 'getData', 'getServerData', 'getStaticData'] : [],
-              jsxTransform: true,
+              compilationConfig: {
+                jsc: {
+                  transform: {
+                    constModules: {
+                      globals: {
+                        '@uni/env': keepPlatform('node'),
+                        'universal-env': keepPlatform('node'),
+                      },
+                    },
+                  },
+                },
+              },
             },
           },
         );

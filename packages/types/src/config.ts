@@ -26,7 +26,6 @@ interface ConfigurationCtx extends Config {
 }
 
 interface SwcOptions {
-  jsxTransform?: boolean;
   removeExportExprs?: string[];
   compilationConfig?: CompilationConfig;
 }
