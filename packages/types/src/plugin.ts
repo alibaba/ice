@@ -1,5 +1,5 @@
 import type webpack from 'webpack';
-import type { PluginAPI, CommandArgs, TaskConfig } from 'build-scripts';
+import type { Plugin as _Plugin, CommandArgs, TaskConfig } from 'build-scripts';
 import type { Configuration, Stats } from 'webpack';
 import type WebpackDevServer from 'webpack-dev-server';
 import type { BuildOptions, BuildResult } from 'esbuild';
@@ -89,6 +89,4 @@ export interface OverwritePluginAPI extends ExtendsPluginAPI {
   onHook: OnHook;
 }
 
-export interface Plugin<T = undefined> {
-  (api: PluginAPI<Config, OverwritePluginAPI>, options?: T): Promise<void> | void;
-}
+export type Plugin<Options = any> = (options?: Options) => _Plugin<Config, OverwritePluginAPI>;
