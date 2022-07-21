@@ -60,19 +60,13 @@ export function createServerCompiler(options: Options) {
 
   const serverCompiler: ServerCompiler = async (customBuildOptions, { preBundle, swc } = {}) => {
     let depsMetadata: DepsMetaData;
-    let swcOptions = swc;
+    let swcOptions = merge({}, {
+      // Only get the `compilationConfig` from task config.
+      compilationConfig: {
+        ...(task.config?.swcOptions?.compilationConfig || {}),
+      },
+    }, swc);
     const enableSyntaxFeatures = syntaxFeatures && Object.keys(syntaxFeatures).some(key => syntaxFeatures[key]);
-    if (enableSyntaxFeatures) {
-      swcOptions = merge(swc, {
-        compilationConfig: {
-          jsc: {
-            parser: {
-              ...syntaxFeatures,
-            },
-          },
-        },
-      });
-    }
     const transformPlugins = getCompilerPlugins({
       ...task.config,
       fastRefresh: false,
@@ -83,7 +77,7 @@ export function createServerCompiler(options: Options) {
       depsMetadata = await createDepsMetadata({
         task,
         rootDir,
-        // Pass transformPlugins on syntaxFeatures is enabled
+        // Pass transformPlugins only if syntaxFeatures is enabled
         plugins: enableSyntaxFeatures ? transformPlugins : [],
       });
     }
