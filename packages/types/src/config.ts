@@ -1,12 +1,20 @@
 import type webpack from 'webpack';
 import type { RuleSetRule, Configuration, Compiler, WebpackPluginInstance } from 'webpack';
-import type { ProxyConfigArray, ProxyConfigArrayItem, ProxyConfigMap, Middleware, ServerOptions, Configuration as DevServerConfiguration } from 'webpack-dev-server';
+import type {
+  ProxyConfigArray,
+  ProxyConfigArrayItem,
+  ProxyConfigMap,
+  Middleware,
+  ServerOptions,
+  Configuration as DevServerConfiguration,
+} from 'webpack-dev-server';
 import type { Options } from 'eslint-webpack-plugin';
 import type { ForkTsCheckerWebpackPluginOptions } from 'fork-ts-checker-webpack-plugin/lib/plugin-options';
 import type { UnpluginOptions } from 'unplugin';
 import type Server from 'webpack-dev-server';
 import type { ECMA } from 'terser';
 import type { Config as CompilationConfig } from '@builder/swc';
+import type { BuildOptions } from 'esbuild';
 
 // get type definitions from terser-webpack-plugin
 interface CustomOptions {
@@ -112,4 +120,10 @@ export interface Config {
   basename?: string;
 
   logging?: string;
+
+  memoryRouter?: boolean;
+
+  server?: {
+    buildOptions?: (options: BuildOptions) => BuildOptions;
+  };
 }
