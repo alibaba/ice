@@ -132,16 +132,18 @@ function getJsxTransformOptions({
       loose: true,
     },
   };
-
+  const syntaxFeatures = {
+    dynamicImport: true,
+    decorators: true,
+    privateMethod: true,
+    importMeta: true,
+    exportNamespaceFrom: true,
+  };
   const jsOptions = merge({
     jsc: {
       parser: {
         jsx: true,
-        dynamicImport: true,
-        functionBind: true,
-        exportDefaultFrom: true,
-        exportNamespaceFrom: true,
-        decorators: true,
+        ...syntaxFeatures,
       },
     },
   }, commonOptions);
@@ -149,10 +151,9 @@ function getJsxTransformOptions({
   const tsOptions = merge({
     jsc: {
       parser: {
-        syntax: 'typescript',
         tsx: true,
-        decorators: true,
-        dynamicImport: true,
+        ...syntaxFeatures,
+        syntax: 'typescript',
       },
     },
   }, commonOptions);

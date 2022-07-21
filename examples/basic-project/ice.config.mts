@@ -4,13 +4,16 @@ import auth from '@ice/plugin-auth';
 
 export default defineConfig({
   publicPath: '/',
+  syntaxFeatures: {
+    exportDefaultFrom: true,
+  },
   define: {
     HAHA: JSON.stringify(true),
     'process.env.HAHA': JSON.stringify(true),
   },
   transform: (code, id) => {
     if (id.includes('src/pages')) {
-      console.log('transform page:', id);
+      // console.log('transform page:', id);
     }
     return code;
   },

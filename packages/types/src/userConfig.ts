@@ -4,6 +4,12 @@ import type { UnpluginOptions } from 'unplugin';
 import type { Config, ModifyWebpackConfig } from './config';
 import type { OverwritePluginAPI } from './plugin';
 
+interface SyntaxFeatures {
+  // syntax exportDefaultFrom and functionBind is not supported by esbuild
+  exportDefaultFrom?: boolean;
+  functionBind?: boolean;
+}
+
 export interface UserConfig {
   alias?: Record<string, string | false>;
   define?: Record<string, string | boolean>;
@@ -35,4 +41,5 @@ export interface UserConfig {
   removeHistoryDeadCode?: boolean;
   mock?: { exclude?: string[] };
   transform?: UnpluginOptions['transform'];
+  syntaxFeatures?: SyntaxFeatures;
 }
