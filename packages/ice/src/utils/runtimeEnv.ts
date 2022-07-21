@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as dotenv from 'dotenv';
 import { expand as dotenvExpand } from 'dotenv-expand';
-import type { CommandArgs, CommandName } from 'build-scripts';
+import type { CommandArgs } from 'build-scripts';
 import type { AppConfig } from '@ice/types';
 
 export interface Envs {
@@ -12,9 +12,11 @@ interface EnvOptions {
   disableRouter: boolean;
 }
 
-export async function initProcessEnv(
+/**
+ * Set env params in .env file and built-in env params to process.env.
+ */
+export async function setEnv(
   rootDir: string,
-  command: CommandName,
   commandArgs: CommandArgs,
 ): Promise<void> {
   const { mode } = commandArgs;
@@ -40,15 +42,6 @@ export async function initProcessEnv(
 
   process.env.ICE_CORE_MODE = mode;
   process.env.ICE_CORE_DEV_PORT = commandArgs.port;
-
-  if (process.env.TEST || command === 'test') {
-    process.env.NODE_ENV = 'test';
-  } else if (command === 'start') {
-    process.env.NODE_ENV = 'development';
-  } else {
-    // build
-    process.env.NODE_ENV = 'production';
-  }
 
   // set runtime initial env
   process.env.ICE_CORE_ROUTER = 'true';

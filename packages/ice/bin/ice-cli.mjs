@@ -30,6 +30,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .option('--config <config>', 'use custom config')
     .option('--rootDir <rootDir>', 'project root directory', cwd)
     .action(async ({ rootDir, ...commandArgs }) => {
+      process.env.NODE_ENV = 'production';
       const service = await createService({ rootDir, command: 'build', commandArgs });
       service.run();
     });
@@ -42,13 +43,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .option('--config <config>', 'custom config path')
     .option('-h, --host <host>', 'dev server host', '0.0.0.0')
     .option('-p, --port <port>', 'dev server port', 3000)
-    .option('--no-open', 'don\'t open browser on startup')
-    .option('--no-mock', 'don\'t start mock service')
+    .option('--no-open', "don't open browser on startup")
+    .option('--no-mock', "don't start mock service")
     .option('--rootDir <rootDir>', 'project root directory', cwd)
     .option('--analyzer', 'visualize size of output files', false)
     .option('--https [https]', 'enable https', false)
     .option('--force', 'force remove cache directory', false)
     .action(async ({ rootDir, ...commandArgs }) => {
+      process.env.NODE_ENV = 'development';
       commandArgs.port = await detectPort(commandArgs.port);
       const service = await createService({ rootDir, command: 'start', commandArgs });
       service.run();
@@ -62,6 +64,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .option('--config <config>', 'use custom config')
     .option('--rootDir <rootDir>', 'project root directory', cwd)
     .action(async ({ rootDir, ...commandArgs }) => {
+      process.env.NODE_ENV = 'test';
       await createService({ rootDir, command: 'test', commandArgs });
     });
 
