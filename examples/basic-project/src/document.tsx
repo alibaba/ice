@@ -1,6 +1,9 @@
-import { Meta, Title, Links, Main, Scripts } from 'ice';
+import { Meta, Title, Links, Main, Scripts, useAppData } from 'ice';
+import type { AppData } from 'ice';
 
 function Document() {
+  const appData = useAppData<AppData>();
+
   return (
     <html>
       <head>
@@ -10,6 +13,11 @@ function Document() {
         <Meta />
         <Title />
         <Links />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `console.log('${appData?.title}')`,
+          }}
+        />
       </head>
       <body>
         <Main />

@@ -64,6 +64,38 @@ export default defineAppConfig({
 - 类型 `string`
 - 默认值 `/`
 
+## 应用级数据
+
+可以在应用入口定义并导出 `getAppData` 方法，来获取应用级数据。示例：
+
+```js
+import type { GetAppData } from 'ice';
+
+// ...
+
+export const getAppData: GetAppData = () => {
+  return new Promise((resolve) => {
+    resolve({
+      success: true,
+      id: 34293
+    });
+  });
+};
+```
+
+在页面或其他组件中，可以通过 `useAppData` 方法获取页面级数据。示例：
+
+```js
+import { useAppData } from 'ice';
+import type { AppData } from 'ice';
+
+export default function Home(props) {
+  const appData = useAppData<AppData>();
+
+  // ...
+}
+```
+
 ## 运行时拓展
 
 应用入口除了支持定义应用配置之外，同时也承担运行时扩展的能力，比如权限配置：

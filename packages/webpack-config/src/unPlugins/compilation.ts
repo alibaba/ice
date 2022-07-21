@@ -64,7 +64,8 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
         merge(programmaticOptions, compilationConfig);
       }
 
-      if (removeExportExprs && /(.*)pages(.*)\.(jsx?|tsx?|mjs)$/.test(id)) {
+      // handle app.tsx and page entries only
+      if (removeExportExprs && (/(.*)pages(.*)\.(jsx?|tsx?|mjs)$/.test(id) || /(.*)src\/app/.test(id))) {
         merge(programmaticOptions, {
           jsc: {
             experimental: {
