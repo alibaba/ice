@@ -31,8 +31,13 @@ const ruleSetStylesheet = {
 
 let warnOnce = false;
 
-function getPlugin(options: CompatRaxOptions): Plugin {
-  return ({ onGetConfig }) => {
+export interface CompatRaxOptions {
+  inlineStyle?: boolean;
+}
+
+const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
+  name: '@ice/plugin-rax-compat',
+  setup: ({ onGetConfig }) => {
     onGetConfig((config) => {
       // Reset jsc.transform.react.runtime to classic.
       config.swcOptions = merge(config.swcOptions || {}, {
@@ -77,14 +82,7 @@ function getPlugin(options: CompatRaxOptions): Plugin {
         });
       }
     });
-  };
-}
-
-export interface CompatRaxOptions {
-  inlineStyle?: boolean;
-}
-
-export default (options: CompatRaxOptions | void) => ({
-  name: '@ice/plugin-rax-compat',
-  setup: getPlugin(options || {}),
+  },
 });
+
+export default plugin;
