@@ -4,7 +4,7 @@ import fs from 'fs-extra';
 import fg from 'fast-glob';
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
 import { transform, build } from 'esbuild';
-import type { Loader } from 'esbuild';
+import type { Loader, Plugin } from 'esbuild';
 import consola from 'consola';
 import { getRouteCache, setRouteCache } from '../utils/persistentCache.js';
 import { getFileHash } from '../utils/hash.js';
@@ -159,12 +159,13 @@ interface ScanOptions {
   rootDir: string;
   alias?: Alias;
   depImports?: Record<string, string>;
+  plugins?: Plugin[];
   exclude?: string[];
 }
 
 export async function scanImports(entries: string[], options?: ScanOptions) {
   const start = performance.now();
-  const { alias = {}, depImports = {}, exclude = [], rootDir } = options;
+  const { alias = {}, depImports = {}, exclude = [], rootDir, plugins } = options;
   const deps = { ...depImports };
 
   await Promise.all(
@@ -177,12 +178,15 @@ export async function scanImports(entries: string[], options?: ScanOptions) {
         format: 'esm',
         logLevel: 'silent',
         loader: { '.js': 'jsx' },
-        plugins: [scanPlugin({
-          rootDir,
-          deps,
-          alias,
-          exclude,
-        })],
+        plugins: [
+          scanPlugin({
+            rootDir,
+            deps,
+            alias,
+            exclude,
+          }),
+          ...(plugins || []),
+        ],
       }),
     ));
   consola.debug(`Scan completed in ${(performance.now() - start).toFixed(2)}ms:`, deps);

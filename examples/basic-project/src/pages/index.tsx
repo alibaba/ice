@@ -8,15 +8,15 @@ import styles from './index.module.css';
 const Bar = lazy(() => import('../components/bar'));
 
 export default function Home(props) {
-  console.log('render Home', props);
-
   const appContext = useAppContext();
-  console.log('get AppContext', appContext);
-
   const data = useData();
   const config = useConfig();
 
-  console.log('render Home', 'data', data, 'config', config);
+  if (typeof window !== 'undefined') {
+    console.log('render Home', props);
+    console.log('get AppContext', appContext);
+    console.log('render Home', 'data', data, 'config', config);
+  }
 
   const { data: foo } = useRequest(() => fetch('/api/foo').then(res => res.json()));
   const { data: users } = useRequest(() => fetch('/api/users').then(res => res.json()));

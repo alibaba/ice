@@ -2,6 +2,7 @@ import path from 'path';
 import { createHash } from 'crypto';
 import fse from 'fs-extra';
 import { build } from 'esbuild';
+import type { Plugin } from 'esbuild';
 import { resolve as resolveExports } from 'resolve.exports';
 import resolve from 'resolve';
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
@@ -43,13 +44,14 @@ interface PreBundleDepsOptions {
   rootDir: string;
   cacheDir: string;
   taskConfig: Config;
+  plugins: Plugin[];
 }
 
 /**
  * Pre bundle dependencies from esm to cjs.
  */
 export default async function preBundleCJSDeps(options: PreBundleDepsOptions): Promise<PreBundleDepsResult> {
-  const { depsInfo, rootDir, cacheDir, taskConfig } = options;
+  const { depsInfo, rootDir, cacheDir, taskConfig, plugins } = options;
   const metadata = createDepsMetadata(depsInfo, taskConfig);
 
   if (!Object.keys(depsInfo)) {
@@ -93,12 +95,12 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
     entryPoints: flatIdDeps,
     bundle: true,
     logLevel: 'error',
-    sourcemap: true,
     outdir: depsCacheDir,
     format: 'cjs',
     platform: 'node',
     loader: { '.js': 'jsx' },
     ignoreAnnotations: true,
+    plugins,
     external: [...BUILDIN_CJS_DEPS, ...BUILDIN_ESM_DEPS],
   });
 

@@ -105,7 +105,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   // get userConfig after setup because of userConfig maybe modified by plugins
   const { userConfig } = ctx;
-  const { routes: routesConfig, server } = userConfig;
+  const { routes: routesConfig, server, syntaxFeatures } = userConfig;
 
   await setEnv(rootDir, commandArgs);
   const coreEnvKeys = getCoreEnvKeys();
@@ -136,6 +136,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     task: webTaskConfig,
     command,
     server,
+    syntaxFeatures,
   });
 
   addWatchEvent(
