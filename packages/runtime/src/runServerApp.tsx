@@ -15,28 +15,30 @@ import type { NodeWritablePiper } from './server/streamRender.js';
 import type {
   AppContext, RouteItem, ServerContext,
   AppExport, RuntimePlugin, CommonJsRuntime, AssetsManifest,
-  ComponentWithChildren,
   RouteMatch,
   RequestContext,
   AppConfig,
   RouteModules,
   RenderMode,
+  DocumentComponent,
 } from './types.js';
 import getRequestContext from './requestContext.js';
 import matchRoutes from './matchRoutes.js';
+import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
 
 interface RenderOptions {
   app: AppExport;
   assetsManifest: AssetsManifest;
   routes: RouteItem[];
   runtimeModules: (RuntimePlugin | CommonJsRuntime)[];
-  Document: ComponentWithChildren<{}>;
+  Document: DocumentComponent;
   documentOnly?: boolean;
   renderMode?: RenderMode;
   // basename is used both for server and client, once set, it will be sync to client.
   basename?: string;
   // serverOnlyBasename is used when just want to change basename for server.
   serverOnlyBasename?: string;
+  routePath?: string;
 }
 
 interface Piper {
@@ -132,13 +134,14 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
   const requestContext = getRequestContext(location, serverContext);
   const appConfig = getAppConfig(app);
   const matches = matchRoutes(routes, location, serverOnlyBasename || basename);
+  const routePath = getCurrentRoutePath(matches);
 
   if (!matches.length) {
     return render404();
   }
 
   if (documentOnly) {
-    return renderDocument(matches, renderOptions, {});
+    return renderDocument(matches, routePath, renderOptions, {});
   }
 
   // FIXME: 原来是在 renderDocument 之前执行这段逻辑。
@@ -155,10 +158,11 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
       appConfig,
       routeModules,
       basename,
+      routePath,
     });
   } catch (err) {
     console.error('Warning: render server entry error, downgrade to csr.', err);
-    return renderDocument(matches, renderOptions, {});
+    return renderDocument(matches, routePath, renderOptions, {});
   }
 }
 
@@ -178,6 +182,7 @@ interface renderServerEntry {
   location: Location;
   appConfig: AppConfig;
   routeModules: RouteModules;
+  routePath: string;
   basename?: string;
 }
 
@@ -194,6 +199,7 @@ async function renderServerEntry(
     renderOptions,
     routeModules,
     basename,
+    routePath,
   }: renderServerEntry,
 ): Promise<RenderResult> {
   const {
@@ -217,6 +223,7 @@ async function renderServerEntry(
     routes,
     routeModules,
     basename,
+    routePath,
   };
 
   const runtime = new Runtime(appContext);
@@ -242,7 +249,7 @@ async function renderServerEntry(
   const element = (
     <AppContextProvider value={appContext}>
       <DocumentContextProvider value={documentContext}>
-        <Document />
+        <Document pagePath={routePath} />
       </DocumentContextProvider>
     </AppContextProvider>
   );
@@ -250,7 +257,7 @@ async function renderServerEntry(
   const pipe = renderToNodeStream(element, false);
 
   const fallback = () => {
-    return renderDocument(matches, renderOptions, routeModules);
+    return renderDocument(matches, routePath, renderOptions, routeModules);
   };
 
   return {
@@ -264,7 +271,12 @@ async function renderServerEntry(
 /**
  * Render Document for CSR.
  */
-function renderDocument(matches: RouteMatch[], options: RenderOptions, routeModules: RouteModules): RenderResult {
+function renderDocument(
+  matches: RouteMatch[],
+  routePath: string,
+  options: RenderOptions,
+  routeModules: RouteModules,
+): RenderResult {
   const {
     routes,
     assetsManifest,
@@ -286,6 +298,7 @@ function renderDocument(matches: RouteMatch[], options: RenderOptions, routeModu
     routes,
     documentOnly: true,
     routeModules,
+    routePath,
     basename,
   };
 
@@ -296,7 +309,7 @@ function renderDocument(matches: RouteMatch[], options: RenderOptions, routeModu
   const html = ReactDOMServer.renderToString(
     <AppContextProvider value={appContext}>
       <DocumentContextProvider value={documentContext}>
-        <Document />
+        <Document pagePath={routePath} />
       </DocumentContextProvider>
     </AppContextProvider>,
   );

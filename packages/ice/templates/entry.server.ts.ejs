@@ -25,10 +25,11 @@ interface RenderOptions {
   renderMode?: RenderMode;
   basename?: string;
   serverOnlyBasename?: string;
+  routePath?: string;
 }
 
 export async function renderToHTML(requestContext, options: RenderOptions = {}) {
-  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename } = options;
+  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath } = options;
   setRuntimeEnv(renderMode);
 
   return await runtime.renderToHTML(requestContext, {
@@ -41,6 +42,7 @@ export async function renderToHTML(requestContext, options: RenderOptions = {}) 
     basename: basename || getRouterBasename(),
     documentOnly,
     renderMode,
+    routePath,
   });
 }
 

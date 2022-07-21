@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { formatNestedRouteManifest, generateRouteManifest } from '@ice/route-manifest';
-import type { NestedRouteManifest, ConfigRoute, RouteManifest } from '@ice/route-manifest';
+import type { NestedRouteManifest } from '@ice/route-manifest';
 import type { UserConfig } from '@ice/types';
 import { getRouteExports } from './service/analyze.js';
 
@@ -20,12 +20,6 @@ export async function generateRoutesInfo(rootDir: string, routesConfig: UserConf
     });
   });
   await Promise.all(analyzeTasks);
-
-  if (!routeManifest['$']) {
-    // create default 404 page
-    const defaultNotFoundRoute = createDefaultNotFoundRoute(routeManifest);
-    routeManifest['$'] = defaultNotFoundRoute;
-  }
 
   const routes = formatNestedRouteManifest(routeManifest);
   const routesStr = generateRoutesStr(routes);
@@ -95,19 +89,6 @@ function formatRoutesStr(deep: number, strs: string[]) {
   return `{
 ${identSpaces + twoSpaces}${strs.join(`\n${`${identSpaces + twoSpaces}`}`)}
 ${identSpaces}},`;
-}
-
-function createDefaultNotFoundRoute(routeManifest: RouteManifest): ConfigRoute {
-  return {
-    path: '*',
-    // TODO: git warning if the id startsWith __
-    id: '__404',
-    parentId: routeManifest['layout'] ? 'layout' : null,
-    file: './404.tsx',
-    componentName: '__404',
-    layout: false,
-    exports: ['default'],
-  };
 }
 
 /**

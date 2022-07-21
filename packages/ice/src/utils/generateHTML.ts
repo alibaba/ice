@@ -49,6 +49,7 @@ export default async function generateHTML(options: Options) {
     const { value: html } = await serverEntry.renderToHTML(serverContext, {
       renderMode,
       documentOnly,
+      routePath,
       serverOnlyBasename: '/',
     });
 
