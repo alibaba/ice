@@ -16,6 +16,7 @@ import Runtime from './runtime.js';
 import App from './App.js';
 import runClientApp from './runClientApp.js';
 import { useAppContext } from './AppContext.js';
+import { useAppData } from './AppData.js';
 import { useData, useConfig } from './RouteContext.js';
 import {
   Meta,
@@ -34,6 +35,7 @@ import type {
   AppProvider,
   RouteWrapper,
   RenderMode,
+  GetAppData,
 } from './types.js';
 import dataLoader from './dataLoader.js';
 import getAppConfig, { defineAppConfig } from './appConfig.js';
@@ -45,6 +47,7 @@ export {
   App,
   runClientApp,
   useAppContext,
+  useAppData,
   useData,
   useConfig,
   Meta,
@@ -77,4 +80,5 @@ export type {
   AppProvider,
   RouteWrapper,
   RenderMode,
+  GetAppData,
 };

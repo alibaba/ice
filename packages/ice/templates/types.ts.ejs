@@ -1,4 +1,4 @@
-import type { AppConfig as DefaultAppConfig } from '@ice/runtime';
+import type { AppConfig as DefaultAppConfig, GetAppData, AppData } from '@ice/runtime';
 
 <%- configTypes.imports -%>
 
@@ -13,3 +13,8 @@ export type AppConfig = ExtendsAppConfig;
 <% } else { -%>
 export type AppConfig = DefaultAppConfig;
 <% } -%>
+
+export { 
+  GetAppData,
+  AppData
+}

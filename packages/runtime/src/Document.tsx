@@ -1,6 +1,7 @@
 import * as React from 'react';
 import type { ReactNode } from 'react';
 import { useAppContext } from './AppContext.js';
+import { useAppData } from './AppData.js';
 import { getMeta, getTitle, getLinks, getScripts } from './routesConfig.js';
 import type { AppContext, RouteMatch, AssetsManifest } from './types.js';
 import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
@@ -64,6 +65,7 @@ export function Links() {
 
 export function Scripts() {
   const { routesData, routesConfig, matches, assetsManifest, documentOnly, routeModules, basename } = useAppContext();
+  const appData = useAppData();
 
   const routeScripts = getScripts(matches, routesConfig);
   const pageAssets = getPageAssets(matches, assetsManifest);
@@ -75,6 +77,7 @@ export function Scripts() {
   const routePath = getCurrentRoutePath(matches);
 
   const appContext: AppContext = {
+    appData,
     routesData,
     routesConfig,
     assetsManifest,

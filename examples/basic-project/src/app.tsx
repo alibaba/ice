@@ -1,6 +1,7 @@
 import { defineAppConfig } from 'ice';
 import { defineAuthConfig } from '@ice/plugin-auth/esm/types';
 import { isWeb, isNode } from '@uni/env';
+import type { GetAppData } from 'ice';
 
 if (process.env.ICE_CORE_ERROR_BOUNDARY === 'true') {
   console.error('__REMOVED__');
@@ -33,3 +34,14 @@ export default defineAppConfig({
     rootId: 'app',
   },
 });
+
+export const getAppData: GetAppData = () => {
+  return new Promise((resolve) => {
+    resolve({
+      title: 'gogogogo',
+      auth: {
+        admin: true,
+      },
+    });
+  });
+};

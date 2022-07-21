@@ -31,7 +31,10 @@ export interface RouteConfig {
 export interface AppExport {
   default?: AppConfig;
   [key: string]: any;
+  getAppData?: GetAppData;
 }
+
+export type GetAppData = (ctx: RequestContext) => Promise<AppData> | AppData;
 
 // app.getData & route.getData
 export type GetData = (ctx: RequestContext) => Promise<RouteData> | RouteData;
@@ -60,6 +63,7 @@ export interface RoutesData {
 // useAppContext
 export interface AppContext {
   appConfig: AppConfig;
+  appData: any;
   assetsManifest: AssetsManifest;
   routesData: RoutesData;
   routesConfig: RoutesConfig;
