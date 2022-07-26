@@ -13,10 +13,11 @@ import escapeLocalIdent from '../utils/escapeLocalIdent.js';
 import cssModulesPlugin from '../esbuild/cssModules.js';
 import aliasPlugin from '../esbuild/alias.js';
 import createAssetsPlugin from '../esbuild/assets.js';
-import { ASSETS_MANIFEST, CACHE_DIR, SERVER_ENTRY, SERVER_OUTPUT_DIR } from '../constant.js';
+import { ASSETS_MANIFEST, CACHE_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
 import emptyCSSPlugin from '../esbuild/emptyCSS.js';
 import createDepRedirectPlugin from '../esbuild/depRedirect.js';
 import isExternalBuiltinDep from '../utils/isExternalBuiltinDep.js';
+import getServerEntry from '../utils/getServerEntry.js';
 import { scanImports } from './analyze.js';
 import type { DepsMetaData } from './preBundleCJSDeps.js';
 import preBundleCJSDeps from './preBundleCJSDeps.js';
@@ -162,7 +163,7 @@ interface CreateDepsMetadataOptions {
  *  Create dependencies metadata only when server entry is bundled to esm.
  */
 async function createDepsMetadata({ rootDir, task, plugins }: CreateDepsMetadataOptions) {
-  const serverEntry = path.join(rootDir, SERVER_ENTRY);
+  const serverEntry = getServerEntry(rootDir, task.config?.server?.entry);
 
   const deps = await scanImports([serverEntry], {
     rootDir,

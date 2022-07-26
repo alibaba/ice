@@ -133,6 +133,8 @@ export interface Config {
   memoryRouter?: boolean;
 
   server?: {
+    entry?: string;
+
     buildOptions?: (options: BuildOptions) => BuildOptions;
   };
 }

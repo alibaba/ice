@@ -9,10 +9,11 @@ import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type ora from '@ice/bundles/compiled/ora/index.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
-import { RUNTIME_TMP_DIR, SERVER_ENTRY, SERVER_OUTPUT_DIR } from '../constant.js';
+import { RUNTIME_TMP_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
 import generateHTML from '../utils/generateHTML.js';
 import emptyDir from '../utils/emptyDir.js';
 import keepPlatform from '../utils/keepPlatform.js';
+import getServerEntry from '../utils/getServerEntry.js';
 
 const build = async (
   context: Context<Config>,
@@ -47,7 +48,7 @@ const build = async (
   });
   const { ssg, ssr, server: { format } } = userConfig;
   // compile server bundle
-  const entryPoint = path.join(rootDir, SERVER_ENTRY);
+  const entryPoint = getServerEntry(rootDir, taskConfigs[0].config?.server?.entry);
   const esm = format === 'esm';
   const outJSExtension = esm ? '.mjs' : '.cjs';
   const serverOutputDir = path.join(outputDir, SERVER_OUTPUT_DIR);
