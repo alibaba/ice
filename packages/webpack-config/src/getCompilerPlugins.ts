@@ -1,6 +1,7 @@
 import type { Config } from '@ice/types';
 import type { BuildOptions } from 'esbuild';
 import { createUnplugin } from 'unplugin';
+import type { UnpluginOptions } from 'unplugin';
 import compilationPlugin from './unPlugins/compilation.js';
 import type { WebpackConfig } from './index.js';
 
@@ -14,6 +15,22 @@ const SKIP_COMPILE = [
   // dev dependencies
   '@pmmmwh/react-refresh-webpack-plugin', 'webpack', 'webpack-dev-server', 'react-refresh',
 ];
+
+function getPluginTransform(plugin: UnpluginOptions, type: 'esbuild' | 'webpack') {
+  const { transform } = plugin;
+  if (transform) {
+    return {
+      ...plugin,
+      transform(code: string, id: string) {
+        return transform.call(this, code, id, {
+          isServer: type === 'esbuild',
+        });
+      },
+    } as UnpluginOptions;
+  }
+
+  return plugin;
+}
 
 function getCompilerPlugins(config: Config, compiler: 'webpack'): WebpackConfig['plugins'];
 function getCompilerPlugins(config: Config, compiler: 'esbuild'): BuildOptions['plugins'];
@@ -41,8 +58,8 @@ function getCompilerPlugins(config: Config, compiler: Compiler) {
   );
 
   return compiler === 'webpack'
-    ? compilerPlugins.map(plugin => createUnplugin(() => plugin).webpack())
-    : compilerPlugins.map(plugin => createUnplugin(() => plugin).esbuild());
+    ? compilerPlugins.map(plugin => createUnplugin(() => getPluginTransform(plugin, 'webpack')).webpack())
+    : compilerPlugins.map(plugin => createUnplugin(() => getPluginTransform(plugin, 'esbuild')).esbuild());
 }
 
 export default getCompilerPlugins;
