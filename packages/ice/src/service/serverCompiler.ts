@@ -39,6 +39,7 @@ export function createServerCompiler(options: Options) {
   const externals = task.config?.externals || {};
   const assetsManifest = path.join(rootDir, ASSETS_MANIFEST);
   const define = task.config?.define || {};
+  const sourceMap = task.config?.sourceMap;
   const dev = command === 'start';
 
   const defineVars = {};
@@ -64,6 +65,8 @@ export function createServerCompiler(options: Options) {
       // Only get the `compilationConfig` from task config.
       compilationConfig: {
         ...(task.config?.swcOptions?.compilationConfig || {}),
+        // Force inline when use swc as a transformer.
+        sourceMaps: sourceMap && 'inline',
       },
     }, swc);
     const enableSyntaxFeatures = syntaxFeatures && Object.keys(syntaxFeatures).some(key => syntaxFeatures[key]);
@@ -98,6 +101,9 @@ export function createServerCompiler(options: Options) {
       // while it is not recommended
       loader: { '.js': 'jsx' },
       inject: [path.resolve(__dirname, '../polyfills/react.js')],
+      sourcemap: typeof sourceMap === 'boolean'
+        // Transform sourceMap for esbuild.
+        ? sourceMap : (sourceMap.includes('inline') ? 'inline' : !!sourceMap),
       ...customBuildOptions,
       define,
       external: Object.keys(externals),
