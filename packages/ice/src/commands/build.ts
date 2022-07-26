@@ -45,14 +45,12 @@ const build = async (
     serverCompiler,
     spinner,
   });
-  const { ssg, server: { format } } = userConfig;
+  const { ssg, ssr, server: { format } } = userConfig;
   // compile server bundle
   const entryPoint = path.join(rootDir, SERVER_ENTRY);
   const esm = format === 'esm';
   const outJSExtension = esm ? '.mjs' : '.cjs';
   const serverOutputDir = path.join(outputDir, SERVER_OUTPUT_DIR);
-  // only ssg need to generate the whole page html when build time.
-  const documentOnly = !ssg;
   let serverEntry;
   const { stats, isSuccessful, messages } = await new Promise((resolve, reject): void => {
     let messages: { errors: string[]; warnings: string[] };
@@ -89,8 +87,8 @@ const build = async (
           {
             preBundle: format === 'esm',
             swc: {
-              // Remove components and getData when document only.
-              removeExportExprs: documentOnly ? ['default', 'getData', 'getServerData', 'getStaticData'] : [],
+              // Remove components and getData when ssg and ssr both `false`.
+              removeExportExprs: (!ssg && !ssr) ? ['default', 'getData', 'getServerData', 'getStaticData'] : [],
               compilationConfig: {
                 jsc: {
                   transform: {
@@ -118,7 +116,8 @@ const build = async (
           rootDir,
           outputDir,
           entry: serverEntry,
-          documentOnly,
+          // only ssg need to generate the whole page html when build time.
+          documentOnly: !ssg,
           renderMode,
         });
         resolve({
