@@ -111,7 +111,7 @@ function generateRouteConfig(
       const componentFile = file.replace(new RegExp(`${fileExtname}$`), '');
       const componentPath = path.isAbsolute(componentFile) ? componentFile : `@/pages/${componentFile}`;
 
-      const loaderName = `${exportKey}_${id}`.replace('/', '_');
+      const loaderName = `${exportKey}_${id}`.replace(/[-/]/g, '_');
       const routePath = route.path || (route.index ? 'index' : '/');
       const fullPath = path.join(parentPath, routePath);
       imports.push([id, loaderName, fullPath]);
