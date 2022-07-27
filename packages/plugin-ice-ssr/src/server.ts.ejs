@@ -155,6 +155,7 @@ export async function renderStatic(
       const result = await getComponentByPath(
         routes,
         initialContext.pathname,
+        buildConfig.i18n,
       );
       component = result.component;
       getInitialProps = result.getInitialProps;
@@ -244,11 +245,26 @@ export function generateHtml({
   return $.html();
 }
 
-export async function getComponentByPath(routes, currPath)  {
+export async function getComponentByPath(routes, reqPath, i18nConfig)  {
   <% if (enableRouter) { %>
+    let routePath = reqPath;
+    // For matchPath method doesn't match the route with basename, so need to remove basename first.
+    if (appConfig?.router?.basename) {
+      routePath = routePath.replace(appConfig.router.basename, '');
+    }
+    // For matchPath method doesn't match the route with locale, so need to remove locale prefix first.
+    if (Array.isArray(i18nConfig.locales)) {
+      for (let locale of i18nConfig.locales) {
+        const localePrefix = `/${locale}`;
+        if (routePath.startsWith(localePrefix)) {
+          routePath = routePath.replace(localePrefix, '');
+          break;
+        }
+      }
+    }
     async function findMatchRoute(routeList) {
       let matchedRoute = routeList.find(route => {
-        return matchPath(currPath, route);
+        return matchPath(routePath, route);
       });
       if (matchedRoute?.component?.__LOADABLE__) {
         matchedRoute.component = loadable(matchedRoute.component.dynamicImport);
