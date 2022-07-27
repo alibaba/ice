@@ -41,6 +41,7 @@ interface RenderOptions {
   // serverOnlyBasename is used when just want to change basename for server.
   serverOnlyBasename?: string;
   routePath?: string;
+  disableFallback?: boolean;
 }
 
 interface Piper {
@@ -74,6 +75,9 @@ export async function renderToHTML(requestContext: ServerContext, renderOptions:
       statusCode: 200,
     };
   } catch (error) {
+    if (renderOptions.disableFallback) {
+      throw error;
+    }
     console.error('Warning: piperToString error, downgrade to csr.', error);
     // downgrade to csr.
     const result = fallback();
@@ -101,6 +105,9 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
     try {
       await pipeToResponse(res, pipe);
     } catch (error) {
+      if (renderOptions.disableFallback) {
+        throw error;
+      }
       console.error('PiperToResponse error, downgrade to csr.', error);
       // downgrade to csr.
       const result = await fallback();
