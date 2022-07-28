@@ -18,10 +18,11 @@ interface Options {
   sourceMap?: Config['sourceMap'];
   compileExcludes?: RegExp[];
   swcOptions?: Config['swcOptions'];
+  cacheDir?: string;
 }
 
 const compilationPlugin = (options: Options): UnpluginOptions => {
-  const { sourceMap, mode, fastRefresh, compileIncludes = [], compileExcludes, swcOptions = {} } = options;
+  const { sourceMap, mode, fastRefresh, compileIncludes = [], compileExcludes, swcOptions = {}, cacheDir } = options;
   const compileRegex = compileIncludes.map((includeRule) => {
     return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);
   });
@@ -69,6 +70,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
         merge(programmaticOptions, {
           jsc: {
             experimental: {
+              cacheRoot: cacheDir,
               plugins: [
                 [
                   require.resolve('@ice/swc-plugin-remove-export'),
