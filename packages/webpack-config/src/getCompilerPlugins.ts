@@ -35,7 +35,16 @@ function getPluginTransform(plugin: UnpluginOptions, type: 'esbuild' | 'webpack'
 function getCompilerPlugins(config: Config, compiler: 'webpack'): WebpackConfig['plugins'];
 function getCompilerPlugins(config: Config, compiler: 'esbuild'): BuildOptions['plugins'];
 function getCompilerPlugins(config: Config, compiler: Compiler) {
-  const { sourceMap, transformPlugins = [], transforms = [], mode, compileIncludes, swcOptions, fastRefresh } = config;
+  const {
+    sourceMap,
+    transformPlugins = [],
+    transforms = [],
+    mode,
+    compileIncludes,
+    swcOptions,
+    fastRefresh,
+    cacheDir,
+  } = config;
   const compilerPlugins = [];
   const compileExcludes = [
     new RegExp(SKIP_COMPILE.map((dep) => `node_modules/?.+${dep}/`).join('|')),
@@ -50,6 +59,7 @@ function getCompilerPlugins(config: Config, compiler: Compiler) {
 
   if (swcOptions) {
     compilerPlugins.push(compilationPlugin({
+      cacheDir,
       sourceMap,
       fastRefresh,
       mode,
