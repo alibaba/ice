@@ -50,7 +50,6 @@ function getCompilerPlugins(config: Config, compiler: Compiler) {
     new RegExp(SKIP_COMPILE.map((dep) => `node_modules/?.+${dep}/`).join('|')),
     /bundles\/compiled/,
   ];
-
   // Add custom transform before swc compilation so the source code can be got before transformed.
   compilerPlugins.push(
     ...transformPlugins,
@@ -70,8 +69,9 @@ function getCompilerPlugins(config: Config, compiler: Compiler) {
   }
 
   return compiler === 'webpack'
-    ? compilerPlugins.map(plugin => createUnplugin(() => getPluginTransform(plugin, 'webpack')).webpack())
-    : compilerPlugins.map(plugin => createUnplugin(() => getPluginTransform(plugin, 'esbuild')).esbuild());
+    // Plugins will be transformed as webpack loader, the execute order of webpack loader is reversed.
+    ? compilerPlugins.reverse().map(plugin => createUnplugin(() => getPluginTransform(plugin, 'webpack')).webpack())
+    : compilerPlugins.map(plugin => getPluginTransform(plugin, 'esbuild'));
 }
 
 export default getCompilerPlugins;
