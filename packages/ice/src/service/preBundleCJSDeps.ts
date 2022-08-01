@@ -116,7 +116,7 @@ function resolvePackageEntry(depId: string, rootDir: string) {
   // resolve exports cjs field
   let entryPoint = resolveExports(pkgJSONData, depId, { require: true });
   if (!entryPoint) {
-    entryPoint = pkgJSONData['main'];
+    entryPoint = pkgJSONData['main'] || 'index.js';
   }
   const entryPointPath = path.join(dir, entryPoint);
   return entryPointPath;
