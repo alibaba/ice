@@ -61,7 +61,7 @@ const start = async (
           outExtension: { '.js': outJSExtension },
         },
         {
-          preBundle: format === 'esm',
+          preBundle: format === 'esm' && (ssr || ssg),
           swc: {
             // Remove components and getData when document only.
             removeExportExprs: false ? ['default', 'getData', 'getServerData', 'getStaticData'] : [],

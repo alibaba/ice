@@ -86,7 +86,7 @@ const build = async (
             outExtension: { '.js': outJSExtension },
           },
           {
-            preBundle: format === 'esm',
+            preBundle: format === 'esm' && (ssr || ssg),
             swc: {
               // Remove components and getData when ssg and ssr both `false`.
               removeExportExprs: (!ssg && !ssr) ? ['default', 'getData', 'getServerData', 'getStaticData'] : [],

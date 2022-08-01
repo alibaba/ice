@@ -15,7 +15,8 @@ import aliasPlugin from '../esbuild/alias.js';
 import createAssetsPlugin from '../esbuild/assets.js';
 import { ASSETS_MANIFEST, CACHE_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
 import emptyCSSPlugin from '../esbuild/emptyCSS.js';
-import createDepRedirectPlugin from '../esbuild/depRedirect.js';
+import transformImportPlugin from '../esbuild/depRedirect.js';
+import transformPipePlugin from '../esbuild/transformPipe.js';
 import isExternalBuiltinDep from '../utils/isExternalBuiltinDep.js';
 import getServerEntry from '../utils/getServerEntry.js';
 import { scanImports } from './analyze.js';
@@ -82,7 +83,11 @@ export function createServerCompiler(options: Options) {
         task,
         rootDir,
         // Pass transformPlugins only if syntaxFeatures is enabled
-        plugins: enableSyntaxFeatures ? transformPlugins : [],
+        plugins: enableSyntaxFeatures ? [
+          transformPipePlugin({
+            plugins: transformPlugins,
+          }),
+        ] : [],
       });
     }
     const define = {
@@ -125,9 +130,13 @@ export function createServerCompiler(options: Options) {
           },
         }),
         fs.existsSync(assetsManifest) && createAssetsPlugin(assetsManifest, rootDir),
-        ...transformPlugins,
-        // Plugin createDepRedirectPlugin need after transformPlugins in case of it has onLoad lifecycle.
-        dev && preBundle && createDepRedirectPlugin(depsMetadata),
+        transformPipePlugin({
+          plugins: [
+            ...transformPlugins,
+            // Plugin transformImportPlugin need after transformPlugins in case of it has onLoad lifecycle.
+            dev && preBundle && transformImportPlugin(depsMetadata),
+          ].filter(Boolean),
+        }),
       ].filter(Boolean),
 
     };
