@@ -10,7 +10,7 @@ const SKIP_COMPILE = [
   // polyfill and helpers
   'core-js', 'core-js-pure', '@swc/helpers', '@babel/runtime',
   // built-in runtime
-  'react', 'react-dom', 'react-router', 'react-router-dom',
+  'react', 'react-dom',
   // dev dependencies
   '@pmmmwh/react-refresh-webpack-plugin', 'webpack', 'webpack-dev-server', 'react-refresh',
 ];
