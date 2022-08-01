@@ -34,7 +34,7 @@ export function resolveId(id: string, alias: Alias) {
     const strictKey = isStrict ? aliasKey.slice(0, -1) : aliasKey;
     const aliasValue = alias[aliasKey];
     if (!aliasValue) return false;
-    if (aliasValue.match(/.(j|t)s(x)?$/)) {
+    if (aliasValue.match(/\.(j|t)s(x)?$/)) {
       if (aliasedPath === strictKey) {
         aliasedPath = aliasValue;
         break;
