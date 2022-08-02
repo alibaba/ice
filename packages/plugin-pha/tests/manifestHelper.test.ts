@@ -281,9 +281,9 @@ describe('parse manifest', () => {
       template: true,
     });
 
-    expect(manifest?.pages![0].document).toBe('<html><body>home-document</body></html>');
-    expect(manifest?.pages![1].document).toBe('<html><body>about-document</body></html>');
-    expect(manifest?.pages![2]?.frames![0].document).toBe('<html><body>home-document</body></html>');
+    expect(manifest?.pages![0].document).toBe('<html><body>/home-document</body></html>');
+    expect(manifest?.pages![1].document).toBe('<html><body>/about-document</body></html>');
+    expect(manifest?.pages![2]?.frames![0].document).toBe('<html><body>/home-document</body></html>');
   });
 
 
@@ -387,7 +387,7 @@ describe('parse manifest', () => {
     const manifest = await parseManifest(phaManifest, options);
 
     expect(manifest.pages![0]?.tab_header?.url).toBe('https://url-prefix.com/header');
-    expect(manifest.pages![0]?.tab_header?.html).toBe('<html><body>header-document</body></html>');
+    expect(manifest.pages![0]?.tab_header?.html).toBe('<html><body>/header-document</body></html>');
     expect(manifest?.tab_bar?.url).toBe('https://url-prefix.com/CustomTabBar');
   });
 

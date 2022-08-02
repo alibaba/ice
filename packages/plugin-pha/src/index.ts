@@ -30,7 +30,7 @@ function getDevPath(url: string): string {
 
 const plugin: Plugin<PluginOptions> = (options) => ({
   name: '@ice/plugin-pha',
-  setup: ({ onGetConfig, onHook, context, generator }) => {
+  setup: ({ onGetConfig, onHook, context, generator, serverCompileTask }) => {
     const { template } = options || {};
     const { command, rootDir } = context;
 
@@ -45,7 +45,8 @@ const plugin: Plugin<PluginOptions> = (options) => ({
     // Get server compiler by hooks
     onHook(`before.${command as 'start' | 'build'}.run`, async ({ serverCompiler, taskConfigs, urls }) => {
       const taskConfig = taskConfigs.find(({ name }) => name === 'web').config;
-      outputDir = path.isAbsolute(taskConfig.outputDir) ? taskConfig.outputDir : path.join(rootDir, taskConfig.outputDir);
+      outputDir = path.isAbsolute(taskConfig.outputDir)
+        ? taskConfig.outputDir : path.join(rootDir, taskConfig.outputDir);
 
       // Need absolute path for pha dev.
       publicPath = command === 'start' ? getDevPath(urls.lanUrlForTerminal) : (taskConfig.publicPath || '/');
@@ -120,6 +121,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
           compiler,
           rootDir,
           outputDir,
+          compileTask: () => serverCompileTask.get(),
           parseOptions: {
             publicPath,
             urlPrefix,
