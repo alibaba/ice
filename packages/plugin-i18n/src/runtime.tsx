@@ -12,12 +12,13 @@ import getRedirectIndexRoute from './utils/getRedirectIndexRoute';
 export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
   const { i18n: i18nConfig } = buildConfig;
   const { i18nRouting, autoRedirect } = i18nConfig;
-  const { router: appConfigRouter = {} } = appConfig;
+  const { router: appConfigRouter = {}, i18nConfig: i18nAppConfig = {} } = appConfig;
+  const { blockCookie = false } = i18nAppConfig;
   const { history = {}, basename } = appConfigRouter;
 
   if (i18nRouting !== false) {
     modifyRoutes((routes) => {
-      // routes 值是被 formatRoutes 方法处理后返回的结果  
+      // routes 值是被 formatRoutes 方法处理后返回的结果
       const modifiedRoutes = addRoutesByLocales(routes, i18nConfig);
 
       if (autoRedirect === true) {
@@ -38,7 +39,8 @@ export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
 
   if (!process.env.__IS_SERVER__) {
     const { detectedLocale } = getLocaleData({ url: window.location, i18nConfig, basename });
-    setInitICELocaleToCookie(detectedLocale);
+    const cookieBlocked = typeof blockCookie === 'function' ? blockCookie() : blockCookie;
+    setInitICELocaleToCookie(detectedLocale, cookieBlocked);
   }
 
   if (i18nRouting !== false) {
@@ -56,10 +58,10 @@ function Provider() {
   };
 }
 
-function setInitICELocaleToCookie(locale: string) {
+function setInitICELocaleToCookie(locale: string, cookieBlocked: boolean) {
   const cookies = new Cookies();
   const iceLocale = cookies.get(LOCALE_COOKIE_KEY);
-  if (!iceLocale) {
+  if (!iceLocale && !cookieBlocked) {
     cookies.set(LOCALE_COOKIE_KEY, locale);
   }
 }
@@ -69,7 +71,7 @@ function modifyHistory(history: History, i18nConfig: I18nConfig, basename?: stri
   const { defaultLocale } = i18nConfig;
 
   function getLocalePath(
-    originPathname: string, 
+    originPathname: string,
     locale: string,
   ) {
     const localePathResult = normalizeLocalePath(originPathname, i18nConfig, basename);
@@ -87,15 +89,15 @@ function modifyHistory(history: History, i18nConfig: I18nConfig, basename?: stri
     return path;
   }
 
-  history.push = function(path: string | Location, state?: unknown) {
-    const locale = getLocaleFromCookies() || defaultLocale;
+  history.push = function(path: string | Location, state?: unknown, localeParam?: string) {
+    const locale = localeParam || getLocaleFromCookies() || defaultLocale;
     const pathname = getPathname(path);
     const localePath = getLocalePath(pathname, locale);
     originHistory.push(localePath, state);
   };
 
-  history.replace = function(path: string | Location, state?: unknown) {
-    const locale = getLocaleFromCookies() || defaultLocale;
+  history.replace = function(path: string | Location, state?: unknown, localeParam?: string) {
+    const locale = localeParam || getLocaleFromCookies() || defaultLocale;
     const pathname = getPathname(path);
     const localePath = getLocalePath(pathname, locale);
     originHistory.replace(localePath, state);
