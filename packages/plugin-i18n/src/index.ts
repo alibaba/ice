@@ -4,7 +4,7 @@ import { I18nConfig } from './types';
 import { LOCALE_COOKIE_KEY } from './constants';
 
 export default async function (
-  { onGetWebpackConfig, getValue, applyMethod }: IPluginAPI, 
+  { onGetWebpackConfig, getValue, applyMethod }: IPluginAPI,
   i18nConfig: I18nConfig,
 ) {
   checkI18nConfig(i18nConfig);
@@ -20,8 +20,8 @@ export default async function (
 
   // copy templates to .ice/i18n dir
   applyMethod(
-    'addPluginTemplate', 
-    path.join(__dirname, 'templates'), 
+    'addPluginTemplate',
+    path.join(__dirname, 'templates'),
     { LOCALE_COOKIE_KEY, i18nConfig, i18nRouting }
   );
   applyMethod(
@@ -39,12 +39,23 @@ export default async function (
   // export API
   // import { useLocale, getAllLocales, getDefaultLocale, getLocale } from 'ice';
   applyMethod(
-    'addExport', 
-    { 
-      source: './plugins/i18n', 
+    'addExport',
+    {
+      source: './plugins/i18n',
       importSource: '$$ice/plugins/i18n',
       exportMembers: ['useLocale', 'getAllLocales', 'getDefaultLocale', 'getLocale', 'setLocale']
-    });
+    }
+  );
+
+  // set I18nAppConfig to IAppConfig
+  applyMethod(
+    'addAppConfigTypes',
+    {
+      source: '../plugins/i18n/pluginRuntime/types',
+      specifier: '{ I18nAppConfig }',
+      exportName: 'i18n?: I18nAppConfig'
+    }
+  );
 }
 
 function checkI18nConfig(i18nConfig: I18nConfig) {

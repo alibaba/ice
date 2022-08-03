@@ -90,7 +90,16 @@ export function setLocale(locale: string) {
 }
 
 function setLocaleToCookies(locale: string) {
-  cookies.set(LOCALE_COOKIE_KEY, locale, { path: '/' });
+  <% if (i18nRouting !== false) {%>
+  const { i18n: i18nConfig = {} } = getAppConfig();
+  const { blockCookie = false } = i18nConfig;
+  const cookieBlocked = typeof blockCookie === 'function' ? blockCookie() : blockCookie;
+  if (!cookieBlocked) {
+  <% } %>
+    cookies.set(LOCALE_COOKIE_KEY, locale, { path: '/' });
+  <% if (i18nRouting !== false) {%>
+  }
+  <% } %>
 }
 
 export function getLocaleFromCookies() {
