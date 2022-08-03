@@ -12,7 +12,7 @@ import getRedirectIndexRoute from './utils/getRedirectIndexRoute';
 export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
   const { i18n: i18nConfig } = buildConfig;
   const { i18nRouting, autoRedirect } = i18nConfig;
-  const { router: appConfigRouter = {}, i18nConfig: i18nAppConfig = {} } = appConfig;
+  const { router: appConfigRouter = {}, i18n: i18nAppConfig = {} } = appConfig;
   const { blockCookie = false } = i18nAppConfig;
   const { history = {}, basename } = appConfigRouter;
 
