@@ -7,6 +7,8 @@ import { generateRoutesInfo } from './routes.js';
 import type Generator from './service/runtimeGenerator';
 import { compileAppConfig } from './analyzeRuntime.js';
 import getGlobalStyleGlobPattern from './utils/getGlobalStyleGlobPattern.js';
+import renderExportsTemplate from './utils/renderExportsTemplate.js';
+import { getFileExports } from './service/analyze.js';
 
 interface Options {
   targetDir: string;
@@ -29,6 +31,7 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
         if (cache.get('routes') !== stringifiedData) {
           cache.set('routes', stringifiedData);
           consola.debug('[event]', `routes data regenerated: ${stringifiedData}`);
+          // Specify the route files to re-render.
           generator.renderFile(
             path.join(templateDir, 'routes.ts.ejs'),
             path.join(rootDir, targetDir, 'routes.ts'),
@@ -39,11 +42,14 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
             path.join(rootDir, targetDir, 'route-manifest.json'),
             routesRenderData,
           );
-          generator.renderFile(
-            path.join(templateDir, 'data-loader.ts.ejs'),
-            path.join(rootDir, targetDir, 'data-loader.ts'),
-            routesRenderData,
-          );
+          renderExportsTemplate({
+            ...routesRenderData,
+            hasExportAppData: !!cache.get('hasExportAppData'),
+          }, generator.renderFile, {
+            rootDir,
+            runtimeDir: targetDir,
+            templateDir: path.join(templateDir, '../exports'),
+          });
         }
       }
     },
@@ -84,6 +90,18 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
     /src\/app.(js|jsx|ts|tsx)/,
     async (event: string) => {
       if (event === 'change') {
+        const hasExportAppData = (await getFileExports({ rootDir, file: 'src/app' })).includes('getAppData');
+        if (hasExportAppData !== !!cache.get('hasExportAppData')) {
+          cache.set('hasExportAppData', hasExportAppData ? 'true' : '');
+          renderExportsTemplate({
+            ...JSON.parse(cache.get('routes')),
+            hasExportAppData,
+          }, generator.renderFile, {
+            rootDir,
+            runtimeDir: targetDir,
+            templateDir: path.join(templateDir, '../exports'),
+          });
+        }
         consola.debug('[event]', 'Compile app config.');
         await compileAppConfig({ rootDir, serverCompiler });
       }

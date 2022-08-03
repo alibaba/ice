@@ -32,6 +32,7 @@ describe(`build ${example}`, () => {
     expect(bundleContent.includes('__IS_WEB__')).toBe(true);
     expect(bundleContent.includes('__IS_NODE__')).toBe(false);
     expect(fs.existsSync(path.join(__dirname, `../../examples/${example}/build/favicon.ico`))).toBe(true);
+    expect(fs.existsSync(path.join(__dirname, `../../examples/${example}/build/js/data-loader.js`))).toBe(true);
 
     const dataLoaderPath = path.join(__dirname, `../../examples/${example}/build/js/data-loader.js`);
     // should not contain react

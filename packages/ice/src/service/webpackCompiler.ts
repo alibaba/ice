@@ -9,6 +9,7 @@ import type { Urls, ServerCompiler } from '@ice/types/esm/plugin.js';
 import type { Config } from '@ice/types';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import openBrowser from '../utils/openBrowser.js';
+import DataLoaderPlugin from '../webpack/DataLoaderPlugin.js';
 
 type WebpackConfig = Configuration & { devServer?: DevServerConfiguration };
 async function webpackCompiler(options: {
@@ -33,6 +34,7 @@ async function webpackCompiler(options: {
     webpackConfigs,
     spinner,
     devPath,
+    rootDir,
   } = options;
   await applyHook(`before.${command}.run`, {
     urls,
@@ -41,6 +43,9 @@ async function webpackCompiler(options: {
     webpackConfigs,
     serverCompiler,
   });
+  // Add webpack plugin of data-loader
+  webpackConfigs[0].plugins.push(new DataLoaderPlugin({ serverCompiler, rootDir }));
+
   // Add default plugins for spinner
   webpackConfigs[0].plugins.push((compiler: Compiler) => {
     compiler.hooks.beforeCompile.tap('spinner', () => {

@@ -2,21 +2,17 @@ import * as path from 'path';
 import { formatNestedRouteManifest, generateRouteManifest } from '@ice/route-manifest';
 import type { NestedRouteManifest } from '@ice/route-manifest';
 import type { UserConfig } from '@ice/types';
-import { getRouteExports } from './service/analyze.js';
+import { getFileExports } from './service/analyze.js';
 
 export async function generateRoutesInfo(rootDir: string, routesConfig: UserConfig['routes'] = {}) {
   const routeManifest = generateRouteManifest(rootDir, routesConfig.ignoreFiles, routesConfig.defineRoutes);
 
   const analyzeTasks = Object.keys(routeManifest).map(async (key) => {
     const routeItem = routeManifest[key];
-    const routeId = routeItem.id;
     // add exports filed for route manifest
-    routeItem.exports = await getRouteExports({
+    routeItem.exports = await getFileExports({
       rootDir,
-      routeConfig: {
-        file: path.join('./src/pages', routeItem.file),
-        routeId,
-      },
+      file: path.join('./src/pages', routeItem.file),
     });
   });
   await Promise.all(analyzeTasks);
@@ -37,16 +33,16 @@ export async function generateRoutesInfo(rootDir: string, routesConfig: UserConf
     routesStr,
     routes,
     loaders: generateRouteConfig(routes, 'getData', (str, imports) => {
-      return `${str}
+      return imports.length > 0 ? `${str}
 const loaders = {
   ${imports.map(([routeId, importKey]) => `'${routeId}': ${importKey},`).join('\n  ')}
-};`;
+};` : '';
     }),
     routesConfig: generateRouteConfig(routes, 'getConfig', (str, imports) => {
-      return `${str}
+      return imports.length > 0 ? `${str}
 export default {
   ${imports.map(([, importKey, routePath]) => `'${routePath}': ${importKey},`).join('\n  ')}
-};`;
+};` : '';
     }),
   };
 }
