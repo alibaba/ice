@@ -46,7 +46,7 @@
   ],
   "dependencies": {
     "@swc/helpers": "^0.4.3",
-    "style-unit": "^3.0.4",
+    "style-unit": "^3.0.5",
     "create-react-class": "^15.7.0"
   },
   "devDependencies": {
