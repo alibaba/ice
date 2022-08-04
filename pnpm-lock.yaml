@@ -634,6 +634,7 @@ importers:
   packages/webpack-config:
     specifiers:
       '@ice/bundles': ^0.1.0
+      '@ice/swc-plugin-keep-platform': ^0.1.0
       '@ice/swc-plugin-remove-export': ^0.1.0
       '@ice/types': ^1.0.0
       '@pmmmwh/react-refresh-webpack-plugin': ^0.5.7
@@ -653,6 +654,7 @@ importers:
       webpack-dev-server: ^4.7.4
     dependencies:
       '@ice/bundles': link:../bundles
+      '@ice/swc-plugin-keep-platform': 0.1.0
       '@ice/swc-plugin-remove-export': 0.1.0
       '@pmmmwh/react-refresh-webpack-plugin': 0.5.7_co3pwf5d42rd2rqpmthdozfyry
       '@rollup/pluginutils': 4.2.1
@@ -4591,6 +4593,10 @@ packages:
       - supports-color
       - ts-node
     dev: true
+
+  /@ice/swc-plugin-keep-platform/0.1.0:
+    resolution: {integrity: sha512-y9ckEmUBr6e6dzYzHVAV/+WMhBcHkOGnIiIQh91cTm1ZlGq5gMEbJDQJh/0ucacBrMpWNCPDvJwsBvqHZDVIdQ==}
+    dev: false
 
   /@ice/swc-plugin-remove-export/0.1.0:
     resolution: {integrity: sha512-L3dSLxJ2b+u8tEF5ISYzpqYMRTfKHwtTlfdKHUWHqK+z8gIUwsqB28SfkGbHlRFPhjlvE+5zP727lsbC3uED5g==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.com/@ice/swc-plugin-remove-export/-/swc-plugin-remove-export-0.1.0.tgz}

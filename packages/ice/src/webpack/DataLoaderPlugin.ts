@@ -4,7 +4,6 @@ import type { ServerCompiler } from '@ice/types/esm/plugin.js';
 import type { Compiler } from 'webpack';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import { RUNTIME_TMP_DIR } from '../constant.js';
-import keepPlatform from '../utils/keepPlatform.js';
 
 const pluginName = 'DataLoaderPlugin';
 const { RawSource } = webpack.sources;
@@ -39,18 +38,7 @@ export default class DataLoaderPlugin {
           }, {
             swc: {
               removeExportExprs: ['default', 'getConfig', 'getServerData', 'getStaticData'],
-              compilationConfig: {
-                jsc: {
-                  transform: {
-                    constModules: {
-                      globals: {
-                        '@uni/env': keepPlatform('web'),
-                        'universal-env': keepPlatform('web'),
-                      },
-                    },
-                  },
-                },
-              },
+              keepPlatform: 'web',
             },
             preBundle: false,
             externalDependencies: false,

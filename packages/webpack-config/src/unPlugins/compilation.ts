@@ -59,24 +59,34 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
 
       merge(programmaticOptions, commonOptions);
 
-      const { removeExportExprs, compilationConfig } = swcOptions;
+      const { removeExportExprs, compilationConfig, keepPlatform } = swcOptions;
 
       if (compilationConfig) {
         merge(programmaticOptions, compilationConfig);
       }
 
+      const swcPlugins = [];
       // handle app.tsx and page entries only
       if (removeExportExprs && (/(.*)pages(.*)\.(jsx?|tsx?|mjs)$/.test(id) || /(.*)src\/app/.test(id))) {
+        swcPlugins.push([
+          require.resolve('@ice/swc-plugin-remove-export'),
+          removeExportExprs,
+        ]);
+      }
+
+      if (keepPlatform) {
+        swcPlugins.push([
+          require.resolve('@ice/swc-plugin-keep-platform'),
+          keepPlatform,
+        ]);
+      }
+
+      if (swcPlugins.length > 0) {
         merge(programmaticOptions, {
           jsc: {
             experimental: {
               cacheRoot: cacheDir,
-              plugins: [
-                [
-                  require.resolve('@ice/swc-plugin-remove-export'),
-                  removeExportExprs,
-                ],
-              ],
+              plugins: swcPlugins,
             },
           },
         });
