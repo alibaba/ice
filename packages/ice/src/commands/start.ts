@@ -16,7 +16,6 @@ import createMockMiddleware from '../middlewares/mock/createMiddleware.js';
 import { ROUTER_MANIFEST, RUNTIME_TMP_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
 import ServerCompilerPlugin from '../webpack/ServerCompilerPlugin.js';
 import { getAppConfig } from '../analyzeRuntime.js';
-import keepPlatform from '../utils/keepPlatform.js';
 import getServerEntry from '../utils/getServerEntry.js';
 
 const { merge } = lodash;
@@ -65,18 +64,7 @@ const start = async (
           swc: {
             // Remove components and getData when document only.
             removeExportExprs: false ? ['default', 'getData', 'getServerData', 'getStaticData'] : [],
-            compilationConfig: {
-              jsc: {
-                transform: {
-                  constModules: {
-                    globals: {
-                      '@uni/env': keepPlatform('node'),
-                      'universal-env': keepPlatform('node'),
-                    },
-                  },
-                },
-              },
-            },
+            keepPlatform: 'node',
           },
         },
       ],
