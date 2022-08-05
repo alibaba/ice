@@ -33,7 +33,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routes,
     runtimeModules,
     Document,
-    basename: defaultBasename,
+    basename,
     hydrate,
     memoryRouter,
   } = options;
@@ -43,7 +43,6 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routesData,
     routesConfig,
     assetsManifest,
-    basename: basenameFromServer,
     routePath,
   } = appContextFromServer;
 
@@ -55,7 +54,6 @@ export default async function runClientApp(options: RunClientAppOptions) {
 
   const appConfig = getAppConfig(app);
 
-  const basename = basenameFromServer || defaultBasename;
   const matches = matchRoutes(
     routes,
     memoryRouter ? routePath : window.location,
