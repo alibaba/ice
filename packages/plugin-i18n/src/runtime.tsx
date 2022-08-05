@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { History } from 'history';
 import Cookies from 'universal-cookie';
-import { I18nProvider, getLocaleFromCookies } from '$ice/i18n';
+import { I18nProvider, getLocaleFromCookies, getLocale } from '$ice/i18n';
 import { LOCALE_COOKIE_KEY } from './constants';
 import getLocaleData from './utils/getLocaleData';
-import { I18nConfig } from './types';
+import { I18nConfig, I18nAppConfig } from './types';
 import normalizeLocalePath from './utils/normalizeLocalePath';
 import addRoutesByLocales from './utils/addRoutesByLocales';
 import getRedirectIndexRoute from './utils/getRedirectIndexRoute';
@@ -66,9 +66,11 @@ function setInitICELocaleToCookie(locale: string, cookieBlocked: boolean) {
   }
 }
 
-function modifyHistory(history: History, i18nConfig: I18nConfig, basename?: string) {
+function modifyHistory(history: History, i18nConfig: I18nConfig, i18nAppConfig: I18nAppConfig, basename?: string) {
   const originHistory = { ...history };
   const { defaultLocale } = i18nConfig;
+  const { blockCookie } = i18nAppConfig;
+  const cookieBlocked = typeof blockCookie === 'function' ? blockCookie() : blockCookie;
 
   function getLocalePath(
     originPathname: string,
@@ -90,14 +92,14 @@ function modifyHistory(history: History, i18nConfig: I18nConfig, basename?: stri
   }
 
   history.push = function(path: string | Location, state?: unknown, localeParam?: string) {
-    const locale = localeParam || getLocaleFromCookies() || defaultLocale;
+    const locale = localeParam || (cookieBlocked ? getLocale() : getLocaleFromCookies()) || defaultLocale;
     const pathname = getPathname(path);
     const localePath = getLocalePath(pathname, locale);
     originHistory.push(localePath, state);
   };
 
   history.replace = function(path: string | Location, state?: unknown, localeParam?: string) {
-    const locale = localeParam || getLocaleFromCookies() || defaultLocale;
+    const locale = localeParam || (cookieBlocked ? getLocale() : getLocaleFromCookies()) || defaultLocale;
     const pathname = getPathname(path);
     const localePath = getLocalePath(pathname, locale);
     originHistory.replace(localePath, state);
