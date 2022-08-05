@@ -174,7 +174,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
       appConfig,
       appData,
       routeModules,
-      basename,
+      basename: serverOnlyBasename || basename,
       routePath,
     });
   } catch (err) {
