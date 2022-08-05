@@ -43,7 +43,7 @@ export type GetStaticData = (ctx: RequestContext) => Promise<RouteData> | RouteD
 // route.getConfig
 export type GetConfig = (args: { data: RouteData }) => RouteConfig;
 
-export interface AppConfig extends Record<string, any> {
+export interface AppConfig {
   app?: App;
   router?: {
     type?: 'hash' | 'browser' | 'memory';
