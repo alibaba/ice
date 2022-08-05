@@ -8,8 +8,8 @@ import type { Loader, Plugin } from 'esbuild';
 import consola from 'consola';
 import { getCache, setCache } from '../utils/persistentCache.js';
 import { getFileHash } from '../utils/hash.js';
-
 import scanPlugin from '../esbuild/scan.js';
+import type { DepScanData } from '../esbuild/scan.js';
 
 interface Options {
   parallel?: number;
@@ -158,7 +158,7 @@ export async function analyzeImports(files: string[], options: Options) {
 interface ScanOptions {
   rootDir: string;
   alias?: Alias;
-  depImports?: Record<string, string>;
+  depImports?: Record<string, DepScanData>;
   plugins?: Plugin[];
   exclude?: string[];
 }
@@ -193,7 +193,7 @@ export async function scanImports(entries: string[], options?: ScanOptions) {
   return orderedDependencies(deps);
 }
 
-function orderedDependencies(deps: Record<string, string>) {
+function orderedDependencies(deps: Record<string, DepScanData>) {
   const depsList = Object.entries(deps);
   // Ensure the same browserHash for the same set of dependencies
   depsList.sort((a, b) => a[0].localeCompare(b[0]));

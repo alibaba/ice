@@ -10,4 +10,4 @@ runApp({
   page,
 } as AppConfig)
 
-export default () => {};
+export default () => { };

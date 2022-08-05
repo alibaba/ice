@@ -79,10 +79,10 @@ const transformPipe = (options: PluginOptions = {}): Plugin => {
       if (pluginResolveIds.length > 0) {
         build.onResolve({ filter }, async (args) => {
           const isEntry = args.kind === 'entry-point';
-          return await pluginResolveIds.reduce(async (resolveData, resolveId) => {
-            const { id, external } = resolveData;
+          const res = await pluginResolveIds.reduce(async (resolveData, resolveId) => {
+            const { path, external } = await resolveData;
             if (!external) {
-              const result = await resolveId(id, isEntry ? undefined : args.importer, { isEntry });
+              const result = await resolveId(path, isEntry ? undefined : args.importer, { isEntry });
               if (typeof result === 'string') {
                 return { path: result };
               } else if (typeof result === 'object' && result !== null) {
@@ -91,6 +91,9 @@ const transformPipe = (options: PluginOptions = {}): Plugin => {
             }
             return resolveData;
           }, Promise.resolve({ path: args.path }));
+          if (path.isAbsolute(res.path) || res.external) {
+            return res;
+          }
         });
       }
       build.onLoad({ filter, namespace }, async (args) => {

@@ -15,10 +15,11 @@ import aliasPlugin from '../esbuild/alias.js';
 import createAssetsPlugin from '../esbuild/assets.js';
 import { ASSETS_MANIFEST, CACHE_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
 import emptyCSSPlugin from '../esbuild/emptyCSS.js';
-import transformImportPlugin from '../esbuild/depRedirect.js';
+import transformImportPlugin from '../esbuild/transformImport.js';
 import transformPipePlugin from '../esbuild/transformPipe.js';
 import isExternalBuiltinDep from '../utils/isExternalBuiltinDep.js';
 import getServerEntry from '../utils/getServerEntry.js';
+import type { DepScanData } from '../esbuild/scan.js';
 import { scanImports } from './analyze.js';
 import type { DepsMetaData } from './preBundleCJSDeps.js';
 import preBundleCJSDeps from './preBundleCJSDeps.js';
@@ -185,7 +186,7 @@ async function createDepsMetadata({ rootDir, task, plugins }: CreateDepsMetadata
     plugins,
   });
 
-  function filterPreBundleDeps(deps: Record<string, string>) {
+  function filterPreBundleDeps(deps: Record<string, DepScanData>) {
     const preBundleDepsInfo = {};
     for (const dep in deps) {
       if (!isExternalBuiltinDep(dep)) {
@@ -200,7 +201,6 @@ async function createDepsMetadata({ rootDir, task, plugins }: CreateDepsMetadata
   const cacheDir = path.join(rootDir, CACHE_DIR);
   const ret = await preBundleCJSDeps({
     depsInfo: preBundleDepsInfo,
-    rootDir,
     cacheDir,
     taskConfig: task.config,
     plugins,
