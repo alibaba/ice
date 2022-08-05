@@ -21,28 +21,28 @@ function useDocumentContext() {
 
 export const DocumentContextProvider = Context.Provider;
 
-export function Meta() {
+export function Meta(props) {
   const { matches, routesConfig } = useAppContext();
   const meta = getMeta(matches, routesConfig);
 
   return (
     <>
-      {meta.map(item => <meta key={item.name} {...item} />)}
-      <meta name="ice-meta-count" content={meta.length.toString()} />
+      {meta.map(item => <meta key={item.name} {...props} {...item} />)}
+      <meta {...props} name="ice-meta-count" content={meta.length.toString()} />
     </>
   );
 }
 
-export function Title() {
+export function Title(props) {
   const { matches, routesConfig } = useAppContext();
   const title = getTitle(matches, routesConfig);
 
   return (
-    <title>{title}</title>
+    <title {...props}>{title}</title>
   );
 }
 
-export function Links() {
+export function Links(props) {
   const { routesConfig, matches, assetsManifest } = useAppContext();
 
   const routeLinks = getLinks(matches, routesConfig);
@@ -54,16 +54,16 @@ export function Links() {
     <>
       {
         routeLinks.map(link => {
-          const { block, ...props } = link;
-          return <link key={link.href} {...props} data-route-link />;
+          const { block, ...routeLinkProps } = link;
+          return <link key={link.href} {...props} {...routeLinkProps} data-route-link />;
         })
       }
-      {styles.map(style => <link key={style} rel="stylesheet" type="text/css" href={style} />)}
+      {styles.map(style => <link key={style} {...props} rel="stylesheet" type="text/css" href={style} />)}
     </>
   );
 }
 
-export function Scripts() {
+export function Scripts(props) {
   const { routesData, routesConfig, matches, assetsManifest, documentOnly, routeModules, basename } = useAppContext();
   const appData = useAppData();
 
@@ -97,24 +97,24 @@ export function Scripts() {
       <script suppressHydrationWarning={documentOnly} dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=${JSON.stringify(appContext)}` }} />
       {
         routeScripts.map(script => {
-          const { block, ...props } = script;
-          return <script key={script.src} {...props} data-route-script />;
+          const { block, ...routeScriptProps } = script;
+          return <script key={script.src} {...props} {...routeScriptProps} data-route-script />;
         })
       }
       {
         scripts.map(script => {
-          return <script key={script} src={script} />;
+          return <script key={script} src={script} {...props} />;
         })
       }
     </>
   );
 }
 
-export function Main() {
+export function Main(props) {
   const { main } = useDocumentContext();
   const { appConfig } = useAppContext();
   return (
-    <div id={appConfig.app.rootId} >
+    <div id={appConfig.app.rootId} {...props}>
       {main}
     </div>
   );
