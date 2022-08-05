@@ -99,13 +99,13 @@ async function webpackCompiler(options: {
           logoutMessage += `\n   - IDE server: https://${process.env.WORKSPACE_UUID}-${commandArgs.port}.${process.env.WORKSPACE_HOST}${devPath}`;
         } else {
           logoutMessage += `\n
-   - Local  : ${chalk.underline.white(urls.localUrlForBrowser)}${devPath}
-   - Network:  ${chalk.underline.white(urls.lanUrlForTerminal)}${devPath}`;
+   - Local  : ${chalk.underline.white(`${urls.localUrlForBrowser}${devPath}`)}
+   - Network:  ${chalk.underline.white(`${urls.lanUrlForTerminal}${devPath}`)}`;
         }
         consola.log(`${logoutMessage}\n`);
 
         if (commandArgs.open) {
-          openBrowser(urls.localUrlForBrowser);
+          openBrowser(`${urls.localUrlForBrowser}${devPath}`);
         }
       }
       // compiler.hooks.done is AsyncSeriesHook which does not support async function
