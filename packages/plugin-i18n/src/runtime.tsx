@@ -44,7 +44,7 @@ export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
   }
 
   if (i18nRouting !== false) {
-    modifyHistory(history, i18nConfig, basename);
+    modifyHistory(history, i18nConfig, i18nAppConfig, basename);
   }
 };
 
@@ -69,7 +69,7 @@ function setInitICELocaleToCookie(locale: string, cookieBlocked: boolean) {
 function modifyHistory(history: History, i18nConfig: I18nConfig, i18nAppConfig: I18nAppConfig, basename?: string) {
   const originHistory = { ...history };
   const { defaultLocale } = i18nConfig;
-  const { blockCookie } = i18nAppConfig;
+  const { blockCookie = false } = i18nAppConfig;
   const cookieBlocked = typeof blockCookie === 'function' ? blockCookie() : blockCookie;
 
   function getLocalePath(
