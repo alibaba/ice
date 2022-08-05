@@ -1,11 +1,12 @@
 import path from 'path';
-import type { TransformOptions, PluginBuild } from 'esbuild';
+import type { TransformOptions } from 'esbuild';
 import { transform } from 'esbuild';
 import { parse as parseJS } from 'acorn';
 import MagicString from 'magic-string';
 import esModuleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
 import type { ImportSpecifier } from '@ice/bundles/compiled/es-module-lexer/index.js';
 import type { Node } from 'estree';
+import type { UnpluginOptions } from 'unplugin';
 import type { DepsMetaData } from '../service/preBundleCJSDeps.js';
 
 const { init, parse } = esModuleLexer;
@@ -13,23 +14,18 @@ const { init, parse } = esModuleLexer;
 type ImportNameSpecifier = { importedName: string; localName: string };
 
 // Redirect original dependency to the pre-bundle dependency(cjs) which is handled by preBundleCJSDeps function.
-export const transformImportPlugin = (metadata: DepsMetaData) => {
+export const transformImportPlugin = (metadata: DepsMetaData): UnpluginOptions => {
   const { deps } = metadata;
-  let redirectDepIds = [];
+  const redirectDepIds = [];
   return {
     name: 'transform-import',
-    esbuild: {
-      setup(build: PluginBuild) {
-        redirectDepIds = [];
-        build.onResolve({ filter: /.*/ }, ({ path: id }) => {
-          if (redirectDepIds.includes(id)) {
-            return {
-              path: id,
-              external: true,
-            };
-          }
-        });
-      },
+    resolveId(id) {
+      if (redirectDepIds.includes(id)) {
+        return {
+          id,
+          external: true,
+        };
+      }
     },
     transformInclude(id: string) {
       return /\.(js|jsx|ts|tsx)$/.test(id);
