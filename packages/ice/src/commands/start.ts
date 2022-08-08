@@ -17,6 +17,7 @@ import { ROUTER_MANIFEST, RUNTIME_TMP_DIR, SERVER_OUTPUT_DIR } from '../constant
 import ServerCompilerPlugin from '../webpack/ServerCompilerPlugin.js';
 import ReCompilePlugin from '../webpack/ReCompilePlugin.js';
 import getServerEntry from '../utils/getServerEntry.js';
+import getRouterBasename from '../utils/getRouterBasename.js';
 
 const { merge } = lodash;
 
@@ -47,7 +48,7 @@ const start = async (
   } = options;
   const { applyHook, commandArgs, command, rootDir, userConfig, extendsPluginAPI: { serverCompileTask } } = context;
   const { port, host, https = false } = commandArgs;
-
+  const webTaskConfig = taskConfigs.find(({ name }) => name === 'web');
   const webpackConfigs = taskConfigs.map(({ config }) => getWebpackConfig({
     config,
     rootDir,
@@ -118,6 +119,7 @@ const start = async (
         documentOnly,
         renderMode,
         getAppConfig,
+        taskConfig: webTaskConfig,
       });
       const insertIndex = middlewares.findIndex(({ name }) => name === 'serve-index');
       middlewares.splice(
@@ -135,7 +137,7 @@ const start = async (
   // merge devServerConfig with webpackConfig.devServer
   devServerConfig = merge(webpackConfigs[0].devServer, devServerConfig);
   const protocol = devServerConfig.https ? 'https' : 'http';
-  let urlPathname = appConfig?.router?.basename || '/';
+  let urlPathname = getRouterBasename(webTaskConfig, appConfig) || '/';
 
   const urls = prepareURLs(
     protocol,
