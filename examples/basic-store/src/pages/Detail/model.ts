@@ -1,6 +1,8 @@
+import { createModel } from 'ice';
+
 const delay = (time) => new Promise<void>((resolve) => setTimeout(() => resolve(), time));
 
-export default {
+export default createModel({
   state: {
     title: 'detail'
   },
@@ -22,4 +24,4 @@ export default {
       });
     },
   }),
-};
+});

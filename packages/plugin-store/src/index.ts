@@ -53,10 +53,10 @@ export default async (api: any) => {
 
   applyMethod('addExport', {
     source: '@ice/store',
-    specifier: '{ createStore }',
-    exportName: 'createStore',
+    specifier: '{ createStore, createModel }',
+    exportName: 'createStore, createModel',
     importSource: '@ice/store',
-    exportMembers: ['createStore'],
+    exportMembers: ['createStore', 'createModel'],
   });
 
   if (!appStoreFile) {

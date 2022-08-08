@@ -1,11 +1,12 @@
+import { createModel } from 'ice';
+
 export const delay = (time) => new Promise<void>((resolve) => setTimeout(() => resolve(), time));
 
-export default {
+export default createModel({
   state: {
     name: '',
     id: ''
   },
-
   reducers: {
     update(prevState, payload) {
       return {
@@ -24,4 +25,4 @@ export default {
       });
     },
   }),
-};
+});
