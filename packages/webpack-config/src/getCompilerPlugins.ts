@@ -52,7 +52,7 @@ function getCompilerPlugins(config: Config, compiler: Compiler) {
   ];
   // Add custom transform before swc compilation so the source code can be got before transformed.
   compilerPlugins.push(
-    ...transformPlugins,
+    ...(transformPlugins.filter(({ enforce }) => !enforce || enforce === 'pre') || []),
     ...transforms.map((transform, index) => ({ name: `transform_${index}`, transform })),
   );
 
@@ -67,6 +67,10 @@ function getCompilerPlugins(config: Config, compiler: Compiler) {
       swcOptions,
     }));
   }
+
+  compilerPlugins.push(
+    ...(transformPlugins.filter(({ enforce }) => enforce === 'post') || []),
+  );
 
   return compiler === 'webpack'
     // Plugins will be transformed as webpack loader, the execute order of webpack loader is reversed.
