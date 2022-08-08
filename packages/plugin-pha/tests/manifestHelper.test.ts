@@ -239,11 +239,11 @@ describe('transform config keys', () => {
   });
 });
 
-describe('parse manifest', () => {
+describe('parse manifest', async () => {
   const options = {
     publicPath: 'https://cdn-path.com/',
     urlPrefix: 'https://url-prefix.com/',
-    configEntry: path.join(__dirname, './mockConfig.mjs'),
+    routesConfig: (await import(path.join(__dirname, './mockConfig.mjs')))?.default,
     serverEntry: path.join(__dirname, './mockServer.mjs'),
   };
 
@@ -447,11 +447,11 @@ describe('parse manifest', () => {
   });
 });
 
-describe('get multiple manifest', () => {
+describe('get multiple manifest', async () => {
   const options = {
     publicPath: 'https://cdn-path.com/',
     urlPrefix: 'https://url-prefix.com/',
-    configEntry: path.join(__dirname, './mockConfig.mjs'),
+    routesConfig: (await import(path.join(__dirname, './mockConfig.mjs')))?.default,
     serverEntry: path.join(__dirname, './mockServer.mjs'),
   };
 

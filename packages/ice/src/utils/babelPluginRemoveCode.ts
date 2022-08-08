@@ -47,27 +47,36 @@ const removeUnreferencedCode = (nodePath: NodePath<t.Program>) => {
   }
 };
 
-const removeTopLevelCode = () => {
+const keepExportCode = (identifier: t.Identifier, keepExports: string[]) => {
+  return keepExports.some((exportString) => {
+    return t.isIdentifier(identifier, { name: exportString });
+  });
+};
+
+const removeTopLevelCode = (keepExports: string[] = []) => {
   return {
     ExportNamedDeclaration: {
       enter(nodePath: NodePath<t.ExportNamedDeclaration>) {
         const { node } = nodePath;
-        // export function getConfig() {}
-        const isFunctionExport = t.isFunctionDeclaration(node.declaration) && t.isIdentifier(node.declaration.id, { name: 'getConfig' });
-        // export const getConfig = () => {}
-        const isVariableExport = t.isVariableDeclaration(node.declaration) && t.isIdentifier(node.declaration.declarations![0]?.id, { name: 'getConfig' });
-        // export { getConfig };
+        // Exp: export function getConfig() {}
+        const isFunctionExport = t.isFunctionDeclaration(node.declaration) &&
+          keepExportCode(node.declaration.id, keepExports);
+        // Exp: export const getConfig = () => {}
+        const isVariableExport = t.isVariableDeclaration(node.declaration) &&
+          keepExportCode(node.declaration.declarations![0]?.id as t.Identifier, keepExports);
+        // Exp: export { getConfig };
         if (node.specifiers && node.specifiers.length > 0) {
           nodePath.traverse({
             ExportSpecifier(nodePath: NodePath<t.ExportSpecifier>) {
-              if (!t.isIdentifier(nodePath.node.exported, { name: 'getConfig' })) {
+              if (!keepExportCode(nodePath.node.exported as t.Identifier, keepExports)) {
                 nodePath.remove();
               }
             },
           });
-          node.specifiers = node.specifiers.filter(specifier => t.isIdentifier(specifier.exported, { name: 'getConfig' }));
+          node.specifiers = node.specifiers.filter(specifier =>
+            keepExportCode(specifier.exported as t.Identifier, keepExports));
         } else if (!isFunctionExport && !isVariableExport) {
-          // Remove named export expect 'getConfig'.
+          // Remove named export expect defined in keepExports.
           nodePath.remove();
         }
       },
@@ -75,7 +84,9 @@ const removeTopLevelCode = () => {
     ExportDefaultDeclaration: {
       enter(nodePath: NodePath<t.ExportDefaultDeclaration>) {
         // Remove default export declaration.
-        nodePath.remove();
+        if (!keepExports.includes('default')) {
+          nodePath.remove();
+        }
       },
     },
     ExpressionStatement: {
