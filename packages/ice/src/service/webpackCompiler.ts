@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import type { CommandArgs, TaskConfig } from 'build-scripts';
 import type { Compiler, Configuration } from 'webpack';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
-import type { Urls, ServerCompiler } from '@ice/types/esm/plugin.js';
+import type { Urls, ServerCompiler, GetAppConfig, GetRoutesConfig } from '@ice/types/esm/plugin.js';
 import type { Config } from '@ice/types';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import openBrowser from '../utils/openBrowser.js';
@@ -20,9 +20,13 @@ async function webpackCompiler(options: {
   applyHook: (key: string, opts?: {}) => Promise<void>;
   rootDir: string;
   urls?: Urls;
-  serverCompiler: ServerCompiler;
   spinner: ora.Ora;
   devPath?: string;
+  hooksAPI: {
+    serverCompiler: ServerCompiler;
+    getAppConfig: GetAppConfig;
+    getRoutesConfig: GetRoutesConfig;
+  };
 }) {
   const {
     taskConfigs,
@@ -30,18 +34,19 @@ async function webpackCompiler(options: {
     applyHook,
     command,
     commandArgs,
-    serverCompiler,
+    hooksAPI,
     webpackConfigs,
     spinner,
     devPath,
     rootDir,
   } = options;
+  const { serverCompiler } = hooksAPI;
   await applyHook(`before.${command}.run`, {
     urls,
     commandArgs,
     taskConfigs,
     webpackConfigs,
-    serverCompiler,
+    ...hooksAPI,
   });
   // Add webpack plugin of data-loader
   webpackConfigs[0].plugins.push(new DataLoaderPlugin({ serverCompiler, rootDir }));
@@ -116,7 +121,7 @@ async function webpackCompiler(options: {
         urls,
         messages,
         taskConfigs,
-        serverCompiler,
+        ...hooksAPI,
       });
     }
 

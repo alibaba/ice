@@ -14,13 +14,14 @@ interface Options {
   routeManifestPath: string;
   documentOnly?: boolean;
   renderMode?: RenderMode;
-  basename?: string;
+  getAppConfig: () => Promise<any>;
 }
 
 export default function createRenderMiddleware(options: Options): Middleware {
-  const { documentOnly, renderMode, serverCompileTask, routeManifestPath, basename } = options;
+  const { documentOnly, renderMode, serverCompileTask, routeManifestPath, getAppConfig } = options;
   const middleware: ExpressRequestHandler = async function (req, res, next) {
     const routes = JSON.parse(fse.readFileSync(routeManifestPath, 'utf-8'));
+    const basename = (await getAppConfig())?.default?.router?.basename;
     const matches = matchRoutes(routes, req.path, basename);
     if (matches.length) {
       // Wait for the server compilation to finish

@@ -1,8 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
+import type { GetAppConfig, GetRoutesConfig } from '@ice/types/esm/plugin.js';
 import { parseManifest, rewriteAppWorker, getAppWorkerUrl, getMultipleManifest, type ParseOptions } from './manifestHelpers.js';
-import { templateFile } from './constants.js';
-import type { Manifest } from './types.js';
 import type { Compiler } from './index.js';
 
 export interface Options {
@@ -10,6 +9,8 @@ export interface Options {
   outputDir: string;
   parseOptions: Partial<ParseOptions>;
   compiler: Compiler;
+  getAppConfig: GetAppConfig;
+  getRoutesConfig: GetRoutesConfig;
   compileTask?: () => Promise<{ serverEntry: string}>;
 }
 
@@ -30,31 +31,16 @@ export async function getAppWorkerContent(
   return fs.readFileSync(appWorkerFile, 'utf-8');
 }
 
-// Compile task before parse pha manifest.
-export async function compileEntires(
-  compiler: Compiler,
-  { rootDir, outputDir }: { rootDir: string; outputDir: string }) {
-  return await Promise.all([
-    compiler({
-      entry: path.join(rootDir, templateFile),
-      outfile: path.join(outputDir, 'pha-manifest.mjs'),
-    }),
-    compiler({
-      entry: path.join(rootDir, '.ice/routes-config.ts'),
-      outfile: path.join(outputDir, 'routes-config.mjs'),
-      removeCode: true,
-    }),
-  ]);
-}
-
 export default async function generateManifest({
   rootDir,
   outputDir,
   parseOptions,
+  getAppConfig,
+  getRoutesConfig,
   compiler,
 }: Options) {
-  const [manifestEntry, routesConfigEntry] = await compileEntires(compiler, { rootDir, outputDir });
-  let manifest: Manifest = (await import(manifestEntry)).default;
+  const [appConfig, routesConfig] = await Promise.all([getAppConfig(['phaManifest']), getRoutesConfig()]);
+  let manifest = appConfig.phaManifest;
   const appWorkerPath = getAppWorkerUrl(manifest, path.join(rootDir, 'src'));
   if (appWorkerPath) {
     manifest = rewriteAppWorker(manifest);
@@ -66,7 +52,7 @@ export default async function generateManifest({
   }
   const phaManifest = await parseManifest(manifest, {
     ...parseOptions,
-    configEntry: routesConfigEntry,
+    routesConfig,
   } as ParseOptions);
   if (phaManifest?.tab_bar) {
     fs.writeFileSync(path.join(outputDir, 'manifest.json'), JSON.stringify(phaManifest), 'utf-8');

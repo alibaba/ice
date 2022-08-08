@@ -1,14 +1,10 @@
 import * as path from 'path';
-import { fileURLToPath } from 'url';
 import consola from 'consola';
 import chalk from 'chalk';
 import type { Plugin } from '@ice/types';
+import type { GetAppConfig, GetRoutesConfig } from '@ice/types/esm/plugin.js';
 import generateManifest from './generateManifest.js';
 import createPHAMiddleware from './phaMiddleware.js';
-import { templateFile } from './constants.js';
-import removeCodePlugin from './removeCodePlugin.js';
-
-import type { Manifest } from './types.js';
 
 export type Compiler = (options: {
   entry: string;
@@ -17,8 +13,6 @@ export type Compiler = (options: {
   timestamp?: boolean;
   removeCode?: boolean;
 }) => Promise<string>;
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 interface PluginOptions {
   template: boolean;
@@ -30,7 +24,7 @@ function getDevPath(url: string): string {
 
 const plugin: Plugin<PluginOptions> = (options) => ({
   name: '@ice/plugin-pha',
-  setup: ({ onGetConfig, onHook, context, generator, serverCompileTask }) => {
+  setup: ({ onGetConfig, onHook, context, serverCompileTask }) => {
     const { template } = options || {};
     const { command, rootDir } = context;
 
@@ -39,14 +33,17 @@ const plugin: Plugin<PluginOptions> = (options) => ({
     let publicPath: string;
     let outputDir: string;
     let urlPrefix: string;
-
-    generator.addRenderFile(path.join(__dirname, '../template/manifest.ts'), path.join(rootDir, templateFile));
+    let getAppConfig: GetAppConfig;
+    let getRoutesConfig: GetRoutesConfig;
 
     // Get server compiler by hooks
-    onHook(`before.${command as 'start' | 'build'}.run`, async ({ serverCompiler, taskConfigs, urls }) => {
+    onHook(`before.${command as 'start' | 'build'}.run`, async ({ serverCompiler, taskConfigs, urls, ...restAPI }) => {
       const taskConfig = taskConfigs.find(({ name }) => name === 'web').config;
       outputDir = path.isAbsolute(taskConfig.outputDir)
         ? taskConfig.outputDir : path.join(rootDir, taskConfig.outputDir);
+
+      getAppConfig = restAPI.getAppConfig;
+      getRoutesConfig = restAPI.getRoutesConfig;
 
       // Need absolute path for pha dev.
       publicPath = command === 'start' ? getDevPath(urls.lanUrlForTerminal) : (taskConfig.publicPath || '/');
@@ -55,16 +52,15 @@ const plugin: Plugin<PluginOptions> = (options) => ({
       urlPrefix = command === 'start' ? urls.lanUrlForTerminal : process.env.DEPLOY_PATH;
 
       compiler = async (options) => {
-        const { entry, outfile, removeCode, timestamp = true, minify = false } = options;
+        const { entry, outfile, minify = false } = options;
         await serverCompiler({
           entryPoints: [entry],
           format: 'esm',
           outfile,
           minify,
           inject: [],
-          plugins: removeCode ? [removeCodePlugin()] : [],
         });
-        return `${outfile}${timestamp ? `?version=${new Date().getTime()}` : ''}`;
+        return `${outfile}`;
       };
     });
 
@@ -73,6 +69,8 @@ const plugin: Plugin<PluginOptions> = (options) => ({
         rootDir,
         outputDir,
         compiler,
+        getAppConfig,
+        getRoutesConfig,
         parseOptions: {
           publicPath,
           urlPrefix,
@@ -85,11 +83,8 @@ const plugin: Plugin<PluginOptions> = (options) => ({
     onHook('after.start.compile', async ({ urls }) => {
       // Log out pha dev urls.
       const lanUrl = urls.lanUrlForTerminal;
-      const phaManifestPath = path.join(rootDir, templateFile);
-      const manifestOutfile = path.join(outputDir, 'pha-manifest.mjs');
-      const phaManifest: Manifest = (await import(
-        await compiler({ entry: phaManifestPath, outfile: manifestOutfile })
-      )).default;
+      const appConfig = await getAppConfig(['phaManifest']);
+      const { phaManifest } = appConfig || {};
       const phaDevUrls = [];
       if (phaManifest?.tabBar) {
         phaDevUrls.push(`${lanUrl}manifest.json`);
@@ -121,6 +116,8 @@ const plugin: Plugin<PluginOptions> = (options) => ({
           compiler,
           rootDir,
           outputDir,
+          getAppConfig,
+          getRoutesConfig,
           compileTask: () => serverCompileTask.get(),
           parseOptions: {
             publicPath,

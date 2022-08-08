@@ -209,16 +209,12 @@ type CachedRouteExports = { hash: string; exports: string[] };
 
 export async function getFileExports(options: FileOptions): Promise<CachedRouteExports['exports']> {
   const { rootDir, file } = options;
-  let filePath = path.join(rootDir, file);
+  const filePath = path.join(rootDir, file);
   let cached: CachedRouteExports | null = null;
   try {
     cached = await getCache(rootDir, filePath);
   } catch (err) {
     // ignore cache error
-  }
-  if (!path.extname(filePath)) {
-    const patterns = [`${filePath}.{js,ts,jsx,tsx}`];
-    filePath = fg.sync(patterns)[0];
   }
   const fileHash = await getFileHash(filePath);
   if (!cached || cached.hash !== fileHash) {

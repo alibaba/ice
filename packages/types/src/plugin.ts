@@ -33,11 +33,16 @@ export interface Urls {
   localUrlForBrowser: string;
 }
 
+export type GetAppConfig = (exportNames?: string[]) => Promise<any>;
+export type GetRoutesConfig = (specifyRoutId?: string) => Promise<any>;
+
 interface BeforeCommandRunOptions {
   commandArgs: CommandArgs;
   webpackConfigs: Configuration | Configuration[];
   taskConfigs: TaskConfig<Config>[];
   urls?: Urls;
+  getAppConfig: GetAppConfig;
+  getRoutesConfig: GetRoutesConfig;
   serverCompiler: ServerCompiler;
 }
 
@@ -48,6 +53,8 @@ interface AfterCommandCompileOptions {
   isFirstCompile: Boolean;
   urls: Urls;
   taskConfigs: TaskConfig<Config>[];
+  getAppConfig: GetAppConfig;
+  getRoutesConfig: GetRoutesConfig;
   serverCompiler: ServerCompiler;
 }
 

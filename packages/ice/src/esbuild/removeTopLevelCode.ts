@@ -3,14 +3,14 @@ import type { Plugin } from 'esbuild';
 import { parse, type ParserOptions } from '@babel/parser';
 import babelTraverse from '@babel/traverse';
 import babelGenerate from '@babel/generator';
-import removeTopLevelCode from './removeTopLevelCode.js';
+import removeTopLevelCode from '../utils/babelPluginRemoveCode.js';
 
 // @ts-ignore @babel/traverse is not a valid export in esm
-const { default: traverse } = babelTraverse;
+const traverse = babelTraverse.default || babelTraverse;
 // @ts-ignore @babel/generate is not a valid export in esm
-const { default: generate } = babelGenerate;
+const generate = babelGenerate.default || babelGenerate;
 
-const removeCodePlugin = (): Plugin => {
+const removeCodePlugin = (keepExports: string[], transformInclude: (id: string) => boolean): Plugin => {
   const parserOptions: ParserOptions = {
     sourceType: 'module',
     plugins: [
@@ -25,8 +25,7 @@ const removeCodePlugin = (): Plugin => {
     name: 'esbuild-remove-top-level-code',
     setup(build) {
       build.onLoad({ filter: /\.(js|jsx|ts|tsx)$/ }, async ({ path: id }) => {
-        // TODO: read route file from route-manifest
-        if (!id.includes('src/pages')) {
+        if (!transformInclude(id)) {
           return;
         }
         const source = fs.readFileSync(id, 'utf-8');
@@ -36,7 +35,7 @@ const removeCodePlugin = (): Plugin => {
           parserOptions.plugins.push('typescript', 'decorators-legacy');
         }
         const ast = parse(source, parserOptions);
-        traverse(ast, removeTopLevelCode());
+        traverse(ast, removeTopLevelCode(keepExports));
         const contents = generate(ast).code;
         return {
           contents,
