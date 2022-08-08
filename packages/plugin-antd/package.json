@@ -1,0 +1,28 @@
+{
+  "name": "@ice/plugin-antd",
+  "version": "1.0.0",
+  "description": "ice plugin for use antd",
+  "type": "module",
+  "scripts": {
+    "watch": "tsc -w",
+    "build": "tsc"
+  },
+  "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-antd"
+  },
+  "devDependencies": {
+    "@ice/types": "^1.0.0"
+  },
+  "dependencies": {
+    "@ice/style-import": "^1.0.0"
+  },
+  "files": [
+    "esm",
+    "!esm/**/*.map"
+  ]
+}

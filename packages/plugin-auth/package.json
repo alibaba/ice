@@ -37,10 +37,8 @@
     "esm",
     "!esm/**/*.map"
   ],
-  "dependencies": {
-    "@ice/types": "^1.0.0"
-  },
   "devDependencies": {
+    "@ice/types": "^1.0.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "regenerator-runtime": "^0.13.9"
