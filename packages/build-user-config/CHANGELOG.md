@@ -1,5 +1,10 @@
 # Changelog
 
+
+## 2.2.4
+
+- [fix] compatible with res is undefined when proxy for websocket
+
 ## 2.2.3
 
 - [fix] escape the empty rules.

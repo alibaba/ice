@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.3
+
+- [fix] skip public folder for minimization
+
 ## 2.2.2
 
 - [fix] config of conditionNames
