@@ -1,0 +1,19 @@
+{
+  "name": "hash-router-demo",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "ice start",
+    "build": "ice build"
+  },
+  "dependencies": {
+    "@ice/app": "workspace:*",
+    "@ice/runtime": "workspace:*",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "regenerator-runtime": "^0.13.9"
+  }
+}
