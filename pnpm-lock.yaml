@@ -136,6 +136,25 @@ importers:
       speed-measure-webpack-plugin: 1.5.0_webpack@5.73.0
       webpack: 5.73.0
 
+  examples/hash-router:
+    specifiers:
+      '@ice/app': workspace:*
+      '@ice/runtime': workspace:*
+      '@types/react': ^18.0.0
+      '@types/react-dom': ^18.0.0
+      react: ^18.0.0
+      react-dom: ^18.0.0
+      regenerator-runtime: ^0.13.9
+    dependencies:
+      '@ice/app': link:../../packages/ice
+      '@ice/runtime': link:../../packages/runtime
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    devDependencies:
+      '@types/react': 18.0.8
+      '@types/react-dom': 18.0.3
+      regenerator-runtime: 0.13.9
+
   examples/rax-project:
     specifiers:
       '@ice/app': workspace:*

@@ -149,20 +149,22 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
   }
 
   const appConfig = getAppConfig(app);
-  const matches = matchRoutes(routes, location, serverOnlyBasename || basename);
-  const routePath = getCurrentRoutePath(matches);
+  // HashRouter loads route modules by the CSR.
+  if (appConfig?.router?.type === 'hash') {
+    return renderDocument({ matches: [], renderOptions, routeModules: {} });
+  }
 
+  const matches = matchRoutes(routes, location, serverOnlyBasename || basename);
   if (!matches.length) {
     return render404();
   }
 
-  if (documentOnly) {
-    return renderDocument(matches, routePath, renderOptions, {});
-  }
-
-  // FIXME: 原来是在 renderDocument 之前执行这段逻辑。
-  // 现在为了避免 CSR 时把页面组件都加载进来导致资源（比如 css）加载报错，带来的问题是调用 renderHTML 的时候 getConfig 失效了
+  const routePath = getCurrentRoutePath(matches);
   const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
+
+  if (documentOnly) {
+    return renderDocument({ matches, routePath, renderOptions, routeModules });
+  }
 
   try {
     return await renderServerEntry({
@@ -179,7 +181,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     });
   } catch (err) {
     console.error('Warning: render server entry error, downgrade to csr.', err);
-    return renderDocument(matches, routePath, renderOptions, {});
+    return renderDocument({ matches, routePath, renderOptions, routeModules: {} });
   }
 }
 
@@ -200,7 +202,7 @@ interface renderServerEntry {
   appConfig: AppConfig;
   appData: AppData;
   routeModules: RouteModules;
-  routePath: string;
+  routePath?: string;
   basename?: string;
 }
 
@@ -279,7 +281,7 @@ async function renderServerEntry(
   const pipe = renderToNodeStream(element, false);
 
   const fallback = () => {
-    return renderDocument(matches, routePath, renderOptions, routeModules);
+    return renderDocument({ matches, routePath, renderOptions, routeModules });
   };
 
   return {
@@ -290,22 +292,23 @@ async function renderServerEntry(
   };
 }
 
+interface RenderDocumentOptions {
+  matches: RouteMatch[];
+  routeModules: RouteModules;
+  renderOptions: RenderOptions;
+  routePath?: string;
+}
 /**
  * Render Document for CSR.
  */
-function renderDocument(
-  matches: RouteMatch[],
-  routePath: string,
-  options: RenderOptions,
-  routeModules: RouteModules,
-): RenderResult {
+function renderDocument({ matches, routeModules, renderOptions, routePath }: RenderDocumentOptions): RenderResult {
   const {
     routes,
     assetsManifest,
     app,
     Document,
     basename,
-  } = options;
+  } = renderOptions;
 
   const routesData = null;
   const appData = null;

@@ -68,7 +68,7 @@ export interface AppContext {
   routesData: RoutesData;
   routesConfig: RoutesConfig;
   routeModules: RouteModules;
-  routePath: string;
+  routePath?: string;
   matches?: RouteMatch[];
   routes?: RouteItem[];
   documentOnly?: boolean;
