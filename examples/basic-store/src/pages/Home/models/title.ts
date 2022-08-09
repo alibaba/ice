@@ -1,4 +1,6 @@
-export default {
+import { createModel } from 'ice';
+
+export default createModel({
   state: {
     title: 'Home Page'
   },
@@ -7,4 +9,4 @@ export default {
       return { title: payload };
     },
   }
-};
+});

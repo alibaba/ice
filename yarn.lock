@@ -1454,10 +1454,10 @@
     path-to-regexp "^1.7.0"
     url-parse "^1.1.9"
 
-"@ice/store@^2.0.0-3":
-  version "2.0.0-4"
-  resolved "https://registry.yarnpkg.com/@ice/store/-/store-2.0.0-4.tgz#e4ec6be7708c38dbac8df1269e6ec93bd971c329"
-  integrity sha512-iwv8VbVt7MY0UBbekxS2RyAnYwg4bfxQ3l7NvE+tDdyTUQXABvnQz+F2uxDYi95ZYH67Hq28erIZ7VRGsDUKNg==
+"@ice/store@^2.0.0":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@ice/store/-/store-2.0.2.tgz#bbcb01e3f91e91a7592956c645ef0af6a11989be"
+  integrity sha512-1c+y5VVmq9ZX2LV/EkBc/wXPgTNoDAKbdtqlSdo07RAJrAbvf/X8Mph7Cz8z1GMR69rWXUGEHwENd6O1URfgog==
   dependencies:
     immer "^9.0.6"
     lodash.isfunction "^3.0.9"
