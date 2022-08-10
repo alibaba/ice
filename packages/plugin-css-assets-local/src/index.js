@@ -2,7 +2,7 @@ const ExtractCssAssetsWebpackPlugin = require('extract-css-assets-webpack-plugin
 
 module.exports = ({ context, log, onGetWebpackConfig }, options = {}) => {
   const { command } = context;
-  const { outputPath, relativeCssPath, activeInDev } = options;
+  const { outputPath, relativeCssPath, forceLocal, activeInDev } = options;
   // it is increase dev build time by set default activeCommands ['build']
   const activeCommands = activeInDev ? ['start', 'build'] : ['build'];
   if (activeCommands.indexOf(command) > -1) {
@@ -13,6 +13,7 @@ module.exports = ({ context, log, onGetWebpackConfig }, options = {}) => {
         .use(ExtractCssAssetsWebpackPlugin, [{
           outputPath: outputPath || 'assets',
           relativeCssPath: relativeCssPath || '../',
+          forceLocal: forceLocal || false,
         }]);
     });
   }
