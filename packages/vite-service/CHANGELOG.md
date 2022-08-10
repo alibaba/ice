@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.1.4
+
+- [fix] avoid top-level warning of esbuild.
+
 ## 2.1.3
 
 - [feat] be able to resolve `.mts`
