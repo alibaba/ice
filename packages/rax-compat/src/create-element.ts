@@ -33,7 +33,7 @@ function createInputCompat(type) {
     const onChange = useCallback((event: SyntheticChangeEvent) => {
       setV(event.target.value);
 
-      // Event of onInput is synthetic by genEventObject.
+      // Event of onInput should be native event.
       onInput && onInput(event.nativeEvent);
     }, [onInput]);
 
