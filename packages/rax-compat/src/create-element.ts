@@ -79,7 +79,6 @@ export function createElement<P extends {
       },
     );
   } else {
-    console.log('createElement__', type, rest);
     return _createElement(type, rest, ...children);
   }
 }
