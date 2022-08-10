@@ -62,4 +62,18 @@ describe('createElement', () => {
     const node = wrapper.queryByTestId('id');
     expect(node.style.width).toBe('40vw');
   });
+
+  it('should work with value', () => {
+    const str = 'hello world';
+    const wrapper = render(createElement(
+      'input',
+      {
+        'data-testid': 'id',
+        value: str,
+      },
+    ));
+
+    const node = wrapper.queryByTestId('id');
+    expect(node.value).toBe(str);
+  });
 });

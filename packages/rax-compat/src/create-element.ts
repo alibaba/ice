@@ -52,6 +52,13 @@ export function createElement<P extends {
   delete rest.onAppear;
   delete rest.onDisappear;
 
+  // Setting the value of props makes the component be a controlled component in React.
+  // But setting the value of props should init value in Rax, same as defaultValue in React.
+  if (rest.value) {
+    rest.defaultValue = rest.value;
+    delete rest.value;
+  }
+
   // Compat for style unit.
   const compatStyleProps = compatStyle(rest.style);
   if (compatStyleProps) {
@@ -72,6 +79,7 @@ export function createElement<P extends {
       },
     );
   } else {
+    console.log('createElement__', type, rest);
     return _createElement(type, rest, ...children);
   }
 }
