@@ -1,7 +1,7 @@
 import type { Compiler } from 'webpack';
 
 type CheckModifiedFiles = (modifiedFiles: string[]) => boolean;
-type ReCompile = () => Promise<void> | void;
+type ReCompile = (compileKey: string) => void;
 
 const pluginName = 'ReCompilePlugin';
 export default class ReCompilePlugin {
@@ -25,7 +25,7 @@ export default class ReCompilePlugin {
     compiler.hooks.emit.tap(pluginName, () => {
       if (this.needRecompile) {
         // Call re compile at lifecycle of emit.
-        this.reCompile();
+        this.reCompile('getConfig');
       }
     });
   }
