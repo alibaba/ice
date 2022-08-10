@@ -16,7 +16,7 @@
     "openChrome.applescript"
   ],
   "engines": {
-    "node": ">=12.22.0",
+    "node": ">=14.19.0",
     "npm": ">=3.0.0"
   },
   "scripts": {
