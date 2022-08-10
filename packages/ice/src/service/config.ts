@@ -17,7 +17,7 @@ interface CompileConfig {
 }
 
 class Config {
-  private compileTask: Promise<string>;
+  private compileTasks: Record<string, Promise<string>>;
   private compiler: (keepExports: string[]) => Promise<string>;
   private compileConfig: CompileConfig;
   private lastOptions: string[];
@@ -26,7 +26,7 @@ class Config {
 
   constructor(compileConfig: CompileConfig) {
     const { rootDir, entry } = compileConfig;
-    this.compileTask = null;
+    this.compileTasks = {};
     this.compileConfig = compileConfig;
     this.lastOptions = [];
     this.status = 'PENDING';
@@ -51,14 +51,15 @@ class Config {
     };
   }
 
-  public reCompile() {
+  public reCompile(taskKey: string) {
     // Re-compile only triggered when `getConfig` has been called.
-    if (this.compileTask) {
-      this.compileTask = this.compiler(this.lastOptions);
+    if (this.compileTasks[taskKey]) {
+      this.compileTasks[taskKey] = this.compiler(this.lastOptions);
     }
   }
 
   public getConfig = async (keepExports: string[]) => {
+    const taskKey = keepExports.join('_');
     this.lastOptions = keepExports;
     let targetFile = '';
     // Check file hash if it need to be re compiled
@@ -67,19 +68,18 @@ class Config {
       const cached = await this.compileConfig?.needRecompile(outfile, keepExports);
       if (cached && typeof cached === 'string') {
         targetFile = this.status === 'RESOLVED' ? `${cached}?version=${new Date().getTime()}`
-          : (await this.compileTask);
+          : (await this.compileTasks[taskKey]);
       } else if (!cached) {
-        this.reCompile();
+        this.reCompile(taskKey);
       }
     }
-    if (!this.compileTask) {
-      this.compileTask = this.compiler(keepExports);
+    if (!this.compileTasks[taskKey]) {
+      this.compileTasks[taskKey] = this.compiler(keepExports);
     }
     if (!targetFile) {
-      targetFile = await this.compileTask;
+      targetFile = await this.compileTasks[taskKey];
     }
-    const result = import(targetFile);
-    return result;
+    return await import(targetFile);
   };
 }
 
@@ -101,15 +101,15 @@ export const getAppExportConfig = (rootDir: string) => {
       } catch (err) {}
       const fileHash = await getFileHash(appEntry);
       if (!cached || fileHash !== cached) {
-        setCache(rootDir, cachedKey, fileHash);
+        await setCache(rootDir, cachedKey, fileHash);
         return false;
       }
       return entry;
     },
   });
 
-  const getAppConfig = (exportNames?: string[]) => {
-    return appExportConfig.getConfig(exportNames || ['default', 'defineAppConfig']);
+  const getAppConfig = async (exportNames?: string[]) => {
+    return await appExportConfig.getConfig(exportNames || ['default', 'defineAppConfig']);
   };
 
   return {
@@ -142,12 +142,12 @@ export const getRouteExportConfig = (rootDir: string) => {
       }
     },
   });
-  const getRoutesConfig = (specifyRoutId?: string) => {
+  const getRoutesConfig = async (specifyRoutId?: string) => {
     // Routes config file may be removed after file changed.
     if (!fs.existsSync(routeConfigFile)) {
       return undefined;
     }
-    const routeConfig = routeExportConfig.getConfig(['getConfig']);
+    const routeConfig = await routeExportConfig.getConfig(['getConfig']);
     return specifyRoutId ? routeConfig[specifyRoutId] : routeConfig;
   };
   return {

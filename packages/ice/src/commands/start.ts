@@ -32,7 +32,7 @@ const start = async (
     getAppConfig: GetAppConfig;
     getRoutesConfig: GetRoutesConfig;
     dataCache: Map<string, string>;
-    reCompileRouteConfig: () => void;
+    reCompileRouteConfig: (compileKey: string) => void;
   },
 ) => {
   const {
