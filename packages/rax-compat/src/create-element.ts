@@ -5,7 +5,7 @@ import type {
   ReactNode,
   RefObject,
 } from 'react';
-import { createElement as _createElement, useEffect, useCallback, useRef } from 'react';
+import { createElement as _createElement, useEffect, useCallback, useRef, useState } from 'react';
 import { cached, convertUnit } from 'style-unit';
 import { observerElement } from './visibility';
 import { isFunction, isObject, isNumber } from './type';
@@ -25,6 +25,40 @@ import { isFunction, isObject, isNumber } from './type';
 // animationIterationCount -> onit
 // borderImageOutset|borderImageSlice|borderImageWidth -> erim
 const NON_DIMENSIONAL_REG = /opa|ntw|ne[ch]|ex(?:s|g|n|p|$)|^ord|zoo|grid|orp|ows|mnc|^columns$|bs|erim|onit/i;
+
+// https://github.com/raxjs/rax-components/blob/master/packages/rax-textinput/src/index.tsx#L37
+function genEventObject(event): EventObject {
+  let text = event.target.value;
+  return {
+    nativeEvent: {
+      text,
+    },
+    originalEvent: event,
+    value: text,
+    target: event.target,
+  };
+}
+
+function createInputCompat(type) {
+  function InputCompat(props) {
+    const { value, onInput, ...rest } = props;
+    const [v, setV] = useState(value);
+    const onChange = useCallback((event: SyntheticChangeEvent) => {
+      setV(event.target.value);
+
+      // Event of onInput is synthetic by genEventObject.
+      onInput && onInput(genEventObject(event.nativeEvent));
+    }, [onInput]);
+
+    return _createElement(type, {
+      ...rest,
+      value: v,
+      onChange,
+    });
+  }
+
+  return InputCompat;
+}
 
 /**
  * Compat createElement for rax export.
@@ -52,17 +86,19 @@ export function createElement<P extends {
   delete rest.onAppear;
   delete rest.onDisappear;
 
-  // Setting the value of props makes the component be a controlled component in React.
-  // But setting the value of props should init value in Rax, same as defaultValue in React.
-  if (rest.value) {
-    rest.defaultValue = rest.value;
-    delete rest.value;
-  }
-
   // Compat for style unit.
   const compatStyleProps = compatStyle(rest.style);
   if (compatStyleProps) {
     rest.style = compatStyleProps;
+  }
+
+  // Setting the value of props makes the component be a controlled component in React.
+  // But setting the value is same as web in Rax.
+  // User can modify value of props to modify native input value
+  // and native input can also modify the value of self in Rax.
+  // So we should compat input to InputCompat, the same as textarea.
+  if (type === 'input' || type === 'textarea') {
+    type = createInputCompat(type);
   }
 
   // Compat for visibility events.
