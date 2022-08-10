@@ -1,0 +1,54 @@
+{
+  "name": "@ice/plugin-store",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./esm/index.d.ts",
+      "import": "./esm/index.js",
+      "default": "./esm/index.js"
+    },
+    "./runtime": {
+      "types": "./esm/runtime.d.ts",
+      "import": "./esm/runtime.js",
+      "default": "./esm/runtime.js"
+    },
+    "./esm/runtime": {
+      "types": "./esm/runtime.d.ts",
+      "import": "./esm/runtime.js",
+      "default": "./esm/runtime.js"
+    }
+  },
+  "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
+  "files": [
+    "esm",
+    "!esm/**/*.map"
+  ],
+  "dependencies": {
+    "@ice/store": "^2.0.1",
+    "fast-glob": "^3.2.11",
+    "micromatch": "^4.0.5"
+  },
+  "devDependencies": {
+    "@ice/types": "^1.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@types/micromatch": "^4.0.2",
+    "regenerator-runtime": "^0.13.9"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-store"
+  },
+  "scripts": {
+    "watch": "tsc -w",
+    "build": "tsc"
+  }
+}

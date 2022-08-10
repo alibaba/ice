@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "rootDir": "src",
+    "outDir": "esm",
+    "jsx": "react",
+    "paths": {
+      "$store": ["./src/_store"]
+    }
+  },
+  "include": ["src"]
+}

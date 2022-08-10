@@ -21,7 +21,7 @@ export default function RouteWrapper(props: Props) {
 
   if (RouteWrappers.length) {
     element = RouteWrappers.reduce((preElement, CurrentWrapper) => (
-      <CurrentWrapper>
+      <CurrentWrapper routeId={id}>
         {preElement}
       </CurrentWrapper>
     ), props.children);
