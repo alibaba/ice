@@ -26,19 +26,6 @@ import { isFunction, isObject, isNumber } from './type';
 // borderImageOutset|borderImageSlice|borderImageWidth -> erim
 const NON_DIMENSIONAL_REG = /opa|ntw|ne[ch]|ex(?:s|g|n|p|$)|^ord|zoo|grid|orp|ows|mnc|^columns$|bs|erim|onit/i;
 
-// https://github.com/raxjs/rax-components/blob/master/packages/rax-textinput/src/index.tsx#L37
-function genEventObject(event): EventObject {
-  let text = event.target.value;
-  return {
-    nativeEvent: {
-      text,
-    },
-    originalEvent: event,
-    value: text,
-    target: event.target,
-  };
-}
-
 function createInputCompat(type) {
   function InputCompat(props) {
     const { value, onInput, ...rest } = props;
@@ -47,7 +34,7 @@ function createInputCompat(type) {
       setV(event.target.value);
 
       // Event of onInput is synthetic by genEventObject.
-      onInput && onInput(genEventObject(event.nativeEvent));
+      onInput && onInput(event.nativeEvent);
     }, [onInput]);
 
     return _createElement(type, {
