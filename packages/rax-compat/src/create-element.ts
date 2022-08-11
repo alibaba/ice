@@ -4,11 +4,13 @@ import type {
   ReactElement,
   ReactNode,
   RefObject,
+  SyntheticEvent,
 } from 'react';
-import { createElement as _createElement, useEffect, useCallback, useRef } from 'react';
+import { createElement as _createElement, useEffect, useCallback, useRef, useState } from 'react';
 import { cached, convertUnit } from 'style-unit';
 import { observerElement } from './visibility';
 import { isFunction, isObject, isNumber } from './type';
+
 
 // https://github.com/alibaba/rax/blob/master/packages/driver-dom/src/index.js
 // opacity -> opa
@@ -25,6 +27,27 @@ import { isFunction, isObject, isNumber } from './type';
 // animationIterationCount -> onit
 // borderImageOutset|borderImageSlice|borderImageWidth -> erim
 const NON_DIMENSIONAL_REG = /opa|ntw|ne[ch]|ex(?:s|g|n|p|$)|^ord|zoo|grid|orp|ows|mnc|^columns$|bs|erim|onit/i;
+
+function createInputCompat(type: string) {
+  function InputCompat(props: any) {
+    const { value, onInput, ...rest } = props;
+    const [v, setV] = useState(value);
+    const onChange = useCallback((event: SyntheticEvent) => {
+      setV((event.target as HTMLInputElement).value);
+
+      // Event of onInput should be native event.
+      onInput && onInput(event.nativeEvent);
+    }, [onInput]);
+
+    return _createElement(type, {
+      ...rest,
+      value: v,
+      onChange,
+    });
+  }
+
+  return InputCompat;
+}
 
 /**
  * Compat createElement for rax export.
@@ -56,6 +79,15 @@ export function createElement<P extends {
   const compatStyleProps = compatStyle(rest.style);
   if (compatStyleProps) {
     rest.style = compatStyleProps;
+  }
+
+  // Setting the value of props makes the component be a controlled component in React.
+  // But setting the value is same as web in Rax.
+  // User can modify value of props to modify native input value
+  // and native input can also modify the value of self in Rax.
+  // So we should compat input to InputCompat, the same as textarea.
+  if (type === 'input' || type === 'textarea') {
+    type = createInputCompat(type);
   }
 
   // Compat for visibility events.
