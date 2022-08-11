@@ -236,19 +236,23 @@ importers:
     specifiers:
       '@ice/app': workspace:*
       '@ice/plugin-antd': workspace:*
+      '@ice/plugin-moment-locales': workspace:*
       '@ice/runtime': workspace:*
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.2
       antd: ^4.0.0
       browserslist: ^4.19.3
+      moment: ^2.29.4
       react: ^18.0.0
       react-dom: ^18.0.0
       regenerator-runtime: ^0.13.9
     dependencies:
       '@ice/app': link:../../packages/ice
       '@ice/plugin-antd': link:../../packages/plugin-antd
+      '@ice/plugin-moment-locales': link:../../packages/plugin-moment-locales
       '@ice/runtime': link:../../packages/runtime
       antd: 4.22.3_biqbaboplfbrettd7655fr4n2y
+      moment: 2.29.4
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     devDependencies:
@@ -591,6 +595,12 @@ importers:
       '@ice/types': ^1.0.0
     dependencies:
       '@ice/style-import': link:../style-import
+    devDependencies:
+      '@ice/types': link:../types
+
+  packages/plugin-moment-locales:
+    specifiers:
+      '@ice/types': ^1.0.0
     devDependencies:
       '@ice/types': link:../types
 
@@ -7281,7 +7291,7 @@ packages:
       copy-to-clipboard: 3.3.2
       lodash: 4.17.21
       memoize-one: 6.0.0
-      moment: 2.29.3
+      moment: 2.29.4
       rc-cascader: 3.6.1_biqbaboplfbrettd7655fr4n2y
       rc-checkbox: 2.3.2_biqbaboplfbrettd7655fr4n2y
       rc-collapse: 3.3.1_biqbaboplfbrettd7655fr4n2y
@@ -12828,6 +12838,10 @@ packages:
     resolution: {integrity: sha512-c6YRvhEo//6T2Jz/vVtYzqBzwvPT95JBQ+smCytzf7c50oMZRsR/a4w88aD34I+/QVSfnoAnSBFPJHItlOMJVw==}
     dev: false
 
+  /moment/2.29.4:
+    resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
+    dev: false
+
   /mrmime/1.0.0:
     resolution: {integrity: sha512-a70zx7zFfVO7XpnQ2IX1Myh9yY4UYvfld/dikWRnsXxbyvMcfz+u6UfgNAtH+k2QqtJuzVpv6eLTx1G2+WKZbQ==}
     engines: {node: '>=10'}
@@ -15133,7 +15147,7 @@ packages:
       classnames: 2.3.1
       date-fns: 2.29.1
       dayjs: 1.11.2
-      moment: 2.29.3
+      moment: 2.29.4
       rc-trigger: 5.3.1_biqbaboplfbrettd7655fr4n2y
       rc-util: 5.23.0_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0

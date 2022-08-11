@@ -11,8 +11,10 @@
   "dependencies": {
     "@ice/app": "workspace:*",
     "@ice/plugin-antd": "workspace:*",
+    "@ice/plugin-moment-locales": "workspace:*",
     "@ice/runtime": "workspace:*",
     "antd": "^4.0.0",
+    "moment": "^2.29.4",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },
