@@ -51,12 +51,12 @@ class Config {
     };
   }
 
-  public reCompile(taskKey: string) {
+  public reCompile = (taskKey: string) => {
     // Re-compile only triggered when `getConfig` has been called.
     if (this.compileTasks[taskKey]) {
       this.compileTasks[taskKey] = this.compiler(this.lastOptions);
     }
-  }
+  };
 
   public getConfig = async (keepExports: string[]) => {
     const taskKey = keepExports.join('_');
