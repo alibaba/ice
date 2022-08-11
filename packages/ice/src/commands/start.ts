@@ -4,7 +4,7 @@ import type { Configuration } from 'webpack-dev-server';
 import type { Context, TaskConfig } from 'build-scripts';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { Config } from '@ice/types';
-import type { ExtendsPluginAPI, ServerCompiler } from '@ice/types/esm/plugin.js';
+import type { ExtendsPluginAPI, ServerCompiler, GetAppConfig, GetRoutesConfig } from '@ice/types/esm/plugin.js';
 import type { AppConfig, RenderMode } from '@ice/runtime';
 import { getWebpackConfig } from '@ice/webpack-config';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
@@ -13,9 +13,11 @@ import webpackCompiler from '../service/webpackCompiler.js';
 import prepareURLs from '../utils/prepareURLs.js';
 import createRenderMiddleware from '../middlewares/ssr/renderMiddleware.js';
 import createMockMiddleware from '../middlewares/mock/createMiddleware.js';
-import { ROUTER_MANIFEST, RUNTIME_TMP_DIR, SERVER_ENTRY, SERVER_OUTPUT_DIR } from '../constant.js';
+import { ROUTER_MANIFEST, RUNTIME_TMP_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
 import ServerCompilerPlugin from '../webpack/ServerCompilerPlugin.js';
-import { getAppConfig } from '../analyzeRuntime.js';
+import ReCompilePlugin from '../webpack/ReCompilePlugin.js';
+import getServerEntry from '../utils/getServerEntry.js';
+import getRouterBasename from '../utils/getRouterBasename.js';
 
 const { merge } = lodash;
 
@@ -27,12 +29,26 @@ const start = async (
     appConfig: AppConfig;
     devPath: string;
     spinner: ora.Ora;
+    getAppConfig: GetAppConfig;
+    getRoutesConfig: GetRoutesConfig;
+    dataCache: Map<string, string>;
+    reCompileRouteConfig: (compileKey: string) => void;
   },
 ) => {
-  const { taskConfigs, serverCompiler, appConfig, devPath, spinner } = options;
+  const {
+    taskConfigs,
+    serverCompiler,
+    appConfig,
+    devPath,
+    spinner,
+    reCompileRouteConfig,
+    getAppConfig,
+    getRoutesConfig,
+    dataCache,
+  } = options;
   const { applyHook, commandArgs, command, rootDir, userConfig, extendsPluginAPI: { serverCompileTask } } = context;
   const { port, host, https = false } = commandArgs;
-
+  const webTaskConfig = taskConfigs.find(({ name }) => name === 'web');
   const webpackConfigs = taskConfigs.map(({ config }) => getWebpackConfig({
     config,
     rootDir,
@@ -43,7 +59,7 @@ const start = async (
   // Compile server entry after the webpack compilation.
   const outputDir = webpackConfigs[0].output.path;
   const { ssg, ssr, server: { format } } = userConfig;
-  const entryPoint = path.join(rootDir, SERVER_ENTRY);
+  const entryPoint = getServerEntry(rootDir, taskConfigs[0].config?.server?.entry);
   const esm = format === 'esm';
   const outJSExtension = esm ? '.mjs' : '.cjs';
   webpackConfigs[0].plugins.push(
@@ -59,11 +75,25 @@ const start = async (
           outExtension: { '.js': outJSExtension },
         },
         {
-          preBundle: format === 'esm',
+          preBundle: format === 'esm' && (ssr || ssg),
+          swc: {
+            // Remove components and getData when document only.
+            removeExportExprs: false ? ['default', 'getData', 'getServerData', 'getStaticData'] : [],
+            keepPlatform: 'node',
+          },
         },
       ],
       serverCompileTask,
     ),
+    new ReCompilePlugin(reCompileRouteConfig, (files) => {
+      // Only when routes file changed.
+      const routeManifest = JSON.parse(dataCache.get('routes'))?.routeManifest || {};
+      const routeFiles = Object.keys(routeManifest).map((key) => {
+        const { file } = routeManifest[key];
+        return `src/pages/${file}`;
+      });
+      return files.some((filePath) => routeFiles.some(routeFile => filePath.includes(routeFile)));
+    }),
   );
 
   const customMiddlewares = webpackConfigs[0].devServer?.setupMiddlewares;
@@ -79,8 +109,8 @@ const start = async (
       } else if (ssg) {
         renderMode = 'SSG';
       }
-      const appConfig = getAppConfig();
       const routeManifestPath = path.join(rootDir, ROUTER_MANIFEST);
+      // both ssr and ssg, should render the whole page in dev mode.
       const documentOnly = !ssr && !ssg;
 
       const serverRenderMiddleware = createRenderMiddleware({
@@ -88,7 +118,8 @@ const start = async (
         routeManifestPath,
         documentOnly,
         renderMode,
-        basename: appConfig?.router?.basename,
+        getAppConfig,
+        taskConfig: webTaskConfig,
       });
       const insertIndex = middlewares.findIndex(({ name }) => name === 'serve-index');
       middlewares.splice(
@@ -106,7 +137,7 @@ const start = async (
   // merge devServerConfig with webpackConfig.devServer
   devServerConfig = merge(webpackConfigs[0].devServer, devServerConfig);
   const protocol = devServerConfig.https ? 'https' : 'http';
-  let urlPathname = appConfig?.router?.basename || '/';
+  let urlPathname = getRouterBasename(webTaskConfig, appConfig) || '/';
 
   const urls = prepareURLs(
     protocol,
@@ -114,6 +145,11 @@ const start = async (
     devServerConfig.port as number,
     urlPathname.endsWith('/') ? urlPathname : `${urlPathname}/`,
   );
+  const hooksAPI = {
+    serverCompiler,
+    getAppConfig,
+    getRoutesConfig,
+  };
   const compiler = await webpackCompiler({
     rootDir,
     webpackConfigs,
@@ -122,7 +158,7 @@ const start = async (
     commandArgs,
     command,
     applyHook,
-    serverCompiler,
+    hooksAPI,
     spinner,
     devPath,
   });

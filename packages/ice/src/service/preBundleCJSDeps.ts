@@ -2,27 +2,14 @@ import path from 'path';
 import { createHash } from 'crypto';
 import fse from 'fs-extra';
 import { build } from 'esbuild';
+import type { Plugin } from 'esbuild';
 import { resolve as resolveExports } from 'resolve.exports';
-import resolve from 'resolve';
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
 import type { Config } from '@ice/types';
 import flattenId from '../utils/flattenId.js';
 import formatPath from '../utils/formatPath.js';
 import { BUILDIN_CJS_DEPS, BUILDIN_ESM_DEPS } from '../constant.js';
-
-interface PackageData {
-  data: {
-    name: string;
-    type: string;
-    version: string;
-    main: string;
-    module: string;
-    exports: string | Record<string, any> | string[];
-    dependencies: Record<string, string>;
-    [field: string]: any;
-  };
-  dir: string;
-}
+import type { DepScanData } from '../esbuild/scan.js';
 
 interface DepInfo {
   file: string;
@@ -39,17 +26,17 @@ interface PreBundleDepsResult {
 }
 
 interface PreBundleDepsOptions {
-  depsInfo: Record<string, string>;
-  rootDir: string;
+  depsInfo: Record<string, DepScanData>;
   cacheDir: string;
   taskConfig: Config;
+  plugins?: Plugin[];
 }
 
 /**
  * Pre bundle dependencies from esm to cjs.
  */
 export default async function preBundleCJSDeps(options: PreBundleDepsOptions): Promise<PreBundleDepsResult> {
-  const { depsInfo, rootDir, cacheDir, taskConfig } = options;
+  const { depsInfo, cacheDir, taskConfig, plugins = [] } = options;
   const metadata = createDepsMetadata(depsInfo, taskConfig);
 
   if (!Object.keys(depsInfo)) {
@@ -76,7 +63,7 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
 
   await moduleLexer.init;
   for (const depId in depsInfo) {
-    const packageEntry = resolvePackageEntry(depId, rootDir);
+    const packageEntry = resolvePackageEntry(depId, depsInfo[depId].pkgPath);
     const flatId = flattenId(depId);
     flatIdDeps[flatId] = packageEntry;
 
@@ -93,12 +80,12 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
     entryPoints: flatIdDeps,
     bundle: true,
     logLevel: 'error',
-    sourcemap: true,
     outdir: depsCacheDir,
     format: 'cjs',
     platform: 'node',
     loader: { '.js': 'jsx' },
     ignoreAnnotations: true,
+    plugins,
     external: [...BUILDIN_CJS_DEPS, ...BUILDIN_ESM_DEPS],
   });
 
@@ -109,38 +96,20 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
   };
 }
 
-function resolvePackageEntry(depId: string, rootDir: string) {
-  const { data: pkgJSONData, dir } = resolvePackageData(depId, rootDir);
+function resolvePackageEntry(depId: string, pkgPath: string) {
+  const pkgJSON = fse.readJSONSync(pkgPath);
+  const pkgDir = path.dirname(pkgPath);
   // resolve exports cjs field
-  let entryPoint = resolveExports(pkgJSONData, depId, { require: true });
+  let entryPoint = resolveExports(pkgJSON, depId, { require: true }) || '';
   if (!entryPoint) {
-    entryPoint = pkgJSONData['main'];
+    entryPoint = pkgJSON['main'] || 'index.js';
   }
-  const entryPointPath = path.join(dir, entryPoint);
+  const entryPointPath = path.join(pkgDir, entryPoint);
   return entryPointPath;
 }
 
-function resolvePackageData(
-  id: string,
-  rootDir: string,
-): PackageData {
-  // Find the actual package name. For examples: @ice/runtime/server -> @ice/runtime
-  const idSplits = id.split('/');
-  const pkgId = idSplits.slice(0, 2).join('/');
-  const packageJSONPath = resolve.sync(`${pkgId}/package.json`, {
-    basedir: rootDir,
-    paths: [],
-    preserveSymlinks: false,
-  });
-  const packageJSONData = fse.readJSONSync(packageJSONPath);
-  const pkgDir = path.dirname(packageJSONPath);
-  return {
-    data: packageJSONData,
-    dir: pkgDir,
-  };
-}
 
-function createDepsMetadata(depsInfo: Record<string, string>, taskConfig: Config): DepsMetaData {
+function createDepsMetadata(depsInfo: Record<string, DepScanData>, taskConfig: Config): DepsMetaData {
   const hash = getDepHash(depsInfo, taskConfig);
   return {
     hash,
@@ -148,7 +117,7 @@ function createDepsMetadata(depsInfo: Record<string, string>, taskConfig: Config
   };
 }
 
-function getDepHash(depsInfo: Record<string, string>, taskConfig: Config) {
+function getDepHash(depsInfo: Record<string, DepScanData>, taskConfig: Config) {
   let content = JSON.stringify(depsInfo) + JSON.stringify(taskConfig);
   return getHash(content);
 }

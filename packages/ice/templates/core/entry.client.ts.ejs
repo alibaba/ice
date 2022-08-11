@@ -1,0 +1,20 @@
+import { runClientApp, getAppConfig } from '@ice/runtime';
+import * as app from '@/app';
+import runtimeModules from './runtimeModules';
+import routes from './routes';
+import Document from '@/document';
+
+const getRouterBasename = () => {
+  const appConfig = getAppConfig(app);
+  return '<%- basename %>' || appConfig?.router?.basename || '';
+}
+
+runClientApp({
+  app,
+  runtimeModules,
+  routes,
+  Document,
+  basename: getRouterBasename(),
+  hydrate: <%- hydrate %>,
+  memoryRouter: <%- memoryRouter || false %>,
+});

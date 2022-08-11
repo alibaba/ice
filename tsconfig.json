@@ -9,6 +9,8 @@
     { "path": "packages/ice" },
     { "path": "packages/plugin-auth" },
     { "path": "packages/plugin-pha" },
+    { "path": "packages/plugin-fusion" },
+    { "path": "packages/plugin-antd" },
     { "path": "packages/plugin-rax-compat" }
   ]
 }

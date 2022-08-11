@@ -1,0 +1,20 @@
+import type { AppConfig as DefaultAppConfig, GetAppData, AppData } from '@ice/runtime';
+
+<%- configTypes.imports -%>
+
+<% if (configTypes.imports) {-%>
+interface ExtendsAppConfig extends DefaultAppConfig {
+  <% if (configTypes.imports) { %>
+    <%- configTypes.exports %>
+  <% } %>
+};
+
+export type AppConfig = ExtendsAppConfig;
+<% } else { -%>
+export type AppConfig = DefaultAppConfig;
+<% } -%>
+
+export { 
+  GetAppData,
+  AppData
+}

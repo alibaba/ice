@@ -6,6 +6,9 @@ import consola from 'consola';
 // @ts-expect-error FIXME: esm type error
 import matchRoutes from '@ice/runtime/matchRoutes';
 import type { ExtendsPluginAPI } from '@ice/types/esm/plugin.js';
+import type { TaskConfig } from 'build-scripts';
+import type { Config } from '@ice/types';
+import getRouterBasename from '../../utils/getRouterBasename.js';
 
 const require = createRequire(import.meta.url);
 
@@ -14,13 +17,15 @@ interface Options {
   routeManifestPath: string;
   documentOnly?: boolean;
   renderMode?: RenderMode;
-  basename?: string;
+  taskConfig?: TaskConfig<Config>;
+  getAppConfig: () => Promise<any>;
 }
 
 export default function createRenderMiddleware(options: Options): Middleware {
-  const { documentOnly, renderMode, serverCompileTask, routeManifestPath, basename } = options;
+  const { documentOnly, renderMode, serverCompileTask, routeManifestPath, getAppConfig, taskConfig } = options;
   const middleware: ExpressRequestHandler = async function (req, res, next) {
     const routes = JSON.parse(fse.readFileSync(routeManifestPath, 'utf-8'));
+    const basename = getRouterBasename(taskConfig, (await getAppConfig()).default);
     const matches = matchRoutes(routes, req.path, basename);
     if (matches.length) {
       // Wait for the server compilation to finish

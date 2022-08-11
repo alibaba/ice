@@ -11,7 +11,7 @@ import TerserPlugin from '@ice/bundles/compiled/terser-webpack-plugin/index.js';
 import ForkTsCheckerPlugin from '@ice/bundles/compiled/fork-ts-checker-webpack-plugin/index.js';
 import ESlintPlugin from '@ice/bundles/compiled/eslint-webpack-plugin/index.js';
 import CopyPlugin from '@ice/bundles/compiled/copy-webpack-plugin/index.js';
-import type { Configuration, WebpackPluginInstance, Compiler } from 'webpack';
+import type { Configuration, WebpackPluginInstance, NormalModule, Compiler } from 'webpack';
 import type webpack from 'webpack';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import type { Config } from '@ice/types';
@@ -20,7 +20,7 @@ import configAssets from './config/assets.js';
 import configCss from './config/css.js';
 import AssetsManifestPlugin from './webpackPlugins/AssetsManifestPlugin.js';
 import getCompilerPlugins from './getCompilerPlugins.js';
-import getSplitChunksConfig from './config/splitChunks.js';
+import getSplitChunksConfig, { FRAMEWORK_BUNDLES } from './config/splitChunks.js';
 
 const require = createRequire(import.meta.url);
 const { merge } = lodash;
@@ -113,6 +113,17 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
         ? webpack.DefinePlugin.runtimeValue(() => JSON.stringify(process.env[key]), true)
         : JSON.stringify(process.env[key]);
   });
+
+  const lazyCompilationConfig = dev && experimental?.lazyCompilation ? {
+    lazyCompilation: {
+      test: (module: NormalModule) => {
+        // do not lazy for framework bundles
+        const frameworkRegex = new RegExp(`[\\\\/]node_modules[\\\\/](${FRAMEWORK_BUNDLES.join('|')})[\\\\/]`);
+        return !frameworkRegex.test(module?.resourceResolveData?.path);
+      },
+      ...(typeof experimental?.lazyCompilation === 'object' ? { ...experimental.lazyCompilation } : {}),
+    },
+  } : {};
   // get compile plugins
   const compilerWebpackPlugins = getCompilerPlugins(config, 'webpack');
 
@@ -142,6 +153,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
       layers: true,
       cacheUnaffected: true,
       topLevelAwait: true,
+      ...lazyCompilationConfig,
       ...(experimental || {}),
     },
     entry: entry || (() => getEntry(rootDir, runtimeTmpDir)),

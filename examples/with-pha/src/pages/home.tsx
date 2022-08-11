@@ -8,6 +8,11 @@ export default function home() {
 
 export function getConfig() {
   return {
+    queryParamsPassKeys: [
+      'questionId',
+      'source',
+      'disableNav',
+    ],
     title: 'Home',
   };
 }

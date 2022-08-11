@@ -1,4 +1,5 @@
 import { Link, useData, useConfig } from 'ice';
+import { isWeb } from '@uni/env';
 // @ts-expect-error
 import url from './ice.png';
 
@@ -18,6 +19,7 @@ export default function About() {
       <Link to="/">home</Link>
       <img src={url} height="40" width="40" />
       <span className="mark">new</span>
+      <div>isWeb: { isWeb ? 'true' : 'false' }</div>
     </>
   );
 }

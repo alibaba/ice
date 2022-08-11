@@ -1,0 +1,67 @@
+import './env.server';
+import * as runtime from '@ice/runtime/server';
+import * as app from '@/app';
+import runtimeModules from './runtimeModules';
+import Document from '@/document';
+import type { RenderMode } from '@ice/runtime';
+import assetsManifest from './assets-manifest.json';
+import routes from './routes';
+
+const getRouterBasename = () => {
+  const appConfig = runtime.getAppConfig(app);
+  return '<%- basename %>' || appConfig?.router?.basename || '';
+}
+
+const setRuntimeEnv = (renderMode) => {
+  if (renderMode === 'SSG') {
+    process.env.ICE_CORE_SSG = 'true';
+  } else {
+    process.env.ICE_CORE_SSR = 'true';
+  }
+}
+
+interface RenderOptions {
+  documentOnly?: boolean;
+  renderMode?: RenderMode;
+  basename?: string;
+  serverOnlyBasename?: string;
+  routePath?: string;
+  disableFallback?: boolean;
+}
+
+export async function renderToHTML(requestContext, options: RenderOptions = {}) {
+  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback } = options;
+  setRuntimeEnv(renderMode);
+
+  return await runtime.renderToHTML(requestContext, {
+    app,
+    assetsManifest,
+    routes,
+    runtimeModules,
+    Document,
+    serverOnlyBasename,
+    basename: basename || getRouterBasename(),
+    documentOnly,
+    renderMode,
+    routePath,
+    disableFallback,
+  });
+}
+
+export async function renderToResponse(requestContext, options: RenderOptions = {}) {
+  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, disableFallback } = options;
+  setRuntimeEnv(options);
+
+  runtime.renderToResponse(requestContext, {
+    app,
+    assetsManifest,
+    routes,
+    runtimeModules,
+    Document,
+    serverOnlyBasename,
+    basename: basename || getRouterBasename(),
+    documentOnly,
+    renderMode,
+    disableFallback,
+  });
+}

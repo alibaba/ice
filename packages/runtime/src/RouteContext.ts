@@ -4,7 +4,7 @@ import type { RouteData, RouteConfig } from './types.js';
 const DataContext = React.createContext<RouteData | undefined>(undefined);
 DataContext.displayName = 'Data';
 
-function useData <T = RouteData>(): T {
+function useData(): RouteData {
   const value = React.useContext(DataContext);
   return value;
 }

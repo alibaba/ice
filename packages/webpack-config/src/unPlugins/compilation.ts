@@ -1,11 +1,13 @@
 import { createRequire } from 'module';
-import type { ReactConfig } from '@builder/swc';
-import { transform, type Config as SwcConfig } from '@builder/swc';
+import swc from '@swc/core';
+import type { Options as SwcConfig, ReactConfig } from '@swc/core';
 import type { UnpluginOptions } from 'unplugin';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { Config } from '@ice/types';
 
 const { merge } = lodash;
+const require = createRequire(import.meta.url);
+const regeneratorRuntimePath = require.resolve('regenerator-runtime');
 
 type JSXSuffix = 'jsx' | 'tsx';
 
@@ -16,17 +18,11 @@ interface Options {
   sourceMap?: Config['sourceMap'];
   compileExcludes?: RegExp[];
   swcOptions?: Config['swcOptions'];
+  cacheDir?: string;
 }
-
-interface TransformOptions extends SwcConfig {
-  filename: string;
-}
-
-const require = createRequire(import.meta.url);
-const regeneratorRuntimePath = require.resolve('regenerator-runtime');
 
 const compilationPlugin = (options: Options): UnpluginOptions => {
-  const { sourceMap, mode, fastRefresh, compileIncludes = [], compileExcludes, swcOptions = {} } = options;
+  const { sourceMap, mode, fastRefresh, compileIncludes = [], compileExcludes, swcOptions = {}, cacheDir } = options;
   const compileRegex = compileIncludes.map((includeRule) => {
     return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);
   });
@@ -45,46 +41,62 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
 
       const suffix = (['jsx', 'tsx'] as JSXSuffix[]).find(suffix => new RegExp(`\\.${suffix}?$`).test(id));
 
-      const programmaticOptions: TransformOptions = {
+      const programmaticOptions: SwcConfig = {
         filename: id,
+        sourceMaps: !!sourceMap,
       };
 
-      const { jsxTransform, removeExportExprs, compilationConfig } = swcOptions;
+      const commonOptions = getJsxTransformOptions({ suffix, fastRefresh });
 
-      let needTransform = false;
-
-      // common transform only works for webpack, esbuild has it's own compilation
-      if (jsxTransform) {
-        const commonOptions = getJsxTransformOptions({ suffix, fastRefresh });
-
-        // auto detect development mode
-        if (
-          mode &&
-          commonOptions?.jsc?.transform?.react &&
-          !Object.prototype.hasOwnProperty.call(commonOptions.jsc.transform.react, 'development')
-        ) {
-          commonOptions.jsc.transform.react.development = mode === 'development';
-        }
-
-        Object.assign(programmaticOptions, { sourceMaps: !!sourceMap }, commonOptions);
-        needTransform = true;
+      // auto detect development mode
+      if (
+        mode &&
+        commonOptions?.jsc?.transform?.react &&
+        !Object.prototype.hasOwnProperty.call(commonOptions.jsc.transform.react, 'development')
+      ) {
+        commonOptions.jsc.transform.react.development = mode === 'development';
       }
 
-      if (removeExportExprs && /(.*)pages(.*)\.(jsx?|tsx?|mjs)$/.test(id)) {
-        Object.assign(programmaticOptions, { removeExportExprs });
-        needTransform = true;
+      merge(programmaticOptions, commonOptions);
+
+      const { removeExportExprs, compilationConfig, keepPlatform } = swcOptions;
+
+      if (compilationConfig) {
+        merge(programmaticOptions, compilationConfig);
       }
 
-      // Files other than page entries do not need to be transform in esbuild.
-      if (!needTransform) {
-        return false;
+      const swcPlugins = [];
+      // handle app.tsx and page entries only
+      if (removeExportExprs && (/(.*)pages(.*)\.(jsx?|tsx?|mjs)$/.test(id) || /(.*)src\/app/.test(id))) {
+        swcPlugins.push([
+          require.resolve('@ice/swc-plugin-remove-export'),
+          removeExportExprs,
+        ]);
+      }
+
+      if (keepPlatform) {
+        swcPlugins.push([
+          require.resolve('@ice/swc-plugin-keep-platform'),
+          keepPlatform,
+        ]);
+      }
+
+      if (swcPlugins.length > 0) {
+        merge(programmaticOptions, {
+          jsc: {
+            experimental: {
+              cacheRoot: cacheDir,
+              plugins: swcPlugins,
+            },
+          },
+        });
       }
 
       try {
-        const output = await transform(source, merge(programmaticOptions, compilationConfig || {}));
+        const output = await swc.transform(source, programmaticOptions);
+
         const { code } = output;
         let { map } = output;
-        // FIXME: swc transform should return the sourcemap which the type is object
         if (typeof map === 'string') {
           // map require object type
           map = JSON.parse(map);
@@ -92,6 +104,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
         return { code, map };
       } catch (e) {
         // catch error for Unhandled promise rejection
+        console.error(e);
       }
     },
   };
@@ -127,23 +140,23 @@ function getJsxTransformOptions({
     module: {
       type: 'es6',
       noInterop: false,
-      // webpack will evaluate dynamic import, so there need preserve it
-      ignoreDynamic: true,
     },
     env: {
       loose: true,
     },
   };
-
+  const syntaxFeatures = {
+    dynamicImport: true,
+    decorators: true,
+    privateMethod: true,
+    importMeta: true,
+    exportNamespaceFrom: true,
+  };
   const jsOptions = merge({
     jsc: {
       parser: {
         jsx: true,
-        dynamicImport: true,
-        functionBind: true,
-        exportDefaultFrom: true,
-        exportNamespaceFrom: true,
-        decorators: true,
+        ...syntaxFeatures,
       },
     },
   }, commonOptions);
@@ -151,10 +164,9 @@ function getJsxTransformOptions({
   const tsOptions = merge({
     jsc: {
       parser: {
-        syntax: 'typescript',
         tsx: true,
-        decorators: true,
-        dynamicImport: true,
+        ...syntaxFeatures,
+        syntax: 'typescript',
       },
     },
   }, commonOptions);

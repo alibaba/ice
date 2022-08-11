@@ -41,7 +41,7 @@ export async function getData() {
 }
 
 // Server 端专用的数据请求
-export async function getStaticData() {
+export async function getServerData() {
   const data = await sendRequestInServer();
 
   return data;

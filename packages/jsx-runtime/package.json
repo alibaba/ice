@@ -27,11 +27,7 @@
   "scripts": {
     "watch": "ice-pkg start",
     "build": "ice-pkg build",
-    "prepublishOnly": "npm run build",
-    "eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
-    "eslint:fix": "npm run eslint -- --fix",
-    "stylelint": "stylelint \"**/*.{css,scss,less}\"",
-    "lint": "npm run eslint && npm run stylelint"
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "ice",
@@ -42,15 +38,11 @@
     "style-unit": "^3.0.4"
   },
   "devDependencies": {
-    "@ice/pkg": "^1.0.0-rc.0",
-    "@ice/pkg-plugin-docusaurus": "^1.0.0-rc.0",
-    "@iceworks/spec": "^1.0.0",
-    "eslint": "^7.0.0",
+    "@ice/pkg": "^1.0.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "stylelint": "^13.7.2"
+    "react-dom": "^18.0.0"
   },
   "peerDependencies": {
     "react": "^16 || ^17 || ^18"

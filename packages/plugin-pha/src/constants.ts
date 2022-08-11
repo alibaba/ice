@@ -75,5 +75,3 @@ export const validPageConfigKeys = [
   'queryParamsPassKeys',
   'queryParamsPassIgnoreKeys',
 ];
-
-export const templateFile = '.ice/pha-manifest.ts';
