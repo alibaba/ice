@@ -22,6 +22,9 @@
     "es-module-lexer": "^1.0.2",
     "magic-string": "^0.26.2"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "esm",
     "!esm/**/*.map"

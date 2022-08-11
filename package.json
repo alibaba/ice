@@ -21,6 +21,7 @@
     "lint:fix": "npm run lint -- --fix",
     "publish:alpha": "PUBLISH_TYPE=alpha esmo ./scripts/publishPackageWithDistTag.ts",
     "publish:beta": "PUBLISH_TYPE=beta esmo ./scripts/publishPackageWithDistTag.ts",
+    "publish:release": "PUBLISH_TYPE=release VERSION_PREFIX=rc esmo ./scripts/publishPackageWithDistTag.ts",
     "cov": "vitest run --coverage",
     "test": "vitest"
   },
