@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "@ice/pkg": "^1.0.0",
+    "@iceworks/spec": "^1.0.0",
     "@types/rax": "^1.0.8",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",

@@ -4,11 +4,13 @@ import type {
   ReactElement,
   ReactNode,
   RefObject,
+  SyntheticEvent,
 } from 'react';
 import { createElement as _createElement, useEffect, useCallback, useRef, useState } from 'react';
 import { cached, convertUnit } from 'style-unit';
 import { observerElement } from './visibility';
 import { isFunction, isObject, isNumber } from './type';
+
 
 // https://github.com/alibaba/rax/blob/master/packages/driver-dom/src/index.js
 // opacity -> opa
@@ -26,12 +28,12 @@ import { isFunction, isObject, isNumber } from './type';
 // borderImageOutset|borderImageSlice|borderImageWidth -> erim
 const NON_DIMENSIONAL_REG = /opa|ntw|ne[ch]|ex(?:s|g|n|p|$)|^ord|zoo|grid|orp|ows|mnc|^columns$|bs|erim|onit/i;
 
-function createInputCompat(type) {
-  function InputCompat(props) {
+function createInputCompat(type: string) {
+  function InputCompat(props: any) {
     const { value, onInput, ...rest } = props;
     const [v, setV] = useState(value);
-    const onChange = useCallback((event: SyntheticChangeEvent) => {
-      setV(event.target.value);
+    const onChange = useCallback((event: SyntheticEvent) => {
+      setV((event.target as HTMLInputElement).value);
 
       // Event of onInput should be native event.
       onInput && onInput(event.nativeEvent);
