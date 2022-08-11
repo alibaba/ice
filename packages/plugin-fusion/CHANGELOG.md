@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.23
+
+- [fix] return sourceMap with custom loader of `unicodeLoader`
+
 ## 0.1.22
 
 - [fix] remove alias config of `~` for vite
