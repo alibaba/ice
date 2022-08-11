@@ -1,13 +1,13 @@
-import { APP_MODE } from 'ice';
+import { APP_MODE, createModel } from 'ice';
 
 console.log('APP_MODE:', APP_MODE);
 
 export const delay = (time) => new Promise<void>((resolve) => setTimeout(() => resolve(), time));
 
-export default {
+export default createModel({
   state: {
     count: 0,
-    countHistory: []
+    countHistory: [] as number[]
   },
 
   reducers: {
@@ -27,4 +27,4 @@ export default {
       dispatch.counter.decrement();
     },
   }),
-};
+});

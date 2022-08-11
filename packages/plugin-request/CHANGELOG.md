@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+- [fix] escape duplicated interceptor of request
+
 ## 2.0.0
 
 - [feat] migrate plugin api and refactor runtime folder

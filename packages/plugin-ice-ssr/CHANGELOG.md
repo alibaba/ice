@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.1.3
+
+- [fix] not call the getStaticPaths method from the dynamic import route component
+- [fix] not call the getInitialProps method from the dynamic import route component
+
 ## 3.1.2
 
 - [feat] support generate defaultLocale HTML in SSG

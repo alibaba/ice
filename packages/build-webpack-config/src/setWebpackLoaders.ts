@@ -51,7 +51,16 @@ const configCSSRule = (config, style, loaders = []) => {
       .end()
       .use('css-loader')
       .loader(require.resolve('@builder/pack/deps/css-loader'))
-      .options(ruleKey === 'module' ? cssModuleLoaderOpts : cssLoaderOpts)
+      .options({
+        ...(ruleKey === 'module' ? cssModuleLoaderOpts : cssLoaderOpts),
+        url: {
+          filter: (url: string) => {
+            // do not parse any urls with absolute path, such as /assets/img.png
+            // starting with version 4.0.0, absolute paths are parsed based on the server root, it will break some project with ice.js 1.x
+            return !url.startsWith('/');
+          }
+        }
+      })
       .end()
       .use('postcss-loader')
       .loader(require.resolve('@builder/pack/deps/postcss-loader'))
@@ -61,7 +70,7 @@ const configCSSRule = (config, style, loaders = []) => {
       const [loaderName, loaderPath, loaderOpts = {}] = loader;
       rule.use(loaderName)
         .loader(loaderPath)
-        .options({ ...cssLoaderOpts, ...loaderOpts });
+        .options({ ...loaderOpts });
     });
   });
 };
@@ -84,8 +93,18 @@ export default (config) => {
   // css loader
   [
     ['css'],
-    ['scss', [['sass-loader', require.resolve('@builder/pack/deps/sass-loader')]]],
-    ['less', [['less-loader', require.resolve('@builder/pack/deps/less-loader'), { lessOptions: { javascriptEnabled: true } }]]],
+    ['scss', [
+      [
+        // fix: problems with url when using sass-loader https://github.com/webpack-contrib/sass-loader#problems-with-url
+        'resolve-url-loader',
+        require.resolve('@builder/pack/deps/resolve-url-loader'),
+        { sourceMap: process.env.NODE_ENV !== 'production'},
+      ],
+      ['sass-loader', require.resolve('@builder/pack/deps/sass-loader'), { sourceMap: true }],
+    ]],
+    ['less', [
+      ['less-loader', require.resolve('@builder/pack/deps/less-loader'), { sourceMap: true, lessOptions: { javascriptEnabled: true } }]
+    ]],
   ].forEach(([style, loaders]) => {
     configCSSRule(config, style, (loaders as any) || []);
   });

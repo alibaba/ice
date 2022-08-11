@@ -10,6 +10,7 @@
 
 - `outputPath` 默认值： `""` 提取后的文件目录前缀
 - `relativeCssPath` 默认值： `""` 提取的文件后相对于 css 的路径
+- `forceLocal` 默认值： `false` 是否 publicPath 为 http 网络路径时也强制生效
 
 ## Usage
 
@@ -101,4 +102,4 @@ body {
 
 ## 注意事项
 
-- 当 `output.publicPath` 设置为 http 网络路径时，插件不工作。
+- 当 `output.publicPath` 设置为 http 网络路径，并且 `forceLocal` 未设置为 `true` 时，插件不工作。

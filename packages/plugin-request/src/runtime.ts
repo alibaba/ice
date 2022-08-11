@@ -32,20 +32,28 @@ function setAxiosInstance(requestConfig, axiosInstance) {
     axiosInstance.defaults[key] = requestOptions[key];
   });
 
+  function isExist(handlers, [ fulfilled, rejected ]) {
+    return handlers.some(item => item.fulfilled === fulfilled && item.rejected === rejected);
+  }
+
   // Add a request interceptor
   if (interceptors.request) {
-    axiosInstance.interceptors.request.use(
+    const [ fulfilled, rejected ] = [
       interceptors.request.onConfig || function(config){ return config; },
       interceptors.request.onError || function(error) { return Promise.reject(error); }
-    );
+    ];
+    if(isExist(axiosInstance.interceptors.request.handlers, [ fulfilled, rejected ])) return;
+    axiosInstance.interceptors.request.use(fulfilled, rejected);
   }
 
   // Add a response interceptor
   if (interceptors.response) {
-    axiosInstance.interceptors.response.use(
+    const [ fulfilled, rejected ] = [
       interceptors.response.onConfig || function(response){ return response; },
       interceptors.response.onError || function(error){ return Promise.reject(error); }
-    );
+    ];
+    if(isExist(axiosInstance.interceptors.response.handlers, [ fulfilled, rejected ])) return;
+    axiosInstance.interceptors.response.use(fulfilled, rejected);
   }
 }
 
