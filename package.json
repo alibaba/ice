@@ -37,7 +37,7 @@
     "@types/fs-extra": "^9.0.13",
     "@types/glob": "^7.2.0",
     "@types/node": "^17.0.45",
-    "@types/semver": "^7.3.10",
+    "@types/semver": "^7.3.11",
     "@vercel/ncc": "^0.33.4",
     "c8": "^7.12.0",
     "chalk": "^4.1.2",
@@ -60,7 +60,7 @@
     "react-dom": "^18.2.0",
     "rimraf": "^3.0.2",
     "semver": "^7.3.7",
-    "stylelint": "^14.9.1",
+    "stylelint": "^14.10.0",
     "typescript": "^4.7.4",
     "vitest": "^0.15.2"
   },
