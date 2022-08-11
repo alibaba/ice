@@ -147,7 +147,7 @@ export const getRouteExportConfig = (rootDir: string) => {
     if (!fs.existsSync(routeConfigFile)) {
       return undefined;
     }
-    const routeConfig = await routeExportConfig.getConfig(['getConfig']);
+    const routeConfig = (await routeExportConfig.getConfig(['getConfig'])).default;
     return specifyRoutId ? routeConfig[specifyRoutId] : routeConfig;
   };
   return {
