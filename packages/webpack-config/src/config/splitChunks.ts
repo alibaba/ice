@@ -10,7 +10,7 @@ interface NameModule {
   type: string;
 }
 
-const FRAMEWORK_BUNDLES = [
+export const FRAMEWORK_BUNDLES = [
   // runtime dependencies
   'react', 'react-dom', '@ice/runtime', 'react-router', 'react-router-dom',
 ];
