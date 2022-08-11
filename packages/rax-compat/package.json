@@ -50,8 +50,7 @@
     "create-react-class": "^15.7.0"
   },
   "devDependencies": {
-    "@ice/pkg": "^1.0.0-rc.0",
-    "@ice/pkg-plugin-docusaurus": "^1.0.0-rc.0",
+    "@ice/pkg": "^1.0.0",
     "@iceworks/spec": "^1.0.0",
     "@types/rax": "^1.0.8",
     "@types/react": "^18.0.0",
