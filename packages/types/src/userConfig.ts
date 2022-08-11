@@ -40,6 +40,7 @@ export interface UserConfig {
   };
   removeHistoryDeadCode?: boolean;
   mock?: { exclude?: string[] };
+  experimental?: Config['experimental'];
   transform?: UnpluginOptions['transform'];
   syntaxFeatures?: SyntaxFeatures;
 }

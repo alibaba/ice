@@ -287,6 +287,10 @@ const userConfig = [
     validation: 'object',
   },
   {
+    name: 'experimental',
+    validation: 'object',
+  },
+  {
     name: 'syntaxFeatures',
     validation: 'object',
     setConfig: (config: Config, syntaxFeatures: UserConfig['syntaxFeatures']) => {
