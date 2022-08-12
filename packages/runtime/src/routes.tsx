@@ -19,7 +19,8 @@ export async function loadRouteModule(route: RouteModule, routeModulesCache: Rou
     routeModulesCache[id] = routeModule;
     return routeModule;
   } catch (error) {
-    console.error('loadRouteModule', error);
+    console.error(`Failed to load route module: ${id}.`);
+    console.debug(error);
   }
 }
 

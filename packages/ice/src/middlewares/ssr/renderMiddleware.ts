@@ -29,8 +29,11 @@ export default function createRenderMiddleware(options: Options): Middleware {
     const matches = matchRoutes(routes, req.path, basename);
     if (matches.length) {
       // Wait for the server compilation to finish
-      const { serverEntry } = await serverCompileTask.get();
-
+      const { serverEntry, error } = await serverCompileTask.get();
+      if (error) {
+        consola.error('Server compile error in render middleware.');
+        return;
+      }
       let serverModule;
       try {
         delete require.cache[serverEntry];

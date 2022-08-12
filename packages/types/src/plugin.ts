@@ -19,7 +19,7 @@ export type ServerCompiler = (
     externalDependencies?: boolean;
     transformEnv?: boolean;
   }
-) => Promise<BuildResult & { serverEntry: string }>;
+) => Promise<Partial<BuildResult & { serverEntry: string; error: any }>>;
 export type WatchEvent = [
   pattern: RegExp | string,
   event: (eventName: EventName, filePath: string) => void,

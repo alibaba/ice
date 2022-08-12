@@ -31,7 +31,7 @@ function getRuntimeModules(plugins: Array<PluginInfo<any, ExtendsPluginAPI>>) {
           name: pkgInfo.name as string,
         };
       } catch (error) {
-        consola.error(`ERROR: fail to load package.json of plugin ${path.basename(packageDir)}`);
+        consola.error(`Failed to load package.json of plugin ${path.basename(packageDir)}`);
       }
     } else {
       consola.warn(`runtime is not exist in ${name}`);

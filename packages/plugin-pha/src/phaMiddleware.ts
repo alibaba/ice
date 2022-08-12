@@ -1,6 +1,7 @@
 import * as path from 'path';
 import type { ServerResponse } from 'http';
 import type { ExpressRequestHandler } from 'webpack-dev-server';
+import consola from 'consola';
 import { parseManifest, rewriteAppWorker, getAppWorkerUrl, getMultipleManifest, type ParseOptions } from './manifestHelpers.js';
 import { getAppWorkerContent, type Options } from './generateManifest.js';
 import type { Manifest } from './types.js';
@@ -28,7 +29,11 @@ const createPHAMiddleware = ({
     const requestAppWorker = req.url === '/app-worker.js';
     if (requestManifest || requestAppWorker) {
       // Get serverEntry from middleware of server-compile.
-      const { serverEntry } = await compileTask();
+      const { error, serverEntry } = await compileTask();
+      if (error) {
+        consola.error('Server compile error in PHA middleware.');
+        return;
+      }
       const [appConfig, routesConfig] = await Promise.all([getAppConfig(['phaManifest']), getRoutesConfig()]);
       let manifest: Manifest = appConfig.phaManifest;
       const appWorkerPath = getAppWorkerUrl(manifest, path.join(rootDir, 'src'));

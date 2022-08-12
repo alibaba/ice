@@ -65,8 +65,7 @@ async function webpackCompiler(options: {
     // @ts-expect-error ignore error with different webpack referer
     compiler = webpack(webpackConfigs as Configuration);
   } catch (err) {
-    consola.error('Failed to compile.');
-    consola.log('');
+    consola.error('Webpack compile error.');
     consola.error(err.message || err);
   }
 
@@ -88,13 +87,12 @@ async function webpackCompiler(options: {
       if (messages.errors.length > 1) {
         messages.errors.length = 1;
       }
-      consola.error('Failed to compile.\n');
-      consola.error(messages.errors.join('\n\n'));
-      consola.log(stats.toString());
+      consola.error('Failed to compile.');
+      console.error(messages.errors.join('\n'));
       return;
     } else if (messages.warnings.length) {
-      consola.warn('Compiled with warnings.\n');
-      consola.warn(messages.warnings.join('\n\n'));
+      consola.warn('Compiled with warnings.');
+      consola.warn(messages.warnings.join('\n'));
     }
     if (command === 'start') {
       if (isSuccessful && isFirstCompile) {

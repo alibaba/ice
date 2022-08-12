@@ -697,6 +697,7 @@ importers:
       '@ice/jsx-runtime': ^0.1.0
       '@types/react': ^18.0.8
       '@types/react-dom': ^18.0.3
+      consola: ^2.15.3
       history: ^5.3.0
       react: ^18.0.0
       react-dom: ^18.0.0
@@ -704,6 +705,7 @@ importers:
       regenerator-runtime: ^0.13.9
     dependencies:
       '@ice/jsx-runtime': link:../jsx-runtime
+      consola: 2.15.3
       history: 5.3.0
       react-router-dom: 6.3.0_biqbaboplfbrettd7655fr4n2y
     devDependencies:

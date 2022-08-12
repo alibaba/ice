@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import type { GetAppConfig, GetRoutesConfig } from '@ice/types/esm/plugin.js';
+import type { GetAppConfig, GetRoutesConfig, ServerCompiler } from '@ice/types/esm/plugin.js';
 import { parseManifest, rewriteAppWorker, getAppWorkerUrl, getMultipleManifest, type ParseOptions } from './manifestHelpers.js';
 import type { Compiler } from './index.js';
 
@@ -11,7 +11,7 @@ export interface Options {
   compiler: Compiler;
   getAppConfig: GetAppConfig;
   getRoutesConfig: GetRoutesConfig;
-  compileTask?: () => Promise<{ serverEntry: string}>;
+  compileTask?: () => ReturnType<ServerCompiler>;
 }
 
 export async function getAppWorkerContent(

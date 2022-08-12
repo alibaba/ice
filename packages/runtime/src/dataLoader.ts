@@ -95,8 +95,8 @@ async function load(id: string, loader: GetData) {
 function init(loaders: Loaders) {
   try {
     loadInitialData(loaders);
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error('Load initial data error: ', error);
   }
 
   (window as any).__ICE_DATA_LOADER__ = async (id) => {

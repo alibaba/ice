@@ -153,18 +153,27 @@ export function createServerCompiler(options: Options) {
     const startTime = new Date().getTime();
     consola.debug('[esbuild]', `start compile for: ${buildOptions.entryPoints}`);
 
-    const esbuildResult = await esbuild.build(buildOptions);
+    try {
+      const esbuildResult = await esbuild.build(buildOptions);
 
-    consola.debug('[esbuild]', `time cost: ${new Date().getTime() - startTime}ms`);
+      consola.debug('[esbuild]', `time cost: ${new Date().getTime() - startTime}ms`);
 
-    const esm = server?.format === 'esm';
-    const outJSExtension = esm ? '.mjs' : '.cjs';
-    const serverEntry = path.join(rootDir, task.config.outputDir, SERVER_OUTPUT_DIR, `index${outJSExtension}`);
+      const esm = server?.format === 'esm';
+      const outJSExtension = esm ? '.mjs' : '.cjs';
+      const serverEntry = path.join(rootDir, task.config.outputDir, SERVER_OUTPUT_DIR, `index${outJSExtension}`);
 
-    return {
-      ...esbuildResult,
-      serverEntry,
-    };
+      return {
+        ...esbuildResult,
+        serverEntry,
+      };
+    } catch (error) {
+      consola.error('Server compile error.', `\nEntryPoints: ${JSON.stringify(buildOptions.entryPoints)}`);
+      consola.debug(buildOptions);
+      consola.debug(error);
+      return {
+        error: error as Error,
+      };
+    }
   };
   return serverCompiler;
 }

@@ -81,6 +81,7 @@ const build = async (
       } else {
         compiler?.close?.(() => {});
         const isSuccessful = !messages.errors.length;
+
         const serverCompilerResult = await serverCompiler(
           {
             entryPoints: { index: entryPoint },
@@ -99,6 +100,11 @@ const build = async (
             },
           },
         );
+        if (serverCompilerResult.error) {
+          consola.error('Build failed.');
+          return;
+        }
+
         serverEntry = serverCompilerResult.serverEntry;
 
         let renderMode;
