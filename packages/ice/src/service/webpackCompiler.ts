@@ -5,10 +5,11 @@ import chalk from 'chalk';
 import type { CommandArgs, TaskConfig } from 'build-scripts';
 import type { Compiler, Configuration } from 'webpack';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
-import type { Urls, ServerCompiler } from '@ice/types/esm/plugin.js';
+import type { Urls, ServerCompiler, GetAppConfig, GetRoutesConfig } from '@ice/types/esm/plugin.js';
 import type { Config } from '@ice/types';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import openBrowser from '../utils/openBrowser.js';
+import DataLoaderPlugin from '../webpack/DataLoaderPlugin.js';
 
 type WebpackConfig = Configuration & { devServer?: DevServerConfiguration };
 async function webpackCompiler(options: {
@@ -19,9 +20,13 @@ async function webpackCompiler(options: {
   applyHook: (key: string, opts?: {}) => Promise<void>;
   rootDir: string;
   urls?: Urls;
-  serverCompiler: ServerCompiler;
   spinner: ora.Ora;
   devPath?: string;
+  hooksAPI: {
+    serverCompiler: ServerCompiler;
+    getAppConfig: GetAppConfig;
+    getRoutesConfig: GetRoutesConfig;
+  };
 }) {
   const {
     taskConfigs,
@@ -29,18 +34,23 @@ async function webpackCompiler(options: {
     applyHook,
     command,
     commandArgs,
-    serverCompiler,
+    hooksAPI,
     webpackConfigs,
     spinner,
     devPath,
+    rootDir,
   } = options;
+  const { serverCompiler } = hooksAPI;
   await applyHook(`before.${command}.run`, {
     urls,
     commandArgs,
     taskConfigs,
     webpackConfigs,
-    serverCompiler,
+    ...hooksAPI,
   });
+  // Add webpack plugin of data-loader
+  webpackConfigs[0].plugins.push(new DataLoaderPlugin({ serverCompiler, rootDir }));
+
   // Add default plugins for spinner
   webpackConfigs[0].plugins.push((compiler: Compiler) => {
     compiler.hooks.beforeCompile.tap('spinner', () => {
@@ -55,8 +65,7 @@ async function webpackCompiler(options: {
     // @ts-expect-error ignore error with different webpack referer
     compiler = webpack(webpackConfigs as Configuration);
   } catch (err) {
-    consola.error('Failed to compile.');
-    consola.log('');
+    consola.error('Webpack compile error.');
     consola.error(err.message || err);
   }
 
@@ -78,13 +87,12 @@ async function webpackCompiler(options: {
       if (messages.errors.length > 1) {
         messages.errors.length = 1;
       }
-      consola.error('Failed to compile.\n');
-      consola.error(messages.errors.join('\n\n'));
-      consola.log(stats.toString());
+      consola.error('Failed to compile.');
+      console.error(messages.errors.join('\n'));
       return;
     } else if (messages.warnings.length) {
-      consola.warn('Compiled with warnings.\n');
-      consola.warn(messages.warnings.join('\n\n'));
+      consola.warn('Compiled with warnings.');
+      consola.warn(messages.warnings.join('\n'));
     }
     if (command === 'start') {
       if (isSuccessful && isFirstCompile) {
@@ -94,13 +102,13 @@ async function webpackCompiler(options: {
           logoutMessage += `\n   - IDE server: https://${process.env.WORKSPACE_UUID}-${commandArgs.port}.${process.env.WORKSPACE_HOST}${devPath}`;
         } else {
           logoutMessage += `\n
-   - Local  : ${chalk.underline.white(urls.localUrlForBrowser)}${devPath}
-   - Network:  ${chalk.underline.white(urls.lanUrlForTerminal)}${devPath}`;
+   - Local  : ${chalk.underline.white(`${urls.localUrlForBrowser}${devPath}`)}
+   - Network:  ${chalk.underline.white(`${urls.lanUrlForTerminal}${devPath}`)}`;
         }
         consola.log(`${logoutMessage}\n`);
 
         if (commandArgs.open) {
-          openBrowser(urls.localUrlForBrowser);
+          openBrowser(`${urls.localUrlForBrowser}${devPath}`);
         }
       }
       // compiler.hooks.done is AsyncSeriesHook which does not support async function
@@ -111,7 +119,7 @@ async function webpackCompiler(options: {
         urls,
         messages,
         taskConfigs,
-        serverCompiler,
+        ...hooksAPI,
       });
     }
 

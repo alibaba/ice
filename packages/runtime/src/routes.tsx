@@ -19,7 +19,8 @@ export async function loadRouteModule(route: RouteModule, routeModulesCache: Rou
     routeModulesCache[id] = routeModule;
     return routeModule;
   } catch (error) {
-    console.error('loadRouteModule', error);
+    console.error(`Failed to load route module: ${id}.`);
+    console.debug(error);
   }
 }
 
@@ -124,7 +125,6 @@ export function createRouteElements(
 ) {
   return routes.map((routeItem: RouteItem) => {
     let { path, children, index, id, layout, element, ...rest } = routeItem;
-
     element = (
       <RouteWrapper id={id} isLayout={layout} wrappers={RouteWrappers}>
         <RouteComponent id={id} />
@@ -150,12 +150,12 @@ export function createRouteElements(
 function RouteComponent({ id }: { id: string }) {
   // get current route component from latest routeModules
   const { routeModules } = useAppContext();
-  const { default: Component } = routeModules[id];
+  const { default: Component } = routeModules[id] || {};
   if (process.env.NODE_ENV === 'development') {
     if (!Component) {
       throw new Error(
         `Route "${id}" has no component! Please go add a \`default\` export in the route module file.\n` +
-          'If you were trying to navigate or submit to a resource route, use `<a>` instead of `<Link>` or `<Form reloadDocument>`.',
+        'If you were trying to navigate or submit to a resource route, use `<a>` instead of `<Link>` or `<Form reloadDocument>`.',
       );
     }
   }

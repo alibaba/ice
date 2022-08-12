@@ -15,7 +15,7 @@
   "main": "./esm/index.js",
   "type": "module",
   "dependencies": {
-    "@swc/core": "1.2.168",
+    "@swc/core": "1.2.210",
     "caniuse-lite": "^1.0.30001332",
     "chokidar": "3.5.3",
     "events": "3.3.0",

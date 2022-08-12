@@ -1,12 +1,20 @@
 import type webpack from 'webpack';
 import type { RuleSetRule, Configuration, Compiler, WebpackPluginInstance } from 'webpack';
-import type { ProxyConfigArray, ProxyConfigArrayItem, ProxyConfigMap, Middleware, ServerOptions, Configuration as DevServerConfiguration } from 'webpack-dev-server';
+import type {
+  ProxyConfigArray,
+  ProxyConfigArrayItem,
+  ProxyConfigMap,
+  Middleware,
+  ServerOptions,
+  Configuration as DevServerConfiguration,
+} from 'webpack-dev-server';
 import type { Options } from 'eslint-webpack-plugin';
 import type { ForkTsCheckerWebpackPluginOptions } from 'fork-ts-checker-webpack-plugin/lib/plugin-options';
-import type { UnpluginOptions } from 'unplugin';
+import type { UnpluginOptions, UnpluginContext } from 'unplugin';
 import type Server from 'webpack-dev-server';
 import type { ECMA } from 'terser';
-import type { Config as CompilationConfig } from '@builder/swc';
+import type { Config as SWCCompilationConfig } from '@builder/swc';
+import type { BuildOptions } from 'esbuild';
 
 // get type definitions from terser-webpack-plugin
 interface CustomOptions {
@@ -25,13 +33,25 @@ interface ConfigurationCtx extends Config {
   webpack: typeof webpack;
 }
 
+type Experimental = Configuration['experiments'];
 interface SwcOptions {
-  jsxTransform?: boolean;
   removeExportExprs?: string[];
-  compilationConfig?: CompilationConfig;
+  compilationConfig?: SWCCompilationConfig;
+  keepPlatform?: 'node' | 'web' | 'weex' | 'miniapp';
 }
 
-type Experimental = Pick<Configuration, 'experiments'>;
+interface TransformOptions {
+  isServer: boolean;
+}
+type Transform = (this: UnpluginContext, code: string, id: string, options: TransformOptions) => ReturnType<UnpluginOptions['transform']>;
+
+// Only support transform and transformInclude for now
+interface TransformPlugin {
+  name: string;
+  enforce?: string;
+  transform?: Transform;
+  transformInclude?: UnpluginOptions['transformInclude'];
+}
 
 export type ModifyWebpackConfig = (config: Configuration, ctx: ConfigurationCtx) => Configuration;
 export interface Config {
@@ -66,9 +86,9 @@ export interface Config {
 
   hash?: boolean | string;
 
-  transformPlugins?: UnpluginOptions[];
+  transformPlugins?: TransformPlugin[];
 
-  transforms?: UnpluginOptions['transform'][];
+  transforms?: Transform[];
 
   middlewares?:
   | ((middlewares: Middleware[], devServer: Server) => Middleware[])
@@ -113,4 +133,12 @@ export interface Config {
   basename?: string;
 
   logging?: string;
+
+  memoryRouter?: boolean;
+
+  server?: {
+    entry?: string;
+
+    buildOptions?: (options: BuildOptions) => BuildOptions;
+  };
 }

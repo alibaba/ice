@@ -31,6 +31,7 @@ coverage
 *.swp
 *.dia~
 *.temp.json
+*.swc
 
 # Packages
 packages/*/lib/
@@ -38,6 +39,7 @@ packages/*/esm/
 
 # temp folder .ice
 examples/*/.ice
+examples/*/.swc
 
 build
 dist

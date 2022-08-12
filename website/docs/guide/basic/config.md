@@ -307,6 +307,13 @@ export default defineConfig({
 - 类型：`boolean | string`
 - 默认值：`development` 模式：默认为 'cheap-module-source-map'，支持通过 `false` 关闭，不支持设置为其他枚举值。`production` 模式：默认 `false`。
 
+### syntaxFeatures
+
+- 类型：`{ exportDefaultFrom: boolean; functionBind: boolean; }`
+- 默认值：`undefined`
+
+ICE 内置了大量 ES 语法，便于开发者进行编码。对于 [proposal-export-default-from](https://github.com/tc39/proposal-export-default-from) 和 [proposal-bind-operator](https://github.com/tc39/proposal-bind-operator) 由于其提案进度较慢，我们并不推荐使用。如果希望支持该语法，可以主动配置 `syntaxFeatures` 进行启用。
+
 ### tsChecker
 
 - 类型：`boolean`

@@ -1,6 +1,6 @@
 {
   "name": "rax-compat",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Rax compatible mode, running rax project on the react runtime.",
   "files": [
     "esm",
@@ -46,20 +46,16 @@
   ],
   "dependencies": {
     "@swc/helpers": "^0.4.3",
-    "style-unit": "^3.0.4",
+    "style-unit": "^3.0.5",
     "create-react-class": "^15.7.0"
   },
   "devDependencies": {
-    "@ice/pkg": "^1.0.0-rc.0",
-    "@ice/pkg-plugin-docusaurus": "^1.0.0-rc.0",
-    "@iceworks/spec": "^1.0.0",
+    "@ice/pkg": "^1.0.0",
     "@types/rax": "^1.0.8",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
-    "eslint": "^7.0.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "stylelint": "^13.7.2"
+    "react-dom": "^18.0.0"
   },
   "peerDependencies": {
     "react": "^18",

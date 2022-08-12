@@ -1,14 +1,15 @@
 import React, { useLayoutEffect, useState } from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { createHashHistory, createBrowserHistory } from 'history';
-import type { HashHistory, BrowserHistory, Action, Location } from 'history';
+import { createHashHistory, createBrowserHistory, createMemoryHistory } from 'history';
+import type { HashHistory, BrowserHistory, Action, Location, InitialEntry, MemoryHistory } from 'history';
 import { createHistorySingle } from './utils/history-single.js';
 import Runtime from './runtime.js';
 import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
+import { AppDataProvider, getAppData } from './AppData.js';
 import type {
   AppContext, AppExport, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
-  RouteWrapperConfig, RuntimeModules, RouteMatch, ComponentWithChildren, RouteModules,
+  RouteWrapperConfig, RuntimeModules, RouteMatch, RouteModules, AppConfig, DocumentComponent,
 } from './types.js';
 import { loadRouteModules, loadRoutesData, getRoutesConfig, filterMatchesToLoad } from './routes.js';
 import { updateRoutesConfig } from './routesConfig.js';
@@ -20,10 +21,13 @@ interface RunClientAppOptions {
   app: AppExport;
   routes: RouteItem[];
   runtimeModules: RuntimeModules;
-  Document: ComponentWithChildren<{}>;
-  basename?: string;
+  Document: DocumentComponent;
   hydrate: boolean;
+  basename?: string;
+  memoryRouter?: boolean;
 }
+
+type History = BrowserHistory | HashHistory | MemoryHistory;
 
 export default async function runClientApp(options: RunClientAppOptions) {
   const {
@@ -31,19 +35,33 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routes,
     runtimeModules,
     Document,
-    basename: defaultBasename,
+    basename,
     hydrate,
+    memoryRouter,
   } = options;
   const appContextFromServer: AppContext = (window as any).__ICE_APP_CONTEXT__ || {};
-  let { routesData, routesConfig, assetsManifest, basename: basenameFromServer } = appContextFromServer;
+  let {
+    appData,
+    routesData,
+    routesConfig,
+    assetsManifest,
+    routePath,
+  } = appContextFromServer;
 
   const requestContext = getRequestContext(window.location);
 
+  if (!appData) {
+    appData = await getAppData(app, requestContext);
+  }
+
   const appConfig = getAppConfig(app);
+  const history = createHistory(appConfig, { memoryRouter, routePath });
 
-  const basename = basenameFromServer || defaultBasename;
-
-  const matches = matchRoutes(routes, window.location, basename);
+  const matches = matchRoutes(
+    routes,
+    memoryRouter ? routePath : history.location,
+    basename,
+  );
   const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
 
   if (!routesData) {
@@ -57,12 +75,14 @@ export default async function runClientApp(options: RunClientAppOptions) {
     appExport: app,
     routes,
     appConfig,
+    appData,
     routesData,
     routesConfig,
     assetsManifest,
     matches,
     routeModules,
     basename,
+    routePath,
   };
 
   const runtime = new Runtime(appContext);
@@ -75,23 +95,25 @@ export default async function runClientApp(options: RunClientAppOptions) {
 
   await Promise.all(runtimeModules.map(m => runtime.loadModule(m)).filter(Boolean));
 
-  render(runtime, Document);
+  render({ runtime, Document, history });
 }
 
-async function render(runtime: Runtime, Document: ComponentWithChildren<{}>) {
+interface RenderOptions {
+  history: History;
+  runtime: Runtime;
+  Document: DocumentComponent;
+}
+async function render({ history, runtime, Document }: RenderOptions) {
   const appContext = runtime.getAppContext();
+  const { appConfig } = appContext;
   const render = runtime.getRender();
   const AppProvider = runtime.composeAppProvider() || React.Fragment;
   const RouteWrappers = runtime.getWrappers();
   const AppRouter = runtime.getAppRouter();
 
-  const createHistory = process.env.ICE_CORE_ROUTER === 'true'
-    ? (appContext.appConfig?.router?.type === 'hash' ? createHashHistory : createBrowserHistory)
-    : createHistorySingle;
-  const history = createHistory({ window });
 
   render(
-    document.getElementById(appContext.appConfig.app.rootId),
+    document.getElementById(appConfig.app.rootId),
     <BrowserEntry
       history={history}
       appContext={appContext}
@@ -109,7 +131,7 @@ interface BrowserEntryProps {
   AppProvider: React.ComponentType<any>;
   RouteWrappers: RouteWrapperConfig[];
   AppRouter: React.ComponentType<AppRouterProps>;
-  Document: ComponentWithChildren<{}>;
+  Document: DocumentComponent;
 }
 
 interface HistoryState {
@@ -137,6 +159,7 @@ function BrowserEntry({
     routesConfig: initialRoutesConfig,
     routeModules: initialRouteModules,
     basename,
+    appData,
   } = appContext;
 
   const [historyState, setHistoryState] = useState<HistoryState>({
@@ -190,12 +213,14 @@ function BrowserEntry({
 
   return (
     <AppContextProvider value={appContext}>
-      <App
-        action={action}
-        location={location}
-        navigator={history}
-        {...rest}
-      />
+      <AppDataProvider value={appData}>
+        <App
+          action={action}
+          location={location}
+          navigator={history}
+          {...rest}
+        />
+      </AppDataProvider>
     </AppContextProvider>
   );
 }
@@ -239,4 +264,39 @@ async function loadNextPage(
     routesConfig,
     routeModules,
   };
+}
+
+function createHistory(
+  appConfig: AppConfig,
+  { memoryRouter, routePath }: { memoryRouter: boolean; routePath: string },
+): History {
+  const createHistory = process.env.ICE_CORE_ROUTER === 'true'
+    ? createRouterHistory(appConfig?.router?.type, memoryRouter)
+    : createHistorySingle;
+  const createHistoryOptions: Parameters<typeof createHistory>[0] = { window };
+
+  if (memoryRouter || appConfig?.router?.type === 'memory') {
+    let initialEntries: InitialEntry[] = [];
+    if (memoryRouter) {
+      initialEntries = [routePath];
+    } else if (appConfig?.router?.type === 'memory') {
+      initialEntries = appConfig?.router?.initialEntries || [window.location.pathname];
+    }
+    (createHistoryOptions as Parameters<typeof createMemoryHistory>[0]).initialEntries = initialEntries;
+  }
+
+  const history = createHistory(createHistoryOptions);
+  return history;
+}
+
+function createRouterHistory(type: AppConfig['router']['type'], memoryRouter: boolean) {
+  if (memoryRouter || type === 'memory') {
+    return createMemoryHistory;
+  }
+  if (type === 'browser') {
+    return createBrowserHistory;
+  }
+  if (type === 'hash') {
+    return createHashHistory;
+  }
 }

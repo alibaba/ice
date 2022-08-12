@@ -1,8 +1,9 @@
 import * as path from 'path';
 import type { ServerResponse } from 'http';
 import type { ExpressRequestHandler } from 'webpack-dev-server';
+import consola from 'consola';
 import { parseManifest, rewriteAppWorker, getAppWorkerUrl, getMultipleManifest, type ParseOptions } from './manifestHelpers.js';
-import { getAppWorkerContent, compileEntires, type Options } from './generateManifest.js';
+import { getAppWorkerContent, type Options } from './generateManifest.js';
 import type { Manifest } from './types.js';
 
 function sendResponse(res: ServerResponse, content: string, mime: string): void {
@@ -16,6 +17,8 @@ const createPHAMiddleware = ({
   outputDir,
   compileTask,
   parseOptions,
+  getAppConfig,
+  getRoutesConfig,
   compiler,
 }: Options): ExpressRequestHandler => {
   const phaMiddleware: ExpressRequestHandler = async (req, res, next) => {
@@ -26,9 +29,13 @@ const createPHAMiddleware = ({
     const requestAppWorker = req.url === '/app-worker.js';
     if (requestManifest || requestAppWorker) {
       // Get serverEntry from middleware of server-compile.
-      const { serverEntry } = await compileTask();
-      const [manifestEntry, routesConfigEntry] = await compileEntires(compiler, { rootDir, outputDir });
-      let manifest: Manifest = (await import(manifestEntry)).default;
+      const { error, serverEntry } = await compileTask();
+      if (error) {
+        consola.error('Server compile error in PHA middleware.');
+        return;
+      }
+      const [appConfig, routesConfig] = await Promise.all([getAppConfig(['phaManifest']), getRoutesConfig()]);
+      let manifest: Manifest = appConfig.phaManifest;
       const appWorkerPath = getAppWorkerUrl(manifest, path.join(rootDir, 'src'));
       if (appWorkerPath) {
         // over rewrite appWorker.url to app-worker.js
@@ -47,7 +54,7 @@ const createPHAMiddleware = ({
       }
       const phaManifest = await parseManifest(manifest, {
         ...parseOptions,
-        configEntry: routesConfigEntry,
+        routesConfig,
         serverEntry: serverEntry,
       } as ParseOptions);
       if (!phaManifest?.tab_bar) {

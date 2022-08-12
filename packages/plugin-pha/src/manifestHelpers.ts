@@ -17,7 +17,7 @@ interface TransformOptions {
 export interface ParseOptions {
   urlPrefix: string;
   publicPath: string;
-  configEntry: string;
+  routesConfig?: Record<string, any>;
   serverEntry: string;
   template?: boolean;
   urlSuffix?: string;
@@ -94,8 +94,7 @@ function getPageUrl(routeId: string, options: ParseOptions) {
   return `${urlPrefix}${splitCharacter}${routeId}${urlSuffix}`;
 }
 
-async function getPageConfig(routeId: string, configEntry: string): Promise<MixedPage> {
-  const routesConfig = (await import(configEntry)).default;
+async function getPageConfig(routeId: string, routesConfig: Record<string, any>): Promise<MixedPage> {
   const routeConfig = routesConfig![`/${routeId}`]?.() as MixedPage || {};
   const filteredConfig = {};
   Object.keys(routeConfig).forEach((key) => {
@@ -122,11 +121,11 @@ async function renderPageDocument(routeId: string, serverEntry: string): Promise
 }
 
 async function getPageManifest(page: string | Page, options: ParseOptions): Promise<MixedPage> {
-  const { template, serverEntry, configEntry } = options;
+  const { template, serverEntry, routesConfig } = options;
   // Page will be type string when it is a source frame.
   if (typeof page === 'string') {
     // Get html content by render document.
-    const pageConfig = await getPageConfig(page, configEntry);
+    const pageConfig = await getPageConfig(page, routesConfig);
     const { queryParams = '', ...rest } = pageConfig;
     const pageManifest = {
       key: page,

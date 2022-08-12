@@ -3,12 +3,12 @@ import cacache from '@ice/bundles/compiled/cacache/index.js';
 
 const CACHE_PATH = 'node_modules/.cache/route';
 
-export function getRouteCache(rootDir: string, routeId: string) {
+export function getCache(rootDir: string, id: string) {
   const cachePath = path.join(rootDir, CACHE_PATH);
-  return cacache.get(cachePath, routeId).then((cache) => JSON.parse(cache.data.toString('utf-8')));
+  return cacache.get(cachePath, id).then((cache) => JSON.parse(cache.data.toString('utf-8')));
 }
 
-export function setRouteCache(rootDir: string, routeId: string, data: any) {
+export function setCache(rootDir: string, id: string, data: any) {
   const cachePath = path.join(rootDir, CACHE_PATH);
-  return cacache.put(cachePath, routeId, JSON.stringify(data));
+  return cacache.put(cachePath, id, JSON.stringify(data));
 }

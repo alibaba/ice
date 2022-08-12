@@ -26,6 +26,11 @@ describe('resolveId', () => {
     const id = resolveId('ice', alias);
     expect(id).toBe(false);
   });
+  it('alias: { foundnamejs: \'/user/folder\'}; id: foundnamejs', () => {
+    const alias = { 'foundnamejs': '/user/folder' };
+    const id = resolveId('foundnamejs', alias);
+    expect(id).toBe('/user/folder');
+  });
 
   it('alias with relative path', () => {
     const alias = { ice: 'rax' } as Alias;

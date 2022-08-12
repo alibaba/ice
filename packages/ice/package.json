@@ -16,7 +16,7 @@
     "openChrome.applescript"
   ],
   "engines": {
-    "node": ">=12.22.0",
+    "node": ">=14.19.0",
     "npm": ">=3.0.0"
   },
   "scripts": {
@@ -29,6 +29,10 @@
   "bugs": "https://github.com/ice-lab/ice-next/issues",
   "homepage": "https://next.ice.work",
   "dependencies": {
+    "@babel/generator": "7.18.10",
+    "@babel/parser": "7.18.10",
+    "@babel/traverse": "7.18.10",
+    "@babel/types": "7.18.10",
     "@ice/bundles": "^0.1.0",
     "@ice/route-manifest": "^1.0.0",
     "@ice/runtime": "^1.0.0",
@@ -36,8 +40,8 @@
     "@ice/webpack-config": "^1.0.0",
     "acorn": "^8.7.1",
     "address": "^1.1.2",
-    "build-scripts": "^2.0.0-23",
     "body-parser": "^1.20.0",
+    "build-scripts": "^2.0.0-23",
     "chalk": "^4.0.0",
     "commander": "^9.0.0",
     "consola": "^2.15.3",
@@ -59,7 +63,6 @@
     "open": "^8.4.0",
     "path-to-regexp": "^6.2.0",
     "react-router": "^6.3.0",
-    "resolve": "^1.22.0",
     "resolve.exports": "^1.1.0",
     "sass": "^1.49.9",
     "semver": "^7.3.5",
@@ -68,6 +71,8 @@
     "webpack-dev-server": "^4.7.4"
   },
   "devDependencies": {
+    "@types/babel__traverse": "^7.17.1",
+    "@types/babel__generator": "^7.6.4",
     "@types/cross-spawn": "^6.0.2",
     "@types/ejs": "^3.1.0",
     "@types/estree": "^0.0.51",
@@ -78,7 +83,7 @@
     "@types/temp": "^0.9.1",
     "chokidar": "^3.5.3",
     "react": "^18.0.0",
-    "unplugin": "^0.3.2",
+    "unplugin": "^0.8.0",
     "webpack": "^5.73.0"
   },
   "peerDependencies": {
