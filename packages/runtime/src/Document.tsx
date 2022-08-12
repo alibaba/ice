@@ -91,8 +91,8 @@ export function Scripts(props) {
   return (
     <>
       {/*
-       * disable hydration warning for csr.
-       * initial app data may not equal csr result.
+       * disable hydration warning for CSR.
+       * initial app data may not equal CSR result.
        */}
       <script suppressHydrationWarning={documentOnly} dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=${JSON.stringify(appContext)}` }} />
       {

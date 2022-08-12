@@ -14,7 +14,7 @@ const { init, parse } = esModuleLexer;
 type ImportNameSpecifier = { importedName: string; localName: string };
 
 // Redirect original dependency to the pre-bundle dependency(cjs) which is handled by preBundleCJSDeps function.
-export const transformImportPlugin = (metadata: DepsMetaData): UnpluginOptions => {
+const transformImportPlugin = (metadata: DepsMetaData): UnpluginOptions => {
   const { deps } = metadata;
   const redirectDepIds = [];
   return {

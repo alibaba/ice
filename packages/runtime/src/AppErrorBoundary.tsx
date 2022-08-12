@@ -23,6 +23,7 @@ export default class AppErrorBoundary extends React.Component<Props, State> {
 
   public render() {
     if (this.state.error) {
+      // TODO: Show the error message and the error stack.
       return <h1>Something went wrong.</h1>;
     }
 
