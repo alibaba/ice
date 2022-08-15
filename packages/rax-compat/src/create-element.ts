@@ -6,7 +6,7 @@ import type {
   RefObject,
   SyntheticEvent,
 } from 'react';
-import { createElement as _createElement, useEffect, useCallback, useRef, useState } from 'react';
+import { createElement as _createElement, useEffect, useCallback, useRef, useState, forwardRef as _forwardRef } from 'react';
 import { cached, convertUnit } from 'style-unit';
 import { observerElement } from './visibility';
 import { isFunction, isObject, isNumber } from './type';
@@ -29,7 +29,7 @@ import { isFunction, isObject, isNumber } from './type';
 const NON_DIMENSIONAL_REG = /opa|ntw|ne[ch]|ex(?:s|g|n|p|$)|^ord|zoo|grid|orp|ows|mnc|^columns$|bs|erim|onit/i;
 
 function createInputCompat(type: string) {
-  function InputCompat(props: any) {
+  function InputCompat(props: any, ref: RefObject<any>) {
     const { value, onInput, ...rest } = props;
     const [v, setV] = useState(value);
     const onChange = useCallback((event: SyntheticEvent) => {
@@ -43,10 +43,11 @@ function createInputCompat(type: string) {
       ...rest,
       value: v,
       onChange,
+      ref,
     });
   }
 
-  return InputCompat;
+  return _forwardRef(InputCompat);
 }
 
 /**
