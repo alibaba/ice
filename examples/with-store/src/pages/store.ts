@@ -1,4 +1,4 @@
-import { createStore } from '@ice/plugin-store/esm/runtime';
+import { createStore } from 'ice';
 import counter from './models/counter';
 
 const store = createStore({ counter });
