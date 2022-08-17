@@ -129,16 +129,19 @@ function VisibilityChange({
 
   const listen = useCallback((eventName: string, handler: Function) => {
     const { current } = ref;
-    if (current != null) {
-      if (isFunction(handler)) {
-        observerElement(current as HTMLElement);
-        current.addEventListener(eventName, handler);
-      }
+    // Rax components will set custom ref by useImperativeHandle.
+    // So We should get eventTarget by _nativeNode.
+    // https://github.com/raxjs/rax-components/blob/master/packages/rax-textinput/src/index.tsx#L151
+    if (current && isFunction(handler)) {
+      const eventTarget = current._nativeNode || current;
+      observerElement(eventTarget as HTMLElement);
+      eventTarget.addEventListener(eventName, handler);
     }
     return () => {
       const { current } = ref;
       if (current) {
-        current.removeEventListener(eventName, handler);
+        const eventTarget = current._nativeNode || current;
+        eventTarget.removeEventListener(eventName, handler);
       }
     };
   }, [ref]);
