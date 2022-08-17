@@ -1,4 +1,4 @@
-import { createModel } from '@ice/plugin-store/esm/runtime';
+import { createModel } from 'ice';
 
 export default createModel({
   state: {

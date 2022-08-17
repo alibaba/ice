@@ -1,4 +1,4 @@
-import { createStore } from '@ice/plugin-store/esm/runtime';
+import { createStore } from 'ice';
 import info from './models/info';
 
 export default createStore({ info });
