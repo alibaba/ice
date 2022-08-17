@@ -76,4 +76,19 @@ describe('createElement', () => {
     const node = wrapper.queryByTestId('valueTest');
     expect(node.value).toBe(str);
   });
+
+  it('input set empty string to maxlength not be 0', () => {
+    const str = 'hello world';
+    const wrapper = render(createElement(
+      'input',
+      {
+        'data-testid': 'maxlengthTest',
+        value: str,
+        maxlength: ''
+      },
+    ));
+
+    const node = wrapper.queryByTestId('valueTest');
+    expect(node?.getAttribute('maxlength')).toBe(null);
+  });
 });
