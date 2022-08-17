@@ -39,6 +39,15 @@ function createInputCompat(type: string) {
       onInput && onInput(event.nativeEvent);
     }, [onInput]);
 
+    // Compat maxlength in rax-textinput, because maxlength is invalid props in web,it will be set attributes to element
+    // and react will Throw a warning in DEV.
+    // https://github.com/raxjs/rax-components/issues/459
+    // https://github.com/raxjs/rax-components/blob/master/packages/rax-textinput/src/index.tsx#L142
+    if (rest.maxlength) {
+      rest.maxLength = rest.maxlength;
+      delete rest.maxlength;
+    }
+
     return _createElement(type, {
       ...rest,
       value: v,
@@ -82,12 +91,12 @@ export function createElement<P extends {
     rest.style = compatStyleProps;
   }
 
-  // Setting the value of props makes the component be a controlled component in React.
-  // But setting the value is same as web in Rax.
-  // User can modify value of props to modify native input value
-  // and native input can also modify the value of self in Rax.
-  // So we should compat input to InputCompat, the same as textarea.
   if (type === 'input' || type === 'textarea') {
+    // Setting the value of props makes the component be a controlled component in React.
+    // But setting the value is same as web in Rax.
+    // User can modify value of props to modify native input value
+    // and native input can also modify the value of self in Rax.
+    // So we should compat input to InputCompat, the same as textarea.
     type = createInputCompat(type);
   }
 
