@@ -32,13 +32,13 @@ export default function getLocaleData({
 }
 
 function getDetectedLocale(
-  { 
-    pathname, 
+  {
+    pathname,
     i18nConfig,
     headers = {},
     basename,
-  }: { 
-    pathname: string, 
+  }: {
+    pathname: string,
     i18nConfig: I18nConfig,
     headers?: Record<string, string>,
     basename?: string,
@@ -49,14 +49,15 @@ function getDetectedLocale(
   } else {
     cookies = (new Cookies()).getAll();
   }
-  
+
   const { defaultLocale, locales, i18nRouting } = i18nConfig;
 
-  const detectedLocale = 
-      getLocaleFromCookie(locales, cookies) || 
-      getPreferredLocale(locales, headers) || 
-      (i18nRouting === false ? undefined : getDetectedLocaleFromPathname({ pathname, locales, basename, defaultLocale })) ||
-      defaultLocale;
+  // 检测获取Locale的优先级为：path前缀 > cookie > 浏览器语言设置 > 默认语言
+  const detectedLocale =
+    (i18nRouting === false ? undefined : getDetectedLocaleFromPathname({ pathname, locales, basename, defaultLocale })) ||
+    getLocaleFromCookie(locales, cookies) ||
+    getPreferredLocale(locales, headers) ||
+    defaultLocale;
 
   return detectedLocale;
 }
@@ -66,7 +67,7 @@ function getDetectedLocale(
  * 仅在 pathname 为 `/` 或者 `/${basename}` 时重定向
  */
 function getRedirectUrl(
-  pathname: string, 
+  pathname: string,
   i18nConfig: I18nConfig & { detectedLocale: string },
   basename?: string,
 ) {
@@ -74,9 +75,9 @@ function getRedirectUrl(
   const normalizedPathname = replaceBasename(pathname, basename);
   const isRootPath = normalizedPathname === '/';
   if (
-    autoRedirect === true && 
-    i18nRouting !== false && 
-    isRootPath && 
+    autoRedirect === true &&
+    i18nRouting !== false &&
+    isRootPath &&
     defaultLocale !== detectedLocale
   ) {
     return `/${detectedLocale}`;
