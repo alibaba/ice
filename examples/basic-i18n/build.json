@@ -5,7 +5,8 @@
       {
         "locales": [
           "zh-CN",
-          "en-US"
+          "en-US",
+          "zh-HK"
         ],
         "defaultLocale": "zh-CN",
         "autoRedirect": true
