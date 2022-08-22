@@ -5,7 +5,7 @@ describe('import style', () => {
   it('simple import', async () => {
     const sourceCode = `import { Button } from 'antd';`;
     const result = await importStyle(sourceCode, { libraryName: 'antd', style: true });
-    expect(result?.code).toBe(`${sourceCode}\nimport 'antd/es/Button/style';`);
+    expect(result?.code).toBe(`${sourceCode}\nimport 'antd/es/button/style';`);
   });
   it('custom style', async () => {
     const sourceCode = `import { Button } from 'antd';`;
@@ -20,12 +20,12 @@ describe('import style', () => {
   it('multiple import', async () => {
     const sourceCode = `import { Button, Table } from 'antd';`;
     const result = await importStyle(sourceCode, { libraryName: 'antd', style: true });
-    expect(result?.code).toBe(`${sourceCode}\nimport 'antd/es/Button/style';\nimport 'antd/es/Table/style';`);
+    expect(result?.code).toBe(`${sourceCode}\nimport 'antd/es/button/style';\nimport 'antd/es/table/style';`);
   });
   it('named import', async () => {
     const sourceCode = `import { Button as Btn } from 'antd';`;
     const result = await importStyle(sourceCode, { libraryName: 'antd', style: true });
-    expect(result?.code).toBe(`${sourceCode}\nimport 'antd/es/Button/style';`);
+    expect(result?.code).toBe(`${sourceCode}\nimport 'antd/es/button/style';`);
   });
   it('default import', async () => {
     const sourceCode = `import * as antd from 'antd';`;
