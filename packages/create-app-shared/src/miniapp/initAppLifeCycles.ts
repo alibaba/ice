@@ -1,4 +1,4 @@
-import { SHOW, HIDE, ERROR, LAUNCH, NOT_FOUND, SHARE, TAB_ITEM_CLICK } from '../constants';
+import { SHOW, HIDE, ERROR, LAUNCH, NOT_FOUND, SHARE, TAB_ITEM_CLICK, UNHANDLED_REJECTION } from '../constants';
 import { emit } from '../appLifeCycles';
 
 function initAppLifeCycles() {
@@ -14,14 +14,18 @@ function initAppLifeCycles() {
   window.addEventListener('apperror', ({ context, error }: any) => {
     emit(ERROR, context, error);
   });
-  window.addEventListener('pagenotfound', ({ context }: any) => {
-    emit(NOT_FOUND, context);
+  window.addEventListener('pagenotfound', ({ context, options }: any) => {
+    emit(NOT_FOUND, context, options);
   });
   window.addEventListener('appshare', ({ context, shareInfo, options }: any) => {
     emit(SHARE, context, shareInfo, options);
   });
   window.addEventListener('tabitemclick', ({ options, context }: any) => {
     emit(TAB_ITEM_CLICK, context, options);
+  });
+
+  window.addEventListener('unhandledrejection', ({ options, context }: any) => {
+    emit(UNHANDLED_REJECTION, context, options);
   });
 }
 
