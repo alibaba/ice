@@ -6,13 +6,14 @@ interface TransformOptions {
   libraryName: string;
   style: ((name: string) => string) | Boolean;
   sourceMap?: Boolean;
+  kebabCase?: Boolean;
 }
 
 export async function importStyle(code: string, options: TransformOptions): Promise<null | {
   code: string;
   map: ReturnType<MagicString['generateMap']>;
 }> {
-  const { style, libraryName, sourceMap } = options;
+  const { style, libraryName, sourceMap, kebabCase = true } = options;
   if (!style) {
     return null;
   }
@@ -45,7 +46,12 @@ export async function importStyle(code: string, options: TransformOptions): Prom
           console.log(e);
           return;
         }
-        exports.forEach(({ n: importName }) => {
+        exports.forEach(({ n }) => {
+          const toKebabCase = (str: string) => str.replace(/^[A-Z]/, $1 => $1.toLowerCase()).replace(/([A-Z])/g, $1 => `-${$1.toLowerCase()}`);
+          let importName = n;
+          if (kebabCase) {
+             importName = toKebabCase(importName);
+          }
           const stylePath = typeof style === 'function' ? style(importName) : `${libraryName}/es/${importName}/style`;
           if (stylePath) {
             styleStatements.push(`import '${stylePath}';`);
