@@ -39,6 +39,7 @@ import type {
 } from './types.js';
 import dataLoader from './dataLoader.js';
 import getAppConfig, { defineAppConfig } from './appConfig.js';
+import { routerHistory as history } from './history.js';
 
 export {
   getAppConfig,
@@ -68,6 +69,7 @@ export {
   useParamsSingle,
   useSearchParamsSingle,
   useLocationSingle,
+  history,
 };
 
 export type {
