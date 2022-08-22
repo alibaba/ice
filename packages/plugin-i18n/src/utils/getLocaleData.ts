@@ -54,7 +54,7 @@ function getDetectedLocale(
 
   // 检测获取Locale的优先级为：path前缀 > cookie > 浏览器语言设置 > 默认语言
   const detectedLocale =
-    (i18nRouting === false ? undefined : getDetectedLocaleFromPathname({ pathname, locales, basename, defaultLocale })) ||
+    (i18nRouting === false ? undefined : getDetectedLocaleFromPathname({ pathname, locales, basename })) ||
     getLocaleFromCookie(locales, cookies) ||
     getPreferredLocale(locales, headers) ||
     defaultLocale;
