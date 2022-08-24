@@ -94,7 +94,10 @@ export function Scripts(props) {
        * disable hydration warning for CSR.
        * initial app data may not equal CSR result.
        */}
-      <script suppressHydrationWarning={documentOnly} dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=${JSON.stringify(appContext)}` }} />
+      <script
+        suppressHydrationWarning={documentOnly}
+        dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=Object.assign(${JSON.stringify(appContext)}, window.__ICE_APP_CONTEXT__ || {})` }}
+      />
       {
         routeScripts.map(script => {
           const { block, ...routeScriptProps } = script;
@@ -107,6 +110,20 @@ export function Scripts(props) {
         })
       }
     </>
+  );
+}
+
+export function Data() {
+  const { routesData, documentOnly } = useAppContext();
+  const appData = useAppData();
+
+  return (
+    // Disable hydration warning for csr.
+    // initial app data may not equal csr result.
+    <script
+      suppressHydrationWarning={documentOnly}
+      dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=${JSON.stringify({ routesData, appData })}` }}
+    />
   );
 }
 
