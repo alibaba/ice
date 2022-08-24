@@ -8,7 +8,7 @@ import { scanImports } from '../src/service/analyze';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const alias = { '@': path.join(__dirname, './fixtures/scan') };
 const rootDir = path.join(__dirname, './fixtures/scan');
-const cacheDir = path.join(rootDir, '.ice');
+const cacheDir = path.join(rootDir, '.cache');
 
 it('prebundle cjs deps', async () => {
   const deps = await scanImports([path.join(__dirname, './fixtures/scan/app.ts')], { alias, rootDir });
