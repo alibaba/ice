@@ -15,10 +15,10 @@
       "import": "./esm/runtime.js",
       "default": "./esm/runtime.js"
     },
-    "./esm/runtime": {
-      "types": "./esm/runtime.d.ts",
-      "import": "./esm/runtime.js",
-      "default": "./esm/runtime.js"
+    "./api": {
+      "types": "./esm/api.d.ts",
+      "import": "./esm/api.js",
+      "default": "./esm/api.js"
     }
   },
   "main": "./esm/index.js",
