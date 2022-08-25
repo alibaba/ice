@@ -1,4 +1,5 @@
 import { Button } from '@alifd/next';
+import '@alifd/next/dist/next.css';
 
 export default function Home() {
   return (
