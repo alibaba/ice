@@ -92,8 +92,10 @@ const removeTopLevelCode = (keepExports: string[] = []) => {
     ExpressionStatement: {
       enter(nodePath: NodePath<t.ExpressionStatement>) {
         // Remove top level call expression.
-        if (nodePath.parentPath.isProgram() && t.isCallExpression(nodePath.node.expression)) {
-          nodePath.remove();
+        if (nodePath.parentPath.isProgram()) {
+          if (t.isCallExpression(nodePath.node.expression) || t.isAssignmentExpression(nodePath.node.expression)) {
+            nodePath.remove();
+          }
         }
       },
     },
