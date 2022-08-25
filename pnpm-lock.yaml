@@ -84,7 +84,6 @@ importers:
       '@types/react-dom': ^18.0.2
       '@uni/env': ^1.1.0
       ahooks: ^3.3.8
-      browserslist: ^4.19.3
       react: ^18.0.0
       react-dom: ^18.0.0
       speed-measure-webpack-plugin: ^1.5.0
@@ -101,7 +100,6 @@ importers:
     devDependencies:
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
-      browserslist: 4.20.3
       speed-measure-webpack-plugin: 1.5.0_webpack@5.73.0
       webpack: 5.73.0
 
@@ -113,7 +111,6 @@ importers:
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
       antd-mobile: ^5.12.6
-      browserslist: ^4.19.3
       react: ^18.0.0
       react-dom: ^18.0.0
       speed-measure-webpack-plugin: ^1.5.0
@@ -128,7 +125,6 @@ importers:
     devDependencies:
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
-      browserslist: 4.20.3
       speed-measure-webpack-plugin: 1.5.0_webpack@5.73.0
       webpack: 5.73.0
 
@@ -156,7 +152,6 @@ importers:
       '@ice/runtime': workspace:*
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.2
-      browserslist: ^4.19.3
       rax: ^1.2.2
       rax-image: ^2.4.1
       rax-is-valid-element: ^1.0.0
@@ -181,7 +176,6 @@ importers:
     devDependencies:
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
-      browserslist: 4.20.3
       webpack: 5.73.0
 
   examples/routes-generate:
@@ -190,7 +184,6 @@ importers:
       '@ice/runtime': workspace:*
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
-      browserslist: ^4.19.3
       react: ^18.0.0
       react-dom: ^18.0.0
     dependencies:
@@ -201,7 +194,6 @@ importers:
     devDependencies:
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
-      browserslist: 4.20.3
 
   examples/single-route:
     specifiers:
@@ -209,7 +201,6 @@ importers:
       '@ice/runtime': workspace:*
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
-      browserslist: ^4.19.3
       react: ^18.0.0
       react-dom: ^18.0.0
       webpack-bundle-analyzer: ^4.5.0
@@ -221,7 +212,6 @@ importers:
     devDependencies:
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
-      browserslist: 4.20.3
       webpack-bundle-analyzer: 4.5.0
 
   examples/with-antd:
@@ -233,7 +223,6 @@ importers:
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.2
       antd: ^4.0.0
-      browserslist: ^4.19.3
       moment: ^2.29.4
       react: ^18.0.0
       react-dom: ^18.0.0
@@ -249,7 +238,6 @@ importers:
     devDependencies:
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
-      browserslist: 4.20.3
 
   examples/with-antd-mobile:
     specifiers:
@@ -258,7 +246,6 @@ importers:
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.2
       antd-mobile: ^5.12.4
-      browserslist: ^4.19.3
       constate: ^3.3.2
       react: ^18.2.0
       react-dom: ^18.2.0
@@ -272,7 +259,6 @@ importers:
     devDependencies:
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
-      browserslist: 4.20.3
 
   examples/with-fusion:
     specifiers:
@@ -302,7 +288,6 @@ importers:
       '@ice/runtime': workspace:*
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.2
-      browserslist: ^4.19.3
       react: ^18.0.0
       react-dom: ^18.0.0
       webpack: ^5.73.0
@@ -315,7 +300,6 @@ importers:
     devDependencies:
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
-      browserslist: 4.20.3
       webpack: 5.73.0
 
   examples/with-store:
@@ -325,7 +309,6 @@ importers:
       '@ice/runtime': workspace:*
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
-      browserslist: ^4.19.3
     dependencies:
       '@ice/app': link:../../packages/ice
       '@ice/runtime': link:../../packages/runtime
@@ -333,7 +316,6 @@ importers:
       '@ice/plugin-store': link:../../packages/plugin-store
       '@types/react': 18.0.15
       '@types/react-dom': 18.0.6
-      browserslist: 4.21.3
 
   packages/bundles:
     specifiers:

@@ -19,7 +19,6 @@
   "devDependencies": {
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
-    "browserslist": "^4.19.3",
     "speed-measure-webpack-plugin": "^1.5.0",
     "webpack": "^5.73.0"
   }
