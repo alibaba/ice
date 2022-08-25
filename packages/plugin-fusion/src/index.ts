@@ -57,13 +57,13 @@ const plugin: Plugin<PluginOptions> = (options = {}) => ({
             return false;
           });
           if (sassLoader) {
-            let additionalContent = '';
+            const additionalContent = [];
             if (themePackage) {
               const themeFile = getVariablesPath({
                 packageName: themePackage,
               });
               if (themeFile) {
-                additionalContent += `@import '${themePackage}/variables.scss'`;
+                additionalContent.push(`@import '${themePackage}/variables.scss';`);
               }
               // Try to get icon.scss if exists.
               const iconFile = getVariablesPath({
@@ -72,14 +72,14 @@ const plugin: Plugin<PluginOptions> = (options = {}) => ({
                 silent: true,
               });
               if (iconFile) {
-                additionalContent += `@import '${themePackage}/icons.scss'`;
+                additionalContent.push(`@import '${themePackage}/icons.scss';`);
               }
             }
             let themeConfig = [];
             Object.keys(theme || {}).forEach((key) => {
               themeConfig.push(`$${key}: ${theme[key]};`);
             });
-            additionalContent += themeConfig.join('\n');
+            additionalContent.push(themeConfig.join('\n'));
 
             const loaderOptions = sassLoader.options || {};
             sassLoader.options = {
@@ -88,7 +88,7 @@ const plugin: Plugin<PluginOptions> = (options = {}) => ({
                 const originalContent = typeof loaderOptions.additionalData === 'function'
                   ? loaderOptions.additionalData(content, loaderContext)
                   : `${loaderOptions.additionalData || ''}${content}`;
-                return `${additionalContent}\n${originalContent}`;
+                return `${additionalContent.join('\n')}\n${originalContent}`;
               },
             };
           }
