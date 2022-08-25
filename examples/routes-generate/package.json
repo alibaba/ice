@@ -16,7 +16,6 @@
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
-    "browserslist": "^4.19.3"
+    "@types/react-dom": "^18.0.0"
   }
 }
