@@ -203,7 +203,6 @@ importers:
       '@types/react-dom': ^18.0.0
       react: ^18.0.0
       react-dom: ^18.0.0
-      webpack-bundle-analyzer: ^4.5.0
     dependencies:
       '@ice/app': link:../../packages/ice
       '@ice/runtime': link:../../packages/runtime
@@ -212,7 +211,6 @@ importers:
     devDependencies:
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
-      webpack-bundle-analyzer: 4.5.0
 
   examples/with-antd:
     specifiers:
@@ -4768,7 +4766,7 @@ packages:
     peerDependencies:
       react: '*'
     dependencies:
-      '@types/react': 18.0.15
+      '@types/react': 18.0.17
       prop-types: 15.8.1
       react: 17.0.2
 
@@ -6584,7 +6582,6 @@ packages:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
       csstype: 3.1.0
-    dev: true
 
   /@types/react/18.0.8:
     resolution: {integrity: sha512-+j2hk9BzCOrrOSJASi5XiOyBbERk9jG5O73Ya4M0env5Ixi6vUNli4qy994AINcEF+1IEHISYFfIT4zwr++LKw==}
