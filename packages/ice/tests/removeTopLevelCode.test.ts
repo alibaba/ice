@@ -85,4 +85,11 @@ describe('remove top level code', () => {
     const content = generate(ast).code;
     expect(content.replace(/\n/g, '').replace(/\s+/g, ' ')).toBe(`const a = 1;export default a;`);
   });
+
+  it('remove expression statement', () => {
+    const ast = parse(fs.readFileSync(path.join(__dirname, './fixtures/removeCode/expression.ts'), 'utf-8'), parserOptions);
+    traverse(ast, removeTopLevelCodePlugin(['default']));
+    const content = generate(ast).code;
+    expect(content.replace(/\n/g, '').replace(/\s+/g, ' ')).toBe('');
+  });
 })
