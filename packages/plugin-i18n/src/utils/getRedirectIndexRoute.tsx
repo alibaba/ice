@@ -8,8 +8,8 @@ import getLocaleData from './getLocaleData';
  */
 export default function getRedirectIndexRoute(originRoutes: any[], i18nConfig: I18nConfig, basename?: string) {
   function walkRoute(routes: any[]) {
-    // eslint-disable-next-line no-restricted-syntax
-    for (const route of routes) {
+    for (let index = 0; index < routes.length; index++) {
+      const route = routes[index];
       const { path, children, ...rest } = route;
       if (path === '/') {
         if (children) {
@@ -27,10 +27,10 @@ export default function getRedirectIndexRoute(originRoutes: any[], i18nConfig: I
             ...route,
             exact: true,
             component: (props: any) => (
-              <IndexComponent 
-                {...props} 
-                i18nConfig={i18nConfig} 
-                basename={basename} 
+              <IndexComponent
+                {...props}
+                i18nConfig={i18nConfig}
+                basename={basename}
                 OriginIndexComponent={route.component}
               />
             )

@@ -8,3 +8,7 @@ export interface I18nConfig {
   // 国际化路由
   i18nRouting?: false;
 }
+
+export interface I18nAppConfig {
+  blockCookie?: boolean | Function;
+}
