@@ -99,19 +99,18 @@ function generateRouteConfig(
   function importConfig(routes: NestedRouteManifest[], parentPath: string) {
     return routes.reduce((prev, route) => {
       const { children, file, id, exports } = route;
-      if (exports.indexOf(exportKey) === -1) {
-        return prev;
-      }
-
-      const fileExtname = path.extname(file);
-      const componentFile = file.replace(new RegExp(`${fileExtname}$`), '');
-      const componentPath = path.isAbsolute(componentFile) ? componentFile : `@/pages/${componentFile}`;
-
-      const loaderName = `${exportKey}_${id}`.replace(/[-/]/g, '_');
       const routePath = route.path || (route.index ? 'index' : '/');
-      const fullPath = path.join(parentPath, routePath);
-      imports.push([id, loaderName, fullPath]);
-      let str = `import { ${exportKey} as ${loaderName} } from '${componentPath}';\n`;
+      let str = '';
+      if (exports.includes(exportKey)) {
+        const fileExtname = path.extname(file);
+        const componentFile = file.replace(new RegExp(`${fileExtname}$`), '');
+        const componentPath = path.isAbsolute(componentFile) ? componentFile : `@/pages/${componentFile}`;
+
+        const loaderName = `${exportKey}_${id}`.replace(/[-/]/g, '_');
+        const fullPath = path.join(parentPath, routePath);
+        imports.push([id, loaderName, fullPath]);
+        str = `import { ${exportKey} as ${loaderName} } from '${componentPath}';\n`;
+      }
 
       if (children) {
         str += importConfig(children, routePath);
