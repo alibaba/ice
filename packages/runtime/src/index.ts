@@ -5,13 +5,6 @@ import {
   useSearchParams,
   useLocation,
 } from 'react-router-dom';
-import {
-  LinkSingle,
-  OutletSingle,
-  useParamsSingle,
-  useSearchParamsSingle,
-  useLocationSingle,
-} from './utils/history-single.js';
 import Runtime from './runtime.js';
 import App from './App.js';
 import runClientApp from './runClientApp.js';
@@ -65,12 +58,6 @@ export {
   useParams,
   useSearchParams,
   useLocation,
-  // Single Route API
-  LinkSingle,
-  OutletSingle,
-  useParamsSingle,
-  useSearchParamsSingle,
-  useLocationSingle,
   history,
 };
 

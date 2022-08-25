@@ -279,8 +279,8 @@ const userConfig = [
     },
   },
   {
-    name: 'removeHistoryDeadCode',
-    validation: 'boolean',
+    name: 'optimization',
+    validation: 'object',
   },
   {
     name: 'mock',
