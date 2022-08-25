@@ -5,6 +5,7 @@ import Home from '@/pages/Home';
 import About from '@/pages/About';
 import NotFound from '@/pages/NotFound';
 import Login from '@/pages/Login';
+import UserInfo from '@/pages/UserInfo';
 
 const routerConfig: IRouterConfig[] = [
   {
@@ -34,6 +35,11 @@ const routerConfig: IRouterConfig[] = [
         path: '/',
         exact: true,
         component: Home,
+      },
+      {
+        path: '/abc/:id',
+        exact: true,
+        component: UserInfo,
       },
       {
         component: NotFound,
