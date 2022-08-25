@@ -1,5 +1,6 @@
 import * as path from 'path';
 import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
 import { Context } from 'build-scripts';
 import consola from 'consola';
 import type { CommandArgs, CommandName } from 'build-scripts';
@@ -27,6 +28,7 @@ import { getAppExportConfig, getRouteExportConfig } from './service/config.js';
 import renderExportsTemplate from './utils/renderExportsTemplate.js';
 import { getFileExports } from './service/analyze.js';
 
+const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 interface CreateServiceOptions {
@@ -98,7 +100,13 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   let taskConfigs = await ctx.setup();
   // merge task config with built-in config
-  taskConfigs = mergeTaskConfig(taskConfigs, { port: commandArgs.port });
+  taskConfigs = mergeTaskConfig(taskConfigs, {
+    port: commandArgs.port,
+    alias: {
+      // Get absolute path of `regenerator-runtime`, so it's unnecessary to add it to project dependencies
+      'regenerator-runtime': require.resolve('regenerator-runtime'),
+    },
+  });
   const webTaskConfig = taskConfigs.find(({ name }) => name === 'web');
 
   // get userConfig after setup because of userConfig maybe modified by plugins

@@ -87,7 +87,6 @@ importers:
       browserslist: ^4.19.3
       react: ^18.0.0
       react-dom: ^18.0.0
-      regenerator-runtime: ^0.13.9
       speed-measure-webpack-plugin: ^1.5.0
       webpack: ^5.73.0
     dependencies:
@@ -103,7 +102,6 @@ importers:
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
       browserslist: 4.20.3
-      regenerator-runtime: 0.13.9
       speed-measure-webpack-plugin: 1.5.0_webpack@5.73.0
       webpack: 5.73.0
 
@@ -118,7 +116,6 @@ importers:
       browserslist: ^4.19.3
       react: ^18.0.0
       react-dom: ^18.0.0
-      regenerator-runtime: ^0.13.9
       speed-measure-webpack-plugin: ^1.5.0
       webpack: ^5.73.0
     dependencies:
@@ -132,7 +129,6 @@ importers:
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
       browserslist: 4.20.3
-      regenerator-runtime: 0.13.9
       speed-measure-webpack-plugin: 1.5.0_webpack@5.73.0
       webpack: 5.73.0
 
@@ -144,7 +140,6 @@ importers:
       '@types/react-dom': ^18.0.0
       react: ^18.0.0
       react-dom: ^18.0.0
-      regenerator-runtime: ^0.13.9
     dependencies:
       '@ice/app': link:../../packages/ice
       '@ice/runtime': link:../../packages/runtime
@@ -153,7 +148,6 @@ importers:
     devDependencies:
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
-      regenerator-runtime: 0.13.9
 
   examples/rax-project:
     specifiers:
@@ -170,7 +164,6 @@ importers:
       rax-view: ^2.3.0
       react: ^18.0.0
       react-dom: ^18.0.0
-      regenerator-runtime: ^0.13.9
       webpack: ^5.73.0
     dependencies:
       '@ice/app': link:../../packages/ice
@@ -187,7 +180,6 @@ importers:
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
       browserslist: 4.20.3
-      regenerator-runtime: 0.13.9
       webpack: 5.73.0
 
   examples/routes-generate:
@@ -199,7 +191,6 @@ importers:
       browserslist: ^4.19.3
       react: ^18.0.0
       react-dom: ^18.0.0
-      regenerator-runtime: ^0.13.9
     dependencies:
       '@ice/app': link:../../packages/ice
       '@ice/runtime': link:../../packages/runtime
@@ -209,7 +200,6 @@ importers:
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
       browserslist: 4.20.3
-      regenerator-runtime: 0.13.9
 
   examples/single-route:
     specifiers:
@@ -245,7 +235,6 @@ importers:
       moment: ^2.29.4
       react: ^18.0.0
       react-dom: ^18.0.0
-      regenerator-runtime: ^0.13.9
     dependencies:
       '@ice/app': link:../../packages/ice
       '@ice/plugin-antd': link:../../packages/plugin-antd
@@ -259,7 +248,6 @@ importers:
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
       browserslist: 4.20.3
-      regenerator-runtime: 0.13.9
 
   examples/with-antd-mobile:
     specifiers:
@@ -272,7 +260,6 @@ importers:
       constate: ^3.3.2
       react: ^18.2.0
       react-dom: ^18.2.0
-      regenerator-runtime: ^0.13.9
     dependencies:
       '@ice/app': link:../../packages/ice
       '@ice/runtime': link:../../packages/runtime
@@ -284,7 +271,6 @@ importers:
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
       browserslist: 4.20.3
-      regenerator-runtime: 0.13.9
 
   examples/with-fusion:
     specifiers:
@@ -296,7 +282,6 @@ importers:
       '@types/react-dom': ^18.0.2
       react: ^18.0.0
       react-dom: ^18.0.0
-      regenerator-runtime: ^0.13.9
     dependencies:
       '@alifd/next': 1.25.49_biqbaboplfbrettd7655fr4n2y
       '@ice/app': link:../../packages/ice
@@ -307,7 +292,6 @@ importers:
     devDependencies:
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
-      regenerator-runtime: 0.13.9
 
   examples/with-pha:
     specifiers:
@@ -319,7 +303,6 @@ importers:
       browserslist: ^4.19.3
       react: ^18.0.0
       react-dom: ^18.0.0
-      regenerator-runtime: ^0.13.9
       webpack: ^5.73.0
     dependencies:
       '@ice/app': link:../../packages/ice
@@ -331,7 +314,6 @@ importers:
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
       browserslist: 4.20.3
-      regenerator-runtime: 0.13.9
       webpack: 5.73.0
 
   examples/with-store:
@@ -342,7 +324,6 @@ importers:
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
       browserslist: ^4.19.3
-      regenerator-runtime: ^0.13.9
     dependencies:
       '@ice/app': link:../../packages/ice
       '@ice/runtime': link:../../packages/runtime
@@ -351,7 +332,6 @@ importers:
       '@types/react': 18.0.15
       '@types/react-dom': 18.0.6
       browserslist: 4.21.3
-      regenerator-runtime: 0.13.9
 
   packages/bundles:
     specifiers:
@@ -486,6 +466,7 @@ importers:
       path-to-regexp: ^6.2.0
       react: ^18.0.0
       react-router: ^6.3.0
+      regenerator-runtime: ^0.13.9
       resolve.exports: ^1.1.0
       sass: ^1.49.9
       semver: ^7.3.5
@@ -529,6 +510,7 @@ importers:
       open: 8.4.0
       path-to-regexp: 6.2.1
       react-router: 6.3.0_react@18.2.0
+      regenerator-runtime: 0.13.9
       resolve.exports: 1.1.0
       sass: 1.50.1
       semver: 7.3.7
@@ -775,7 +757,6 @@ importers:
       magic-string: ^0.26.1
       mini-css-extract-plugin: 2.6.0
       react-refresh: ^0.12.0
-      regenerator-runtime: 0.13.9
       unplugin: ^0.3.2
       webpack: ^5.73.0
       webpack-dev-server: ^4.7.4
@@ -792,7 +773,6 @@ importers:
       magic-string: 0.26.1
       mini-css-extract-plugin: 2.6.0_webpack@5.73.0
       react-refresh: 0.12.0
-      regenerator-runtime: 0.13.9
       unplugin: 0.3.3_4upc34oiflw3lduyjvrzpjntau
     devDependencies:
       '@ice/types': link:../types
