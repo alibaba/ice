@@ -1,10 +1,12 @@
 {
+  "name": "ice-monorepo",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
-  "version": "0.0.1",
   "description": "A universal framework based on React",
+  "author": "ice-admin@alibaba-inc.com",
+  "license": "MIT",
+  "homepage": "https://v3.ice.work",
+  "repository": "ice-lab/ice-next",
+  "bugs": "https://github.com/ice-lab/ice-next/issues",
   "scripts": {
     "prepare": "husky install",
     "setup": "rm -rf node_modules packages/*/node_modules && pnpm install && pnpm prebundle && pnpm build",
@@ -16,20 +18,13 @@
     "dependency:check": "esmo ./scripts/dependencyCheck.ts",
     "version": "esmo ./scripts/tagVersion.ts",
     "version:check": "esmo ./scripts/versionCheck.ts",
-    "lint:diff": "esmo ./scripts/lintDiff.ts",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
-    "lint:fix": "npm run lint -- --fix",
     "publish:alpha": "PUBLISH_TYPE=alpha esmo ./scripts/publishPackageWithDistTag.ts",
     "publish:beta": "PUBLISH_TYPE=beta esmo ./scripts/publishPackageWithDistTag.ts",
     "publish:release": "PUBLISH_TYPE=release VERSION_PREFIX=rc esmo ./scripts/publishPackageWithDistTag.ts",
     "cov": "vitest run --coverage",
     "test": "vitest"
   },
-  "author": "ice-admin@alibaba-inc.com",
-  "license": "MIT",
-  "repository": "ice-lab/ice-next",
-  "bugs": "https://github.com/ice-lab/ice-next/issues",
-  "homepage": "https://v3.ice.work",
   "devDependencies": {
     "@applint/spec": "^1.2.3",
     "@commitlint/cli": "^16.3.0",
@@ -56,6 +51,7 @@
     "husky": "^7.0.4",
     "ice-npm-utils": "^3.0.2",
     "jsdom": "^20.0.0",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "puppeteer": "^13.7.0",
     "react": "^18.2.0",
@@ -65,6 +61,9 @@
     "stylelint": "^14.10.0",
     "typescript": "^4.7.4",
     "vitest": "^0.15.2"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
   },
   "packageManager": "pnpm@7.2.1"
 }
