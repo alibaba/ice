@@ -2,9 +2,10 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { createHash } from 'crypto';
 import fg from 'fast-glob';
+import formatPath from './formatPath.js';
 
 export async function getFileHash(file: string): Promise<string> {
-  let filePath = file;
+  let filePath = formatPath(file);
   if (!path.extname(filePath)) {
     const patterns = [`${filePath}.{js,ts,jsx,tsx}`];
     filePath = fg.sync(patterns)[0];

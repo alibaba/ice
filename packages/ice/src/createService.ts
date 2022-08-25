@@ -210,7 +210,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             reCompileRouteConfig,
             dataCache,
             appConfig,
-            devPath: (routePaths[0] || '').replace(/^\//, ''),
+            devPath: (routePaths[0] || '').replace(/^[\/\\]/, ''),
             spinner: buildSpinner,
           });
         } else if (command === 'build') {

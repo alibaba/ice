@@ -2,7 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import minimatch from 'minimatch';
-import { createRouteId, defineRoutes } from './routes.js';
+import { createRouteId, defineRoutes, normalizeSlashes } from './routes.js';
 import type { RouteManifest, DefineRouteFunction, NestedRouteManifest, ConfigRoute } from './routes.js';
 
 export type {
@@ -122,7 +122,7 @@ function defineConventionalRoutes(
         // in order to escape the child route path is absolute path
         routeId.slice(parentRoutePath.length + (parentRoutePath ? 1 : 0)),
       );
-      const routeFilePath = path.join('src', 'pages', files[routeId]);
+      const routeFilePath = normalizeSlashes(path.join('src', 'pages', files[routeId]));
       if (RegExp(`[^${validRouteChar.join(',')}]`).test(routePath)) {
         throw new Error(`invalid character in '${routeFilePath}'. Only support char: ${validRouteChar.join(', ')}`);
       }
@@ -231,7 +231,7 @@ function visitFiles(
     if (stat.isDirectory()) {
       visitFiles(file, visitor, baseDir);
     } else if (stat.isFile()) {
-      visitor(path.relative(baseDir, file));
+      visitor(normalizeSlashes(path.relative(baseDir, file)));
     }
   }
 }

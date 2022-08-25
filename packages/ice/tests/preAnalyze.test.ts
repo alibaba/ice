@@ -42,7 +42,8 @@ describe('resolveId', () => {
 describe('getImportPath', () => {
   it('import from relative path', () => {
     const filePath = getImportPath('./page.js', '/rootDir/test.ts', {});
-    expect(filePath).toBe('/rootDir/page.js');
+    // Compatible with test case in win32.
+    expect(filePath.replace(/^[A-Za-z]:/, '')).toBe('/rootDir/page.js');
   });
   it('import from alias', () => {
     const filePath = getImportPath('ice', '/rootDir/test.ts', { ice: '/rootDir/component.tsx'});

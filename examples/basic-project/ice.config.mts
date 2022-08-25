@@ -12,10 +12,7 @@ export default defineConfig({
     'process.env.HAHA': JSON.stringify(true),
   },
   transform: (code, id) => {
-    if (id.includes('src/pages')) {
-      // console.log('transform page:', id);
-    }
-    return code;
+    return id.includes('src/pages') && id.endsWith('.js') ? code : null;
   },
   webpack: (webpackConfig) => {
     if (process.env.NODE_ENV !== 'test') {

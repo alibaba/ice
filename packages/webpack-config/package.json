@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@ice/types": "^1.0.0",
-    "build-scripts": "^2.0.0-23",
+    "build-scripts": "^2.0.0-24",
     "esbuild": "^0.14.23",
     "webpack": "^5.73.0",
     "webpack-dev-server": "^4.7.4"

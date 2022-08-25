@@ -10,6 +10,7 @@ import { getCache, setCache } from '../utils/persistentCache.js';
 import { getFileHash } from '../utils/hash.js';
 import scanPlugin from '../esbuild/scan.js';
 import type { DepScanData } from '../esbuild/scan.js';
+import formatPath from '../utils/formatPath.js';
 
 interface Options {
   parallel?: number;
@@ -68,7 +69,7 @@ export function getImportPath(
   let aliasedPath = resolveId(id, alias) || '';
   if (!path.isAbsolute(aliasedPath)) {
     if (aliasedPath.startsWith('.')) {
-      aliasedPath = path.resolve(path.dirname(importer), aliasedPath);
+      aliasedPath = formatPath(path.resolve(path.dirname(importer), aliasedPath));
     } else {
       // node_modules dependencies
       aliasedPath = '';

@@ -1,5 +1,6 @@
 import * as path from 'path';
 import type { RouteObject } from 'react-router';
+import formatPath from './formatPath.js';
 
 /**
  * get all route path
@@ -13,7 +14,7 @@ function getRoutePaths(routes: RouteObject[], parentPath = ''): string[] {
     if (route.children) {
       pathList = pathList.concat(getRoutePaths(route.children, route.path));
     } else {
-      pathList.push(path.join('/', parentPath, route.path || ''));
+      pathList.push(formatPath(path.join('/', parentPath, route.path || '')));
     }
   });
 
