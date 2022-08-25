@@ -41,7 +41,7 @@
     "acorn": "^8.7.1",
     "address": "^1.1.2",
     "body-parser": "^1.20.0",
-    "build-scripts": "^2.0.0-23",
+    "build-scripts": "^2.0.0-24",
     "chalk": "^4.0.0",
     "commander": "^9.0.0",
     "consola": "^2.15.3",

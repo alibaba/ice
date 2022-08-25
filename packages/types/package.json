@@ -33,7 +33,7 @@
     "@builder/swc": "^0.2.0",
     "@ice/route-manifest": "^1.0.0",
     "@ice/runtime": "^1.0.0",
-    "build-scripts": "^2.0.0-23",
+    "build-scripts": "^2.0.0-24",
     "esbuild": "^0.14.23",
     "eslint": "^8.14.0",
     "eslint-webpack-plugin": "3.1.1",

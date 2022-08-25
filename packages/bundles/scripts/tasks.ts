@@ -77,8 +77,8 @@ const tasks = [
   {
     pkgName: 'terser-webpack-plugin',
     matchCopyFiles: (data: { resolvePath: string; resolveId: string }): boolean => {
-      const { resolvePath, resolveId } = data;
-      return resolvePath.endsWith('./utils') && resolveId.endsWith('terser-webpack-plugin/dist/index.js');
+      const { resolvePath } = data;
+      return resolvePath.endsWith('./utils') || resolvePath.endsWith('.json');
     },
   },
   {

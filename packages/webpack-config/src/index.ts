@@ -232,7 +232,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
       ...plugins,
       ...compilerWebpackPlugins,
       dev && fastRefresh && new ReactRefreshWebpackPlugin({
-        exclude: [/node_modules/, /bundles\/compiled/],
+        exclude: [/node_modules/, /bundles[\\\\/]compiled/],
         // use webpack-dev-server overlay instead
         overlay: false,
       }),

@@ -3,6 +3,7 @@ import { formatNestedRouteManifest, generateRouteManifest } from '@ice/route-man
 import type { NestedRouteManifest } from '@ice/route-manifest';
 import type { UserConfig } from '@ice/types';
 import { getFileExports } from './service/analyze.js';
+import formatPath from './utils/formatPath.js';
 
 export async function generateRoutesInfo(rootDir: string, routesConfig: UserConfig['routes'] = {}) {
   const routeManifest = generateRouteManifest(rootDir, routesConfig.ignoreFiles, routesConfig.defineRoutes);
@@ -12,7 +13,7 @@ export async function generateRoutesInfo(rootDir: string, routesConfig: UserConf
     // add exports filed for route manifest
     routeItem.exports = await getFileExports({
       rootDir,
-      file: path.join('./src/pages', routeItem.file),
+      file: formatPath(path.join('./src/pages', routeItem.file)),
     });
   });
   await Promise.all(analyzeTasks);
@@ -59,8 +60,8 @@ function recurseRoutesStr(nestRouteManifest: NestedRouteManifest[], depth = 0) {
 
     const componentPath = id.startsWith('__') ? file : `@/pages/${file}`.replace(new RegExp(`${path.extname(file)}$`), '');
     const routeProperties: string[] = [
-      `path: '${routePath || ''}',`,
-      `load: () => import(/* webpackChunkName: "${componentName}" */ '${componentPath}'),`,
+      `path: '${formatPath(routePath || '')}',`,
+      `load: () => import(/* webpackChunkName: "${componentName}" */ '${formatPath(componentPath)}'),`,
       `componentName: '${componentName}',`,
       `index: ${index},`,
       `id: '${id}',`,
