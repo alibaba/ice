@@ -1,10 +1,13 @@
 # Changelog
 
+## 3.1.4
+
+- [fix] not get the route component when the request url has locale prefix
+
 ## 3.1.3
 
 - [fix] not call the getStaticPaths method from the dynamic import route component
 - [fix] not call the getInitialProps method from the dynamic import route component
-- [fix] not get the route component when the request url has locale prefix
 
 ## 3.1.2
 

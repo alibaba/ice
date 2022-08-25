@@ -1,5 +1,12 @@
 # build-plugin-ice-i18n
 
+## 0.2.2
+
+- fix: can not work in IE 11
+- feat: add setting for block cookie setting i18n locale
+- fix: adjust detect locale sequence in getDetectedLocale function
+- fix: redirect incorrect i18n page
+
 ## 0.2.1
 
 - feat: add defaultLocale prefix routes
