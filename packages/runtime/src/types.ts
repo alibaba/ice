@@ -140,6 +140,7 @@ export interface RouteModules {
 }
 
 export interface AssetsManifest {
+  dataLoader?: string;
   publicPath: string;
   entries: string[];
   pages: string[];
