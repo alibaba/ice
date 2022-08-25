@@ -24,7 +24,6 @@
     "magic-string": "^0.26.1",
     "mini-css-extract-plugin": "2.6.0",
     "react-refresh": "^0.12.0",
-    "regenerator-runtime": "0.13.9",
     "unplugin": "^0.3.2"
   },
   "devDependencies": {
