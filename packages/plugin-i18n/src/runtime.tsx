@@ -60,9 +60,8 @@ function Provider() {
 
 function setInitICELocaleToCookie(locale: string, cookieBlocked: boolean) {
   const cookies = new Cookies();
-  const iceLocale = cookies.get(LOCALE_COOKIE_KEY);
-  if (!iceLocale && !cookieBlocked) {
-    cookies.set(LOCALE_COOKIE_KEY, locale);
+  if (!cookieBlocked) {
+    cookies.set(LOCALE_COOKIE_KEY, locale, { path: '/' });
   }
 }
 
