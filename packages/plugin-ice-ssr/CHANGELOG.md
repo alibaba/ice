@@ -3,6 +3,7 @@
 ## 3.1.4
 
 - [fix] not get the route component when the request url has locale prefix
+- [fix] not await dynamic chunks load
 
 ## 3.1.3
 
