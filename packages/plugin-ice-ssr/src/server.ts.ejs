@@ -274,13 +274,13 @@ export async function getComponentByPath(routes, reqPath, i18nConfig)  {
       }
     }
     const routeData = await findMatchRoute(routes);
+    let loadedPageComponent;
     if (routeData?.component && routeData?.component?.load) {
-      const loadedPageComponent = await routeData.component.load();
-      routeData.component = loadedPageComponent.default;
+      loadedPageComponent = await routeData.component.load();
     }
     return {
       component: routeData?.component,
-      getInitialProps: routeData?.getInitialProps || routeData?.component?.getInitialProps,
+      getInitialProps: routeData?.getInitialProps || routeData?.component?.getInitialProps || loadedPageComponent?.default?.getInitialProps,
     };
   <% } else { %>
     const matchedComponent = appConfig?.app?.renderComponent;
