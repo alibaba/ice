@@ -7,6 +7,16 @@ export interface I18nConfig {
   autoRedirect?: true;
   // 国际化路由
   i18nRouting?: false;
+  // cookie 参数
+  cookieOptions?: {
+    path?: string;
+    expires?: Date;
+    maxAge?: number;
+    domain?: string;
+    secure?: boolean;
+    httpOnly?: boolean;
+    sameSite?: boolean | 'strict' | 'lax' | 'none';
+  }
 }
 
 export interface I18nAppConfig {

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { History } from 'history';
 import Cookies from 'universal-cookie';
 import { I18nProvider, getLocaleFromCookies, getLocale } from '$ice/i18n';
-import { LOCALE_COOKIE_KEY } from './constants';
+import { DEFAULT_COOKIE_OPTIONS, LOCALE_COOKIE_KEY } from './constants';
 import getLocaleData from './utils/getLocaleData';
 import { I18nConfig, I18nAppConfig } from './types';
 import normalizeLocalePath from './utils/normalizeLocalePath';
@@ -11,7 +11,7 @@ import getRedirectIndexRoute from './utils/getRedirectIndexRoute';
 
 export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
   const { i18n: i18nConfig } = buildConfig;
-  const { i18nRouting, autoRedirect } = i18nConfig;
+  const { i18nRouting, autoRedirect, cookieOptions = DEFAULT_COOKIE_OPTIONS } = i18nConfig;
   const { router: appConfigRouter = {}, i18n: i18nAppConfig = {} } = appConfig;
   const { blockCookie = false } = i18nAppConfig;
   const { history = {}, basename } = appConfigRouter;
@@ -40,7 +40,7 @@ export default ({ modifyRoutes, buildConfig, addProvider, appConfig }) => {
   if (!process.env.__IS_SERVER__) {
     const { detectedLocale } = getLocaleData({ url: window.location, i18nConfig, basename });
     const cookieBlocked = typeof blockCookie === 'function' ? blockCookie() : blockCookie;
-    setInitICELocaleToCookie(detectedLocale, cookieBlocked);
+    setInitICELocaleToCookie(detectedLocale, cookieBlocked, cookieOptions);
   }
 
   if (i18nRouting !== false) {
@@ -58,10 +58,10 @@ function Provider() {
   };
 }
 
-function setInitICELocaleToCookie(locale: string, cookieBlocked: boolean) {
+function setInitICELocaleToCookie(locale: string, cookieBlocked: boolean, cookieOptions: Record<string, any>) {
   const cookies = new Cookies();
   if (!cookieBlocked) {
-    cookies.set(LOCALE_COOKIE_KEY, locale, { path: '/' });
+    cookies.set(LOCALE_COOKIE_KEY, locale, { path: '/', ...cookieOptions });
   }
 }
 
