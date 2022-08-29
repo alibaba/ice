@@ -10,10 +10,23 @@ import vitePluginSSR from './vite/ssrPlugin';
 import ssrBuild from './vite/ssrBuild';
 import replaceHtmlContent from './replaceHtmlContent';
 
+interface NodeExternals {
+  excludes?: string[];
+}
+
 const plugin: IPlugin = async (api): Promise<void> => {
   const { context, registerTask, getValue, onGetWebpackConfig, onHook, log, applyMethod, modifyUserConfig, registerUserConfig } = api;
+  // Register nodeExternals in build.json
+  registerUserConfig({
+    name: 'nodeExternals',
+    validation: (val) => {
+      return typeof val === 'boolean' || typeof val === 'object';
+    }
+  });
+
   const { rootDir, command, webpack, commandArgs, userConfig } = context;
-  const { outputDir, ssr, nodeExternals } = userConfig;
+  const { outputDir, ssr } = userConfig;
+  const nodeExternals = userConfig.nodeExternals as NodeExternals;
 
   const TEMP_PATH = getValue<string>('TEMP_PATH');
   // Note: Compatible plugins to modify configuration
@@ -39,11 +52,7 @@ const plugin: IPlugin = async (api): Promise<void> => {
   if (ssr === 'static') {
     applyMethod('addRenderFile', path.join(__dirname, './renderPages.ts.ejs'), ssgEntry, renderProps);
   }
-  // Register nodeExternals in build.json
-  registerUserConfig({
-    name: 'nodeExternals',
-    validation: 'boolean',
-  });
+
   if (userConfig.vite) {
 
     // vite 模式下直接使用 process.env.__IS_SERVER__ 的变量，如果注册即便是将会进行字符串替换
@@ -151,7 +160,19 @@ const plugin: IPlugin = async (api): Promise<void> => {
     // in case of app with client and server code, webpack-node-externals is helpful to reduce server bundle size
     // while by bundle all dependencies, developers do not need to concern about the dependencies of server-side
     // empty externals added by config external
-    config.externals(nodeExternals ? [webpackNodeExternals()] : []);
+    config.externals(
+      nodeExternals ?
+        [
+          webpackNodeExternals(
+            nodeExternals?.excludes ?
+              {
+                allowlist: [
+                  ...nodeExternals?.excludes.map(exclude => RegExp(`^${exclude}`)),
+                ]
+              } : undefined
+          )
+        ] : []
+    );
 
     // remove process fallback when target is node
     config.plugins.delete('ProvidePlugin');
