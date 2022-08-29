@@ -307,6 +307,13 @@ export default defineConfig({
 - 类型：`boolean | string`
 - 默认值：`development` 模式：默认为 'cheap-module-source-map'，支持通过 `false` 关闭，不支持设置为其他枚举值。`production` 模式：默认 `false`。
 
+### splitChunks
+
+- 类型：`boolean`
+- 默认值：`true`
+
+默认会根据模块体积自动拆分 chunks，有可能会出现多个 bundle。如果不希望打包产物出现过多 bundle ，可设置成 `false`。
+
 ### syntaxFeatures
 
 - 类型：`{ exportDefaultFrom: boolean; functionBind: boolean; }`

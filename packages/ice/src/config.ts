@@ -311,6 +311,14 @@ const userConfig = [
       }
     },
   },
+  {
+    name: 'splitChunks',
+    validation: 'boolean',
+    defaultValue: true,
+    setConfig: (config: Config, splitChunks: UserConfig['splitChunks']) => {
+      config.splitChunks = splitChunks;
+    },
+  },
 ];
 
 const cliOption = [

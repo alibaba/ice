@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "start": "ice start",
-    "build": "ice build"
+    "build": "ice build",
+    "build:splitChunks": "ice build --config splitChunks.config.mts"
   },
   "description": "",
   "author": "",
