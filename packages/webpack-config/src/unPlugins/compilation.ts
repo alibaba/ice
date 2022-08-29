@@ -66,11 +66,29 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
 
       const swcPlugins = [];
       // handle app.tsx and page entries only
-      if (removeExportExprs && (/(.*)pages(.*)\.(jsx?|tsx?|mjs)$/.test(id) || /(.*)src\/app/.test(id))) {
-        swcPlugins.push([
-          require.resolve('@ice/swc-plugin-remove-export'),
-          removeExportExprs,
-        ]);
+      if (removeExportExprs) {
+        if (/(.*)pages(.*)\.(jsx?|tsx?|mjs)$/.test(id)) {
+          swcPlugins.push([
+            require.resolve('@ice/swc-plugin-remove-export'),
+            removeExportExprs,
+          ]);
+        } else if (/(.*)src\/app/.test(id)) {
+          let removeList;
+
+          // FIXME: https://github.com/ice-lab/ice-next/issues/487
+          if (removeExportExprs.indexOf('getConfig') === -1) {
+            // when build for getConfig, should keep default, it equals to getAppConfig
+            removeList = removeExportExprs.filter(key => key !== 'default');
+          } else {
+            // when build for getData, should remove all other exports
+            removeList = removeExportExprs;
+          }
+
+          swcPlugins.push([
+            require.resolve('@ice/swc-plugin-remove-export'),
+            removeList,
+          ]);
+        }
       }
 
       if (keepPlatform) {

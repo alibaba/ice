@@ -162,11 +162,11 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
 
   const routePath = getCurrentRoutePath(matches);
 
-  if (documentOnly) {
-    return renderDocument({ matches, routePath, renderOptions, routeModules: {} });
-  }
-  // FIXME: https://github.com/ice-lab/ice-next/issues/427
   const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
+
+  if (documentOnly) {
+    return renderDocument({ matches, routePath, renderOptions, routeModules });
+  }
 
   try {
     return await renderServerEntry({
