@@ -15,6 +15,7 @@ it('prebundle cjs deps', async () => {
   await preBundleCJSDeps({
     depsInfo: deps,
     cacheDir,
+    alias,
     taskConfig: { mode: 'production' }
   });
 

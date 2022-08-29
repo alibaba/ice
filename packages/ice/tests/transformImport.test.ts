@@ -21,6 +21,7 @@ it('transform module import', async () => {
   const { metadata } = await preBundleCJSDeps({
     depsInfo: deps,
     cacheDir,
+    alias,
     taskConfig: { mode: 'production' }
   });
   const transformImportPlugin = createUnplugin(() => transformImport(metadata, path.join(outdir, 'server'))).esbuild;

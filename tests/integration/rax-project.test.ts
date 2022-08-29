@@ -17,7 +17,11 @@ describe(`build ${example}`, () => {
 
     page = res.page;
     browser = res.browser;
-    expect(await page.$$text('div')).toStrictEqual(['']);
+    expect((await page.$$text('span')).length).toEqual(3);
+    expect((await page.$$text('span'))[0]).toStrictEqual('Welcome to Your Rax App');
+    expect((await page.$$text('span'))[1]).toStrictEqual('More information about Rax');
+    expect((await page.$$text('span'))[2]).toStrictEqual('Visit https://rax.js.org');
+    expect((await page.$$text('img')).length).toEqual(1);
     expect(fs.existsSync(path.join(__dirname, `../../examples/${example}/build/js/data-loader.js`))).toBe(false);
   }, 120000);
 
@@ -35,7 +39,11 @@ describe(`start ${example}`, () => {
     const res = await setupStartBrowser({ server: devServer, port });
     page = res.page;
     browser = res.browser;
+    expect((await page.$$text('span')).length).toEqual(3);
     expect((await page.$$text('span'))[0]).toStrictEqual('Welcome to Your Rax App');
+    expect((await page.$$text('span'))[1]).toStrictEqual('More information about Rax');
+    expect((await page.$$text('span'))[2]).toStrictEqual('Visit https://rax.js.org');
+    expect((await page.$$text('img')).length).toEqual(1);
   }, 120000);
 
   afterAll(async () => {
