@@ -4,15 +4,16 @@ import LoadablePlugin from '@loadable/webpack-plugin';
 import getWebpackConfig from '@builder/webpack-config';
 import { formatPath } from '@builder/app-helpers';
 import type { IPlugin } from 'build-scripts';
+import webpackNodeExternals = require('webpack-node-externals');
 import generateStaticPages from './generateStaticPages';
 import vitePluginSSR from './vite/ssrPlugin';
 import ssrBuild from './vite/ssrBuild';
 import replaceHtmlContent from './replaceHtmlContent';
 
 const plugin: IPlugin = async (api): Promise<void> => {
-  const { context, registerTask, getValue, onGetWebpackConfig, onHook, log, applyMethod, modifyUserConfig } = api;
+  const { context, registerTask, getValue, onGetWebpackConfig, onHook, log, applyMethod, modifyUserConfig, registerUserConfig } = api;
   const { rootDir, command, webpack, commandArgs, userConfig } = context;
-  const { outputDir, ssr } = userConfig;
+  const { outputDir, ssr, nodeExternals } = userConfig;
 
   const TEMP_PATH = getValue<string>('TEMP_PATH');
   // Note: Compatible plugins to modify configuration
@@ -38,7 +39,11 @@ const plugin: IPlugin = async (api): Promise<void> => {
   if (ssr === 'static') {
     applyMethod('addRenderFile', path.join(__dirname, './renderPages.ts.ejs'), ssgEntry, renderProps);
   }
-
+  // Register nodeExternals in build.json
+  registerUserConfig({
+    name: 'nodeExternals',
+    validation: 'boolean',
+  });
   if (userConfig.vite) {
 
     // vite 模式下直接使用 process.env.__IS_SERVER__ 的变量，如果注册即便是将会进行字符串替换
@@ -145,9 +150,8 @@ const plugin: IPlugin = async (api): Promise<void> => {
 
     // in case of app with client and server code, webpack-node-externals is helpful to reduce server bundle size
     // while by bundle all dependencies, developers do not need to concern about the dependencies of server-side
-    // TODO: support options to enable nodeExternals
     // empty externals added by config external
-    config.externals([]);
+    config.externals(nodeExternals ? [webpackNodeExternals()] : []);
 
     // remove process fallback when target is node
     config.plugins.delete('ProvidePlugin');
