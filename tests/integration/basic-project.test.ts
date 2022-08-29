@@ -4,16 +4,15 @@ import * as fs from 'fs';
 import { fileURLToPath } from 'url';
 import { buildFixture, setupBrowser } from '../utils/build';
 import { startFixture, setupStartBrowser } from '../utils/start';
-import { Page } from '../utils/browser';
+import Browser, { Page } from '../utils/browser';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 const example = 'basic-project';
 
 describe(`build ${example}`, () => {
-  let page: Page = null;
-  let browser = null;
+  let page: Page;
+  let browser: Browser;
 
   test('open /', async () => {
     await buildFixture(example);
@@ -43,14 +42,26 @@ describe(`build ${example}`, () => {
     expect(stats.size).toBeLessThan(1024 * 14);
   }, 120000);
 
+  test('disable splitChunks', async () => {
+    await buildFixture(example, {
+      config: 'splitChunks.config.mts'
+    });
+    const res = await setupBrowser({ example });
+    page = res.page;
+    browser = res.browser;
+
+    const files = fs.readdirSync(path.join(__dirname, `../../examples/${example}/build/js`), 'utf-8');
+    expect(files.length).toBe(7);
+  }, 120000);
+
   afterAll(async () => {
     await browser.close();
   });
 });
 
 describe(`start ${example}`, () => {
-  let page: Page = null;
-  let browser = null;
+  let page: Page;
+  let browser: Browser;
 
   test('setup devServer', async () => {
     const { devServer, port } = await startFixture(example);

@@ -193,7 +193,9 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
       ignored: watchIgnoredRegexp,
     },
     optimization: {
-      splitChunks: splitChunks == false ? undefined : getSplitChunksConfig(rootDir),
+      splitChunks: splitChunks == false
+        ? { minChunks: Infinity, cacheGroups: { default: false } }
+        : getSplitChunksConfig(rootDir),
       minimize: minify,
       minimizer: [
         new TerserPlugin({
