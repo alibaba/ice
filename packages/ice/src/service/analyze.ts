@@ -6,20 +6,20 @@ import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
 import { transform, build } from 'esbuild';
 import type { Loader, Plugin } from 'esbuild';
 import consola from 'consola';
+import type { TaskConfig } from 'build-scripts';
+import type { Config } from '@ice/types';
 import { getCache, setCache } from '../utils/persistentCache.js';
 import { getFileHash } from '../utils/hash.js';
 import scanPlugin from '../esbuild/scan.js';
 import type { DepScanData } from '../esbuild/scan.js';
 import formatPath from '../utils/formatPath.js';
 
+type Alias = TaskConfig<Config>['config']['alias'];
+
 interface Options {
   parallel?: number;
   analyzeRelativeImport?: boolean;
   alias?: Alias;
-}
-
-export interface Alias {
-  [x: string]: string | false;
 }
 
 const { init, parse } = moduleLexer;
