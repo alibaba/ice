@@ -53,6 +53,16 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
           },
         },
       });
+      if (!config.server) {
+        config.server = {};
+      }
+      const originalOptions = config.server.buildOptions;
+      config.server.buildOptions = (options) => ({
+        ...(originalOptions ? originalOptions(options) : options),
+        jsx: 'transform',
+        jsxFactory: 'createElement',
+        jsxFragment: 'Fragment',
+      });
       Object.assign(config.alias, alias);
       if (options.inlineStyle) {
         if (!warnOnce) {

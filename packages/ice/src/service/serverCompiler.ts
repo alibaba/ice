@@ -1,5 +1,4 @@
 import * as path from 'path';
-import { fileURLToPath } from 'url';
 import { createHash } from 'crypto';
 import * as fs from 'fs';
 import consola from 'consola';
@@ -23,8 +22,6 @@ import type { DepScanData } from '../esbuild/scan.js';
 import { scanImports } from './analyze.js';
 import type { DepsMetaData } from './preBundleCJSDeps.js';
 import preBundleCJSDeps from './preBundleCJSDeps.js';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 interface Options {
   rootDir: string;
@@ -112,7 +109,7 @@ export function createServerCompiler(options: Options) {
       // enable JSX syntax in .js files by default for compatible with migrate project
       // while it is not recommended
       loader: { '.js': 'jsx' },
-      inject: [path.resolve(__dirname, '../polyfills/react.js')],
+      jsx: 'automatic',
       sourcemap: typeof sourceMap === 'boolean'
         // Transform sourceMap for esbuild.
         ? sourceMap : (sourceMap.includes('inline') ? 'inline' : !!sourceMap),

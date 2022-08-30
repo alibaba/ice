@@ -50,7 +50,7 @@
     "dotenv": "^16.0.0",
     "dotenv-expand": "^8.0.3",
     "ejs": "^3.1.6",
-    "esbuild": "^0.14.23",
+    "esbuild": "^0.14.51",
     "esbuild-register": "^3.3.2",
     "fast-glob": "^3.2.11",
     "find-up": "^5.0.0",

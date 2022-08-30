@@ -34,7 +34,6 @@ export default class DataLoaderPlugin {
             target: 'esnext',
             entryPoints: [filePath],
             write: false,
-            inject: [],
           }, {
             swc: {
               removeExportExprs: ['default', 'getConfig', 'getServerData', 'getStaticData'],

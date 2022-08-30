@@ -44,7 +44,6 @@ class Config {
       const { error } = await esbuildCompiler({
         entryPoints: [entry],
         format: 'esm',
-        inject: [],
         outfile,
         plugins: [removeTopLevelCode(keepExports, transformInclude)],
       });
