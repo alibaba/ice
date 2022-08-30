@@ -7,7 +7,6 @@ import type { Config } from '@ice/types';
 
 const { merge } = lodash;
 const require = createRequire(import.meta.url);
-const regeneratorRuntimePath = require.resolve('regenerator-runtime');
 
 type JSXSuffix = 'jsx' | 'tsx';
 
@@ -33,7 +32,6 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
     transformInclude(id) {
       return extensionRegex.test(id) && !compileExcludes.some((regex) => regex.test(id));
     },
-    // @ts-expect-error TODO: source map types
     async transform(source: string, id: string) {
       if ((/node_modules/.test(id) && !compileRegex.some((regex) => regex.test(id)))) {
         return;
@@ -67,11 +65,29 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
 
       const swcPlugins = [];
       // handle app.tsx and page entries only
-      if (removeExportExprs && (/(.*)pages(.*)\.(jsx?|tsx?|mjs)$/.test(id) || /(.*)src\/app/.test(id))) {
-        swcPlugins.push([
-          require.resolve('@ice/swc-plugin-remove-export'),
-          removeExportExprs,
-        ]);
+      if (removeExportExprs) {
+        if (/(.*)pages(.*)\.(jsx?|tsx?|mjs)$/.test(id)) {
+          swcPlugins.push([
+            require.resolve('@ice/swc-plugin-remove-export'),
+            removeExportExprs,
+          ]);
+        } else if (/(.*)src\/app/.test(id)) {
+          let removeList;
+
+          // FIXME: https://github.com/ice-lab/ice-next/issues/487
+          if (removeExportExprs.indexOf('getConfig') === -1) {
+            // when build for getConfig, should keep default, it equals to getAppConfig
+            removeList = removeExportExprs.filter(key => key !== 'default');
+          } else {
+            // when build for getData, should remove all other exports
+            removeList = removeExportExprs;
+          }
+
+          swcPlugins.push([
+            require.resolve('@ice/swc-plugin-remove-export'),
+            removeList,
+          ]);
+        }
       }
 
       if (keepPlatform) {
@@ -97,10 +113,6 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
 
         const { code } = output;
         let { map } = output;
-        if (typeof map === 'string') {
-          // map require object type
-          map = JSON.parse(map);
-        }
         return { code, map };
       } catch (e) {
         // catch error for Unhandled promise rejection
@@ -131,10 +143,6 @@ function getJsxTransformOptions({
       transform: {
         react: reactTransformConfig,
         legacyDecorator: true,
-        // @ts-expect-error fix me when @builder/swc fix type error
-        regenerator: {
-          importPath: regeneratorRuntimePath,
-        },
       },
       externalHelpers: false,
     },

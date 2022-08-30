@@ -6,7 +6,7 @@ import type {
   RefObject,
   SyntheticEvent,
 } from 'react';
-import { createElement as _createElement, useEffect, useCallback, useRef, useState } from 'react';
+import { createElement as _createElement, useEffect, useCallback, useRef, useState, forwardRef as _forwardRef } from 'react';
 import { cached, convertUnit } from 'style-unit';
 import { observerElement } from './visibility';
 import { isFunction, isObject, isNumber } from './type';
@@ -29,7 +29,7 @@ import { isFunction, isObject, isNumber } from './type';
 const NON_DIMENSIONAL_REG = /opa|ntw|ne[ch]|ex(?:s|g|n|p|$)|^ord|zoo|grid|orp|ows|mnc|^columns$|bs|erim|onit/i;
 
 function createInputCompat(type: string) {
-  function InputCompat(props: any) {
+  function InputCompat(props: any, ref: RefObject<any>) {
     const { value, onInput, ...rest } = props;
     const [v, setV] = useState(value);
     const onChange = useCallback((event: SyntheticEvent) => {
@@ -39,14 +39,24 @@ function createInputCompat(type: string) {
       onInput && onInput(event.nativeEvent);
     }, [onInput]);
 
+    // Compat maxlength in rax-textinput, because maxlength is invalid props in web,it will be set attributes to element
+    // and react will Throw a warning in DEV.
+    // https://github.com/raxjs/rax-components/issues/459
+    // https://github.com/raxjs/rax-components/blob/master/packages/rax-textinput/src/index.tsx#L142
+    if (rest.maxlength) {
+      rest.maxLength = rest.maxlength;
+      delete rest.maxlength;
+    }
+
     return _createElement(type, {
       ...rest,
       value: v,
       onChange,
+      ref,
     });
   }
 
-  return InputCompat;
+  return _forwardRef(InputCompat);
 }
 
 /**
@@ -81,12 +91,12 @@ export function createElement<P extends {
     rest.style = compatStyleProps;
   }
 
-  // Setting the value of props makes the component be a controlled component in React.
-  // But setting the value is same as web in Rax.
-  // User can modify value of props to modify native input value
-  // and native input can also modify the value of self in Rax.
-  // So we should compat input to InputCompat, the same as textarea.
   if (type === 'input' || type === 'textarea') {
+    // Setting the value of props makes the component be a controlled component in React.
+    // But setting the value is same as web in Rax.
+    // User can modify value of props to modify native input value
+    // and native input can also modify the value of self in Rax.
+    // So we should compat input to InputCompat, the same as textarea.
     type = createInputCompat(type);
   }
 
@@ -119,16 +129,19 @@ function VisibilityChange({
 
   const listen = useCallback((eventName: string, handler: Function) => {
     const { current } = ref;
-    if (current != null) {
-      if (isFunction(handler)) {
-        observerElement(current as HTMLElement);
-        current.addEventListener(eventName, handler);
-      }
+    // Rax components will set custom ref by useImperativeHandle.
+    // So We should get eventTarget by _nativeNode.
+    // https://github.com/raxjs/rax-components/blob/master/packages/rax-textinput/src/index.tsx#L151
+    if (current && isFunction(handler)) {
+      const eventTarget = current._nativeNode || current;
+      observerElement(eventTarget as HTMLElement);
+      eventTarget.addEventListener(eventName, handler);
     }
     return () => {
       const { current } = ref;
       if (current) {
-        current.removeEventListener(eventName, handler);
+        const eventTarget = current._nativeNode || current;
+        eventTarget.removeEventListener(eventName, handler);
       }
     };
   }, [ref]);

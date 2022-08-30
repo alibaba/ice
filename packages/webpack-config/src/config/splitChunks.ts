@@ -8,6 +8,7 @@ interface TestModule {
 interface NameModule {
   libIdent?: Function;
   type: string;
+  updateHash: (hash: crypto.Hash) => void;
 }
 
 export const FRAMEWORK_BUNDLES = [
@@ -15,6 +16,15 @@ export const FRAMEWORK_BUNDLES = [
   'react', 'react-dom', '@ice/runtime', 'react-router', 'react-router-dom',
 ];
 
+
+const isModuleCSS = (module: { type: string }): boolean => {
+  return (
+    // mini-css-extract-plugin
+    module.type === 'css/mini-extract' ||
+    // extract-css-chunks-webpack-plugin
+    module.type === 'css/extract-css-chunks'
+  );
+};
 const getSplitChunksConfig = (rootDir: string): webpack.Configuration['optimization']['splitChunks'] => {
   const frameworkRegex = new RegExp(`[\\\\/]node_modules[\\\\/](${FRAMEWORK_BUNDLES.join('|')})[\\\\/]`);
   return {
@@ -39,12 +49,16 @@ const getSplitChunksConfig = (rootDir: string): webpack.Configuration['optimizat
         },
         name(module: NameModule) {
           const hash = crypto.createHash('sha1');
-          if (!module.libIdent) {
-            throw new Error(
-              `Encountered unknown module type: ${module.type}.`,
-            );
+          if (isModuleCSS(module)) {
+            module.updateHash(hash);
+          } else {
+            if (!module.libIdent) {
+              throw new Error(
+                `Encountered unknown module type: ${module.type}.`,
+              );
+            }
+            hash.update(module.libIdent({ context: rootDir }));
           }
-          hash.update(module.libIdent({ context: rootDir }));
           return hash.digest('hex').substring(0, 8);
         },
       },

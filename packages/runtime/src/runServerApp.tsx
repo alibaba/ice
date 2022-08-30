@@ -137,7 +137,7 @@ function pipeToResponse(res: ServerResponse, pipe: NodeWritablePiper) {
 
 async function doRender(serverContext: ServerContext, renderOptions: RenderOptions): Promise<RenderResult> {
   const { req } = serverContext;
-  const { routes, documentOnly, app, basename, serverOnlyBasename } = renderOptions;
+  const { routes, documentOnly, app, basename, serverOnlyBasename, disableFallback } = renderOptions;
 
   const location = getLocation(req.url);
 
@@ -162,11 +162,11 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
 
   const routePath = getCurrentRoutePath(matches);
 
-  if (documentOnly) {
-    return renderDocument({ matches, routePath, renderOptions, routeModules: {} });
-  }
-  // FIXME: https://github.com/ice-lab/ice-next/issues/427
   const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
+
+  if (documentOnly) {
+    return renderDocument({ matches, routePath, renderOptions, routeModules });
+  }
 
   try {
     return await renderServerEntry({
@@ -182,7 +182,10 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
       routePath,
     });
   } catch (err) {
-    consola.error('Render server entry error, downgrade to CSR.', err);
+    if (disableFallback) {
+      throw err;
+    }
+    consola.error('Warning: render server entry error, downgrade to csr.', err);
     return renderDocument({ matches, routePath, renderOptions, routeModules: {} });
   }
 }

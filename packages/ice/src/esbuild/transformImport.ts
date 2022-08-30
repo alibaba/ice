@@ -8,13 +8,14 @@ import type { ImportSpecifier } from '@ice/bundles/compiled/es-module-lexer/inde
 import type { Node } from 'estree';
 import type { UnpluginOptions } from 'unplugin';
 import type { DepsMetaData } from '../service/preBundleCJSDeps.js';
+import formatPath from '../utils/formatPath.js';
 
 const { init, parse } = esModuleLexer;
 
 type ImportNameSpecifier = { importedName: string; localName: string };
 
 // Redirect original dependency to the pre-bundle dependency(cjs) which is handled by preBundleCJSDeps function.
-const transformImportPlugin = (metadata: DepsMetaData): UnpluginOptions => {
+const transformImportPlugin = (metadata: DepsMetaData, serverDir: string): UnpluginOptions => {
   const { deps } = metadata;
   const redirectDepIds = [];
   return {
@@ -54,7 +55,7 @@ const transformImportPlugin = (metadata: DepsMetaData): UnpluginOptions => {
         }
 
         const importExp = source.slice(expStart, expEnd);
-        const filePath = deps[specifier].file;
+        const filePath = formatPath(path.relative(formatPath(serverDir), formatPath(deps[specifier].file)));
         redirectDepIds.push(filePath);
         const rewritten = transformCjsImport(
           importExp,

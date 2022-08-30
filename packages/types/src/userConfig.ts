@@ -10,6 +10,10 @@ interface SyntaxFeatures {
   functionBind?: boolean;
 }
 
+interface Optimization {
+  router?: boolean;
+}
+
 export interface UserConfig {
   alias?: Record<string, string | false>;
   define?: Record<string, string | boolean>;
@@ -38,9 +42,10 @@ export interface UserConfig {
     format: 'esm' | 'cjs';
     bundle: boolean;
   };
-  removeHistoryDeadCode?: boolean;
+  optimization?: Optimization;
   mock?: { exclude?: string[] };
   experimental?: Config['experimental'];
   transform?: UnpluginOptions['transform'];
   syntaxFeatures?: SyntaxFeatures;
+  splitChunks?: boolean;
 }

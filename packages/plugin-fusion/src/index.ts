@@ -27,6 +27,29 @@ function getVariablesPath({
   return filePath;
 }
 
+function importIcon(iconPath: string, cssPrefix: string) {
+  let entryFile = '';
+  return {
+    name: 'transform-import-icon',
+    enforce: 'pre',
+    async transform(code: string, id: string, options: { isServer: boolean }) {
+      const { isServer } = options;
+      // Only import icon scss in client
+      if (!isServer) {
+        // Icon just import once.
+        if (!entryFile && !id.match(/node_modules/) && id.match(/[js|jsx|ts|tsx]$/)) {
+          entryFile = id;
+        }
+        if (id === entryFile) {
+          return `import '${iconPath}';\n${code}`;
+        } else if (id === iconPath) {
+          return `$css-prefix: '${cssPrefix}';\n${code}`;
+        }
+      }
+    },
+  };
+}
+
 const plugin: Plugin<PluginOptions> = (options = {}) => ({
   name: '@ice/plugin-fusion',
   setup: ({ onGetConfig }) => {
@@ -41,6 +64,15 @@ const plugin: Plugin<PluginOptions> = (options = {}) => ({
     }
     if (theme || themePackage) {
       onGetConfig((config) => {
+        // Try to get icon.scss if exists.
+        const iconFile = getVariablesPath({
+          packageName: themePackage,
+          filename: 'icons.scss',
+          silent: true,
+        });
+        if (iconFile) {
+          config.transformPlugins = [...(config.transformPlugins || []), importIcon(iconFile, theme['css-prefix'] || 'next-')];
+        }
         // Modify webpack config of scss rule for fusion theme.
         config.configureWebpack ??= [];
         config.configureWebpack.push((webpackConfig) => {
@@ -57,29 +89,20 @@ const plugin: Plugin<PluginOptions> = (options = {}) => ({
             return false;
           });
           if (sassLoader) {
-            let additionalContent = '';
+            const additionalContent = [];
             if (themePackage) {
               const themeFile = getVariablesPath({
                 packageName: themePackage,
               });
               if (themeFile) {
-                additionalContent += `@import '${themePackage}/variables.scss'`;
-              }
-              // Try to get icon.scss if exists.
-              const iconFile = getVariablesPath({
-                packageName: themePackage,
-                filename: 'icons.scss',
-                silent: true,
-              });
-              if (iconFile) {
-                additionalContent += `@import '${themePackage}/icons.scss'`;
+                additionalContent.push(`@import '${themePackage}/variables.scss';`);
               }
             }
             let themeConfig = [];
             Object.keys(theme || {}).forEach((key) => {
               themeConfig.push(`$${key}: ${theme[key]};`);
             });
-            additionalContent += themeConfig.join('\n');
+            additionalContent.push(themeConfig.join('\n'));
 
             const loaderOptions = sassLoader.options || {};
             sassLoader.options = {
@@ -88,7 +111,7 @@ const plugin: Plugin<PluginOptions> = (options = {}) => ({
                 const originalContent = typeof loaderOptions.additionalData === 'function'
                   ? loaderOptions.additionalData(content, loaderContext)
                   : `${loaderOptions.additionalData || ''}${content}`;
-                return `${additionalContent}\n${originalContent}`;
+                return `${additionalContent.join('\n')}\n${originalContent}`;
               },
             };
           }

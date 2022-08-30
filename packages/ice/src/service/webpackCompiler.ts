@@ -95,20 +95,22 @@ async function webpackCompiler(options: {
       consola.warn(messages.warnings.join('\n'));
     }
     if (command === 'start') {
+      const appConfig = (await hooksAPI.getAppConfig()).default;
+      const hashChar = appConfig?.router?.type === 'hash' ? '#/' : '';
       if (isSuccessful && isFirstCompile) {
         let logoutMessage = '\n';
         logoutMessage += chalk.green(' Starting the development server at:');
         if (process.env.CLOUDIDE_ENV) {
-          logoutMessage += `\n   - IDE server: https://${process.env.WORKSPACE_UUID}-${commandArgs.port}.${process.env.WORKSPACE_HOST}${devPath}`;
+          logoutMessage += `\n   - IDE server: https://${process.env.WORKSPACE_UUID}-${commandArgs.port}.${process.env.WORKSPACE_HOST}${hashChar}${devPath}`;
         } else {
           logoutMessage += `\n
-   - Local  : ${chalk.underline.white(`${urls.localUrlForBrowser}${devPath}`)}
-   - Network:  ${chalk.underline.white(`${urls.lanUrlForTerminal}${devPath}`)}`;
+   - Local  : ${chalk.underline.white(`${urls.localUrlForBrowser}${hashChar}${devPath}`)}
+   - Network:  ${chalk.underline.white(`${urls.lanUrlForTerminal}${hashChar}${devPath}`)}`;
         }
         consola.log(`${logoutMessage}\n`);
 
         if (commandArgs.open) {
-          openBrowser(`${urls.localUrlForBrowser}${devPath}`);
+          openBrowser(`${urls.localUrlForBrowser}${hashChar}${devPath}`);
         }
       }
       // compiler.hooks.done is AsyncSeriesHook which does not support async function

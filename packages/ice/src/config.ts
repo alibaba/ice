@@ -279,8 +279,8 @@ const userConfig = [
     },
   },
   {
-    name: 'removeHistoryDeadCode',
-    validation: 'boolean',
+    name: 'optimization',
+    validation: 'object',
   },
   {
     name: 'mock',
@@ -309,6 +309,14 @@ const userConfig = [
           });
         }
       }
+    },
+  },
+  {
+    name: 'splitChunks',
+    validation: 'boolean',
+    defaultValue: true,
+    setConfig: (config: Config, splitChunks: UserConfig['splitChunks']) => {
+      config.splitChunks = splitChunks;
     },
   },
 ];

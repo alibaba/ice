@@ -37,7 +37,7 @@ export default class Browser {
   createServer(cwd: string, port: number) {
     return http.createServer((req, res) => {
       const requrl: string = req.url || '';
-      const pathname = `${cwd}${url.parse(requrl).pathname}`;
+      const pathname = `${cwd}${url.parse(requrl).pathname}`.split(path.sep).join('/');
       if (fse.existsSync(pathname)) {
         switch (path.extname(pathname)) { // set HTTP HEAD
           case '.html':

@@ -1,4 +1,4 @@
-import { Link, useData, useConfig } from 'ice';
+import { Link, useData, useConfig, history } from 'ice';
 import { isWeb } from '@uni/env';
 // @ts-expect-error
 import url from './ice.png';
@@ -12,6 +12,7 @@ export default function About() {
   const config = useConfig();
 
   console.log('render About', 'data', data, 'config', config);
+  console.log('history in component', history);
 
   return (
     <>
@@ -19,7 +20,7 @@ export default function About() {
       <Link to="/">home</Link>
       <img src={url} height="40" width="40" />
       <span className="mark">new</span>
-      <div>isWeb: { isWeb ? 'true' : 'false' }</div>
+      <div>isWeb: {isWeb ? 'true' : 'false'}</div>
     </>
   );
 }

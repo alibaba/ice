@@ -12,7 +12,7 @@ import { createUnplugin } from 'unplugin';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const alias = { '@': path.join(__dirname, './fixtures/scan') };
 const rootDir = path.join(__dirname, './fixtures/scan');
-const cacheDir = path.join(rootDir, '.ice');
+const cacheDir = path.join(rootDir, '.cache');
 const appEntry = path.join(__dirname, './fixtures/scan/app.ts');
 const outdir = path.join(rootDir, 'build');
 
@@ -21,9 +21,10 @@ it('transform module import', async () => {
   const { metadata } = await preBundleCJSDeps({
     depsInfo: deps,
     cacheDir,
+    alias,
     taskConfig: { mode: 'production' }
   });
-  const transformImportPlugin = createUnplugin(() => transformImport(metadata)).esbuild;
+  const transformImportPlugin = createUnplugin(() => transformImport(metadata, path.join(outdir, 'server'))).esbuild;
   await esbuild.build({
     entryPoints: [appEntry],
     outdir,
@@ -33,8 +34,8 @@ it('transform module import', async () => {
     ],
   });
   const buildContent = await fse.readFile(path.join(outdir, 'app.js'));
-  expect(buildContent.includes(path.join(rootDir, '.ice/deps/@ice_runtime_client.js'))).toBeTruthy();
-  expect(buildContent.includes(path.join(rootDir, '.ice/deps/@ice_runtime.js'))).toBeTruthy();
+  expect(buildContent.includes('../../.cache/deps/@ice_runtime_client.js')).toBeTruthy();
+  expect(buildContent.includes('../../.cache/deps/@ice_runtime.js')).toBeTruthy();
 });
 
 afterAll(async () => {

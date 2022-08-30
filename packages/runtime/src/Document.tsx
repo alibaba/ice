@@ -73,6 +73,10 @@ export function Scripts(props) {
   // Page assets need to be load before entry assets, so when call dynamic import won't cause duplicate js chunk loaded.
   const scripts = pageAssets.concat(entryAssets).filter(path => path.indexOf('.js') > -1);
 
+  if (assetsManifest.dataLoader) {
+    scripts.unshift(`${assetsManifest.publicPath}${assetsManifest.dataLoader}`);
+  }
+
   const matchedIds = matches.map(match => match.route.id);
   const routePath = getCurrentRoutePath(matches);
 
@@ -94,7 +98,10 @@ export function Scripts(props) {
        * disable hydration warning for CSR.
        * initial app data may not equal CSR result.
        */}
-      <script suppressHydrationWarning={documentOnly} dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=${JSON.stringify(appContext)}` }} />
+      <script
+        suppressHydrationWarning={documentOnly}
+        dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=Object.assign(${JSON.stringify(appContext)}, window.__ICE_APP_CONTEXT__ || {})` }}
+      />
       {
         routeScripts.map(script => {
           const { block, ...routeScriptProps } = script;
@@ -107,6 +114,20 @@ export function Scripts(props) {
         })
       }
     </>
+  );
+}
+
+export function Data() {
+  const { routesData, documentOnly } = useAppContext();
+  const appData = useAppData();
+
+  return (
+    // Disable hydration warning for csr.
+    // initial app data may not equal csr result.
+    <script
+      suppressHydrationWarning={documentOnly}
+      dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=${JSON.stringify({ routesData, appData })}` }}
+    />
   );
 }
 

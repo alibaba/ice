@@ -69,7 +69,7 @@ export default class AssetsManifestPlugin {
     // data-loader is built by another webpack task
     const dataLoader = resolve(this.outputDir, './data-loader.ts');
     if (existsSync(dataLoader)) {
-      manifest.entries['main']?.unshift('js/data-loader.js');
+      manifest['dataLoader'] = 'js/data-loader.js';
     }
 
     const output = JSON.stringify(manifest, null, 2);

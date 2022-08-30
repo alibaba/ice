@@ -9,6 +9,7 @@ import type { ExtendsPluginAPI } from '@ice/types/esm/plugin.js';
 import type { TaskConfig } from 'build-scripts';
 import type { Config } from '@ice/types';
 import getRouterBasename from '../../utils/getRouterBasename.js';
+import dynamicImport from '../../utils/dynamicImport.js';
 
 const require = createRequire(import.meta.url);
 
@@ -27,7 +28,8 @@ export default function createRenderMiddleware(options: Options): Middleware {
     const routes = JSON.parse(fse.readFileSync(routeManifestPath, 'utf-8'));
     const basename = getRouterBasename(taskConfig, (await getAppConfig()).default);
     const matches = matchRoutes(routes, req.path, basename);
-    if (matches.length) {
+    // When documentOnly is true, it means that the app is CSR and it should return the html.
+    if (matches.length || documentOnly) {
       // Wait for the server compilation to finish
       const { serverEntry, error } = await serverCompileTask.get();
       if (error) {
@@ -37,9 +39,7 @@ export default function createRenderMiddleware(options: Options): Middleware {
       let serverModule;
       try {
         delete require.cache[serverEntry];
-        // timestamp for disable import cache
-        const serverEntryWithVersion = `${serverEntry}?version=${new Date().getTime()}`;
-        serverModule = await import(serverEntryWithVersion);
+        serverModule = await dynamicImport(serverEntry, true);
       } catch (err) {
         // make error clearly, notice typeof err === 'string'
         consola.error(`import ${serverEntry} error: ${err}`);

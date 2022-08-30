@@ -13,7 +13,7 @@ const ignoreStoreFilePatterns = ['**/models/**', storeFilePattern];
 
 const plugin: Plugin<Options> = (options) => ({
   name: '@ice/plugin-store',
-  setup: ({ onGetConfig, modifyUserConfig, context: { rootDir, userConfig } }) => {
+  setup: ({ onGetConfig, modifyUserConfig, generator, context: { rootDir, userConfig } }) => {
     const { disableResetPageState = false } = options || {};
     const srcDir = path.join(rootDir, 'src');
     const pageDir = path.join(srcDir, 'pages');
@@ -38,6 +38,13 @@ const plugin: Plugin<Options> = (options) => ({
       ];
       return config;
     });
+
+    // Export store api: createStore, createModel from `.ice/index.ts`.
+    generator.addExport({
+      specifier: ['createStore', 'createModel'],
+      source: '@ice/plugin-store/api',
+      type: false,
+    });
   },
   runtime: path.join(path.dirname(fileURLToPath(import.meta.url)), 'runtime.js'),
 });
@@ -47,7 +54,7 @@ function exportStoreProviderPlugin({ pageDir, disableResetPageState }: { pageDir
     name: 'export-store-provider',
     enforce: 'post',
     transformInclude: (id) => {
-      return id.startsWith(pageDir) && !micromatch.isMatch(id, ignoreStoreFilePatterns);
+      return id.startsWith(pageDir.split(path.sep).join('/')) && !micromatch.isMatch(id, ignoreStoreFilePatterns);
     },
     transform: async (source, id) => {
       const pageStorePath = getPageStorePath(id);

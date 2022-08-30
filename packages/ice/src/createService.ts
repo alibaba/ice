@@ -1,5 +1,6 @@
 import * as path from 'path';
 import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
 import { Context } from 'build-scripts';
 import consola from 'consola';
 import type { CommandArgs, CommandName } from 'build-scripts';
@@ -27,6 +28,7 @@ import { getAppExportConfig, getRouteExportConfig } from './service/config.js';
 import renderExportsTemplate from './utils/renderExportsTemplate.js';
 import { getFileExports } from './service/analyze.js';
 
+const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 interface CreateServiceOptions {
@@ -97,9 +99,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   ['userConfig', 'cliOption'].forEach((configType) => ctx.registerConfig(configType, config[configType]));
 
   let taskConfigs = await ctx.setup();
-  // merge task config with built-in config
-  taskConfigs = mergeTaskConfig(taskConfigs, { port: commandArgs.port });
-  const webTaskConfig = taskConfigs.find(({ name }) => name === 'web');
 
   // get userConfig after setup because of userConfig maybe modified by plugins
   const { userConfig } = ctx;
@@ -111,6 +110,22 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const routesInfo = await generateRoutesInfo(rootDir, routesConfig);
   const hasExportAppData = (await getFileExports({ rootDir, file: 'src/app' })).includes('getAppData');
   const csr = !userConfig.ssr && !userConfig.ssg;
+
+  const disableRouter = userConfig?.optimization?.router && routesInfo.routesCount <= 1;
+  let taskAlias = {};
+  if (disableRouter) {
+    consola.info('[ice]', 'optimization.router is enabled and only have one route, ice build will remove react-router and history which is unnecessary.');
+    taskAlias['@ice/runtime/router'] = path.join(require.resolve('@ice/runtime'), '../single-router.js');
+  }
+  // merge task config with built-in config
+  taskConfigs = mergeTaskConfig(taskConfigs, {
+    port: commandArgs.port,
+    alias: {
+      // Get absolute path of `regenerator-runtime`, so it's unnecessary to add it to project dependencies
+      'regenerator-runtime': require.resolve('regenerator-runtime'),
+    },
+  });
+  const webTaskConfig = taskConfigs.find(({ name }) => name === 'web');
 
   // add render data
   generator.setRenderData({
@@ -124,6 +139,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   });
   dataCache.set('routes', JSON.stringify(routesInfo));
   dataCache.set('hasExportAppData', hasExportAppData ? 'true' : '');
+
   // Render exports files if route component export getData / getConfig.
   renderExportsTemplate({
     ...routesInfo,
@@ -176,10 +192,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     consola.debug(err);
   }
 
-  const disableRouter = userConfig.removeHistoryDeadCode && routesInfo.routesCount <= 1;
-  if (disableRouter) {
-    consola.info('[ice] removeHistoryDeadCode is enabled and only have one route, ice build will remove history and react-router dead code.');
-  }
   updateRuntimeEnv(appConfig, { disableRouter });
 
   return {
@@ -198,7 +210,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             reCompileRouteConfig,
             dataCache,
             appConfig,
-            devPath: (routePaths[0] || '').replace(/^\//, ''),
+            devPath: (routePaths[0] || '').replace(/^[\/\\]/, ''),
             spinner: buildSpinner,
           });
         } else if (command === 'build') {

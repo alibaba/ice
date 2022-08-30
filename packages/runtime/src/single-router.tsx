@@ -1,18 +1,19 @@
 /**
- * 对 react-router-dom 进行二次封装，保证只有一个路由时能够通过 tree-shaking 将 react-router 相关代码全量移除
+ * Fake API of react-router-dom, react-router-dom will be remove
+ * if user config `optimize.router` false
  */
 import * as React from 'react';
 import type { History } from 'history';
 
-export const useRoutesSingle = (routes) => {
+export const useRoutes = (routes) => {
   return <>{routes[0].element}</>;
 };
 
-export const RouterSingle = (props) => {
+export const Router = (props) => {
   return <>{props.children}</>;
 };
 
-export const createHistorySingle = (): History => {
+export const createHistory = (): History => {
   return {
     // @ts-expect-error
     listen: () => {},
@@ -23,7 +24,7 @@ export const createHistorySingle = (): History => {
   };
 };
 
-export const matchRoutesSingle = (routes) => {
+export const matchRoutes = (routes: any[]) => {
   return routes.map(item => {
     return {
       params: {},
@@ -34,16 +35,19 @@ export const matchRoutesSingle = (routes) => {
   });
 };
 
-export const LinkSingle = () => null;
-export const OutletSingle = () => {
+export const Link = () => null;
+export const Outlet = () => {
   return <></>;
 };
-export const useParamsSingle = () => {
+export const useParams = () => {
   return {};
 };
-export const useSearchParamsSingle = () => {
+export const useSearchParams = () => {
   return [{}, () => {}];
 };
-export const useLocationSingle = () => {
+export const useLocation = () => {
+  return {};
+};
+export const useNavigate = () => {
   return {};
 };

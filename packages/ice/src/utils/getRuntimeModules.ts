@@ -4,6 +4,7 @@ import findUp from 'find-up';
 import consola from 'consola';
 import type { PluginInfo } from 'build-scripts';
 import type { ExtendsPluginAPI } from '@ice/types/esm/plugin.js';
+import formatPath from './formatPath.js';
 
 export interface RuntimeModule {
   staticModule: boolean;
@@ -27,7 +28,8 @@ function getRuntimeModules(plugins: Array<PluginInfo<any, ExtendsPluginAPI>>) {
         const pkgInfo = fse.readJSONSync(pkgPath);
         return {
           staticModule: !!pkgInfo?.pluginConfig?.staticModule,
-          path: runtime,
+          // Format path for win32 while runtime path will be render to template.
+          path: formatPath(runtime),
           name: pkgInfo.name as string,
         };
       } catch (error) {

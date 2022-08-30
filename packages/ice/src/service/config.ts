@@ -4,6 +4,8 @@ import type { ServerCompiler } from '@ice/types/esm/plugin.js';
 import removeTopLevelCode from '../esbuild/removeTopLevelCode.js';
 import { getCache, setCache } from '../utils/persistentCache.js';
 import { getFileHash } from '../utils/hash.js';
+import dynamicImport from '../utils/dynamicImport.js';
+import formatPath from '../utils/formatPath.js';
 import { RUNTIME_TMP_DIR } from '../constant.js';
 
 type GetOutfile = (entry: string, exportNames: string[]) => string;
@@ -18,7 +20,7 @@ interface CompileConfig {
 
 class Config {
   private compileTasks: Record<string, Promise<string>>;
-  private compiler: (keepExports: string[]) => Promise<string>;
+  private compiler: (keepExports: string[]) => Promise<string | null>;
   private compileConfig: CompileConfig;
   private lastOptions: string[];
   private getOutfile: GetOutfile;
@@ -31,7 +33,7 @@ class Config {
     this.lastOptions = [];
     this.status = 'PENDING';
     this.getOutfile = compileConfig.getOutfile ||
-      (() => path.join(rootDir, 'node_modules', `${path.basename(entry)}.mjs`));
+      (() => formatPath(path.join(rootDir, 'node_modules', `${path.basename(entry)}.mjs`)));
   }
 
   public setCompiler(esbuildCompiler: ServerCompiler): void {
@@ -39,15 +41,17 @@ class Config {
       const { entry, transformInclude } = this.compileConfig;
       const outfile = this.getOutfile(entry, keepExports);
       this.status = 'PENDING';
-      await esbuildCompiler({
+      const { error } = await esbuildCompiler({
         entryPoints: [entry],
         format: 'esm',
         inject: [],
         outfile,
         plugins: [removeTopLevelCode(keepExports, transformInclude)],
       });
-      this.status = 'RESOLVED';
-      return `${outfile}?version=${new Date().getTime()}`;
+      if (!error) {
+        this.status = 'RESOLVED';
+        return outfile;
+      }
     };
   }
 
@@ -67,7 +71,7 @@ class Config {
       const outfile = this.getOutfile(this.compileConfig.entry, keepExports);
       const cached = await this.compileConfig?.needRecompile(outfile, keepExports);
       if (cached && typeof cached === 'string') {
-        targetFile = this.status === 'RESOLVED' ? `${cached}?version=${new Date().getTime()}`
+        targetFile = this.status === 'RESOLVED' ? cached
           : (await this.compileTasks[taskKey]);
       } else if (!cached) {
         this.reCompile(taskKey);
@@ -79,14 +83,14 @@ class Config {
     if (!targetFile) {
       targetFile = await this.compileTasks[taskKey];
     }
-    return await import(targetFile);
+    if (targetFile) return await dynamicImport(targetFile, true);
   };
 }
 
 export const getAppExportConfig = (rootDir: string) => {
   const appEntry = path.join(rootDir, 'src/app');
   const getOutfile = (entry: string, keepExports: string[]) =>
-    path.join(rootDir, 'node_modules', `${keepExports.join('_')}_${path.basename(entry)}.mjs`);
+    formatPath(path.join(rootDir, 'node_modules', `${keepExports.join('_')}_${path.basename(entry)}.mjs`));
   const appExportConfig = new Config({
     entry: appEntry,
     rootDir,
@@ -95,7 +99,7 @@ export const getAppExportConfig = (rootDir: string) => {
     getOutfile,
     needRecompile: async (entry, keepExports) => {
       let cached = null;
-      const cachedKey = `app_${keepExports.join('_')}`;
+      const cachedKey = `app_${keepExports.join('_')}_${process.env.__ICE_VERSION__}`;
       try {
         cached = await getCache(rootDir, cachedKey);
       } catch (err) {}
@@ -109,7 +113,7 @@ export const getAppExportConfig = (rootDir: string) => {
   });
 
   const getAppConfig = async (exportNames?: string[]) => {
-    return await appExportConfig.getConfig(exportNames || ['default', 'defineAppConfig']);
+    return (await appExportConfig.getConfig(exportNames || ['default', 'defineAppConfig'])) || {};
   };
 
   return {
@@ -129,7 +133,7 @@ export const getRouteExportConfig = (rootDir: string) => {
     transformInclude: (id) => id.includes('src/pages'),
     needRecompile: async (entry) => {
       let cached = false;
-      const cachedKey = 'route_config_file';
+      const cachedKey = `route_config_file_${process.env.__ICE_VERSION__}`;
       try {
         cached = await getCache(rootDir, cachedKey);
       } catch (err) {}
@@ -147,7 +151,7 @@ export const getRouteExportConfig = (rootDir: string) => {
     if (!fs.existsSync(routeConfigFile)) {
       return undefined;
     }
-    const routeConfig = (await routeExportConfig.getConfig(['getConfig'])).default;
+    const routeConfig = (await routeExportConfig.getConfig(['getConfig']) || {}).default;
     return specifyRoutId ? routeConfig[specifyRoutId] : routeConfig;
   };
   return {
