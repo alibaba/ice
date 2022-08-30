@@ -169,7 +169,7 @@ const plugin: IPlugin = async (api): Promise<void> => {
               /^create-app-shared/,
               /^react-app-renderer/,
               /^@ice\/runtime/,
-              ...nodeExternals?.excludes.map(exclude => RegExp(`^${exclude}`)),
+              ...[nodeExternals?.excludes || []].map(exclude => RegExp(`^${exclude}`)),
             ]
           })
         ] : []
