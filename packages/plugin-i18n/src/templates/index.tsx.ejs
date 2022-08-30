@@ -14,7 +14,7 @@ const cookies = new Cookies();
 const LOCALE_COOKIE_KEY = '<%= LOCALE_COOKIE_KEY %>';
 const i18nConfig = <%- JSON.stringify(i18nConfig) %>;
 
-const { defaultLocale, locales } = i18nConfig;
+const { defaultLocale, locales, cookieOptions } = i18nConfig;
 
 const Context = createContext<any>(null);
 
@@ -96,7 +96,7 @@ function setLocaleToCookies(locale: string) {
   const cookieBlocked = typeof blockCookie === 'function' ? blockCookie() : blockCookie;
   if (!cookieBlocked) {
 <% } %>
-    cookies.set(LOCALE_COOKIE_KEY, locale, { path: '/' });
+    cookies.set(LOCALE_COOKIE_KEY, locale, { path: '/', ...cookieOptions });
 <% if (i18nRouting !== false) {%>
   }
 <% } %>
