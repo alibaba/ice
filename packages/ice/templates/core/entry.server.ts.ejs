@@ -9,7 +9,7 @@ import routes from './routes';
 
 const getRouterBasename = () => {
   const appConfig = runtime.getAppConfig(app);
-  return '<%- basename %>' || appConfig?.router?.basename || '';
+  return appConfig?.router?.basename ?? '<%- basename %>' ?? '';
 }
 
 const setRuntimeEnv = (renderMode) => {

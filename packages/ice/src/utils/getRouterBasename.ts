@@ -3,7 +3,7 @@ import type { Config } from '@ice/types';
 import type { TaskConfig } from 'build-scripts';
 
 const getRouterBasename = (taskConfig: TaskConfig<Config>, appConfig: AppConfig) => {
-  return taskConfig?.config?.basename || appConfig?.router?.basename;
+  return appConfig?.router?.basename ?? taskConfig?.config?.basename ?? '';
 };
 
 export default getRouterBasename;
