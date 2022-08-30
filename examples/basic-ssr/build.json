@@ -1,4 +1,5 @@
 {
   "plugins": [],
-  "ssr": true
+  "ssr": true,
+  "nodeExternals": true
 }

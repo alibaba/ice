@@ -14,5 +14,6 @@
     ]
   ],
   "vite": false,
-  "ssr": "static"
+  "ssr": "static",
+  "nodeExternals": true
 }
