@@ -163,14 +163,15 @@ const plugin: IPlugin = async (api): Promise<void> => {
     config.externals(
       nodeExternals ?
         [
-          webpackNodeExternals(
-            nodeExternals?.excludes ?
-              {
-                allowlist: [
-                  ...nodeExternals?.excludes.map(exclude => RegExp(`^${exclude}`)),
-                ]
-              } : undefined
-          )
+          webpackNodeExternals({
+            allowlist: [
+              // inner deps need to be bundled
+              /^create-app-shared/,
+              /^react-app-renderer/,
+              /^@ice\/runtime/,
+              ...nodeExternals?.excludes.map(exclude => RegExp(`^${exclude}`)),
+            ]
+          })
         ] : []
     );
 
