@@ -454,7 +454,7 @@ importers:
       semver: ^7.3.5
       temp: ^0.9.4
       trusted-cert: ^1.1.3
-      unplugin: ^0.8.0
+      unplugin: ^0.9.5
       webpack: ^5.73.0
       webpack-dev-server: ^4.7.4
     dependencies:
@@ -512,7 +512,7 @@ importers:
       '@types/temp': 0.9.1
       chokidar: 3.5.3
       react: 18.2.0
-      unplugin: 0.8.1_4upc34oiflw3lduyjvrzpjntau
+      unplugin: 0.9.5_4upc34oiflw3lduyjvrzpjntau
       webpack: 5.73.0_esbuild@0.14.38
 
   packages/jsx-runtime:
@@ -703,7 +703,7 @@ importers:
       react: ^18.0.0
       terser: ^5.12.1
       typescript: ^4.6.4
-      unplugin: ^0.3.2
+      unplugin: ^0.9.5
       webpack: ^5.73.0
       webpack-dev-server: ^4.7.4
     devDependencies:
@@ -718,7 +718,7 @@ importers:
       react: 18.2.0
       terser: 5.12.1
       typescript: 4.6.4
-      unplugin: 0.3.3_4upc34oiflw3lduyjvrzpjntau
+      unplugin: 0.9.5_4upc34oiflw3lduyjvrzpjntau
       webpack: 5.73.0_esbuild@0.14.38
       webpack-dev-server: 4.8.1_webpack@5.73.0
 
@@ -739,7 +739,7 @@ importers:
       magic-string: ^0.26.1
       mini-css-extract-plugin: 2.6.0
       react-refresh: ^0.12.0
-      unplugin: ^0.3.2
+      unplugin: ^0.9.5
       webpack: ^5.73.0
       webpack-dev-server: ^4.7.4
     dependencies:
@@ -755,7 +755,7 @@ importers:
       magic-string: 0.26.1
       mini-css-extract-plugin: 2.6.0_webpack@5.73.0
       react-refresh: 0.12.0
-      unplugin: 0.3.3_4upc34oiflw3lduyjvrzpjntau
+      unplugin: 0.9.5_4upc34oiflw3lduyjvrzpjntau
     devDependencies:
       '@ice/types': link:../types
       build-scripts: 2.0.0-24
@@ -18180,29 +18180,8 @@ packages:
     resolution: {integrity: sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==}
     engines: {node: '>= 0.8'}
 
-  /unplugin/0.3.3_4upc34oiflw3lduyjvrzpjntau:
-    resolution: {integrity: sha512-WjZWpUqqcYPQ/efR00Zm2m1+J1LitwoZ4uhHV4VdZ+IpW0Nh/qnDYtVf+nLhozXdGxslMPecOshVR7NiWFl4gA==}
-    peerDependencies:
-      esbuild: '>=0.13'
-      rollup: ^2.50.0
-      vite: ^2.3.0
-      webpack: 4 || 5
-    peerDependenciesMeta:
-      esbuild:
-        optional: true
-      rollup:
-        optional: true
-      vite:
-        optional: true
-      webpack:
-        optional: true
-    dependencies:
-      esbuild: 0.14.38
-      webpack: 5.73.0_esbuild@0.14.38
-      webpack-virtual-modules: 0.4.3
-
-  /unplugin/0.8.1_4upc34oiflw3lduyjvrzpjntau:
-    resolution: {integrity: sha512-o7rUZoPLG1fH4LKinWgb77gDtTE6mw/iry0Pq0Z5UPvZ9+HZ1/4+7fic7t58s8/CGkPrDpGq+RltO+DmswcR4g==}
+  /unplugin/0.9.5_4upc34oiflw3lduyjvrzpjntau:
+    resolution: {integrity: sha512-luraheyfxwtvkvHpsOvMNv7IjLdORTWKZp0gWYNHGLi2ImON3iIZOj464qEyyEwLA/EMt12fC415HW9zRpOfTg==}
     peerDependencies:
       esbuild: '>=0.13'
       rollup: ^2.50.0
@@ -18224,7 +18203,6 @@ packages:
       webpack: 5.73.0_esbuild@0.14.38
       webpack-sources: 3.2.3
       webpack-virtual-modules: 0.4.4
-    dev: true
 
   /unquote/1.1.1:
     resolution: {integrity: sha512-vRCqFv6UhXpWxZPyGDh/F3ZpNv8/qo7w6iufLpQg9aKnQ71qM4B5KiI7Mia9COcjEhrO9LueHpMYjYzsWH3OIg==}
@@ -18824,12 +18802,8 @@ packages:
     resolution: {integrity: sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==}
     engines: {node: '>=10.13.0'}
 
-  /webpack-virtual-modules/0.4.3:
-    resolution: {integrity: sha512-5NUqC2JquIL2pBAAo/VfBP6KuGkHIZQXW/lNKupLPfhViwh8wNsu0BObtl09yuKZszeEUfbXz8xhrHvSG16Nqw==}
-
   /webpack-virtual-modules/0.4.4:
     resolution: {integrity: sha512-h9atBP/bsZohWpHnr+2sic8Iecb60GxftXsWNLLLSqewgIsGzByd2gcIID4nXcG+3tNe4GQG3dLcff3kXupdRA==}
-    dev: true
 
   /webpack/5.72.1:
     resolution: {integrity: sha512-dXG5zXCLspQR4krZVR6QgajnZOjW2K/djHvdcRaDQvsjV9z9vaW6+ja5dZOYbqBBjF6kGXka/2ZyxNdc+8Jung==}

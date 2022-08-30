@@ -32,7 +32,6 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
     transformInclude(id) {
       return extensionRegex.test(id) && !compileExcludes.some((regex) => regex.test(id));
     },
-    // @ts-expect-error TODO: source map types
     async transform(source: string, id: string) {
       if ((/node_modules/.test(id) && !compileRegex.some((regex) => regex.test(id)))) {
         return;
@@ -114,10 +113,6 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
 
         const { code } = output;
         let { map } = output;
-        if (typeof map === 'string') {
-          // map require object type
-          map = JSON.parse(map);
-        }
         return { code, map };
       } catch (e) {
         // catch error for Unhandled promise rejection
