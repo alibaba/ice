@@ -1,7 +1,7 @@
 import { createRequire } from 'module';
 import { createHash } from 'crypto';
 // FIXME when resolve mini-css-extract-plugin symbol in test
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import MiniCssExtractPlugin from '@ice/bundles/compiled/mini-css-extract-plugin/dist/index.js';
 import { sass, less, postcss } from '@ice/bundles';
 import type { ModifyWebpackConfig } from '@ice/types/esm/config';
 import type { LoaderContext } from 'webpack';

@@ -3,7 +3,7 @@ import { createRequire } from 'module';
 import fg from 'fast-glob';
 import consola from 'consola';
 // FIXME when prepack @pmmmwh/react-refresh-webpack-plugin
-import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import ReactRefreshWebpackPlugin from '@ice/bundles/compiled/@pmmmwh/react-refresh-webpack-plugin/lib/index.js';
 import bundleAnalyzer from '@ice/bundles/compiled/webpack-bundle-analyzer/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import CssMinimizerPlugin from '@ice/bundles/compiled/css-minimizer-webpack-plugin/index.js';
@@ -13,7 +13,6 @@ import ESlintPlugin from '@ice/bundles/compiled/eslint-webpack-plugin/index.js';
 import CopyPlugin from '@ice/bundles/compiled/copy-webpack-plugin/index.js';
 import type { Configuration, WebpackPluginInstance, NormalModule, Compiler } from 'webpack';
 import type webpack from 'webpack';
-import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import type { Config } from '@ice/types';
 import browserslist from 'browserslist';
 import configAssets from './config/assets.js';
@@ -35,8 +34,7 @@ interface GetWebpackConfigOptions {
   webpack: typeof webpack;
   runtimeTmpDir: string;
 }
-export type WebpackConfig = Configuration & { devServer?: DevServerConfiguration };
-type GetWebpackConfig = (options: GetWebpackConfigOptions) => WebpackConfig;
+type GetWebpackConfig = (options: GetWebpackConfigOptions) => Configuration;
 
 function getEntry(rootDir: string, runtimeTmpDir: string) {
   // check entry.client.ts
@@ -160,7 +158,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
     compileExcludes,
     swcOptions,
   });
-  const webpackConfig: WebpackConfig = {
+  const webpackConfig: Configuration = {
     mode,
     experiments: {
       layers: true,

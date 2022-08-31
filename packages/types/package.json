@@ -30,7 +30,7 @@
   "bugs": "https://github.com/ice-lab/ice-next/issues",
   "homepage": "https://next.ice.work",
   "devDependencies": {
-    "@builder/swc": "^0.2.0",
+    "@swc/core": "1.2.210",
     "@ice/route-manifest": "^1.0.0",
     "@ice/runtime": "^1.0.0",
     "build-scripts": "^2.0.0-24",

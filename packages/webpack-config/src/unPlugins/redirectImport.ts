@@ -1,6 +1,6 @@
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
 import type { ImportSpecifier } from '@ice/bundles/compiled/es-module-lexer';
-import type { UnpluginOptions } from 'unplugin';
+import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import consola from 'consola';
 import MagicString from 'magic-string';
 import { createFilter } from '@rollup/pluginutils';

@@ -1,5 +1,5 @@
 import * as path from 'path';
-import WebpackDevServer from 'webpack-dev-server';
+import WebpackDevServer from '@ice/bundles/compiled/webpack-dev-server/lib/Server.js';
 import type { Configuration } from 'webpack-dev-server';
 import type { Context, TaskConfig } from 'build-scripts';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
