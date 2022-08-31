@@ -1,13 +1,14 @@
 import type { Config } from '@ice/types';
 import type { BuildOptions } from 'esbuild';
-import { createUnplugin } from 'unplugin';
-import type { UnpluginOptions } from 'unplugin';
+import unplugin from '@ice/bundles/compiled/unplugin/index.js';
+import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
+import type { Configuration } from 'webpack';
 import compilationPlugin from './unPlugins/compilation.js';
 import compileExcludes from './compileExcludes.js';
-import type { WebpackConfig } from './index.js';
 
 type Compiler = 'webpack' | 'esbuild';
 
+const { createUnplugin } = unplugin;
 function getPluginTransform(plugin: UnpluginOptions, type: 'esbuild' | 'webpack') {
   const { transform } = plugin;
   if (transform) {
@@ -24,7 +25,7 @@ function getPluginTransform(plugin: UnpluginOptions, type: 'esbuild' | 'webpack'
   return plugin;
 }
 
-function getCompilerPlugins(config: Config, compiler: 'webpack'): WebpackConfig['plugins'];
+function getCompilerPlugins(config: Config, compiler: 'webpack'): Configuration['plugins'];
 function getCompilerPlugins(config: Config, compiler: 'esbuild'): BuildOptions['plugins'];
 function getCompilerPlugins(config: Config, compiler: Compiler) {
   const {

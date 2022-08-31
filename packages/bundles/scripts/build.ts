@@ -26,6 +26,7 @@ interface Options {
   declaration?: boolean;
   bundleName?: string;
   emptyDir?: boolean;
+  skipCompile?: boolean;
   matchCopyFiles?: (data: {
     resolvePath: string;
     resolveId: string;
@@ -35,7 +36,7 @@ interface Options {
 
 export async function packDependency(options: Options): Promise<void> {
   const { pkgName, file, rootDir, target, externals, matchCopyFiles, patch, emptyDir = true,
-    bundleName = 'index.js', minify = true, declaration = true } = options;
+    bundleName = 'index.js', minify = true, declaration = true, skipCompile } = options;
   console.log(chalk.green(`start pack ${pkgName || file}`));
 
   const targetPath = path.join(rootDir, target);
@@ -48,58 +49,60 @@ export async function packDependency(options: Options): Promise<void> {
   });
 
   fs.ensureDirSync(targetPath);
-  const { code, assets } = await ncc(packEntry, {
-    cache: false,
-    externals,
-    minify,
-    target: 'es5',
-    assetsBuilds: false,
-    customEmit(filePath: string, opts: {id: string}) {
-      const { id } = opts;
-      if (matchCopyFiles && matchCopyFiles({
-        resolvePath: filePath,
-        resolveId: id,
-      })) {
-        filesToCopy.push(require.resolve(filePath, {
-          paths: [path.dirname(id)],
-        }));
+  if (!skipCompile) {
+    const { code, assets } = await ncc(packEntry, {
+      cache: false,
+      externals,
+      minify,
+      target: 'es5',
+      assetsBuilds: false,
+      customEmit(filePath: string, opts: {id: string}) {
+        const { id } = opts;
+        if (matchCopyFiles && matchCopyFiles({
+          resolvePath: filePath,
+          resolveId: id,
+        })) {
+          filesToCopy.push(require.resolve(filePath, {
+            paths: [path.dirname(id)],
+          }));
 
-        return `'./${path.basename(filePath)}'`;
+          return `'./${path.basename(filePath)}'`;
+        }
+      },
+    });
+    for (const assetKey of Object.keys(assets)) {
+      const asset = assets[assetKey];
+      const data = asset.source;
+      const fileTarget = path.join(targetPath, assetKey);
+      fs.ensureDirSync(path.dirname(fileTarget));
+      fs.writeFileSync(fileTarget, data);
+    }
+    // copy files
+    for (const fileToCopy of filesToCopy) {
+      let content = fs.readFileSync(fileToCopy, 'utf-8');
+      for (const key of Object.keys(externals)) {
+        content = content.replace(
+          new RegExp(`require\\(['"]${key}['"]\\)`, 'gm'),
+          `require('${externals[key]}')`,
+        );
+        content = content.replace(
+          new RegExp(`require\\(['"]${key}/package(.json)?['"]\\)`, 'gm'),
+          `require('${externals[key]}/package.json')`,
+        );
       }
-    },
-  });
-  for (const assetKey of Object.keys(assets)) {
-    const asset = assets[assetKey];
-    const data = asset.source;
-    const fileTarget = path.join(targetPath, assetKey);
-    fs.ensureDirSync(path.dirname(fileTarget));
-    fs.writeFileSync(fileTarget, data);
-  }
-  // copy files
-  for (const fileToCopy of filesToCopy) {
-    let content = fs.readFileSync(fileToCopy, 'utf-8');
-    for (const key of Object.keys(externals)) {
-      content = content.replace(
-        new RegExp(`require\\(['"]${key}['"]\\)`, 'gm'),
-        `require('${externals[key]}')`,
-      );
-      content = content.replace(
-        new RegExp(`require\\(['"]${key}/package(.json)?['"]\\)`, 'gm'),
-        `require('${externals[key]}/package.json')`,
+      const copyTarget = path.join(targetPath, path.basename(fileToCopy));
+      console.log(chalk.green(`fileToCopy ${copyTarget}`));
+      fs.writeFileSync(
+        copyTarget,
+        content,
+        'utf-8',
       );
     }
-    const copyTarget = path.join(targetPath, path.basename(fileToCopy));
-    console.log(chalk.green(`fileToCopy ${copyTarget}`));
-    fs.writeFileSync(
-      copyTarget,
-      content,
-      'utf-8',
-    );
+    // write code to package
+    const outfile = path.join(targetPath, bundleName);
+    fs.ensureDirSync(path.dirname(outfile));
+    fs.writeFileSync(path.join(targetPath, bundleName), code, 'utf-8');
   }
-  // write code to package
-  const outfile = path.join(targetPath, bundleName);
-  fs.ensureDirSync(path.dirname(outfile));
-  fs.writeFileSync(path.join(targetPath, bundleName), code, 'utf-8');
   if (pkgName) {
     const packageRoot = path.dirname(
       findUp.sync('package.json', {
