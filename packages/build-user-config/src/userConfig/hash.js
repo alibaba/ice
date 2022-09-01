@@ -5,8 +5,12 @@ module.exports = (config, hash, context) => {
   const { command } = context;
   // default is false
   if (hash) {
+    // eslint-disable-next-line global-require
+    const webpack = require('webpack');
+    const webpack4 = webpack.version.startsWith('4');
+    const defaultHash = webpack4 ? 'hash:6' : 'fullhash:6';
     // can not use [chunkhash] or [contenthash] for chunk in dev mode
-    const hashStr = typeof hash === 'boolean' || command === 'start' ? 'fullhash:6' : hash;
+    const hashStr = typeof hash === 'boolean' || command === 'start' ? defaultHash : hash;
     const fileName = config.output.get('filename');
     let pathArray = fileName.split('/');
     pathArray.pop(); // pop filename
@@ -14,9 +18,11 @@ module.exports = (config, hash, context) => {
     const outputPath = pathArray.length ? pathArray.join('/') : '';
     config.output.filename(formatPath(path.join(outputPath, `[name].[${hashStr}].js`)));
     if (config.plugins.get('MiniCssExtractPlugin')) {
-      config.plugin('MiniCssExtractPlugin').tap((args) => [Object.assign(...args, {
-        filename: formatPath(path.join(outputPath, `[name].[${hashStr}].css`)),
-      })]);
+      config.plugin('MiniCssExtractPlugin').tap((args) => [
+        Object.assign(...args, {
+          filename: formatPath(path.join(outputPath, `[name].[${hashStr}].css`)),
+        }),
+      ]);
     }
   }
 };
