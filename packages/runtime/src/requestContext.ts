@@ -1,4 +1,4 @@
-import type { ServerContext, RequestContext } from './types.js';
+import type { ServerContext, RequestContext } from '@ice/types';
 
 interface Location {
   pathname: string;

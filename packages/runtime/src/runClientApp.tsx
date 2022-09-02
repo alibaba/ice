@@ -2,16 +2,16 @@ import React, { useLayoutEffect, useState } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { createHashHistory, createBrowserHistory, createMemoryHistory } from 'history';
 import type { HashHistory, BrowserHistory, Action, Location, InitialEntry, MemoryHistory } from 'history';
+import type {
+  AppContext, AppExport, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
+  RouteWrapperConfig, RuntimeModules, RouteMatch, RouteModules, AppConfig, DocumentComponent,
+} from '@ice/types';
 import { createHistory as createHistorySingle } from './single-router.js';
 import { setHistory } from './history.js';
 import Runtime from './runtime.js';
 import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
 import { AppDataProvider, getAppData } from './AppData.js';
-import type {
-  AppContext, AppExport, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
-  RouteWrapperConfig, RuntimeModules, RouteMatch, RouteModules, AppConfig, DocumentComponent,
-} from './types.js';
 import { loadRouteModules, loadRoutesData, getRoutesConfig, filterMatchesToLoad } from './routes.js';
 import { updateRoutesConfig } from './routesConfig.js';
 import getRequestContext from './requestContext.js';
