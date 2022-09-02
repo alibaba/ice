@@ -5,6 +5,18 @@ import {
   useSearchParams,
   useLocation,
 } from 'react-router-dom';
+import type {
+  RuntimePlugin,
+  AppContext,
+  AppConfig,
+  RouteConfig,
+  RouteItem,
+  ServerContext,
+  AppProvider,
+  RouteWrapper,
+  RenderMode,
+  GetAppData,
+} from '@ice/types';
 import Runtime from './runtime.js';
 import App from './App.js';
 import runClientApp from './runClientApp.js';
@@ -19,18 +31,6 @@ import {
   Main,
   Data,
 } from './Document.js';
-import type {
-  RuntimePlugin,
-  AppContext,
-  AppConfig,
-  RouteConfig,
-  RouteItem,
-  ServerContext,
-  AppProvider,
-  RouteWrapper,
-  RenderMode,
-  GetAppData,
-} from './types.js';
 import dataLoader from './dataLoader.js';
 import getAppConfig, { defineAppConfig } from './appConfig.js';
 import { routerHistory as history } from './history.js';
