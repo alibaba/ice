@@ -747,11 +747,11 @@ importers:
       regenerator-runtime: ^0.13.9
     dependencies:
       '@ice/jsx-runtime': link:../jsx-runtime
-      '@ice/types': link:../types
       consola: 2.15.3
       history: 5.3.0
       react-router-dom: 6.3.0_biqbaboplfbrettd7655fr4n2y
     devDependencies:
+      '@ice/types': link:../types
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
       react: 18.2.0
