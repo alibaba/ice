@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { RouteWrapperConfig } from './types.js';
+import type { RouteWrapperConfig } from '@ice/types';
 import { useAppContext } from './AppContext.js';
 import { DataProvider, ConfigProvider } from './RouteContext.js';
 

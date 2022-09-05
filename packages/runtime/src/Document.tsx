@@ -1,9 +1,9 @@
 import * as React from 'react';
 import type { ReactNode } from 'react';
+import type { AppContext, RouteMatch, AssetsManifest } from '@ice/types';
 import { useAppContext } from './AppContext.js';
 import { useAppData } from './AppData.js';
 import { getMeta, getTitle, getLinks, getScripts } from './routesConfig.js';
-import type { AppContext, RouteMatch, AssetsManifest } from './types.js';
 import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
 
 interface DocumentContext {

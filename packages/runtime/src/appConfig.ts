@@ -1,4 +1,4 @@
-import type { AppConfig, AppExport } from './types.js';
+import type { AppConfig, AppExport } from '@ice/types';
 
 const defaultAppConfig: AppConfig = {
   app: {

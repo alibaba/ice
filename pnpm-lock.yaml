@@ -723,6 +723,7 @@ importers:
   packages/runtime:
     specifiers:
       '@ice/jsx-runtime': ^0.1.0
+      '@ice/types': ^1.0.0
       '@types/react': ^18.0.8
       '@types/react-dom': ^18.0.3
       consola: ^2.15.3
@@ -737,6 +738,7 @@ importers:
       history: 5.3.0
       react-router-dom: 6.3.0_biqbaboplfbrettd7655fr4n2y
     devDependencies:
+      '@ice/types': link:../types
       '@types/react': 18.0.8
       '@types/react-dom': 18.0.3
       react: 18.2.0
@@ -757,14 +759,16 @@ importers:
   packages/types:
     specifiers:
       '@ice/route-manifest': ^1.0.0
-      '@ice/runtime': ^1.0.0
       '@swc/core': 1.2.210
       build-scripts: ^2.0.0-24
       esbuild: ^0.14.51
       eslint: ^8.14.0
       eslint-webpack-plugin: 3.1.1
       fork-ts-checker-webpack-plugin: 7.2.6
+      history: ^5.3.0
       react: ^18.0.0
+      react-dom: ^18.2.0
+      react-router-dom: ^6.2.2
       terser: ^5.12.1
       typescript: ^4.6.4
       unplugin: ^0.9.5
@@ -772,14 +776,16 @@ importers:
       webpack-dev-server: ^4.7.4
     devDependencies:
       '@ice/route-manifest': link:../route-manifest
-      '@ice/runtime': link:../runtime
       '@swc/core': 1.2.210
       build-scripts: 2.0.0-24
       esbuild: 0.14.54
       eslint: 8.14.0
       eslint-webpack-plugin: 3.1.1_asfk4lnnm2udvewr2geiu7gcyy
       fork-ts-checker-webpack-plugin: 7.2.6_spx7prkkl7pj6nxt6g3ewnbaqu
+      history: 5.3.0
       react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-router-dom: 6.3.0_biqbaboplfbrettd7655fr4n2y
       terser: 5.12.1
       typescript: 4.6.4
       unplugin: 0.9.5_3qmdnfoccgmcaqi5n264fyeyfi
@@ -11249,7 +11255,6 @@ packages:
     resolution: {integrity: sha512-ZqaKwjjrAYUYfLG+htGaIIZ4nioX2L70ZUMIFysS3xvBsSG4x/n1V6TXV3N8ZYNuFGlDirFg32T7B6WOUPDYcQ==}
     dependencies:
       '@babel/runtime': 7.17.9
-    dev: false
 
   /hoist-non-react-statics/3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
@@ -15922,7 +15927,6 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-router: 6.3.0_react@18.2.0
-    dev: false
 
   /react-router/5.3.3_react@17.0.2:
     resolution: {integrity: sha512-mzQGUvS3bM84TnbtMYR8ZjKnuPJ71IjSzR+DE6UkUqvN4czWIqEs17yLL8xkAycv4ev0AiN+IGrWu88vJs/p2w==}
@@ -15948,7 +15952,6 @@ packages:
     dependencies:
       history: 5.3.0
       react: 18.2.0
-    dev: false
 
   /react-textarea-autosize/8.3.4_skqlhrap4das3cz5b6iqdn2lqi:
     resolution: {integrity: sha512-CdtmP8Dc19xL8/R6sWvtknD/eCXkQr30dtvC4VmGInhRsfF8X/ihXCq6+9l9qbxmKRiq407/7z5fxE7cVWQNgQ==}

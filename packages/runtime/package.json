@@ -29,10 +29,11 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "@ice/types": "^1.0.0",
     "@types/react": "^18.0.8",
     "@types/react-dom": "^18.0.3",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "regenerator-runtime": "^0.13.9"
   },
   "sideEffects": false,
