@@ -10,6 +10,7 @@ import { createElement as _createElement, useEffect, useCallback, useRef, useSta
 import { cached, convertUnit } from 'style-unit';
 import { observerElement } from './visibility';
 import { isFunction, isObject, isNumber } from './type';
+import transformPrototypes from './prototypes';
 
 
 // https://github.com/alibaba/rax/blob/master/packages/driver-dom/src/index.js
@@ -78,7 +79,7 @@ export function createElement<P extends {
   props?: Attributes & P | null,
   ...children: ReactNode[]): ReactElement {
   // Get a shallow copy of props, to avoid mutating the original object.
-  const rest = Object.assign({}, props);
+  let rest: Attributes & P = Object.assign({}, props);
   const { onAppear, onDisappear } = rest;
 
   // Delete props that are not allowed in react.
@@ -99,6 +100,8 @@ export function createElement<P extends {
     // So we should compat input to InputCompat, the same as textarea.
     type = createInputCompat(type);
   }
+
+  rest = transformPrototypes(rest);
 
   // Compat for visibility events.
   if (isFunction(onAppear) || isFunction(onDisappear)) {

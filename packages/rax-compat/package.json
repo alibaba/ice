@@ -1,6 +1,6 @@
 {
   "name": "rax-compat",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Rax compatible mode, running rax project on the react runtime.",
   "files": [
     "esm",
