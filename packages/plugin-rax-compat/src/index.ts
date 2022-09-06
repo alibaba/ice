@@ -76,7 +76,7 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
             for (let i = 0, l = rules.length; i < l; i++) {
               const rule: RuleSetRule | any = rules[i];
               // Find the css rule, that default to CSS Modules.
-              if (rule.test && rule.test.source.indexOf('.css') > -1) {
+              if (rule.test && rule.test instanceof RegExp && rule.test.source.indexOf('.css') > -1) {
                 rule.test = /\.module\.css$/i;
                 rules[i] = {
                   test: /\.css$/i,
