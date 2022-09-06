@@ -23,6 +23,7 @@ const getWebTask = ({ rootDir, command }): Config => {
     assetsManifest: true,
     fastRefresh: command === 'start',
     logging: process.env.WEBPACK_LOGGING || defaultLogging,
+    minify: command === 'build',
   };
 };
 

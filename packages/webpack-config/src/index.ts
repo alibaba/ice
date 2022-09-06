@@ -35,6 +35,10 @@ interface GetWebpackConfigOptions {
   runtimeTmpDir: string;
 }
 type GetWebpackConfig = (options: GetWebpackConfigOptions) => Configuration;
+enum JSMinifier {
+  terser = 'terser',
+  swc = 'swc',
+}
 
 function getEntry(rootDir: string, runtimeTmpDir: string) {
   // check entry.client.ts
@@ -217,12 +221,11 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
       splitChunks: splitChunks == false
         ? { minChunks: Infinity, cacheGroups: { default: false } }
         : getSplitChunksConfig(rootDir),
-      minimize: minify,
+      minimize: !!minify,
       minimizer: [
         new TerserPlugin({
-          // keep same with compilation
-          // use swcMinify with fix error of pure_funcs
-          // minify: TerserPlugin.swcMinify
+          // Minify of swc is still experimental, config `minify: 'swc'` faster minification.
+          minify: minify === JSMinifier.swc ? TerserPlugin.swcMinify : TerserPlugin.terserMinify,
           extractComments: false,
           terserOptions,
         }),
