@@ -1,0 +1,72 @@
+{
+  "name": "@ice/plugin-request",
+  "version": "1.0.0",
+  "description": "Request plugin for ice.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./esm/index.d.ts",
+      "import": "./esm/index.js",
+      "default": "./esm/index.js"
+    },
+    "./runtime": {
+      "types": "./esm/runtime.d.ts",
+      "import": "./esm/runtime.js",
+      "default": "./esm/runtime.js"
+    },
+    "./hooks": {
+      "types": "./esm/hooks.d.ts",
+      "import": "./esm/hooks.js",
+      "default": "./esm/hooks.js"
+    },
+    "./request": {
+      "types": "./esm/request.d.ts",
+      "import": "./esm/request.js",
+      "default": "./esm/request.js"
+    },
+    "./types": {
+      "types": "./esm/types.d.ts",
+      "import": "./esm/types.js",
+      "default": "./esm/types.js"
+    },
+    "./esm/types": {
+      "types": "./esm/types.d.ts",
+      "import": "./esm/types.js",
+      "default": "./esm/types.js"
+    },
+    "./esm/runtime": {
+      "types": "./esm/runtime.d.ts",
+      "import": "./esm/runtime.js",
+      "default": "./esm/runtime.js"
+    }
+  },
+  "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
+  "files": [
+    "esm",
+    "!esm/**/*.map"
+  ],
+  "dependencies": {
+    "ahooks": "^3.0.0",
+    "axios": "^0.27.2"
+  },
+  "devDependencies": {
+    "@ice/types": "^1.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "regenerator-runtime": "^0.13.9"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-request"
+  },
+  "scripts": {
+    "watch": "tsc -w",
+    "build": "tsc"
+  }
+}

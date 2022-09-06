@@ -300,6 +300,25 @@ importers:
       '@types/react-dom': 18.0.3
       webpack: 5.74.0
 
+  examples/with-plugin-request:
+    specifiers:
+      '@ice/app': workspace:*
+      '@ice/plugin-request': workspace:*
+      '@ice/runtime': workspace:*
+      '@types/react': ^18.0.17
+      '@types/react-dom': ^18.0.6
+      react: ^18.2.0
+      react-dom: ^18.2.0
+    dependencies:
+      '@ice/app': link:../../packages/ice
+      '@ice/plugin-request': link:../../packages/plugin-request
+      '@ice/runtime': link:../../packages/runtime
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    devDependencies:
+      '@types/react': 18.0.17
+      '@types/react-dom': 18.0.6
+
   examples/with-store:
     specifiers:
       '@ice/app': workspace:*
@@ -510,7 +529,7 @@ importers:
       multer: ^1.4.5-lts.1
       open: ^8.4.0
       path-to-regexp: ^6.2.0
-      react: ^18.0.0
+      react: ^18.2.0
       react-router: ^6.3.0
       regenerator-runtime: ^0.13.9
       resolve.exports: ^1.1.0
@@ -518,7 +537,7 @@ importers:
       semver: ^7.3.5
       temp: ^0.9.4
       trusted-cert: ^1.1.3
-      unplugin: ^0.9.5
+      unplugin: ^0.8.0
       webpack: ^5.73.0
       webpack-dev-server: ^4.7.4
     dependencies:
@@ -575,7 +594,7 @@ importers:
       '@types/temp': 0.9.1
       chokidar: 3.5.3
       react: 18.2.0
-      unplugin: 0.9.5_3qmdnfoccgmcaqi5n264fyeyfi
+      unplugin: 0.8.1_3qmdnfoccgmcaqi5n264fyeyfi
       webpack: 5.74.0_esbuild@0.14.54
       webpack-dev-server: 4.8.1_webpack@5.74.0
 
@@ -669,6 +688,23 @@ importers:
     devDependencies:
       '@ice/types': link:../types
       '@types/webpack': 5.28.0
+
+  packages/plugin-request:
+    specifiers:
+      '@ice/types': ^1.0.0
+      '@types/react': ^18.0.0
+      '@types/react-dom': ^18.0.0
+      ahooks: ^3.0.0
+      axios: ^0.27.2
+      regenerator-runtime: ^0.13.9
+    dependencies:
+      ahooks: 3.4.1
+      axios: 0.27.2
+    devDependencies:
+      '@ice/types': link:../types
+      '@types/react': 18.0.17
+      '@types/react-dom': 18.0.6
+      regenerator-runtime: 0.13.9
 
   packages/plugin-store:
     specifiers:
@@ -5514,6 +5550,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
@@ -5523,6 +5560,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
@@ -5532,6 +5570,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
@@ -5541,6 +5580,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
@@ -6104,6 +6144,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     optional: true
 
@@ -6112,6 +6153,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     optional: true
 
@@ -6120,6 +6162,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     optional: true
 
@@ -6128,6 +6171,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     optional: true
 
@@ -7037,6 +7081,22 @@ packages:
       screenfull: 5.2.0
     dev: false
 
+  /ahooks/3.4.1:
+    resolution: {integrity: sha512-PMxCDO6JsFdNrAyN3cW1J/2qt/vy2EJ/9KhxGOxj41hJhQddjgaBJjZKf/FrrnZmL+3yGPioZtbC4C7q7ru3yA==}
+    engines: {node: '>=8.0.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@types/js-cookie': 2.2.7
+      ahooks-v3-count: 1.0.0
+      dayjs: 1.11.2
+      intersection-observer: 0.12.0
+      js-cookie: 2.2.1
+      lodash: 4.17.21
+      resize-observer-polyfill: 1.5.1
+      screenfull: 5.2.0
+    dev: false
+
   /ahooks/3.4.1_react@18.2.0:
     resolution: {integrity: sha512-PMxCDO6JsFdNrAyN3cW1J/2qt/vy2EJ/9KhxGOxj41hJhQddjgaBJjZKf/FrrnZmL+3yGPioZtbC4C7q7ru3yA==}
     engines: {node: '>=8.0.0'}
@@ -7414,7 +7474,6 @@ packages:
 
   /asynckit/0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
-    dev: true
 
   /at-least-node/1.0.0:
     resolution: {integrity: sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==}
@@ -7502,6 +7561,15 @@ packages:
     resolution: {integrity: sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==}
     dependencies:
       follow-redirects: 1.15.1_debug@4.3.4
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  /axios/0.27.2:
+    resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
+    dependencies:
+      follow-redirects: 1.15.1
+      form-data: 4.0.0
     transitivePeerDependencies:
       - debug
     dev: false
@@ -8207,7 +8275,6 @@ packages:
     engines: {node: '>= 0.8'}
     dependencies:
       delayed-stream: 1.0.0
-    dev: true
 
   /comma-separated-tokens/1.0.8:
     resolution: {integrity: sha512-GHuDRO12Sypu2cV70d1dkA2EUmXHgntrzbpvOB+Qy+49ypNfGgFQIC2fhhXbnyrJRynDCAARsT7Ou0M6hirpfw==}
@@ -9097,7 +9164,6 @@ packages:
   /delayed-stream/1.0.0:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
     engines: {node: '>=0.4.0'}
-    dev: true
 
   /delegates/1.0.0:
     resolution: {integrity: sha512-bd2L678uiWATM6m5Z1VzNCErI3jiGzt6HGY8OVICs40JQq/HALfbyNJmp0UDakEY4pMMaN0Ly5om/B1VI/+xfQ==}
@@ -10744,7 +10810,6 @@ packages:
       asynckit: 0.4.0
       combined-stream: 1.0.8
       mime-types: 2.1.35
-    dev: true
 
   /forwarded/0.2.0:
     resolution: {integrity: sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==}
@@ -17916,6 +17981,31 @@ packages:
   /unpipe/1.0.0:
     resolution: {integrity: sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==}
     engines: {node: '>= 0.8'}
+
+  /unplugin/0.8.1_3qmdnfoccgmcaqi5n264fyeyfi:
+    resolution: {integrity: sha512-o7rUZoPLG1fH4LKinWgb77gDtTE6mw/iry0Pq0Z5UPvZ9+HZ1/4+7fic7t58s8/CGkPrDpGq+RltO+DmswcR4g==}
+    peerDependencies:
+      esbuild: '>=0.13'
+      rollup: ^2.50.0
+      vite: ^2.3.0 || ^3.0.0-0
+      webpack: 4 || 5
+    peerDependenciesMeta:
+      esbuild:
+        optional: true
+      rollup:
+        optional: true
+      vite:
+        optional: true
+      webpack:
+        optional: true
+    dependencies:
+      acorn: 8.8.0
+      chokidar: 3.5.3
+      esbuild: 0.14.54
+      webpack: 5.74.0_esbuild@0.14.54
+      webpack-sources: 3.2.3
+      webpack-virtual-modules: 0.4.4
+    dev: true
 
   /unplugin/0.9.5_3qmdnfoccgmcaqi5n264fyeyfi:
     resolution: {integrity: sha512-luraheyfxwtvkvHpsOvMNv7IjLdORTWKZp0gWYNHGLi2ImON3iIZOj464qEyyEwLA/EMt12fC415HW9zRpOfTg==}
