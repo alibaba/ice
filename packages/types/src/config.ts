@@ -26,7 +26,7 @@ interface PredefinedOptions {
   module?: boolean | undefined;
   ecma?: ECMA | undefined;
 }
-type MinimizerOptions<T> = PredefinedOptions & InferDefaultType<T>;
+export type MinimizerOptions<T> = PredefinedOptions & InferDefaultType<T>;
 
 interface ConfigurationCtx extends Config {
   supportedBrowsers: string[];
@@ -99,7 +99,7 @@ export interface Config {
 
   compileIncludes?: (string | RegExp)[];
 
-  minify?: boolean;
+  minify?: boolean | string;
 
   minimizerOptions?: MinimizerOptions<CustomOptions>;
 
