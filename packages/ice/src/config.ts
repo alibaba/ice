@@ -182,7 +182,7 @@ const userConfig = [
   {
     name: 'compileDependencies',
     validation: 'array|boolean',
-    defaultValue: process.env.NODE_ENV === 'development' ? false : [/node_modules\/*/],
+    getDefaultValue: () => (process.env.NODE_ENV === 'development' ? false : [/node_modules\/*/]),
     setConfig: (config: Config, customValue: UserConfig['compileDependencies']) => {
       let compileRegex: RegExp | false;
       if (customValue === true) {

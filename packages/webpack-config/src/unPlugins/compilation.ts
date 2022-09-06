@@ -151,7 +151,7 @@ function getJsxTransformOptions({
       noInterop: false,
     },
     env: {
-      loose: true,
+      loose: false,
     },
   };
   const syntaxFeatures = {
