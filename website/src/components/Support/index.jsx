@@ -1,8 +1,11 @@
 import React from 'react';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { join } from '../../utils/path';
 import styles from './support.module.css';
 
-function Support({ list }) {
+export default function Support({ list }) {
   const availablePlatforms = ['webpack', 'vite'];
+  const context = useDocusaurusContext();
   return (
     <span className={styles.container}>
       {availablePlatforms.map((supportPlatform) => {
@@ -11,12 +14,10 @@ function Support({ list }) {
             title={supportPlatform}
             className={styles[supportPlatform]}
             key={supportPlatform}
-            src={`/img/svg/${list.includes(supportPlatform) ? supportPlatform : `${supportPlatform}-gray`}.svg`}
+            src={join(context.siteConfig.baseUrl, `/img/svg/${list.includes(supportPlatform) ? supportPlatform : `${supportPlatform}-gray`}.svg`)}
           />
         );
       })}
     </span>
   );
 }
-
-export default Support;
