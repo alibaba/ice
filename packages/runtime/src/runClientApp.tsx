@@ -4,7 +4,7 @@ import { createHashHistory, createBrowserHistory, createMemoryHistory } from 'hi
 import type { HashHistory, BrowserHistory, Action, Location, InitialEntry, MemoryHistory } from 'history';
 import type {
   AppContext, AppExport, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
-  RouteWrapperConfig, RuntimeModules, RouteMatch, RouteModules, AppConfig, DocumentComponent,
+  RouteWrapperConfig, RuntimeModules, RouteMatch, RouteModules, AppConfig,
 } from '@ice/types';
 import { createHistory as createHistorySingle } from './single-router.js';
 import { setHistory } from './history.js';
@@ -22,7 +22,6 @@ interface RunClientAppOptions {
   app: AppExport;
   routes: RouteItem[];
   runtimeModules: RuntimeModules;
-  Document: DocumentComponent;
   hydrate: boolean;
   basename?: string;
   memoryRouter?: boolean;
@@ -35,7 +34,6 @@ export default async function runClientApp(options: RunClientAppOptions) {
     app,
     routes,
     runtimeModules,
-    Document,
     basename,
     hydrate,
     memoryRouter,
@@ -71,7 +69,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routesData = await loadRoutesData(matches, requestContext, routeModules);
   }
   if (!routesConfig) {
-    routesConfig = getRoutesConfig(matches, routesConfig, routeModules);
+    routesConfig = getRoutesConfig(matches, routesData, routeModules);
   }
 
   const appContext: AppContext = {
@@ -98,15 +96,14 @@ export default async function runClientApp(options: RunClientAppOptions) {
 
   await Promise.all(runtimeModules.map(m => runtime.loadModule(m)).filter(Boolean));
 
-  render({ runtime, Document, history });
+  render({ runtime, history });
 }
 
 interface RenderOptions {
   history: History;
   runtime: Runtime;
-  Document: DocumentComponent;
 }
-async function render({ history, runtime, Document }: RenderOptions) {
+async function render({ history, runtime }: RenderOptions) {
   const appContext = runtime.getAppContext();
   const { appConfig } = appContext;
   const render = runtime.getRender();
@@ -122,7 +119,6 @@ async function render({ history, runtime, Document }: RenderOptions) {
       AppProvider={AppProvider}
       RouteWrappers={RouteWrappers}
       AppRouter={AppRouter}
-      Document={Document}
     />,
   );
 }
@@ -133,7 +129,6 @@ interface BrowserEntryProps {
   AppProvider: React.ComponentType<any>;
   RouteWrappers: RouteWrapperConfig[];
   AppRouter: React.ComponentType<AppRouterProps>;
-  Document: DocumentComponent;
 }
 
 interface HistoryState {
@@ -151,7 +146,6 @@ interface RouteState {
 function BrowserEntry({
   history,
   appContext,
-  Document,
   ...rest
 }: BrowserEntryProps) {
   const {
@@ -231,7 +225,7 @@ function BrowserEntry({
  * Prepare for the next pages.
  * Load modules、getPageData and preLoad the custom assets.
  */
-async function loadNextPage(
+export async function loadNextPage(
   currentMatches: RouteMatch[],
   preRouteState: RouteState,
 ) {

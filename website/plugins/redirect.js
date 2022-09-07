@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = function (config, options) {
   return {
     name: 'docusaurus-redirect-plugin',
-    async contentLoaded({ content, actions }) {
+    async contentLoaded({ actions }) {
       const { createData, addRoute } = actions;
 
       const routes = [

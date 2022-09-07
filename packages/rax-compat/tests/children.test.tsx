@@ -1,25 +1,25 @@
 import React from 'react';
 import { expect, it, describe } from 'vitest';
-import Children from '../src/children';
 import { render } from '@testing-library/react';
+import Children from '../src/children';
 
 const arrText = ['hello', 'rax'];
 
 describe('children', () => {
   it('should work with map', () => {
     function Hello({ children }) {
-      return <div data-testid="test">
+      return (<div data-testid="test">
         {
           Children.map(children, (child, i) => {
             if (i === 0) {
-              return <span>{arrText[1]}</span>
+              return <span>{arrText[1]}</span>;
             }
             return child;
           })
         }
-      </div>
+      </div>);
     }
-    
+
     const instance = (
       <Hello>
         <span>{arrText[0]}</span>
@@ -29,10 +29,10 @@ describe('children', () => {
 
     const wrapper = render(instance);
     const node = wrapper.queryByTestId('test');
-    
+
     expect(node.children.item(0).textContent).toBe(node.children.item(0).textContent);
     expect(node.children.item(1).textContent).toBe(arrText[1]);
-  })
+  });
 
   it('should work with forEach', () => {
     function Hello({ children }) {
@@ -40,9 +40,9 @@ describe('children', () => {
         expect(child.type).toBe('span');
         expect(child.props.children).toBe(arrText[i]);
       });
-      return children
+      return children;
     }
-    
+
     const instance = (
       <Hello>
         <span>{arrText[0]}</span>
@@ -51,14 +51,14 @@ describe('children', () => {
     );
 
     render(instance);
-  })
+  });
 
   it('should work with count', () => {
     function Hello({ children }) {
       expect(Children.count(children)).toBe(arrText.length);
-      return children
+      return children;
     }
-    
+
     const instance = (
       <Hello>
         <span>{arrText[0]}</span>
@@ -67,15 +67,15 @@ describe('children', () => {
     );
 
     render(instance);
-  })
+  });
 
   it('should work with only', () => {
     let child = <span>{arrText[0]}</span>;
     function Hello({ children }) {
       expect(Children.only(children)).toBe(child);
-      return children
+      return children;
     }
-    
+
     const instance = (
       <Hello>
         {
@@ -85,14 +85,14 @@ describe('children', () => {
     );
 
     render(instance);
-  })
+  });
 
   it('should work with toArray', () => {
     function Hello({ children }) {
       expect(Children.toArray(children).length).toBe(arrText.length);
-      return children
+      return children;
     }
-    
+
     const instance = (
       <Hello>
         <span>{arrText[0]}</span>
@@ -101,7 +101,7 @@ describe('children', () => {
     );
 
     render(instance);
-  })
+  });
 
   it('should escape keys', () => {
     const zero = <div key="1" />;
@@ -139,7 +139,7 @@ describe('children', () => {
         null,
         <span key="y" />,
         kid,
-        kid && React.cloneElement(kid, {key: 'z'}),
+        kid && React.cloneElement(kid, { key: 'z' }),
         <hr />,
       ],
     );

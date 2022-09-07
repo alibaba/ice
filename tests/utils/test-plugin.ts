@@ -3,4 +3,4 @@ export default ({ modifyUserConfig }) => {
   modifyUserConfig('minify', false);
   // disable sourceMap to speed-up fixture start
   modifyUserConfig('sourceMap', false);
-}
+};

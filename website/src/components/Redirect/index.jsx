@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 export default function Redirect(props) {
   const { location, history, redirectConfig = [] } = props;
@@ -28,7 +28,7 @@ export default function Redirect(props) {
         console.log('未知路由', pathname);
       }
     }
-  }, []);
+  }, [location, history, pathname, redirectConfig]);
 
   return null;
 }

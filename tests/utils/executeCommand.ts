@@ -6,4 +6,4 @@ export default (order: string, cwd: string) => {
     stdio: 'inherit',
     cwd,
   });
-}
+};

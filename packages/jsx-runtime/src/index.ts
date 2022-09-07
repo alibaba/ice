@@ -26,7 +26,7 @@ function isObject(obj: any): obj is object {
 }
 
 // Support rpx unit.
-function hijackElementProps(props: { style?: object } | object): object {
+export function hijackElementProps(props: { style?: object } | object): object {
   if (props && STYLE in props) {
     const { style } = props;
     if (isObject(style)) {

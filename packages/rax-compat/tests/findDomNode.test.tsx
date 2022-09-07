@@ -1,8 +1,8 @@
 import { expect, it, describe } from 'vitest';
 import React from 'react';
+import { render } from '@testing-library/react';
 import { useRef, useEffect } from '../src/index';
 import findDOMNode from '../src/find-dom-node';
-import { render } from '@testing-library/react';
 
 describe('findDomNode', () => {
   it('basic', () => {

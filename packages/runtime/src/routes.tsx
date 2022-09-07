@@ -147,7 +147,7 @@ export function createRouteElements(
   });
 }
 
-function RouteComponent({ id }: { id: string }) {
+export function RouteComponent({ id }: { id: string }) {
   // get current route component from latest routeModules
   const { routeModules } = useAppContext();
   const { default: Component } = routeModules[id] || {};
@@ -169,7 +169,6 @@ export function filterMatchesToLoad(prevMatches: RouteMatch[], currentMatches: R
   let isNew = (match: RouteMatch, index: number) => {
     // [a] -> [a, b]
     if (!prevMatches[index]) return true;
-
     // [a, b] -> [a, c]
     return match.route.id !== prevMatches[index].route.id;
   };

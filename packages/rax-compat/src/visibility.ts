@@ -72,7 +72,7 @@ function handleIntersect(entries: IntersectionObserverEntry[]) {
     } = entry;
     // No `top` value in polyfill.
     const currentY = boundingClientRect.y || boundingClientRect.top;
-    const beforeY = parseInt(target.getAttribute('data-before-current-y')) || currentY;
+    const beforeY = parseInt(target.getAttribute('data-before-current-y'), 10) || currentY;
 
     // is in view
     if (

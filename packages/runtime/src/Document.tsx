@@ -54,7 +54,7 @@ export function Links(props) {
     <>
       {
         routeLinks.map(link => {
-          const { block, ...routeLinkProps } = link;
+          const { block: ignored, ...routeLinkProps } = link;
           return <link key={link.href} {...props} {...routeLinkProps} data-route-link />;
         })
       }
@@ -104,7 +104,7 @@ export function Scripts(props) {
       />
       {
         routeScripts.map(script => {
-          const { block, ...routeScriptProps } = script;
+          const { block: ignored, ...routeScriptProps } = script;
           return <script key={script.src} {...props} {...routeScriptProps} data-route-script />;
         })
       }

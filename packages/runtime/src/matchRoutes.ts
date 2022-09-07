@@ -15,7 +15,6 @@ export default function matchRoutes(
   const matchRoutesFn = process.env.ICE_CORE_ROUTER === 'true' ? originMatchRoutes : matchRoutesSingle;
   let matches = matchRoutesFn(routes as unknown as RouteObject[], location, basename);
   if (!matches) return [];
-
   return matches.map(({ params, pathname, pathnameBase, route }) => ({
     params,
     pathname,

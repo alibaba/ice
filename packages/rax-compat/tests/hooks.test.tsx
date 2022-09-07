@@ -1,5 +1,6 @@
 import { expect, it, describe, vi } from 'vitest';
 import React from 'react';
+import { render } from '@testing-library/react';
 import {
   useState,
   useEffect,
@@ -8,12 +9,11 @@ import {
   useContext,
   useRef,
 } from '../src/hooks';
-import { render } from '@testing-library/react';
 
 describe('hooks', () => {
   it('useState', () => {
     function App() {
-      const [state, setState] = useState({ text: 'text' });
+      const [state] = useState({ text: 'text' });
       expect(state.text).toBe('text');
       return <div>{state.text}</div>;
     }
@@ -30,6 +30,8 @@ describe('hooks', () => {
           setLoading(false);
           expect(loading).toBe(false);
         }, 1);
+      // Expect useEffect to execute once
+      // eslint-disable-next-line
       }, []);
       return <div>{loading ? 'loading...' : 'load end'}</div>;
     }
@@ -41,11 +43,11 @@ describe('hooks', () => {
     let useEffectFunc = vi.spyOn({
       func: () => {
         expect(useEffectFunc).toHaveBeenCalled();
-      }
-    }, 'func')
+      },
+    }, 'func');
     function App() {
       useEffect(useEffectFunc, []);
-      
+
       return <div>useEffect</div>;
     }
 
@@ -56,11 +58,11 @@ describe('hooks', () => {
     let useEffectFunc = vi.spyOn({
       func: () => {
         expect(useEffectFunc).toHaveBeenCalled();
-      }
-    }, 'func')
+      },
+    }, 'func');
     function App() {
       useLayoutEffect(useEffectFunc, []);
-      
+
       return <div>useEffect</div>;
     }
 
@@ -69,7 +71,7 @@ describe('hooks', () => {
 
   it('useContext', () => {
     const Context = createContext({
-      theme: 'dark'
+      theme: 'dark',
     });
     function App() {
       const context = useContext(Context);
@@ -79,7 +81,7 @@ describe('hooks', () => {
     const wrapper = render(<App />);
     wrapper.findAllByText('dark').then((res) => {
       expect(res.length).toBe(1);
-    });    
+    });
   });
 
   it('useRef', () => {
@@ -87,15 +89,14 @@ describe('hooks', () => {
       const inputEl = useRef(null);
       useEffect(() => {
         expect(inputEl.current).instanceOf(Element);
-      })
+      });
       return (
-      <>
-        <input ref={inputEl} type="text" />
-      </>
+        <>
+          <input ref={inputEl} type="text" />
+        </>
       );
     }
 
     render(<TextInputWithFocusButton />);
   });
-
 });
