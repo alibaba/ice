@@ -103,11 +103,12 @@ const transformPipe = (options: PluginOptions = {}): Plugin => {
         const loader = guessLoader(id);
         const transformedResult = await plugins.reduce(async (prevData, plugin) => {
           const { contents } = await prevData;
-          const { transform, transformInclude } = plugin;
-          if (!transformInclude || transformInclude?.(id)) {
-            let sourceCode = contents;
-            let sourceMap = null;
-            if (plugin.load) {
+          const { transform, transformInclude, loadInclude } = plugin;
+          let sourceCode = contents;
+          let sourceMap = null;
+
+          if (plugin.load) {
+            if (!loadInclude || loadInclude?.(id)) {
               const result = await plugin.load.call(pluginContext, id);
               if (typeof result === 'string') {
                 sourceCode = result;
@@ -116,6 +117,9 @@ const transformPipe = (options: PluginOptions = {}): Plugin => {
                 sourceMap = result.map;
               }
             }
+          }
+
+          if (!transformInclude || transformInclude?.(id)) {
             if (!sourceCode) {
               // Caution: 'utf8' assumes the input file is not in binary.
               // If you want your plugin handle binary files, make sure to execute `plugin.load()` first.

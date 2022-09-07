@@ -25,6 +25,11 @@ function getPluginTransform(plugin: UnpluginOptions, type: 'esbuild' | 'webpack'
   return plugin;
 }
 
+function transformInclude(id: string) {
+  // Ingore binary file to be transformed.
+  return !!id.match(/\.(js|jsx|ts|tsx|mjs|mts|css|less|scss)$/);
+}
+
 function getCompilerPlugins(config: Config, compiler: 'webpack'): Configuration['plugins'];
 function getCompilerPlugins(config: Config, compiler: 'esbuild'): BuildOptions['plugins'];
 function getCompilerPlugins(config: Config, compiler: Compiler) {
@@ -43,7 +48,7 @@ function getCompilerPlugins(config: Config, compiler: Compiler) {
   // Add custom transform before swc compilation so the source code can be got before transformed.
   compilerPlugins.push(
     ...(transformPlugins.filter(({ enforce }) => !enforce || enforce === 'pre') || []),
-    ...transforms.map((transform, index) => ({ name: `transform_${index}`, transform })),
+    ...transforms.map((transform, index) => ({ name: `transform_${index}`, transform, transformInclude })),
   );
   // Use webpack loader instead of webpack plugin to do the compilation.
   // Reason: https://github.com/unjs/unplugin/issues/154
