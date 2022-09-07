@@ -52,6 +52,8 @@ interface TransformPlugin {
   enforce?: string;
   transform?: Transform;
   transformInclude?: UnpluginOptions['transformInclude'];
+  load?: UnpluginOptions['load'];
+  loadInclude?: UnpluginOptions['loadInclude'];
 }
 
 export type ModifyWebpackConfig = (config: Configuration, ctx: ConfigurationCtx) => Configuration;

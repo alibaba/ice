@@ -1,6 +1,7 @@
 import { defineConfig } from '@ice/app';
 import SpeedMeasurePlugin from 'speed-measure-webpack-plugin';
 import auth from '@ice/plugin-auth';
+import custom from './plugin';
 
 export default defineConfig({
   publicPath: '/',
@@ -21,6 +22,6 @@ export default defineConfig({
     return webpackConfig;
   },
   dropLogLevel: 'warn',
-  plugins: [auth()],
+  plugins: [auth(), custom],
   eslint: true,
 });
