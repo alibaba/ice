@@ -1,6 +1,6 @@
-import { expect, it, describe } from 'vitest';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
+import { expect, it, describe } from 'vitest';
 import { analyzeImports, getImportPath, resolveId, type Alias } from '../src/service/analyze';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -17,7 +17,7 @@ describe('resolveId', () => {
     expect(id).toBe('/.ice/runApp/test');
   });
   it('alias: { ice$: \'/.ice/runApp\'}; id: ice/test', () => {
-    const alias = { 'ice$': '/.ice/runApp' };
+    const alias = { ice$: '/.ice/runApp' };
     const id = resolveId('ice/test', alias);
     expect(id).toBe('ice/test');
   });
@@ -27,7 +27,7 @@ describe('resolveId', () => {
     expect(id).toBe(false);
   });
   it('alias: { foundnamejs: \'/user/folder\'}; id: foundnamejs', () => {
-    const alias = { 'foundnamejs': '/user/folder' };
+    const alias = { foundnamejs: '/user/folder' };
     const id = resolveId('foundnamejs', alias);
     expect(id).toBe('/user/folder');
   });
@@ -46,7 +46,7 @@ describe('getImportPath', () => {
     expect(filePath.replace(/^[A-Za-z]:/, '')).toBe('/rootDir/page.js');
   });
   it('import from alias', () => {
-    const filePath = getImportPath('ice', '/rootDir/test.ts', { ice: '/rootDir/component.tsx'});
+    const filePath = getImportPath('ice', '/rootDir/test.ts', { ice: '/rootDir/component.tsx' });
     expect(filePath).toBe('/rootDir/component.tsx');
   });
   it('import node_module dependency', () => {
@@ -57,7 +57,7 @@ describe('getImportPath', () => {
 
 describe('analyzeImports', () => {
   it('basic usage', async () => {
-    const entryFile  = path.join(__dirname, './fixtures/preAnalyze/app.ts');
+    const entryFile = path.join(__dirname, './fixtures/preAnalyze/app.ts');
     const analyzeSet = await analyzeImports([entryFile], {
       analyzeRelativeImport: true,
       alias: {
@@ -65,5 +65,5 @@ describe('analyzeImports', () => {
       },
     });
     expect([...(analyzeSet || [])]).toStrictEqual(['runApp', 'request', 'store']);
-  })
+  });
 });

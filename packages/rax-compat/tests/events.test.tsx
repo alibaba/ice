@@ -1,10 +1,10 @@
 import { expect, it, describe, vi } from 'vitest';
-import React, { Children } from 'react';
+import React from 'react';
+import { render } from '@testing-library/react';
 import { useRef, useEffect } from '../src/index';
 import { createElement } from '../src/create-element';
 import findDOMNode from '../src/find-dom-node';
-import { render } from '@testing-library/react';
-import transformPrototypes from '../src/prototypes'
+import transformPrototypes from '../src/prototypes';
 
 describe('events', () => {
   it('should work with onclick', () => {
@@ -13,20 +13,20 @@ describe('events', () => {
 
       const obj = {
         handleClick: () => console.log('click'),
-      }
+      };
 
-      const click = vi.spyOn(obj, 'handleClick')
+      const click = vi.spyOn(obj, 'handleClick');
 
       useEffect(() => {
         const dom = findDOMNode(ref.current);
         dom.click();
-        expect(click).toHaveBeenCalled()
+        expect(click).toHaveBeenCalled();
       });
 
       return createElement('div', {
         onclick: obj.handleClick,
-        ref: ref
-      }, 'click me')
+        ref: ref,
+      }, 'click me');
     }
 
     render(<App />);
@@ -34,82 +34,82 @@ describe('events', () => {
 
   it('should work with ontouchstart', () => {
     expect(transformPrototypes({
-      ontouchstart: () => { }
+      ontouchstart: () => { },
     }).onTouchStart).toBeInstanceOf(Function);
   });
 
   it('should work with onclick', () => {
     expect(transformPrototypes({
-      onclick: () => { }
+      onclick: () => { },
     }).onClick).toBeInstanceOf(Function);
     expect(transformPrototypes({
-      onclick: () => { }
+      onclick: () => { },
     }).onclick).toBe(undefined);
   });
 
   it('should work with onClick', () => {
     expect(transformPrototypes({
-      onClick: () => { }
+      onClick: () => { },
     }).onClick).toBeInstanceOf(Function);
   });
 
   it('should work with ondblclick', () => {
     expect(transformPrototypes({
-      ondblclick: () => { }
+      ondblclick: () => { },
     }).onDoubleClick).toBeInstanceOf(Function);
     expect(transformPrototypes({
-      ondblclick: () => { }
+      ondblclick: () => { },
     }).ondblclick).toBe(undefined);
   });
 
   it('should work with onDblclick', () => {
     expect(transformPrototypes({
-      onDblclick: () => { }
+      onDblclick: () => { },
     }).onDoubleClick).toBeInstanceOf(Function);
     expect(transformPrototypes({
-      onDblclick: () => { }
+      onDblclick: () => { },
     }).onDblclick).toBe(undefined);
   });
 
   it('should work with onDoubleClick', () => {
     expect(transformPrototypes({
-      onDoubleClick: () => { }
+      onDoubleClick: () => { },
     }).onDoubleClick).toBeInstanceOf(Function);
   });
 
   it('should work with onmouseenter', () => {
     expect(transformPrototypes({
-      onmouseenter: () => { }
+      onmouseenter: () => { },
     }).onMouseEnter).toBeInstanceOf(Function);
     expect(transformPrototypes({
-      onmouseenter: () => { }
+      onmouseenter: () => { },
     }).onmouseenter).toBe(undefined);
   });
 
   it('should work with onpointerenter', () => {
     expect(transformPrototypes({
-      onpointerenter: () => { }
+      onpointerenter: () => { },
     }).onPointerEnter).toBeInstanceOf(Function);
     expect(transformPrototypes({
-      onpointerenter: () => { }
+      onpointerenter: () => { },
     }).onpointerenter).toBe(undefined);
   });
 
   it('should work with onchange', () => {
     expect(transformPrototypes({
-      onchange: () => { }
+      onchange: () => { },
     }).onChange).toBeInstanceOf(Function);
     expect(transformPrototypes({
-      onchange: () => { }
+      onchange: () => { },
     }).onchange).toBe(undefined);
   });
 
   it('should work with onbeforeinput', () => {
     expect(transformPrototypes({
-      onbeforeinput: () => { }
+      onbeforeinput: () => { },
     }).onBeforeInput).toBeInstanceOf(Function);
     expect(transformPrototypes({
-      onbeforeinput: () => { }
+      onbeforeinput: () => { },
     }).onbeforeinput).toBe(undefined);
   });
 });

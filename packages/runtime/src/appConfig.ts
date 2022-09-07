@@ -18,11 +18,11 @@ export default function getAppConfig(appExport: AppExport): AppConfig {
   return {
     app: {
       ...defaultAppConfig.app,
-      ...(appConfig.app || {}),
+      ...(app || {}),
     },
     router: {
       ...defaultAppConfig.router,
-      ...(appConfig.router || {}),
+      ...(router || {}),
     },
     ...others,
   };

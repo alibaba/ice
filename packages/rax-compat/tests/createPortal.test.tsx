@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { expect, it, describe } from 'vitest';
-import createPortal from '../src/create-portal';
 import { render } from '@testing-library/react';
+import createPortal from '../src/create-portal';
 
 describe('createPortal', () => {
   it('basic', () => {
@@ -11,13 +11,13 @@ describe('createPortal', () => {
     const Portal = ({ children }) => {
       return createPortal(children, div);
     };
-    
+
     function App() {
-      return <div>
+      return (<div>
         <Portal>
           <text>Hello Rax</text>
         </Portal>
-      </div>
+      </div>);
     }
 
     render(<App />);

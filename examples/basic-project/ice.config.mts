@@ -22,6 +22,14 @@ export default defineConfig({
     return webpackConfig;
   },
   dropLogLevel: 'warn',
-  plugins: [auth(), custom],
+  plugins: [
+    auth(),
+    {
+      name: 'runtime-donot-exsist',
+      setup() {},
+      runtime: './test',
+    },
+    custom,
+  ],
   eslint: true,
 });

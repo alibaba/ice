@@ -1,5 +1,5 @@
-var j = 2;
-var i = 2;
+let j = 2;
+let i = 2;
 while (j < 3) {
   j++;
 }

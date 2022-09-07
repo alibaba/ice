@@ -1,15 +1,15 @@
 import { expect, it, describe } from 'vitest';
 import React from 'react';
-import Fragment from '../src/fragment';
 import { render } from '@testing-library/react';
+import Fragment from '../src/fragment';
 
 describe('fragment', () => {
   it('basic', () => {
     function App() {
-      return <Fragment>
+      return (<Fragment>
         <header>A heading</header>
         <footer>A footer</footer>
-      </Fragment>;
+      </Fragment>);
     }
 
     const wrapper = render(<App />);

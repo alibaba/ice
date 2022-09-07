@@ -1,15 +1,15 @@
 import http from 'http';
 import url from 'url';
-import fse from 'fs-extra';
 import path from 'path';
+import fse from 'fs-extra';
 import puppeteer from 'puppeteer';
 
 export interface Page extends puppeteer.Page {
   html?: () => Promise<string>;
-  $text?: (selector: string, trim?: boolean) => Promise<string|null>;
-  $$text?: (selector: string, trim?: boolean) => Promise<(string|null)[]>;
-  $attr?: (selector: string, attr: string) => Promise<string|null>;
-  $$attr?: (selector: string, attr: string) => Promise<(string|null)[]>;
+  $text?: (selector: string, trim?: boolean) => Promise<string | null>;
+  $$text?: (selector: string, trim?: boolean) => Promise<(string | null)[]>;
+  $attr?: (selector: string, attr: string) => Promise<string | null>;
+  $$attr?: (selector: string, attr: string) => Promise<(string | null)[]>;
   push?: (url: string, options?: puppeteer.WaitForOptions & { referer?: string }) => Promise<puppeteer.HTTPResponse>;
 }
 
@@ -24,7 +24,7 @@ export default class Browser {
   private browser: puppeteer.Browser;
   private baseUrl: string;
 
-  constructor (options: BrowserOptions) {
+  constructor(options: BrowserOptions) {
     const { server } = options;
     if (server) {
       this.server = server;
@@ -74,12 +74,12 @@ export default class Browser {
     }).listen(port, '127.0.0.1');
   }
 
-  async start () {
+  async start() {
     this.browser = await puppeteer.launch();
   }
 
-  async close () {
-    if (!this.browser) { return }
+  async close() {
+    if (!this.browser) { return; }
     await this.browser.close();
     // @ts-ignore
     if (this.server.stop) {
@@ -90,7 +90,7 @@ export default class Browser {
     }
   }
 
-  async page (url: string, disableJS?: boolean) {
+  async page(url: string, disableJS?: boolean) {
     this.baseUrl = url;
     if (!this.browser) { throw new Error('Please call start() before page(url)'); }
     const page: Page = await this.browser.newPage();
@@ -104,11 +104,11 @@ export default class Browser {
     page.html = () =>
       page.evaluate(() => window.document.documentElement.outerHTML);
     page.$text = (selector, trim) => page.$eval(selector, (el, trim) => {
-      return trim ? (el.textContent || '').replace(/^\s+|\s+$/g, '') : el.textContent
+      return trim ? (el.textContent || '').replace(/^\s+|\s+$/g, '') : el.textContent;
     }, trim);
     page.$$text = (selector, trim) =>
       page.$$eval(selector, (els, trim) => els.map((el) => {
-        return trim ? (el.textContent || '').replace(/^\s+|\s+$/g, '') : el.textContent
+        return trim ? (el.textContent || '').replace(/^\s+|\s+$/g, '') : el.textContent;
       }), trim);
 
     page.$attr = (selector, attr) =>

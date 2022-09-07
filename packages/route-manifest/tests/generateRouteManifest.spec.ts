@@ -1,6 +1,6 @@
-import { expect, test, describe } from 'vitest';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { expect, test, describe } from 'vitest';
 import { generateRouteManifest } from '../src/index';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -33,7 +33,7 @@ describe('generateRouteManifest function', () => {
   });
 
   test('invalid-routes', () => {
-    expect(() => generateRouteManifest(path.join(fixturesDir, 'invalid-routes'))).toThrow(`invalid character in 'src/pages/[a.pdf].tsx'. Only support char: -, \\w, /`);
+    expect(() => generateRouteManifest(path.join(fixturesDir, 'invalid-routes'))).toThrow('invalid character in \'src/pages/[a.pdf].tsx\'. Only support char: -, \\w, /');
   });
 
   test('ignore-routes', () => {
@@ -43,11 +43,11 @@ describe('generateRouteManifest function', () => {
 
   test('define-extra-routes', () => {
     const routeManifest = generateRouteManifest(
-      path.join(fixturesDir, 'basic-routes'), 
-      ['About/index.tsx'], 
+      path.join(fixturesDir, 'basic-routes'),
+      ['About/index.tsx'],
       (defineRoute) => {
         defineRoute('/about-me', 'About/index.tsx');
-      }
+      },
     );
     expect(routeManifest).toMatchSnapshot();
   });

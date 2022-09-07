@@ -165,7 +165,7 @@ export default class IntersectionObserver {
     if (!Array.isArray(threshold)) threshold = [threshold];
 
     return threshold.sort().filter((t, i, a) => {
-      if (typeof t != 'number' || isNaN(t) || t < 0 || t > 1) {
+      if (typeof t != 'number' || Number.isNaN(t) || t < 0 || t > 1) {
         throw new Error('threshold must be a number between 0 and 1 inclusively');
       }
       return t !== a[i - 1];
@@ -515,12 +515,12 @@ function throttle(fn, timeout) {
  * @param {Node} node The DOM node to add the event handler to.
  * @param {string} event The event name.
  * @param {Function} fn The event handler to add.
- * @param {boolean} opt_useCapture Optionally adds the even to the capture
+ * @param {boolean} useCapture Optionally adds the even to the capture
  *     phase. Note: this only works in modern browsers.
  */
-function addEvent(node, event, fn, opt_useCapture) {
+function addEvent(node, event, fn, useCapture) {
   if (typeof node.addEventListener == 'function') {
-    node.addEventListener(event, fn, opt_useCapture || false);
+    node.addEventListener(event, fn, useCapture || false);
   } else if (typeof node.attachEvent == 'function') {
     node.attachEvent(`on${event}`, fn);
   }
@@ -532,12 +532,12 @@ function addEvent(node, event, fn, opt_useCapture) {
  * @param {Node} node The DOM node to remove the event handler from.
  * @param {string} event The event name.
  * @param {Function} fn The event handler to remove.
- * @param {boolean} opt_useCapture If the event handler was added with this
+ * @param {boolean} useCapture If the event handler was added with this
  *     flag set to true, it should be set to true here in order to remove it.
  */
-function removeEvent(node, event, fn, opt_useCapture) {
+function removeEvent(node, event, fn, useCapture) {
   if (typeof node.removeEventListener == 'function') {
-    node.removeEventListener(event, fn, opt_useCapture || false);
+    node.removeEventListener(event, fn, useCapture || false);
   } else if (typeof node.detatchEvent == 'function') {
     node.detatchEvent(`on${event}`, fn);
   }

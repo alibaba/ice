@@ -83,7 +83,7 @@
     "@types/temp": "^0.9.1",
     "chokidar": "^3.5.3",
     "react": "^18.2.0",
-    "unplugin": "^0.8.0",
+    "unplugin": "^0.9.0",
     "webpack": "^5.73.0",
     "webpack-dev-server": "^4.7.4"
   },

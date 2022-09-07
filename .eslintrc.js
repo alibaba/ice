@@ -16,6 +16,7 @@ const commonRules = {
   'no-multiple-empty-lines': 1,
   'react/jsx-no-bind': 0,
   'import/order': 1,
+  'no-multi-assign': 0,
 };
 
 module.exports = getESLintConfig('react-ts', {
@@ -32,7 +33,9 @@ module.exports = getESLintConfig('react-ts', {
     'id-length': 0,
     'no-use-before-define': 0,
     'no-unused-vars': 0,
-    '@typescript-eslint/no-unused-vars': 1,
+    '@typescript-eslint/no-unused-vars': ['warn', {
+      varsIgnorePattern: '[iI]gnored|createElement',
+    }],
     '@typescript-eslint/ban-ts-ignore': 0,
     '@typescript-eslint/no-confusing-void-expression': 0,
     '@typescript-eslint/promise-function-async': 0,

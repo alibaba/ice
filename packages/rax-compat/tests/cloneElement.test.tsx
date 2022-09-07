@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect, it, describe } from 'vitest';
+import { render } from '@testing-library/react';
 import { Component } from '../src/index';
 import cloneElement from '../src/clone-element';
-import { render } from '@testing-library/react';
 
 describe('cloneElement', () => {
   it('basic', () => {

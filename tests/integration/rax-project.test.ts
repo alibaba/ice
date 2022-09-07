@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import { expect, test, describe, afterAll } from 'vitest';
 import { buildFixture, setupBrowser } from '../utils/build';
 import { startFixture, setupStartBrowser } from '../utils/start';
-import { Page } from '../utils/browser';
+import type { Page } from '../utils/browser';
 
 const example = 'rax-project';
 
@@ -39,7 +39,7 @@ describe(`start ${example}`, () => {
     const res = await setupStartBrowser({ server: devServer, port });
     page = res.page;
     browser = res.browser;
-    await page.waitForFunction(`document.getElementsByTagName('span').length > 0`);
+    await page.waitForFunction('document.getElementsByTagName(\'span\').length > 0');
     expect((await page.$$text('span')).length).toEqual(3);
     expect((await page.$$text('span'))[0]).toStrictEqual('Welcome to Your Rax App');
     expect((await page.$$text('span'))[1]).toStrictEqual('More information about Rax');

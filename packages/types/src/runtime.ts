@@ -144,8 +144,12 @@ export interface RouteModules {
 export interface AssetsManifest {
   dataLoader?: string;
   publicPath: string;
-  entries: string[];
-  pages: string[];
+  entries: {
+    [assetPath: string]: string[];
+  };
+  pages: {
+    [assetPath: string]: string[];
+  };
   assets?: {
     [assetPath: string]: string;
   };

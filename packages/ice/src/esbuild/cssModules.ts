@@ -6,7 +6,6 @@ import { less, sass, postcss } from '@ice/bundles';
 import type { Plugin, PluginBuild, OnResolveArgs, OnResolveResult, OnLoadArgs, OnLoadResult } from 'esbuild';
 
 const cssModulesStyleFilter = /\.module\.(css|sass|scss|less)$/;
-const CSS_LOADER_NAMESPACE = 'css-loader-namespace';
 const STYLE_HANDLER_NAMESPACE = 'style-handler-namespace';
 
 type GenerateScopedNameFunction = (name: string, filename: string, css: string) => string;
@@ -27,35 +26,17 @@ const cssModulesPlugin = (options: PluginOptions): Plugin => {
       build.onResolve({ filter: cssModulesStyleFilter }, onResolve);
 
       build.onLoad({ filter: /.*/, namespace: STYLE_HANDLER_NAMESPACE }, onStyleLoad(options));
-
-      build.onLoad({ filter: /.*/, namespace: CSS_LOADER_NAMESPACE }, onCSSLoad);
     },
   };
 };
 
 async function onResolve(args: OnResolveArgs): Promise<OnResolveResult> {
-  const { namespace, resolveDir } = args;
+  const { resolveDir } = args;
   const absolutePath = path.resolve(resolveDir, args.path);
-  // This is the import in the `STYLE_HANDLER_NAMESPACE` namespace.
-  // Put the path in the `CSS_LOADER_NAMESPACE` namespace to tell esbuild to load the css file.
-  if (namespace === STYLE_HANDLER_NAMESPACE) {
-    return {
-      path: absolutePath,
-      namespace: CSS_LOADER_NAMESPACE,
-    };
-  }
-  // Otherwise, generate css and put it in the `STYLE_HANDLER_NAMESPACE` namespace to handle css file
+  // Generate css and put it in the `STYLE_HANDLER_NAMESPACE` namespace to handle css file
   return {
     path: absolutePath,
     namespace: STYLE_HANDLER_NAMESPACE,
-  };
-}
-
-async function onCSSLoad(args: OnLoadArgs): Promise<OnLoadResult> {
-  const data = (await fse.readFile(args.path)).toString();
-  return {
-    contents: data,
-    loader: 'css',
   };
 }
 
