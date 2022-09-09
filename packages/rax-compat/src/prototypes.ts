@@ -1,6 +1,6 @@
 import { registrationNameToReactEvent } from './events';
 
-export default function transformPrototypes(props: Object): Object {
+export default function transformPrototype(props: Object): Object {
   const resProps: Object = {};
   Object.keys(props).forEach((propKey: string) => {
     let resKey: string = propKey;

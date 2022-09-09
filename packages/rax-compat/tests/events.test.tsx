@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import { useRef, useEffect } from '../src/index';
 import { createElement } from '../src/create-element';
 import findDOMNode from '../src/find-dom-node';
-import transformPrototypes from '../src/prototypes';
+import transformPrototype from '../src/prototypes';
 
 describe('events', () => {
   it('should work with onclick', () => {
@@ -33,82 +33,82 @@ describe('events', () => {
   });
 
   it('should work with ontouchstart', () => {
-    expect(transformPrototypes({
+    expect(transformPrototype({
       ontouchstart: () => { },
     }).onTouchStart).toBeInstanceOf(Function);
   });
 
   it('should work with onclick', () => {
-    expect(transformPrototypes({
+    expect(transformPrototype({
       onclick: () => { },
     }).onClick).toBeInstanceOf(Function);
-    expect(transformPrototypes({
+    expect(transformPrototype({
       onclick: () => { },
     }).onclick).toBe(undefined);
   });
 
   it('should work with onClick', () => {
-    expect(transformPrototypes({
+    expect(transformPrototype({
       onClick: () => { },
     }).onClick).toBeInstanceOf(Function);
   });
 
   it('should work with ondblclick', () => {
-    expect(transformPrototypes({
+    expect(transformPrototype({
       ondblclick: () => { },
     }).onDoubleClick).toBeInstanceOf(Function);
-    expect(transformPrototypes({
+    expect(transformPrototype({
       ondblclick: () => { },
     }).ondblclick).toBe(undefined);
   });
 
   it('should work with onDblclick', () => {
-    expect(transformPrototypes({
+    expect(transformPrototype({
       onDblclick: () => { },
     }).onDoubleClick).toBeInstanceOf(Function);
-    expect(transformPrototypes({
+    expect(transformPrototype({
       onDblclick: () => { },
     }).onDblclick).toBe(undefined);
   });
 
   it('should work with onDoubleClick', () => {
-    expect(transformPrototypes({
+    expect(transformPrototype({
       onDoubleClick: () => { },
     }).onDoubleClick).toBeInstanceOf(Function);
   });
 
   it('should work with onmouseenter', () => {
-    expect(transformPrototypes({
+    expect(transformPrototype({
       onmouseenter: () => { },
     }).onMouseEnter).toBeInstanceOf(Function);
-    expect(transformPrototypes({
+    expect(transformPrototype({
       onmouseenter: () => { },
     }).onmouseenter).toBe(undefined);
   });
 
   it('should work with onpointerenter', () => {
-    expect(transformPrototypes({
+    expect(transformPrototype({
       onpointerenter: () => { },
     }).onPointerEnter).toBeInstanceOf(Function);
-    expect(transformPrototypes({
+    expect(transformPrototype({
       onpointerenter: () => { },
     }).onpointerenter).toBe(undefined);
   });
 
   it('should work with onchange', () => {
-    expect(transformPrototypes({
+    expect(transformPrototype({
       onchange: () => { },
     }).onChange).toBeInstanceOf(Function);
-    expect(transformPrototypes({
+    expect(transformPrototype({
       onchange: () => { },
     }).onchange).toBe(undefined);
   });
 
   it('should work with onbeforeinput', () => {
-    expect(transformPrototypes({
+    expect(transformPrototype({
       onbeforeinput: () => { },
     }).onBeforeInput).toBeInstanceOf(Function);
-    expect(transformPrototypes({
+    expect(transformPrototype({
       onbeforeinput: () => { },
     }).onbeforeinput).toBe(undefined);
   });
