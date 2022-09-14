@@ -5,7 +5,8 @@
       {
         "locales": [
           "zh-CN",
-          "en-US"
+          "en-US",
+          "zh-HK"
         ],
         "defaultLocale": "zh-CN",
         "autoRedirect": true
@@ -13,5 +14,6 @@
     ]
   ],
   "vite": false,
-  "ssr": "static"
+  "ssr": "static",
+  "nodeExternals": true
 }

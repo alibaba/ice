@@ -23,6 +23,18 @@ export const messages = {
     basicLayout: '主布局',
     userLayout: '用户布局',
     notFound: '未找到页面',
-    userLogin: '用户登录页'
+    userLogin: '用户登录页',
+  },
+  [LOCALES.zh_HK]: {
+    homeTitle: '首頁',
+    aboutTitle: '關於',
+    currentLocale: '當前語言',
+    defaultLocale: '默認語言',
+    configuredLocales: '配置的語言',
+    localeSwitcher: '語言切換',
+    basicLayout: '主佈局',
+    userLayout: '用戶佈局',
+    notFound: '未找到頁面',
+    userLogin: '用戶登錄頁',
   },
 };
