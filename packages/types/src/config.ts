@@ -39,6 +39,8 @@ interface SwcOptions {
   removeExportExprs?: string[];
   compilationConfig?: SWCCompilationConfig;
   keepPlatform?: 'node' | 'web' | 'weex' | 'miniapp';
+  keepExports?: string[];
+  getRoutePaths?: Function;
 }
 
 interface TransformOptions {

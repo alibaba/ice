@@ -860,6 +860,7 @@ importers:
   packages/webpack-config:
     specifiers:
       '@ice/bundles': ^0.1.0
+      '@ice/swc-plugin-keep-export': ^0.1.1
       '@ice/swc-plugin-keep-platform': ^0.1.0
       '@ice/swc-plugin-remove-export': ^0.1.0
       '@ice/types': ^1.0.0
@@ -875,6 +876,7 @@ importers:
       webpack-dev-server: ^4.7.4
     dependencies:
       '@ice/bundles': link:../bundles
+      '@ice/swc-plugin-keep-export': 0.1.1
       '@ice/swc-plugin-keep-platform': 0.1.0
       '@ice/swc-plugin-remove-export': 0.1.0
       '@rollup/pluginutils': 4.2.1
@@ -5404,6 +5406,10 @@ packages:
     transitivePeerDependencies:
       - react-dom
       - react-native
+    dev: false
+
+  /@ice/swc-plugin-keep-export/0.1.1:
+    resolution: {integrity: sha512-FjBZV6msseDZ+g1DmS8qTQADDK646A7jWZpSbJ15Z0QX0KTmNwSCzb061nj7p7EW3xOW6N2cGNdGV6+TENb7Jg==}
     dev: false
 
   /@ice/swc-plugin-keep-platform/0.1.0:

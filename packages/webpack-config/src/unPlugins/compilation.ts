@@ -22,9 +22,26 @@ interface Options {
 
 const compilationPlugin = (options: Options): UnpluginOptions => {
   const { sourceMap, mode, fastRefresh, compileIncludes = [], compileExcludes, swcOptions = {}, cacheDir } = options;
+
+  const { removeExportExprs, compilationConfig, keepPlatform, keepExports, getRoutePaths } = swcOptions;
+
   const compileRegex = compileIncludes.map((includeRule) => {
     return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);
   });
+
+  function isRouteEntry(id) {
+    const routes = getRoutePaths();
+
+    const matched = routes.find(route => {
+      return id.indexOf(route) > -1;
+    });
+
+    return !!matched;
+  }
+
+  function isAppEntry(id) {
+    return /(.*)src\/app/.test(id);
+  }
 
   const extensionRegex = /\.(jsx?|tsx?|mjs)$/;
   return {
@@ -57,8 +74,6 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
 
       merge(programmaticOptions, commonOptions);
 
-      const { removeExportExprs, compilationConfig, keepPlatform } = swcOptions;
-
       if (compilationConfig) {
         merge(programmaticOptions, compilationConfig);
       }
@@ -66,26 +81,33 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
       const swcPlugins = [];
       // handle app.tsx and page entries only
       if (removeExportExprs) {
-        if (/(.*)pages(.*)\.(jsx?|tsx?|mjs)$/.test(id)) {
+        if (isRouteEntry(id) || isAppEntry(id)) {
           swcPlugins.push([
             require.resolve('@ice/swc-plugin-remove-export'),
             removeExportExprs,
           ]);
-        } else if (/(.*)src\/app/.test(id)) {
-          let removeList;
+        }
+      }
 
-          // FIXME: https://github.com/ice-lab/ice-next/issues/487
-          if (removeExportExprs.indexOf('getConfig') === -1) {
+      if (keepExports) {
+        if (isRouteEntry(id)) {
+          swcPlugins.push([
+            require.resolve('@ice/swc-plugin-keep-export'),
+            keepExports,
+          ]);
+        } else if (isAppEntry(id)) {
+          let keepList;
+
+          if (keepExports.indexOf('getConfig') > -1) {
             // when build for getConfig, should keep default, it equals to getAppConfig
-            removeList = removeExportExprs.filter(key => key !== 'default');
+            keepList = keepExports.concat(['default']);
           } else {
-            // when build for getData, should remove all other exports
-            removeList = removeExportExprs;
+            keepList = keepExports;
           }
 
           swcPlugins.push([
-            require.resolve('@ice/swc-plugin-remove-export'),
-            removeList,
+            require.resolve('@ice/swc-plugin-keep-export'),
+            keepList,
           ]);
         }
       }

@@ -27,6 +27,7 @@ async function webpackCompiler(options: {
     getAppConfig: GetAppConfig;
     getRoutesConfig: GetRoutesConfig;
   };
+  dataCache: Map<string, string>;
 }) {
   const {
     taskConfigs,
@@ -39,6 +40,7 @@ async function webpackCompiler(options: {
     spinner,
     devPath,
     rootDir,
+    dataCache,
   } = options;
   const { serverCompiler } = hooksAPI;
   await applyHook(`before.${command}.run`, {
@@ -49,7 +51,7 @@ async function webpackCompiler(options: {
     ...hooksAPI,
   });
   // Add webpack plugin of data-loader
-  webpackConfigs[0].plugins.push(new DataLoaderPlugin({ serverCompiler, rootDir }));
+  webpackConfigs[0].plugins.push(new DataLoaderPlugin({ serverCompiler, rootDir, dataCache }));
 
   // Add default plugins for spinner
   webpackConfigs[0].plugins.push((compiler: Compiler) => {
