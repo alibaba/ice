@@ -18,6 +18,7 @@ import ServerCompilerPlugin from '../webpack/ServerCompilerPlugin.js';
 import ReCompilePlugin from '../webpack/ReCompilePlugin.js';
 import getServerEntry from '../utils/getServerEntry.js';
 import getRouterBasename from '../utils/getRouterBasename.js';
+import { getRoutePathsFromCache } from '../utils/getRoutePaths.js';
 
 const { merge } = lodash;
 
@@ -56,6 +57,7 @@ const start = async (
     webpack,
     runtimeTmpDir: RUNTIME_TMP_DIR,
   }));
+
   // Compile server entry after the webpack compilation.
   const outputDir = webpackConfigs[0].output.path;
   const { ssg, ssr, server: { format } } = userConfig;
@@ -77,9 +79,11 @@ const start = async (
         {
           preBundle: format === 'esm' && (ssr || ssg),
           swc: {
-            // Remove components and getData when document only.
-            removeExportExprs: (!ssg && !ssr) ? ['default', 'getData', 'getServerData', 'getStaticData'] : [],
+            keepExports: (!ssg && !ssr) ? ['getConfig'] : null,
             keepPlatform: 'node',
+            getRoutePaths: () => {
+              return getRoutePathsFromCache(dataCache);
+            },
           },
         },
       ],
@@ -161,6 +165,7 @@ const start = async (
     hooksAPI,
     spinner,
     devPath,
+    dataCache,
   });
   const devServer = new WebpackDevServer(devServerConfig, compiler);
   devServer.startCallback(() => {

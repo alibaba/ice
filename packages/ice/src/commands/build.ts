@@ -13,6 +13,7 @@ import { RUNTIME_TMP_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
 import generateHTML from '../utils/generateHTML.js';
 import emptyDir from '../utils/emptyDir.js';
 import getServerEntry from '../utils/getServerEntry.js';
+import { getRoutePathsFromCache } from '../utils/getRoutePaths.js';
 
 const build = async (
   context: Context<Config>,
@@ -20,11 +21,12 @@ const build = async (
     taskConfigs: TaskConfig<Config>[];
     serverCompiler: ServerCompiler;
     spinner: ora.Ora;
+    dataCache: Map<string, string>;
     getAppConfig: GetAppConfig;
     getRoutesConfig: GetRoutesConfig;
   },
 ) => {
-  const { taskConfigs, serverCompiler, spinner, getAppConfig, getRoutesConfig } = options;
+  const { taskConfigs, serverCompiler, spinner, getAppConfig, getRoutesConfig, dataCache } = options;
   const { applyHook, commandArgs, command, rootDir, userConfig } = context;
   const webpackConfigs = taskConfigs.map(({ config }) => getWebpackConfig({
     config,
@@ -50,6 +52,7 @@ const build = async (
     spinner,
     applyHook,
     hooksAPI,
+    dataCache,
   });
   const { ssg, ssr, server: { format } } = userConfig;
   // compile server bundle
@@ -94,9 +97,11 @@ const build = async (
           {
             preBundle: format === 'esm' && (ssr || ssg),
             swc: {
-              // Remove components and getData when ssg and ssr both `false`.
-              removeExportExprs: (!ssg && !ssr) ? ['default', 'getData', 'getServerData', 'getStaticData'] : [],
+              keepExports: (!ssg && !ssr) ? ['getConfig'] : null,
               keepPlatform: 'node',
+              getRoutePaths: () => {
+                return getRoutePathsFromCache(dataCache);
+              },
             },
           },
         );
