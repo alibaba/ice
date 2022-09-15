@@ -21,7 +21,7 @@ function useDocumentContext() {
 
 export const DocumentContextProvider = Context.Provider;
 
-export function Meta(props) {
+export function Meta(props: React.MetaHTMLAttributes<HTMLMetaElement>) {
   const { matches, routesConfig } = useAppContext();
   const meta = getMeta(matches, routesConfig);
 
@@ -33,7 +33,7 @@ export function Meta(props) {
   );
 }
 
-export function Title(props) {
+export function Title(props: React.HTMLAttributes<HTMLTitleElement>) {
   const { matches, routesConfig } = useAppContext();
   const title = getTitle(matches, routesConfig);
 
@@ -42,7 +42,7 @@ export function Title(props) {
   );
 }
 
-export function Links(props) {
+export function Links(props: React.LinkHTMLAttributes<HTMLLinkElement>) {
   const { routesConfig, matches, assetsManifest } = useAppContext();
 
   const routeLinks = getLinks(matches, routesConfig);
@@ -53,9 +53,8 @@ export function Links(props) {
   return (
     <>
       {
-        routeLinks.map(link => {
-          const { block: ignored, ...routeLinkProps } = link;
-          return <link key={link.href} {...props} {...routeLinkProps} data-route-link />;
+        routeLinks.map(routeLinkProps => {
+          return <link key={routeLinkProps.href} {...props} {...routeLinkProps} data-route-link />;
         })
       }
       {styles.map(style => <link key={style} {...props} rel="stylesheet" type="text/css" href={style} />)}
@@ -63,7 +62,7 @@ export function Links(props) {
   );
 }
 
-export function Scripts(props) {
+export function Scripts(props: React.ScriptHTMLAttributes<HTMLScriptElement>) {
   const { routesData, routesConfig, matches, assetsManifest, documentOnly, routeModules, basename } = useAppContext();
   const appData = useAppData();
 
@@ -103,9 +102,8 @@ export function Scripts(props) {
         dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=Object.assign(${JSON.stringify(appContext)}, window.__ICE_APP_CONTEXT__ || {})` }}
       />
       {
-        routeScripts.map(script => {
-          const { block: ignored, ...routeScriptProps } = script;
-          return <script key={script.src} {...props} {...routeScriptProps} data-route-script />;
+        routeScripts.map(routeScriptProps => {
+          return <script key={routeScriptProps.src} {...props} {...routeScriptProps} data-route-script />;
         })
       }
       {
@@ -131,7 +129,7 @@ export function Data() {
   );
 }
 
-export function Main(props) {
+export function Main(props: React.HTMLAttributes<HTMLDivElement>) {
   const { main } = useDocumentContext();
   const { appConfig } = useAppContext();
   return (

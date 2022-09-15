@@ -1,14 +1,14 @@
 import type { RouteMatch, RoutesConfig, RouteConfig } from '@ice/types';
 
-export function getMeta(matches: RouteMatch[], routesConfig: RoutesConfig) {
+export function getMeta(matches: RouteMatch[], routesConfig: RoutesConfig): React.MetaHTMLAttributes<HTMLMetaElement>[] {
   return getMergedValue('meta', matches, routesConfig) || [];
 }
 
-export function getLinks(matches: RouteMatch[], routesConfig: RoutesConfig) {
+export function getLinks(matches: RouteMatch[], routesConfig: RoutesConfig): React.LinkHTMLAttributes<HTMLLinkElement>[] {
   return getMergedValue('links', matches, routesConfig) || [];
 }
 
-export function getScripts(matches: RouteMatch[], routesConfig: RoutesConfig) {
+export function getScripts(matches: RouteMatch[], routesConfig: RoutesConfig): React.ScriptHTMLAttributes<HTMLScriptElement>[] {
   return getMergedValue('scripts', matches, routesConfig) || [];
 }
 
