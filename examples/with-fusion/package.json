@@ -10,14 +10,15 @@
   "license": "MIT",
   "dependencies": {
     "@alifd/next": "^1.25.49",
-    "@ice/app": "workspace:*",
-    "@ice/plugin-fusion": "workspace:*",
     "@ice/runtime": "workspace:*",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.2"
+    "@types/react-dom": "^18.0.2",
+    "@ice/app": "workspace:*",
+    "@ice/plugin-css-assets-local": "workspace:*",
+    "@ice/plugin-fusion": "workspace:*"
   }
 }
