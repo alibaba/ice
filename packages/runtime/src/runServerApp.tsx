@@ -3,7 +3,6 @@ import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { Action, parsePath } from 'history';
 import type { Location } from 'history';
-import { default as consola } from 'consola';
 import type {
   AppContext, RouteItem, ServerContext,
   AppData,
@@ -79,7 +78,7 @@ export async function renderToHTML(requestContext: ServerContext, renderOptions:
     if (renderOptions.disableFallback) {
       throw error;
     }
-    consola.error('PiperToString error, downgrade to CSR.', error);
+    console.error('PiperToString error, downgrade to CSR.', error);
     // downgrade to CSR.
     const result = fallback();
     return result;
@@ -109,7 +108,7 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
       if (renderOptions.disableFallback) {
         throw error;
       }
-      consola.error('PiperToResponse error, downgrade to CSR.', error);
+      console.error('PiperToResponse error, downgrade to CSR.', error);
       // downgrade to CSR.
       const result = await fallback();
       sendResult(res, result);
@@ -185,7 +184,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     if (disableFallback) {
       throw err;
     }
-    consola.error('Warning: render server entry error, downgrade to csr.', err);
+    console.error('Warning: render server entry error, downgrade to csr.', err);
     return renderDocument({ matches, routePath, renderOptions, routeModules: {} });
   }
 }
