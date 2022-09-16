@@ -47,7 +47,8 @@
   "dependencies": {
     "@swc/helpers": "^0.4.3",
     "style-unit": "^3.0.5",
-    "create-react-class": "^15.7.0"
+    "create-react-class": "^15.7.0",
+    "@ice/appear": "^0.1.0"
   },
   "devDependencies": {
     "@ice/pkg": "1.1.2-0",

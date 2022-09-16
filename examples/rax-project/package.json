@@ -11,6 +11,7 @@
   "dependencies": {
     "@ice/app": "workspace:*",
     "@ice/plugin-rax-compat": "workspace:*",
+    "@ice/appear": "workspace:*",
     "@ice/runtime": "workspace:*",
     "rax": "^1.2.2",
     "rax-image": "^2.4.1",

@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * An IntersectionObserver registry. This registry exists to hold a strong
  * reference to IntersectionObserver instances currently observing a target
