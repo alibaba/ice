@@ -113,7 +113,7 @@ describe(`start ${example}`, () => {
       await page.$$attr('meta[name="theme-color"]', 'content'),
     ).toStrictEqual(['#000']);
 
-    await page.push('about');
+    await page.push('/about');
     await page.waitForNetworkIdle();
 
     expect(

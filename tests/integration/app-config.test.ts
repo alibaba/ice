@@ -22,12 +22,12 @@ describe(`start ${example}`, () => {
     const res = await setupStartBrowser({ server: devServer, port });
     page = res.page;
     browser = res.browser;
-    await page.push('ice');
+    await page.push('/ice');
     expect(await page.$$text('h1')).toStrictEqual(['home']);
   }, 120000);
 
   test('error page', async () => {
-    await page.push('ice/error');
+    await page.push('/ice/error');
     await page.waitForNetworkIdle();
     expect(await page.$$text('h1')).toStrictEqual(['Something went wrong.']);
   }, 120000);
