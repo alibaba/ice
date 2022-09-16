@@ -43,7 +43,7 @@ export const setupBrowser: SetupBrowser = async (options) => {
   console.log();
   // When preview html generate by build, the path will not match the router info,
   // so hydrate will not found the route component.
-  const page = await browser.page(`http://127.0.0.1:${port}/${defaultHtml}`, disableJS);
+  const page = await browser.page(`http://127.0.0.1:${port}`, `/${defaultHtml}`, disableJS);
   return {
     browser,
     page,

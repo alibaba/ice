@@ -47,10 +47,10 @@ commandArgs: {
 };
 
 export const setupStartBrowser: SetupBrowser = async (options) => {
-  const { port, server, defaultPath = '' } = options;
+  const { port, server, defaultPath = '/' } = options;
   const browser = new Browser({ server });
   await browser.start();
-  const page = await browser.page(`http://127.0.0.1:${port}/${defaultPath}`);
+  const page = await browser.page(`http://127.0.0.1:${port}`, defaultPath);
   return {
     browser,
     page,
