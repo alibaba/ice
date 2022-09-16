@@ -1,0 +1,19 @@
+.title {
+  color: red;
+  margin-left: 10rpx;
+}
+
+.data {
+  margin-top: 10px;
+}
+
+.homeContainer {
+  align-items: center;
+  margin-top: 200rpx;
+}
+
+.homeInfo {
+  font-size: 36rpx;
+  margin: 8rpx 0;
+  color: #555;
+}
