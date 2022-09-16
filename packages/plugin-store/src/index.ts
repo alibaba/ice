@@ -6,7 +6,7 @@ import fg from 'fast-glob';
 import { PAGE_STORE_MODULE, PAGE_STORE_PROVIDER, PAGE_STORE_INITIAL_STATES } from './constants.js';
 
 interface Options {
-  disableResetPageState?: boolean;
+  resetPageState?: boolean;
 }
 const storeFilePattern = '**/store.{js,ts}';
 const ignoreStoreFilePatterns = ['**/models/**', storeFilePattern];
@@ -14,7 +14,7 @@ const ignoreStoreFilePatterns = ['**/models/**', storeFilePattern];
 const plugin: Plugin<Options> = (options) => ({
   name: '@ice/plugin-store',
   setup: ({ onGetConfig, modifyUserConfig, generator, context: { rootDir, userConfig } }) => {
-    const { disableResetPageState = false } = options || {};
+    const { resetPageState = false } = options || {};
     const srcDir = path.join(rootDir, 'src');
     const pageDir = path.join(srcDir, 'pages');
 
@@ -34,7 +34,7 @@ const plugin: Plugin<Options> = (options) => ({
       }
       config.transformPlugins = [
         ...(config.transformPlugins || []),
-        exportStoreProviderPlugin({ pageDir, disableResetPageState }),
+        exportStoreProviderPlugin({ pageDir, resetPageState }),
       ];
       return config;
     });
@@ -49,7 +49,7 @@ const plugin: Plugin<Options> = (options) => ({
   runtime: path.join(path.dirname(fileURLToPath(import.meta.url)), 'runtime.js'),
 });
 
-function exportStoreProviderPlugin({ pageDir, disableResetPageState }: { pageDir: string; disableResetPageState: boolean }): Config['transformPlugins'][0] {
+function exportStoreProviderPlugin({ pageDir, resetPageState }: { pageDir: string; resetPageState: boolean }): Config['transformPlugins'][0] {
   return {
     name: 'export-store-provider',
     enforce: 'post',
@@ -63,7 +63,7 @@ function exportStoreProviderPlugin({ pageDir, disableResetPageState }: { pageDir
           isLayout(id) || // Current id is layout.
           !isLayoutExisted(id) // If current id is route and there is no layout in the current dir.
         ) {
-          return exportPageStore(source, disableResetPageState);
+          return exportPageStore(source, resetPageState);
         }
       }
       return source;
@@ -71,14 +71,14 @@ function exportStoreProviderPlugin({ pageDir, disableResetPageState }: { pageDir
   };
 }
 
-function exportPageStore(source: string, disableResetPageState: boolean) {
+function exportPageStore(source: string, resetPageState: boolean) {
   const importStoreStatement = `import ${PAGE_STORE_MODULE} from './store';\n`;
-  const exportStoreProviderStatement = disableResetPageState ? `
-const { Provider: ${PAGE_STORE_PROVIDER} } = ${PAGE_STORE_MODULE};
-export { ${PAGE_STORE_PROVIDER} };` : `
+  const exportStoreProviderStatement = resetPageState ? `
 const { Provider: ${PAGE_STORE_PROVIDER}, getState } = ${PAGE_STORE_MODULE};
 const ${PAGE_STORE_INITIAL_STATES} = getState();
-export { ${PAGE_STORE_PROVIDER}, ${PAGE_STORE_INITIAL_STATES} };`;
+export { ${PAGE_STORE_PROVIDER}, ${PAGE_STORE_INITIAL_STATES} };` : `
+const { Provider: ${PAGE_STORE_PROVIDER} } = ${PAGE_STORE_MODULE};
+export { ${PAGE_STORE_PROVIDER} };`;
 
   return importStoreStatement + source + exportStoreProviderStatement;
 }
