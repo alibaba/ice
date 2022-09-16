@@ -1,9 +1,9 @@
 // Handle appear and disappear event.
 // Fork from https://github.com/raxjs/appear-polyfill
-// @ts-ignore
+// @ts-nocheck
 import PolyfilledIntersectionObserver from './intersection-observer';
 
-enum VisibilityChangeEvent {
+export enum VisibilityChangeEvent {
   appear = 'appear',
   disappear = 'disappear',
 }
@@ -92,7 +92,7 @@ function handleIntersect(entries: IntersectionObserverEntry[]) {
     ) {
       target.setAttribute('data-appeared', 'false');
       target.setAttribute('data-has-disappeared', 'true');
-      target.dispatchEvent(createEvent(VisibilityChangeEvent.appear, {
+      target.dispatchEvent(createEvent(VisibilityChangeEvent.disappear, {
         direction: currentY > beforeY ? VisibilityChangeDirection.up : VisibilityChangeDirection.down,
       }));
     }

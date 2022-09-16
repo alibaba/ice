@@ -1,0 +1,23 @@
+{
+  "name": "@ice/appear",
+  "version": "0.1.0",
+  "description": "",
+  "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
+  "scripts": {
+    "watch": "tsc -w",
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "peerDependencies": {
+    "react": "^18",
+    "react-dom": "^18"
+  }
+}

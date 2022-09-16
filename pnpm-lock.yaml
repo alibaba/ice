@@ -210,6 +210,7 @@ importers:
   examples/rax-project:
     specifiers:
       '@ice/app': workspace:*
+      '@ice/appear': workspace:*
       '@ice/plugin-rax-compat': workspace:*
       '@ice/runtime': workspace:*
       '@types/react': ^18.0.0
@@ -224,6 +225,7 @@ importers:
       webpack: ^5.73.0
     dependencies:
       '@ice/app': link:../../packages/ice
+      '@ice/appear': link:../../packages/appear
       '@ice/plugin-rax-compat': link:../../packages/plugin-rax-compat
       '@ice/runtime': link:../../packages/runtime
       rax: 1.2.2
@@ -395,6 +397,14 @@ importers:
       '@ice/plugin-store': link:../../packages/plugin-store
       '@types/react': 18.0.15
       '@types/react-dom': 18.0.6
+
+  packages/appear:
+    specifiers:
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    devDependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
 
   packages/bundles:
     specifiers:
@@ -812,6 +822,7 @@ importers:
 
   packages/rax-compat:
     specifiers:
+      '@ice/appear': ^0.1.0
       '@ice/pkg': 1.1.2-0
       '@swc/helpers': ^0.4.3
       '@types/rax': ^1.0.8
@@ -822,6 +833,7 @@ importers:
       react-dom: ^18.0.0
       style-unit: ^3.0.5
     dependencies:
+      '@ice/appear': link:../appear
       '@swc/helpers': 0.4.3
       create-react-class: 15.7.0
       style-unit: 3.0.5
