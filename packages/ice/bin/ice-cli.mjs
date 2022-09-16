@@ -56,18 +56,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
       service.run();
     });
 
-  program
-    .command('test')
-    .description('run tests with jest')
-    .allowUnknownOption() // allow jest config
-    .option('--mode <mode>', 'set mode', 'test')
-    .option('--config <config>', 'use custom config')
-    .option('--rootDir <rootDir>', 'project root directory', cwd)
-    .action(async ({ rootDir, ...commandArgs }) => {
-      process.env.NODE_ENV = 'test';
-      await createService({ rootDir, command: 'test', commandArgs });
-    });
-
   program.parse(process.argv);
 
   const proc = program.runningCommand;

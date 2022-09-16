@@ -82,6 +82,7 @@
     "@types/sass": "^1.43.1",
     "@types/temp": "^0.9.1",
     "chokidar": "^3.5.3",
+    "jest": "^29.0.2",
     "react": "^18.2.0",
     "unplugin": "^0.9.0",
     "webpack": "^5.73.0",

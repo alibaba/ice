@@ -13,6 +13,7 @@ import { createServerCompiler } from './service/serverCompiler.js';
 import createWatch from './service/watchSource.js';
 import start from './commands/start.js';
 import build from './commands/build.js';
+import test from './commands/test.js';
 import mergeTaskConfig from './utils/mergeTaskConfig.js';
 import getWatchEvents from './getWatchEvents.js';
 import { setEnv, updateRuntimeEnv, getCoreEnvKeys } from './utils/runtimeEnv.js';
@@ -234,6 +235,11 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             serverCompiler,
             spinner: buildSpinner,
             dataCache,
+          });
+        } else if (command === 'test') {
+          return await test(ctx, {
+            taskConfigs,
+            spinner: buildSpinner,
           });
         }
       } catch (err) {

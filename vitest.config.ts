@@ -18,6 +18,7 @@ export default defineConfig({
       '**/node_modules/**',
       '**/esm/**',
       '**/tests/fixtures/**',
+      'examples/**',
     ],
     coverage: {
       reporter: ['cobertura', 'text'],
