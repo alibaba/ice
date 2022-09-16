@@ -11,6 +11,7 @@ import { getCompilerPlugins } from '@ice/webpack-config';
 import escapeLocalIdent from '../utils/escapeLocalIdent.js';
 import cssModulesPlugin from '../esbuild/cssModules.js';
 import aliasPlugin from '../esbuild/alias.js';
+import ignorePlugin from '../esbuild/ignore.js';
 import createAssetsPlugin from '../esbuild/assets.js';
 import { ASSETS_MANIFEST, CACHE_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
 import emptyCSSPlugin from '../esbuild/emptyCSS.js';
@@ -124,6 +125,7 @@ export function createServerCompiler(options: Options) {
           externalDependencies: externalDependencies ?? !server.bundle,
           format,
         }),
+        server?.ignores && ignorePlugin(server.ignores),
         cssModulesPlugin({
           extract: false,
           generateLocalIdentName: function (name: string, filename: string) {
