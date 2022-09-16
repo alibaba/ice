@@ -1,7 +1,7 @@
 import type { DefineRouteFunction } from '@ice/route-manifest';
 import type { PluginList } from 'build-scripts';
 import type { UnpluginOptions } from 'unplugin';
-import type { Config, ModifyWebpackConfig } from './config';
+import type { Config, ModifyWebpackConfig, MinimizerOptions } from './config';
 import type { OverwritePluginAPI } from './plugin';
 
 interface SyntaxFeatures {
@@ -12,6 +12,16 @@ interface SyntaxFeatures {
 
 interface Optimization {
   router?: boolean;
+}
+
+interface MinifyOptions {
+  type: 'terser' | 'swc';
+  options?: MinimizerOptions<Record<string, any>>;
+}
+
+interface IgnorePattern {
+  resourceRegExp: RegExp;
+  contextRegExp?: RegExp;
 }
 
 export interface UserConfig {
@@ -31,7 +41,7 @@ export interface UserConfig {
   };
   plugins?: PluginList<Config, OverwritePluginAPI>;
   dropLogLevel?: 'trace' | 'debug' | 'log' | 'info' | 'warn' | 'error';
-  minify?: boolean;
+  minify?: boolean | 'swc' | MinifyOptions;
   compileDependencies?: boolean | string[] | RegExp[];
   sourceMap?: string | boolean;
   tsChecker?: boolean;
@@ -39,8 +49,9 @@ export interface UserConfig {
   ssr?: boolean;
   ssg?: boolean;
   server?: {
-    format: 'esm' | 'cjs';
-    bundle: boolean;
+    format?: 'esm' | 'cjs';
+    bundle?: boolean;
+    ignores?: IgnorePattern[];
   };
   optimization?: Optimization;
   mock?: { exclude?: string[] };

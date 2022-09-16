@@ -13,23 +13,20 @@
   ],
   "dependencies": {
     "@ice/swc-plugin-remove-export": "^0.1.0",
+    "@ice/swc-plugin-keep-export": "^0.1.1",
     "@ice/swc-plugin-keep-platform": "^0.1.0",
     "@swc/core": "1.2.210",
     "@ice/bundles": "^0.1.0",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "@rollup/pluginutils": "^4.2.0",
     "browserslist": "^4.19.3",
     "consola": "^2.15.3",
     "fast-glob": "^3.2.11",
-    "magic-string": "^0.26.1",
-    "mini-css-extract-plugin": "2.6.0",
-    "react-refresh": "^0.12.0",
-    "unplugin": "^0.9.5"
+    "magic-string": "^0.26.1"
   },
   "devDependencies": {
     "@ice/types": "^1.0.0",
     "build-scripts": "^2.0.0-24",
-    "esbuild": "^0.14.23",
+    "esbuild": "^0.14.51",
     "webpack": "^5.73.0",
     "webpack-dev-server": "^4.7.4"
   },

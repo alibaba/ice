@@ -20,11 +20,11 @@ if (isNode) {
   console.error('__IS_NODE__');
 }
 
-export const auth = defineAuthConfig(() => {
+export const auth = defineAuthConfig((data) => {
   // fetch auth data
   return {
     initialAuth: {
-      admin: true,
+      admin: data?.auth?.admin,
     },
   };
 });

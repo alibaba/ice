@@ -4,7 +4,10 @@ import { Link, useData, useAppData, useConfig } from 'ice';
 import { useAppContext } from '@ice/runtime';
 import { useRequest } from 'ahooks';
 import type { AppData } from 'ice';
+import './index.css';
 import styles from './index.module.css';
+import lessStyles from './index.module.less';
+import sassStyles from './index.module.scss';
 
 const Bar = lazy(() => import('../components/bar'));
 
@@ -33,8 +36,8 @@ export default function Home(props) {
         <Bar />
       </Suspense>
       <div className={styles.data}>
-        <div>foo: {JSON.stringify(foo)}</div>
-        <div>users: {JSON.stringify(users)}</div>
+        <div className={lessStyles.data}>foo: {JSON.stringify(foo)}</div>
+        <div className={sassStyles.data}>users: {JSON.stringify(users)}</div>
         <div>userInfo: {JSON.stringify(userInfo)}</div>
         <div>data from: <span id="data-from">{data.from}</span></div>
       </div>

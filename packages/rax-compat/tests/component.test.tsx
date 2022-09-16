@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect, it, describe } from 'vitest';
-import { Component, PureComponent, memo } from '../src/index';
 import { render } from '@testing-library/react';
+import { Component, PureComponent, memo } from '../src/index';
 
 describe('component', () => {
   it('Component should work', () => {
@@ -31,8 +31,8 @@ describe('component', () => {
   });
 
   it('memo should work', () => {
-    const MyComponent = memo(function MyComponent(props: { text: string, id: string }) {
-      return <div id={props.id}>{props.text}</div>
+    const MyComponent = memo((props: { text: string; id: string }) => {
+      return <div id={props.id}>{props.text}</div>;
     });
 
     const wrapper = render(<MyComponent id="" text="memo demo" />);

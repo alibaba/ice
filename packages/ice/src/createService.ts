@@ -13,6 +13,7 @@ import { createServerCompiler } from './service/serverCompiler.js';
 import createWatch from './service/watchSource.js';
 import start from './commands/start.js';
 import build from './commands/build.js';
+import test from './commands/test.js';
 import mergeTaskConfig from './utils/mergeTaskConfig.js';
 import getWatchEvents from './getWatchEvents.js';
 import { setEnv, updateRuntimeEnv, getCoreEnvKeys } from './utils/runtimeEnv.js';
@@ -93,10 +94,23 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const runtimeModules = getRuntimeModules(plugins);
 
   // register web
-  ctx.registerTask('web', getWebTask({ rootDir, command }));
+  ctx.registerTask('web', getWebTask({ rootDir, command, dataCache }));
 
   // register config
-  ['userConfig', 'cliOption'].forEach((configType) => ctx.registerConfig(configType, config[configType]));
+  ['userConfig', 'cliOption'].forEach((configType) => {
+    // Support getDefaultValue for config, make easier for get default value in different mode.
+    const configData = config[configType].map(({ getDefaultValue, ...resetConfig }) => {
+      if (getDefaultValue && typeof getDefaultValue === 'function') {
+        return {
+          ...resetConfig,
+          defaultValue: getDefaultValue(),
+        };
+      }
+      return resetConfig;
+    });
+
+    ctx.registerConfig(configType, configData);
+  });
 
   let taskConfigs = await ctx.setup();
 
@@ -210,7 +224,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             reCompileRouteConfig,
             dataCache,
             appConfig,
-            devPath: (routePaths[0] || '').replace(/^[\/\\]/, ''),
+            devPath: (routePaths[0] || '').replace(/^[/\\]/, ''),
             spinner: buildSpinner,
           });
         } else if (command === 'build') {
@@ -219,6 +233,12 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             getAppConfig,
             taskConfigs,
             serverCompiler,
+            spinner: buildSpinner,
+            dataCache,
+          });
+        } else if (command === 'test') {
+          return await test(ctx, {
+            taskConfigs,
             spinner: buildSpinner,
           });
         }

@@ -259,8 +259,8 @@ export default defineConfig({
 
 ### server
 
-- 类型：`{ format: 'esm' | 'cjs'; bundle: boolean }`
-- 默认值：`{ format: 'esm', bundle: false }`
+- 类型：`{ format: 'esm' | 'cjs'; bundle: boolean; ignores: IgnorePattern[] }`
+- 默认值：`{ format: 'esm', bundle: false, ignores: [] }`
 
 SSR / SSG 产物标准，推荐以 ESM 标准进行执行，如果希望打包成一个 cjs 模块，可以进行如下设置：
 
@@ -274,6 +274,25 @@ export default defineConfig({
   },
 });
 ```
+
+可以通过 `ignores` 参数，为 SSR / SSG 产物过滤指定文件：
+
+```js
+import { defineConfig } from '@ice/app';
+
+export default defineConfig({
+  server: {
+    ignores: [{
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/,
+    }]
+  },
+});
+```
+
+其中：
+* resourceRegExp 对应文件的匹配路径
+* contextRegExp （可选）对应文件内容的匹配规则
 
 ### routes
 

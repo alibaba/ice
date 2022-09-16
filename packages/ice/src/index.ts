@@ -5,3 +5,5 @@ export function defineConfig(config: UserConfig) {
 }
 
 export type { UserConfig };
+
+export * from './test/index.js';

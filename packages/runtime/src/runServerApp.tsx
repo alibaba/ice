@@ -3,17 +3,6 @@ import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { Action, parsePath } from 'history';
 import type { Location } from 'history';
-import { default as consola } from 'consola';
-import Runtime from './runtime.js';
-import App from './App.js';
-import { AppContextProvider } from './AppContext.js';
-import { AppDataProvider, getAppData } from './AppData.js';
-import getAppConfig from './appConfig.js';
-import { DocumentContextProvider } from './Document.js';
-import { loadRouteModules, loadRoutesData, getRoutesConfig } from './routes.js';
-import { piperToString, renderToNodeStream } from './server/streamRender.js';
-import { createStaticNavigator } from './server/navigator.js';
-import type { NodeWritablePiper } from './server/streamRender.js';
 import type {
   AppContext, RouteItem, ServerContext,
   AppData,
@@ -24,7 +13,17 @@ import type {
   RouteModules,
   RenderMode,
   DocumentComponent,
-} from './types.js';
+} from '@ice/types';
+import Runtime from './runtime.js';
+import App from './App.js';
+import { AppContextProvider } from './AppContext.js';
+import { AppDataProvider, getAppData } from './AppData.js';
+import getAppConfig from './appConfig.js';
+import { DocumentContextProvider } from './Document.js';
+import { loadRouteModules, loadRoutesData, getRoutesConfig } from './routes.js';
+import { piperToString, renderToNodeStream } from './server/streamRender.js';
+import { createStaticNavigator } from './server/navigator.js';
+import type { NodeWritablePiper } from './server/streamRender.js';
 import getRequestContext from './requestContext.js';
 import matchRoutes from './matchRoutes.js';
 import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
@@ -79,7 +78,7 @@ export async function renderToHTML(requestContext: ServerContext, renderOptions:
     if (renderOptions.disableFallback) {
       throw error;
     }
-    consola.error('PiperToString error, downgrade to CSR.', error);
+    console.error('PiperToString error, downgrade to CSR.', error);
     // downgrade to CSR.
     const result = fallback();
     return result;
@@ -109,7 +108,7 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
       if (renderOptions.disableFallback) {
         throw error;
       }
-      consola.error('PiperToResponse error, downgrade to CSR.', error);
+      console.error('PiperToResponse error, downgrade to CSR.', error);
       // downgrade to CSR.
       const result = await fallback();
       sendResult(res, result);
@@ -185,7 +184,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     if (disableFallback) {
       throw err;
     }
-    consola.error('Warning: render server entry error, downgrade to csr.', err);
+    console.error('Warning: render server entry error, downgrade to csr.', err);
     return renderDocument({ matches, routePath, renderOptions, routeModules: {} });
   }
 }

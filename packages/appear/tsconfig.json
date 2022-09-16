@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "rootDir": "src",
+    "outDir": "esm"
+  },
+  "allowJs": true,
+  "include": [
+    "src"
+  ]
+}

@@ -2,16 +2,16 @@ import React, { useLayoutEffect, useState } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { createHashHistory, createBrowserHistory, createMemoryHistory } from 'history';
 import type { HashHistory, BrowserHistory, Action, Location, InitialEntry, MemoryHistory } from 'history';
+import type {
+  AppContext, AppExport, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
+  RouteWrapperConfig, RuntimeModules, RouteMatch, RouteModules, AppConfig,
+} from '@ice/types';
 import { createHistory as createHistorySingle } from './single-router.js';
 import { setHistory } from './history.js';
 import Runtime from './runtime.js';
 import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
 import { AppDataProvider, getAppData } from './AppData.js';
-import type {
-  AppContext, AppExport, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
-  RouteWrapperConfig, RuntimeModules, RouteMatch, RouteModules, AppConfig, DocumentComponent,
-} from './types.js';
 import { loadRouteModules, loadRoutesData, getRoutesConfig, filterMatchesToLoad } from './routes.js';
 import { updateRoutesConfig } from './routesConfig.js';
 import getRequestContext from './requestContext.js';
@@ -22,7 +22,6 @@ interface RunClientAppOptions {
   app: AppExport;
   routes: RouteItem[];
   runtimeModules: RuntimeModules;
-  Document: DocumentComponent;
   hydrate: boolean;
   basename?: string;
   memoryRouter?: boolean;
@@ -35,7 +34,6 @@ export default async function runClientApp(options: RunClientAppOptions) {
     app,
     routes,
     runtimeModules,
-    Document,
     basename,
     hydrate,
     memoryRouter,
@@ -71,7 +69,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routesData = await loadRoutesData(matches, requestContext, routeModules);
   }
   if (!routesConfig) {
-    routesConfig = getRoutesConfig(matches, routesConfig, routeModules);
+    routesConfig = getRoutesConfig(matches, routesData, routeModules);
   }
 
   const appContext: AppContext = {
@@ -98,22 +96,20 @@ export default async function runClientApp(options: RunClientAppOptions) {
 
   await Promise.all(runtimeModules.map(m => runtime.loadModule(m)).filter(Boolean));
 
-  render({ runtime, Document, history });
+  render({ runtime, history });
 }
 
 interface RenderOptions {
   history: History;
   runtime: Runtime;
-  Document: DocumentComponent;
 }
-async function render({ history, runtime, Document }: RenderOptions) {
+async function render({ history, runtime }: RenderOptions) {
   const appContext = runtime.getAppContext();
   const { appConfig } = appContext;
   const render = runtime.getRender();
   const AppProvider = runtime.composeAppProvider() || React.Fragment;
   const RouteWrappers = runtime.getWrappers();
   const AppRouter = runtime.getAppRouter();
-
 
   render(
     document.getElementById(appConfig.app.rootId),
@@ -123,7 +119,6 @@ async function render({ history, runtime, Document }: RenderOptions) {
       AppProvider={AppProvider}
       RouteWrappers={RouteWrappers}
       AppRouter={AppRouter}
-      Document={Document}
     />,
   );
 }
@@ -134,7 +129,6 @@ interface BrowserEntryProps {
   AppProvider: React.ComponentType<any>;
   RouteWrappers: RouteWrapperConfig[];
   AppRouter: React.ComponentType<AppRouterProps>;
-  Document: DocumentComponent;
 }
 
 interface HistoryState {
@@ -152,7 +146,6 @@ interface RouteState {
 function BrowserEntry({
   history,
   appContext,
-  Document,
   ...rest
 }: BrowserEntryProps) {
   const {
@@ -232,7 +225,7 @@ function BrowserEntry({
  * Prepare for the next pages.
  * Load modules、getPageData and preLoad the custom assets.
  */
-async function loadNextPage(
+export async function loadNextPage(
   currentMatches: RouteMatch[],
   preRouteState: RouteState,
 ) {

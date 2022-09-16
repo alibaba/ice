@@ -6,10 +6,11 @@ import type {
   RefObject,
   SyntheticEvent,
 } from 'react';
-import { createElement as _createElement, useEffect, useCallback, useRef, useState, forwardRef as _forwardRef } from 'react';
+import { createElement as _createElement, useEffect, useCallback, useRef, useState } from 'react';
 import { cached, convertUnit } from 'style-unit';
-import { observerElement } from './visibility';
+import VisibilityChange from '@ice/appear';
 import { isFunction, isObject, isNumber } from './type';
+import transformPrototype from './prototypes';
 
 
 // https://github.com/alibaba/rax/blob/master/packages/driver-dom/src/index.js
@@ -28,35 +29,52 @@ import { isFunction, isObject, isNumber } from './type';
 // borderImageOutset|borderImageSlice|borderImageWidth -> erim
 const NON_DIMENSIONAL_REG = /opa|ntw|ne[ch]|ex(?:s|g|n|p|$)|^ord|zoo|grid|orp|ows|mnc|^columns$|bs|erim|onit/i;
 
-function createInputCompat(type: string) {
-  function InputCompat(props: any, ref: RefObject<any>) {
-    const { value, onInput, ...rest } = props;
-    const [v, setV] = useState(value);
-    const onChange = useCallback((event: SyntheticEvent) => {
-      setV((event.target as HTMLInputElement).value);
+function InputCompat(props: any) {
+  const { value, onInput, onChange, inputType, ...rest } = props;
+  const [v, setV] = useState(value);
+  const changeCallback = useCallback((event: SyntheticEvent) => {
+    setV((event.target as HTMLInputElement).value);
 
-      // Event of onInput should be native event.
-      onInput && onInput(event.nativeEvent);
-    }, [onInput]);
+    // Event of onInput should be native event.
+    onInput && onInput(event.nativeEvent);
+  }, [onInput]);
 
-    // Compat maxlength in rax-textinput, because maxlength is invalid props in web,it will be set attributes to element
-    // and react will Throw a warning in DEV.
-    // https://github.com/raxjs/rax-components/issues/459
-    // https://github.com/raxjs/rax-components/blob/master/packages/rax-textinput/src/index.tsx#L142
-    if (rest.maxlength) {
-      rest.maxLength = rest.maxlength;
-      delete rest.maxlength;
-    }
+  const ref = useRef();
 
-    return _createElement(type, {
-      ...rest,
-      value: v,
-      onChange,
-      ref,
-    });
+  useEffect(() => {
+    setV(value);
+  }, [value]);
+
+  // Compat maxlength in rax-textinput, because maxlength is invalid props in web,it will be set attributes to element
+  // and react will Throw a warning in DEV.
+  // https://github.com/raxjs/rax-components/issues/459
+  // https://github.com/raxjs/rax-components/blob/master/packages/rax-textinput/src/index.tsx#L142
+  if (rest.maxlength) {
+    rest.maxLength = rest.maxlength;
+    delete rest.maxlength;
   }
 
-  return _forwardRef(InputCompat);
+  // The onChange event is SyntheticEvent in React, but it is dom event in Rax, so it needs compat onChange.
+  useEffect(() => {
+    let eventTarget: EventTarget;
+    if (ref && ref.current && onChange) {
+      eventTarget = ref.current;
+      eventTarget.addEventListener('change', onChange);
+    }
+
+    return () => {
+      if (eventTarget) {
+        eventTarget.removeEventListener('change', onChange);
+      }
+    };
+  }, [onChange]);
+
+  return _createElement(inputType, {
+    ...rest,
+    value: v,
+    onChange: changeCallback,
+    ref,
+  });
 }
 
 /**
@@ -78,12 +96,14 @@ export function createElement<P extends {
   props?: Attributes & P | null,
   ...children: ReactNode[]): ReactElement {
   // Get a shallow copy of props, to avoid mutating the original object.
-  const rest = Object.assign({}, props);
+  let rest: Attributes & P = Object.assign({}, props);
   const { onAppear, onDisappear } = rest;
 
   // Delete props that are not allowed in react.
   delete rest.onAppear;
   delete rest.onDisappear;
+
+  rest = transformPrototype(rest);
 
   // Compat for style unit.
   const compatStyleProps = compatStyle(rest.style);
@@ -91,13 +111,14 @@ export function createElement<P extends {
     rest.style = compatStyleProps;
   }
 
+  // Setting the value of props makes the component be a controlled component in React.
+  // But setting the value is same as web in Rax.
+  // User can modify value of props to modify native input value
+  // and native input can also modify the value of self in Rax.
+  // So we should compat input to InputCompat, the same as textarea.
   if (type === 'input' || type === 'textarea') {
-    // Setting the value of props makes the component be a controlled component in React.
-    // But setting the value is same as web in Rax.
-    // User can modify value of props to modify native input value
-    // and native input can also modify the value of self in Rax.
-    // So we should compat input to InputCompat, the same as textarea.
-    type = createInputCompat(type);
+    rest.inputType = type;
+    type = InputCompat;
   }
 
   // Compat for visibility events.
@@ -107,49 +128,12 @@ export function createElement<P extends {
       {
         onAppear,
         onDisappear,
-        // Passing child ref to `VisibilityChange` to avoid creating a new ref.
-        childRef: rest.ref,
-        // Using forwardedRef as a prop to the backend react element.
-        forwardRef: (ref: RefObject<any>) => _createElement(type, Object.assign({ ref }, rest), ...children),
+        children: _createElement(type, rest, ...children),
       },
     );
   } else {
     return _createElement(type, rest, ...children);
   }
-}
-
-function VisibilityChange({
-  onAppear,
-  onDisappear,
-  childRef,
-  forwardRef,
-}: any) {
-  const fallbackRef = useRef(null); // `fallbackRef` used if `childRef` is not provided.
-  const ref = childRef || fallbackRef;
-
-  const listen = useCallback((eventName: string, handler: Function) => {
-    const { current } = ref;
-    // Rax components will set custom ref by useImperativeHandle.
-    // So We should get eventTarget by _nativeNode.
-    // https://github.com/raxjs/rax-components/blob/master/packages/rax-textinput/src/index.tsx#L151
-    if (current && isFunction(handler)) {
-      const eventTarget = current._nativeNode || current;
-      observerElement(eventTarget as HTMLElement);
-      eventTarget.addEventListener(eventName, handler);
-    }
-    return () => {
-      const { current } = ref;
-      if (current) {
-        const eventTarget = current._nativeNode || current;
-        eventTarget.removeEventListener(eventName, handler);
-      }
-    };
-  }, [ref]);
-
-  useEffect(() => listen('appear', onAppear), [ref, onAppear, listen]);
-  useEffect(() => listen('disappear', onDisappear), [ref, onDisappear, listen]);
-
-  return forwardRef(ref);
 }
 
 const isDimensionalProp = cached((prop: string) => !NON_DIMENSIONAL_REG.test(prop));

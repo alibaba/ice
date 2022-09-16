@@ -1,5 +1,7 @@
 import type { ReactElement } from 'react';
 
+type ChildrenElement<T> = ChildrenElement<T>[] | T;
+
 // Mocked `Rax.shared`.
 const shared = {
   get Element(): any {
@@ -27,7 +29,7 @@ function warningCompat(message: string) {
   console.error(`[RaxCompat] ${stack}`);
 }
 
-function flattenChildren(children: ReactElement) {
+function flattenChildren(children: ChildrenElement<ReactElement>) {
   if (children == null) {
     return children;
   }
@@ -39,7 +41,7 @@ function flattenChildren(children: ReactElement) {
   return result.length - 1 ? result : result[0];
 }
 
-function traverseChildren(children: ReactElement, result: ReactElement[]) {
+function traverseChildren(children: ChildrenElement<ReactElement>, result: ReactElement[]) {
   if (Array.isArray(children)) {
     for (let i = 0, l = children.length; i < l; i++) {
       traverseChildren(children[i], result);

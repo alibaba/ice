@@ -1,0 +1,34 @@
+{
+  "name": "@ice/plugin-css-assets-local",
+  "version": "1.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-css-assets-local"
+  },
+  "type": "module",
+  "files": [
+    "esm",
+    "!esm/**/*.map"
+  ],
+  "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./esm/index.d.ts",
+      "import": "./esm/index.js",
+      "default": "./esm/index.js"
+    }
+  },
+  "dependencies": {
+    "extract-css-assets-webpack-plugin": "^0.2.10",
+    "consola": "^2.15.3"
+  },
+  "devDependencies": {
+    "@ice/types": "^1.0.0"
+  },
+  "scripts": {
+    "watch": "tsc -w",
+    "build": "tsc"
+  }
+}

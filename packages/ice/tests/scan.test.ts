@@ -1,6 +1,6 @@
-import { expect, it, describe } from 'vitest';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
+import { expect, it, describe } from 'vitest';
 import { scanImports } from '../src/service/analyze';
 import formatPath from '../src/utils/formatPath';
 
@@ -30,7 +30,7 @@ describe('scan import', () => {
   it('scan with depImports', async () => {
     const deps = await scanImports(
       [path.join(__dirname, './fixtures/scan/app.ts')],
-      { alias, rootDir, depImports: { '@ice/runtime': { name: '@ice/runtime' }, react: { name: 'react' } } }
+      { alias, rootDir, depImports: { '@ice/runtime': { name: '@ice/runtime' }, react: { name: 'react' } } },
     );
     expect(deps['@ice/runtime'].name).toEqual('@ice/runtime');
     expect(deps['@ice/runtime'].pkgPath).toBeUndefined();

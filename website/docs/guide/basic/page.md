@@ -27,17 +27,17 @@ export default function Home() {
 }
 ```
 
-## getData()
+## 获取页面初始数据
 
-获取页面初始数据的方法，详见[数据请求](./request.md)。
+详见[数据请求](./request.md)。
 
-## getConfig()
+## 配置页面运行时属性
 
-获取页面运行时配置的方法，页面主体内容之外的，其他需要通用 HTML 模板上差异化显示的内容，可以通过导出 `getConfig` 方法来声明。
+页面主体内容之外的、其他需要通用 HTML 模板上差异化显示的内容，可以通过导出 `getConfig` 方法来声明。
 
-支持的页面级配置包含:
+支持的页面级配置包含：
 
-#### title
+### title
 
 标题会显示在文档上，可以通过 `title` 属性来设置。 示例：
 
@@ -49,9 +49,9 @@ export function getConfig() {
 }
 ```
 
-#### metas
+### metas
 
-Meta 信息会显示在文档上，可以通过 `meta` 属性来设置。 示例：
+Meta 信息会显示在文档上，可以通过 `metas` 属性来设置。 示例：
 
 ```tsx
 export function getConfig() {
@@ -67,7 +67,7 @@ export function getConfig() {
 }
 ```
 
-#### links
+### links
 
 页面级需要额外插入的 `<link />` 标签，会被插入 `<head>` 标签内，先于页面自身的 Bundle 加载，是阻塞型的。
 

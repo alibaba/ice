@@ -1,6 +1,6 @@
-import { expect, test, describe } from 'vitest';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { expect, test, describe } from 'vitest';
 import { generateRouteManifest, formatNestedRouteManifest } from '../src/index';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

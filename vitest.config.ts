@@ -18,12 +18,15 @@ export default defineConfig({
       '**/node_modules/**',
       '**/esm/**',
       '**/tests/fixtures/**',
+      'examples/**',
     ],
     coverage: {
       reporter: ['cobertura', 'text'],
       include: ['**/packages/**'],
       exclude: [
         '**/bundles/compiled/**',
+        // App runtime has been tested by unit test case
+        '**/packages/runtime/esm/**',
         '**/tests/**',
       ],
     },

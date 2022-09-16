@@ -140,10 +140,13 @@ const userConfig = [
   },
   {
     name: 'minify',
-    validation: 'boolean',
+    validation: 'boolean|string|object',
     setConfig: (config: Config, minify: UserConfig['minify'], context: UserConfigContext<Config>) => {
-      if (typeof minify === 'boolean') {
+      if (typeof minify === 'boolean' || typeof minify === 'string') {
         config.minify = minify;
+      } else if (minify && typeof minify === 'object') {
+        config.minify = minify.type;
+        config.minimizerOptions = minify.options;
       } else {
         // minify code in build, while disable minify in dev
         config.minify = context.command === 'build';
@@ -179,7 +182,7 @@ const userConfig = [
   {
     name: 'compileDependencies',
     validation: 'array|boolean',
-    defaultValue: process.env.NODE_ENV === 'development' ? false : [/node_modules\/*/],
+    getDefaultValue: () => (process.env.NODE_ENV === 'development' ? false : [/node_modules\/*/]),
     setConfig: (config: Config, customValue: UserConfig['compileDependencies']) => {
       let compileRegex: RegExp | false;
       if (customValue === true) {

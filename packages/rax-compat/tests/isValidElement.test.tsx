@@ -5,9 +5,9 @@ import isValidElement from '../src/is-valid-element';
 describe('isValidElement', () => {
   it('basic', () => {
     function App() {
-      return <div>
+      return (<div>
         <div>isValidElement</div>
-      </div>;
+      </div>);
     }
 
     expect(isValidElement(<App />)).toBe(true);

@@ -1,8 +1,9 @@
 import * as path from 'path';
 import type { Config } from '@ice/types';
 import { CACHE_DIR, RUNTIME_TMP_DIR } from '../../constant.js';
+import { getRoutePathsFromCache } from '../../utils/getRoutePaths.js';
 
-const getWebTask = ({ rootDir, command }): Config => {
+const getWebTask = ({ rootDir, command, dataCache }): Config => {
   // basic task config of web task
   const defaultLogging = command === 'start' ? 'summary' : 'summary assets';
   return {
@@ -19,10 +20,14 @@ const getWebTask = ({ rootDir, command }): Config => {
       // getData is built by data-loader
       removeExportExprs: ['getData', 'getServerData', 'getStaticData'],
       keepPlatform: 'web',
+      getRoutePaths: () => {
+        return getRoutePathsFromCache(dataCache);
+      },
     },
     assetsManifest: true,
     fastRefresh: command === 'start',
     logging: process.env.WEBPACK_LOGGING || defaultLogging,
+    minify: command === 'build',
   };
 };
 

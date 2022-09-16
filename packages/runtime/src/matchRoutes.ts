@@ -4,8 +4,8 @@
 import type { Location } from 'history';
 import type { RouteObject } from 'react-router-dom';
 import { matchRoutes as originMatchRoutes } from 'react-router-dom';
+import type { RouteItem, RouteMatch } from '@ice/types';
 import { matchRoutes as matchRoutesSingle } from './single-router.js';
-import type { RouteItem, RouteMatch } from './types.js';
 
 export default function matchRoutes(
   routes: RouteItem[],
@@ -15,7 +15,6 @@ export default function matchRoutes(
   const matchRoutesFn = process.env.ICE_CORE_ROUTER === 'true' ? originMatchRoutes : matchRoutesSingle;
   let matches = matchRoutesFn(routes as unknown as RouteObject[], location, basename);
   if (!matches) return [];
-
   return matches.map(({ params, pathname, pathnameBase, route }) => ({
     params,
     pathname,

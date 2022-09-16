@@ -1,10 +1,11 @@
-import { expect, test, describe, afterAll } from 'vitest';
 import * as path from 'path';
 import * as fs from 'fs';
 import { fileURLToPath } from 'url';
+import { expect, test, describe, afterAll } from 'vitest';
 import { buildFixture, setupBrowser } from '../utils/build';
 import { startFixture, setupStartBrowser } from '../utils/start';
-import Browser, { Page } from '../utils/browser';
+import type { Page } from '../utils/browser';
+import type Browser from '../utils/browser';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -44,7 +45,7 @@ describe(`build ${example}`, () => {
 
   test('disable splitChunks', async () => {
     await buildFixture(example, {
-      config: 'splitChunks.config.mts'
+      config: 'splitChunks.config.mts',
     });
     const res = await setupBrowser({ example });
     page = res.page;
@@ -62,47 +63,73 @@ describe(`build ${example}`, () => {
 describe(`start ${example}`, () => {
   let page: Page;
   let browser: Browser;
+  const rootDir = path.join(__dirname, `../../examples/${example}`);
 
   test('setup devServer', async () => {
-    const { devServer, port } = await startFixture(example);
+    const { devServer, port } = await startFixture(example, {
+      mock: true,
+      force: true,
+      https: false,
+      analyzer: false,
+      open: false,
+      mode: 'start',
+    });
     const res = await setupStartBrowser({ server: devServer, port });
     page = res.page;
     browser = res.browser;
     expect(await page.$$text('h2')).toStrictEqual(['Home Page']);
     expect(await page.$$text('#data-from')).toStrictEqual(['getServerData']);
   }, 120000);
-  // TODO: fix waitForNetworkIdle not resolved
-  test.skip('should update config during client routing', async () => {
-    const { devServer, port } = await startFixture(example);
-    const res = await setupStartBrowser({ server: devServer, port });
-    page = res.page;
-    browser = res.browser;
 
+  test('update route', async () => {
+    const targetPath = path.join(rootDir, 'src/pages/blog.tsx');
+    const routeContent = fs.readFileSync(targetPath, 'utf-8');
+    const routeManifest = fs.readFileSync(path.join(rootDir, '.ice/route-manifest.json'), 'utf-8');
+    fs.writeFileSync(targetPath, routeContent);
+    await page.reload();
+    expect(JSON.parse(routeManifest)[0].children.length).toBe(3);
+  }, 120000);
+
+  test('update watched file: global.css', async () => {
+    const targetPath = path.join(rootDir, 'src/global.css');
+    const cssContent = fs.readFileSync(targetPath, 'utf-8');
+    fs.writeFileSync(targetPath, cssContent);
+    await page.reload();
+  });
+
+  test('update watched file: app.ts', async () => {
+    const targetPath = path.join(rootDir, 'src/app.tsx');
+    const appContent = fs.readFileSync(targetPath, 'utf-8');
+    fs.writeFileSync(targetPath, appContent);
+    await page.reload();
+  });
+
+  test('should update config during client routing', async () => {
     expect(
-      await page.title()
+      await page.title(),
     ).toBe('Home');
 
     expect(
-      await page.$$attr('meta[name="theme-color"]', 'content')
+      await page.$$attr('meta[name="theme-color"]', 'content'),
     ).toStrictEqual(['#000']);
 
-    await page.click('a[href="/about"]');
+    await page.push('/about');
     await page.waitForNetworkIdle();
 
     expect(
-      await page.title()
+      await page.title(),
     ).toBe('About');
 
     expect(
-      await page.$$attr('meta[name="theme-color"]', 'content')
+      await page.$$attr('meta[name="theme-color"]', 'content'),
     ).toStrictEqual(['#eee']);
 
     expect(
-      await page.$$eval('link[href*="bootstrap"]', (els) => els.length)
+      await page.$$eval('link[href*="bootstrap"]', (els) => els.length),
     ).toBe(1);
 
     expect(
-      await page.$$eval('script[src*="lodash"]', (els) => els.length)
+      await page.$$eval('script[src*="lodash"]', (els) => els.length),
     ).toBe(1);
   }, 120000);
 

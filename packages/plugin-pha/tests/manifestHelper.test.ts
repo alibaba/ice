@@ -49,12 +49,12 @@ describe('rewrite app worker url', () => {
       appWorker: {
         url: 'pha-worker.js',
         source: 'test',
-      }
+      },
     })).toMatchObject({
       appWorker: {
         url: 'app-worker.js',
         source: 'test',
-      }
+      },
     });
   });
 
@@ -62,7 +62,7 @@ describe('rewrite app worker url', () => {
     expect(rewriteAppWorker({})).toMatchObject({
       appWorker: {
         url: 'app-worker.js',
-      }
+      },
     });
   });
 });
@@ -78,11 +78,11 @@ describe('transform config keys', () => {
           {
             pageHeader: {
               includedSafeArea: true,
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
-      { isRoot: true }
+      { isRoot: true },
     );
     expect(manifestJSON.name).toStrictEqual('name');
     expect(manifestJSON.offline_resources).toStrictEqual(['//g.alicdn.com/.*']);
@@ -115,7 +115,7 @@ describe('transform config keys', () => {
           },
         ],
       },
-      { isRoot: true }
+      { isRoot: true },
     );
     expect(manifestJSON?.data_prefetch?.length).toBe(1);
     expect(manifestJSON?.data_prefetch![0].data).toMatchObject({
@@ -154,11 +154,11 @@ describe('transform config keys', () => {
               text: 'text-name',
               icon: '',
               activeIcon: '',
-            }
+            },
           ],
         },
       },
-      { isRoot: true }
+      { isRoot: true },
     );
 
     expect(manifestJSON.tab_bar).toBeTruthy();
@@ -189,7 +189,7 @@ describe('transform config keys', () => {
           },
         ],
       },
-      { isRoot: true }
+      { isRoot: true },
     );
     expect(manifestJSON?.pages?.length).toBe(2);
     expect(manifestJSON?.pages![0].data_prefetch).toMatchObject([
@@ -209,7 +209,7 @@ describe('transform config keys', () => {
       {
         a: 123,
       },
-      { isRoot: false }
+      { isRoot: false },
     );
 
     expect(manifestJSON).toMatchObject({ a: 123 });
@@ -220,7 +220,7 @@ describe('transform config keys', () => {
       {
         a: 123,
       },
-      { isRoot: true }
+      { isRoot: true },
     );
 
     expect(manifestJSON).toMatchObject({});
@@ -233,7 +233,7 @@ describe('transform config keys', () => {
           'U-Tag': '${storage.uTag}',
         },
       },
-      { isRoot: false }
+      { isRoot: false },
     );
     expect(manifestJSON).toMatchObject({ request_headers: { 'U-Tag': '${storage.uTag}' } });
   });
@@ -293,7 +293,7 @@ describe('parse manifest', async () => {
         'home',
         'about',
         'app/nest',
-        '404'
+        '404',
       ],
     };
     const manifest = await parseManifest(phaManifest, {
@@ -403,7 +403,7 @@ describe('parse manifest', async () => {
     } catch (err) {
       expect(true).toBe(true);
     }
-  })
+  });
 
   it('url failed with new URL', async () => {
     const phaManifest = {
@@ -417,7 +417,7 @@ describe('parse manifest', async () => {
     });
     expect(manifest.tab_bar?.url).toBe('{{xxx}}/tabBar');
     expect(manifest.tab_bar?.name).toBe('{{xxx}}');
-  })
+  });
 
   it('should not inject html when tabHeader & tabBar have url field', async () => {
     const phaManifest = {
@@ -426,14 +426,14 @@ describe('parse manifest', async () => {
           pageHeader: {
             source: 'pages/Header',
             url: 'https://m.taobao.com',
-          }
-        }
+          },
+        },
       ],
       tabBar: {
         custom: true,
         source: 'pages/CustomTabBar',
         items: ['home', 'frame1'],
-      }
+      },
     };
 
     const manifest = await parseManifest(phaManifest, {
@@ -477,8 +477,8 @@ describe('get multiple manifest', async () => {
             'app/nest',
             {
               url: 'https://m.taobao.com',
-            }
-          ]
+            },
+          ],
         },
         'about',
       ],

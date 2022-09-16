@@ -35,7 +35,6 @@ export function getHookFiles() {
   });
 
   return [
-    // ['webpack-dev-server', '@builder/pack/deps/webpack-dev-server'],
     ['webpack', `${webpackDir}webpack-lib`],
     ['webpack/lib/webpack', `${webpackDir}webpack-lib`],
     ['webpack/lib/webpack.js', `${webpackDir}webpack-lib`],

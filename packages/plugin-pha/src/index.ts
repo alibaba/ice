@@ -58,7 +58,6 @@ const plugin: Plugin<PluginOptions> = (options) => ({
           format: 'esm',
           outfile,
           minify,
-          inject: [],
         });
         return `${outfile}`;
       };

@@ -1,6 +1,6 @@
 import { expect, it, describe, vi } from 'vitest';
-import { createElement } from '../src/index';
 import { render } from '@testing-library/react';
+import { createElement } from '../src/index';
 
 describe('createElement', () => {
   it('basic', () => {
@@ -8,7 +8,7 @@ describe('createElement', () => {
     const wrapper = render(createElement(
       'div',
       null,
-      str
+      str,
     ));
     expect(wrapper.container.childNodes[0].textContent).toBe(str);
   });
@@ -17,32 +17,32 @@ describe('createElement', () => {
     let appearFun = vi.spyOn({
       func: () => {
         expect(appearFun).toHaveBeenCalled();
-      }
-    }, 'func')
+      },
+    }, 'func');
     const str = 'hello world';
     render(createElement(
       'div',
       {
-        onAppear: appearFun
+        onAppear: appearFun,
       },
-      str
+      str,
     ));
   });
 
   it('should work with onDisappear', () => {
     const func = () => {
       expect(disappearFun).toHaveBeenCalled();
-    }
+    };
     let disappearFun = vi.spyOn({
-      func: func
-    }, 'func')
+      func: func,
+    }, 'func');
     const str = 'hello world';
     render(createElement(
       'div',
       {
         onDisappear: func,
       },
-      str
+      str,
     ));
   });
 
@@ -53,10 +53,10 @@ describe('createElement', () => {
       {
         'data-testid': 'rpxTest',
         style: {
-          width: '300rpx'
-        }
+          width: '300rpx',
+        },
       },
-      str
+      str,
     ));
 
     const node = wrapper.queryByTestId('rpxTest');
@@ -84,7 +84,7 @@ describe('createElement', () => {
       {
         'data-testid': 'maxlengthTest',
         value: str,
-        maxlength: ''
+        maxlength: '',
       },
     ));
 

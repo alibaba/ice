@@ -1,6 +1,6 @@
 import React from 'react';
+import type { RouteItem, RouteModules, RouteWrapperConfig, RouteMatch, RequestContext, RoutesConfig, RoutesData, RenderMode } from '@ice/types';
 import RouteWrapper from './RouteWrapper.js';
-import type { RouteItem, RouteModules, RouteWrapperConfig, RouteMatch, RequestContext, RoutesConfig, RoutesData, RenderMode } from './types.js';
 import { useAppContext } from './AppContext.js';
 
 type RouteModule = Pick<RouteItem, 'id' | 'load'>;
@@ -147,7 +147,7 @@ export function createRouteElements(
   });
 }
 
-function RouteComponent({ id }: { id: string }) {
+export function RouteComponent({ id }: { id: string }) {
   // get current route component from latest routeModules
   const { routeModules } = useAppContext();
   const { default: Component } = routeModules[id] || {};
@@ -169,7 +169,6 @@ export function filterMatchesToLoad(prevMatches: RouteMatch[], currentMatches: R
   let isNew = (match: RouteMatch, index: number) => {
     // [a] -> [a, b]
     if (!prevMatches[index]) return true;
-
     // [a, b] -> [a, c]
     return match.route.id !== prevMatches[index].route.id;
   };

@@ -1,13 +1,13 @@
-import { afterAll, expect, it } from 'vitest';
 import * as path from 'path';
-import fse from 'fs-extra';
 import { fileURLToPath } from 'url';
+import { afterAll, expect, it } from 'vitest';
+import fse from 'fs-extra';
+import esbuild from 'esbuild';
+import { createUnplugin } from 'unplugin';
 import preBundleCJSDeps from '../src/service/preBundleCJSDeps';
 import { scanImports } from '../src/service/analyze';
-import esbuild from 'esbuild';
 import transformImport from '../src/esbuild/transformImport';
 import aliasPlugin from '../src/esbuild/alias';
-import { createUnplugin } from 'unplugin';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const alias = { '@': path.join(__dirname, './fixtures/scan') };
@@ -22,7 +22,7 @@ it('transform module import', async () => {
     depsInfo: deps,
     cacheDir,
     alias,
-    taskConfig: { mode: 'production' }
+    taskConfig: { mode: 'production' },
   });
   const transformImportPlugin = createUnplugin(() => transformImport(metadata, path.join(outdir, 'server'))).esbuild;
   await esbuild.build({

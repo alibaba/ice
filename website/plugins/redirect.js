@@ -1,7 +1,9 @@
-module.exports = function (context, options) {
+const path = require('path');
+
+module.exports = function (config) {
   return {
     name: 'docusaurus-redirect-plugin',
-    async contentLoaded({ content, actions }) {
+    async contentLoaded({ actions }) {
       const { createData, addRoute } = actions;
 
       const routes = [
@@ -53,7 +55,7 @@ module.exports = function (context, options) {
       });
 
       addRoute({
-        path: '/component',
+        path: path.join(config.baseUrl, '/component'),
         component: '@site/src/components/Redirect',
         modules: {
           // propName -> JSON file path
@@ -62,7 +64,7 @@ module.exports = function (context, options) {
       });
 
       addRoute({
-        path: '/docs/guide/advance',
+        path: path.join(config.baseUrl, '/docs/guide/advance'),
         component: '@site/src/components/Redirect',
         modules: {
           // propName -> JSON file path
@@ -71,7 +73,7 @@ module.exports = function (context, options) {
       });
 
       addRoute({
-        path: '/docs/materials',
+        path: path.join(config.baseUrl, '/docs/materials'),
         component: '@site/src/components/Redirect',
         modules: {
           // propName -> JSON file path
@@ -80,7 +82,7 @@ module.exports = function (context, options) {
       });
 
       addRoute({
-        path: '/docs/icestark',
+        path: path.join(config.baseUrl, '/docs/icestark'),
         component: '@site/src/components/Redirect',
         modules: {
           // propName -> JSON file path

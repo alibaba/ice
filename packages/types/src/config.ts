@@ -13,7 +13,7 @@ import type { ForkTsCheckerWebpackPluginOptions } from 'fork-ts-checker-webpack-
 import type { UnpluginOptions, UnpluginContext } from 'unplugin';
 import type Server from 'webpack-dev-server';
 import type { ECMA } from 'terser';
-import type { Config as SWCCompilationConfig } from '@builder/swc';
+import type { Config as SWCCompilationConfig } from '@swc/core';
 import type { BuildOptions } from 'esbuild';
 import type { UserConfig } from './userConfig';
 
@@ -26,7 +26,7 @@ interface PredefinedOptions {
   module?: boolean | undefined;
   ecma?: ECMA | undefined;
 }
-type MinimizerOptions<T> = PredefinedOptions & InferDefaultType<T>;
+export type MinimizerOptions<T> = PredefinedOptions & InferDefaultType<T>;
 
 interface ConfigurationCtx extends Config {
   supportedBrowsers: string[];
@@ -39,6 +39,8 @@ interface SwcOptions {
   removeExportExprs?: string[];
   compilationConfig?: SWCCompilationConfig;
   keepPlatform?: 'node' | 'web' | 'weex' | 'miniapp';
+  keepExports?: string[];
+  getRoutePaths?: Function;
 }
 
 interface TransformOptions {
@@ -52,6 +54,8 @@ interface TransformPlugin {
   enforce?: string;
   transform?: Transform;
   transformInclude?: UnpluginOptions['transformInclude'];
+  load?: UnpluginOptions['load'];
+  loadInclude?: UnpluginOptions['loadInclude'];
 }
 
 export type ModifyWebpackConfig = (config: Configuration, ctx: ConfigurationCtx) => Configuration;
@@ -99,7 +103,7 @@ export interface Config {
 
   compileIncludes?: (string | RegExp)[];
 
-  minify?: boolean;
+  minify?: boolean | string;
 
   minimizerOptions?: MinimizerOptions<CustomOptions>;
 

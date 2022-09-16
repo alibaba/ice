@@ -1,7 +1,7 @@
-import { expect, describe, it } from 'vitest';
 import * as path from 'path';
 import * as fs from 'fs';
 import { fileURLToPath } from 'url';
+import { expect, describe, it } from 'vitest';
 import { redirectImport } from '../src/unPlugins/redirectImport';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -14,8 +14,8 @@ describe('redirect import', () => {
     specifier: 'Head',
     source: 'react-helmet',
     exportAlias: {
-      'Head': 'Helmet',
-    }
+      Head: 'Helmet',
+    },
   }, {
     specifier: 'store',
     source: '@ice/store',
@@ -53,5 +53,5 @@ describe('redirect import', () => {
     const code = fs.readFileSync(path.join(__dirname, './fixtures/multiple.js'), 'utf-8');
     const transformed = await redirectImport(code, { exportData, targetSource: 'ice' });
     expect(transformed).toBe('import request from \'axios\';\nimport store from \'@ice/store\';');
-  })
-})
+  });
+});

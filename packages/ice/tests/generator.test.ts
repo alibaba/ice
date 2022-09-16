@@ -9,7 +9,7 @@ describe('generateExports', () => {
       type: false,
     }]);
     expect(importStr).toBe('import Router from \'react-router\';');
-    expect(exportStr).toBe('Router,')
+    expect(exportStr).toBe('Router,');
   });
   it('type export', () => {
     const { importStr, exportStr } = generateExports([{
@@ -18,7 +18,7 @@ describe('generateExports', () => {
       type: true,
     }]);
     expect(importStr).toBe('import type Router from \'react-router\';');
-    expect(exportStr).toBe('Router;')
+    expect(exportStr).toBe('Router;');
   });
   it('named exports', () => {
     const { importStr, exportStr } = generateExports([{
@@ -34,7 +34,7 @@ describe('generateExports', () => {
       source: 'react-helmet',
       specifier: 'Helmet',
       exportAlias: {
-        'Helmet': 'Head',
+        Helmet: 'Head',
       },
     }]);
     expect(importStr).toBe('import Helmet from \'react-helmet\';');
@@ -52,40 +52,20 @@ const defaultExportData = [{
 
 describe('checkExportData', () => {
   it('basic usage', () => {
-    try {
-      checkExportData(defaultExportData, { source: 'react-dom', specifier: 'react-dom' }, 'test-api');
-      expect(true).toBe(true);
-    } catch (err) {
-      expect(true).toBe(false);
-    }
+    checkExportData(defaultExportData, { source: 'react-dom', specifier: 'react-dom' }, 'test-api');
   });
 
   it('duplicate named export', () => {
-    try {
-      checkExportData(defaultExportData, defaultExportData[0], 'test-api');
-      expect(true).toBe(false);
-    } catch (err) {
-      expect(true).toBe(true);
-    }
-  })
+    expect(() => checkExportData(defaultExportData, defaultExportData[0], 'test-api')).toThrow();
+  });
 
   it('duplicate exports', () => {
-    try {
-      checkExportData(defaultExportData, defaultExportData, 'test-api');
-      expect(true).toBe(false);
-    } catch (err) {
-      expect(true).toBe(true);
-    }
-  })
+    expect(() => checkExportData(defaultExportData, defaultExportData, 'test-api')).toThrow();
+  });
 
   it('duplicate default export', () => {
-    try {
-      checkExportData(defaultExportData, { source: 'react-dom', specifier: 'Switch' }, 'test-api');
-      expect(true).toBe(false);
-    } catch (err) {
-      expect(true).toBe(true);
-    }
-  })
+    expect(() => checkExportData(defaultExportData, { source: 'react-dom', specifier: 'Switch' }, 'test-api')).toThrow();
+  });
 });
 
 describe('removeExportData', () => {
@@ -102,4 +82,4 @@ describe('removeExportData', () => {
     const removed = removeExportData(defaultExportData, ['react-router', 'react-helmet']);
     expect(removed.length).toBe(0);
   });
-})
+});

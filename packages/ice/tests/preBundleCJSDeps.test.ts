@@ -1,7 +1,7 @@
-import { afterAll, expect, it } from 'vitest';
 import * as path from 'path';
-import fse from 'fs-extra';
 import { fileURLToPath } from 'url';
+import { afterAll, expect, it } from 'vitest';
+import fse from 'fs-extra';
 import preBundleCJSDeps from '../src/service/preBundleCJSDeps';
 import { scanImports } from '../src/service/analyze';
 
@@ -16,7 +16,7 @@ it('prebundle cjs deps', async () => {
     depsInfo: deps,
     cacheDir,
     alias,
-    taskConfig: { mode: 'production' }
+    taskConfig: { mode: 'production' },
   });
 
   expect(fse.pathExistsSync(path.join(cacheDir, 'deps', 'react.js'))).toBeTruthy();

@@ -1,16 +1,16 @@
 import http from 'http';
 import url from 'url';
-import fse from 'fs-extra';
 import path from 'path';
+import fse from 'fs-extra';
 import puppeteer from 'puppeteer';
 
 export interface Page extends puppeteer.Page {
-  html?: () => Promise<string>;
-  $text?: (selector: string, trim?: boolean) => Promise<string|null>;
-  $$text?: (selector: string, trim?: boolean) => Promise<(string|null)[]>;
-  $attr?: (selector: string, attr: string) => Promise<string|null>;
-  $$attr?: (selector: string, attr: string) => Promise<(string|null)[]>;
-  push?: (url: string, options?: puppeteer.WaitForOptions & { referer?: string }) => Promise<puppeteer.HTTPResponse>;
+  html: () => Promise<string>;
+  $text: (selector: string, trim?: boolean) => Promise<string | null>;
+  $$text: (selector: string, trim?: boolean) => Promise<(string | null)[]>;
+  $attr: (selector: string, attr: string) => Promise<string | null>;
+  $$attr: (selector: string, attr: string) => Promise<(string | null)[]>;
+  push: (url: string, options?: puppeteer.WaitForOptions & { referer?: string }) => Promise<puppeteer.HTTPResponse>;
 }
 
 interface BrowserOptions {
@@ -24,20 +24,20 @@ export default class Browser {
   private browser: puppeteer.Browser;
   private baseUrl: string;
 
-  constructor (options: BrowserOptions) {
+  constructor(options: BrowserOptions) {
     const { server } = options;
     if (server) {
       this.server = server;
     } else {
       const { cwd, port } = options;
-      this.server = this.createServer(cwd, port);
+      this.server = this.createServer(cwd!, port!);
     }
   }
 
   createServer(cwd: string, port: number) {
     return http.createServer((req, res) => {
-      const requrl: string = req.url || '';
-      const pathname = `${cwd}${url.parse(requrl).pathname}`.split(path.sep).join('/');
+      const reqUrl: string = req.url || '';
+      const pathname = `${cwd}${url.parse(reqUrl).pathname}`.split(path.sep).join('/');
       if (fse.existsSync(pathname)) {
         switch (path.extname(pathname)) { // set HTTP HEAD
           case '.html':
@@ -74,12 +74,12 @@ export default class Browser {
     }).listen(port, '127.0.0.1');
   }
 
-  async start () {
+  async start() {
     this.browser = await puppeteer.launch();
   }
 
-  async close () {
-    if (!this.browser) { return }
+  async close() {
+    if (!this.browser) { return; }
     await this.browser.close();
     // @ts-ignore
     if (this.server.stop) {
@@ -90,25 +90,27 @@ export default class Browser {
     }
   }
 
-  async page (url: string, disableJS?: boolean) {
-    this.baseUrl = url;
+  async page(baseUrl: string, path = '/', disableJS?: boolean): Promise<Page> {
+    this.baseUrl = baseUrl;
+
     if (!this.browser) { throw new Error('Please call start() before page(url)'); }
-    const page: Page = await this.browser.newPage();
+    const page = (await this.browser.newPage()) as Page;
 
     if (disableJS) {
       page.setJavaScriptEnabled(false);
     }
 
-    await page.goto(url);
+    await page.goto(`${this.baseUrl}${path}`);
+
     page.push = (url, options) => page.goto(`${this.baseUrl}${url}`, options);
     page.html = () =>
       page.evaluate(() => window.document.documentElement.outerHTML);
     page.$text = (selector, trim) => page.$eval(selector, (el, trim) => {
-      return trim ? (el.textContent || '').replace(/^\s+|\s+$/g, '') : el.textContent
+      return trim ? (el.textContent || '').replace(/^\s+|\s+$/g, '') : el.textContent;
     }, trim);
     page.$$text = (selector, trim) =>
       page.$$eval(selector, (els, trim) => els.map((el) => {
-        return trim ? (el.textContent || '').replace(/^\s+|\s+$/g, '') : el.textContent
+        return trim ? (el.textContent || '').replace(/^\s+|\s+$/g, '') : el.textContent;
       }), trim);
 
     page.$attr = (selector, attr) =>
@@ -120,6 +122,7 @@ export default class Browser {
         (els, attr) => els.map(el => el.getAttribute(attr as string)),
         attr,
       );
+
     return page;
   }
 }
