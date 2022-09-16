@@ -8,6 +8,7 @@ export default function Home() {
 
   useEffect(() => {
     request();
+    // eslint-disable-next-line
   }, []);
 
   if (error) {

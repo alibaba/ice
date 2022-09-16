@@ -1,6 +1,6 @@
 const path = require('path');
 
-module.exports = function (config, options) {
+module.exports = function (config) {
   return {
     name: 'docusaurus-redirect-plugin',
     async contentLoaded({ actions }) {

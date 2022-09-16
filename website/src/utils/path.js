@@ -1,10 +1,7 @@
 // Similar with nodejs's path.join, not a full version support.
+const separator = '/';
+
 export function join(...args) {
-  return args.map((part, i) => {
-    if (i === 0) {
-      return part.trim().replace(/[\/]*$/g, '');
-    } else {
-      return part.trim().replace(/(^[\/]*|[\/]*$)/g, '');
-    }
-  }).filter(x => x.length).join('/');
+  const replace = new RegExp(`${separator}{1,}`, 'g');
+  return args.join(separator).replace(replace, separator);
 }

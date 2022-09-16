@@ -4,6 +4,7 @@ import type { Plugin } from '@ice/types';
 import type { Request, Interceptors, InterceptorRequest, InterceptorResponse } from './types';
 
 // @ts-ignore
+// eslint-disable-next-line
 interface PluginRequestOptions {}
 
 const plugin: Plugin<PluginRequestOptions | void> = () => ({
