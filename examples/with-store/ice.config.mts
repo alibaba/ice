@@ -3,6 +3,8 @@ import store from '@ice/plugin-store';
 
 export default defineConfig({
   plugins: [
-    store(),
+    store({
+      resetPageState: true,
+    }),
   ],
 });
