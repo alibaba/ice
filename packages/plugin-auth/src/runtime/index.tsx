@@ -5,9 +5,9 @@ import { AuthProvider, useAuth } from './Auth.js';
 import type { InjectProps } from './Auth.js';
 
 const runtime: RuntimePlugin = async ({ appContext, useConfig, addProvider, addWrapper }) => {
-  const { appExport } = appContext;
+  const { appExport, appData } = appContext;
   const authConfig: AuthConfig = (typeof appExport.auth === 'function'
-    ? (await appExport.auth()) : appExport.auth) || {};
+    ? (await appExport.auth(appData)) : appExport.auth) || {};
   const initialAuth = authConfig.initialAuth || {};
   const AuthProviderWrapper: AppProvider = ({ children }) => {
     const [state, setState] = React.useState<AuthType>(initialAuth);
