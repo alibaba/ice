@@ -1053,6 +1053,17 @@ importers:
       webpack: 5.74.0_3cawqt5e67dzz3yqkvwzyd4tq4
       webpack-dev-server: 4.10.0_webpack@5.74.0
 
+  packages/webpack-modify:
+    specifiers:
+      '@ice/webpack-config': ^1.0.0
+      consola: ^2.15.3
+      webpack: ^5.73.0
+    dependencies:
+      consola: 2.15.3
+    devDependencies:
+      '@ice/webpack-config': link:../webpack-config
+      webpack: 5.74.0
+
   website:
     specifiers:
       '@algolia/client-search': ^4.9.1
