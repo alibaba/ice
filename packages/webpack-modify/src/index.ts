@@ -37,7 +37,7 @@ interface ModifyRuleOptions {
   options: (rule: RuleSetRule) => RuleSetRule;
 }
 
-export function modifyRule(webpackConfig: Configuration, options: ModifyRuleOptions) {
+export function modifyRule(webpackConfig: Configuration, options: ModifyRuleOptions): Configuration {
   const { rule: ruleName, options: modifyOptions } = options;
   const modifiedRules = webpackConfig?.module?.rules?.map((rule) => {
     if (typeof rule === 'object' && rule.test instanceof RegExp && rule.test.source.includes(ruleName)) {
@@ -102,7 +102,7 @@ export function addLoader(webpackConfig: Configuration, options: AddLoaderOption
   return webpackConfig;
 }
 
-export function removePlugin(webpackConfig: Configuration, pluginName: string) {
+export function removePlugin(webpackConfig: Configuration, pluginName: string): Configuration {
   const webpackPlugins = (webpackConfig.plugins || []).filter((plugin) => {
     return !(plugin?.constructor?.name === pluginName);
   });
