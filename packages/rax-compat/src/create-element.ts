@@ -10,7 +10,7 @@ import { createElement as _createElement, useEffect, useCallback, useRef, useSta
 import { cached, convertUnit } from 'style-unit';
 import VisibilityChange from '@ice/appear';
 import { isFunction, isObject, isNumber } from './type';
-import transformPrototype from './prototypes';
+import transformProps from './props';
 
 
 // https://github.com/alibaba/rax/blob/master/packages/driver-dom/src/index.js
@@ -44,15 +44,6 @@ function InputCompat(props: any) {
   useEffect(() => {
     setV(value);
   }, [value]);
-
-  // Compat maxlength in rax-textinput, because maxlength is invalid props in web,it will be set attributes to element
-  // and react will Throw a warning in DEV.
-  // https://github.com/raxjs/rax-components/issues/459
-  // https://github.com/raxjs/rax-components/blob/master/packages/rax-textinput/src/index.tsx#L142
-  if (rest.maxlength) {
-    rest.maxLength = rest.maxlength;
-    delete rest.maxlength;
-  }
 
   // The onChange event is SyntheticEvent in React, but it is dom event in Rax, so it needs compat onChange.
   useEffect(() => {
@@ -103,7 +94,7 @@ export function createElement<P extends {
   delete rest.onAppear;
   delete rest.onDisappear;
 
-  rest = transformPrototype(rest);
+  rest = transformProps(rest);
 
   // Compat for style unit.
   const compatStyleProps = compatStyle(rest.style);
