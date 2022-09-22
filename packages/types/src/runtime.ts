@@ -78,6 +78,7 @@ export interface AppContext {
   matchedIds?: string[];
   appExport?: AppExport;
   basename?: string;
+  downgrade?: boolean;
 }
 
 export type Renderer = (

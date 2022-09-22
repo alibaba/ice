@@ -63,7 +63,9 @@ export function Links(props: React.LinkHTMLAttributes<HTMLLinkElement>) {
 }
 
 export function Scripts(props: React.ScriptHTMLAttributes<HTMLScriptElement>) {
-  const { routesData, routesConfig, matches, assetsManifest, documentOnly, routeModules, basename } = useAppContext();
+  const {
+    routesData, routesConfig, matches, assetsManifest, documentOnly, routeModules, basename, downgrade,
+  } = useAppContext();
   const appData = useAppData();
 
   const routeScripts = getScripts(matches, routesConfig);
@@ -89,6 +91,7 @@ export function Scripts(props: React.ScriptHTMLAttributes<HTMLScriptElement>) {
     routeModules,
     routePath,
     basename,
+    downgrade,
   };
 
   return (
