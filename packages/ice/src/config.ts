@@ -51,6 +51,11 @@ const userConfig = [
     },
   },
   {
+    name: 'dataLoader',
+    validation: 'boolean',
+    defaultValue: true,
+  },
+  {
     name: 'publicPath',
     validation: 'string',
     defaultValue: '/',

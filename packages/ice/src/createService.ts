@@ -162,6 +162,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     rootDir,
     runtimeDir: RUNTIME_TMP_DIR,
     templateDir: path.join(templateDir, '../exports'),
+    dataLoader: userConfig.dataLoader,
   });
 
   // render template before webpack compile

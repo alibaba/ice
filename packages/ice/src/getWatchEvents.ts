@@ -20,7 +20,7 @@ interface Options {
 
 const getWatchEvents = (options: Options): WatchEvent[] => {
   const { generator, targetDir, templateDir, cache, ctx } = options;
-  const { userConfig: { routes: routesConfig }, configFile, rootDir } = ctx;
+  const { userConfig: { routes: routesConfig, dataLoader }, configFile, rootDir } = ctx;
   const watchRoutes: WatchEvent = [
     /src\/pages\/?[\w*-:.$]+$/,
     async (eventName: string) => {
@@ -50,6 +50,7 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
             rootDir,
             runtimeDir: targetDir,
             templateDir: path.join(templateDir, '../exports'),
+            dataLoader,
           });
         }
       }
@@ -101,6 +102,7 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
             rootDir,
             runtimeDir: targetDir,
             templateDir: path.join(templateDir, '../exports'),
+            dataLoader,
           });
         }
       }
