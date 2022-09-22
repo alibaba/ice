@@ -11,7 +11,7 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
   const { uniqueName, umd, library, omitSetLibraryName = false, type } = options as Json;
   const { rootDir, webpack, pkg, userConfig } = context;
   const { vite, mpa } = userConfig;
-
+  const disableRouter = !userConfig.router;
   let appType = type;
 
   if (!type) {
@@ -55,7 +55,12 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
   // copy runtime/Layout.tsx to .ice while it can not been analyzed with alias `$ice/Layout`
   const layoutSource = path.join(__dirname, '../src/runtime/Layout.tsx');
   const layoutPath = path.join(iceTempPath, 'plugins/icestark/pluginRuntime/runtime/Layout.tsx');
+  const fakeRouterSource = path.join(__dirname, '../src/runtime/_Router.tsx');
+  const fakeRouterPath = path.join(iceTempPath, 'plugins/icestark/pluginRuntime/runtime/Router.tsx');
   applyMethod('addRenderFile', layoutSource, layoutPath);
+  if (disableRouter) {
+    applyMethod('addRenderFile', fakeRouterSource, fakeRouterPath);
+  }
 
   onGetWebpackConfig((config) => {
     const entries = config.entryPoints.entries();
@@ -89,6 +94,10 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
 
     // set alias for default layout
     config.resolve.alias.set('$ice/Layout', hasDefaultLayout ? path.join(rootDir, 'src/layouts') : layoutPath);
+    if (disableRouter) {
+      // If router is false, overwrite alias config of $ice/Router.
+      config.resolve.alias.set('$ice/Router', fakeRouterPath);
+    }
     // set alias for icestark
     ['@ice/stark', '@ice/stark-app'].forEach((pkgName) => {
       config.resolve.alias.set(pkgName, require.resolve(pkgName));
