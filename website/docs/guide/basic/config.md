@@ -82,6 +82,13 @@ console.log(process.env.TEST);
 
 对于运行时变量，ICE 更加推荐通过[环境变量](./env.md)的方式注入。
 
+#### dataLoader
+
+是否启用内置的数据预加载能力
+
+- 类型 `boolean`
+- 默认值 `true`
+
 ### publicPath
 
 - 类型：`string`

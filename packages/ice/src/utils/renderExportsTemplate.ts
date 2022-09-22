@@ -14,13 +14,16 @@ function renderExportsTemplate(
     rootDir: string;
     runtimeDir: string;
     templateDir: string;
+    dataLoader?: boolean;
   },
 ) {
+  const { rootDir, runtimeDir, templateDir, dataLoader } = renderOptions;
+
   const renderList: [string, boolean][] = [
-    ['data-loader.ts.ejs', !!renderData.loaders || renderData.hasExportAppData],
+    ['data-loader.ts.ejs', dataLoader && (!!renderData.loaders || renderData.hasExportAppData)],
     ['routes-config.ts.ejs', !!renderData.routesConfig],
   ];
-  const { rootDir, runtimeDir, templateDir } = renderOptions;
+
   renderList.forEach(([filePath, needRender]) => {
     const targetFilePath = path.join(rootDir, runtimeDir, filePath.replace('.ejs', ''));
     if (needRender) {

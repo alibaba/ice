@@ -59,4 +59,5 @@ export interface UserConfig {
   transform?: UnpluginOptions['transform'];
   syntaxFeatures?: SyntaxFeatures;
   splitChunks?: boolean;
+  dataLoader?: boolean;
 }
