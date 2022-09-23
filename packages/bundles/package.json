@@ -61,7 +61,6 @@
     "webpack": "5.74.0",
     "webpack-bundle-analyzer": "4.5.0",
     "webpack-dev-server": "4.10.0",
-    "webpack-sources": "3.2.3",
     "unplugin": "0.9.5",
     "bonjour-service": "^1.0.13",
     "colorette": "^2.0.10",

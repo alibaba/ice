@@ -13,7 +13,8 @@
     "./jsx-dev-runtime": "./esm/jsx-dev-runtime.js",
     "./matchRoutes": "./esm/matchRoutes.js",
     "./router": "./esm/router.js",
-    "./single-router": "./esm/single-router.js"
+    "./single-router": "./esm/single-router.js",
+    "./miniapp": "./esm/miniapp/index.js"
   },
   "files": [
     "esm",
@@ -30,16 +31,20 @@
   },
   "devDependencies": {
     "@ice/types": "^1.0.0",
-    "@types/react": "^18.0.8",
-    "@types/react-dom": "^18.0.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "@types/react": "^18.0.8",
+    "@types/react-dom": "^18.0.3",
     "regenerator-runtime": "^0.13.9"
   },
   "sideEffects": false,
   "dependencies": {
     "@ice/jsx-runtime": "^0.1.0",
+    "@ice/miniapp-runtime": "^1.0.0",
+    "@ice/shared": "^1.0.0",
+    "@ice/types": "^1.0.0",
     "history": "^5.3.0",
+    "miniapp-history": "^0.1.7",
     "react-router-dom": "^6.2.2"
   },
   "peerDependencies": {

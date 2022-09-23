@@ -86,11 +86,21 @@ class Config {
   };
 }
 
+type AppExportConfig = {
+  init: (serverCompiler: ServerCompiler) => void;
+  getAppConfig: (exportNames?: string[]) => Promise<Record<string, any>>;
+};
+
+let appExportConfig: null | AppExportConfig;
+
 export const getAppExportConfig = (rootDir: string) => {
+  if (appExportConfig) {
+    return appExportConfig;
+  }
   const appEntry = path.join(rootDir, 'src/app');
   const getOutfile = (entry: string, keepExports: string[]) =>
     formatPath(path.join(rootDir, 'node_modules', `${keepExports.join('_')}_${path.basename(entry)}.mjs`));
-  const appExportConfig = new Config({
+  const config = new Config({
     entry: appEntry,
     rootDir,
     // Only remove top level code for src/app.
@@ -112,20 +122,32 @@ export const getAppExportConfig = (rootDir: string) => {
   });
 
   const getAppConfig = async (exportNames?: string[]) => {
-    return (await appExportConfig.getConfig(exportNames || ['default', 'defineAppConfig'])) || {};
+    return (await config.getConfig(exportNames || ['default', 'defineAppConfig'])) || {};
   };
 
-  return {
+  appExportConfig = {
     init(serverCompiler: ServerCompiler) {
-      appExportConfig.setCompiler(serverCompiler);
+      config.setCompiler(serverCompiler);
     },
     getAppConfig,
   };
+
+  return appExportConfig;
 };
 
+type RouteExportConfig = {
+  init: (serverCompiler: ServerCompiler) => void;
+  getRoutesConfig: (specifyRoutId?: string) => undefined | Promise<Record<string, any>>;
+  reCompile: (taskKey: string) => void;
+};
+let routeExportConfig: null | RouteExportConfig;
+
 export const getRouteExportConfig = (rootDir: string) => {
+  if (routeExportConfig) {
+    return routeExportConfig;
+  }
   const routeConfigFile = path.join(rootDir, RUNTIME_TMP_DIR, 'routes-config.ts');
-  const routeExportConfig = new Config({
+  const config = new Config({
     entry: routeConfigFile,
     rootDir,
     // Only remove top level code for route component file.
@@ -150,16 +172,17 @@ export const getRouteExportConfig = (rootDir: string) => {
     if (!fs.existsSync(routeConfigFile)) {
       return undefined;
     }
-    const routeConfig = (await routeExportConfig.getConfig(['getConfig']) || {}).default;
+    const routeConfig = (await config.getConfig(['getConfig']) || {}).default;
     return specifyRoutId ? routeConfig[specifyRoutId] : routeConfig;
   };
-  return {
+  routeExportConfig = {
     init(serverCompiler: ServerCompiler) {
-      routeExportConfig.setCompiler(serverCompiler);
+      config.setCompiler(serverCompiler);
     },
     getRoutesConfig,
-    reCompile: routeExportConfig.reCompile,
+    reCompile: config.reCompile,
   };
+  return routeExportConfig;
 };
 
 export default Config;

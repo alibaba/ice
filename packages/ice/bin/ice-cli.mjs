@@ -2,12 +2,13 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fse from 'fs-extra';
-import { program } from 'commander';
+import { program, Option } from 'commander';
 import detectPort from 'detect-port';
 // hijack webpack before import other modules
 import '../esm/requireHook.js';
 import createService from '../esm/createService.js';
 import checkNodeVersion from './checkNodeVersion.mjs';
+import { ALL_PLATFORMS } from '../esm/constant.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -25,6 +26,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .command('build')
     .description('build project')
     .allowUnknownOption()
+    .addOption(new Option('--platform <platform>', 'set platform').default('web').choices(ALL_PLATFORMS))
     .option('--mode <mode>', 'set mode', 'production')
     .option('--analyzer', 'visualize size of output files', false)
     .option('--config <config>', 'use custom config')
@@ -39,6 +41,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .command('start')
     .description('start server')
     .allowUnknownOption()
+    .addOption(new Option('--platform <platform>', 'set platform').default('web').choices(ALL_PLATFORMS))
     .option('--mode <mode>', 'set mode', 'development')
     .option('--config <config>', 'custom config path')
     .option('-h, --host <host>', 'dev server host', '0.0.0.0')

@@ -13,17 +13,18 @@ import { createServerCompiler } from './service/serverCompiler.js';
 import createWatch from './service/watchSource.js';
 import start from './commands/start.js';
 import build from './commands/build.js';
+import webPlugin from './plugins/web/index.js';
+import miniappPlugin from './plugins/miniapp/index.js';
 import test from './commands/test.js';
 import mergeTaskConfig from './utils/mergeTaskConfig.js';
 import getWatchEvents from './getWatchEvents.js';
 import { setEnv, updateRuntimeEnv, getCoreEnvKeys } from './utils/runtimeEnv.js';
 import getRuntimeModules from './utils/getRuntimeModules.js';
 import { generateRoutesInfo } from './routes.js';
-import getWebTask from './tasks/web/index.js';
 import * as config from './config.js';
+import { RUNTIME_TMP_DIR, WEB, MINIAPP_PLATFORMS, ALL_PLATFORMS } from './constant.js';
 import createSpinner from './utils/createSpinner.js';
 import getRoutePaths from './utils/getRoutePaths.js';
-import { RUNTIME_TMP_DIR } from './constant.js';
 import ServerCompileTask from './utils/ServerCompileTask.js';
 import { getAppExportConfig, getRouteExportConfig } from './service/config.js';
 import renderExportsTemplate from './utils/renderExportsTemplate.js';
@@ -67,11 +68,22 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   };
 
   const serverCompileTask = new ServerCompileTask();
+
+  const { platform = WEB } = commandArgs;
+  const isMiniappPlatform = MINIAPP_PLATFORMS.includes(platform);
+  const builtinPlugins = [];
+  if (platform === WEB) {
+    builtinPlugins.push(webPlugin);
+  } else if (isMiniappPlatform) {
+    builtinPlugins.push(miniappPlugin);
+  }
+
   const ctx = new Context<Config, ExtendsPluginAPI>({
     rootDir,
     command,
     commandArgs,
     configFile,
+    plugins: builtinPlugins,
     extendsPluginAPI: {
       generator: generatorAPI,
       watch: {
@@ -83,9 +95,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         webpack,
       },
       serverCompileTask,
+      dataCache,
     },
   });
-
   // resolve userConfig from ice.config.ts before registerConfig
   await ctx.resolveUserConfig();
 
@@ -93,8 +105,12 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const plugins = await ctx.resolvePlugins();
   const runtimeModules = getRuntimeModules(plugins);
 
-  // register web
-  ctx.registerTask('web', getWebTask({ rootDir, command, dataCache }));
+  const { getAppConfig, init: initAppConfigCompiler } = getAppExportConfig(rootDir);
+  const {
+    getRoutesConfig,
+    init: initRouteConfigCompiler,
+    reCompile: reCompileRouteConfig,
+  } = getRouteExportConfig(rootDir);
 
   // register config
   ['userConfig', 'cliOption'].forEach((configType) => {
@@ -111,7 +127,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
     ctx.registerConfig(configType, configData);
   });
-
   let taskConfigs = await ctx.setup();
 
   // get userConfig after setup because of userConfig maybe modified by plugins
@@ -139,16 +154,21 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       'regenerator-runtime': require.resolve('regenerator-runtime'),
     },
   });
-  const webTaskConfig = taskConfigs.find(({ name }) => name === 'web');
+  const platformTaskConfig = taskConfigs.find(({ name }) => ALL_PLATFORMS.includes(name));
 
+  const iceRuntimePath = isMiniappPlatform ? '@ice/runtime/miniapp' : '@ice/runtime';
+  const enableRoutes = platform === WEB;
   // add render data
   generator.setRenderData({
     ...routesInfo,
+    platform,
+    iceRuntimePath,
+    enableRoutes,
     hasExportAppData,
     runtimeModules,
     coreEnvKeys,
-    basename: webTaskConfig.config.basename,
-    memoryRouter: webTaskConfig.config.memoryRouter,
+    basename: platformTaskConfig.config.basename || '/',
+    memoryRouter: platformTaskConfig.config.memoryRouter,
     hydrate: !csr,
   });
   dataCache.set('routes', JSON.stringify(routesInfo));
@@ -169,21 +189,15 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const renderStart = new Date().getTime();
   generator.render();
   consola.debug('template render cost:', new Date().getTime() - renderStart);
-
   // create serverCompiler with task config
   const serverCompiler = createServerCompiler({
     rootDir,
-    task: webTaskConfig,
+    task: platformTaskConfig,
     command,
     server,
     syntaxFeatures,
   });
-  const { getAppConfig, init: initAppConfigCompiler } = getAppExportConfig(rootDir);
-  const {
-    getRoutesConfig,
-    init: initRouteConfigCompiler,
-    reCompile: reCompileRouteConfig,
-  } = getRouteExportConfig(rootDir);
+
   initAppConfigCompiler(serverCompiler);
   initRouteConfigCompiler(serverCompiler);
 
@@ -223,7 +237,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             getRoutesConfig,
             getAppConfig,
             reCompileRouteConfig,
-            dataCache,
             appConfig,
             devPath: (routePaths[0] || '').replace(/^[/\\]/, ''),
             spinner: buildSpinner,
@@ -235,7 +248,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             taskConfigs,
             serverCompiler,
             spinner: buildSpinner,
-            dataCache,
           });
         } else if (command === 'test') {
           return await test(ctx, {
