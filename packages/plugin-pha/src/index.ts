@@ -62,7 +62,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
       };
     });
 
-    onHook('after.build.compile', async ({ serverEntry }) => {
+    onHook('after.build.compile', async ({ serverEntryRef }) => {
       await generateManifest({
         rootDir,
         outputDir,
@@ -72,7 +72,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
         parseOptions: {
           publicPath,
           urlPrefix,
-          serverEntry,
+          serverEntry: serverEntryRef.current,
           template,
         },
       });

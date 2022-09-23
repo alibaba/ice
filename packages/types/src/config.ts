@@ -38,10 +38,14 @@ type Experimental = Configuration['experiments'];
 interface SwcOptions {
   removeExportExprs?: string[];
   compilationConfig?: SWCCompilationConfig;
-  keepPlatform?: 'node' | 'web' | 'weex' | 'miniapp';
+  keepPlatform?: 'node' | 'web' | 'weex' | 'miniapp' | 'wechat-miniprogram' | 'bytedance-microapp' | 'baidu-smartprogram' | 'kuaishou-miniprogram';
   keepExports?: string[];
   getRoutePaths?: Function;
 }
+
+type Output = Configuration['output'];
+type Optimization = Configuration['optimization'];
+type Performance = Configuration['performance'];
 
 interface TransformOptions {
   isServer: boolean;
@@ -69,6 +73,8 @@ export interface Config {
   experimental?: Experimental;
 
   configureWebpack?: ModifyWebpackConfig[];
+
+  output?: Output;
 
   outputDir?: string;
 
@@ -127,6 +133,10 @@ export interface Config {
 
   splitChunks?: boolean;
 
+  optimization?: Optimization;
+
+  performance?: Performance;
+
   assetsManifest?: boolean;
 
   concatenateModules?: boolean;
@@ -146,4 +156,14 @@ export interface Config {
 
     buildOptions?: (options: BuildOptions) => BuildOptions;
   };
+
+  cssFilename?: string;
+
+  cssChunkFilename?: string;
+
+  enableCopyPlugin?: boolean;
+
+  getAppConfig?: (exportNamse?: string[]) => Promise<any>;
+
+  getRoutesConfig?: (specifyRoutId?: string) => Promise<any>;
 }

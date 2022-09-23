@@ -9,3 +9,5 @@ export {
 };
 
 export * from './runtime.js';
+
+export * from './miniapp/index.js';
