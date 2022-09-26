@@ -28,5 +28,5 @@
     }
   },
   "include": ["src", ".ice", "ice.config.*"],
-  "exclude": ["node_modules", "build", "public"]
+  "exclude": ["build", "public"]
 } 
