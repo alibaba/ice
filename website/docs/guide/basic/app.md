@@ -9,7 +9,7 @@ ICE 通过应用配置的方式渲染整个应用，开发者可以根据提供�
 
 框架以 `src/app.ts` 作为应用配置文件：
 
-```tsx
+```ts
 import { defineAppConfig } from 'ice';
 
 export default defineAppConfig({
@@ -32,21 +32,21 @@ export default defineAppConfig({
 根节点 id
 
 - 类型：`string`
-- 默认值 `ice-container`
+- 默认值：`ice-container`
 
 #### `strict`
 
 是否开启 React 的严格模式 (React.StrictMode)
 
-- 类型 `boolean`
-- 默认值 `false`
+- 类型：`boolean`
+- 默认值：`false`
 
 #### `errorBoundary`
 
 是否启用内置的错误边界捕获能力
 
-- 类型 `boolean`
-- 默认值 `false`
+- 类型：`boolean`
+- 默认值：`false`
 
 ### router
 
@@ -54,15 +54,40 @@ export default defineAppConfig({
 
 路由类型
 
-- 类型 `string`，可选值为 `hash` 或 `browser`
-- 默认为 `browser`
+- 类型：`'hash' | 'browser' | 'memory'`
+- 默认值：`browser`
+
+:::tip
+
+当设置路由类型为 `memory` 时，需要对应设置 [`initialEntries`](#initialentries)。
+
+:::
+
+#### `initialEntries`
+
+路由类型设置为 [`MemoryRouter`](https://reactrouter.com/en/main/router-components/memory-router#memoryrouter) 时，需要渲染的路由。
+
+- 类型：`InitialEntry[]`
+- 默认值：`['/']`
+
+```ts
+import { defineAppConfig } from 'ice';
+
+export default defineAppConfig({
+  router: {
+    type: 'memory',
+    // 渲染 home 页面
+    initialEntries: ['/home']
+  }
+});
+```
 
 #### `basename`
 
 路由 basename
 
-- 类型 `string`
-- 默认值 `/`
+- 类型：`string`
+- 默认值：`/`
 
 ## 应用级数据
 
