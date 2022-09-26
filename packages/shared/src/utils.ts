@@ -9,11 +9,11 @@ export function toCamelCase(s: string) {
   let camel = '';
   let nextCap = false;
   for (let i = 0; i < s.length; i++) {
-    if (s[i] !== '-') {
+    if (s[i] === '-') {
+      nextCap = true;
+    } else {
       camel += nextCap ? s[i].toUpperCase() : s[i];
       nextCap = false;
-    } else {
-      nextCap = true;
     }
   }
   return camel;
@@ -48,11 +48,11 @@ export function indent(str: string, size: number): string {
  */
  export function ensure(condition: boolean, msg: string): asserts condition {
   if (!condition) {
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error(msg);
+    } else {
       const reportIssue = '\n如有疑问，请提交 issue 至：https://github.com/ice-lab/ice-next/issues';
       throw new Error(msg + reportIssue);
-    } else {
-      throw new Error(msg);
     }
   }
 }

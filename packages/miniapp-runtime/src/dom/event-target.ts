@@ -25,8 +25,8 @@ export class EventTarget {
     }
 
     if (isOnce) {
-      const wrapper = function () {
-        handler.apply(this, arguments); // this 指向 Element
+      const wrapper = function (...args) {
+        handler.apply(this, args); // this 指向 Element
         this.removeEventListener(type, wrapper);
       };
       this.addEventListener(type, wrapper, {
@@ -43,8 +43,8 @@ export class EventTarget {
     // 这样解决：view -> view(handlerA.stop = false) -> view(handlerB.stop = false)
     // 因此每次绑定事件都新建一个函数，如果带来了性能问题，可以把这段逻辑抽取到 PReact 插件中。
     const oldHandler = handler;
-    handler = function () {
-      oldHandler.apply(this, arguments); // this 指向 Element
+    handler = function (...args) {
+      oldHandler.apply(this, args); // this 指向 Element
     };
 (handler as any).oldHandler = oldHandler;
 
@@ -76,7 +76,10 @@ export class EventTarget {
     }
 
     const index = handlers.findIndex(item => {
-      if (item === handler || (item as any).oldHandler === handler) return true;
+      if (item === handler || (item as any).oldHandler === handler) {
+        return true;
+      }
+      return;
     });
 
     process.env.NODE_ENV !== 'production' && warn(index === -1, `事件: '${type}' 没有注册在 DOM 中，因此不会被移除。`);

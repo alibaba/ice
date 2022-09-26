@@ -17,6 +17,7 @@ export function cloneNode(this: Node, isDeep = false) {
 
   for (const key in this) {
     const value: any = this[key];
+    /* eslint-disable-next-line valid-typeof */
     if ([PROPS, DATASET].includes(key) && typeof value === OBJECT) {
       newNode[key] = { ...value };
     } else if (key === '_value') {
@@ -42,6 +43,7 @@ export function contains(this: Node, node: Node & { id?: string }): boolean {
       isContains = true;
       return true;
     }
+    return;
   });
   return isContains;
 }

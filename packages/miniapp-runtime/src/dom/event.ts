@@ -59,11 +59,13 @@ export class Event {
 
   get target() {
     const { cacheTarget } = this;
-    if (!cacheTarget) {
+    if (cacheTarget) {
+      return cacheTarget;
+    } else {
       const target = Object.create(this.mpEvent?.target || null);
 
       const element = env.document.getElementById(target.id);
-      target.dataset = element !== null ? element.dataset : EMPTY_OBJ;
+      target.dataset = element === null ? EMPTY_OBJ : element.dataset;
 
       for (const key in this.mpEvent?.detail) {
         target[key] = this.mpEvent!.detail[key];
@@ -72,14 +74,14 @@ export class Event {
       this.cacheTarget = target;
 
       return target;
-    } else {
-      return cacheTarget;
     }
   }
 
   get currentTarget() {
     const { cacheCurrentTarget } = this;
-    if (!cacheCurrentTarget) {
+    if (cacheCurrentTarget) {
+      return cacheCurrentTarget;
+    } else {
       const doc = env.document;
 
       const currentTarget = Object.create(this.mpEvent?.currentTarget || null);
@@ -101,8 +103,6 @@ export class Event {
       this.cacheCurrentTarget = currentTarget;
 
       return currentTarget;
-    } else {
-      return cacheCurrentTarget;
     }
   }
 }

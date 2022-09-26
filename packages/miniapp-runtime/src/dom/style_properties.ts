@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /*
  *
  * https://www.w3.org/Style/CSS/all-properties.en.html

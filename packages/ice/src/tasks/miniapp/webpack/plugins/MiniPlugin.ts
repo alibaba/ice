@@ -431,7 +431,14 @@ export default class MiniPlugin {
     // app.json
     this.generateConfigFile(compilation, APP_CONFIG_FILE, this.filesConfig[APP_CONFIG_FILE].content);
 
-    if (!template.isSupportRecursive) {
+    if (template.isSupportRecursive) {
+      this.generateConfigFile(compilation, customWrapperName, {
+        component: true,
+        usingComponents: {
+          [customWrapperName]: `./${customWrapperName}`,
+        },
+      });
+    } else {
       // 如微信、QQ 不支持递归模版的小程序，需要使用自定义组件协助递归
       this.generateTemplateFile(
         compilation,
@@ -450,13 +457,6 @@ export default class MiniPlugin {
         component: true,
         usingComponents: {
           [baseCompName]: `./${baseCompName}`,
-          [customWrapperName]: `./${customWrapperName}`,
-        },
-      });
-    } else {
-      this.generateConfigFile(compilation, customWrapperName, {
-        component: true,
-        usingComponents: {
           [customWrapperName]: `./${customWrapperName}`,
         },
       });

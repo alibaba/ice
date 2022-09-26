@@ -54,7 +54,7 @@ const createIceMiniappHook = (lifecycle: keyof PageLifeCycle | keyof AppInstance
           (inst![lifecycle] as any) = list.filter(item => item !== callback);
         }
       };
-    }, []);
+    }, [id]);
   };
 };
 
@@ -88,6 +88,7 @@ export const useTitleClick = createIceMiniappHook('onTitleClick');
 export const useReady = createIceMiniappHook('onReady');
 export const useRouter: any = (dynamic = false) => {
   const React = reactMeta.R;
+  /* eslint-disable-next-line react-hooks/rules-of-hooks */
   return dynamic ? Current.router : React.useMemo(() => Current.router, []);
 };
 export const useTabItemTap = createIceMiniappHook('onTabItemTap');

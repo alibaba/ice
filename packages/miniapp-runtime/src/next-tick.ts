@@ -11,7 +11,9 @@ export const nextTick = (cb: Func, ctx?: Record<string, any>) => {
     }, 1);
   };
 
-  if (router !== null) {
+  if (router === null) {
+    timerFunc();
+  } else {
     let pageElement: RootElement | null = null;
     const path = router.$icePath;
     pageElement = env.document.getElementById<RootElement>(path);
@@ -20,7 +22,5 @@ export const nextTick = (cb: Func, ctx?: Record<string, any>) => {
     } else {
       timerFunc();
     }
-  } else {
-    timerFunc();
   }
 };

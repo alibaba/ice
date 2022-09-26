@@ -37,6 +37,7 @@ function findCustomWrapper(root: RootElement, dataPathArr: string[]) {
         splitedPath = dataPathArr.slice(i + 2).join('.');
       }
     }
+    return;
   });
 
   if (customWrapper) {
