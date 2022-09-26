@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.1.5
+
+- [fix] do not remove origin css when config `cssChunkNames`.
+
 ## 2.1.4
 
 - [fix] avoid top-level warning of esbuild.
