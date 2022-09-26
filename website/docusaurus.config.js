@@ -1,7 +1,9 @@
-/** @type {import('@docusaurus/types').DocusaurusConfig} */
 const navbar = require('./config/navbar');
 const footer = require('./config/footer');
 
+/**
+ * @type {import('@docusaurus/types').DocusaurusConfig}
+ */
 const config = {
   title: '飞冰 ICE ',
   tagline: ' 基于 React 的应用研发框架',
@@ -20,9 +22,6 @@ const config = {
     },
     navbar,
     footer,
-    prism: {
-      theme: require('prism-react-renderer/themes/oceanicNext'),
-    },
     // algolia: {
     //   apiKey: '01f284e7e1c13eac3dc14beb6d8b153d',
     //   indexName: 'ice',
