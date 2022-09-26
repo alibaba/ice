@@ -15,11 +15,11 @@ function matchRoute(url: string, routes: Array<string>): string | undefined {
   * 3. / => index
   */
   const matchedRoute = routes.find(route => {
-    if (path !== '/') {
-      return `/${route}` === path || `/${route}` === `${path}/index`;
-    } else {
+    if (path === '/') {
       // Index is special
       return route === 'index';
+    } else {
+      return `/${route}` === path || `/${route}` === `${path}/index`;
     }
   });
   return query ? `${matchedRoute}?${query}` : matchedRoute;

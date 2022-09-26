@@ -1,3 +1,4 @@
+/* eslint-disable no-dupe-class-members */
 type Callback1<T1> = (arg1: T1) => any;
 type Callback2<T1, T2> = (arg1: T1, arg2: T2) => any;
 type Callback3<T1, T2, T3> = (arg1: T1, arg2: T2, arg3: T3) => any;
@@ -103,6 +104,7 @@ tail;
       return this;
     }
     events = events.split(Events.eventSplitter);
+  /* eslint-disable prefer-rest-params */
     const rest = [].slice.call(arguments, 1);
     while ((event = events.shift())) {
       if ((node = calls[event])) {

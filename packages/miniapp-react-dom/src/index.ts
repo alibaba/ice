@@ -6,7 +6,7 @@ import type { ReactNode } from 'react';
 import { IceMiniappReconciler } from './reconciler.js';
 import { ContainerMap, createRoot, render } from './render.js';
 
-const unstable_batchedUpdates = IceMiniappReconciler.batchedUpdates;
+const { batchedUpdates } = IceMiniappReconciler;
 
 function unmountComponentAtNode(dom: Element) {
   ensure(dom && [1, 8, 9, 11].includes(dom.nodeType), 'unmountComponentAtNode(...): Target container is not a DOM element.');
@@ -15,7 +15,7 @@ function unmountComponentAtNode(dom: Element) {
 
   if (!root) return false;
 
-  unstable_batchedUpdates(() => {
+  batchedUpdates(() => {
     root.unmount(() => {
       ContainerMap.delete(dom);
     });
@@ -67,13 +67,14 @@ export {
   findDOMNode,
   render,
   unmountComponentAtNode,
-  unstable_batchedUpdates,
+  /* eslint-disable-next-line camelcase */
+  batchedUpdates as unstable_batchedUpdates,
 };
 
 export default {
   render,
   createRoot,
-  unstable_batchedUpdates,
+  unstable_batchedUpdates: batchedUpdates,
   unmountComponentAtNode,
   findDOMNode,
   createPortal,

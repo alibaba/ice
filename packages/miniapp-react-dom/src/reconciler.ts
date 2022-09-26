@@ -130,16 +130,16 @@ const hostConfig: HostConfig<
     }
   },
 
-  queueMicrotask: !isUndefined(Promise)
-  ? callback =>
-      Promise.resolve(null)
-        .then(callback)
-        .catch((error) => {
-          setTimeout(() => {
-            throw error;
-          });
-        })
-  : setTimeout,
+  queueMicrotask: isUndefined(Promise)
+  ? setTimeout
+  : callback =>
+  Promise.resolve(null)
+    .then(callback)
+    .catch((error) => {
+      setTimeout(() => {
+        throw error;
+      });
+    }),
 
   shouldSetTextContent: returnFalse,
   prepareForCommit() { return null; },

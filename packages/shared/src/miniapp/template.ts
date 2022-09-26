@@ -105,6 +105,7 @@ export class BaseTemplate {
       .join('');
   }
 
+  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   protected replacePropName(name: string, value: string, _componentName?: string, _componentAlias?) {
     if (value === 'eh') return name.toLowerCase();
     return name;
@@ -425,13 +426,13 @@ export class BaseTemplate {
     ${!this.isSupportRecursive && this.supportXS ? '<comp i="{{i}}" l="{{l}}" />' : '<comp i="{{i}}" />'}
   </block>`;
     } else {
-      const xs = !this.isSupportRecursive
-        ? `xs.a(${level}, i.${Shortcuts.NodeName}, l)`
-        : `xs.a(${level}, i.${Shortcuts.NodeName})`;
+      const xs = this.isSupportRecursive
+        ? `xs.a(${level}, i.${Shortcuts.NodeName})`
+        : `xs.a(${level}, i.${Shortcuts.NodeName}, l)`;
 
-      const data = !this.isSupportRecursive
-        ? `${this.dataKeymap(`i:i,cid:${level},l:xs.f(l,i.${Shortcuts.NodeName})`)}`
-        : `${this.dataKeymap('i:i')}`;
+      const data = this.isSupportRecursive
+        ? `${this.dataKeymap('i:i')}`
+        : `${this.dataKeymap(`i:i,cid:${level},l:xs.f(l,i.${Shortcuts.NodeName})`)}`;
 
       tmpl = this.supportXS
         ? `<template is="{{${xs}}}" data="{{${data}}}" />`
@@ -451,7 +452,7 @@ export class BaseTemplate {
   protected getEvents(): any {
     return events;
   }
-
+  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   protected getAttrValue(value: string, _key: string, _nodeName: string) {
     return `{${value}}`;
   }
@@ -616,15 +617,15 @@ export class UnRecursiveTemplate extends BaseTemplate {
 
     let template = components.reduce((current, nodeName) => {
       if (level !== 0) {
-        if (!this.nestElements.has(nodeName)) {
-          // 不可嵌套自身的组件只需输出一层模板
-          return current;
-        } else {
+        if (this.nestElements.has(nodeName)) {
           // 部分可嵌套自身的组件实际上不会嵌套过深，这里按阈值限制层数
           const max = this.nestElements.get(nodeName)!;
           if (max > 0 && level >= max) {
             return current;
           }
+        } else {
+          // 不可嵌套自身的组件只需输出一层模板
+          return current;
         }
       }
       const attributes: Attributes = this.miniComponents[nodeName];

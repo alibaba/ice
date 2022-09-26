@@ -210,8 +210,8 @@ export function createPageConfig(
   };
 
   LIFECYCLES.forEach((lifecycle) => {
-    config[lifecycle] = function () {
-      return safeExecute(this.$icePath, lifecycle, ...arguments);
+    config[lifecycle] = function (...args) {
+      return safeExecute(this.$icePath, lifecycle, ...args);
     };
   });
 
