@@ -7,8 +7,7 @@ module.exports = (config, hash, context) => {
   if (hash) {
     // eslint-disable-next-line global-require
     const webpack = require('webpack');
-    const webpack4 = webpack.version.startsWith('4');
-    const defaultHash = webpack4 ? 'hash:6' : 'fullhash:6';
+    const defaultHash = webpack.version.startsWith('4') ? 'hash:6' : 'fullhash:6';
     // can not use [chunkhash] or [contenthash] for chunk in dev mode
     const hashStr = typeof hash === 'boolean' || command === 'start' ? defaultHash : hash;
     const fileName = config.output.get('filename');
