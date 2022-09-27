@@ -1,6 +1,7 @@
-import { isUrlRequest, urlToRequest } from '@ice/bundles/compiled/loader-utils/index.js';
+import loaderUtils from '@ice/bundles/compiled/loader-utils/index.js';
 import sax from 'sax';
 
+const { isUrlRequest, urlToRequest } = loaderUtils;
 export default function miniTemplateLoader(source) {
   this.cacheable && this.cacheable();
   /**

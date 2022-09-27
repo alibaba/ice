@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { getOptions, stringifyRequest } from '@ice/bundles/compiled/loader-utils/index.js';
+import loaderUtils from '@ice/bundles/compiled/loader-utils/index.js';
 import type webpack from 'webpack';
 import normalizePath from './utils/normalizePath.js';
 
@@ -7,7 +7,7 @@ interface PageConfig {
   content: any;
   path: string;
 }
-
+const { getOptions, stringifyRequest } = loaderUtils;
 export default function (this: webpack.LoaderContext<any>) {
   const options = getOptions(this);
   const { config: loaderConfig } = options;
