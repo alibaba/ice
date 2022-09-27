@@ -4,7 +4,8 @@ import * as app from '@/app';
 import runtimeModules from './runtimeModules';
 import Document from '@/document';
 import type { RenderMode } from '@ice/runtime';
-import assetsManifest from './assets-manifest.json';
+// @ts-ignore
+import assetsManifest from 'virtual:assets-manifest.json';
 import routes from './routes';
 
 const getRouterBasename = () => {

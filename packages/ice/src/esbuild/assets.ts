@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as mrmime from 'mrmime';
 import fs from 'fs-extra';
+import type { PluginBuild } from 'esbuild';
 
 export const ASSET_TYPES = [
   // images
@@ -43,10 +44,23 @@ interface AssetsManifest {
   };
 }
 
-const createAssetsPlugin = (manifestPath: string, rootDir: string) => ({
+const createAssetsPlugin = (assetsManifest: AssetsManifest, rootDir: string) => ({
   name: 'esbuild-assets',
-  setup(build) {
-    const assetsManifest: AssetsManifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+  setup(build: PluginBuild) {
+    build.onResolve({ filter: /assets-manifest.json$/ }, (args) => {
+      if (args.path === 'virtual:assets-manifest.json') {
+        return {
+          path: args.path,
+          namespace: 'asset-manifest',
+        };
+      }
+    });
+    build.onLoad({ filter: /.*/, namespace: 'asset-manifest' }, () => {
+      return {
+        contents: JSON.stringify(assetsManifest),
+        loader: 'json',
+      };
+    });
     build.onLoad({ filter: ASSETS_RE }, async (args) => {
       const relativePath = path.relative(rootDir, args.path);
       let content = await fs.promises.readFile(args.path);
