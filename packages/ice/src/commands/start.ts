@@ -1,9 +1,9 @@
 import * as path from 'path';
 import consola from 'consola';
 import WebpackDevServer from '@ice/bundles/compiled/webpack-dev-server/lib/Server.js';
-import type { Configuration } from 'webpack-dev-server';
+import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import type { Context, TaskConfig } from 'build-scripts';
-import type { StatsError, Compiler } from 'webpack';
+import type { StatsError, Compiler, Configuration } from 'webpack';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { Config } from '@ice/types';
 import type { ExtendsPluginAPI, ServerCompiler, GetAppConfig, GetRoutesConfig } from '@ice/types/esm/plugin.js';
@@ -18,7 +18,6 @@ import createRenderMiddleware from '../middlewares/ssr/renderMiddleware.js';
 import createMockMiddleware from '../middlewares/mock/createMiddleware.js';
 import { ROUTER_MANIFEST, RUNTIME_TMP_DIR, WEB } from '../constant.js';
 import getRouterBasename from '../utils/getRouterBasename.js';
-
 import emptyDir from '../utils/emptyDir.js';
 
 const { merge } = lodash;
@@ -45,7 +44,7 @@ const start = async (
     getAppConfig,
     getRoutesConfig,
   } = options;
-  const { applyHook, commandArgs, command, rootDir, userConfig, extendsPluginAPI: { serverCompileTask } } = context;
+  const { commandArgs, rootDir } = context;
   const { platform = WEB } = commandArgs;
   const webpackConfigs = taskConfigs.map(({ config }) => getWebpackConfig({
     config,
@@ -68,52 +67,54 @@ const start = async (
 
   if (useDevServer) {
     return (await startDevServer({
-      rootDir,
+      context,
       webpackConfigs,
       taskConfigs,
-      commandArgs,
-      command,
       spinner,
-      applyHook,
       hooksAPI,
-      userConfig,
-      serverCompileTask,
       appConfig,
       devPath,
     }));
   } else {
     return (await invokeCompilerWatch({
+      context,
       webpackConfigs,
       taskConfigs,
-      commandArgs,
-      command,
       spinner,
-      applyHook,
       hooksAPI,
     }));
   }
 };
 
+interface StartDevServerOptions {
+  context: Context<Config, ExtendsPluginAPI>;
+  webpackConfigs: Configuration | Configuration[];
+  taskConfigs: TaskConfig<Config>[];
+  spinner: ora.Ora;
+  hooksAPI: {
+    serverCompiler: ServerCompiler;
+    getAppConfig: GetAppConfig;
+    getRoutesConfig: GetRoutesConfig;
+  };
+  appConfig: AppConfig;
+  devPath: string;
+}
 async function startDevServer({
-  rootDir,
+  context,
   webpackConfigs,
   taskConfigs,
-  commandArgs,
-  command,
   spinner,
-  applyHook,
   hooksAPI,
-  userConfig,
-  serverCompileTask,
   appConfig,
   devPath,
-}): Promise<{ compiler: Compiler; devServer: WebpackDevServer }> {
+}: StartDevServerOptions): Promise<{ compiler: Compiler; devServer: WebpackDevServer }> {
+  const { commandArgs, userConfig, rootDir, applyHook, extendsPluginAPI: { serverCompileTask } } = context;
   const { port, host, https = false } = commandArgs;
   const { ssg, ssr } = userConfig;
   const { getAppConfig } = hooksAPI;
   const webTaskConfig = taskConfigs.find(({ name }) => name === WEB);
   const customMiddlewares = webpackConfigs[0].devServer?.setupMiddlewares;
-  let devServerConfig: Configuration = {
+  let devServerConfig: DevServerConfiguration = {
     port,
     host,
     https,
@@ -162,12 +163,10 @@ async function startDevServer({
     urlPathname.endsWith('/') ? urlPathname : `${urlPathname}/`,
   );
   const compiler = await webpackCompiler({
+    context,
     webpackConfigs,
     taskConfigs,
     urls,
-    commandArgs,
-    command,
-    applyHook,
     hooksAPI,
     spinner,
     devPath,
@@ -183,21 +182,20 @@ async function startDevServer({
 }
 
 async function invokeCompilerWatch({
+  context,
   webpackConfigs,
   taskConfigs,
-  commandArgs,
-  command,
   spinner,
-  applyHook,
   hooksAPI,
-}): Promise<{ compiler: Compiler }> {
+}: Pick<
+  StartDevServerOptions,
+  'context' | 'webpackConfigs' | 'taskConfigs' | 'spinner' | 'hooksAPI'
+>): Promise<{ compiler: Compiler }> {
   const compiler = await webpackCompiler({
+    context,
     webpackConfigs,
     taskConfigs,
-    commandArgs,
-    command,
     spinner,
-    applyHook,
     hooksAPI,
   });
   let messages: { errors: string[]; warnings: string[] };

@@ -6,6 +6,7 @@ import type { BuildOptions, BuildResult } from 'esbuild';
 import type { NestedRouteManifest } from '@ice/route-manifest';
 import type { Config } from './config.js';
 import type { ExportData, AddRenderFile, AddTemplateFiles } from './generator.js';
+import type { AssetsManifest } from './runtime.js';
 
 type AddExport = (exportData: ExportData) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
@@ -18,6 +19,7 @@ export type ServerCompiler = (
     preBundle?: boolean;
     externalDependencies?: boolean;
     transformEnv?: boolean;
+    assetsManifest?: AssetsManifest;
   }
 ) => Promise<Partial<BuildResult & { serverEntry: string; error: any }>>;
 export type WatchEvent = [

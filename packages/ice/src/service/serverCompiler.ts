@@ -1,6 +1,5 @@
 import * as path from 'path';
 import { createHash } from 'crypto';
-import * as fs from 'fs';
 import consola from 'consola';
 import esbuild from 'esbuild';
 import type { Config, UserConfig } from '@ice/types';
@@ -13,7 +12,7 @@ import cssModulesPlugin from '../esbuild/cssModules.js';
 import aliasPlugin from '../esbuild/alias.js';
 import ignorePlugin from '../esbuild/ignore.js';
 import createAssetsPlugin from '../esbuild/assets.js';
-import { ASSETS_MANIFEST, CACHE_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
+import { CACHE_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
 import emptyCSSPlugin from '../esbuild/emptyCSS.js';
 import transformImportPlugin from '../esbuild/transformImport.js';
 import transformPipePlugin from '../esbuild/transformPipe.js';
@@ -38,7 +37,6 @@ export function createServerCompiler(options: Options) {
 
   const alias = task.config?.alias || {};
   const externals = task.config?.externals || {};
-  const assetsManifest = path.join(rootDir, ASSETS_MANIFEST);
   const define = task.config?.define || {};
   const sourceMap = task.config?.sourceMap;
   const dev = command === 'start';
@@ -54,6 +52,7 @@ export function createServerCompiler(options: Options) {
     swc,
     externalDependencies,
     transformEnv = true,
+    assetsManifest,
   } = {}) => {
     let depsMetadata: DepsMetaData;
     let swcOptions = merge({}, {
@@ -142,7 +141,7 @@ export function createServerCompiler(options: Options) {
             return escapeLocalIdent(`${name}--${localIdentHash}`);
           },
         }),
-        fs.existsSync(assetsManifest) && createAssetsPlugin(assetsManifest, rootDir),
+        assetsManifest && createAssetsPlugin(assetsManifest, rootDir),
         transformPipePlugin({
           plugins: [
             ...transformPlugins,

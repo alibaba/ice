@@ -3,7 +3,7 @@ import { getWebpackConfig } from '@ice/webpack-config';
 import type { Context, TaskConfig } from 'build-scripts';
 import type { StatsError, Stats } from 'webpack';
 import type { Config } from '@ice/types';
-import type { ServerCompiler, GetAppConfig, GetRoutesConfig } from '@ice/types/esm/plugin.js';
+import type { ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI } from '@ice/types/esm/plugin.js';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type ora from '@ice/bundles/compiled/ora/index.js';
 import webpackCompiler from '../service/webpackCompiler.js';
@@ -12,7 +12,7 @@ import { RUNTIME_TMP_DIR } from '../constant.js';
 import emptyDir from '../utils/emptyDir.js';
 
 const build = async (
-  context: Context<Config>,
+  context: Context<Config, ExtendsPluginAPI>,
   options: {
     taskConfigs: TaskConfig<Config>[];
     serverCompiler: ServerCompiler;
@@ -22,7 +22,7 @@ const build = async (
   },
 ) => {
   const { taskConfigs, serverCompiler, spinner, getAppConfig, getRoutesConfig } = options;
-  const { applyHook, commandArgs, command, rootDir } = context;
+  const { applyHook, rootDir } = context;
   const webpackConfigs = taskConfigs.map(({ config }) => getWebpackConfig({
     config,
     rootDir,
@@ -39,12 +39,10 @@ const build = async (
     getRoutesConfig,
   };
   const compiler = await webpackCompiler({
+    context,
     webpackConfigs,
     taskConfigs,
-    commandArgs,
-    command,
     spinner,
-    applyHook,
     hooksAPI,
   });
 

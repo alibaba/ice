@@ -1,5 +1,6 @@
-import { mkdirSync, writeFileSync, existsSync } from 'fs';
-import { dirname, resolve } from 'path';
+import { existsSync } from 'fs';
+import { resolve } from 'path';
+import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type { Compiler, Compilation } from 'webpack';
 
 const pluginName = 'AssetsManifestPlugin';
@@ -62,9 +63,6 @@ export default class AssetsManifestPlugin {
       pages,
       assets,
     };
-
-    const manifestFileName = resolve(this.outputDir, this.fileName);
-
     // FIXME: append data-loader to the entry by hard code
     // data-loader is built by another webpack task
     const dataLoader = resolve(this.outputDir, './data-loader.ts');
@@ -73,10 +71,7 @@ export default class AssetsManifestPlugin {
     }
 
     const output = JSON.stringify(manifest, null, 2);
-
-    mkdirSync(dirname(manifestFileName), { recursive: true });
-    writeFileSync(manifestFileName, output);
-    return;
+    compilation.emitAsset(this.fileName, new webpack.sources.RawSource(output));
   }
 
   public apply(compiler: Compiler) {

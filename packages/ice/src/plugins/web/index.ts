@@ -1,118 +1,67 @@
 import * as path from 'path';
 import consola from 'consola';
 import chalk from 'chalk';
-
-import ServerCompilerPlugin from '../../webpack/ServerCompilerPlugin.js';
 import ReCompilePlugin from '../../webpack/ReCompilePlugin.js';
 import DataLoaderPlugin from '../../webpack/DataLoaderPlugin.js';
-
 import { getRouteExportConfig } from '../../service/config.js';
-
 import { WEB, SERVER_OUTPUT_DIR } from '../../constant.js';
 import getWebTask from '../../tasks/web/index.js';
-import getServerEntry from '../../utils/getServerEntry.js';
-import { getRoutePathsFromCache } from '../../utils/getRoutePaths.js';
 import generateHTML from '../../utils/generateHTML.js';
 import openBrowser from '../../utils/openBrowser.js';
+import getServerCompilerPlugin from '../../utils/getServerCompilerPlugin.js';
 
 const plugin = ({ registerTask, onHook, context }) => {
   const { rootDir, commandArgs, command, userConfig, extendsPluginAPI: { serverCompileTask, dataCache } } = context;
-  const { ssg, ssr, server: { format } } = userConfig;
-  const esm = format === 'esm';
-  const outJSExtension = esm ? '.mjs' : '.cjs';
+  const { ssg, server: { format } } = userConfig;
 
   registerTask(WEB, getWebTask({ rootDir, command, dataCache }));
-
-  onHook('before.start.run', async ({ webpackConfigs, taskConfigs, serverCompiler }) => {
+  let serverOutfile: string;
+  onHook(`before.${command}.run`, async ({ webpackConfigs, taskConfigs, serverCompiler }) => {
     // Compile server entry after the webpack compilation.
-    const entryPoint = getServerEntry(rootDir, taskConfigs[0].config?.server?.entry);
-    const outputDir = webpackConfigs[0].output.path;
     const { reCompile: reCompileRouteConfig } = getRouteExportConfig(rootDir);
+    const outputDir = webpackConfigs[0].output.path;
+    serverOutfile = path.join(outputDir, SERVER_OUTPUT_DIR, `index${format === 'esm' ? '.mjs' : '.cjs'}`);
     webpackConfigs[0].plugins.push(
-      new ServerCompilerPlugin(
-        serverCompiler,
-        [
-          {
-            entryPoints: { index: entryPoint },
-            outdir: path.join(outputDir, SERVER_OUTPUT_DIR),
-            splitting: esm,
-            format,
-            platform: esm ? 'browser' : 'node',
-            outExtension: { '.js': outJSExtension },
-          },
-          {
-            preBundle: format === 'esm' && (ssr || ssg),
-            swc: {
-              keepExports: (!ssg && !ssr) ? ['getConfig'] : null,
-              keepPlatform: 'node',
-              getRoutePaths: () => {
-                return getRoutePathsFromCache(dataCache);
-              },
-            },
-          },
-        ],
-        serverCompileTask,
-      ),
-      new ReCompilePlugin(reCompileRouteConfig, (files) => {
-        // Only when routes file changed.
-        const routeManifest = JSON.parse(dataCache.get('routes'))?.routeManifest || {};
-        const routeFiles = Object.keys(routeManifest).map((key) => {
-          const { file } = routeManifest[key];
-          return `src/pages/${file}`;
-        });
-        return files.some((filePath) => routeFiles.some(routeFile => filePath.includes(routeFile)));
-      }),
       // Add webpack plugin of data-loader in web task
       new DataLoaderPlugin({ serverCompiler, rootDir, dataCache }),
+      // Add ServerCompilerPlugin
+      getServerCompilerPlugin(serverCompiler, {
+        rootDir,
+        serverEntry: taskConfigs[0].config?.server?.entry,
+        outputDir: webpackConfigs[0].output.path,
+        dataCache,
+        serverCompileTask: command === 'start' ? serverCompileTask : null,
+        userConfig,
+      }),
     );
-  });
 
-  onHook('before.build.run', async ({ webpackConfigs, serverCompiler }) => {
-    webpackConfigs[0].plugins.push(new DataLoaderPlugin({ serverCompiler, rootDir, dataCache }));
-  });
-
-  onHook('after.build.compile', async ({ serverCompiler, taskConfigs, webpackConfigs, serverEntryRef }) => {
-    const entryPoint = getServerEntry(rootDir, taskConfigs[0].config?.server?.entry);
-    const outputDir = webpackConfigs[0].output.path;
-    const serverOutputDir = path.join(outputDir, SERVER_OUTPUT_DIR);
-    // compile server bundle
-    const serverCompilerResult = await serverCompiler(
-      {
-        entryPoints: { index: entryPoint },
-        outdir: serverOutputDir,
-        splitting: esm,
-        format,
-        platform: esm ? 'browser' : 'node',
-        outExtension: { '.js': outJSExtension },
-      },
-      {
-        preBundle: format === 'esm' && (ssr || ssg),
-        swc: {
-          keepExports: (!ssg && !ssr) ? ['getConfig'] : null,
-          keepPlatform: 'node',
-          getRoutePaths: () => {
-            return getRoutePathsFromCache(dataCache);
-          },
-        },
-      },
-    );
-    if (serverCompilerResult.error) {
-      consola.error('Build failed.');
-      return;
+    if (command === 'start') {
+      webpackConfigs[0].plugins.push(
+        new ReCompilePlugin(reCompileRouteConfig, (files) => {
+          // Only when routes file changed.
+          const routeManifest = JSON.parse(dataCache.get('routes'))?.routeManifest || {};
+          const routeFiles = Object.keys(routeManifest).map((key) => {
+            const { file } = routeManifest[key];
+            return `src/pages/${file}`;
+          });
+          return files.some((filePath) => routeFiles.some(routeFile => filePath.includes(routeFile)));
+        }),
+      );
     }
+  });
 
-    serverEntryRef.current = serverCompilerResult.serverEntry;
-
+  onHook('after.build.compile', async ({ webpackConfigs, serverEntryRef }) => {
+    const outputDir = webpackConfigs[0].output.path;
     let renderMode;
     if (ssg) {
       renderMode = 'SSG';
     }
-
+    serverEntryRef.current = serverOutfile;
     // generate html
     await generateHTML({
       rootDir,
       outputDir,
-      entry: serverEntryRef.current,
+      entry: serverOutfile,
       // only ssg need to generate the whole page html when build time.
       documentOnly: !ssg,
       renderMode,
