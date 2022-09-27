@@ -6,7 +6,7 @@ import type { RecursiveTemplate, UnRecursiveTemplate } from '@ice/shared';
 import type { Config, MiniappAppConfig, MiniappConfig } from '@ice/types';
 import fs from 'fs-extra';
 import { minify } from 'html-minifier';
-import { urlToRequest } from 'loader-utils';
+import loaderUtils from '@ice/bundles/compiled/loader-utils/index.js';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import EntryDependency from 'webpack/lib/dependencies/EntryDependency.js';
 
@@ -19,7 +19,7 @@ import LoadChunksPlugin from './LoadChunksPlugin.js';
 import NormalModulesPlugin from './NormalModulesPlugin.js';
 
 const { ConcatSource, RawSource } = webpack.sources;
-
+const { urlToRequest } = loaderUtils;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
 const PLUGIN_NAME = 'MiniPlugin';
