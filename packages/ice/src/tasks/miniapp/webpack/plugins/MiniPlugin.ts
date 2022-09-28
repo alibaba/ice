@@ -8,7 +8,7 @@ import fs from 'fs-extra';
 import { minify } from 'html-minifier';
 import loaderUtils from '@ice/bundles/compiled/loader-utils/index.js';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
-import EntryDependency from 'webpack/lib/dependencies/EntryDependency.js';
+import EntryDependency from '@ice/bundles/compiled/webpack/EntryDependency.js';
 
 import SingleEntryDependency from '../dependencies/SingleEntryDependency.js';
 import { componentConfig } from '../template/component.js';

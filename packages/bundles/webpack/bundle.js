@@ -12,6 +12,7 @@ module.exports = {
   FetchCompileWasmPlugin: require('webpack/lib/web/FetchCompileWasmPlugin'),
   StringXor: require('webpack/lib/util/StringXor'),
   NormalModule: require('webpack/lib/NormalModule'),
+  EntryDependency: require('webpack/lib/dependencies/EntryDependency'),
   sources: require('webpack').sources,
   webpack: require('webpack'),
   package: {
