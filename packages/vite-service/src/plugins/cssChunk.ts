@@ -66,7 +66,7 @@ export const cssChunk = (chunkName: ChunkName): Plugin => {
               const cssName = parseCssName(cssChunkName, cssIndex);
               const renamedCss = formatPath(path.join(cssDir, cssName));
               if (cssLink !== renamedCss) {
-                fse.moveSync(sourceCss, path.join(outputDir, cssDir, cssName));
+                fse.writeFileSync(path.join(outputDir, cssDir, cssName), fse.readFileSync(sourceCss, 'utf-8'));
                 // replace css link
                 htmlContent = htmlContent.replace(/<link[\s\S]*href=["']([^'"]*)["'][^>]*>/g, (str, matched) => {
                   return matched === `${base}${cssLink}` ? str.replace(matched, `${base}${renamedCss}`) : str;

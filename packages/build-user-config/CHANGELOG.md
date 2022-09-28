@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.2.5
+
+- [fix] compatible with webpack4 hash type
 
 ## 2.2.4
 
