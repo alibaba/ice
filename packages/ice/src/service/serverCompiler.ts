@@ -82,6 +82,7 @@ export function createServerCompiler(options: Options) {
         ] : [],
       });
     }
+
     // get runtime variable for server build
     const runtimeDefineVars = {};
     Object.keys(process.env).forEach((key) => {

@@ -32,7 +32,6 @@ const start = async (
     spinner: ora.Ora;
     getAppConfig: GetAppConfig;
     getRoutesConfig: GetRoutesConfig;
-    reCompileRouteConfig: (compileKey: string) => void;
   },
 ) => {
   const {
