@@ -96,18 +96,18 @@ describe(`start ${example}`, () => {
     expect(JSON.parse(routeManifest)[0].children.length).toBe(4);
   }, 120000);
 
-  test('update watched file: global.css', async () => {
+  test('update watched file: global.css', () => {
     const targetPath = path.join(rootDir, 'src/global.css');
     const cssContent = fs.readFileSync(targetPath, 'utf-8');
+    // Trigger modification of global style
     fs.writeFileSync(targetPath, cssContent);
-    await page.reload();
   });
 
-  test('update watched file: app.ts', async () => {
+  test('update watched file: app.ts', () => {
     const targetPath = path.join(rootDir, 'src/app.tsx');
     const appContent = fs.readFileSync(targetPath, 'utf-8');
+    // Trigger modification of app entry
     fs.writeFileSync(targetPath, appContent);
-    await page.reload();
   });
 
   test('should update config during client routing', async () => {

@@ -22,9 +22,7 @@ const igonrePlugin = (ignores: IgnorePattern[] = []): Plugin => {
                 namespace: 'ignore',
               };
             } else {
-              return {
-                path: args.path,
-              };
+              return;
             }
           }
 
