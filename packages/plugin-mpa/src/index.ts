@@ -28,7 +28,7 @@ const plugin: IPlugin = (api) => {
   // support --mpa-entry to specify mpa entry
   registerCliOption({
     name: 'mpa-entry',
-    commands: ['start'],
+    commands: ['start', 'build'],
   });
 
   if (mpa) {
