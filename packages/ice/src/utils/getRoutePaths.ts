@@ -1,5 +1,5 @@
 import * as path from 'path';
-import type { RouteObject } from 'react-router';
+import type { NestedRouteManifest } from '@ice/route-manifest';
 import formatPath from './formatPath.js';
 
 /**
@@ -7,7 +7,7 @@ import formatPath from './formatPath.js';
  * @param routes
  * @returns
  */
-function getRoutePaths(routes: RouteObject[], parentPath = ''): string[] {
+function getRoutePaths(routes: NestedRouteManifest[], parentPath = ''): string[] {
   let pathList = [];
 
   routes.forEach(route => {
