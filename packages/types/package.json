@@ -31,7 +31,7 @@
   "homepage": "https://next.ice.work",
   "devDependencies": {
     "@ice/route-manifest": "^1.0.0",
-    "@swc/core": "1.2.210",
+    "@swc/core": "1.3.3",
     "build-scripts": "^2.0.0-24",
     "esbuild": "^0.14.51",
     "eslint": "^8.14.0",
