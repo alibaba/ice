@@ -81,6 +81,11 @@ export interface AppContext {
   downgrade?: boolean;
 }
 
+export type WindowContext = Pick<
+  AppContext,
+  'appData' | 'routesData' | 'routesConfig' | 'assetsManifest' | 'routePath' | 'downgrade'
+>;
+
 export type Renderer = (
   container: Element | Document,
   initialChildren: React.ReactNode,

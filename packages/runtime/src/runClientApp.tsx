@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom/client';
 import { createHashHistory, createBrowserHistory, createMemoryHistory } from 'history';
 import type { HashHistory, BrowserHistory, Action, Location, InitialEntry, MemoryHistory } from 'history';
 import type {
-  AppContext, AppExport, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
+  AppContext, WindowContext, AppExport, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
   RouteWrapperConfig, RuntimeModules, RouteMatch, RouteModules, AppConfig,
 } from '@ice/types';
 import { createHistory as createHistorySingle } from './single-router.js';
@@ -38,7 +38,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     hydrate,
     memoryRouter,
   } = options;
-  const appContextFromServer: AppContext = (window as any).__ICE_APP_CONTEXT__ || {};
+  const windowContext: WindowContext = (window as any).__ICE_APP_CONTEXT__ || {};
   let {
     appData,
     routesData,
@@ -46,7 +46,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     assetsManifest,
     routePath,
     downgrade,
-  } = appContextFromServer;
+  } = windowContext;
 
   const requestContext = getRequestContext(window.location);
 
