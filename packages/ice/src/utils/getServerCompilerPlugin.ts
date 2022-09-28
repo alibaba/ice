@@ -13,9 +13,10 @@ interface Options {
   serverEntry: string;
   dataCache: Map<string, string>;
   serverCompileTask: ExtendsPluginAPI['serverCompileTask'];
+  ensureRoutesConfig: () => Promise<void>;
 }
 function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Options) {
-  const { outputDir, rootDir, serverEntry, userConfig, dataCache, serverCompileTask } = options;
+  const { outputDir, rootDir, serverEntry, userConfig, dataCache, serverCompileTask, ensureRoutesConfig } = options;
   const entryPoint = getServerEntry(rootDir, serverEntry);
   const { ssg, ssr, server: { format } } = userConfig;
   const isEsm = userConfig?.server?.format === 'esm';
@@ -41,6 +42,7 @@ function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Option
         },
       },
     ],
+    ensureRoutesConfig,
     serverCompileTask,
   );
 }

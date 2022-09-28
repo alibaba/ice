@@ -18,7 +18,7 @@ const plugin = ({ registerTask, onHook, context }) => {
   let serverOutfile: string;
   onHook(`before.${command}.run`, async ({ webpackConfigs, taskConfigs, serverCompiler }) => {
     // Compile server entry after the webpack compilation.
-    const { reCompile: reCompileRouteConfig } = getRouteExportConfig(rootDir);
+    const { reCompile: reCompileRouteConfig, ensureRoutesConfig } = getRouteExportConfig(rootDir);
     const outputDir = webpackConfigs[0].output.path;
     serverOutfile = path.join(outputDir, SERVER_OUTPUT_DIR, `index${format === 'esm' ? '.mjs' : '.cjs'}`);
     webpackConfigs[0].plugins.push(
@@ -32,6 +32,7 @@ const plugin = ({ registerTask, onHook, context }) => {
         dataCache,
         serverCompileTask: command === 'start' ? serverCompileTask : null,
         userConfig,
+        ensureRoutesConfig,
       }),
     );
 

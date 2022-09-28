@@ -54,6 +54,11 @@ class Config {
     };
   }
 
+  public clearTasks = () => {
+    this.status = 'PENDING';
+    this.compileTasks = {};
+  };
+
   public reCompile = (taskKey: string) => {
     // Re-compile only triggered when `getConfig` has been called.
     if (this.compileTasks[taskKey]) {
@@ -61,7 +66,7 @@ class Config {
     }
   };
 
-  public getConfig = async (keepExports: string[]) => {
+  public getConfigFile = async (keepExports: string[]) => {
     const taskKey = keepExports.join('_');
     this.lastOptions = keepExports;
     let targetFile = '';
@@ -76,12 +81,20 @@ class Config {
         this.reCompile(taskKey);
       }
     }
+
     if (!this.compileTasks[taskKey]) {
       this.compileTasks[taskKey] = this.compiler(keepExports);
     }
+
     if (!targetFile) {
       targetFile = await this.compileTasks[taskKey];
     }
+
+    return targetFile;
+  };
+
+  public getConfig = async (keepExports: string[]) => {
+    const targetFile = await this.getConfigFile(keepExports);
     if (targetFile) return await dynamicImport(targetFile, true);
   };
 }
@@ -139,17 +152,24 @@ type RouteExportConfig = {
   init: (serverCompiler: ServerCompiler) => void;
   getRoutesConfig: (specifyRoutId?: string) => undefined | Promise<Record<string, any>>;
   reCompile: (taskKey: string) => void;
+  ensureRoutesConfig: () => Promise<void>;
 };
+
+// FIXME: when run multiple test cases, this config will not be reset.
 let routeExportConfig: null | RouteExportConfig;
 
 export const getRouteExportConfig = (rootDir: string) => {
   if (routeExportConfig) {
     return routeExportConfig;
   }
+
   const routeConfigFile = path.join(rootDir, RUNTIME_TMP_DIR, 'routes-config.ts');
+  const getOutfile = () => formatPath(path.join(rootDir, RUNTIME_TMP_DIR, 'routes-config.bundle.mjs'));
+
   const config = new Config({
     entry: routeConfigFile,
     rootDir,
+    getOutfile,
     // Only remove top level code for route component file.
     transformInclude: (id) => id.includes('src/pages'),
     needRecompile: async (entry) => {
@@ -167,6 +187,7 @@ export const getRouteExportConfig = (rootDir: string) => {
       }
     },
   });
+
   const getRoutesConfig = async (specifyRoutId?: string) => {
     // Routes config file may be removed after file changed.
     if (!fs.existsSync(routeConfigFile)) {
@@ -175,11 +196,19 @@ export const getRouteExportConfig = (rootDir: string) => {
     const routeConfig = (await config.getConfig(['getConfig']) || {}).default;
     return specifyRoutId ? routeConfig[specifyRoutId] : routeConfig;
   };
+
+  // ensure routes config is up to date.
+  const ensureRoutesConfig = async () => {
+    await config.getConfigFile(['getConfig']);
+  };
+
   routeExportConfig = {
     init(serverCompiler: ServerCompiler) {
+      config.clearTasks();
       config.setCompiler(serverCompiler);
     },
     getRoutesConfig,
+    ensureRoutesConfig,
     reCompile: config.reCompile,
   };
   return routeExportConfig;
