@@ -1,5 +1,5 @@
 import * as React from 'react';
-import KeepAlive, { AliveScope } from 'react-activation';
+import { AliveScope, KeepAlive } from 'react-activation';
 
 const runtimeModule = ({ wrapperPageComponent, wrapperRouteComponent, modifyRoutesComponent }) => {
   const wrapperKeepAlive = (PageComponent) => {
