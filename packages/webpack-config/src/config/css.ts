@@ -108,7 +108,7 @@ const css: ModifyWebpackConfig = (config, ctx) => {
   config.plugins.push(
     new MiniCssExtractPlugin({
       filename: cssFilename || `${cssOutputFolder}/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`,
-      chunkFilename: cssChunkFilename || '[name].css',
+      chunkFilename: cssChunkFilename || `${cssOutputFolder}/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`,
       // If the warning is triggered, it seen to be unactionable for the user,
       ignoreOrder: true,
     }),
