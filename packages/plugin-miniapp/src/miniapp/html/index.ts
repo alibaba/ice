@@ -1,11 +1,10 @@
-
-interface IComponentConfig {
+interface ComponentConfig {
   includes: Set<string>;
 }
 
 interface OnParseCreateElementArgs {
   nodeName: string;
-  componentConfig: IComponentConfig;
+  componentConfig: ComponentConfig;
 }
 
 const inlineElements = ['i', 'abbr', 'select', 'acronym', 'small', 'bdi', 'kbd', 'strong', 'big', 'sub', 'sup', 'br', 'mark', 'meter', 'template', 'cite', 'object', 'time', 'code', 'output', 'u', 'data', 'picture', 'tt', 'datalist', 'var', 'dfn', 'del', 'q', 'em', 's', 'embed', 'samp', 'b'];

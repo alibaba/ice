@@ -14,6 +14,7 @@
   "dependencies": {
     "@ice/app": "workspace:*",
     "@ice/runtime": "workspace:*",
+    "@ice/plugin-miniapp": "workspace:*",
     "ahooks": "^3.3.8",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"

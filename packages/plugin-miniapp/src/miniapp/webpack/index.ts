@@ -1,4 +1,4 @@
-import type { MiniappWebpackOptions, MiniappWebpackConfig } from '../types.js';
+import type { MiniappWebpackOptions, MiniappWebpackConfig } from '../../types.js';
 import { MiniWebpackModule } from './module.js';
 import { MiniWebpackPlugin } from './plugin.js';
 

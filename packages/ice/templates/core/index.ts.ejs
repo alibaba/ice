@@ -1,50 +1,6 @@
 <% if (globalStyle) {-%>
-  import '<%= globalStyle %>'
+import '<%= globalStyle %>'
 <% } -%>
-
-<% if (platform === 'web') { -%>
-  import {
-    Link,
-    Outlet,
-    useParams,
-    useSearchParams,
-    useLocation,
-    useNavigate,
-  } from '@ice/runtime/router';
-
-  export {
-    Link,
-    Outlet,
-    useParams,
-    useSearchParams,
-    useLocation,
-  };
-  
-  export {
-    defineAppConfig,
-    useAppData,
-    useData,
-    useConfig,
-    Meta,
-    Title,
-    Links,
-    Scripts,
-    Data,
-    Main,
-    history,
-  } from '@ice/runtime';
-<% } else { -%>
-  export { 
-    defineAppConfig, 
-    useAppData, 
-    useData, 
-    useConfig, 
-    Link, 
-    useSearchParams, 
-    history,
-  } from '@ice/runtime/miniapp';
-<% } -%>
-
 
 <%- framework.imports %>
 

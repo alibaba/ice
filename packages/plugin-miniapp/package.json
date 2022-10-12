@@ -1,0 +1,39 @@
+{
+  "name": "@ice/plugin-miniapp",
+  "version": "1.0.0",
+  "description": "ICE plugin for miniapp",
+  "license": "MIT",
+  "type": "module",
+  "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
+  "files": [
+    "esm",
+    "!esm/**/*.map",
+    "template"
+  ],
+  "scripts": {
+    "watch": "tsc -w",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "acorn-walk": "^8.2.0",
+    "consola": "^2.15.3",
+    "chalk": "^4.0.0",
+    "@ice/shared": "^1.0.0",
+    "fast-glob": "^3.2.11",
+    "sax": "^1.2.4",
+    "html-minifier": "^4.0.0",
+    "@ice/miniapp-runtime": "^1.0.0",
+    "@ice/miniapp-react-dom": "^1.0.0",
+    "@ice/miniapp-loader": "^1.0.0",
+    "@ice/bundles": "^0.1.0"
+  },
+  "devDependencies": {
+    "@ice/types": "^1.0.0",
+    "webpack": "^5.73.0"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-miniapp"
+  }
+}

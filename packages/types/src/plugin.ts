@@ -5,7 +5,7 @@ import type WebpackDevServer from 'webpack-dev-server';
 import type { BuildOptions, BuildResult } from 'esbuild';
 import type { NestedRouteManifest } from '@ice/route-manifest';
 import type { Config } from './config.js';
-import type { ExportData, AddRenderFile, AddTemplateFiles } from './generator.js';
+import type { ExportData, AddRenderFile, AddTemplateFiles, ModifyRenderData } from './generator.js';
 import type { AssetsManifest } from './runtime.js';
 
 type AddExport = (exportData: ExportData) => void;
@@ -91,6 +91,7 @@ export interface ExtendsPluginAPI {
     addExportTypes: AddExport;
     addRenderFile: AddRenderFile;
     addRenderTemplate: AddTemplateFiles;
+    modifyRenderData: ModifyRenderData;
   };
   watch: {
     addEvent?: (watchEvent: WatchEvent) => void;

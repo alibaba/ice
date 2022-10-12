@@ -37,8 +37,10 @@ export interface MiniappWebpackOptions {
   env?: Record<string, string>;
   template: PlatformConfig['template'];
   fileType: PlatformConfig['fileType'];
-  getAppConfig: Config['getAppConfig'];
-  getRoutesConfig: Config['getRoutesConfig'];
+  configAPI: {
+    getAppConfig: Config['getAppConfig'];
+    getRoutesConfig: Config['getRoutesConfig'];
+  };
 }
 
 export type MiniappWebpackConfig = Pick<Configuration, 'plugins' | 'module'>;

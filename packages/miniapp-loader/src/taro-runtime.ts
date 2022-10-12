@@ -1,4 +1,4 @@
-import loadderUtils from '@ice/bundles/compiled/loader-utils/index.js';
+import * as loadderUtils from '@ice/bundles/compiled/loader-utils/index.js';
 import type webpack from 'webpack';
 
 const { getOptions } = loadderUtils;

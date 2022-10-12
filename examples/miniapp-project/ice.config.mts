@@ -1,4 +1,5 @@
 import { defineConfig } from '@ice/app';
+import pluginMiniapp from '@ice/plugin-miniapp';
 
 export default defineConfig({
   alias: {
@@ -7,5 +8,6 @@ export default defineConfig({
   // TODO:
   // proxy: {}
   sourceMap: false,
+  plugins: [pluginMiniapp()],
   // eslint: false,
 });
