@@ -24,11 +24,6 @@ export default defineConfig({
   dropLogLevel: 'warn',
   plugins: [
     auth(),
-    {
-      name: 'runtime-donot-exsist',
-      setup() {},
-      runtime: './test',
-    },
     custom,
   ],
   eslint: true,

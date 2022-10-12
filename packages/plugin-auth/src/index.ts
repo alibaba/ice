@@ -1,9 +1,9 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
 import type { Plugin } from '@ice/types';
 
+const PLUGIN_NAME = '@ice/plugin-auth';
+
 const plugin: Plugin = () => ({
-  name: '@ice/plugin-auth',
+  name: PLUGIN_NAME,
   setup: ({ generator }) => {
   // Register API: `import { useAuth, withAuth } from 'ice';`
     generator.addExport({
@@ -11,7 +11,7 @@ const plugin: Plugin = () => ({
       source: '@ice/plugin-auth/runtime/Auth',
     });
   },
-  runtime: path.join(path.dirname(fileURLToPath(import.meta.url)), 'runtime', 'index.js'),
+  runtime: `${PLUGIN_NAME}/esm/runtime`,
 });
 
 export default plugin;

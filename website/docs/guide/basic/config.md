@@ -34,9 +34,9 @@ chrome 55
 ### alias
 
 - 类型：`Record<string, string | false>`
-- 默认值：`{}`
+- 默认值：`{ "@": "./src/" }`
 
-在 icejs 默认配置了 { "@": "./src/" } 的规则，因此项目大多数时候不需要配置，配置完成后则可以更加简单的导入模块了：
+在 icejs 默认内置常用的 alias 规则，因此项目大多数时候不需要配置即可更加简单的导入模块了：
 
 ```diff
 -import CustomTips from '../../../components/CustomTips';
@@ -380,6 +380,26 @@ export default defineConfig({
     // 忽略 mock 目录中 custom 目录下的文件以及 api.ts 文件
     exclude: ["custom/**", "api.ts"]
   },
+});
+```
+
+### plugins
+
+- 类型：`PluginList<Config, OverwritePluginAPI>`
+- 默认值：`[]`
+
+添加插件
+
+```js
+import { defineConfig } from '@ice/app';
+import customPlugin from './custom-plugin';
+import myPlugin from '@ice/my-plugin';
+
+export default defineConfig({
+  plugins: [
+    customPlugin(),
+    myPlugin(),
+  ],
 });
 ```
 
