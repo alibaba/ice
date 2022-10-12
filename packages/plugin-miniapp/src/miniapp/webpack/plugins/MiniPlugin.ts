@@ -12,8 +12,8 @@ import EntryDependency from '@ice/bundles/compiled/webpack/EntryDependency.js';
 
 import SingleEntryDependency from '../dependencies/SingleEntryDependency.js';
 import { componentConfig } from '../template/component.js';
-import type { MiniappComponent, FileType } from '../../types.js';
-import { META_TYPE, NODE_MODULES_REG, REG_STYLE, SCRIPT_EXT } from '../../../../constant.js';
+import type { MiniappComponent, FileType } from '../../../types.js';
+import { META_TYPE, NODE_MODULES_REG, REG_STYLE, SCRIPT_EXT } from '../../../constant.js';
 import { promoteRelativePath, resolveMainFilePath } from '../utils/index.js';
 import LoadChunksPlugin from './LoadChunksPlugin.js';
 import NormalModulesPlugin from './NormalModulesPlugin.js';
@@ -35,8 +35,10 @@ interface MiniPluginOptions {
   fileType: FileType;
   template: RecursiveTemplate | UnRecursiveTemplate;
   loaderMeta?: Record<string, string>;
-  getAppConfig: Config['getAppConfig'];
-  getRoutesConfig: Config['getRoutesConfig'];
+  configAPI: {
+    getAppConfig: Config['getAppConfig'];
+    getRoutesConfig: Config['getRoutesConfig'];
+  };
 }
 
 interface FilesConfig {
@@ -256,8 +258,8 @@ export default class MiniPlugin {
    * @returns app config 配置内容
    */
   async getAppConfig(): Promise<MiniappAppConfig> {
-    const { getAppConfig } = this.options;
-    const { miniappManifest } = await getAppConfig(['miniappManifest']);
+    const { configAPI } = this.options;
+    const { miniappManifest } = await configAPI.getAppConfig(['miniappManifest']);
     const appConfig = {
       pages: miniappManifest.routes.map(route => `pages/${route}`),
       ...miniappManifest,
@@ -306,8 +308,8 @@ export default class MiniPlugin {
    * 读取页面及其依赖的组件的配置
    */
   async getPagesConfig() {
-    const { getRoutesConfig } = this.options;
-    const routesConfig = await getRoutesConfig();
+    const { configAPI } = this.options;
+    const routesConfig = await configAPI.getRoutesConfig();
     for (let page of this.pages) {
       await this.compileFile(page, routesConfig);
     }

@@ -8,16 +8,13 @@ import * as path from 'path';
 import { createRequire } from 'node:module';
 import fg from 'fast-glob';
 import type { Config } from '@ice/types';
-import { RUNTIME_TMP_DIR, CACHE_DIR } from '../../constant.js';
-import { getRoutePathsFromCache } from '../../utils/getRoutePaths.js';
-import getMiniappPlatformConfig from './platforms/index.js';
+import getMiniappPlatformConfig from '../platforms/index.js';
 import getMiniappWebpackConfig from './webpack/index.js';
-
 
 const require = createRequire(import.meta.url);
 
 // The same as @ice/webpack-config
-function getEntry(rootDir: string) {
+function getEntry(rootDir: string, runtimeDir: string) {
   // check entry.client.ts
   let entryFile = fg.sync('entry.client.{tsx,ts,jsx.js}', {
     cwd: path.join(rootDir, 'src'),
@@ -25,15 +22,23 @@ function getEntry(rootDir: string) {
   })[0];
   if (!entryFile) {
     // use generated file in template directory
-    entryFile = path.join(rootDir, RUNTIME_TMP_DIR, 'entry.client.ts');
+    entryFile = path.join(rootDir, runtimeDir, 'entry.client.ts');
   }
   return {
     main: entryFile,
   };
 }
 
-const getMiniappTask = ({ rootDir, command, platform, getAppConfig, getRoutesConfig, dataCache }): Config => {
-  const entry = getEntry(rootDir);
+const getMiniappTask = ({
+  rootDir,
+  command,
+  platform,
+  configAPI,
+  dataCache,
+  runtimeDir,
+  cacheDir,
+}): Config => {
+  const entry = getEntry(rootDir, runtimeDir);
   const mode = command === 'start' ? 'development' : 'production';
   const { template, globalObject, fileType } = getMiniappPlatformConfig(platform);
 
@@ -41,8 +46,7 @@ const getMiniappTask = ({ rootDir, command, platform, getAppConfig, getRoutesCon
     rootDir,
     template,
     fileType,
-    getAppConfig,
-    getRoutesConfig,
+    configAPI,
   });
   const defaultLogging = command === 'start' ? 'summary' : 'summary assets';
   return {
@@ -59,7 +63,7 @@ const getMiniappTask = ({ rootDir, command, platform, getAppConfig, getRoutesCon
     },
     sourceMap: command === 'start' ? 'cheap-module-source-map' : false,
     alias: {
-      ice: path.join(rootDir, RUNTIME_TMP_DIR, 'index.ts'),
+      ice: path.join(rootDir, runtimeDir, 'index.ts'),
       '@': path.join(rootDir, 'src'),
       // 小程序使用 regenerator-runtime@0.11
       'regenerator-runtime': require.resolve('regenerator-runtime'),
@@ -68,7 +72,7 @@ const getMiniappTask = ({ rootDir, command, platform, getAppConfig, getRoutesCon
       '@ice/shared': require.resolve('@ice/shared'),
       'react-dom$': require.resolve('@ice/miniapp-react-dom'),
     },
-    cacheDir: path.join(rootDir, CACHE_DIR),
+    cacheDir: path.join(rootDir, cacheDir),
     plugins,
     loaders: module.rules,
     optimization: {
@@ -113,7 +117,15 @@ const getMiniappTask = ({ rootDir, command, platform, getAppConfig, getRoutesCon
       keepPlatform: platform === 'ali-miniapp' ? 'miniapp' : platform,
       removeExportExprs: ['getServerData', 'getStaticData'],
       getRoutePaths: () => {
-        return getRoutePathsFromCache(dataCache);
+        const routes = dataCache.get('routes');
+
+        const routeManifest = JSON.parse(routes)?.routeManifest || {};
+        const routeFiles = Object.keys(routeManifest).map((key) => {
+          const { file } = routeManifest[key];
+          return `src/pages/${file}`;
+        });
+
+        return routeFiles;
       },
     },
     cssFilename: `[name]${fileType.style}`,

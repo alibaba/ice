@@ -1,8 +1,8 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { createRequire } from 'node:module';
-import { REG_TEMPLATE } from '../../../constant.js';
-import type { MiniappWebpackOptions } from '../types.js';
+import { REG_TEMPLATE } from '../../constant.js';
+import type { MiniappWebpackOptions } from '../../types.js';
 
 
 interface IRule {

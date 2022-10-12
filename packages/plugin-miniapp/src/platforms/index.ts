@@ -1,4 +1,4 @@
-import { WECHAT_MINIPROGRAM, ALI_MINIAPP, BAIDU_SMARTPROGRAM, BYTEDANCE_MICROAPP } from '../../../constant.js';
+import { WECHAT_MINIPROGRAM, ALI_MINIAPP, BAIDU_SMARTPROGRAM, BYTEDANCE_MICROAPP } from '../constant.js';
 import type { PlatformConfig } from '../types.js';
 import wechat from './wechat/index.js';
 import bytedance from './bytedance/index.js';

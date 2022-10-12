@@ -1,7 +1,7 @@
 import { networkInterfaces } from 'os';
 import path from 'path';
 import fs from 'fs-extra';
-import { SCRIPT_EXT } from '../../../../constant.js';
+import { SCRIPT_EXT } from '../../../constant.js';
 
 export const emptyObj = {};
 export const emptyTogglableObj = {
