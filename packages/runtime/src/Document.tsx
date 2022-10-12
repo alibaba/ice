@@ -81,7 +81,6 @@ export function Scripts(props: React.ScriptHTMLAttributes<HTMLScriptElement>) {
     appData,
     routesData,
     routesConfig,
-    assetsManifest,
     routePath,
     downgrade,
   };

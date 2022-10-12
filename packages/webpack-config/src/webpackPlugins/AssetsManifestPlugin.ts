@@ -43,12 +43,12 @@ export default class AssetsManifestPlugin {
         assets[asset.sourceFilename] = asset.contenthash;
       }
     }
-
+    const entryFiles = [];
     for (const entrypoint of entrypoints) {
       const entryName = entrypoint.name;
       const mainFiles = filterAssets(entrypoint);
       entries[entryName] = mainFiles;
-
+      entryFiles.push(mainFiles[0]);
       const chunks = entrypoint?.getChildren();
       chunks.forEach((chunk) => {
         const chunkName = chunk.name;
@@ -71,7 +71,15 @@ export default class AssetsManifestPlugin {
     }
 
     const output = JSON.stringify(manifest, null, 2);
+    // Emit asset manifest for server compile.
     compilation.emitAsset(this.fileName, new webpack.sources.RawSource(output));
+    // Inject assets manifest to entry file.
+    entryFiles.forEach((entryFile) => {
+      compilation.assets[entryFile] = new webpack.sources.ConcatSource(
+        new webpack.sources.RawSource(String(`window.__ICE_ASSETS_MANIFEST__=${output};\n`)),
+        compilation.assets[entryFile],
+      );
+    });
   }
 
   public apply(compiler: Compiler) {
