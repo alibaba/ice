@@ -83,7 +83,7 @@ export interface AppContext {
 
 export type WindowContext = Pick<
   AppContext,
-  'appData' | 'routesData' | 'routesConfig' | 'assetsManifest' | 'routePath' | 'downgrade'
+  'appData' | 'routesData' | 'routesConfig' | 'routePath' | 'downgrade'
 >;
 
 export type Renderer = (

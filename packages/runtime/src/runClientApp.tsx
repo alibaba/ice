@@ -4,7 +4,7 @@ import { createHashHistory, createBrowserHistory, createMemoryHistory } from 'hi
 import type { HashHistory, BrowserHistory, Action, Location, InitialEntry, MemoryHistory } from 'history';
 import type {
   AppContext, WindowContext, AppExport, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
-  RouteWrapperConfig, RuntimeModules, RouteMatch, RouteModules, AppConfig,
+  RouteWrapperConfig, RuntimeModules, RouteMatch, RouteModules, AppConfig, AssetsManifest,
 } from '@ice/types';
 import { createHistory as createHistorySingle } from './single-router.js';
 import { setHistory } from './history.js';
@@ -39,11 +39,11 @@ export default async function runClientApp(options: RunClientAppOptions) {
     memoryRouter,
   } = options;
   const windowContext: WindowContext = (window as any).__ICE_APP_CONTEXT__ || {};
+  const assetsManifest: AssetsManifest = (window as any).__ICE_ASSETS_MANIFEST__ || {};
   let {
     appData,
     routesData,
     routesConfig,
-    assetsManifest,
     routePath,
     downgrade,
   } = windowContext;
