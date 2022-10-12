@@ -1,5 +1,4 @@
 import * as path from 'path';
-import { fileURLToPath } from 'url';
 import type { Config, Plugin } from '@ice/types';
 import micromatch from 'micromatch';
 import fg from 'fast-glob';
@@ -8,11 +7,13 @@ import { PAGE_STORE_MODULE, PAGE_STORE_PROVIDER, PAGE_STORE_INITIAL_STATES } fro
 interface Options {
   resetPageState?: boolean;
 }
+
+const PLUGIN_NAME = '@ice/plugin-store';
 const storeFilePattern = '**/store.{js,ts}';
 const ignoreStoreFilePatterns = ['**/models/**', storeFilePattern];
 
 const plugin: Plugin<Options> = (options) => ({
-  name: '@ice/plugin-store',
+  name: PLUGIN_NAME,
   setup: ({ onGetConfig, modifyUserConfig, generator, context: { rootDir, userConfig } }) => {
     const { resetPageState = false } = options || {};
     const srcDir = path.join(rootDir, 'src');
@@ -46,7 +47,7 @@ const plugin: Plugin<Options> = (options) => ({
       type: false,
     });
   },
-  runtime: path.join(path.dirname(fileURLToPath(import.meta.url)), 'runtime.js'),
+  runtime: `${PLUGIN_NAME}/esm/runtime`,
 });
 
 function exportStoreProviderPlugin({ pageDir, resetPageState }: { pageDir: string; resetPageState: boolean }): Config['transformPlugins'][0] {

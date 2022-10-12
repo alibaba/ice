@@ -4,7 +4,7 @@ import { createRequire } from 'module';
 import { Context } from 'build-scripts';
 import consola from 'consola';
 import type { CommandArgs, CommandName } from 'build-scripts';
-import type { AppConfig, Config } from '@ice/types';
+import type { AppConfig, Config, PluginData } from '@ice/types';
 import type { ExportData } from '@ice/types/esm/generator.js';
 import type { ExtendsPluginAPI } from '@ice/types/esm/plugin.js';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
@@ -94,7 +94,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   await ctx.resolveUserConfig();
 
   // get plugins include built-in plugins and custom plugins
-  const plugins = await ctx.resolvePlugins();
+  const plugins = await ctx.resolvePlugins() as PluginData[];
   const runtimeModules = getRuntimeModules(plugins);
 
   const { getAppConfig, init: initAppConfigCompiler } = getAppExportConfig(rootDir);
