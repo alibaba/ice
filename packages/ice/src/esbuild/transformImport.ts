@@ -1,8 +1,8 @@
 import path from 'path';
 import type { TransformOptions } from 'esbuild';
 import { transform } from 'esbuild';
-import { parse as parseJS } from 'acorn';
-import MagicString from 'magic-string';
+import acorn from '@ice/bundles/compiled/acorn/index.js';
+import MagicString from '@ice/bundles/compiled/magic-string/index.js';
 import esModuleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
 import type { ImportSpecifier } from '@ice/bundles/compiled/es-module-lexer/index.js';
 import type { Node } from 'estree';
@@ -11,6 +11,7 @@ import type { DepsMetaData } from '../service/preBundleCJSDeps.js';
 import formatPath from '../utils/formatPath.js';
 
 const { init, parse } = esModuleLexer;
+const { parse: parseJS } = acorn;
 
 type ImportNameSpecifier = { importedName: string; localName: string };
 

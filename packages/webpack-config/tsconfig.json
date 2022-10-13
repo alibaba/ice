@@ -3,7 +3,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "rootDir": "src",
-    "outDir": "esm"
+    "outDir": "esm",
+    "moduleDetection": "legacy"
   },
   "include": ["src"]
 }

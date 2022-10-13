@@ -27,7 +27,15 @@ function configCSSRule(config: CSSRuleConfig, options: Options) {
       getLocalIdent: (context: LoaderContext<any>, localIdentName: string, localName: string) => {
         const hash = createHash('md4');
         hash.update(Buffer.from(context.resourcePath + localName, 'utf8'));
-        return `${localName}--${hash.digest('base64').slice(0, 8)}`;
+        const localIdentHash = hash.digest('base64')
+          // Remove all leading digits
+          .replace(/^\d+/, '')
+          // Replace all slashes with underscores (same as in base64url)
+          .replace(/\//g, '_')
+          // Remove everything that is not an alphanumeric or underscore
+          .replace(/[^A-Za-z0-9_]+/g, '')
+          .slice(0, 8);
+        return `${localName}--${localIdentHash}`;
       },
     },
   };
@@ -85,7 +93,7 @@ function configCSSRule(config: CSSRuleConfig, options: Options) {
 }
 
 const css: ModifyWebpackConfig = (config, ctx) => {
-  const { supportedBrowsers, publicPath, hashKey } = ctx;
+  const { supportedBrowsers, publicPath, hashKey, cssFilename, cssChunkFilename } = ctx;
   const cssOutputFolder = 'css';
   config.module.rules.push(...([
     ['css'],
@@ -99,7 +107,8 @@ const css: ModifyWebpackConfig = (config, ctx) => {
   ] as CSSRuleConfig[]).map((config) => configCSSRule(config, { publicPath, browsers: supportedBrowsers })));
   config.plugins.push(
     new MiniCssExtractPlugin({
-      filename: `${cssOutputFolder}/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`,
+      filename: cssFilename || `${cssOutputFolder}/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`,
+      chunkFilename: cssChunkFilename || `${cssOutputFolder}/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`,
       // If the warning is triggered, it seen to be unactionable for the user,
       ignoreOrder: true,
     }),

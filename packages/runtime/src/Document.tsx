@@ -1,6 +1,6 @@
 import * as React from 'react';
 import type { ReactNode } from 'react';
-import type { AppContext, RouteMatch, AssetsManifest } from '@ice/types';
+import type { WindowContext, RouteMatch, AssetsManifest } from '@ice/types';
 import { useAppContext } from './AppContext.js';
 import { useAppData } from './AppData.js';
 import { getMeta, getTitle, getLinks, getScripts } from './routesConfig.js';
@@ -63,7 +63,7 @@ export function Links(props: React.LinkHTMLAttributes<HTMLLinkElement>) {
 }
 
 export function Scripts(props: React.ScriptHTMLAttributes<HTMLScriptElement>) {
-  const { routesData, routesConfig, matches, assetsManifest, documentOnly, routeModules, basename } = useAppContext();
+  const { routesData, routesConfig, matches, assetsManifest, documentOnly, downgrade } = useAppContext();
   const appData = useAppData();
 
   const routeScripts = getScripts(matches, routesConfig);
@@ -76,19 +76,13 @@ export function Scripts(props: React.ScriptHTMLAttributes<HTMLScriptElement>) {
     scripts.unshift(`${assetsManifest.publicPath}${assetsManifest.dataLoader}`);
   }
 
-  const matchedIds = matches.map(match => match.route.id);
   const routePath = getCurrentRoutePath(matches);
-
-  const appContext: AppContext = {
+  const windowContext: WindowContext = {
     appData,
     routesData,
     routesConfig,
-    assetsManifest,
-    appConfig: {},
-    matchedIds,
-    routeModules,
     routePath,
-    basename,
+    downgrade,
   };
 
   return (
@@ -99,7 +93,7 @@ export function Scripts(props: React.ScriptHTMLAttributes<HTMLScriptElement>) {
        */}
       <script
         suppressHydrationWarning={documentOnly}
-        dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=Object.assign(${JSON.stringify(appContext)}, window.__ICE_APP_CONTEXT__ || {})` }}
+        dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=Object.assign(${JSON.stringify(windowContext)}, window.__ICE_APP_CONTEXT__ || {})` }}
       />
       {
         routeScripts.map(routeScriptProps => {

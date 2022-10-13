@@ -1,11 +1,12 @@
 import type webpack from 'webpack';
-import type { Plugin as _Plugin, CommandArgs, TaskConfig } from 'build-scripts';
+import type { _Plugin, CommandArgs, TaskConfig } from 'build-scripts';
 import type { Configuration, Stats } from 'webpack';
 import type WebpackDevServer from 'webpack-dev-server';
 import type { BuildOptions, BuildResult } from 'esbuild';
 import type { NestedRouteManifest } from '@ice/route-manifest';
 import type { Config } from './config.js';
-import type { ExportData, AddRenderFile, AddTemplateFiles } from './generator.js';
+import type { ExportData, AddRenderFile, AddTemplateFiles, ModifyRenderData } from './generator.js';
+import type { AssetsManifest } from './runtime.js';
 
 type AddExport = (exportData: ExportData) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
@@ -18,6 +19,7 @@ export type ServerCompiler = (
     preBundle?: boolean;
     externalDependencies?: boolean;
     transformEnv?: boolean;
+    assetsManifest?: AssetsManifest;
   }
 ) => Promise<Partial<BuildResult & { serverEntry: string; error: any }>>;
 export type WatchEvent = [
@@ -56,13 +58,19 @@ interface AfterCommandCompileOptions {
   getAppConfig: GetAppConfig;
   getRoutesConfig: GetRoutesConfig;
   serverCompiler: ServerCompiler;
+  webpackConfigs: Configuration | Configuration[];
+}
+
+interface DevServerInfo {
+  devPath: string;
+  hashChar: string;
 }
 
 export interface HookLifecycle {
   'before.start.run': BeforeCommandRunOptions;
   'before.build.run': BeforeCommandRunOptions;
-  'after.start.compile': AfterCommandCompileOptions;
-  'after.build.compile': AfterCommandCompileOptions & { serverEntry: string };
+  'after.start.compile': AfterCommandCompileOptions & { devUrlInfo?: DevServerInfo };
+  'after.build.compile': AfterCommandCompileOptions & { serverEntryRef: { current: string } };
   'after.start.devServer': {
     urls: Urls;
     devServer: WebpackDevServer;
@@ -83,6 +91,7 @@ export interface ExtendsPluginAPI {
     addExportTypes: AddExport;
     addRenderFile: AddRenderFile;
     addRenderTemplate: AddTemplateFiles;
+    modifyRenderData: ModifyRenderData;
   };
   watch: {
     addEvent?: (watchEvent: WatchEvent) => void;
@@ -92,10 +101,16 @@ export interface ExtendsPluginAPI {
     set: (task: ReturnType<ServerCompiler>) => void;
     get: () => ReturnType<ServerCompiler>;
   };
+  dataCache: Map<string, string>;
 }
 
 export interface OverwritePluginAPI extends ExtendsPluginAPI {
   onHook: OnHook;
 }
 
-export type Plugin<Options = any> = (options?: Options) => _Plugin<Config, OverwritePluginAPI>;
+export interface PluginData extends _Plugin<Config, OverwritePluginAPI> {
+  runtime?: string;
+  staticRuntime?: boolean;
+}
+
+export type Plugin<Options = any> = (options?: Options) => PluginData;

@@ -1,0 +1,34 @@
+{
+  "name": "@ice/miniapp-react-dom",
+  "version": "1.0.0",
+  "description": "like react-dom, but for miniapps.",
+  "type": "module",
+  "types": "./esm/index.d.ts",
+  "main": "./esm/index.js",
+  "exports": {
+    ".": "./esm/index.js"
+  },
+  "files": [
+    "esm",
+    "!esm/**/*.map"
+  ],
+  "author": "ICE",
+  "license": "MIT",
+  "repository": "ice-lab/ice-next",
+  "bugs": "https://github.com/ice-lab/ice-next/issues",
+  "homepage": "https://next.ice.work",
+  "scripts": {
+    "watch": "tsc -w",
+    "build": "tsc"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@ice/miniapp-runtime": "^1.0.0",
+    "@ice/shared": "^1.0.0",
+    "react-reconciler": "0.27.0",
+    "scheduler": "^0.20.1"
+  },
+  "devDependencies": {
+    "react": "^18.0.0"
+  }
+}

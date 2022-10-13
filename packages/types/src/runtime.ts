@@ -44,7 +44,7 @@ export type GetData = (ctx: RequestContext) => Promise<RouteData> | RouteData;
 export type GetServerData = (ctx: RequestContext) => Promise<RouteData> | RouteData;
 export type GetStaticData = (ctx: RequestContext) => Promise<RouteData> | RouteData;
 // route.getConfig
-export type GetConfig = (args: { data: RouteData }) => RouteConfig;
+export type GetConfig = (args: { data?: RouteData }) => RouteConfig;
 
 export interface AppConfig {
   app?: App;
@@ -67,10 +67,10 @@ export interface RoutesData {
 export interface AppContext {
   appConfig: AppConfig;
   appData: any;
-  assetsManifest: AssetsManifest;
-  routesData: RoutesData;
-  routesConfig: RoutesConfig;
-  routeModules: RouteModules;
+  assetsManifest?: AssetsManifest;
+  routesData?: RoutesData;
+  routesConfig?: RoutesConfig;
+  routeModules?: RouteModules;
   routePath?: string;
   matches?: RouteMatch[];
   routes?: RouteItem[];
@@ -78,7 +78,13 @@ export interface AppContext {
   matchedIds?: string[];
   appExport?: AppExport;
   basename?: string;
+  downgrade?: boolean;
 }
+
+export type WindowContext = Pick<
+  AppContext,
+  'appData' | 'routesData' | 'routesConfig' | 'routePath' | 'downgrade'
+>;
 
 export type Renderer = (
   container: Element | Document,
@@ -156,7 +162,7 @@ export interface AssetsManifest {
 }
 
 export interface RuntimeAPI {
-  setAppRouter: SetAppRouter;
+  setAppRouter?: SetAppRouter;
   addProvider: AddProvider;
   setRender: SetRender;
   addWrapper: AddWrapper;

@@ -37,5 +37,6 @@ getPackageInfos(publishTag).then((packageInfos: IPackageInfo[]) => {
   }
   console.log(`[PUBLISH PACKAGE PRODUCTION] Complete (count=${publishedCount}):`);
   console.log(`${publishedPackages.join('\n')}`);
+  console.log(`[TNPM SYNC PACKAGES] tnpm sync ${publishedPackages.map((p: string) => p.split(':')[0]).join(' ')}`);
   setPublishedPackages(publishedPackages);
 });

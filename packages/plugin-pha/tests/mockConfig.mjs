@@ -1,15 +1,15 @@
 const configData = {
-  '/home': {
+  home: {
     priority: 'low',
     dataPrefetch: {
       api: 'test/api',
     },
   },
-  '/about': {
+  about: {
     defaultFrameIndex: 0,
     queryParams: 'c=123',
   },
-  '/app/nest': {
+  'app/nest': {
     frames: [
       'home',
       {
@@ -17,10 +17,10 @@ const configData = {
       },
     ],
   },
-}
+};
 
 const config = new Proxy(configData, {
-  get: function(obj, props) {
+  get: function (obj, props) {
     if (props in obj) {
       const defaultConfig = {
         title: `title-${props.replace(/^\//, '')}`,
@@ -32,7 +32,7 @@ const config = new Proxy(configData, {
     } else {
       return undefined;
     }
-  }
-})
+  },
+});
 
 export default config;

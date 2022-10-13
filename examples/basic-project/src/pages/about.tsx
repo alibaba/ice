@@ -1,6 +1,5 @@
 import { Link, useData, useConfig, history } from 'ice';
 import { isWeb } from '@uni/env';
-// @ts-expect-error
 import url from './ice.png';
 
 interface Data {

@@ -83,6 +83,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
     tsCheckerOptions,
     eslintOptions,
     entry,
+    output = {},
     splitChunks,
     assetsManifest,
     concatenateModules,
@@ -91,6 +92,9 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
     logging,
     swcOptions,
     compileIncludes,
+    optimization = {},
+    performance,
+    enableCopyPlugin,
   } = config;
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
   const dev = mode !== 'production';
@@ -178,6 +182,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
       path: absoluteOutputDir,
       filename: `js/${hashKey ? `[name]-[${hashKey}].js` : '[name].js'}`,
       assetModuleFilename: 'assets/[name].[hash:8][ext]',
+      ...output,
     },
     context: rootDir,
     module: {
@@ -204,12 +209,19 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
     },
     resolve: {
       alias: aliasWithRoot,
+      symlinks: true,
       extensions: ['.ts', '.tsx', '.jsx', '...'],
+      mainFields: ['browser', 'module', 'jsnext:main', 'main'],
       fallback: {
         // TODO: add more fallback module
         events: require.resolve('events'),
         stream: false,
+        fs: false,
+        path: false,
       },
+    },
+    resolveLoader: {
+      modules: ['node_modules'],
     },
     watchOptions: {
       // add a delay before rebuilding once routes changed
@@ -241,7 +253,8 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
           },
         }),
       ],
-    },
+      ...optimization,
+    } as Configuration['optimization'],
     cache: {
       type: 'filesystem',
       version: `${process.env.__ICE_VERSION__}|${JSON.stringify(config)}`,
@@ -253,7 +266,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
     infrastructureLogging: {
       level: 'warn',
     },
-    performance: false,
+    performance: performance || false,
     devtool: getDevtoolValue(sourceMap),
     plugins: [
       ...plugins,
@@ -276,7 +289,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
       eslintOptions && new ESlintPlugin(eslintOptions),
       // copy plugin only active in production
       // otherwise it will add assets to webpack compilation
-      !dev && new CopyPlugin({
+      (enableCopyPlugin || !dev) && new CopyPlugin({
         patterns: [{
           from: path.join(rootDir, 'public'),
           to: absoluteOutputDir,

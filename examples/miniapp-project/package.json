@@ -1,0 +1,29 @@
+{
+  "name": "miniapp-project",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "ice start",
+    "start:wechat": "ice start --platform wechat-miniprogram",
+    "start:ali": "ice start --platform ali-miniapp",
+    "build": "ice build",
+    "build:wechat": "ice build --platform wechat-miniprogram"
+  },
+  "description": "",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@ice/app": "workspace:*",
+    "@ice/runtime": "workspace:*",
+    "@ice/plugin-miniapp": "workspace:*",
+    "ahooks": "^3.3.8",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.2",
+    "browserslist": "^4.19.3",
+    "speed-measure-webpack-plugin": "^1.5.0",
+    "webpack": "^5.73.0"
+  }
+}

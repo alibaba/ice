@@ -1,6 +1,5 @@
 import * as path from 'path';
 import { createHash } from 'crypto';
-import * as fs from 'fs';
 import consola from 'consola';
 import esbuild from 'esbuild';
 import type { Config, UserConfig } from '@ice/types';
@@ -13,7 +12,7 @@ import cssModulesPlugin from '../esbuild/cssModules.js';
 import aliasPlugin from '../esbuild/alias.js';
 import ignorePlugin from '../esbuild/ignore.js';
 import createAssetsPlugin from '../esbuild/assets.js';
-import { ASSETS_MANIFEST, CACHE_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
+import { CACHE_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
 import emptyCSSPlugin from '../esbuild/emptyCSS.js';
 import transformImportPlugin from '../esbuild/transformImport.js';
 import transformPipePlugin from '../esbuild/transformPipe.js';
@@ -38,7 +37,6 @@ export function createServerCompiler(options: Options) {
 
   const alias = task.config?.alias || {};
   const externals = task.config?.externals || {};
-  const assetsManifest = path.join(rootDir, ASSETS_MANIFEST);
   const define = task.config?.define || {};
   const sourceMap = task.config?.sourceMap;
   const dev = command === 'start';
@@ -54,6 +52,7 @@ export function createServerCompiler(options: Options) {
     swc,
     externalDependencies,
     transformEnv = true,
+    assetsManifest,
   } = {}) => {
     let depsMetadata: DepsMetaData;
     let swcOptions = merge({}, {
@@ -83,6 +82,7 @@ export function createServerCompiler(options: Options) {
         ] : [],
       });
     }
+
     // get runtime variable for server build
     const runtimeDefineVars = {};
     Object.keys(process.env).forEach((key) => {
@@ -131,10 +131,18 @@ export function createServerCompiler(options: Options) {
           generateLocalIdentName: function (name: string, filename: string) {
             const hash = createHash('md4');
             hash.update(Buffer.from(filename + name, 'utf8'));
-            return escapeLocalIdent(`${name}--${hash.digest('base64').slice(0, 8)}`);
+            const localIdentHash = hash.digest('base64')
+              // Remove all leading digits
+              .replace(/^\d+/, '')
+              // Replace all slashes with underscores (same as in base64url)
+              .replace(/\//g, '_')
+              // Remove everything that is not an alphanumeric or underscore
+              .replace(/[^A-Za-z0-9_]+/g, '')
+              .slice(0, 8);
+            return escapeLocalIdent(`${name}--${localIdentHash}`);
           },
         }),
-        fs.existsSync(assetsManifest) && createAssetsPlugin(assetsManifest, rootDir),
+        assetsManifest && createAssetsPlugin(assetsManifest, rootDir),
         transformPipePlugin({
           plugins: [
             ...transformPlugins,

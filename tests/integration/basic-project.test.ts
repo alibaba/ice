@@ -52,7 +52,13 @@ describe(`build ${example}`, () => {
     browser = res.browser;
 
     const files = fs.readdirSync(path.join(__dirname, `../../examples/${example}/build/js`), 'utf-8');
-    expect(files.length).toBe(7);
+    expect(files.length).toBe(8);
+  }, 120000);
+
+  test('render route config when downgrade to CSR.', async () => {
+    await page.push('/downgrade.html');
+    expect(await page.$$text('title')).toStrictEqual(['hello']);
+    expect((await page.$$text('h2')).length).toEqual(0);
   }, 120000);
 
   afterAll(async () => {
@@ -87,21 +93,21 @@ describe(`start ${example}`, () => {
     const routeManifest = fs.readFileSync(path.join(rootDir, '.ice/route-manifest.json'), 'utf-8');
     fs.writeFileSync(targetPath, routeContent);
     await page.reload();
-    expect(JSON.parse(routeManifest)[0].children.length).toBe(3);
+    expect(JSON.parse(routeManifest)[0].children.length).toBe(4);
   }, 120000);
 
-  test('update watched file: global.css', async () => {
+  test('update watched file: global.css', () => {
     const targetPath = path.join(rootDir, 'src/global.css');
     const cssContent = fs.readFileSync(targetPath, 'utf-8');
+    // Trigger modification of global style
     fs.writeFileSync(targetPath, cssContent);
-    await page.reload();
   });
 
-  test('update watched file: app.ts', async () => {
+  test('update watched file: app.ts', () => {
     const targetPath = path.join(rootDir, 'src/app.tsx');
     const appContent = fs.readFileSync(targetPath, 'utf-8');
+    // Trigger modification of app entry
     fs.writeFileSync(targetPath, appContent);
-    await page.reload();
   });
 
   test('should update config during client routing', async () => {

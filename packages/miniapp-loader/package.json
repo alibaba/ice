@@ -1,0 +1,26 @@
+{
+  "name": "@ice/miniapp-loader",
+  "version": "1.0.0",
+  "description": "webpack loader for miniapps.",
+  "main": "./lib/page.js",
+  "files": [
+    "lib",
+    "!lib/**/*.map"
+  ],
+  "author": "ICE",
+  "license": "MIT",
+  "repository": "ice-lab/ice-next",
+  "bugs": "https://github.com/ice-lab/ice-next/issues",
+  "homepage": "https://next.ice.work",
+  "scripts": {
+    "watch": "tsc -w",
+    "build": "tsc"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@ice/bundles": "^0.1.0"
+  },
+  "devDependencies": {
+    "webpack": "^5.73.0"
+  }
+}

@@ -1,5 +1,6 @@
-import { mkdirSync, writeFileSync, existsSync } from 'fs';
-import { dirname, resolve } from 'path';
+import { existsSync } from 'fs';
+import { resolve } from 'path';
+import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type { Compiler, Compilation } from 'webpack';
 
 const pluginName = 'AssetsManifestPlugin';
@@ -42,12 +43,12 @@ export default class AssetsManifestPlugin {
         assets[asset.sourceFilename] = asset.contenthash;
       }
     }
-
+    const entryFiles = [];
     for (const entrypoint of entrypoints) {
       const entryName = entrypoint.name;
       const mainFiles = filterAssets(entrypoint);
       entries[entryName] = mainFiles;
-
+      entryFiles.push(mainFiles[0]);
       const chunks = entrypoint?.getChildren();
       chunks.forEach((chunk) => {
         const chunkName = chunk.name;
@@ -62,9 +63,6 @@ export default class AssetsManifestPlugin {
       pages,
       assets,
     };
-
-    const manifestFileName = resolve(this.outputDir, this.fileName);
-
     // FIXME: append data-loader to the entry by hard code
     // data-loader is built by another webpack task
     const dataLoader = resolve(this.outputDir, './data-loader.ts');
@@ -73,10 +71,15 @@ export default class AssetsManifestPlugin {
     }
 
     const output = JSON.stringify(manifest, null, 2);
-
-    mkdirSync(dirname(manifestFileName), { recursive: true });
-    writeFileSync(manifestFileName, output);
-    return;
+    // Emit asset manifest for server compile.
+    compilation.emitAsset(this.fileName, new webpack.sources.RawSource(output));
+    // Inject assets manifest to entry file.
+    entryFiles.forEach((entryFile) => {
+      compilation.assets[entryFile] = new webpack.sources.ConcatSource(
+        new webpack.sources.RawSource(String(`window.__ICE_ASSETS_MANIFEST__=${output};\n`)),
+        compilation.assets[entryFile],
+      );
+    });
   }
 
   public apply(compiler: Compiler) {

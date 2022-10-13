@@ -2,6 +2,7 @@ const { getESLintConfig } = require('@applint/spec');
 
 const commonRules = {
   'react/jsx-filename-extension': 0,
+  'react/no-unknown-property': 0,
   'no-underscore-dangle': 0,
   'class-methods-use-this': 0,
   'no-param-reassign': 0,

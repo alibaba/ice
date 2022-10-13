@@ -4,7 +4,7 @@ import { createRequire } from 'module';
 import { Context } from 'build-scripts';
 import consola from 'consola';
 import type { CommandArgs, CommandName } from 'build-scripts';
-import type { AppConfig, Config } from '@ice/types';
+import type { AppConfig, Config, PluginData } from '@ice/types';
 import type { ExportData } from '@ice/types/esm/generator.js';
 import type { ExtendsPluginAPI } from '@ice/types/esm/plugin.js';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
@@ -13,17 +13,17 @@ import { createServerCompiler } from './service/serverCompiler.js';
 import createWatch from './service/watchSource.js';
 import start from './commands/start.js';
 import build from './commands/build.js';
+import webPlugin from './plugins/web/index.js';
 import test from './commands/test.js';
 import mergeTaskConfig from './utils/mergeTaskConfig.js';
 import getWatchEvents from './getWatchEvents.js';
 import { setEnv, updateRuntimeEnv, getCoreEnvKeys } from './utils/runtimeEnv.js';
 import getRuntimeModules from './utils/getRuntimeModules.js';
 import { generateRoutesInfo } from './routes.js';
-import getWebTask from './tasks/web/index.js';
 import * as config from './config.js';
+import { RUNTIME_TMP_DIR, WEB } from './constant.js';
 import createSpinner from './utils/createSpinner.js';
 import getRoutePaths from './utils/getRoutePaths.js';
-import { RUNTIME_TMP_DIR } from './constant.js';
 import ServerCompileTask from './utils/ServerCompileTask.js';
 import { getAppExportConfig, getRouteExportConfig } from './service/config.js';
 import renderExportsTemplate from './utils/renderExportsTemplate.js';
@@ -64,14 +64,18 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     },
     addRenderFile: generator.addRenderFile,
     addRenderTemplate: generator.addTemplateFiles,
+    modifyRenderData: generator.modifyRenderData,
   };
 
   const serverCompileTask = new ServerCompileTask();
+
+  const { platform = WEB } = commandArgs;
   const ctx = new Context<Config, ExtendsPluginAPI>({
     rootDir,
     command,
     commandArgs,
     configFile,
+    plugins: platform === WEB ? [webPlugin()] : [],
     extendsPluginAPI: {
       generator: generatorAPI,
       watch: {
@@ -83,18 +87,21 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         webpack,
       },
       serverCompileTask,
+      dataCache,
     },
   });
-
   // resolve userConfig from ice.config.ts before registerConfig
   await ctx.resolveUserConfig();
 
   // get plugins include built-in plugins and custom plugins
-  const plugins = await ctx.resolvePlugins();
+  const plugins = await ctx.resolvePlugins() as PluginData[];
   const runtimeModules = getRuntimeModules(plugins);
 
-  // register web
-  ctx.registerTask('web', getWebTask({ rootDir, command, dataCache }));
+  const { getAppConfig, init: initAppConfigCompiler } = getAppExportConfig(rootDir);
+  const {
+    getRoutesConfig,
+    init: initRouteConfigCompiler,
+  } = getRouteExportConfig(rootDir);
 
   // register config
   ['userConfig', 'cliOption'].forEach((configType) => {
@@ -111,7 +118,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
     ctx.registerConfig(configType, configData);
   });
-
   let taskConfigs = await ctx.setup();
 
   // get userConfig after setup because of userConfig maybe modified by plugins
@@ -139,16 +145,23 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       'regenerator-runtime': require.resolve('regenerator-runtime'),
     },
   });
-  const webTaskConfig = taskConfigs.find(({ name }) => name === 'web');
 
+  // Get first task config as default platform config.
+  const platformTaskConfig = taskConfigs[0];
+
+  const iceRuntimePath = '@ice/runtime';
+  const enableRoutes = platform === WEB;
   // add render data
   generator.setRenderData({
     ...routesInfo,
+    platform,
+    iceRuntimePath,
+    enableRoutes,
     hasExportAppData,
     runtimeModules,
     coreEnvKeys,
-    basename: webTaskConfig.config.basename,
-    memoryRouter: webTaskConfig.config.memoryRouter,
+    basename: platformTaskConfig.config.basename || '/',
+    memoryRouter: platformTaskConfig.config.memoryRouter,
     hydrate: !csr,
   });
   dataCache.set('routes', JSON.stringify(routesInfo));
@@ -162,27 +175,21 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     rootDir,
     runtimeDir: RUNTIME_TMP_DIR,
     templateDir: path.join(templateDir, '../exports'),
+    dataLoader: userConfig.dataLoader,
   });
 
   // render template before webpack compile
   const renderStart = new Date().getTime();
   generator.render();
   consola.debug('template render cost:', new Date().getTime() - renderStart);
-
   // create serverCompiler with task config
   const serverCompiler = createServerCompiler({
     rootDir,
-    task: webTaskConfig,
+    task: platformTaskConfig,
     command,
     server,
     syntaxFeatures,
   });
-  const { getAppConfig, init: initAppConfigCompiler } = getAppExportConfig(rootDir);
-  const {
-    getRoutesConfig,
-    init: initRouteConfigCompiler,
-    reCompile: reCompileRouteConfig,
-  } = getRouteExportConfig(rootDir);
   initAppConfigCompiler(serverCompiler);
   initRouteConfigCompiler(serverCompiler);
 
@@ -221,8 +228,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             serverCompiler,
             getRoutesConfig,
             getAppConfig,
-            reCompileRouteConfig,
-            dataCache,
             appConfig,
             devPath: (routePaths[0] || '').replace(/^[/\\]/, ''),
             spinner: buildSpinner,
@@ -234,7 +239,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             taskConfigs,
             serverCompiler,
             spinner: buildSpinner,
-            dataCache,
           });
         } else if (command === 'test') {
           return await test(ctx, {

@@ -1,0 +1,29 @@
+{
+  "name": "@ice/miniapp-runtime",
+  "version": "1.0.0",
+  "description": "ice runtime for miniapps.",
+  "type": "module",
+  "types": "./esm/index.d.ts",
+  "main": "./esm/index.js",
+  "exports": {
+    ".": "./esm/index.js"
+  },
+  "files": [
+    "esm",
+    "!esm/**/*.map"
+  ],
+  "author": "ICE",
+  "license": "MIT",
+  "repository": "ice-lab/ice-next",
+  "bugs": "https://github.com/ice-lab/ice-next/issues",
+  "homepage": "https://next.ice.work",
+  "scripts": {
+    "watch": "tsc -w",
+    "build": "tsc"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@ice/shared": "^1.0.0",
+    "@ice/types": "^1.0.0"
+  }
+}

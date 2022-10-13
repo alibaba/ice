@@ -10,6 +10,7 @@ import type {
   RouteMatch,
   RequestContext,
   AppConfig,
+  GetConfig,
   RouteModules,
   RenderMode,
   DocumentComponent,
@@ -42,6 +43,9 @@ interface RenderOptions {
   serverOnlyBasename?: string;
   routePath?: string;
   disableFallback?: boolean;
+  routesConfig: {
+    [key: string]: GetConfig;
+  };
 }
 
 interface Piper {
@@ -151,7 +155,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
   const appConfig = getAppConfig(app);
   // HashRouter loads route modules by the CSR.
   if (appConfig?.router?.type === 'hash') {
-    return renderDocument({ matches: [], renderOptions, routeModules: {} });
+    return renderDocument({ matches: [], renderOptions });
   }
 
   const matches = matchRoutes(routes, location, serverOnlyBasename || basename);
@@ -161,11 +165,11 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
 
   const routePath = getCurrentRoutePath(matches);
 
-  const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
-
   if (documentOnly) {
-    return renderDocument({ matches, routePath, renderOptions, routeModules });
+    return renderDocument({ matches, routePath, renderOptions });
   }
+
+  const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
 
   try {
     return await renderServerEntry({
@@ -185,7 +189,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
       throw err;
     }
     console.error('Warning: render server entry error, downgrade to csr.', err);
-    return renderDocument({ matches, routePath, renderOptions, routeModules: {} });
+    return renderDocument({ matches, routePath, renderOptions, downgrade: true });
   }
 }
 
@@ -285,7 +289,7 @@ async function renderServerEntry(
   const pipe = renderToNodeStream(element, false);
 
   const fallback = () => {
-    return renderDocument({ matches, routePath, renderOptions, routeModules });
+    return renderDocument({ matches, routePath, renderOptions, downgrade: true });
   };
 
   return {
@@ -298,39 +302,49 @@ async function renderServerEntry(
 
 interface RenderDocumentOptions {
   matches: RouteMatch[];
-  routeModules: RouteModules;
   renderOptions: RenderOptions;
   routePath?: string;
+  downgrade?: boolean;
 }
 /**
  * Render Document for CSR.
  */
-function renderDocument({ matches, routeModules, renderOptions, routePath }: RenderDocumentOptions): RenderResult {
+function renderDocument(options: RenderDocumentOptions): RenderResult {
+  const { matches, renderOptions, routePath, downgrade }: RenderDocumentOptions = options;
+
   const {
     routes,
     assetsManifest,
     app,
     Document,
     basename,
+    routesConfig = {},
   } = renderOptions;
 
   const routesData = null;
   const appData = null;
   const appConfig = getAppConfig(app);
-  const routesConfig = getRoutesConfig(matches, {}, routeModules);
+
+  const matchedRoutesConfig = {};
+  matches.forEach(async (match) => {
+    const { id } = match.route;
+    const getConfig = routesConfig[id];
+
+    matchedRoutesConfig[id] = getConfig ? getConfig({}) : {};
+  });
 
   const appContext: AppContext = {
     assetsManifest,
     appConfig,
     appData,
     routesData,
-    routesConfig,
+    routesConfig: matchedRoutesConfig,
     matches,
     routes,
     documentOnly: true,
-    routeModules,
     routePath,
     basename,
+    downgrade,
   };
 
   const documentContext = {

@@ -1,5 +1,5 @@
 import { createRequire } from 'module';
-import { certificateFor } from 'trusted-cert';
+import trustCert from '@ice/bundles/compiled/trusted-cert/index.js';
 import fse from 'fs-extra';
 import consola from 'consola';
 import type { UserConfig, Config } from '@ice/types';
@@ -8,6 +8,7 @@ import lodash from '@ice/bundles/compiled/lodash/index.js';
 
 const require = createRequire(import.meta.url);
 const { merge } = lodash;
+const { certificateFor } = trustCert;
 
 const mergeDefaultValue = <T>(config: Config, key: string, value: T): Config => {
   if (value) {
@@ -49,6 +50,11 @@ const userConfig = [
     setConfig: (config: Config, publicPath: UserConfig['publicPath'], context: UserConfigContext) => {
       return mergeDefaultValue(config, 'publicPath', context.command === 'start' && publicPath);
     },
+  },
+  {
+    name: 'dataLoader',
+    validation: 'boolean',
+    defaultValue: true,
   },
   {
     name: 'publicPath',
@@ -325,6 +331,10 @@ const userConfig = [
 ];
 
 const cliOption = [
+  {
+    name: 'platform',
+    commands: ['start', 'build'],
+  },
   {
     name: 'open',
     commands: ['start'],
