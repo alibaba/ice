@@ -163,13 +163,13 @@ public String index(Model model) {
 
 ### 静态资源在非根目录或 CDN
 
-如果你的 js、css、图片、字体等资源不在，这时需要配置 [publicPath](/docs/guide/basic/config#publicpath) 的值为你的静态资源所在的路径。
+如果你的 js、css、图片、字体等资源不在，这时需要配置 [publicPath](../basic/config#publicpath) 的值为你的静态资源所在的路径。
 
 ### 部署的 HTML 在非根目录
 
 假设你本地开发的时候有一个路由是 `/home`，生产环境下你把应用部署到 `/abc/` 下，然后访问 `/abc/home`，就会出现路由不匹配，显示空白页面的情况。
 
-这时你需要配置 [basename](/docs/guide/basic/app#basename) 解决。
+这时你需要配置 [basename](../basic/app#basename) 解决。
 
 ```ts title="./src/app.ts"
 import { defineAppConfig } from 'ice';
