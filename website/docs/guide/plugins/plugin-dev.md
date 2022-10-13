@@ -469,7 +469,7 @@ export default runtime;
 
 appContext 上包含框架相关上下文配置信息，主要包括：
 
-- `appConfig`：应用配置，详细内容可以参考 [应用入口](/)
+- `appConfig`：应用配置，详细内容可以参考 [应用入口](../basic/app)
 - `assetsManifest`：应用资讯配置信息
 - `routesData`：路由信息
 

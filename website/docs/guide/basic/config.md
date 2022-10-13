@@ -36,7 +36,7 @@ chrome 55
 - 类型：`Record<string, string | false>`
 - 默认值：`{ "@": "./src/" }`
 
-在 icejs 默认内置常用的 alias 规则，因此项目大多数时候不需要配置即可更加简单的导入模块了：
+在 ice.js 默认内置常用的 alias 规则，因此项目大多数时候不需要配置即可更加简单的导入模块了：
 
 ```diff
 -import CustomTips from '../../../components/CustomTips';

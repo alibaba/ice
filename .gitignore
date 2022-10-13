@@ -49,4 +49,6 @@ compiled
 .docusaurus
 .cache-loader
 
-.env*.local
+.env
+*.local
+.fleet/

@@ -56,19 +56,19 @@ TypeScript 编译所需的配置文件。
 
 ### app.ts
 
-项目的入口文件，用于对应用进行全局运行时配置，包括路由、添加 Provider 等。详见[应用入口](/docs/guide/basic/app)。
+项目的入口文件，用于对应用进行全局运行时配置，包括路由、添加 Provider 等。详见[应用入口](./app)。
 
 ### document.tsx
 
-HTML 模板，使用 JSX 语法来描述，与 `index.html` 类似用于生成 HTML 产物。详见 [Document](/docs/guide/basic/document)。
+HTML 模板，使用 JSX 语法来描述，与 `index.html` 类似用于生成 HTML 产物。详见 [Document](./document)。
 
 ### global.[css|scss|less]
 
-全局的样式配置，框架默认会引入该文件。详见[样式方案](/docs/guide/basic/style)
+全局的样式配置，框架默认会引入该文件。详见[样式方案](./style)
 
 ### pages 目录
 
-存放路由组件的目录。ICE 使用约定式路由，会自动根据文件生成路由规则，详见[路由](/docs/guide/basic/router)。
+存放路由组件的目录。ICE 使用约定式路由，会自动根据文件生成路由规则，详见[路由](./router)。
 
 ### components 目录
 

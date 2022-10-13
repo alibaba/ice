@@ -38,7 +38,7 @@ const data = [
 function Feature() {
   return (
     <AreaWrapper
-      title={'基于 React 的应用研发框架 ICE 3'}
+      title={'基于 React 的应用研发框架 ice.js 3'}
       decs={'开箱即用的研发框架，内置工程配置、状态管理、数据请求、权限管理等最佳实践，让开发者可以更加专注于业务逻辑'}
       contentStyle={styles.container}
       isBlock

@@ -1,17 +1,16 @@
 ---
 title: 权限管理
-order: 4
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-<details>
+<details open>
   <summary>示例</summary>
   <ul>
     <li>
       <a href="https://github.com/ice-lab/ice-next/tree/master/examples/basic-project" target="_blank" rel="noopener noreferrer">
-        Basic Project
+        basic-project
       </a>
     </li>
   </ul>
@@ -23,7 +22,7 @@ import TabItem from '@theme/TabItem';
 - 操作权限：页面中的某些按钮或组件针对无权限的用户直接隐藏
 - 接口权限：当用户通过操作调用没有权限的接口时跳转到无权限页面
 
-icejs 提供 `@ice/plugin-auth` 插件，帮助用户更简单管理前两种类型的权限。接口权限管理请见数据请求文档。
+ice.js 提供 `@ice/plugin-auth` 插件，帮助用户更简单管理前两种类型的权限。接口权限管理请见数据请求文档。
 
 ## 安装插件
 

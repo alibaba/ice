@@ -20,11 +20,11 @@ module.exports = {
     //   label: '示例',
     //   to: '/docs/examples/tailwind',
     // },
-    {
-      position: 'right',
-      label: '博客',
-      to: '/blog',
-    },
+    // {
+    //   position: 'right',
+    //   label: '博客',
+    //   to: '/blog',
+    // },
     {
       label: '生态',
       position: 'right',
