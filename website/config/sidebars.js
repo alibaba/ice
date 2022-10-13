@@ -21,7 +21,7 @@ module.exports = {
       type: 'category',
       label: '进阶',
       collapsed: false,
-      items: getDocsFromDir('guide/best-practices'),
+      items: getDocsFromDir('guide/advanced'),
     },
     {
       type: 'category',
