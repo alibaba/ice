@@ -27,6 +27,7 @@ export default defineConfig({
         '**/bundles/compiled/**',
         // App runtime has been tested by unit test case
         '**/packages/runtime/esm/**',
+        '**/packages/route-manifest/esm/**',
         '**/packages/miniapp-runtime/esm/**',
         '**/tests/**',
       ],
