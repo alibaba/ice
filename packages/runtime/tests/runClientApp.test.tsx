@@ -27,7 +27,13 @@ describe('run client app', () => {
           content: '',
         }),
       },
+      body: {
+        appendChild: () => null,
+      },
       getElementById: () => null,
+      createElement: () => ({
+        id: '',
+      }),
       querySelectorAll: () => [],
     }));
   });
@@ -42,7 +48,7 @@ describe('run client app', () => {
     setRender((container, element) => {
       try {
         domstring = renderToString(element as any);
-      } catch (err) {}
+      } catch (err) { }
     });
   };
 

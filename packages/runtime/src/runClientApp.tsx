@@ -112,8 +112,17 @@ async function render({ history, runtime }: RenderOptions) {
   const RouteWrappers = runtime.getWrappers();
   const AppRouter = runtime.getAppRouter();
 
+  const rootId = appConfig.app.rootId || 'app';
+  let root = document.getElementById(rootId);
+  if (!root) {
+    root = document.createElement('div');
+    root.id = rootId;
+    document.body.appendChild(root);
+    console.warn(`Root node #${rootId} is not found, current root is automatically created by the framework.`);
+  }
+
   render(
-    document.getElementById(appConfig.app.rootId),
+    root,
     <BrowserEntry
       history={history}
       appContext={appContext}
