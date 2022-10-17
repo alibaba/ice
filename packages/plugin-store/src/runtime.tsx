@@ -1,15 +1,19 @@
 import * as React from 'react';
 import type { RuntimePlugin, AppProvider, RouteWrapper } from '@ice/types';
 import { PAGE_STORE_INITIAL_STATES, PAGE_STORE_PROVIDER } from './constants.js';
+import type { StoreConfig } from './types.js';
 import appStore from '$store';
 
-const runtime: RuntimePlugin = async ({ addWrapper, addProvider, useAppContext }) => {
+const runtime: RuntimePlugin = async ({ appContext, addWrapper, addProvider, useAppContext }) => {
+  const { appExport, appData } = appContext;
+  const storeConfig: StoreConfig = (typeof appExport.store === 'function'
+    ? (await appExport.store(appData)) : appExport.store) || {};
+  const { initialStates } = storeConfig;
   if (appStore && Object.prototype.hasOwnProperty.call(appStore, 'Provider')) {
     // Add app store Provider
     const StoreProvider: AppProvider = ({ children }) => {
       return (
-        // TODO: support initialStates: https://github.com/ice-lab/ice-next/issues/395#issuecomment-1210552931
-        <appStore.Provider>
+        <appStore.Provider initialStates={initialStates}>
           {children}
         </appStore.Provider>
       );

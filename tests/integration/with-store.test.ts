@@ -15,7 +15,7 @@ describe(`build ${example}`, () => {
     page = res.page;
     browser = res.browser;
     await page.waitForFunction('document.getElementsByTagName(\'button\').length > 0');
-    expect(await page.$$text('#username')).toStrictEqual(['name: ICE 3']);
+    expect(await page.$$text('#username')).toStrictEqual(['name: icejs']);
     expect(await page.$$text('#count')).toStrictEqual(['0']);
   }, 120000);
 

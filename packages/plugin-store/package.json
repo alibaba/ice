@@ -24,6 +24,16 @@
       "types": "./esm/api.d.ts",
       "import": "./esm/api.js",
       "default": "./esm/api.js"
+    },
+    "./types": {
+      "types": "./esm/types.d.ts",
+      "import": "./esm/types.js",
+      "default": "./esm/types.js"
+    },
+    "./esm/types": {
+      "types": "./esm/types.d.ts",
+      "import": "./esm/types.js",
+      "default": "./esm/types.js"
     }
   },
   "main": "./esm/index.js",
@@ -33,12 +43,14 @@
     "!esm/**/*.map"
   ],
   "dependencies": {
-    "@ice/store": "^2.0.1",
+    "@ice/store": "^2.0.3",
     "fast-glob": "^3.2.11",
     "micromatch": "^4.0.5"
   },
   "devDependencies": {
     "@ice/types": "^1.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@types/micromatch": "^4.0.2",

@@ -483,6 +483,7 @@ importers:
       '@ice/runtime': workspace:*
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
+      tslib: ^2.4.0
     dependencies:
       '@ice/app': link:../../packages/ice
       '@ice/runtime': link:../../packages/runtime
@@ -490,6 +491,7 @@ importers:
       '@ice/plugin-store': link:../../packages/plugin-store
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
+      tslib: 2.4.0
 
   examples/with-vitest:
     specifiers:
@@ -1007,13 +1009,15 @@ importers:
 
   packages/plugin-store:
     specifiers:
-      '@ice/store': ^2.0.1
+      '@ice/store': ^2.0.3
       '@ice/types': ^1.0.0
       '@types/micromatch': ^4.0.2
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
       fast-glob: ^3.2.11
       micromatch: ^4.0.5
+      react: ^18.2.0
+      react-dom: ^18.2.0
       regenerator-runtime: ^0.13.9
     dependencies:
       '@ice/store': 2.0.3
@@ -1024,6 +1028,8 @@ importers:
       '@types/micromatch': 4.0.2
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
       regenerator-runtime: 0.13.9
 
   packages/rax-compat:
@@ -16142,6 +16148,8 @@ packages:
       hoist-non-react-statics: 3.3.2
       loose-envify: 1.4.0
       prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
       react-is: 17.0.2
     dev: false
 
@@ -17752,7 +17760,6 @@ packages:
       serialize-javascript: 6.0.0
       terser: 5.14.2
       webpack: 5.74.0_esbuild@0.14.54
-    dev: true
 
   /terser-webpack-plugin/5.3.5_webpack@5.74.0:
     resolution: {integrity: sha512-AOEDLDxD2zylUGf/wxHxklEkOe2/r+seuyOWujejFrIxHf11brA1/dWQNIgXa1c6/Wkxgu7zvv0JhOWfc2ELEA==}
@@ -19232,7 +19239,6 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
-    dev: true
 
   /webpackbar/5.0.2_webpack@5.74.0:
     resolution: {integrity: sha512-BmFJo7veBDgQzfWXl/wwYXr/VFus0614qZ8i9znqcl9fnEdiVkdbi0TedLQ6xAK92HZHDJ0QmyQ0fmuZPAgCYQ==}
