@@ -11,7 +11,22 @@ import type { AssetsManifest } from './runtime.js';
 type AddExport = (exportData: ExportData) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
 
-type ServerCompilerBuildOptions = Pick<BuildOptions, 'write' | 'target' | 'minify' | 'inject' | 'format' | 'entryPoints' | 'outfile' | 'bundle' | 'outdir' | 'splitting' | 'platform' | 'outExtension' | 'plugins'>;
+type ServerCompilerBuildOptions = Pick<BuildOptions, 'write' |
+  'target' |
+  'minify' |
+  'inject' |
+  'format' |
+  'entryPoints' |
+  'outfile' |
+  'bundle' |
+  'outdir' |
+  'splitting' |
+  'platform' |
+  'outExtension' |
+  'plugins' |
+  'logLevel'
+>;
+
 export type ServerCompiler = (
   buildOptions: ServerCompilerBuildOptions,
   options?: {

@@ -1,6 +1,7 @@
 import * as path from 'path';
 import fs from 'fs-extra';
 import type { ServerCompiler } from '@ice/types/esm/plugin.js';
+import consola from 'consola';
 import removeTopLevelCode from '../esbuild/removeTopLevelCode.js';
 import { getCache, setCache } from '../utils/persistentCache.js';
 import { getFileHash } from '../utils/hash.js';
@@ -46,6 +47,7 @@ class Config {
         format: 'esm',
         outfile,
         plugins: [removeTopLevelCode(keepExports, transformInclude)],
+        logLevel: 'silent', // The main server compiler process will log it.
       });
       if (!error) {
         this.status = 'RESOLVED';
@@ -140,7 +142,12 @@ export const getAppExportConfig = (rootDir: string) => {
 
   appExportConfig = {
     init(serverCompiler: ServerCompiler) {
-      config.setCompiler(serverCompiler);
+      try {
+        config.setCompiler(serverCompiler);
+      } catch (error) {
+        consola.error('Get app export config error.');
+        console.debug(error.stack);
+      }
     },
     getAppConfig,
   };
@@ -205,7 +212,12 @@ export const getRouteExportConfig = (rootDir: string) => {
   routeExportConfig = {
     init(serverCompiler: ServerCompiler) {
       config.clearTasks();
-      config.setCompiler(serverCompiler);
+      try {
+        config.setCompiler(serverCompiler);
+      } catch (error) {
+        consola.error('Get route export config error.');
+        console.debug(error.stack);
+      }
     },
     getRoutesConfig,
     ensureRoutesConfig,
