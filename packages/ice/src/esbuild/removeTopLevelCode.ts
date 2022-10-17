@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import consola from 'consola';
 import type { Plugin } from 'esbuild';
 import { parse, type ParserOptions } from '@babel/parser';
 import babelTraverse from '@babel/traverse';
@@ -34,13 +35,17 @@ const removeCodePlugin = (keepExports: string[], transformInclude: (id: string) 
           isTS = true;
           parserOptions.plugins.push('typescript', 'decorators-legacy');
         }
-        const ast = parse(source, parserOptions);
-        traverse(ast, removeTopLevelCode(keepExports));
-        const contents = generate(ast).code;
-        return {
-          contents,
-          loader: isTS ? 'tsx' : 'jsx',
-        };
+        try {
+          const ast = parse(source, parserOptions);
+          traverse(ast, removeTopLevelCode(keepExports));
+          const contents = generate(ast).code;
+          return {
+            contents,
+            loader: isTS ? 'tsx' : 'jsx',
+          };
+        } catch (error) {
+          consola.debug('Remove top level code error.', error.stack);
+        }
       });
     },
   };

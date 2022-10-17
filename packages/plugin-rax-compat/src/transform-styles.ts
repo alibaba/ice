@@ -32,7 +32,7 @@ async function styleSheetLoader(source, type = 'css') {
   const { stylesheet } = css.parse(newContent);
 
   if (stylesheet.parsingErrors.length) {
-    throw new Error('StyleSheet Parsing Error occured.');
+    throw new Error('StyleSheet Parsing Error occurred.');
   }
 
   // getOptions can return null if no query passed.
