@@ -1,3 +1,6 @@
+/**
+ * This file which is imported by the runtime.tsx, is to avoid TS error.
+ */
 import type { IcestoreDispatch, IcestoreRootState } from '@ice/store';
 import { createStore } from '@ice/store';
 
