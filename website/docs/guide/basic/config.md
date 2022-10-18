@@ -1,6 +1,6 @@
 ---
 title: 构建配置
-order: 13
+order: 14
 ---
 
 ICE 支持常用的构建配置项，所有的配置项在 `ice.config.mts` 中设置。

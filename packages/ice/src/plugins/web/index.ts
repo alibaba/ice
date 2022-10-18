@@ -37,6 +37,8 @@ const plugin: Plugin = () => ({
         'Data',
         'Main',
         'history',
+        'useMounted',
+        'ClientOnly',
       ],
       source: '@ice/runtime',
     });
