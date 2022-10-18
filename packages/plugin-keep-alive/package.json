@@ -11,7 +11,7 @@
     "test": "__tests__"
   },
   "dependencies": {
-    "react-activation": "^0.7.0"
+    "react-activation": "^0.12.0"
   },
   "files": [
     "lib",
