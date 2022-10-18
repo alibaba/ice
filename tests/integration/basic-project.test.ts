@@ -43,6 +43,12 @@ describe(`build ${example}`, () => {
     expect(stats.size).toBeLessThan(1024 * 14);
   }, 120000);
 
+  test('ClientOnly Component', async () => {
+    await page.push('/client-only.html');
+    expect(await page.$$text('#mounted')).toStrictEqual(['Server']);
+    expect(await page.$$text('#page-url')).toStrictEqual([]);
+  });
+
   test('disable splitChunks', async () => {
     await buildFixture(example, {
       config: 'splitChunks.config.mts',
@@ -52,7 +58,7 @@ describe(`build ${example}`, () => {
     browser = res.browser;
 
     const files = fs.readdirSync(path.join(__dirname, `../../examples/${example}/build/js`), 'utf-8');
-    expect(files.length).toBe(8);
+    expect(files.length).toBe(10);
   }, 120000);
 
   test('render route config when downgrade to CSR.', async () => {
@@ -93,7 +99,7 @@ describe(`start ${example}`, () => {
     const routeManifest = fs.readFileSync(path.join(rootDir, '.ice/route-manifest.json'), 'utf-8');
     fs.writeFileSync(targetPath, routeContent);
     await page.reload();
-    expect(JSON.parse(routeManifest)[0].children.length).toBe(4);
+    expect(JSON.parse(routeManifest)[0].children.length).toBe(5);
   }, 120000);
 
   test('update watched file: global.css', () => {
@@ -138,6 +144,13 @@ describe(`start ${example}`, () => {
       await page.$$eval('script[src*="lodash"]', (els) => els.length),
     ).toBe(1);
   }, 120000);
+
+  test('ClientOnly Component', async () => {
+    await page.push('/client-only');
+    expect(await page.$$text('#mounted')).toStrictEqual(['Client']);
+    const pageUrlText = await page.$$text('#page-url');
+    expect((pageUrlText as string[])[0].endsWith('/client-only')).toBeTruthy();
+  });
 
   afterAll(async () => {
     await browser.close();

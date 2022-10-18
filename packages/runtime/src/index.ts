@@ -34,6 +34,8 @@ import {
 import dataLoader from './dataLoader.js';
 import getAppConfig, { defineAppConfig } from './appConfig.js';
 import { routerHistory as history } from './history.js';
+import ClientOnly from './ClientOnly.js';
+import useMounted from './useMounted.js';
 
 export {
   getAppConfig,
@@ -59,6 +61,9 @@ export {
   useSearchParams,
   useLocation,
   history,
+
+  ClientOnly,
+  useMounted,
 };
 
 export type {
