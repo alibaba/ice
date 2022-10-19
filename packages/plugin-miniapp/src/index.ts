@@ -20,7 +20,9 @@ const plugin: Plugin<MiniappOptions> = () => ({
         getAppConfig: async () => ({}),
         getRoutesConfig: async () => ({}),
       };
-      const miniappRuntime = '@ice/runtime/miniapp';
+      // Recommand add @ice/miniapp-runtime in dependencies when use pnpm.
+      // Use `@ice/miniapp-runtime/esm/app` for vscode type hint.
+      const miniappRuntime = '@ice/miniapp-runtime/esm/app';
       generator.addExport({
         specifier: [
           'defineAppConfig',

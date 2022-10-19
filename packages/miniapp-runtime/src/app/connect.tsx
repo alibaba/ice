@@ -1,17 +1,17 @@
+import { EMPTY_OBJ, hooks } from '@ice/shared';
+import type { MiniappAppConfig } from '@ice/types';
+import React, { createElement } from 'react';
+import * as ReactDOM from 'react-dom';
+import { ConfigProvider, DataProvider } from '@ice/runtime';
+import { Current, getPageInstance,
+  incrementId, injectPageInstance,
+} from '../index.js';
 import type {
   MountOptions,
   AppInstance, Instance,
   PageLifeCycle, PageProps,
   ReactAppInstance, ReactPageComponent,
-} from '@ice/miniapp-runtime';
-import { Current, getPageInstance,
-  incrementId, injectPageInstance,
-} from '@ice/miniapp-runtime';
-import { EMPTY_OBJ, hooks } from '@ice/shared';
-import type { MiniappAppConfig } from '@ice/types';
-import React, { createElement } from 'react';
-import * as ReactDOM from 'react-dom';
-import { ConfigProvider, DataProvider } from '../RouteContext.js';
+} from '../index.js';
 import enableHtmlRuntime from './html/runtime.js';
 import { reactMeta } from './react-meta.js';
 import { ensureIsArray, HOOKS_APP_ID, isClassComponent, setDefaultDescriptor, setRouterParams } from './utils.js';

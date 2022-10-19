@@ -3,7 +3,6 @@
  * Licensed under the MIT License
  * https://github.com/NervJS/taro/blob/next/LICENSE
  * */
-
 import * as path from 'path';
 import { createRequire } from 'node:module';
 import fg from 'fast-glob';
@@ -41,7 +40,6 @@ const getMiniappTask = ({
   const entry = getEntry(rootDir, runtimeDir);
   const mode = command === 'start' ? 'development' : 'production';
   const { template, globalObject, fileType } = getMiniappPlatformConfig(platform);
-
   const { plugins, module } = getMiniappWebpackConfig({
     rootDir,
     template,
@@ -67,6 +65,7 @@ const getMiniappTask = ({
       '@': path.join(rootDir, 'src'),
       // 小程序使用 regenerator-runtime@0.11
       'regenerator-runtime': require.resolve('regenerator-runtime'),
+      '@ice/miniapp-runtime/esm/app': require.resolve('@ice/miniapp-runtime/app'),
       // 开发组件库时 link 到本地调试，runtime 包需要指向本地 node_modules 顶层的 runtime，保证闭包值 Current 一致，shared 也一样
       '@ice/miniapp-runtime': require.resolve('@ice/miniapp-runtime'),
       '@ice/shared': require.resolve('@ice/shared'),

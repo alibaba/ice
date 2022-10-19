@@ -26,7 +26,8 @@
     "@ice/miniapp-runtime": "^1.0.0",
     "@ice/miniapp-react-dom": "^1.0.0",
     "@ice/miniapp-loader": "^1.0.0",
-    "@ice/bundles": "^0.1.0"
+    "@ice/bundles": "^0.1.0",
+    "regenerator-runtime": "^0.11.0"
   },
   "devDependencies": {
     "@ice/types": "^1.0.0",
