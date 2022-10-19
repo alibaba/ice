@@ -3,13 +3,13 @@ title: 构建配置
 order: 14
 ---
 
-ICE 支持常用的构建配置项，所有的配置项在 `ice.config.mts` 中设置。
+ice.js 支持常用的构建配置项，所有的配置项在 `ice.config.mts` 中设置。
 
 ## 配置文件
 
 ### 构建配置文件
 
-为了获取良好的类型提示，ICE 推荐以 `ice.config.mts` 作为配置文件：
+为了获取良好的类型提示，ice.js 推荐以 `ice.config.mts` 作为配置文件：
 
 ```js
 import { defineConfig } from '@ice/app';
@@ -80,7 +80,7 @@ console.log(ASSETS_VERSION);
 console.log(process.env.TEST);
 ```
 
-对于运行时变量，ICE 更加推荐通过[环境变量](./env.md)的方式注入。
+对于运行时变量，ice.js 更加推荐通过[环境变量](./env.md)的方式注入。
 
 #### dataLoader
 
@@ -248,7 +248,7 @@ export default defineConfig({
 });
 ```
 
-> ICE 内置通过 `swc` 提升编译体验，如果在 `transform` 配置上过多依赖 babel 等工具将可以能造成编译性能瓶颈
+> ice.js 内置通过 `swc` 提升编译体验，如果在 `transform` 配置上过多依赖 babel 等工具将可以能造成编译性能瓶颈
 
 ### ssr
 
@@ -345,7 +345,7 @@ export default defineConfig({
 - 类型：`{ exportDefaultFrom: boolean; functionBind: boolean; }`
 - 默认值：`undefined`
 
-ICE 内置了大量 ES 语法，便于开发者进行编码。对于 [proposal-export-default-from](https://github.com/tc39/proposal-export-default-from) 和 [proposal-bind-operator](https://github.com/tc39/proposal-bind-operator) 由于其提案进度较慢，我们并不推荐使用。如果希望支持该语法，可以主动配置 `syntaxFeatures` 进行启用。
+ice.js 内置了大量 ES 语法支持，便于开发者进行编码。对于 [proposal-export-default-from](https://github.com/tc39/proposal-export-default-from) 和 [proposal-bind-operator](https://github.com/tc39/proposal-bind-operator) 由于其提案进度较慢，我们并不推荐使用。如果希望支持该语法，可以主动配置 `syntaxFeatures` 进行启用。
 
 ### tsChecker
 
@@ -408,7 +408,7 @@ export default defineConfig({
 - 类型：`(config: WebpackConfig, taskConfig: TaskConfig) => WebpackConfig`
 - 默认值：`true`
 
-ICE 默认基于 webpack 进行构建，在上述提供的构建配置无法满足的情况下，用户可以定制 webpack 配置：
+ice.js 默认基于 webpack 5 进行构建，在上述提供的构建配置无法满足的情况下，用户可以定制 webpack 配置：
 
 ```js
 import { defineConfig } from '@ice/app';
@@ -425,5 +425,5 @@ export default defineConfig({
 });
 ```
 
-> ICE 对 webpack 构建配置进行了定制，并借助 esbuild 等工具提升用户开发体验，直接修改 webpack 配置的方式并不推荐。
+> ice.js 对 webpack 构建配置进行了定制，并借助 esbuild 等工具提升用户开发体验，直接修改 webpack 配置的方式并不推荐。
 > 如有定制需求欢迎👏 PR 或反馈：<https://github.com/alibaba/ice/issues>

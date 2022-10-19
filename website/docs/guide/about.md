@@ -17,7 +17,7 @@ order: 1
 
 在应用框架之上，我们还提供了 NPM 包开发工具 [ICE PKG](https://pkg.ice.work)：
 
-- 提供 React 组件开发、Node.js 模块开发、前端通用库等[多场景需求](https://pkg.ice.work/scenarios/component)
+- 提供 React 组件开发、Node.js 模块开发、前端通用库等[多场景需求](https://pkg.ice.work/scenarios/react)
 - 组件开发提供基础研发范式，提供组件文档、示例、预览等功能，[查看文档](https://pkg.ice.work/guide/preview)
 - 更多场景可以通过插件的方式完成定制，查看[插件开发](https://pkg.ice.work/reference/plugins-development)
 
@@ -41,7 +41,7 @@ Webpack 只提供了基础的构建能力，ice.js 在此基础上扩展了很�
 
 ### 我正在使用 ice.js 2，需要升级到 ice.js 3 吗？
 
-ice.js 3 相比之前的版本，增加了更多对移动端能力的优化和适配，同时提升了页面性能体验。对于新项目推荐 ice.js 3 进行开发，对于历史项目原先的 ice.js 2 依然是可用的，并且我们仍会持续修复已知的问题。
+ice.js 3 相比之前的版本，增加了更多对移动端能力的优化和适配，同时提升了页面性能体验。对于新项目推荐 ice.js 3 进行开发，对于历史项目原先的 ice.js 2.x 依然是可用的，并且我们仍会持续修复已知的问题。
 
 如果你的页面会同时运行在移动端和桌面端，使用 ice.js 3 可能会是更好的选择，亦或者是你对 ice.js 3 提供的更新的构建工具链、更优更多的解决方案感兴趣，你都可以选择升级到 ice.js 3。
 
@@ -57,7 +57,7 @@ ice.js 3 相比之前的版本，增加了更多对移动端能力的优化和�
 
 应用框架 ice.js 默认使用的是 React 18，你可以查看 React 18 官方说明[对 JavaScript 环境的要求](https://zh-hans.reactjs.org/docs/javascript-environment-requirements.html)。如果你支持旧的浏览器和设备，可能需要引入对应的 Polyfill。
 
-此外，飞冰官方 React 物料默认使用 React 16+ 进行开发，所以通常情况下这些物料在 ICE 中是可以正常运行的，如果你遇到任何问题，也可以通过 [Issue](https://github.com/alibaba/ice/issues) 或其它方式反馈给我们。
+此外，飞冰官方 React 物料默认使用 React 16+ 进行开发，所以通常情况下这些物料在 ice.js 中是可以正常运行的，如果你遇到任何问题，也可以通过 [Issue](https://github.com/alibaba/ice/issues) 或其它方式反馈给我们。
 
 ### 飞冰可以使用哪些 UI 组件？
 

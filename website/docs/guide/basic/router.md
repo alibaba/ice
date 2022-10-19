@@ -45,7 +45,7 @@ export default function Home() {
 
 ## 路由跳转
 
-ICE 通过 `Link` 组件，来提供路由间的跳转能力。基于 `Link` 组件，可以只加载下一个页面相比于当前页面差异化的 Bundle 进行渲染，以达到更好的性能体验。
+ice.js 通过 `Link` 组件，来提供路由间的跳转能力。基于 `Link` 组件，可以只加载下一个页面相比于当前页面差异化的 Bundle 进行渲染，以达到更好的性能体验。
 
 ```jsx
 // src/pages/index.tsx
