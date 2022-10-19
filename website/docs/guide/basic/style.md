@@ -5,7 +5,7 @@ order: 5
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-ICE 推荐使用原生 CSS + PostCSS 的方案编写样式，不建议使用 `less/sass` 之类的预编译方案，CSS 写法目前扩展支持了 `@import` 以及嵌套写法。
+ice.js 推荐使用原生 CSS + PostCSS 的方案编写样式，不建议使用 `less/sass` 之类的预编译方案，CSS 写法目前扩展支持了 `@import` 以及嵌套写法。
 
 <Tabs>
 <TabItem value="css" label="index.css">
@@ -40,7 +40,7 @@ function Home() {
 </TabItem>
 </Tabs>
 
-> ICE 同时支持 `less/scss` 预编译器，只要保证文件后缀匹配即可。
+> ice.js 同时支持 `less/scss` 预编译器，只要保证文件后缀匹配即可。
 
 ## 全局样式
 
@@ -125,6 +125,14 @@ export default function () {
 - [CSS Modules 详解及 React 中实践](https://zhuanlan.zhihu.com/p/20495964)
 
 ## 常见问题
+
+### ice.js 支持 rpx 吗
+
+ice.js 原生支持 `rpx` 单位。在无线端中，阿里巴巴集团标准统一使用 `rpx` 作为响应式长度单位。你可以直接在样式文件中使用 rpx，不需要担心转换的问题。
+
+> rpx（responsive pixel），可以根据屏幕宽度进行自适应。规定屏幕宽为 750rpx。以 iPhone6 为例，屏幕宽度为 375px，共有 750 个物理像素，则 750rpx = 375px = 750 物理像素，1rpx = 0.5px = 1物理像素。
+
+在浏览器中，ice.js 会将 rpx 会转换为 vw 进行渲染，其转换关系为：750rpx = 100vw，即 1rpx = 1/7.5vw，保留 5 位小数。
 
 ### 如何覆盖全局基础组件（next/antd）样式
 
