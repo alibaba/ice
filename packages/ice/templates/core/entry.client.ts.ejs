@@ -1,7 +1,6 @@
 import { runClientApp, getAppConfig } from '<%- iceRuntimePath %>';
 import * as app from '@/app';
 import runtimeModules from './runtimeModules';
-
 <% if (enableRoutes) { %>
 import routes from './routes';
 <% } %>
@@ -13,9 +12,7 @@ const getRouterBasename = () => {
 runClientApp({
   app,
   runtimeModules,
-  <% if (enableRoutes) { %>
-  routes,
-  <% } %>
+  <% if (enableRoutes) { %>routes,<% } %>
   basename: getRouterBasename(),
   hydrate: <%- hydrate %>,
   memoryRouter: <%- memoryRouter || false %>,

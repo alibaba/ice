@@ -1,12 +1,11 @@
-import type {
-  AppInstance,
-  Func,
-  PageLifeCycle,
-} from '@ice/miniapp-runtime';
-import { Current, getPageInstance,
-  injectPageInstance,
-} from '@ice/miniapp-runtime';
 import { isArray, isFunction } from '@ice/shared';
+import type { AppInstance, PageLifeCycle } from '../dsl/instance.js';
+import type { Func } from '../interface/index.js';
+import { Current } from '../current.js';
+import {
+  getPageInstance,
+  injectPageInstance,
+} from '../dsl/common.js';
 
 import { reactMeta } from './react-meta.js';
 import { HOOKS_APP_ID } from './utils.js';

@@ -15,7 +15,6 @@ import type {
   AppRouterProps,
   ComponentWithChildren,
 } from '@ice/types';
-import DefaultAppRouter from './AppRouter.js';
 import { useData, useConfig } from './RouteContext.js';
 import { useAppContext } from './AppContext.js';
 
@@ -37,7 +36,6 @@ class Runtime {
       const root = ReactDOM.createRoot(container);
       root.render(element);
     };
-    this.AppRouter = DefaultAppRouter;
     this.RouteWrappers = [];
   }
 
@@ -97,7 +95,6 @@ class Runtime {
     });
   };
 
-  // for plugin-icestark
   public setAppRouter: SetAppRouter = (AppRouter) => {
     this.AppRouter = AppRouter;
   };

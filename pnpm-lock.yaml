@@ -210,6 +210,7 @@ importers:
   examples/miniapp-project:
     specifiers:
       '@ice/app': workspace:*
+      '@ice/miniapp-runtime': workspace:*
       '@ice/plugin-miniapp': workspace:*
       '@ice/runtime': workspace:*
       '@types/react': ^18.0.0
@@ -222,6 +223,7 @@ importers:
       webpack: ^5.73.0
     dependencies:
       '@ice/app': link:../../packages/ice
+      '@ice/miniapp-runtime': link:../../packages/miniapp-runtime
       '@ice/plugin-miniapp': link:../../packages/plugin-miniapp
       '@ice/runtime': link:../../packages/runtime
       ahooks: 3.7.1_react@18.2.0
@@ -729,7 +731,7 @@ importers:
       path-to-regexp: ^6.2.0
       react: ^18.2.0
       react-router: ^6.3.0
-      regenerator-runtime: ^0.11.0
+      regenerator-runtime: ^0.13.0
       resolve.exports: ^1.1.0
       semver: ^7.3.5
       temp: ^0.9.4
@@ -764,7 +766,7 @@ importers:
       mrmime: 1.0.1
       open: 8.4.0
       path-to-regexp: 6.2.1
-      regenerator-runtime: 0.11.1
+      regenerator-runtime: 0.13.9
       resolve.exports: 1.1.0
       semver: 7.3.7
       temp: 0.9.4
@@ -831,11 +833,24 @@ importers:
 
   packages/miniapp-runtime:
     specifiers:
+      '@ice/runtime': ^1.0.0
       '@ice/shared': ^1.0.0
       '@ice/types': ^1.0.0
+      '@types/react': ^18.0.0
+      history: ^5.3.0
+      miniapp-history: ^0.1.7
+      react: ^18.1.0
+      react-dom: ^18.1.0
     dependencies:
+      '@ice/runtime': link:../runtime
       '@ice/shared': link:../shared
       '@ice/types': link:../types
+      miniapp-history: 0.1.7
+    devDependencies:
+      '@types/react': 18.0.21
+      history: 5.3.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
 
   packages/plugin-antd:
     specifiers:
@@ -918,6 +933,7 @@ importers:
       consola: ^2.15.3
       fast-glob: ^3.2.11
       html-minifier: ^4.0.0
+      regenerator-runtime: ^0.11.0
       sax: ^1.2.4
       webpack: ^5.73.0
     dependencies:
@@ -931,6 +947,7 @@ importers:
       consola: 2.15.3
       fast-glob: 3.2.12
       html-minifier: 4.0.0
+      regenerator-runtime: 0.11.1
       sax: 1.2.4
     devDependencies:
       '@ice/types': link:../types
@@ -1020,7 +1037,7 @@ importers:
       react-dom: ^18.2.0
       regenerator-runtime: ^0.13.9
     dependencies:
-      '@ice/store': 2.0.3
+      '@ice/store': 2.0.3_biqbaboplfbrettd7655fr4n2y
       fast-glob: 3.2.12
       micromatch: 4.0.5
     devDependencies:
@@ -1066,24 +1083,18 @@ importers:
   packages/runtime:
     specifiers:
       '@ice/jsx-runtime': ^0.1.0
-      '@ice/miniapp-runtime': ^1.0.0
-      '@ice/shared': ^1.0.0
       '@ice/types': ^1.0.0
       '@types/react': ^18.0.8
       '@types/react-dom': ^18.0.3
       history: ^5.3.0
-      miniapp-history: ^0.1.7
       react: ^18.0.0
       react-dom: ^18.0.0
       react-router-dom: ^6.2.2
       regenerator-runtime: ^0.13.9
     dependencies:
       '@ice/jsx-runtime': link:../jsx-runtime
-      '@ice/miniapp-runtime': link:../miniapp-runtime
-      '@ice/shared': link:../shared
       '@ice/types': link:../types
       history: 5.3.0
-      miniapp-history: 0.1.7
       react-router-dom: 6.4.1_biqbaboplfbrettd7655fr4n2y
     devDependencies:
       '@types/react': 18.0.21
@@ -4236,14 +4247,15 @@ packages:
       - ts-node
     dev: true
 
-  /@ice/store/2.0.3:
+  /@ice/store/2.0.3_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-U1YcY380bejqc3+WtkEqIwE6HnjBjSKd4IWFyq8gakPeAvA6fEJ58Qx9hzscYxlogWbiCb0Wm9kqkcDU+njx7g==}
     peerDependencies:
       react: ^16.8 || ^17 || ^18
     dependencies:
       immer: 9.0.15
       lodash.isfunction: 3.0.9
-      react-redux: 7.2.9
+      react: 18.2.0
+      react-redux: 7.2.9_biqbaboplfbrettd7655fr4n2y
       redux: 4.2.0
       redux-thunk: 2.4.1_redux@4.2.0
     transitivePeerDependencies:
@@ -16131,7 +16143,7 @@ packages:
       scheduler: 0.21.0
     dev: false
 
-  /react-redux/7.2.9:
+  /react-redux/7.2.9_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-Gx4L3uM182jEEayZfRbI/G11ZpYdNAnBs70lFVMNdHJI76XYtR+7m0MN+eAs7UHBPhWXcnFPaS+9owSCJQHNpQ==}
     peerDependencies:
       react: ^16.8.3 || ^17 || ^18
@@ -17760,6 +17772,7 @@ packages:
       serialize-javascript: 6.0.0
       terser: 5.14.2
       webpack: 5.74.0_esbuild@0.14.54
+    dev: true
 
   /terser-webpack-plugin/5.3.5_webpack@5.74.0:
     resolution: {integrity: sha512-AOEDLDxD2zylUGf/wxHxklEkOe2/r+seuyOWujejFrIxHf11brA1/dWQNIgXa1c6/Wkxgu7zvv0JhOWfc2ELEA==}
@@ -19239,6 +19252,7 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
+    dev: true
 
   /webpackbar/5.0.2_webpack@5.74.0:
     resolution: {integrity: sha512-BmFJo7veBDgQzfWXl/wwYXr/VFus0614qZ8i9znqcl9fnEdiVkdbi0TedLQ6xAK92HZHDJ0QmyQ0fmuZPAgCYQ==}

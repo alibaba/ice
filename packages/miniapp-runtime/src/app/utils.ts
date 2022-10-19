@@ -1,6 +1,6 @@
-import { Current } from '@ice/miniapp-runtime';
-import { isFunction } from '@ice/shared';
 import type React from 'react';
+import { isFunction } from '@ice/shared';
+import { Current } from '../current.js';
 
 export const HOOKS_APP_ID = 'ice-miniapp';
 

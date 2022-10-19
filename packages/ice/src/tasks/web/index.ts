@@ -1,8 +1,10 @@
 import * as path from 'path';
+import { createRequire } from 'module';
 import type { Config } from '@ice/types';
 import { CACHE_DIR, RUNTIME_TMP_DIR } from '../../constant.js';
 import { getRoutePathsFromCache } from '../../utils/getRoutePaths.js';
 
+const require = createRequire(import.meta.url);
 const getWebTask = ({ rootDir, command, dataCache }): Config => {
   // basic task config of web task
   const defaultLogging = command === 'start' ? 'summary' : 'summary assets';
@@ -15,6 +17,8 @@ const getWebTask = ({ rootDir, command, dataCache }): Config => {
       '@': path.join(rootDir, 'src'),
       // set alias for webpack/hot while webpack has been prepacked
       'webpack/hot': '@ice/bundles/compiled/webpack/hot',
+      // Get absolute path of `regenerator-runtime`, so it's unnecessary to add it to project dependencies
+      'regenerator-runtime': require.resolve('regenerator-runtime'),
     },
     swcOptions: {
       // getData is built by data-loader

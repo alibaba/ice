@@ -1,6 +1,5 @@
 import React from 'react';
-import AppErrorBoundary from '../AppErrorBoundary.js';
-import { useAppContext } from '../AppContext.js';
+import { AppErrorBoundary, useAppContext } from '@ice/runtime';
 import { AppWrapper } from './connect.js';
 
 interface Props {

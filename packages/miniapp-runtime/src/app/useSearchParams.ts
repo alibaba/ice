@@ -1,4 +1,4 @@
-import { Current } from '@ice/miniapp-runtime';
+import { Current } from '../current.js';
 
 export default function useSearchParams() {
   const searchParams = Current.router.params;

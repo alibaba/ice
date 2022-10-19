@@ -1,5 +1,5 @@
-import type { Element } from '@ice/miniapp-runtime';
 import { hooks, Shortcuts, warn } from '@ice/shared';
+import type { Element } from '../../dom/element.js';
 
 import {
   defineMappedProp,
