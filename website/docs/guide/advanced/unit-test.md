@@ -3,23 +3,23 @@ title: 单元测试
 order: 8
 ---
 
-icejs 不耦合任何一个测试框架，开发者可自由选择。目前提供开箱即用的 [jest](https://jestjs.io/) 和 [vitest](https://vitest.dev/) 配置，以便快速开始单元测试。
-
-<details>
+<details open>
   <summary>示例</summary>
   <ul>
     <li>
       <a href="https://github.com/ice-lab/ice-next/tree/master/examples/with-jest" target="_blank" rel="noopener noreferrer">
-        icejs with jest
+        with-jest
       </a>
     </li>
     <li>
       <a href="https://github.com/ice-lab/ice-next/tree/master/examples/with-vitest" target="_blank" rel="noopener noreferrer">
-        icejs with vitest
+        with-vitest
       </a>
     </li>
   </ul>
 </details>
+
+ice.js 不耦合任何一个测试框架，开发者可自由选择。目前提供开箱即用的 [jest](https://jestjs.io/) 和 [vitest](https://vitest.dev/) 配置，以便快速开始单元测试。
 
 ## Jest
 
@@ -41,7 +41,7 @@ import { defineJestConfig } from '@ice/app';
 export default defineJestConfig({});
 ```
 
-`defineJestConfig` 方法返回的是 icejs 默认配置好的 Jest 配置，支持传入自定义的 [Jest 配置](https://jestjs.io/docs/configuration)。
+`defineJestConfig` 方法返回的是 ice.js 默认配置好的 Jest 配置，支持传入自定义的 [Jest 配置](https://jestjs.io/docs/configuration)。
 
 `defineJestConfig` 入参支持两种写法：
 
@@ -169,7 +169,7 @@ import { defineVitestConfig } from '@ice/app';
 
 export default defineVitestConfig({});
 ```
-`defineVitestConfig` 方法返回的是 icejs 默认配置好的 vitest 配置，支持传入自定义的 [vitest 配置](https://vitest.dev/config/)。
+`defineVitestConfig` 方法返回的是 ice.js 默认配置好的 vitest 配置，支持传入自定义的 [vitest 配置](https://vitest.dev/config/)。
 
 defineVitestConfig 入参支持三种写法：
 

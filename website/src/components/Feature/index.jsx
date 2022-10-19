@@ -16,29 +16,29 @@ const data = [
   {
     title: '最佳实践',
     decs: '内置数据请求、路由、状态、构建配置、日志输出等最佳实践',
-    url: '/docs/guide/basic/ssg',
+	url: '/docs/guide/basic/directory',
   },
   {
     title: '应用模式',
     decs: '支持 SPA、服务端渲染 SSR 以及静态构建 SSG 等不同研发模式',
-    url: '/docs/guide/advanced/mpa',
+	url: '/docs/guide/basic/ssr',
   },
   {
     title: '插件化',
     decs: '通过插件将框架能力进行解耦，同时开发者也可以基于插件扩展框架能力',
-    url: '/docs/plugin/develop/start',
+	url: '/docs/plugins/plugin-dev',
   },
   {
     title: '领域方案',
-    decs: '提供丰富的领域方案，如微前端 ICESTARK、包开发 ICE PKG、Serverless 一体化方案等',
-    url: '/docs/plugin/develop/start',
+	decs: '提供丰富的领域方案，如包开发 ICE PKG、微前端 ICESTARK 等等',
+	url: 'https://pkg.ice.work/',
   },
 ];
 
 function Feature() {
   return (
     <AreaWrapper
-      title={'基于 React 的应用研发框架 ICE 3'}
+      title={'基于 React 的应用研发框架 ice.js 3'}
       decs={'开箱即用的研发框架，内置工程配置、状态管理、数据请求、权限管理等最佳实践，让开发者可以更加专注于业务逻辑'}
       contentStyle={styles.container}
       isBlock

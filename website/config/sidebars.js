@@ -13,15 +13,15 @@ module.exports = {
     // 'guide/practice',
     {
       type: 'category',
-      label: 'ICE 指南',
+      label: '指南',
       collapsed: false,
       items: getDocsFromDir('guide/basic'),
     },
     {
       type: 'category',
-      label: '最佳实践',
+      label: '进阶',
       collapsed: false,
-      items: getDocsFromDir('guide/best-practices'),
+      items: getDocsFromDir('guide/advanced'),
     },
     {
       type: 'category',
