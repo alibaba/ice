@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.5
+
+- [fix] check router status by userConfig.
+
 ## 2.5.4
 
 - [fix] compatible with router `false`.
