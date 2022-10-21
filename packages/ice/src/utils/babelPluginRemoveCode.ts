@@ -10,7 +10,7 @@ const removeUnreferencedCode = (nodePath: NodePath<t.Program>) => {
     if (!binding.referenced && binding.path.node) {
       const nodeType = binding.path.node.type;
       if (['VariableDeclarator', 'ImportSpecifier', 'FunctionDeclaration'].includes(nodeType)) {
-        if (nodeType === 'ImportSpecifier' && (binding.path.parentPath.node as t.ImportDeclaration).specifiers.length === 1) {
+        if (nodeType === 'ImportSpecifier' && (binding.path.parentPath.node as t.ImportDeclaration)?.specifiers.length === 1) {
           binding.path.parentPath.remove();
         } else if (nodeType === 'VariableDeclarator') {
           if (binding.identifier === binding.path.node.id) {
