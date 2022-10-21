@@ -76,6 +76,7 @@ export function Scripts(props: React.ScriptHTMLAttributes<HTMLScriptElement>) {
     scripts.unshift(`${assetsManifest.publicPath}${assetsManifest.dataLoader}`);
   }
 
+  const matchedIds = matches.map(match => match.route.id);
   const routePath = getCurrentRoutePath(matches);
   const windowContext: WindowContext = {
     appData,
@@ -83,6 +84,7 @@ export function Scripts(props: React.ScriptHTMLAttributes<HTMLScriptElement>) {
     routesConfig,
     routePath,
     downgrade,
+    matchedIds,
   };
 
   return (

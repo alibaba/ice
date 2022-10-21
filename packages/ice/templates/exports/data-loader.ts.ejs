@@ -1,7 +1,15 @@
 import { dataLoader } from '@ice/runtime';
 <% if(hasExportAppData) {-%>import { getAppData } from '@/app';<% } -%>
 
+<% if(dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
+
 <%- loaders %>
 <% if(hasExportAppData) {-%>loaders['__app'] = getAppData;<% } -%>
 
-dataLoader.init(loaders);
+<% if(!dataLoaderImport.imports) {-%>
+let fetcher = (options) => {
+  window.fetch(options.url, options);
+}  
+<% } -%>
+
+dataLoader.init(loaders, fetcher);
