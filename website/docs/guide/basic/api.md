@@ -72,3 +72,7 @@ export function Home () {
   );
 };
 ```
+
+### `<KeepAliveOutlet />`
+
+缓存所有路由组件的状态。详细使用方式参考 [Keep Alive 文档](../advanced/keep-alive/#缓存路由组件)。

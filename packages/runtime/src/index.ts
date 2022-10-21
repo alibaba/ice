@@ -37,6 +37,7 @@ import AppRouter from './AppRouter.js';
 import AppErrorBoundary from './AppErrorBoundary.js';
 import getAppConfig, { defineAppConfig } from './appConfig.js';
 import { routerHistory as history } from './history.js';
+import KeepAliveOutlet from './KeepAliveOutlet.js';
 import ClientOnly from './ClientOnly.js';
 import useMounted from './useMounted.js';
 
@@ -69,6 +70,8 @@ export {
   useSearchParams,
   useLocation,
   history,
+
+  KeepAliveOutlet,
   AppRouter,
   AppErrorBoundary,
   ClientOnly,
