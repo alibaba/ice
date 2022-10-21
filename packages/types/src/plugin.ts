@@ -104,6 +104,7 @@ export interface ExtendsPluginAPI {
   generator: {
     addExport: AddExport;
     addExportTypes: AddExport;
+    addRouteTypes: AddExport;
     addRenderFile: AddRenderFile;
     addRenderTemplate: AddTemplateFiles;
     modifyRenderData: ModifyRenderData;

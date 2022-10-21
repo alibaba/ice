@@ -1,20 +1,16 @@
-import type { AppConfig as DefaultAppConfig, GetAppData, AppData } from '@ice/runtime';
+import type { AppConfig, GetAppData, RouteConfig as DefaultRouteConfig } from '@ice/runtime';
+<%- routeConfigTypes.imports -%>
 
-<%- configTypes.imports -%>
 
-<% if (configTypes.imports) {-%>
-interface ExtendsAppConfig extends DefaultAppConfig {
-  <% if (configTypes.imports) { %>
-    <%- configTypes.exports %>
-  <% } %>
-};
-
-export type AppConfig = ExtendsAppConfig;
+<% if (routeConfigTypes.imports) {-%>
+type ExtendsRouteConfig = <% if (routeConfigTypes.imports) { %><%- routeConfigTypes.exportNames.join(' & ') %><% } %>;
 <% } else { -%>
-export type AppConfig = DefaultAppConfig;
+type ExtendsRouteConfig = {};
 <% } -%>
+type RouteConfig = DefaultRouteConfig<ExtendsRouteConfig>;
 
-export { 
+export type {
+  AppConfig,
   GetAppData,
-  AppData
-}
+  RouteConfig,
+};

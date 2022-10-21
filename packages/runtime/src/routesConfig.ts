@@ -110,7 +110,7 @@ const DOMAttributeNames: Record<string, string> = {
   noModule: 'noModule',
 };
 
-type ElementProps = RouteConfig['meta'] | RouteConfig['links'] | RouteConfig['scripts'];
+type ElementProps = RouteConfig['meta'][0] | RouteConfig['links'][0] | RouteConfig['scripts'][0];
 
 /**
  * map element props to dom

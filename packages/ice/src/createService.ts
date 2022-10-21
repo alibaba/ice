@@ -62,6 +62,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     addExportTypes: (exportData: ExportData) => {
       generator.addExport('frameworkTypes', exportData);
     },
+    addRouteTypes: (exportData: ExportData) => {
+      generator.addExport('routeConfigTypes', exportData);
+    },
     addRenderFile: generator.addRenderFile,
     addRenderTemplate: generator.addTemplateFiles,
     modifyRenderData: generator.modifyRenderData,
