@@ -2,3 +2,4 @@ packages:
   - 'packages/*'
   - 'examples/*'
   - 'website'
+  - '!examples/with-keep-alive/'
