@@ -136,11 +136,16 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
         const { code } = output;
         let { map } = output;
         return { code, map };
-      } catch (e) {
+      } catch (error) {
         // Catch error for unhandled promise rejection.
-        // In some cases, this referred to undefined.
-        if (this) this.error(e);
-        return { code: null, map: null };
+        if (this) {
+          // Handled by unplugin.
+          this.error(error);
+          return { code: null, map: null };
+        } else {
+          // Handled by webpack.
+          throw error;
+        }
       }
     },
   };
