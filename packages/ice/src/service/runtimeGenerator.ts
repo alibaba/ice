@@ -8,7 +8,7 @@ import type {
   AddExport,
   RemoveExport,
   AddContent,
-  GetExportStr,
+  GetExportData,
   ParseRenderData,
   Render,
   RenderFile,
@@ -38,6 +38,7 @@ interface Options {
 export function generateExports(exportList: ExportData[]) {
   const importStatements = [];
   let exportStatements = [];
+  let exportNames: string[] = [];
   exportList.forEach(data => {
     const { specifier, source, exportAlias, type } = data;
     const isDefaultImport = !Array.isArray(specifier);
@@ -50,6 +51,7 @@ export function generateExports(exportList: ExportData[]) {
       } else {
         exportStatements.push(`${specifierStr}${symbol}`);
       }
+      exportNames.push(specifierStr);
     });
   });
   return {
@@ -62,6 +64,7 @@ export function generateExports(exportList: ExportData[]) {
         };
      */
     exportStr: exportStatements.join('\n  '),
+    exportNames,
   };
 }
 
@@ -118,7 +121,7 @@ export default class Generator {
     this.rerender = false;
     this.renderTemplates = [];
     this.renderDataRegistration = [];
-    this.contentTypes = ['framework', 'frameworkTypes', 'configTypes'];
+    this.contentTypes = ['framework', 'frameworkTypes', 'routeConfigTypes'];
     // empty .ice before render
     fse.emptyDirSync(path.join(rootDir, targetDir));
     // add initial templates
@@ -166,13 +169,14 @@ export default class Generator {
     this.contentRegistration[registerKey].push(...content);
   };
 
-  private getExportStr: GetExportStr = (registerKey, dataKeys) => {
+  private getExportData: GetExportData = (registerKey, dataKeys) => {
     const exportList = this.contentRegistration[registerKey] || [];
-    const { importStr, exportStr } = generateExports(exportList);
+    const { importStr, exportStr, exportNames } = generateExports(exportList);
     const [importStrKey, exportStrKey] = dataKeys;
     return {
       [importStrKey]: importStr,
       [exportStrKey]: exportStr,
+      exportNames,
     };
   };
 
@@ -181,7 +185,7 @@ export default class Generator {
     const globalStyles = fg.sync([getGlobalStyleGlobPattern()], { cwd: this.rootDir });
     let exportsData = {};
     this.contentTypes.forEach(item => {
-      const data = this.getExportStr(item, ['imports', 'exports']);
+      const data = this.getExportData(item, ['imports', 'exports']);
       exportsData = Object.assign({}, exportsData, {
         [`${item}`]: data,
       });
