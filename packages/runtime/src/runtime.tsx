@@ -41,6 +41,10 @@ class Runtime {
 
   public getAppContext = () => this.appContext;
 
+  public setAppContext = (appContext: AppContext) => {
+    this.appContext = appContext;
+  };
+
   public getRender = () => {
     return this.render;
   };

@@ -50,15 +50,34 @@ export default async function runClientApp(options: RunClientAppOptions) {
   } = windowContext;
 
   const requestContext = getRequestContext(window.location);
-
-  if (!appData) {
-    appData = await getAppData(app, requestContext);
-  }
-
   const appConfig = getAppConfig(app);
   const history = createHistory(appConfig, { memoryRouter, routePath });
   // Set history for import it from ice.
   setHistory(history);
+
+  const appContext: AppContext = {
+    appExport: app,
+    routes,
+    appConfig,
+    appData,
+    routesData,
+    routesConfig,
+    assetsManifest,
+    basename,
+    routePath,
+  };
+
+  const runtime = new Runtime(appContext);
+  runtime.setAppRouter(DefaultAppRouter);
+  // Load static module before getAppData,
+  // so we can call request in in getAppData which provide by `plugin-request`.
+  if (runtimeModules.statics) {
+    await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
+  }
+
+  if (!appData) {
+    appData = await getAppData(app, requestContext);
+  }
 
   const matches = matchRoutes(
     routes,
@@ -74,30 +93,16 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routesConfig = getRoutesConfig(matches, routesData, routeModules);
   }
 
-  const appContext: AppContext = {
-    appExport: app,
-    routes,
-    appConfig,
-    appData,
-    routesData,
-    routesConfig,
-    assetsManifest,
-    matches,
-    routeModules,
-    basename,
-    routePath,
-  };
-
-  const runtime = new Runtime(appContext);
-  runtime.setAppRouter(DefaultAppRouter);
-
   if (hydrate && !downgrade) {
     runtime.setRender((container, element) => {
       ReactDOM.hydrateRoot(container, element);
     });
   }
-
-  await Promise.all(runtimeModules.map(m => runtime.loadModule(m)).filter(Boolean));
+  // Reset app context after app context is updated.
+  runtime.setAppContext({ ...appContext, matches, routeModules, routesData, routesConfig, appData });
+  if (runtimeModules.commons) {
+    await Promise.all(runtimeModules.commons.map(m => runtime.loadModule(m)).filter(Boolean));
+  }
 
   render({ runtime, history });
 }

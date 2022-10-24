@@ -1,15 +1,25 @@
 <% const moduleNames = []; -%>
-<% if (runtimeModules.length) {-%>
-  <% runtimeModules.filter((moduleInfo) => !moduleInfo.staticModule).forEach((runtimeModule, index) => { -%>
-    <% moduleNames.push('module' + index) %>
+<% const staticModuleNames = []; -%>
+<% if (runtimeModules.length) { -%>
+<% runtimeModules.forEach((runtimeModule, index) => { -%>
 import module<%= index %> from '<%= runtimeModule.path %>';
+    <% if (runtimeModule.staticRuntime) { -%>
+      <% staticModuleNames.push('module' + index) -%>
+    <% } else { -%>
+      <% moduleNames.push('module' + index) -%>
+    <% } -%>
   <% }) -%>
 <% } -%>
 
-const modules = [
+export const statics = [
+<% staticModuleNames.forEach((moduleName, index) => { -%>
+  <%= moduleName %>,
+<% }) -%>
+];
+export const commons = [
 <% moduleNames.forEach((moduleName, index) => { -%>
   <%= moduleName %>,
 <% }) -%>
 ];
 
-export default modules;
+
