@@ -57,7 +57,7 @@ describe('run server app', () => {
     }, {
       app: {},
       assetsManifest,
-      runtimeModules: [],
+      runtimeModules: { commons: [] },
       routes: basicRoutes,
       Document,
       renderMode: 'SSR',
@@ -77,7 +77,7 @@ describe('run server app', () => {
     }, {
       app: {},
       assetsManifest,
-      runtimeModules: [],
+      runtimeModules: { commons: [] },
       routes: basicRoutes,
       Document,
       renderMode: 'SSR',
@@ -96,7 +96,7 @@ describe('run server app', () => {
     }, {
       app: {},
       assetsManifest,
-      runtimeModules: [],
+      runtimeModules: { commons: [] },
       routes: basicRoutes,
       Document,
       renderMode: 'SSR',
@@ -116,7 +116,7 @@ describe('run server app', () => {
     }, {
       app: {},
       assetsManifest,
-      runtimeModules: [],
+      runtimeModules: { commons: [] },
       routes: basicRoutes,
       Document,
     });
@@ -139,7 +139,7 @@ describe('run server app', () => {
         },
       },
       assetsManifest,
-      runtimeModules: [],
+      runtimeModules: { commons: [] },
       routes: basicRoutes,
       Document,
     });
@@ -158,7 +158,7 @@ describe('run server app', () => {
     }, {
       app: {},
       assetsManifest,
-      runtimeModules: [],
+      runtimeModules: { commons: [] },
       routes: [{
         id: 'home',
         path: 'home',
@@ -197,7 +197,7 @@ describe('run server app', () => {
     }, {
       app: {},
       assetsManifest,
-      runtimeModules: [],
+      runtimeModules: { commons: [] },
       routes: basicRoutes,
       Document,
       renderMode: 'SSR',
