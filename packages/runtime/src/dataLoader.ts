@@ -101,10 +101,13 @@ function getLoaders(loadersConfig: LoadersConfig, fetcher: Function): Loaders {
 
   const loaders: Loaders = {};
   matchedIds.forEach(id => {
-    // If getData is an object, it is wrapped with a function.
-    loaders[id] = typeof loadersConfig[id] === 'function' ? loadersConfig[id] : () => {
-      return fetcher(loadersConfig[id]);
-    };
+    const loaderConfig = loadersConfig[id];
+    if (loaderConfig) {
+      // If getData is an object, it is wrapped with a function.
+      loaders[id] = typeof loaderConfig === 'function' ? loadersConfig[id] : () => {
+        return fetcher(loaderConfig);
+      };
+    }
   });
 
   return loaders;

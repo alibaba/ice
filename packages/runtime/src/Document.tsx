@@ -85,6 +85,7 @@ export function Scripts(props: React.ScriptHTMLAttributes<HTMLScriptElement>) {
     routePath,
     downgrade,
     matchedIds,
+    documentOnly,
   };
 
   return (
