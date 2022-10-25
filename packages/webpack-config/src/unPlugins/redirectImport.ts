@@ -4,16 +4,16 @@ import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import consola from 'consola';
 import MagicString from '@ice/bundles/compiled/magic-string/index.js';
 import { createFilter } from '@rollup/pluginutils';
-import type { ExportData } from '@ice/types/esm/generator.js';
+import type { DeclarationData } from '@ice/types/esm/generator.js';
 import type { Config } from '@ice/types';
 
 interface Options {
-  exportData: ExportData[];
+  exportData: DeclarationData[];
   targetSource: string;
 }
 
 interface PluginOptions {
-  exportData: ExportData[];
+  exportData: DeclarationData[];
   sourceMap?: Config['sourceMap'];
 }
 
@@ -40,11 +40,10 @@ const { init, parse } = moduleLexer;
 const AS_ALIAS_REG_EXP = /^(\w+)\s+as\s+(\w+)/;
 const ICE_REG_EXP = /import\s?(?:type)?\s?\{([\w*\s{},]*)\}\s+from\s+['"](.*)['"]/;
 
-export function parseRedirectData(data: ExportData[]): RedirectData {
+export function parseRedirectData(data: DeclarationData[]): RedirectData {
   const redirectData: RedirectData = {};
-  data.forEach(({ specifier, exportAlias, type, source }) => {
+  data.forEach(({ specifier, alias = {}, type, source }) => {
     const isDefault = typeof specifier === 'string';
-    const alias = exportAlias || {};
     (isDefault ? [specifier] : specifier).forEach((str) => {
       redirectData[str] = {
         type,
