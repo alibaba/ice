@@ -47,6 +47,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routesConfig,
     routePath,
     downgrade,
+    documentOnly,
   } = windowContext;
 
   const requestContext = getRequestContext(window.location);
@@ -93,7 +94,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routesConfig = getRoutesConfig(matches, routesData, routeModules);
   }
 
-  if (hydrate && !downgrade) {
+  if (hydrate && !downgrade && !documentOnly) {
     runtime.setRender((container, element) => {
       ReactDOM.hydrateRoot(container, element);
     });
