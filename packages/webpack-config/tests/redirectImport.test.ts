@@ -13,7 +13,7 @@ describe('redirect import', () => {
   }, {
     specifier: 'Head',
     source: 'react-helmet',
-    exportAlias: {
+    alias: {
       Head: 'Helmet',
     },
   }, {

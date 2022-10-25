@@ -5,10 +5,10 @@ import fg from 'fast-glob';
 import ejs from 'ejs';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type {
-  AddExport,
-  RemoveExport,
+  AddDeclaration,
+  RemoveDeclaration,
   AddContent,
-  GetExportData,
+  GetDeclarations,
   ParseRenderData,
   Render,
   RenderFile,
@@ -18,7 +18,7 @@ import type {
   RenderDataRegistration,
   RenderTemplate,
   RenderData,
-  ExportData,
+  DeclarationData,
   Registration,
   TemplateOptions,
 } from '@ice/types/esm/generator.js';
@@ -35,27 +35,27 @@ interface Options {
   templates?: (string | TemplateOptions)[];
 }
 
-export function generateExports(exportList: ExportData[]) {
-  const importStatements = [];
-  let exportStatements = [];
+export function generateDeclaration(exportList: DeclarationData[]) {
+  const importDeclarations = [];
+  let exportDeclarations = [];
   let exportNames: string[] = [];
   exportList.forEach(data => {
-    const { specifier, source, exportAlias, type } = data;
+    const { specifier, source, alias, type } = data;
     const isDefaultImport = !Array.isArray(specifier);
     const specifiers = isDefaultImport ? [specifier] : specifier;
     const symbol = type ? ';' : ',';
-    importStatements.push(`import ${type ? 'type ' : ''}${isDefaultImport ? specifier : `{ ${specifiers.map(specifierStr => ((exportAlias && exportAlias[specifierStr]) ? `${specifierStr} as ${exportAlias[specifierStr]}` : specifierStr)).join(', ')} }`} from '${source}';`);
+    importDeclarations.push(`import ${type ? 'type ' : ''}${isDefaultImport ? specifier : `{ ${specifiers.map(specifierStr => ((alias && alias[specifierStr]) ? `${specifierStr} as ${alias[specifierStr]}` : specifierStr)).join(', ')} }`} from '${source}';`);
     specifiers.forEach((specifierStr) => {
-      if (exportAlias && exportAlias[specifierStr]) {
-        exportStatements.push(`${exportAlias[specifierStr]}: ${specifierStr}${symbol}`);
+      if (alias && alias[specifierStr]) {
+        exportDeclarations.push(`${alias[specifierStr]}: ${specifierStr}${symbol}`);
       } else {
-        exportStatements.push(`${specifierStr}${symbol}`);
+        exportDeclarations.push(`${specifierStr}${symbol}`);
       }
       exportNames.push(specifierStr);
     });
   });
   return {
-    importStr: importStatements.join('\n'),
+    importStr: importDeclarations.join('\n'),
     /**
      * Add two whitespace character in order to get the formatted code. For example:
      *  export {
@@ -63,23 +63,27 @@ export function generateExports(exportList: ExportData[]) {
           useAuth,
         };
      */
-    exportStr: exportStatements.join('\n  '),
+    exportStr: exportDeclarations.join('\n  '),
     exportNames,
   };
 }
 
-export function checkExportData(currentList: ExportData[], exportData: ExportData | ExportData[], apiName: string) {
+export function checkExportData(
+  currentList: DeclarationData[],
+  exportData: DeclarationData | DeclarationData[],
+  apiName: string,
+) {
   (Array.isArray(exportData) ? exportData : [exportData]).forEach((data) => {
     const exportNames = (Array.isArray(data.specifier) ? data.specifier : [data.specifier]).map((specifierStr) => {
-      return data?.exportAlias?.[specifierStr] || specifierStr;
+      return data?.alias?.[specifierStr] || specifierStr;
     });
-    currentList.forEach(({ specifier, exportAlias }) => {
+    currentList.forEach(({ specifier, alias }) => {
       // check exportName and specifier
       const currentExportNames = (Array.isArray(specifier) ? specifier : [specifier]).map((specifierStr) => {
-        return exportAlias?.[specifierStr] || specifierStr;
+        return alias?.[specifierStr] || specifierStr;
       });
       if (currentExportNames.some((name) => exportNames.includes(name))) {
-        consola.error('specifier:', specifier, 'exportAlias:', exportAlias);
+        consola.error('specifier:', specifier, 'alias:', alias);
         consola.error('duplicate with', data);
         throw new Error(`duplicate export data added by ${apiName}`);
       }
@@ -87,7 +91,7 @@ export function checkExportData(currentList: ExportData[], exportData: ExportDat
   });
 }
 
-export function removeExportData(exportList: ExportData[], removeSource: string | string[]) {
+export function removeDeclarations(exportList: DeclarationData[], removeSource: string | string[]) {
   const removeSourceNames = Array.isArray(removeSource) ? removeSource : [removeSource];
   return exportList.filter(({ source }) => {
     const needRemove = removeSourceNames.includes(source);
@@ -138,19 +142,19 @@ export default class Generator {
     this.render();
   }, RENDER_WAIT);
 
-  public addExport: AddExport = (registerKey, exportData) => {
+  public addDeclaration: AddDeclaration = (registerKey, exportData) => {
     const exportList = this.contentRegistration[registerKey] || [];
     checkExportData(exportList, exportData, registerKey);
     // remove export before add
-    this.removeExport(
+    this.removeDeclaration(
       registerKey,
       Array.isArray(exportData) ? exportData.map((data) => data.source) : exportData.source);
     this.addContent(registerKey, exportData);
   };
 
-  public removeExport: RemoveExport = (registerKey, removeSource) => {
+  public removeDeclaration: RemoveDeclaration = (registerKey, removeSource) => {
     const exportList = this.contentRegistration[registerKey] || [];
-    this.contentRegistration[registerKey] = removeExportData(exportList, removeSource);
+    this.contentRegistration[registerKey] = removeDeclarations(exportList, removeSource);
   };
 
   public addContent: AddContent = (apiName, ...args) => {
@@ -169,9 +173,9 @@ export default class Generator {
     this.contentRegistration[registerKey].push(...content);
   };
 
-  private getExportData: GetExportData = (registerKey, dataKeys) => {
+  private getDeclarations: GetDeclarations = (registerKey, dataKeys) => {
     const exportList = this.contentRegistration[registerKey] || [];
-    const { importStr, exportStr, exportNames } = generateExports(exportList);
+    const { importStr, exportStr, exportNames } = generateDeclaration(exportList);
     const [importStrKey, exportStrKey] = dataKeys;
     return {
       [importStrKey]: importStr,
@@ -185,7 +189,7 @@ export default class Generator {
     const globalStyles = fg.sync([getGlobalStyleGlobPattern()], { cwd: this.rootDir });
     let exportsData = {};
     this.contentTypes.forEach(item => {
-      const data = this.getExportData(item, ['imports', 'exports']);
+      const data = this.getDeclarations(item, ['imports', 'exports']);
       exportsData = Object.assign({}, exportsData, {
         [`${item}`]: data,
       });
