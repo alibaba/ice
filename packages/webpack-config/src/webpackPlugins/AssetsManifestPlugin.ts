@@ -48,7 +48,8 @@ export default class AssetsManifestPlugin {
       const entryName = entrypoint.name;
       const mainFiles = filterAssets(entrypoint);
       entries[entryName] = mainFiles;
-      entryFiles.push(mainFiles[0]);
+      const jsMainFiles = mainFiles.filter((file) => file.endsWith('.js'));
+      entryFiles.push(jsMainFiles[0]);
       const chunks = entrypoint?.getChildren();
       chunks.forEach((chunk) => {
         const chunkName = chunk.name;
