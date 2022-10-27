@@ -13,7 +13,8 @@
     "./jsx-dev-runtime": "./esm/jsx-dev-runtime.js",
     "./matchRoutes": "./esm/matchRoutes.js",
     "./router": "./esm/router.js",
-    "./single-router": "./esm/single-router.js"
+    "./single-router": "./esm/single-router.js",
+    "./package.json": "./package.json"
   },
   "files": [
     "esm",
