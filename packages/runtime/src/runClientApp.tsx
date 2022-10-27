@@ -17,14 +17,16 @@ import { updateRoutesConfig } from './routesConfig.js';
 import getRequestContext from './requestContext.js';
 import getAppConfig from './appConfig.js';
 import matchRoutes from './matchRoutes.js';
+import DefaultAppRouter from './AppRouter.js';
 
-interface RunClientAppOptions {
+export interface RunClientAppOptions {
   app: AppExport;
-  routes: RouteItem[];
   runtimeModules: RuntimeModules;
-  hydrate: boolean;
+  routes?: RouteItem[];
+  hydrate?: boolean;
   basename?: string;
   memoryRouter?: boolean;
+  runtimeOptions?: Record<string, any>;
 }
 
 type History = BrowserHistory | HashHistory | MemoryHistory;
@@ -37,6 +39,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     basename,
     hydrate,
     memoryRouter,
+    runtimeOptions,
   } = options;
   const windowContext: WindowContext = (window as any).__ICE_APP_CONTEXT__ || {};
   const assetsManifest: AssetsManifest = (window as any).__ICE_ASSETS_MANIFEST__ || {};
@@ -46,18 +49,38 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routesConfig,
     routePath,
     downgrade,
+    documentOnly,
   } = windowContext;
 
   const requestContext = getRequestContext(window.location);
-
-  if (!appData) {
-    appData = await getAppData(app, requestContext);
-  }
-
   const appConfig = getAppConfig(app);
   const history = createHistory(appConfig, { memoryRouter, routePath });
   // Set history for import it from ice.
   setHistory(history);
+
+  const appContext: AppContext = {
+    appExport: app,
+    routes,
+    appConfig,
+    appData,
+    routesData,
+    routesConfig,
+    assetsManifest,
+    basename,
+    routePath,
+  };
+
+  const runtime = new Runtime(appContext, runtimeOptions);
+  runtime.setAppRouter(DefaultAppRouter);
+  // Load static module before getAppData,
+  // so we can call request in in getAppData which provide by `plugin-request`.
+  if (runtimeModules.statics) {
+    await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
+  }
+
+  if (!appData) {
+    appData = await getAppData(app, requestContext);
+  }
 
   const matches = matchRoutes(
     routes,
@@ -73,29 +96,16 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routesConfig = getRoutesConfig(matches, routesData, routeModules);
   }
 
-  const appContext: AppContext = {
-    appExport: app,
-    routes,
-    appConfig,
-    appData,
-    routesData,
-    routesConfig,
-    assetsManifest,
-    matches,
-    routeModules,
-    basename,
-    routePath,
-  };
-
-  const runtime = new Runtime(appContext);
-
-  if (hydrate && !downgrade) {
+  if (hydrate && !downgrade && !documentOnly) {
     runtime.setRender((container, element) => {
       ReactDOM.hydrateRoot(container, element);
     });
   }
-
-  await Promise.all(runtimeModules.map(m => runtime.loadModule(m)).filter(Boolean));
+  // Reset app context after app context is updated.
+  runtime.setAppContext({ ...appContext, matches, routeModules, routesData, routesConfig, appData });
+  if (runtimeModules.commons) {
+    await Promise.all(runtimeModules.commons.map(m => runtime.loadModule(m)).filter(Boolean));
+  }
 
   render({ runtime, history });
 }
@@ -112,8 +122,17 @@ async function render({ history, runtime }: RenderOptions) {
   const RouteWrappers = runtime.getWrappers();
   const AppRouter = runtime.getAppRouter();
 
+  const rootId = appConfig.app.rootId || 'app';
+  let root = document.getElementById(rootId);
+  if (!root) {
+    root = document.createElement('div');
+    root.id = rootId;
+    document.body.appendChild(root);
+    console.warn(`Root node #${rootId} is not found, current root is automatically created by the framework.`);
+  }
+
   render(
-    document.getElementById(appConfig.app.rootId),
+    root,
     <BrowserEntry
       history={history}
       appContext={appContext}

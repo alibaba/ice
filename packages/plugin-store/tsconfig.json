@@ -4,10 +4,7 @@
     "baseUrl": "./",
     "rootDir": "src",
     "outDir": "esm",
-    "jsx": "react",
-    "paths": {
-      "$store": ["./src/_store"]
-    }
+    "jsx": "react"
   },
   "include": ["src"]
 }

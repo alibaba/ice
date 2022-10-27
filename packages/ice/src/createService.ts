@@ -5,7 +5,7 @@ import { Context } from 'build-scripts';
 import consola from 'consola';
 import type { CommandArgs, CommandName } from 'build-scripts';
 import type { AppConfig, Config, PluginData } from '@ice/types';
-import type { ExportData } from '@ice/types/esm/generator.js';
+import type { DeclarationData } from '@ice/types/esm/generator.js';
 import type { ExtendsPluginAPI } from '@ice/types/esm/plugin.js';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import Generator from './service/runtimeGenerator.js';
@@ -56,15 +56,28 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   });
 
   const generatorAPI = {
-    addExport: (exportData: ExportData) => {
-      generator.addExport('framework', exportData);
+    addExport: (declarationData: DeclarationData) => {
+      generator.addDeclaration('framework', declarationData);
     },
-    addExportTypes: (exportData: ExportData) => {
-      generator.addExport('frameworkTypes', exportData);
+    addExportTypes: (declarationData: DeclarationData) => {
+      generator.addDeclaration('frameworkTypes', declarationData);
+    },
+    addRuntimeOptions: (declarationData: DeclarationData) => {
+      generator.addDeclaration('runtimeOptions', declarationData);
+    },
+    removeRuntimeOptions: (removeSource: string | string[]) => {
+      generator.removeDeclaration('runtimeOptions', removeSource);
+    },
+    addRouteTypes: (declarationData: DeclarationData) => {
+      generator.addDeclaration('routeConfigTypes', declarationData);
     },
     addRenderFile: generator.addRenderFile,
     addRenderTemplate: generator.addTemplateFiles,
     modifyRenderData: generator.modifyRenderData,
+    addDataLoaderImport: (declarationData: DeclarationData) => {
+      generator.addDeclaration('dataLoaderImport', declarationData);
+    },
+    render: generator.render,
   };
 
   const serverCompileTask = new ServerCompileTask();
@@ -98,10 +111,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const runtimeModules = getRuntimeModules(plugins);
 
   const { getAppConfig, init: initAppConfigCompiler } = getAppExportConfig(rootDir);
-  const {
-    getRoutesConfig,
-    init: initRouteConfigCompiler,
-  } = getRouteExportConfig(rootDir);
+  const { getRoutesConfig, init: initRouteConfigCompiler } = getRouteExportConfig(rootDir);
 
   // register config
   ['userConfig', 'cliOption'].forEach((configType) => {
@@ -140,10 +150,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   // merge task config with built-in config
   taskConfigs = mergeTaskConfig(taskConfigs, {
     port: commandArgs.port,
-    alias: {
-      // Get absolute path of `regenerator-runtime`, so it's unnecessary to add it to project dependencies
-      'regenerator-runtime': require.resolve('regenerator-runtime'),
-    },
   });
 
   // Get first task config as default platform config.

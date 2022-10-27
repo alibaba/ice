@@ -15,12 +15,13 @@ import type {
   AppRouterProps,
   ComponentWithChildren,
 } from '@ice/types';
-import DefaultAppRouter from './AppRouter.js';
 import { useData, useConfig } from './RouteContext.js';
 import { useAppContext } from './AppContext.js';
 
 class Runtime {
   private appContext: AppContext;
+
+  private runtimeOptions?: Record<string, any>;
 
   private AppRouter: ComponentType<AppRouterProps>;
 
@@ -30,18 +31,22 @@ class Runtime {
 
   private render: Renderer;
 
-  public constructor(appContext: AppContext) {
+  public constructor(appContext: AppContext, runtimeOptions?: Record<string, any>) {
     this.AppProvider = [];
     this.appContext = appContext;
     this.render = (container, element) => {
       const root = ReactDOM.createRoot(container);
       root.render(element);
     };
-    this.AppRouter = DefaultAppRouter;
     this.RouteWrappers = [];
+    this.runtimeOptions = runtimeOptions;
   }
 
   public getAppContext = () => this.appContext;
+
+  public setAppContext = (appContext: AppContext) => {
+    this.appContext = appContext;
+  };
 
   public getRender = () => {
     return this.render;
@@ -65,7 +70,7 @@ class Runtime {
 
     const runtimeModule = (module as CommonJsRuntime).default || module as RuntimePlugin;
     if (module) {
-      return await runtimeModule(runtimeAPI);
+      return await runtimeModule(runtimeAPI, this.runtimeOptions);
     }
   }
 
@@ -97,7 +102,6 @@ class Runtime {
     });
   };
 
-  // for plugin-icestark
   public setAppRouter: SetAppRouter = (AppRouter) => {
     this.AppRouter = AppRouter;
   };

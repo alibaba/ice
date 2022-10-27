@@ -1,7 +1,7 @@
 import React from 'react';
-import { Current } from '@ice/miniapp-runtime';
+import { Current } from '../current.js';
 
-interface ILinkProps extends React.ComponentProps<any> {
+interface LinkProps extends React.ComponentProps<any> {
   to: string;
 }
 
@@ -25,7 +25,7 @@ function matchRoute(url: string, routes: Array<string>): string | undefined {
   return query ? `${matchedRoute}?${query}` : matchedRoute;
 }
 
-export default function Link(props: ILinkProps) {
+export default function Link(props: LinkProps) {
   const { routes } = Current.app.config;
   const url = matchRoute(props.to, routes);
   // @ts-ignore

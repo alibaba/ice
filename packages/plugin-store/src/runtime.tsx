@@ -1,22 +1,30 @@
 import * as React from 'react';
 import type { RuntimePlugin, AppProvider, RouteWrapper } from '@ice/types';
 import { PAGE_STORE_INITIAL_STATES, PAGE_STORE_PROVIDER } from './constants.js';
-import appStore from '$store';
+import type { StoreConfig } from './types.js';
 
-const runtime: RuntimePlugin = async ({ addWrapper, addProvider, useAppContext }) => {
-  if (appStore && Object.prototype.hasOwnProperty.call(appStore, 'Provider')) {
-    // Add app store Provider
-    const StoreProvider: AppProvider = ({ children }) => {
+const runtime: RuntimePlugin = async ({ appContext, addWrapper, addProvider, useAppContext }, runtimeOptions) => {
+  const { appExport, appData } = appContext;
+  const storeConfig: StoreConfig = (typeof appExport.store === 'function'
+    ? (await appExport.store(appData)) : appExport.store) || {};
+  const { initialStates } = storeConfig;
+
+  // Add app store <Provider />.
+  const StoreProvider: AppProvider = ({ children }) => {
+    if (runtimeOptions?.appStore?.Provider) {
+      const { Provider } = runtimeOptions.appStore;
       return (
-        // TODO: support initialStates: https://github.com/ice-lab/ice-next/issues/395#issuecomment-1210552931
-        <appStore.Provider>
+        <Provider initialStates={initialStates}>
           {children}
-        </appStore.Provider>
+        </Provider>
       );
-    };
-    addProvider(StoreProvider);
-  }
-  // page store
+    }
+    return <>{children}</>;
+  };
+
+  addProvider(StoreProvider);
+
+  // Add page store <Provider />.
   const StoreProviderWrapper: RouteWrapper = ({ children, routeId }) => {
     const { routeModules } = useAppContext();
     const routeModule = routeModules[routeId];
@@ -35,3 +43,5 @@ const runtime: RuntimePlugin = async ({ addWrapper, addProvider, useAppContext }
 };
 
 export default runtime;
+
+export { createModel, createStore } from '@ice/store';

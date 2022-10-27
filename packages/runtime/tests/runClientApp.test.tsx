@@ -27,7 +27,13 @@ describe('run client app', () => {
           content: '',
         }),
       },
+      body: {
+        appendChild: () => null,
+      },
       getElementById: () => null,
+      createElement: () => ({
+        id: '',
+      }),
       querySelectorAll: () => [],
     }));
   });
@@ -42,8 +48,14 @@ describe('run client app', () => {
     setRender((container, element) => {
       try {
         domstring = renderToString(element as any);
-      } catch (err) {}
+      } catch (err) { }
     });
+  };
+
+  let staticMsg = '';
+
+  const staticRuntime = async () => {
+    staticMsg = 'static';
   };
 
   const wrapperRuntime = async ({ addWrapper }) => {
@@ -81,6 +93,20 @@ describe('run client app', () => {
     },
   ];
 
+  it('run with static runtime', async () => {
+    await runClientApp({
+      app: {
+        getAppData: async () => {
+          return { msg: staticMsg };
+        },
+      },
+      routes: basicRoutes,
+      runtimeModules: { commons: [serverRuntime], statics: [staticRuntime] },
+      hydrate: false,
+    });
+    expect(domstring).toBe('<div>home<!-- -->static</div>');
+  });
+
   it('run client basic', async () => {
     windowSpy.mockImplementation(() => ({
       ...mockData,
@@ -90,7 +116,7 @@ describe('run client app', () => {
     await runClientApp({
       app: {},
       routes: basicRoutes,
-      runtimeModules: [serverRuntime],
+      runtimeModules: { commons: [serverRuntime] },
       hydrate: false,
     });
     expect(domstring).toBe('<div>home</div>');
@@ -101,7 +127,7 @@ describe('run client app', () => {
     await runClientApp({
       app: {},
       routes: basicRoutes,
-      runtimeModules: [serverRuntime],
+      runtimeModules: { commons: [serverRuntime] },
       hydrate: false,
     });
     process.env.ICE_CORE_ROUTER = 'true';
@@ -112,7 +138,7 @@ describe('run client app', () => {
     await runClientApp({
       app: {},
       routes: basicRoutes,
-      runtimeModules: [serverRuntime, wrapperRuntime],
+      runtimeModules: { commons: [serverRuntime, wrapperRuntime] },
       hydrate: true,
     });
     expect(domstring).toBe('<div><div>home</div></div>');
@@ -122,7 +148,7 @@ describe('run client app', () => {
     await runClientApp({
       app: {},
       routes: basicRoutes,
-      runtimeModules: [serverRuntime, providerRuntmie],
+      runtimeModules: { commons: [serverRuntime, providerRuntmie] },
       hydrate: true,
     });
     expect(domstring).toBe('<div><div><div>home</div></div></div>');
@@ -132,7 +158,7 @@ describe('run client app', () => {
     await runClientApp({
       app: {},
       routes: [],
-      runtimeModules: [serverRuntime],
+      runtimeModules: { commons: [serverRuntime] },
       hydrate: false,
     });
   });
@@ -160,7 +186,7 @@ describe('run client app', () => {
         },
       },
       routes,
-      runtimeModules: [serverRuntime],
+      runtimeModules: { commons: [serverRuntime] },
       hydrate: true,
     });
 
@@ -171,7 +197,7 @@ describe('run client app', () => {
         },
       },
       routes,
-      runtimeModules: [serverRuntime],
+      runtimeModules: { commons: [serverRuntime] },
       hydrate: true,
     });
   });
@@ -199,7 +225,7 @@ describe('run client app', () => {
       app: {
       },
       routes,
-      runtimeModules: [serverRuntime],
+      runtimeModules: { commons: [serverRuntime] },
       hydrate: true,
       memoryRouter: true,
     });
@@ -217,7 +243,7 @@ describe('run client app', () => {
         },
       },
       routes: basicRoutes,
-      runtimeModules: [serverRuntime],
+      runtimeModules: { commons: [serverRuntime] },
       hydrate: true,
     });
     expect(domstring).toBe('<div>home</div>');
@@ -233,7 +259,7 @@ describe('run client app', () => {
         },
       },
       routes: basicRoutes,
-      runtimeModules: [serverRuntime],
+      runtimeModules: { commons: [serverRuntime] },
       hydrate: false,
     });
     expect(domstring).toBe('<div>home<!-- -->-getAppData</div>');
@@ -259,7 +285,7 @@ describe('run client app', () => {
         },
       },
       routes: basicRoutes,
-      runtimeModules: [serverRuntime],
+      runtimeModules: { commons: [serverRuntime] },
       hydrate: false,
     });
     expect(executed).toBe(false);
@@ -294,7 +320,7 @@ describe('run client app', () => {
           getData: async () => ({ data: 'test' }),
         }),
       }],
-      runtimeModules: [serverRuntime],
+      runtimeModules: { commons: [serverRuntime] },
       hydrate: false,
     });
     expect(domstring).toBe('<div>home<!-- -->test<!-- -->home</div>');

@@ -53,6 +53,12 @@ describe('remove top level code', () => {
     const content = generate(ast).code;
     expect(content.replace(/\n/g, '').replace(/\s+/g, ' ')).toBe('export function getConfig() { return { a: 1 };}');
   });
+  it('remove mixed import statement', () => {
+    const ast = parse(fs.readFileSync(path.join(__dirname, './fixtures/removeCode/mixed-import.tsx'), 'utf-8'), parserOptions);
+    traverse(ast, removeTopLevelCodePlugin(['getConfig']));
+    const content = generate(ast).code;
+    expect(content.replace(/\n/g, '').replace(/\s+/g, ' ')).toBe('export function getConfig() { return { a: 1 };}');
+  });
   it('remove IIFE code', () => {
     const ast = parse(fs.readFileSync(path.join(__dirname, './fixtures/removeCode/iife.ts'), 'utf-8'), parserOptions);
     traverse(ast, removeTopLevelCodePlugin(['getConfig']));

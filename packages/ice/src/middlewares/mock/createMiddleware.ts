@@ -2,8 +2,6 @@ import * as path from 'path';
 import type { ExpressRequestHandler, Request, Middleware } from 'webpack-dev-server';
 import { pathToRegexp } from 'path-to-regexp';
 import type { Key } from 'path-to-regexp';
-import bodyParser from 'body-parser';
-import multer from 'multer';
 import createWatch from '../../service/watchSource.js';
 import getConfigs, { MOCK_FILE_PATTERN } from './getConfigs.js';
 import type { MockConfig } from './getConfigs.js';
@@ -28,7 +26,7 @@ export default function createMiddleware(options: MockOptions): Middleware {
     const matchResult = matchPath(req, mockConfigs);
     if (matchResult) {
       const { match, mockConfig, keys } = matchResult;
-      const { handler, method } = mockConfig;
+      const { handler } = mockConfig;
       if (typeof handler === 'function') {
         // params
         const params: Record<string, any> = {};
@@ -41,23 +39,8 @@ export default function createMiddleware(options: MockOptions): Middleware {
           }
         }
         req.params = params;
-        // handler
-        if (method === 'GET') {
-          handler(req, res, next);
-          return;
-        } else {
-          // parses json and add to `req.body`
-          bodyParser.json({ limit: '5mb', strict: false })(req, res, () => {
-            // parses urlencoded bodies and add to `req.body`
-            bodyParser.urlencoded({ limit: '5mb', extended: true })(req, res, () => {
-              // handles `multipart/form-data` and add to `req.body`
-              multer().any()(req, res, () => {
-                handler(req, res, next);
-                return;
-              });
-            });
-          });
-        }
+        handler(req, res, next);
+        return;
       } else {
         return res.status(200).json(handler);
       }

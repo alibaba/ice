@@ -15,7 +15,7 @@ const plugin: Plugin = () => ({
   name: 'plugin-web',
   setup: ({ registerTask, onHook, context, generator, serverCompileTask, dataCache }) => {
     const { rootDir, commandArgs, command, userConfig } = context;
-    const { ssg, server: { format } } = userConfig;
+    const { ssg } = userConfig;
 
     registerTask(WEB, getWebTask({ rootDir, command, dataCache }));
 
@@ -37,6 +37,9 @@ const plugin: Plugin = () => ({
         'Data',
         'Main',
         'history',
+        'KeepAliveOutlet',
+        'useMounted',
+        'ClientOnly',
       ],
       source: '@ice/runtime',
     });
@@ -46,7 +49,7 @@ const plugin: Plugin = () => ({
       // Compile server entry after the webpack compilation.
       const { reCompile: reCompileRouteConfig, ensureRoutesConfig } = getRouteExportConfig(rootDir);
       const outputDir = webpackConfigs[0].output.path;
-      serverOutfile = path.join(outputDir, SERVER_OUTPUT_DIR, `index${format === 'esm' ? '.mjs' : '.cjs'}`);
+      serverOutfile = path.join(outputDir, SERVER_OUTPUT_DIR, `index${userConfig?.server?.format === 'esm' ? '.mjs' : '.cjs'}`);
       webpackConfigs[0].plugins.push(
         // Add webpack plugin of data-loader in web task
         new DataLoaderPlugin({ serverCompiler, rootDir, dataCache }),
@@ -106,7 +109,7 @@ const plugin: Plugin = () => ({
         } else {
           logoutMessage += `\n
     - Local  : ${chalk.underline.white(`${urls.localUrlForBrowser}${hashChar}${devPath}`)}
-    - Network:  ${chalk.underline.white(`${urls.lanUrlForTerminal}${hashChar}${devPath}`)}`;
+    - Network: ${chalk.underline.white(`${urls.lanUrlForTerminal}${hashChar}${devPath}`)}`;
         }
         consola.log(`${logoutMessage}\n`);
 

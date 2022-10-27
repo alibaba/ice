@@ -194,8 +194,8 @@ export async function scanImports(entries: string[], options?: ScanOptions) {
     );
     consola.debug(`Scan completed in ${(performance.now() - start).toFixed(2)}ms:`, deps);
   } catch (error) {
-    consola.error('Failed to scan imports.');
-    consola.debug(error);
+    consola.error('Failed to scan module imports.');
+    consola.debug(error.stack);
   }
   return orderedDependencies(deps);
 }
@@ -250,8 +250,7 @@ export async function getFileExports(options: FileOptions): Promise<CachedRouteE
         }
       }
     } catch (error) {
-      consola.error(`Failed to get route ${filePath} exports.`);
-      consola.debug(error);
+      consola.debug(`Failed to get route ${filePath} exports.`, error.stack);
     }
   }
   return cached.exports;

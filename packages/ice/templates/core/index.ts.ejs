@@ -1,13 +1,17 @@
 <% if (globalStyle) {-%>
 import '<%= globalStyle %>'
 <% } -%>
-
+import type { RouteConfig } from './types';
 <%- framework.imports %>
 
-<% if (framework.exports) { -%>
+type GetConfig = () => RouteConfig;
+function defineGetConfig(getConfig: GetConfig): GetConfig {
+  return getConfig;
+}
+
 export {
-  <%- framework.exports %>
+  defineGetConfig,
+  <% if (framework.exports) { -%><%- framework.exports %><% } -%>
 };
-<% } -%>
 
 export * from './types';

@@ -1,6 +1,6 @@
 ---
 title: 环境变量
-order: 13
+order: 15
 ---
 
 ICE 内置通过环境变量实现给构建或运行时传递参数的功能。
@@ -41,11 +41,14 @@ DEV_PORT=9999
 此外你也可以在 `.env.${mode}` 和 `.env.${mode}.local` 文件中指定不同模式下的环境变量。`${mode}` 的取值是 `development` 或 `production`。
 
 需要注意的是：
+
 1. 这几个文件的优先级由低至高分别是
-  - `.env` 
-  - `.env.local`
-  - `.env.${mode}`
-  - `.env.${mode}.local`
+
+- `.env`
+- `.env.local`
+- `.env.${mode}`
+- `.env.${mode}.local`
+
 2. 一般不建议将 `.local` 结尾的文件加入版本管理 (如 Git) 中。
 
 ## 使用环境变量

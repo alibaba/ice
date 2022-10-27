@@ -6,7 +6,8 @@
   "types": "./esm/index.d.ts",
   "main": "./esm/index.js",
   "exports": {
-    ".": "./esm/index.js"
+    ".": "./esm/index.js",
+    "./app": "./esm/app/index.js"
   },
   "files": [
     "esm",
@@ -24,6 +25,14 @@
   "sideEffects": false,
   "dependencies": {
     "@ice/shared": "^1.0.0",
-    "@ice/types": "^1.0.0"
+    "@ice/types": "^1.0.0",
+    "@ice/runtime": "^1.0.0",
+    "miniapp-history": "^0.1.7"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "history": "^5.3.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
   }
 }

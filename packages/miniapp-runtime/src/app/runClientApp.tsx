@@ -1,37 +1,34 @@
 import React from 'react';
-
 import type {
-  AppContext, AppExport, RouteWrapperConfig, RuntimeModules,
+  AppContext, RouteWrapperConfig,
 } from '@ice/types';
-import { AppContextProvider } from '../AppContext.js';
-import { AppDataProvider, getAppData } from '../AppData.js';
-
-import getAppConfig from '../appConfig.js';
-import Runtime from './runtime.js';
+import { AppContextProvider, AppDataProvider, getAppData, getAppConfig, Runtime } from '@ice/runtime';
+import type { RunClientAppOptions } from '@ice/runtime';
 import App from './App.js';
 import { createMiniApp } from './connect.js';
 import { setHistory } from './history.js';
 
-interface RunClientAppOptions {
-  app: AppExport;
-  runtimeModules: RuntimeModules;
-}
-
 export default async function runClientApp(options: RunClientAppOptions) {
   const { app, runtimeModules } = options;
-  const appData = await getAppData(app);
-  const { miniappManifest } = app;
   const appConfig = getAppConfig(app);
-  setHistory(miniappManifest.routes);
   const appContext: AppContext = {
     appExport: app,
     appConfig,
-    appData,
+    appData: null,
   };
   const runtime = new Runtime(appContext);
+  if (runtimeModules.statics) {
+    await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
+  }
+  const appData = await getAppData(app);
+  const { miniappManifest } = app;
 
+  setHistory(miniappManifest.routes);
+  runtime.setAppContext({ ...appContext, appData });
   // TODO: to be tested
-  await Promise.all(runtimeModules.map(m => runtime.loadModule(m)).filter(Boolean));
+  if (runtimeModules.commons) {
+    await Promise.all(runtimeModules.commons.map(m => runtime.loadModule(m)).filter(Boolean));
+  }
   render(runtime);
   // TODO: transform routes to pages in miniappManifest
   createMiniApp(miniappManifest);

@@ -4,9 +4,9 @@ import type { ComponentType, ReactNode, PropsWithChildren } from 'react';
 import type { HydrationOptions } from 'react-dom/client';
 import type { Navigator, Params } from 'react-router-dom';
 
-type useConfig = () => RouteConfig;
-type useData = () => RouteData;
-type useAppContext = () => AppContext;
+type UseConfig = () => RouteConfig<Record<string, any>>;
+type UseData = () => RouteData;
+type UseAppContext = () => AppContext;
 
 type VoidFunction = () => void;
 type AppLifecycle = 'onShow' | 'onHide' | 'onPageNotFound' | 'onShareAppMessage' | 'onUnhandledRejection' | 'onLaunch' | 'onError' | 'onTabItemClick';
@@ -20,16 +20,13 @@ export type AppData = any;
 export type RouteData = any;
 
 // route.getConfig return value
-export interface RouteConfig {
+export type RouteConfig<T = {}> = T & {
+  // Support for extends config.
   title?: string;
-  // TODO: fix type
-  meta?: any[];
-  links?: any[];
-  scripts?: any[];
-
-  // plugin extends
-  auth?: string[];
-}
+  meta?: React.MetaHTMLAttributes<HTMLMetaElement>[];
+  links?: React.LinkHTMLAttributes<HTMLLinkElement>[];
+  scripts?: React.ScriptHTMLAttributes<HTMLScriptElement>[];
+};
 
 export interface AppExport {
   default?: AppConfig;
@@ -37,12 +34,14 @@ export interface AppExport {
   getAppData?: GetAppData;
 }
 
-export type GetAppData = (ctx: RequestContext) => Promise<AppData> | AppData;
+export type GetAppData = (ctx: RequestContext) => (Promise<AppData> | AppData);
+
+export type GetDataConfig = (ctx: RequestContext) => (Promise<RouteData> | RouteData) | RouteData;
 
 // app.getData & route.getData
-export type GetData = (ctx: RequestContext) => Promise<RouteData> | RouteData;
-export type GetServerData = (ctx: RequestContext) => Promise<RouteData> | RouteData;
-export type GetStaticData = (ctx: RequestContext) => Promise<RouteData> | RouteData;
+export type GetData = (ctx: RequestContext) => (Promise<RouteData> | RouteData);
+export type GetServerData = (ctx: RequestContext) => (Promise<RouteData> | RouteData);
+export type GetStaticData = (ctx: RequestContext) => (Promise<RouteData> | RouteData);
 // route.getConfig
 export type GetConfig = (args: { data?: RouteData }) => RouteConfig;
 
@@ -83,7 +82,7 @@ export interface AppContext {
 
 export type WindowContext = Pick<
   AppContext,
-  'appData' | 'routesData' | 'routesConfig' | 'routePath' | 'downgrade'
+  'appData' | 'routesData' | 'routesConfig' | 'routePath' | 'downgrade' | 'matchedIds' | 'documentOnly'
 >;
 
 export type Renderer = (
@@ -167,14 +166,15 @@ export interface RuntimeAPI {
   setRender: SetRender;
   addWrapper: AddWrapper;
   appContext: AppContext;
-  useData: useData;
-  useConfig: useConfig;
-  useAppContext: useAppContext;
+  useData: UseData;
+  useConfig: UseConfig;
+  useAppContext: UseAppContext;
 }
 
 export interface RuntimePlugin {
   (
-    apis: RuntimeAPI
+    apis: RuntimeAPI,
+    runtimeOptions?: Record<string, any>,
   ): Promise<void> | void;
 }
 
@@ -182,7 +182,10 @@ export interface CommonJsRuntime {
   default: RuntimePlugin;
 }
 
-export type RuntimeModules = (RuntimePlugin | CommonJsRuntime)[];
+export interface RuntimeModules {
+  statics?: (RuntimePlugin | CommonJsRuntime)[];
+  commons?: (RuntimePlugin | CommonJsRuntime)[];
+}
 
 export interface AppRouterProps {
   action: Action;

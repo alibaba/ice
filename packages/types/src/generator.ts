@@ -1,8 +1,8 @@
-export interface ExportData {
+export interface DeclarationData {
   specifier: string | string[];
   source: string;
   type?: boolean;
-  exportAlias?: Record<string, string>;
+  alias?: Record<string, string>;
 }
 
 export type RenderData = Record<string, unknown>;
@@ -21,13 +21,19 @@ export interface Registration {
 }
 
 export type SetPlugins = (plugins: any) => void;
-export type AddExport = (registerKey: string, exportData: ExportData | ExportData[]) => void;
-export type RemoveExport = (registerKey: string, removeSource: string | string[]) => void;
+export type AddDeclaration = (registerKey: string, declarationData: DeclarationData | DeclarationData[]) => void;
+export type RemoveDeclaration = (registerKey: string, removeSource: string | string[]) => void;
 export type AddContent = (apiName: string, ...args: any) => void;
-export type GetExportStr = (registerKey: string, dataKeys: string[]) => { [x: string]: string };
+export type GetDeclarations = (registerKey: string, dataKeys: string[]) => {
+  imports?: string;
+  exports?: string;
+  exportNames?: string[];
+  [x: string]: any;
+};
 export type ParseRenderData = () => Record<string, unknown>;
 export type Render = () => void;
 export type ModifyRenderData = (registration: RenderDataRegistration) => void;
+export type AddDataLoaderImport = (declarationData: DeclarationData) => void;
 export type AddRenderFile = (templatePath: string, targetPath: string, extraData?: ExtraData) => void;
 export type AddTemplateFiles = (templateOptions: string | TemplateOptions, extraData?: ExtraData) => void;
 export type RenderFile = (templatePath: string, targetPath: string, extraData?: ExtraData) => void;

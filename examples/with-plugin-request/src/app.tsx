@@ -1,4 +1,6 @@
+import { request as requestAPI } from 'ice';
 import { defineRequestConfig } from '@ice/plugin-request/esm/types';
+
 const requestConfig = {
   // 可选的，全局设置 request 是否返回 response 对象，默认为 false
   withFullResponse: false,
@@ -49,6 +51,14 @@ const requestConfig = {
     },
   },
 };
+
+export async function getAppData() {
+  try {
+    return await requestAPI('/user');
+  } catch (err) {
+    console.log('request error', err);
+  }
+}
 
 export default {
   app: {

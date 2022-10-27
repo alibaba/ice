@@ -81,9 +81,12 @@ export default function importStylePlugin(options: TransformOptions) {
     name: 'transform-import-style',
     // Add plugin as a post plugin, so we do not need to deal with ts language.
     enforce: 'post',
-    async transform(code: string, id: string, transformOption: { isServer: Boolean }) {
+    transformInclude(id: string) {
       // Only transform source code.
-      if (transformOption.isServer || !code || !id.match(/\.(js|jsx|ts|tsx)$/) || id.match(/node_modules/)) {
+      return id.match(/\.(js|jsx|ts|tsx)$/) && !id.match(/node_modules/);
+    },
+    async transform(code: string, id: string, transformOption: { isServer: Boolean }) {
+      if (transformOption.isServer || !code) {
         return null;
       }
       return await importStyle(code, options);

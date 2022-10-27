@@ -4,16 +4,16 @@ import type { RouteData, RouteConfig } from '@ice/types';
 const DataContext = React.createContext<RouteData | undefined>(undefined);
 DataContext.displayName = 'Data';
 
-function useData(): RouteData {
+function useData<T = any>(): T {
   const value = React.useContext(DataContext);
   return value;
 }
 const DataProvider = DataContext.Provider;
 
-const ConfigContext = React.createContext<RouteConfig | undefined>(undefined);
+const ConfigContext = React.createContext<RouteConfig<any> | undefined>(undefined);
 ConfigContext.displayName = 'Config';
 
-function useConfig(): RouteConfig {
+function useConfig<T = {}>(): RouteConfig<T> {
   const value = React.useContext(ConfigContext);
   return value;
 }
@@ -22,7 +22,6 @@ const ConfigProvider = ConfigContext.Provider;
 export {
   useData,
   DataProvider,
-
   useConfig,
   ConfigProvider,
 };

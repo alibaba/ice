@@ -33,6 +33,10 @@ coverage
 *.temp.json
 *.swc
 
+# yalc
+.yalc
+yalc.lock
+
 # Packages
 packages/*/lib/
 packages/*/esm/

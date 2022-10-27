@@ -10,6 +10,12 @@ const plugin: Plugin = () => ({
       specifier: ['withAuth', 'useAuth'],
       source: '@ice/plugin-auth/runtime/Auth',
     });
+
+    generator.addRouteTypes({
+      specifier: ['ConfigAuth'],
+      type: true,
+      source: '@ice/plugin-auth/esm/types',
+    });
   },
   runtime: `${PLUGIN_NAME}/esm/runtime`,
 });

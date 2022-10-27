@@ -30,7 +30,6 @@ export function getTitle(matches: RouteMatch[], routesConfig: RoutesConfig): str
  */
 function getMergedValue(key: string, matches: RouteMatch[], routesConfig: RoutesConfig) {
   let result;
-
   for (let match of matches) {
     const routeId = match.route.id;
     const data = routesConfig[routeId];
@@ -57,7 +56,6 @@ export async function updateRoutesConfig(matches: RouteMatch[], routesConfig: Ro
   if (title) {
     document.title = title;
   }
-
   const meta = getMeta(matches, routesConfig) || [];
   const links = getLinks(matches, routesConfig) || [];
   const scripts = getScripts(matches, routesConfig) || [];
@@ -110,7 +108,7 @@ const DOMAttributeNames: Record<string, string> = {
   noModule: 'noModule',
 };
 
-type ElementProps = RouteConfig['meta'] | RouteConfig['links'] | RouteConfig['scripts'];
+type ElementProps = RouteConfig['meta'][0] | RouteConfig['links'][0] | RouteConfig['scripts'][0];
 
 /**
  * map element props to dom

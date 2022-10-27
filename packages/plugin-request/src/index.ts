@@ -3,7 +3,7 @@ import type { Request, Interceptors, InterceptorRequest, InterceptorResponse } f
 
 // @ts-ignore
 // eslint-disable-next-line
-interface PluginRequestOptions {}
+interface PluginRequestOptions { }
 
 const PLUGIN_NAME = '@ice/plugin-request';
 
@@ -25,6 +25,7 @@ const plugin: Plugin<PluginRequestOptions | void> = () => ({
     });
   },
   runtime: `${PLUGIN_NAME}/esm/runtime`,
+  staticRuntime: true,
 });
 
 export type {

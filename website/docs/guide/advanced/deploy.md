@@ -1,6 +1,5 @@
 ---
 title: 部署
-order: 10
 ---
 
 前端代码开发完成后，我们会执行 `npm build` 命令进行项目构建。构建完成后，我们需要把 js/css/html 等静态资源部署到服务器或者发布到 CDN 上。
@@ -37,7 +36,7 @@ npm install --global surge
 
 #### 运行 surge
 
-以 `ice-demo` 项目名，ice 项目默认构建目录 `build` 为例：
+以 `ice-demo` 项目名，ice.js 项目默认构建目录 `build` 为例：
 
 ```bash
 $ cd ice-demo/build

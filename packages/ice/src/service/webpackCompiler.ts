@@ -41,7 +41,7 @@ async function webpackCompiler(options: {
   // Add default plugins for spinner
   webpackConfigs[0].plugins.push((compiler: Compiler) => {
     compiler.hooks.beforeCompile.tap('spinner', () => {
-      spinner.text = 'compiling...';
+      spinner.text = 'compiling...\n';
     });
     compiler.hooks.afterEmit.tap('spinner', () => {
       spinner.stop();
@@ -74,7 +74,7 @@ async function webpackCompiler(options: {
       if (messages.errors.length > 1) {
         messages.errors.length = 1;
       }
-      consola.error('Failed to compile.');
+      consola.error('Compiled with errors.');
       console.error(messages.errors.join('\n'));
       return;
     } else if (messages.warnings.length) {

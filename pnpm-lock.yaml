@@ -210,6 +210,7 @@ importers:
   examples/miniapp-project:
     specifiers:
       '@ice/app': workspace:*
+      '@ice/miniapp-runtime': workspace:*
       '@ice/plugin-miniapp': workspace:*
       '@ice/runtime': workspace:*
       '@types/react': ^18.0.0
@@ -222,6 +223,7 @@ importers:
       webpack: ^5.73.0
     dependencies:
       '@ice/app': link:../../packages/ice
+      '@ice/miniapp-runtime': link:../../packages/miniapp-runtime
       '@ice/plugin-miniapp': link:../../packages/plugin-miniapp
       '@ice/runtime': link:../../packages/runtime
       ahooks: 3.7.1_react@18.2.0
@@ -483,6 +485,7 @@ importers:
       '@ice/runtime': workspace:*
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
+      tslib: ^2.4.0
     dependencies:
       '@ice/app': link:../../packages/ice
       '@ice/runtime': link:../../packages/runtime
@@ -490,6 +493,7 @@ importers:
       '@ice/plugin-store': link:../../packages/plugin-store
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
+      tslib: 2.4.0
 
   examples/with-vitest:
     specifiers:
@@ -705,7 +709,6 @@ importers:
       '@types/sass': ^1.43.1
       '@types/temp': ^0.9.1
       address: ^1.1.2
-      body-parser: ^1.20.0
       build-scripts: ^2.0.0-26
       chalk: ^4.0.0
       chokidar: ^3.5.3
@@ -724,12 +727,11 @@ importers:
       jest: ^29.0.2
       micromatch: ^4.0.5
       mrmime: ^1.0.0
-      multer: ^1.4.5-lts.1
       open: ^8.4.0
       path-to-regexp: ^6.2.0
       react: ^18.2.0
       react-router: ^6.3.0
-      regenerator-runtime: ^0.11.0
+      regenerator-runtime: ^0.13.0
       resolve.exports: ^1.1.0
       semver: ^7.3.5
       temp: ^0.9.4
@@ -746,7 +748,6 @@ importers:
       '@ice/runtime': link:../runtime
       '@ice/webpack-config': link:../webpack-config
       address: 1.2.1
-      body-parser: 1.20.0
       build-scripts: 2.0.0-26
       chalk: 4.1.2
       commander: 9.4.0
@@ -763,10 +764,9 @@ importers:
       fs-extra: 10.1.0
       micromatch: 4.0.5
       mrmime: 1.0.1
-      multer: 1.4.5-lts.1
       open: 8.4.0
       path-to-regexp: 6.2.1
-      regenerator-runtime: 0.11.1
+      regenerator-runtime: 0.13.9
       resolve.exports: 1.1.0
       semver: 7.3.7
       temp: 0.9.4
@@ -833,11 +833,24 @@ importers:
 
   packages/miniapp-runtime:
     specifiers:
+      '@ice/runtime': ^1.0.0
       '@ice/shared': ^1.0.0
       '@ice/types': ^1.0.0
+      '@types/react': ^18.0.0
+      history: ^5.3.0
+      miniapp-history: ^0.1.7
+      react: ^18.1.0
+      react-dom: ^18.1.0
     dependencies:
+      '@ice/runtime': link:../runtime
       '@ice/shared': link:../shared
       '@ice/types': link:../types
+      miniapp-history: 0.1.7
+    devDependencies:
+      '@types/react': 18.0.21
+      history: 5.3.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
 
   packages/plugin-antd:
     specifiers:
@@ -920,6 +933,7 @@ importers:
       consola: ^2.15.3
       fast-glob: ^3.2.11
       html-minifier: ^4.0.0
+      regenerator-runtime: ^0.11.0
       sax: ^1.2.4
       webpack: ^5.73.0
     dependencies:
@@ -933,6 +947,7 @@ importers:
       consola: 2.15.3
       fast-glob: 3.2.12
       html-minifier: 4.0.0
+      regenerator-runtime: 0.11.1
       sax: 1.2.4
     devDependencies:
       '@ice/types': link:../types
@@ -1011,16 +1026,18 @@ importers:
 
   packages/plugin-store:
     specifiers:
-      '@ice/store': ^2.0.1
+      '@ice/store': ^2.0.3
       '@ice/types': ^1.0.0
       '@types/micromatch': ^4.0.2
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
       fast-glob: ^3.2.11
       micromatch: ^4.0.5
+      react: ^18.2.0
+      react-dom: ^18.2.0
       regenerator-runtime: ^0.13.9
     dependencies:
-      '@ice/store': 2.0.3
+      '@ice/store': 2.0.3_biqbaboplfbrettd7655fr4n2y
       fast-glob: 3.2.12
       micromatch: 4.0.5
     devDependencies:
@@ -1028,6 +1045,8 @@ importers:
       '@types/micromatch': 4.0.2
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
       regenerator-runtime: 0.13.9
 
   packages/rax-compat:
@@ -1064,24 +1083,18 @@ importers:
   packages/runtime:
     specifiers:
       '@ice/jsx-runtime': ^0.1.0
-      '@ice/miniapp-runtime': ^1.0.0
-      '@ice/shared': ^1.0.0
       '@ice/types': ^1.0.0
       '@types/react': ^18.0.8
       '@types/react-dom': ^18.0.3
       history: ^5.3.0
-      miniapp-history: ^0.1.7
       react: ^18.0.0
       react-dom: ^18.0.0
       react-router-dom: ^6.2.2
       regenerator-runtime: ^0.13.9
     dependencies:
       '@ice/jsx-runtime': link:../jsx-runtime
-      '@ice/miniapp-runtime': link:../miniapp-runtime
-      '@ice/shared': link:../shared
       '@ice/types': link:../types
       history: 5.3.0
-      miniapp-history: 0.1.7
       react-router-dom: 6.4.1_biqbaboplfbrettd7655fr4n2y
     devDependencies:
       '@types/react': 18.0.21
@@ -4234,14 +4247,15 @@ packages:
       - ts-node
     dev: true
 
-  /@ice/store/2.0.3:
+  /@ice/store/2.0.3_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-U1YcY380bejqc3+WtkEqIwE6HnjBjSKd4IWFyq8gakPeAvA6fEJ58Qx9hzscYxlogWbiCb0Wm9kqkcDU+njx7g==}
     peerDependencies:
       react: ^16.8 || ^17 || ^18
     dependencies:
       immer: 9.0.15
       lodash.isfunction: 3.0.9
-      react-redux: 7.2.9
+      react: 18.2.0
+      react-redux: 7.2.9_biqbaboplfbrettd7655fr4n2y
       redux: 4.2.0
       redux-thunk: 2.4.1_redux@4.2.0
     transitivePeerDependencies:
@@ -6758,10 +6772,6 @@ packages:
       normalize-path: 3.0.0
       picomatch: 2.3.1
 
-  /append-field/1.0.0:
-    resolution: {integrity: sha512-klpgFSWLW1ZEs8svjfb7g4qWY0YS5imI82dTg+QahUvJ8YqAY0P10Uk8tTyh9ZGuYEZEMaeJYCF5BFuX552hsw==}
-    dev: false
-
   /aproba/1.2.0:
     resolution: {integrity: sha512-Y9J6ZjXtoYh8RnXVCMOU/ttDmk1aBjunq9vO0ta5x85WDQiQfUF9sIPBITdbiiIVcBo03Hi3jMxigBtsddlXRw==}
 
@@ -7433,13 +7443,6 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /busboy/1.6.0:
-    resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
-    engines: {node: '>=10.16.0'}
-    dependencies:
-      streamsearch: 1.1.0
-    dev: false
-
   /bytes/3.0.0:
     resolution: {integrity: sha512-pMhOfFDPiv9t5jjIXkHosWmkSyQbvsgEVNkz0ERHbuLh2T/7j4Mqqpz523Fe8MVY89KC6Sh/QfS2sM+SjgFDcw==}
     engines: {node: '>= 0.8'}
@@ -7930,16 +7933,6 @@ packages:
 
   /concat-map/0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
-
-  /concat-stream/1.6.2:
-    resolution: {integrity: sha512-27HBghJxjiZtIk3Ycvn/4kbJk/1uZuJFfuPEns6LaEvpvG1f0hTea8lilrouyo9mVc2GWdcEZ8OLoGmSADlrCw==}
-    engines: {'0': node >= 0.8}
-    dependencies:
-      buffer-from: 1.1.2
-      inherits: 2.0.4
-      readable-stream: 2.3.7
-      typedarray: 0.0.6
-    dev: false
 
   /concat-with-sourcemaps/1.1.0:
     resolution: {integrity: sha512-4gEjHJFT9e+2W/77h/DS5SGUgwDaOwprX8L/gl5+3ixnzkVJJsZWDSelmN3Oilw3LNDZjZV0yqH1hLG3k6nghg==}
@@ -13442,19 +13435,6 @@ packages:
   /ms/2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
-  /multer/1.4.5-lts.1:
-    resolution: {integrity: sha512-ywPWvcDMeH+z9gQq5qYHCCy+ethsk4goepZ45GLD63fOu0YcNecQxi64nDs3qluZB+murG3/D4dJ7+dGctcCQQ==}
-    engines: {node: '>= 6.0.0'}
-    dependencies:
-      append-field: 1.0.0
-      busboy: 1.6.0
-      concat-stream: 1.6.2
-      mkdirp: 0.5.6
-      object-assign: 4.1.1
-      type-is: 1.6.18
-      xtend: 4.0.2
-    dev: false
-
   /multicast-dns/7.2.5:
     resolution: {integrity: sha512-2eznPJP8z2BFLX50tf0LuODrpINqP1RVIm/CObbTcBRITQgmC/TjcREF1NeTBzIcR5XO/ukWo+YHOjBbFwIupg==}
     hasBin: true
@@ -16163,7 +16143,7 @@ packages:
       scheduler: 0.21.0
     dev: false
 
-  /react-redux/7.2.9:
+  /react-redux/7.2.9_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-Gx4L3uM182jEEayZfRbI/G11ZpYdNAnBs70lFVMNdHJI76XYtR+7m0MN+eAs7UHBPhWXcnFPaS+9owSCJQHNpQ==}
     peerDependencies:
       react: ^16.8.3 || ^17 || ^18
@@ -16180,6 +16160,8 @@ packages:
       hoist-non-react-statics: 3.3.2
       loose-envify: 1.4.0
       prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
       react-is: 17.0.2
     dev: false
 
@@ -17329,11 +17311,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
-  /streamsearch/1.1.0:
-    resolution: {integrity: sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==}
-    engines: {node: '>=10.0.0'}
-    dev: false
-
   /string-argv/0.3.1:
     resolution: {integrity: sha512-a1uQGz7IyVy9YwhqjZIZu1c8JO8dNIe20xBmSS6qu9kv++k3JGzCVmprbNN5Kn+BgzD5E7YYwg1CcjuJMRNsvg==}
     engines: {node: '>=0.6.19'}
@@ -18221,10 +18198,6 @@ packages:
     resolution: {integrity: sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q==}
     dependencies:
       is-typedarray: 1.0.0
-
-  /typedarray/0.0.6:
-    resolution: {integrity: sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==}
-    dev: false
 
   /typescript/4.8.4:
     resolution: {integrity: sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==}
