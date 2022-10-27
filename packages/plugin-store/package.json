@@ -20,11 +20,6 @@
       "import": "./esm/runtime.js",
       "default": "./esm/runtime.js"
     },
-    "./api": {
-      "types": "./esm/api.d.ts",
-      "import": "./esm/api.js",
-      "default": "./esm/api.js"
-    },
     "./types": {
       "types": "./esm/types.d.ts",
       "import": "./esm/types.js",

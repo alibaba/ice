@@ -1,9 +1,11 @@
 import { runClientApp, getAppConfig } from '<%- iceRuntimePath %>';
 import { commons, statics } from './runtimeModules';
 import * as app from '@/app';
-<% if (enableRoutes) { %>
+<% if (enableRoutes) { -%>
 import routes from './routes';
-<% } %>
+<% } -%>
+<%- runtimeOptions.imports %>
+
 const getRouterBasename = () => {
   const appConfig = getAppConfig(app);
   return appConfig?.router?.basename ?? '<%- basename %>' ?? '';
@@ -16,6 +18,11 @@ runClientApp({
     statics,
   },
   <% if (enableRoutes) { %>routes,<% } %>
+<% if (runtimeOptions.exports) { -%>
+  runtimeOptions: {
+    <%- runtimeOptions.exports %>
+  },
+<% } -%>
   basename: getRouterBasename(),
   hydrate: <%- hydrate %>,
   memoryRouter: <%- memoryRouter || false %>,

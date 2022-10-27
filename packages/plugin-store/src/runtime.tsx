@@ -2,25 +2,29 @@ import * as React from 'react';
 import type { RuntimePlugin, AppProvider, RouteWrapper } from '@ice/types';
 import { PAGE_STORE_INITIAL_STATES, PAGE_STORE_PROVIDER } from './constants.js';
 import type { StoreConfig } from './types.js';
-import appStore from '$store';
 
-const runtime: RuntimePlugin = async ({ appContext, addWrapper, addProvider, useAppContext }) => {
+const runtime: RuntimePlugin = async ({ appContext, addWrapper, addProvider, useAppContext }, runtimeOptions) => {
   const { appExport, appData } = appContext;
   const storeConfig: StoreConfig = (typeof appExport.store === 'function'
     ? (await appExport.store(appData)) : appExport.store) || {};
   const { initialStates } = storeConfig;
-  if (appStore && Object.prototype.hasOwnProperty.call(appStore, 'Provider')) {
-    // Add app store Provider
-    const StoreProvider: AppProvider = ({ children }) => {
+
+  // Add app store <Provider />.
+  const StoreProvider: AppProvider = ({ children }) => {
+    if (runtimeOptions?.appStore?.Provider) {
+      const { Provider } = runtimeOptions.appStore;
       return (
-        <appStore.Provider initialStates={initialStates}>
+        <Provider initialStates={initialStates}>
           {children}
-        </appStore.Provider>
+        </Provider>
       );
-    };
-    addProvider(StoreProvider);
-  }
-  // page store
+    }
+    return <>{children}</>;
+  };
+
+  addProvider(StoreProvider);
+
+  // Add page store <Provider />.
   const StoreProviderWrapper: RouteWrapper = ({ children, routeId }) => {
     const { routeModules } = useAppContext();
     const routeModule = routeModules[routeId];
@@ -39,3 +43,5 @@ const runtime: RuntimePlugin = async ({ appContext, addWrapper, addProvider, use
 };
 
 export default runtime;
+
+export { createModel, createStore } from '@ice/store';
