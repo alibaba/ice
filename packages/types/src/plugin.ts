@@ -5,10 +5,11 @@ import type WebpackDevServer from 'webpack-dev-server';
 import type { BuildOptions, BuildResult } from 'esbuild';
 import type { NestedRouteManifest } from '@ice/route-manifest';
 import type { Config } from './config.js';
-import type { DeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport } from './generator.js';
+import type { DeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport, Render } from './generator.js';
 import type { AssetsManifest } from './runtime.js';
 
 type AddExport = (exportData: DeclarationData) => void;
+type RemoveExport = (removeSource: string | string[]) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
 
 type ServerCompilerBuildOptions = Pick<BuildOptions, 'write' |
@@ -104,10 +105,13 @@ export interface ExtendsPluginAPI {
   generator: {
     addExport: AddExport;
     addExportTypes: AddExport;
+    addRuntimeOptions: AddExport;
+    removeRuntimeOptions: RemoveExport;
     addRouteTypes: AddExport;
     addRenderFile: AddRenderFile;
     addRenderTemplate: AddTemplateFiles;
     modifyRenderData: ModifyRenderData;
+    render: Render;
     addDataLoaderImport: AddDataLoaderImport;
   };
   watch: {

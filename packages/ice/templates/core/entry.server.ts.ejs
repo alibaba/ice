@@ -8,6 +8,7 @@ import type { RenderMode } from '@ice/runtime';
 import assetsManifest from 'virtual:assets-manifest.json';
 import routes from './routes';
 import routesConfig from './routes-config.bundle.mjs';
+<%- runtimeOptions.imports %>
 
 const runtimeModules = { commons, statics };
 
@@ -50,6 +51,11 @@ export async function renderToHTML(requestContext, options: RenderOptions = {}) 
     routePath,
     disableFallback,
     routesConfig,
+<% if (runtimeOptions.exports) { -%>
+    runtimeOptions: {
+      <%- runtimeOptions.exports %>
+    },
+<% } -%>
   });
 }
 
@@ -69,5 +75,10 @@ export async function renderToResponse(requestContext, options: RenderOptions = 
     renderMode,
     disableFallback,
     routesConfig,
+<% if (runtimeOptions.exports) { -%>
+    runtimeOptions: {
+      <%- runtimeOptions.exports %>
+    },
+<% } -%>
   });
 }

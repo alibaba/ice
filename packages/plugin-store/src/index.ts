@@ -14,7 +14,7 @@ const ignoreStoreFilePatterns = ['**/models/**', storeFilePattern];
 
 const plugin: Plugin<Options> = (options) => ({
   name: PLUGIN_NAME,
-  setup: ({ onGetConfig, modifyUserConfig, generator, context: { rootDir, userConfig } }) => {
+  setup: ({ onGetConfig, modifyUserConfig, generator, context: { rootDir, userConfig }, watch }) => {
     const { resetPageState = false } = options || {};
     const srcDir = path.join(rootDir, 'src');
     const pageDir = path.join(srcDir, 'pages');
@@ -24,15 +24,32 @@ const plugin: Plugin<Options> = (options) => ({
       ignoreFiles: [...(userConfig?.routes?.ignoreFiles || []), ...ignoreStoreFilePatterns],
     });
 
+    if (getAppStorePath(srcDir)) {
+      generator.addRuntimeOptions({
+        source: '@/store',
+        specifier: 'appStore',
+      });
+    }
+
+    watch.addEvent([
+      /src\/store.(js|ts)$/,
+      (event) => {
+        if (event === 'unlink') {
+          generator.removeRuntimeOptions('@/store');
+        }
+        if (event === 'add') {
+          generator.addRuntimeOptions({
+            source: '@/store',
+            specifier: 'appStore',
+          });
+        }
+        if (['add', 'unlink'].includes(event)) {
+          generator.render();
+        }
+      },
+    ]);
+
     onGetConfig(config => {
-      // Add app store provider.
-      const appStorePath = getAppStorePath(srcDir);
-      if (appStorePath) {
-        config.alias = {
-          ...config.alias || {},
-          $store: appStorePath,
-        };
-      }
       config.transformPlugins = [
         ...(config.transformPlugins || []),
         exportStoreProviderPlugin({ pageDir, resetPageState }),
@@ -43,7 +60,7 @@ const plugin: Plugin<Options> = (options) => ({
     // Export store api: createStore, createModel from `.ice/index.ts`.
     generator.addExport({
       specifier: ['createStore', 'createModel'],
-      source: '@ice/plugin-store/api',
+      source: '@ice/plugin-store/esm/runtime',
       type: false,
     });
   },

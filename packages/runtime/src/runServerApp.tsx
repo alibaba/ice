@@ -44,6 +44,7 @@ interface RenderOptions {
   routesConfig: {
     [key: string]: GetConfig;
   };
+  runtimeOptions?: Record<string, any>;
 }
 
 interface Piper {
@@ -148,6 +149,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     assetsManifest,
     runtimeModules,
     renderMode,
+    runtimeOptions,
   } = renderOptions;
 
   const location = getLocation(req.url);
@@ -166,7 +168,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     basename,
     matches: [],
   };
-  const runtime = new Runtime(appContext);
+  const runtime = new Runtime(appContext, runtimeOptions);
   runtime.setAppRouter(DefaultAppRouter);
   // Load static module before getAppData.
   if (runtimeModules.statics) {

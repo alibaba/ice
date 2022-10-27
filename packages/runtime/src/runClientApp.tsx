@@ -26,6 +26,7 @@ export interface RunClientAppOptions {
   hydrate?: boolean;
   basename?: string;
   memoryRouter?: boolean;
+  runtimeOptions?: Record<string, any>;
 }
 
 type History = BrowserHistory | HashHistory | MemoryHistory;
@@ -38,6 +39,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     basename,
     hydrate,
     memoryRouter,
+    runtimeOptions,
   } = options;
   const windowContext: WindowContext = (window as any).__ICE_APP_CONTEXT__ || {};
   const assetsManifest: AssetsManifest = (window as any).__ICE_ASSETS_MANIFEST__ || {};
@@ -68,7 +70,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routePath,
   };
 
-  const runtime = new Runtime(appContext);
+  const runtime = new Runtime(appContext, runtimeOptions);
   runtime.setAppRouter(DefaultAppRouter);
   // Load static module before getAppData,
   // so we can call request in in getAppData which provide by `plugin-request`.
