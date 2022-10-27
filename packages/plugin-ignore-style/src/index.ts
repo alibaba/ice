@@ -24,7 +24,10 @@ const plugin: IPlugin = ({ onGetWebpackConfig, modifyUserConfig, log, context },
     onGetWebpackConfig((config) => {
       config.module
         .rule('ignore-style')
-        .test(new RegExp(externalRule))
+        .test((path) => {
+          const reg = new RegExp(externalRule);
+          return reg.test(path) || reg.test(path.replace(/\\/g, '/'));
+        })
         .before('jsx')
         .use('null-loader').loader(require.resolve('./null-loader'));
     });
