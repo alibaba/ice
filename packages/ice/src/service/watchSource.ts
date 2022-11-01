@@ -1,7 +1,7 @@
 import * as chokidar from 'chokidar';
 import micromatch from 'micromatch';
 import type { WatchOptions } from 'chokidar';
-import type { WatchEvent } from '@ice/types/esm/plugin.js';
+import type { WatchEvent } from '../types/plugin.js';
 import formatPath from '../utils/formatPath.js';
 
 function createWatch(options: {

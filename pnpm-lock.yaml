@@ -696,7 +696,6 @@ importers:
       '@ice/bundles': ^0.1.0
       '@ice/route-manifest': ^1.0.0
       '@ice/runtime': ^1.0.0
-      '@ice/types': ^1.0.0
       '@ice/webpack-config': ^1.0.0
       '@types/babel__generator': ^7.6.4
       '@types/babel__traverse': ^7.17.1
@@ -771,7 +770,6 @@ importers:
       semver: 7.3.7
       temp: 0.9.4
     devDependencies:
-      '@ice/types': link:../types
       '@types/babel__generator': 7.6.4
       '@types/babel__traverse': 7.18.2
       '@types/cross-spawn': 6.0.2
@@ -835,7 +833,6 @@ importers:
     specifiers:
       '@ice/runtime': ^1.0.0
       '@ice/shared': ^1.0.0
-      '@ice/types': ^1.0.0
       '@types/react': ^18.0.0
       history: ^5.3.0
       miniapp-history: ^0.1.7
@@ -844,7 +841,6 @@ importers:
     dependencies:
       '@ice/runtime': link:../runtime
       '@ice/shared': link:../shared
-      '@ice/types': link:../types
       miniapp-history: 0.1.7
     devDependencies:
       '@types/react': 18.0.21
@@ -854,49 +850,51 @@ importers:
 
   packages/plugin-antd:
     specifiers:
+      '@ice/app': ^3.0.0
       '@ice/style-import': ^1.0.0
-      '@ice/types': ^1.0.0
     dependencies:
       '@ice/style-import': link:../style-import
     devDependencies:
-      '@ice/types': link:../types
+      '@ice/app': link:../ice
 
   packages/plugin-auth:
     specifiers:
-      '@ice/types': ^1.0.0
+      '@ice/app': ^3.0.0
+      '@ice/runtime': ^1.0.0
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
       regenerator-runtime: ^0.13.9
     devDependencies:
-      '@ice/types': link:../types
+      '@ice/app': link:../ice
+      '@ice/runtime': link:../runtime
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
       regenerator-runtime: 0.13.9
 
   packages/plugin-css-assets-local:
     specifiers:
-      '@ice/types': ^1.0.0
+      '@ice/app': ^3.0.0
       consola: ^2.15.3
       extract-css-assets-webpack-plugin: ^0.2.10
     dependencies:
       consola: 2.15.3
       extract-css-assets-webpack-plugin: 0.2.10
     devDependencies:
-      '@ice/types': link:../types
+      '@ice/app': link:../ice
 
   packages/plugin-fusion:
     specifiers:
+      '@ice/app': ^3.0.0
       '@ice/style-import': ^1.0.0
-      '@ice/types': ^1.0.0
     dependencies:
       '@ice/style-import': link:../style-import
     devDependencies:
-      '@ice/types': link:../types
+      '@ice/app': link:../ice
 
   packages/plugin-jsx-plus:
     specifiers:
       '@babel/core': ^7.19.1
-      '@ice/types': ^1.0.0
+      '@ice/app': ^3.0.0
       '@types/react': ^18.0.20
       '@types/react-dom': ^18.0.6
       babel-plugin-transform-jsx-class: ^0.1.3
@@ -916,18 +914,18 @@ importers:
       babel-plugin-transform-jsx-slot: 0.1.2
       babel-runtime-jsx-plus: 0.1.5
     devDependencies:
-      '@ice/types': link:../types
+      '@ice/app': link:../ice
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
 
   packages/plugin-miniapp:
     specifiers:
+      '@ice/app': ^3.0.0
       '@ice/bundles': ^0.1.0
       '@ice/miniapp-loader': ^1.0.0
       '@ice/miniapp-react-dom': ^1.0.0
       '@ice/miniapp-runtime': ^1.0.0
       '@ice/shared': ^1.0.0
-      '@ice/types': ^1.0.0
       acorn-walk: ^8.2.0
       chalk: ^4.0.0
       consola: ^2.15.3
@@ -950,18 +948,18 @@ importers:
       regenerator-runtime: 0.11.1
       sax: 1.2.4
     devDependencies:
-      '@ice/types': link:../types
+      '@ice/app': link:../ice
       webpack: 5.74.0
 
   packages/plugin-moment-locales:
     specifiers:
-      '@ice/types': ^1.0.0
+      '@ice/app': ^3.0.0
     devDependencies:
-      '@ice/types': link:../types
+      '@ice/app': link:../ice
 
   packages/plugin-pha:
     specifiers:
-      '@ice/types': ^1.0.0
+      '@ice/app': ^3.0.0
       chalk: ^4.0.0
       consola: ^2.15.3
       esbuild: ^0.14.51
@@ -975,7 +973,7 @@ importers:
       humps: 2.0.1
       lodash.clonedeep: 4.5.0
     devDependencies:
-      '@ice/types': link:../types
+      '@ice/app': link:../ice
       esbuild: 0.14.54
       webpack: 5.74.0_esbuild@0.14.54
       webpack-dev-server: 4.11.1_webpack@5.74.0
@@ -984,15 +982,15 @@ importers:
     specifiers:
       '@babel/core': ^7.0.0
       '@babel/plugin-proposal-export-default-from': ^7.18.9
+      '@ice/app': ^3.0.0
       '@ice/bundles': ^0.1.0
-      '@ice/types': ^1.0.0
-      '@types/webpack': ^5.28.0
       babel-plugin-transform-jsx-stylesheet: 1.0.6
       consola: ^2.15.3
       css: ^2.2.1
       lodash.merge: ^4.6.2
       rax-compat: ^0.1.0
       stylesheet-loader: ^0.9.1
+      webpack: ^5.73.0
     dependencies:
       '@babel/core': 7.19.3
       '@babel/plugin-proposal-export-default-from': 7.18.10_@babel+core@7.19.3
@@ -1004,12 +1002,13 @@ importers:
       rax-compat: link:../rax-compat
       stylesheet-loader: 0.9.1
     devDependencies:
-      '@ice/types': link:../types
-      '@types/webpack': 5.28.0
+      '@ice/app': link:../ice
+      webpack: 5.74.0
 
   packages/plugin-request:
     specifiers:
-      '@ice/types': ^1.0.0
+      '@ice/app': ^3.0.0
+      '@ice/runtime': ^1.0.0
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
       ahooks: ^3.0.0
@@ -1019,15 +1018,17 @@ importers:
       ahooks: 3.7.1
       axios: 0.27.2
     devDependencies:
-      '@ice/types': link:../types
+      '@ice/app': link:../ice
+      '@ice/runtime': link:../runtime
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
       regenerator-runtime: 0.13.9
 
   packages/plugin-store:
     specifiers:
+      '@ice/app': ^3.0.0
+      '@ice/runtime': ^1.0.0
       '@ice/store': ^2.0.3
-      '@ice/types': ^1.0.0
       '@types/micromatch': ^4.0.2
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
@@ -1041,7 +1042,8 @@ importers:
       fast-glob: 3.2.12
       micromatch: 4.0.5
     devDependencies:
-      '@ice/types': link:../types
+      '@ice/app': link:../ice
+      '@ice/runtime': link:../runtime
       '@types/micromatch': 4.0.2
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
@@ -1083,7 +1085,6 @@ importers:
   packages/runtime:
     specifiers:
       '@ice/jsx-runtime': ^0.1.0
-      '@ice/types': ^1.0.0
       '@types/react': ^18.0.8
       '@types/react-dom': ^18.0.3
       history: ^5.3.0
@@ -1093,7 +1094,6 @@ importers:
       regenerator-runtime: ^0.13.9
     dependencies:
       '@ice/jsx-runtime': link:../jsx-runtime
-      '@ice/types': link:../types
       history: 5.3.0
       react-router-dom: 6.4.1_biqbaboplfbrettd7655fr4n2y
     devDependencies:
@@ -1111,50 +1111,11 @@ importers:
 
   packages/style-import:
     specifiers:
-      '@ice/types': ^1.0.0
       es-module-lexer: ^1.0.2
       magic-string: ^0.26.2
     dependencies:
       es-module-lexer: 1.0.3
       magic-string: 0.26.4
-    devDependencies:
-      '@ice/types': link:../types
-
-  packages/types:
-    specifiers:
-      '@ice/route-manifest': ^1.0.0
-      '@swc/core': 1.3.3
-      build-scripts: ^2.0.0-26
-      esbuild: ^0.14.51
-      eslint: ^8.14.0
-      eslint-webpack-plugin: 3.1.1
-      fork-ts-checker-webpack-plugin: 7.2.6
-      history: ^5.3.0
-      react: ^18.0.0
-      react-dom: ^18.2.0
-      react-router-dom: ^6.2.2
-      terser: ^5.12.1
-      typescript: ^4.6.4
-      unplugin: ^0.9.5
-      webpack: ^5.73.0
-      webpack-dev-server: ^4.7.4
-    devDependencies:
-      '@ice/route-manifest': link:../route-manifest
-      '@swc/core': 1.3.3
-      build-scripts: 2.0.0-26
-      esbuild: 0.14.54
-      eslint: 8.24.0
-      eslint-webpack-plugin: 3.1.1_j6jdqc6yj4dakyrvwvnzxinrfq
-      fork-ts-checker-webpack-plugin: 7.2.6_qqxisngxjbp7lstdk7boexbu3e
-      history: 5.3.0
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      react-router-dom: 6.4.1_biqbaboplfbrettd7655fr4n2y
-      terser: 5.15.0
-      typescript: 4.8.4
-      unplugin: 0.9.6
-      webpack: 5.74.0_erwzf5wtj3ezvtz6x57nwwsumu
-      webpack-dev-server: 4.11.1_webpack@5.74.0
 
   packages/webpack-config:
     specifiers:
@@ -1162,11 +1123,9 @@ importers:
       '@ice/swc-plugin-keep-export': 0.1.2
       '@ice/swc-plugin-keep-platform': 0.1.1
       '@ice/swc-plugin-remove-export': 0.1.1
-      '@ice/types': ^1.0.0
       '@rollup/pluginutils': ^4.2.0
       '@swc/core': 1.3.3
       browserslist: ^4.19.3
-      build-scripts: ^2.0.0-26
       consola: ^2.15.3
       esbuild: ^0.14.51
       fast-glob: ^3.2.11
@@ -1183,8 +1142,6 @@ importers:
       consola: 2.15.3
       fast-glob: 3.2.12
     devDependencies:
-      '@ice/types': link:../types
-      build-scripts: 2.0.0-26
       esbuild: 0.14.54
       webpack: 5.74.0_erwzf5wtj3ezvtz6x57nwwsumu
       webpack-dev-server: 4.11.1_webpack@5.74.0
@@ -6111,19 +6068,6 @@ packages:
       - webpack-cli
     dev: true
 
-  /@types/webpack/5.28.0:
-    resolution: {integrity: sha512-8cP0CzcxUiFuA9xGJkfeVpqmWTk9nx6CWwamRGCj95ph1SmlRRk9KlCZ6avhCbZd4L68LvYT6l1kpdEnQXrF8w==}
-    dependencies:
-      '@types/node': 18.7.23
-      tapable: 2.2.1
-      webpack: 5.74.0
-    transitivePeerDependencies:
-      - '@swc/core'
-      - esbuild
-      - uglify-js
-      - webpack-cli
-    dev: true
-
   /@types/ws/8.5.3:
     resolution: {integrity: sha512-6YOoWjruKj1uLf3INHH7D3qTXwFfEsg1kf3c0uDdSBJwfa/llkwIjrAGV7j7mVgGNbzTQ3HiHKKDXl6bJPD97w==}
     dependencies:
@@ -7437,6 +7381,7 @@ packages:
       npmlog: 4.1.2
       picocolors: 1.0.0
       semver: 7.3.7
+    dev: false
 
   /builtin-modules/3.3.0:
     resolution: {integrity: sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw==}
@@ -16209,6 +16154,7 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-router: 6.4.1_react@18.2.0
+    dev: false
 
   /react-router/5.3.3_react@17.0.2:
     resolution: {integrity: sha512-mzQGUvS3bM84TnbtMYR8ZjKnuPJ71IjSzR+DE6UkUqvN4czWIqEs17yLL8xkAycv4ev0AiN+IGrWu88vJs/p2w==}

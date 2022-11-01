@@ -1,4 +1,6 @@
-import type { ModifyWebpackConfig } from '@ice/types/esm/config';
+import type webpack from 'webpack';
+import type { Configuration } from 'webpack';
+import type { ModifyWebpackConfig } from '../types.js';
 
 type AssetRuleConfig = [RegExp, Record<string, any>?, boolean?];
 
@@ -21,7 +23,7 @@ function configAssetsRule(config: AssetRuleConfig) {
   };
 }
 
-const assets: ModifyWebpackConfig = (config) => {
+const assets: ModifyWebpackConfig<Configuration, typeof webpack> = (config) => {
   const assetsRule = ([
     [/\.woff2?$/, { mimetype: 'application/font-woff' }],
     [/\.ttf$/, { mimetype: 'application/octet-stream' }],

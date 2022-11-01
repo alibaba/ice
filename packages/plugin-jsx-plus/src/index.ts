@@ -1,6 +1,6 @@
 import path from 'path';
 import { createRequire } from 'module';
-import type { Plugin } from '@ice/types';
+import type { Plugin } from '@ice/app/esm/types';
 import { transformSync } from '@babel/core';
 
 const require = createRequire(import.meta.url);

@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { createRequire } from 'module';
-import type { Config } from '@ice/types';
+import type { Config } from '@ice/webpack-config/esm/types';
 import { CACHE_DIR, RUNTIME_TMP_DIR } from '../../constant.js';
 import { getRoutePathsFromCache } from '../../utils/getRoutePaths.js';
 

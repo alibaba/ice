@@ -1,6 +1,5 @@
 import type { RecursiveTemplate, UnRecursiveTemplate } from '@ice/shared';
-import type { Configuration } from 'webpack';
-import type { Config } from '@ice/types';
+import type { Config, webpack } from '@ice/app/esm/types';
 
 export interface MiniappConfig {
   rootDir: string;
@@ -43,4 +42,4 @@ export interface MiniappWebpackOptions {
   };
 }
 
-export type MiniappWebpackConfig = Pick<Configuration, 'plugins' | 'module'>;
+export type MiniappWebpackConfig = Pick<webpack.Configuration, 'plugins' | 'module'>;

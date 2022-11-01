@@ -14,6 +14,7 @@
     "./matchRoutes": "./esm/matchRoutes.js",
     "./router": "./esm/router.js",
     "./single-router": "./esm/single-router.js",
+    "./types": "./esm/types.js",
     "./package.json": "./package.json"
   },
   "files": [
@@ -30,7 +31,6 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "@ice/types": "^1.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "@types/react": "^18.0.8",
@@ -40,7 +40,6 @@
   "sideEffects": false,
   "dependencies": {
     "@ice/jsx-runtime": "^0.1.0",
-    "@ice/types": "^1.0.0",
     "history": "^5.3.0",
     "react-router-dom": "^6.2.2"
   },

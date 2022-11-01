@@ -4,7 +4,10 @@
   "description": "provide scripts and configuration used by web framework ice",
   "type": "module",
   "main": "./esm/index.js",
-  "exports": "./esm/index.js",
+  "exports": {
+    ".": "./esm/index.js",
+    "./types": "./esm/types/index.js"
+  },
   "bin": {
     "ice": "./bin/ice-cli.mjs"
   },
@@ -63,7 +66,6 @@
     "temp": "^0.9.4"
   },
   "devDependencies": {
-    "@ice/types": "^1.0.0",
     "@types/babel__generator": "^7.6.4",
     "@types/babel__traverse": "^7.17.1",
     "@types/cross-spawn": "^6.0.2",

@@ -30,7 +30,7 @@
     "regenerator-runtime": "^0.11.0"
   },
   "devDependencies": {
-    "@ice/types": "^1.0.0",
+    "@ice/app": "^3.0.0",
     "webpack": "^5.73.0"
   },
   "repository": {

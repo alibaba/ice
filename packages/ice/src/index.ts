@@ -1,4 +1,4 @@
-import type { UserConfig } from '@ice/types';
+import type { UserConfig } from './types/userConfig.js';
 
 export function defineConfig(config: UserConfig) {
   return config;

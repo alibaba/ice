@@ -1,8 +1,8 @@
 import { EMPTY_OBJ, hooks } from '@ice/shared';
-import type { MiniappAppConfig } from '@ice/types';
 import React, { createElement } from 'react';
 import * as ReactDOM from 'react-dom';
 import { ConfigProvider, DataProvider } from '@ice/runtime';
+import type { MiniappAppConfig } from '../types.js';
 import { Current, getPageInstance,
   incrementId, injectPageInstance,
 } from '../index.js';

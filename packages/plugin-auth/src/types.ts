@@ -1,5 +1,6 @@
 import type * as React from 'react';
-import type { RouteConfig } from '@ice/types';
+import type { RouteConfig } from '@ice/runtime/esm/types';
+
 export interface AuthConfig {
   initialAuth: {
     [auth: string]: boolean;

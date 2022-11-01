@@ -6,7 +6,7 @@ import { build } from 'esbuild';
 import type { Plugin } from 'esbuild';
 import { resolve as resolveExports } from 'resolve.exports';
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
-import type { Config } from '@ice/types';
+import type { Config } from '@ice/webpack-config/esm/types';
 import type { TaskConfig } from 'build-scripts';
 import flattenId from '../utils/flattenId.js';
 import formatPath from '../utils/formatPath.js';

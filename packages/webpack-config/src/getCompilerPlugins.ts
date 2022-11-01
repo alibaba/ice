@@ -1,8 +1,8 @@
-import type { Config } from '@ice/types';
 import type { BuildOptions } from 'esbuild';
 import unplugin from '@ice/bundles/compiled/unplugin/index.js';
 import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import type { Configuration } from 'webpack';
+import type { Config } from './types.js';
 import compilationPlugin from './unPlugins/compilation.js';
 import compileExcludes from './compileExcludes.js';
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import type { RouteObject } from 'react-router-dom';
 import { Router, useRoutes } from 'react-router-dom';
-import type { AppRouterProps } from '@ice/types';
+import type { AppRouterProps } from './types.js';
 import { Router as RouterSingle, useRoutes as useRoutesSingle } from './single-router.js';
 
 const AppRouter: React.ComponentType<AppRouterProps> = (props) => {

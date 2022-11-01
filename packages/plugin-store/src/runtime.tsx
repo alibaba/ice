@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { RuntimePlugin, AppProvider, RouteWrapper } from '@ice/types';
+import type { RuntimePlugin, AppProvider, RouteWrapper } from '@ice/runtime/esm/types';
 import { PAGE_STORE_INITIAL_STATES, PAGE_STORE_PROVIDER } from './constants.js';
 import type { StoreConfig } from './types.js';
 

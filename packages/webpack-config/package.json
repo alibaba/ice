@@ -6,7 +6,10 @@
   "homepage": "https://next.ice.work",
   "type": "module",
   "main": "./esm/index.js",
-  "exports": "./esm/index.js",
+  "exports": {
+    ".": "./esm/index.js",
+    "./types": "./esm/types.js"
+  },
   "files": [
     "esm",
     "!esm/**/*.map"
@@ -23,8 +26,6 @@
     "fast-glob": "^3.2.11"
   },
   "devDependencies": {
-    "@ice/types": "^1.0.0",
-    "build-scripts": "^2.0.0-26",
     "esbuild": "^0.14.51",
     "webpack": "^5.73.0",
     "webpack-dev-server": "^4.7.4"

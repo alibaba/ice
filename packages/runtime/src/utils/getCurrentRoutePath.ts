@@ -1,4 +1,4 @@
-import type { RouteMatch } from '@ice/types';
+import type { RouteMatch } from '../types.js';
 
 /**
  * Get the current route path exclude the basename.

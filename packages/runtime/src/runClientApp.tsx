@@ -5,7 +5,7 @@ import type { HashHistory, BrowserHistory, Action, Location, InitialEntry, Memor
 import type {
   AppContext, WindowContext, AppExport, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
   RouteWrapperConfig, RuntimeModules, RouteMatch, RouteModules, AppConfig, AssetsManifest,
-} from '@ice/types';
+} from './types.js';
 import { createHistory as createHistorySingle } from './single-router.js';
 import { setHistory } from './history.js';
 import Runtime from './runtime.js';

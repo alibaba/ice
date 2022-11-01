@@ -1,7 +1,7 @@
 import type { DefineRouteFunction } from '@ice/route-manifest';
 import type { PluginList } from 'build-scripts';
 import type { UnpluginOptions } from 'unplugin';
-import type { Config, ModifyWebpackConfig, MinimizerOptions } from './config';
+import type { Config, ModifyWebpackConfig, MinimizerOptions } from '@ice/webpack-config/esm/types';
 import type { OverwritePluginAPI } from './plugin';
 
 interface SyntaxFeatures {

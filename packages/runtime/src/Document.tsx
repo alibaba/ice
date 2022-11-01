@@ -1,6 +1,6 @@
 import * as React from 'react';
 import type { ReactNode } from 'react';
-import type { WindowContext, RouteMatch, AssetsManifest } from '@ice/types';
+import type { WindowContext, RouteMatch, AssetsManifest } from './types.js';
 import { useAppContext } from './AppContext.js';
 import { useAppData } from './AppData.js';
 import { getMeta, getTitle, getLinks, getScripts } from './routesConfig.js';

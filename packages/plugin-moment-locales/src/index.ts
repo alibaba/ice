@@ -1,4 +1,4 @@
-import type { Plugin } from '@ice/types';
+import type { Plugin } from '@ice/app/esm/types';
 
 interface PluginOptions {
   locales: string | string[];

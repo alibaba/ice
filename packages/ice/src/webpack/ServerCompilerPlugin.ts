@@ -1,5 +1,5 @@
-import type { ExtendsPluginAPI, ServerCompiler } from '@ice/types/esm/plugin.js';
 import type { Compiler, Compilation } from 'webpack';
+import type { ExtendsPluginAPI, ServerCompiler } from '../types/plugin.js';
 
 const pluginName = 'ServerCompilerPlugin';
 

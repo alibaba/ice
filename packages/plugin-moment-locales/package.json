@@ -16,7 +16,7 @@
     "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-moment-locales"
   },
   "devDependencies": {
-    "@ice/types": "^1.0.0"
+    "@ice/app": "^3.0.0"
   },
   "publishConfig": {
     "access": "public"

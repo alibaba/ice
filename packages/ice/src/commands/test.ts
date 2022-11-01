@@ -1,5 +1,5 @@
 import type { Context, TaskConfig } from 'build-scripts';
-import type { Config } from '@ice/types';
+import type { Config } from '@ice/webpack-config/esm/types';
 import type ora from '@ice/bundles/compiled/ora/index.js';
 
 function test(

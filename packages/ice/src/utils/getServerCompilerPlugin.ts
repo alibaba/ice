@@ -1,6 +1,6 @@
 import path from 'path';
-import type { ServerCompiler, ExtendsPluginAPI } from '@ice/types/esm/plugin.js';
-import type { UserConfig } from '@ice/types';
+import type { ServerCompiler, ExtendsPluginAPI } from '../types/plugin.js';
+import type { UserConfig } from '../types/userConfig.js';
 import ServerCompilerPlugin from '../webpack/ServerCompilerPlugin.js';
 import { SERVER_OUTPUT_DIR } from '../constant.js';
 import getServerEntry from './getServerEntry.js';
