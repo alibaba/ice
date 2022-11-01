@@ -17,8 +17,11 @@ export const serverHistoryPlugin = (opt: history.Options | boolean): Plugin => {
     configureServer({ middlewares: app }) {
       const handler = history(all([opt, {
         rewrites: [{
-          from: /.*/,
+          from: /\.html/,
           to: (ctx: history.Context) => ctx.parsedUrl.pathname
+        }, {
+          from: /.*/,
+          to: (ctx: history.Context) => ctx.parsedUrl.path
         }]
       }]));
 
