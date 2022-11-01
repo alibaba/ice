@@ -3,7 +3,7 @@ import swc from '@swc/core';
 import type { Options as SwcConfig, ReactConfig } from '@swc/core';
 import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
-import type { Config } from '@ice/types';
+import type { Config } from '../types.js';
 
 const { merge } = lodash;
 const require = createRequire(import.meta.url);

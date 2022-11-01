@@ -15,9 +15,6 @@
     "type": "http",
     "url": "https://github.com/ice-lab/ice-next/tree/master/packages/transform-import"
   },
-  "devDependencies": {
-    "@ice/types": "^1.0.0"
-  },
   "dependencies": {
     "es-module-lexer": "^1.0.2",
     "magic-string": "^0.26.2"

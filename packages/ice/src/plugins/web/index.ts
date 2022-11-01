@@ -1,7 +1,7 @@
 import * as path from 'path';
 import consola from 'consola';
 import chalk from 'chalk';
-import type { Plugin } from '@ice/types';
+import type { Plugin } from '../../types/plugin.js';
 import ReCompilePlugin from '../../webpack/ReCompilePlugin.js';
 import DataLoaderPlugin from '../../webpack/DataLoaderPlugin.js';
 import { getRouteExportConfig } from '../../service/config.js';

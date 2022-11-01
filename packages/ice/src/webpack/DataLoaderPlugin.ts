@@ -1,9 +1,9 @@
 import * as path from 'path';
 import fse from 'fs-extra';
 import consola from 'consola';
-import type { ServerCompiler } from '@ice/types/esm/plugin.js';
 import type { Compiler } from 'webpack';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
+import type { ServerCompiler } from '../types/plugin.js';
 import { RUNTIME_TMP_DIR } from '../constant.js';
 import { getRoutePathsFromCache } from '../utils/getRoutePaths.js';
 

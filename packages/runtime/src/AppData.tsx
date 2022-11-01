@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { AppExport, AppData, RequestContext } from '@ice/types';
+import type { AppExport, AppData, RequestContext } from './types.js';
 
 const Context = React.createContext<AppData | undefined>(undefined);
 

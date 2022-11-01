@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { expect, it, describe, beforeEach, afterEach, vi } from 'vitest';
-import type { RouteComponent as IRouteComponent } from '@ice/types/esm/runtime';
+import type { RouteComponent as IRouteComponent } from '../src/types';
 import RouteWrapper from '../src/RouteWrapper';
 import { AppContextProvider } from '../src/AppContext';
 import {

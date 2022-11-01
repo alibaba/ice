@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { createRequire } from 'module';
-import type { Plugin } from '@ice/types';
+import type { Plugin } from '@ice/app/esm/types';
 import type { RuleSetRule } from 'webpack';
 import consola from 'consola';
 import merge from 'lodash.merge';

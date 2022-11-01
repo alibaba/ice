@@ -11,7 +11,7 @@ import type {
   RenderMode,
   DocumentComponent,
   RuntimeModules,
-} from '@ice/types';
+} from './types.js';
 import Runtime from './runtime.js';
 import App from './App.js';
 import { AppContextProvider } from './AppContext.js';

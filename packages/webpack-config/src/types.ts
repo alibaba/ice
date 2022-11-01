@@ -1,21 +1,20 @@
-import type webpack from 'webpack';
-import type { RuleSetRule, Configuration, Compiler, WebpackPluginInstance } from 'webpack';
+import type webpack from '@ice/bundles/compiled/webpack';
+import type { RuleSetRule, Configuration, Compiler, WebpackPluginInstance } from '@ice/bundles/compiled/webpack';
 import type {
   ProxyConfigArray,
   ProxyConfigArrayItem,
   ProxyConfigMap,
   Middleware,
   ServerOptions,
-  Configuration as DevServerConfiguration,
 } from 'webpack-dev-server';
-import type { Options } from 'eslint-webpack-plugin';
-import type { ForkTsCheckerWebpackPluginOptions } from 'fork-ts-checker-webpack-plugin/lib/plugin-options';
-import type { UnpluginOptions, UnpluginContext } from 'unplugin';
+import type { Options } from '@ice/bundles/compiled/eslint-webpack-plugin';
+import type { ForkTsCheckerWebpackPluginOptions } from '@ice/bundles/compiled/fork-ts-checker-webpack-plugin';
+import type { UnpluginOptions, UnpluginContext } from '@ice/bundles/compiled/unplugin';
 import type Server from 'webpack-dev-server';
-import type { ECMA } from 'terser';
 import type { Config as SWCCompilationConfig } from '@swc/core';
 import type { BuildOptions } from 'esbuild';
-import type { UserConfig } from './userConfig';
+
+export type ECMA = 5 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020;
 
 // get type definitions from terser-webpack-plugin
 interface CustomOptions {
@@ -28,10 +27,10 @@ interface PredefinedOptions {
 }
 export type MinimizerOptions<T> = PredefinedOptions & InferDefaultType<T>;
 
-interface ConfigurationCtx extends Config {
+interface ConfigurationCtx<T = typeof webpack> extends Config {
   supportedBrowsers: string[];
   hashKey: string;
-  webpack: typeof webpack;
+  webpack: T;
 }
 
 type Experimental = Configuration['experiments'];
@@ -62,7 +61,8 @@ interface TransformPlugin {
   loadInclude?: UnpluginOptions['loadInclude'];
 }
 
-export type ModifyWebpackConfig = (config: Configuration, ctx: ConfigurationCtx) => Configuration;
+export type ModifyWebpackConfig<T=Configuration, U=typeof webpack> = (config: T, ctx: ConfigurationCtx<U>) => T;
+export type { webpack };
 export interface Config {
   mode: 'none' | 'development' | 'production';
 
@@ -93,7 +93,7 @@ export interface Config {
     | WebpackPluginInstance
   )[];
 
-  alias?: UserConfig['alias'];
+  alias?: Record<string, string | false>;
 
   hash?: boolean | string;
 
@@ -141,7 +141,7 @@ export interface Config {
 
   concatenateModules?: boolean;
 
-  devServer?: DevServerConfiguration;
+  devServer?: Server.Configuration;
 
   fastRefresh?: boolean;
 

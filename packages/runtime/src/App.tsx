@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import type { Action, Location } from 'history';
 import type { Navigator } from 'react-router-dom';
-import type { RouteWrapperConfig, AppRouterProps } from '@ice/types';
+import type { RouteWrapperConfig, AppRouterProps } from './types.js';
 import AppErrorBoundary from './AppErrorBoundary.js';
 import { useAppContext } from './AppContext.js';
 import { createRouteElements } from './routes.js';

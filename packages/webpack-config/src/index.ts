@@ -11,10 +11,10 @@ import TerserPlugin from '@ice/bundles/compiled/terser-webpack-plugin/index.js';
 import ForkTsCheckerPlugin from '@ice/bundles/compiled/fork-ts-checker-webpack-plugin/index.js';
 import ESlintPlugin from '@ice/bundles/compiled/eslint-webpack-plugin/index.js';
 import CopyPlugin from '@ice/bundles/compiled/copy-webpack-plugin/index.js';
-import type { Configuration, WebpackPluginInstance, NormalModule, Compiler } from 'webpack';
+import type { NormalModule, Compiler, Configuration } from 'webpack';
 import type webpack from 'webpack';
-import type { Config } from '@ice/types';
 import browserslist from 'browserslist';
+import type { Config, ModifyWebpackConfig } from './types.js';
 import configAssets from './config/assets.js';
 import configCss from './config/css.js';
 import AssetsManifestPlugin from './webpackPlugins/AssetsManifestPlugin.js';
@@ -166,7 +166,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
     compileExcludes,
     swcOptions,
   });
-  const webpackConfig: Configuration = {
+  const webpackConfig = {
     mode,
     experiments: {
       layers: true,
@@ -302,7 +302,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
           },
         }],
       }),
-    ].filter(Boolean) as unknown as WebpackPluginInstance[],
+    ].filter(Boolean),
     devServer: merge({
       allowedHosts: 'all',
       headers: {
@@ -328,8 +328,8 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
       },
       setupMiddlewares: middlewares,
       https,
-    }, devServer || {}),
-  };
+    }, devServer || {}) as Config['devServer'],
+  } as Configuration;
   // tnpm / cnpm 安装时，webpack 5 的持久缓存无法生成，长时间将导致 OOM
   // 原因：[managedPaths](https://webpack.js.org/configuration/other-options/#managedpaths) 在 tnpm / cnpm 安装的情况下失效，导致持久缓存在处理 node_modules
   // 通过指定 [immutablePaths](https://webpack.js.org/configuration/other-options/#immutablepaths) 进行兼容
@@ -401,9 +401,8 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
     hashKey,
     webpack,
   };
-  const finalWebpackConfig = [configCss, configAssets, ...(configureWebpack || [])].reduce((result, next) => {
-    return next(result, ctx);
-  }, webpackConfig);
+  const finalWebpackConfig = [configCss, configAssets, ...(configureWebpack || [])]
+    .reduce((result, next: ModifyWebpackConfig<Configuration, typeof webpack>) => next(result, ctx), webpackConfig);
   consola.debug('[webpack]', finalWebpackConfig);
   return finalWebpackConfig;
 };

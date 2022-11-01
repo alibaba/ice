@@ -1,4 +1,4 @@
-import type { Plugin } from '@ice/types';
+import type { Plugin } from '@ice/app/esm/types';
 
 const PLUGIN_NAME = '@ice/plugin-auth';
 

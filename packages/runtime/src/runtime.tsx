@@ -14,7 +14,7 @@ import type {
   SetRender,
   AppRouterProps,
   ComponentWithChildren,
-} from '@ice/types';
+} from './types.js';
 import { useData, useConfig } from './RouteContext.js';
 import { useAppContext } from './AppContext.js';
 

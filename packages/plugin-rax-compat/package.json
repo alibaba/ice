@@ -28,8 +28,8 @@
     "stylesheet-loader": "^0.9.1"
   },
   "devDependencies": {
-    "@ice/types": "^1.0.0",
-    "@types/webpack": "^5.28.0"
+    "@ice/app": "^3.0.0",
+    "webpack": "^5.73.0"
   },
   "repository": {
     "type": "http",

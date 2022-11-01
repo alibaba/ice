@@ -1,7 +1,7 @@
 import * as path from 'path';
 import type { Config as JestConfig } from 'jest';
 import fse from 'fs-extra';
-import type { Config } from '@ice/types';
+import type { Config } from '@ice/webpack-config/esm/types';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import getTaskConfig from './getTaskConfig.js';
 

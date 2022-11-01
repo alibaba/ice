@@ -1,5 +1,5 @@
 import React from 'react';
-import type { RouteItem, RouteModules, RouteWrapperConfig, RouteMatch, RequestContext, RoutesConfig, RoutesData, RenderMode } from '@ice/types';
+import type { RouteItem, RouteModules, RouteWrapperConfig, RouteMatch, RequestContext, RoutesConfig, RoutesData, RenderMode } from './types.js';
 import RouteWrapper from './RouteWrapper.js';
 import { useAppContext } from './AppContext.js';
 

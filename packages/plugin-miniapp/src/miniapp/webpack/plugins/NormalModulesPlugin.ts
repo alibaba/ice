@@ -1,5 +1,4 @@
 import type webpack from '@ice/bundles/compiled/webpack/index.js';
-
 import * as walk from 'acorn-walk';
 import SingleEntryDependency from '../dependencies/SingleEntryDependency.js';
 import { componentConfig } from '../template/component.js';

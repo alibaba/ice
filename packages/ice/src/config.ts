@@ -2,9 +2,10 @@ import { createRequire } from 'module';
 import trustCert from '@ice/bundles/compiled/trusted-cert/index.js';
 import fse from 'fs-extra';
 import consola from 'consola';
-import type { UserConfig, Config } from '@ice/types';
+import type { Config } from '@ice/webpack-config/esm/types';
 import type { UserConfigContext } from 'build-scripts';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
+import type { UserConfig } from './types/userConfig.js';
 
 const require = createRequire(import.meta.url);
 const { merge } = lodash;

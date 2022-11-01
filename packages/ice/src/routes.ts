@@ -1,7 +1,7 @@
 import * as path from 'path';
 import { formatNestedRouteManifest, generateRouteManifest } from '@ice/route-manifest';
 import type { NestedRouteManifest } from '@ice/route-manifest';
-import type { UserConfig } from '@ice/types';
+import type { UserConfig } from './types/userConfig.js';
 import { getFileExports } from './service/analyze.js';
 import formatPath from './utils/formatPath.js';
 

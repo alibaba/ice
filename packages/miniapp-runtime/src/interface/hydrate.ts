@@ -1,5 +1,5 @@
 import type { Shortcuts } from '@ice/shared';
-import type { MiniappPageConfig } from '@ice/types';
+import type { MiniappPageConfig } from '../types.js';
 
 export interface MpInstance {
   config: MiniappPageConfig;

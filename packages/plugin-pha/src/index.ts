@@ -1,8 +1,7 @@
 import * as path from 'path';
 import consola from 'consola';
 import chalk from 'chalk';
-import type { Plugin } from '@ice/types';
-import type { GetAppConfig, GetRoutesConfig } from '@ice/types/esm/plugin.js';
+import type { Plugin, GetAppConfig, GetRoutesConfig } from '@ice/app/esm/types';
 import generateManifest from './generateManifest.js';
 import createPHAMiddleware from './phaMiddleware.js';
 

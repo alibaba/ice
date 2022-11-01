@@ -3,7 +3,8 @@ import path from 'path';
 import { createRequire } from 'module';
 
 import type { RecursiveTemplate, UnRecursiveTemplate } from '@ice/shared';
-import type { Config, MiniappAppConfig, MiniappConfig } from '@ice/types';
+import type { Config } from '@ice/app/esm/types';
+import type { MiniappAppConfig, MiniappConfig } from '@ice/miniapp-runtime/esm/types';
 import fs from 'fs-extra';
 import { minify } from 'html-minifier';
 import loaderUtils from '@ice/bundles/compiled/loader-utils/index.js';

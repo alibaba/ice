@@ -52,7 +52,8 @@
     "axios": "^0.27.2"
   },
   "devDependencies": {
-    "@ice/types": "^1.0.0",
+    "@ice/app": "^3.0.0",
+    "@ice/runtime": "^1.0.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "regenerator-runtime": "^0.13.9"

@@ -1,5 +1,5 @@
 import * as path from 'path';
-import type { Config, Plugin } from '@ice/types';
+import type { Config, Plugin } from '@ice/app/esm/types';
 import micromatch from 'micromatch';
 import fg from 'fast-glob';
 import { PAGE_STORE_MODULE, PAGE_STORE_PROVIDER, PAGE_STORE_INITIAL_STATES } from './constants.js';

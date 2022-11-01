@@ -1,7 +1,7 @@
 /* eslint-disable dot-notation */
 import { EMPTY_OBJ, ensure, hooks, isArray, isFunction, isString, isUndefined, Shortcuts } from '@ice/shared';
-import type { MiniappPageConfig } from '@ice/types';
 import type * as React from 'react';
+import type { MiniappPageConfig } from '../types.js';
 
 import { raf } from '../bom/raf.js';
 import { BEHAVIORS, CUSTOM_WRAPPER, EXTERNAL_CLASSES, ON_HIDE, ON_LOAD, ON_READY, ON_SHOW, OPTIONS, PAGE_INIT, VIEW } from '../constants/index.js';

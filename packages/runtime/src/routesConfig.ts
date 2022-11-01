@@ -1,4 +1,4 @@
-import type { RouteMatch, RoutesConfig, RouteConfig } from '@ice/types';
+import type { RouteMatch, RoutesConfig, RouteConfig } from './types.js';
 
 export function getMeta(
   matches: RouteMatch[],

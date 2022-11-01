@@ -4,8 +4,14 @@ import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import consola from 'consola';
 import MagicString from '@ice/bundles/compiled/magic-string/index.js';
 import { createFilter } from '@rollup/pluginutils';
-import type { DeclarationData } from '@ice/types/esm/generator.js';
-import type { Config } from '@ice/types';
+import type { Config } from '../types.js';
+
+interface DeclarationData {
+  specifier: string | string[];
+  source: string;
+  type?: boolean;
+  alias?: Record<string, string>;
+}
 
 interface Options {
   exportData: DeclarationData[];
