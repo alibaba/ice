@@ -1,7 +1,7 @@
 import consola from 'consola';
 import { getWebpackConfig } from '@ice/webpack-config';
 import type { Context, TaskConfig } from 'build-scripts';
-import webpack from 'webpack';
+import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type { StatsError, Stats } from 'webpack';
 import type { Config } from '@ice/webpack-config/esm/types';
 import type ora from '@ice/bundles/compiled/ora/index.js';
@@ -26,6 +26,7 @@ const build = async (
   const webpackConfigs = taskConfigs.map(({ config }) => getWebpackConfig({
     config,
     rootDir,
+    // @ts-expect-error fix type error of compiled webpack
     webpack,
     runtimeTmpDir: RUNTIME_TMP_DIR,
   }));
