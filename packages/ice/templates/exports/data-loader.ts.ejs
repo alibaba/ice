@@ -3,7 +3,12 @@ import { dataLoader } from '@ice/runtime';
 
 <% if(dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
 
+<% if (loaders) {-%>
 <%- loaders %>
+<% } else { -%>
+const loaders = {};
+<% } -%>
+
 <% if(hasExportAppData) {-%>loaders['__app'] = getAppData;<% } -%>
 
 <% if(!dataLoaderImport.imports) {-%>
