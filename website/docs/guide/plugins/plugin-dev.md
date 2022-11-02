@@ -408,6 +408,25 @@ export default () => ({
 });
 ```
 
+#### `addDataLoaderImport`
+
+向 ice.js 里注册 data-loader 的自定义发送方法，实现 `import { customFetch as fetcher } from 'custom-fetch';` 的能力：
+
+```ts
+export default () => ({
+  name: 'plugin-test',
+  setup: ({ generator }) => {
+    generator.addDataLoaderImport({
+      source: 'custom-fetch',
+      alias: {
+        customFetch: 'fetcher',
+      },
+      specifier: ['customFetch'],
+    });
+  },
+});
+```
+
 ### `watch`
 
 支持统一的 watch 服务
