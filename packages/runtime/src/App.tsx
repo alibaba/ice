@@ -11,7 +11,6 @@ interface Props {
   location: Location;
   navigator: Navigator;
   static?: boolean;
-  AppProvider: React.ComponentType<any>;
   RouteWrappers: RouteWrapperConfig[];
   AppRouter: React.ComponentType<AppRouterProps>;
 }
@@ -22,7 +21,6 @@ export default function App(props: Props) {
     action,
     navigator,
     static: staticProp = false,
-    AppProvider,
     AppRouter,
     RouteWrappers,
   } = props;
@@ -58,9 +56,7 @@ export default function App(props: Props) {
   return (
     <StrictMode>
       <ErrorBoundary>
-        <AppProvider>
-          {element}
-        </AppProvider>
+        {element}
       </ErrorBoundary>
     </StrictMode>
   );

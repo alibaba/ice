@@ -1,6 +1,6 @@
 import React from 'react';
 import type {
-  AppContext, RouteWrapperConfig, RunClientAppOptions,
+  AppContext, RunClientAppOptions,
 } from '@ice/runtime';
 import { AppContextProvider, AppDataProvider, getAppData, getAppConfig, Runtime } from '@ice/runtime';
 import App from './App.js';
@@ -37,43 +37,31 @@ async function render(
   runtime: Runtime,
 ) {
   const appContext = runtime.getAppContext();
-  const { appConfig } = appContext;
+  const { appConfig, appData } = appContext;
   const render = runtime.getRender();
-  const AppProvider = runtime.composeAppProvider() || React.Fragment;
-  const RouteWrappers = runtime.getWrappers();
+  const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
 
   // TODO:支持设置 rootId (在 miniapp-runtime 中修改)
   render(
     document.getElementById(appConfig.app.rootId || 'app'),
-    <BrowserEntry
-      appContext={appContext}
-      AppProvider={AppProvider}
-      RouteWrappers={RouteWrappers}
-    />,
+    <AppDataProvider value={appData}>
+      <AppRuntimeProvider>
+        <BrowserEntry appContext={appContext} />
+      </AppRuntimeProvider>
+    </AppDataProvider>,
   );
 }
 
 interface BrowserEntryProps {
   appContext: AppContext;
-  AppProvider: React.ComponentType<any>;
-  RouteWrappers: RouteWrapperConfig[];
 }
 
 function BrowserEntry({
   appContext,
-  ...rest
 }: BrowserEntryProps) {
-  const {
-    appData,
-  } = appContext;
-
   return (
     <AppContextProvider value={appContext}>
-      <AppDataProvider value={appData}>
-        <App
-          {...rest}
-        />
-      </AppDataProvider>
+      <App />
     </AppContextProvider>
   );
 }

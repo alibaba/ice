@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react';
-import { Link, useData, useAppData, useConfig, ClientOnly, useMounted } from 'ice';
+import { Link, useData, useAppData, useConfig } from 'ice';
 // not recommended but works
 import { useAppContext } from '@ice/runtime';
 import { useRequest } from 'ahooks';
@@ -16,7 +16,6 @@ export default function Home(props) {
   const appData = useAppData<AppData>();
   const data = useData();
   const config = useConfig();
-  const mounted = useMounted();
 
   if (typeof window !== 'undefined') {
     console.log('render Home', props);
@@ -42,19 +41,6 @@ export default function Home(props) {
         <div>userInfo: {JSON.stringify(userInfo)}</div>
         <div>data from: <span id="data-from">{data.from}</span></div>
       </div>
-      <p>
-        <div>{mounted ? 'Client' : 'Server'}</div>
-        <ClientOnly>
-          {() => {
-            const PageUrl = lazy(() => import('@/components/PageUrl'));
-            return (
-              <Suspense>
-                <PageUrl />
-              </Suspense>
-            );
-          }}
-        </ClientOnly>
-      </p>
     </>
   );
 }

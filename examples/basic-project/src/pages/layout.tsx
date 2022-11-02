@@ -1,6 +1,6 @@
 import { Outlet, useData, useConfig } from 'ice';
 
-export default () => {
+export default function Layout() {
   const data = useData();
   const config = useConfig();
 
@@ -12,7 +12,7 @@ export default () => {
       <Outlet />
     </div>
   );
-};
+}
 
 export function getConfig() {
   return {
