@@ -17,7 +17,11 @@ function Home() {
         <span id="count">{countState.count}</span>
         <button type="button" id="dec" onClick={() => countDispatcher.dec()}>-</button>
       </div>
-      <Link to="/blog">Blog</Link>
+      <>
+        <Link to="/blog">Blog</Link>
+        <br />
+        <Link to="/login">Login</Link>
+      </>
     </>
   );
 }
