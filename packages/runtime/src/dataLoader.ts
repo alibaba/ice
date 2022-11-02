@@ -96,18 +96,15 @@ async function load(id: string, loader: GetData) {
  * Get loaders by config of loaders.
  */
 function getLoaders(loadersConfig: LoadersConfig, fetcher: Function): Loaders {
-  const context = (window as any).__ICE_APP_CONTEXT__ || {};
-  const matchedIds = context.matchedIds || [];
-
   const loaders: Loaders = {};
-  matchedIds.forEach(id => {
-    const loaderConfig = loadersConfig[id];
-    if (loaderConfig) {
-      // If getData is an object, it is wrapped with a function.
-      loaders[id] = typeof loaderConfig === 'function' ? loadersConfig[id] : () => {
-        return fetcher(loaderConfig);
-      };
-    }
+
+  Object.keys(loadersConfig).forEach(id => {
+    const loader = loadersConfig[id];
+
+    // If getData is an object, it is wrapped with a function.
+    loaders[id] = typeof loader === 'function' ? loader : () => {
+      return fetcher(loader);
+    };
   });
 
   return loaders;
