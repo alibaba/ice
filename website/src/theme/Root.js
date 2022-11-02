@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import storage from '../utils/storage';
 import { isIntranet } from '../utils/internal';
@@ -22,16 +22,19 @@ if (typeof window !== 'undefined') {
 function Root({ children }) {
   const [noticeVisible, setNoticeVisible] = useState(false);
 
-  // TODO
-  // useEffect(() => {
-  //   const noNeedRedirect = /alibaba-inc\.com/.test(window.location.href) || storage.get(NO_REDIRECT_KEY) === 'TRUE';
-  //   if (noNeedRedirect) {
-  //     return;
-  //   }
-  //   isInternal().then(() => {
-  //     setNoticeVisible(true);
-  //   };
-  // }, []);
+  useEffect(() => {
+    if (
+      // In case of redirect for internal site.
+      !/alibaba-inc\.com/.test(window.location.href) &&
+      // If ignored by user, then skip.
+      storage.get(NO_REDIRECT_KEY) !== 'TRUE'
+    ) {
+      isIntranet()
+        .then(() => {
+          setNoticeVisible(true);
+        });
+    }
+  }, []);
 
   return (
     <>
@@ -39,12 +42,12 @@ function Root({ children }) {
       {noticeVisible && (
         <div className={styles.wrapper}>
           <div className={styles.container}>
-            <p className={styles.content}>检测到您是内网用户，建议前往内部官网 ice.alibaba-inc.com 以获取更多信息？</p>
+            <p className={styles.content}>检测到您是内网用户，建议前往内部官网 <a href="https://ice3.alibaba-inc.com">https://ice3.alibaba-inc.com</a> 以获取更多信息？</p>
             <div className={styles.action}>
               <div
                 className={clsx(styles.btn, styles.primaryBtn)}
                 onClick={() => {
-                  location.href = 'https://ice.alibaba-inc.com';
+                  location.href = 'https://ice3.alibaba-inc.com';
                 }}
               >
                 去内部官网（推荐）
@@ -53,7 +56,7 @@ function Root({ children }) {
                 className={clsx(styles.btn)}
                 onClick={() => {
                   setNoticeVisible(false);
-                  storage.set(NO_REDIRECT_KEY, 'TRUE', STORAGE_VALID_TIME);
+                  storage.set(NO_REDIRECT_KEY, 'TRUE', String(STORAGE_VALID_TIME));
                 }}
               >
                 七天内不再提示
