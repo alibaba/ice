@@ -72,7 +72,11 @@ function exportStoreProviderPlugin({ pageDir, resetPageState }: { pageDir: strin
     name: 'export-store-provider',
     enforce: 'post',
     transformInclude: (id) => {
-      return id.startsWith(pageDir.split(path.sep).join('/')) && !micromatch.isMatch(id, ignoreStoreFilePatterns);
+      return (
+        /\.[jt]sx?$/i.test(id) &&
+        id.startsWith(pageDir.split(path.sep).join('/')) &&
+        !micromatch.isMatch(id, ignoreStoreFilePatterns)
+      );
     },
     transform: async (source, id) => {
       const pageStorePath = getPageStorePath(id);
