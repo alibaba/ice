@@ -10,7 +10,9 @@ const getRouterBasename = () => {
   const appConfig = getAppConfig(app);
   return appConfig?.router?.basename ?? '<%- basename %>' ?? '';
 }
-
+// Add react fragment for split chunks of app.
+// Otherwise chunk of route component will pack @ice/jsx-runtime and depend on framework bundle.
+const App = <></>;
 runClientApp({
   app,
   runtimeModules: {

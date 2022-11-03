@@ -70,11 +70,19 @@ export function Scripts(props: React.ScriptHTMLAttributes<HTMLScriptElement>) {
   const pageAssets = getPageAssets(matches, assetsManifest);
   const entryAssets = getEntryAssets(assetsManifest);
   // Page assets need to be load before entry assets, so when call dynamic import won't cause duplicate js chunk loaded.
-  const scripts = pageAssets.concat(entryAssets).filter(path => path.indexOf('.js') > -1);
+  let scripts = pageAssets.concat(entryAssets).filter(path => path.indexOf('.js') > -1);
 
   if (assetsManifest.dataLoader) {
     scripts.unshift(`${assetsManifest.publicPath}${assetsManifest.dataLoader}`);
   }
+
+  // Unique scripts for duplicate chunks.
+  const jsSet = {};
+  scripts = scripts.filter((script) => {
+    if (jsSet[script]) return false;
+    jsSet[script] = true;
+    return true;
+  });
 
   const matchedIds = matches.map(match => match.route.id);
   const routePath = getCurrentRoutePath(matches);
