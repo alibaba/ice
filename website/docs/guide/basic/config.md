@@ -55,6 +55,23 @@ export default defineConfig({
 });
 ```
 
+### crossOriginLoading
+
+- 类型：`false | 'anonymous' | 'use-credentials'`
+- 默认值：`false`
+
+配置
+
+```js
+import { defineConfig } from '@ice/app';
+
+export default defineConfig({
+  crossOriginLoading: 'anonymous'
+});
+```
+
+指定 webpack 启用 [cross-origin](https://webpack.js.org/configuration/output/#outputcrossoriginloading) 去加载 chunk。
+
 ### define
 
 - 类型：`Record<string, string | boolean>`
