@@ -19,9 +19,10 @@ const build = async (
     spinner: ora.Ora;
     getAppConfig: GetAppConfig;
     getRoutesConfig: GetRoutesConfig;
+    userConfigHash: string;
   },
 ) => {
-  const { taskConfigs, serverCompiler, spinner, getAppConfig, getRoutesConfig } = options;
+  const { taskConfigs, serverCompiler, spinner, getAppConfig, getRoutesConfig, userConfigHash } = options;
   const { applyHook, rootDir } = context;
   const webpackConfigs = taskConfigs.map(({ config }) => getWebpackConfig({
     config,
@@ -29,6 +30,7 @@ const build = async (
     // @ts-expect-error fix type error of compiled webpack
     webpack,
     runtimeTmpDir: RUNTIME_TMP_DIR,
+    userConfigHash,
   }));
   const outputDir = webpackConfigs[0].output.path;
 
