@@ -6,6 +6,14 @@ import { defineJestConfig } from '../src/test';
 const __dirname = fileURLToPath(path.dirname(import.meta.url));
 
 describe('defineJestConfig', () => {
+  const builtInAlias = [
+    '^ice',
+    '^@/(.*)',
+    '^webpack/hot',
+    '^regenerator-runtime',
+    '^@swc/helpers/(.*)',
+    '^core-js/(.*)',
+  ];
   beforeAll(() => {
     const spy = vi.spyOn(process, 'cwd');
     spy.mockReturnValue(path.join(__dirname, '../../../examples/with-jest'));
@@ -15,14 +23,14 @@ describe('defineJestConfig', () => {
     const jestConfigFn = defineJestConfig({});
     const jestConfig = await jestConfigFn();
     expect(Object.keys(jestConfig)).toStrictEqual(['moduleNameMapper']);
-    expect(Object.keys(jestConfig.moduleNameMapper as Record<string, string>)).toStrictEqual(['^ice', '^@/(.*)', '^webpack/hot', '^regenerator-runtime']);
+    expect(Object.keys(jestConfig.moduleNameMapper as Record<string, string>)).toStrictEqual(builtInAlias);
   });
 
   it('get default config with function', async () => {
     const jestConfigFn = defineJestConfig(async () => { return {}; });
     const jestConfig = await jestConfigFn();
     expect(Object.keys(jestConfig)).toStrictEqual(['moduleNameMapper']);
-    expect(Object.keys(jestConfig.moduleNameMapper as Record<string, string>)).toStrictEqual(['^ice', '^@/(.*)', '^webpack/hot', '^regenerator-runtime']);
+    expect(Object.keys(jestConfig.moduleNameMapper as Record<string, string>)).toStrictEqual(builtInAlias);
   });
 
   it('get config with custom object config', async () => {
