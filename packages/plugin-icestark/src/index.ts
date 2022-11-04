@@ -11,7 +11,7 @@ const plugin: IPlugin = async ({ onGetWebpackConfig, getValue, applyMethod, modi
   const { uniqueName, umd, library, omitSetLibraryName = false, type } = options as Json;
   const { rootDir, webpack, pkg, userConfig } = context;
   const { vite, mpa } = userConfig;
-  const disableRouter = !userConfig.router;
+  const disableRouter = userConfig.router === false;
   let appType = type;
 
   if (!type) {

@@ -61,8 +61,6 @@ const module = ({
 
     const childBasename = isInIcestark() ? getBasename() : basename;
 
-    const history = createAppHistory({ type, basename: childBasename, initialIndex, initialEntries });
-
     addDOMRender(({ App, appMountNode }) => {
       return new Promise(resolve => {
         if (isInIcestark()) {
@@ -119,22 +117,26 @@ const module = ({
     // get props by props
     wrapperComponent(wrapperPageFn);
 
-    const routerProps = {
-      type,
-      basename: childBasename,
-      history,
-      fallback
-    };
+    // `buildConfig.router` is false when configrated in build.json.
+    if (buildConfig.router !== false) {
+      const history = createAppHistory({ type, basename: childBasename, initialIndex, initialEntries });
+      const routerProps = {
+        type,
+        basename: childBasename,
+        history,
+        fallback
+      };
 
-    // compatible with the case which lock icejs version
-    if (wrapperRouterRender && !!process.env.__FRAMEWORK_VERSION__) {
-      wrapperRouterRender((originRender) => (routes, RoutesComponent) => {
-        return originRender(routes, RoutesComponent, routerProps);
-      });
-    } else {
-      setRenderComponent((routes) => () => {
-        return <IceRouter {...routerProps} routes={routes} />;
-      });
+      // compatible with the case which lock icejs version
+      if (wrapperRouterRender && !!process.env.__FRAMEWORK_VERSION__) {
+        wrapperRouterRender((originRender) => (routes, RoutesComponent) => {
+          return originRender(routes, RoutesComponent, routerProps);
+        });
+      } else {
+        setRenderComponent((routes) => () => {
+          return <IceRouter {...routerProps} routes={routes} />;
+        });
+      }
     }
   } else if (appType === 'framework' && getApps) {
     const { appRouter, Layout, AppRoute: CustomAppRoute, removeRoutesLayout } = (icestark || {}) as IIceStark;
