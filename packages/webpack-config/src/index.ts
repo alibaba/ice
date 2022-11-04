@@ -33,6 +33,7 @@ interface GetWebpackConfigOptions {
   config: Config;
   webpack: typeof webpack;
   runtimeTmpDir: string;
+  userConfigHash: string;
 }
 type GetWebpackConfig = (options: GetWebpackConfigOptions) => Configuration;
 enum JSMinifier {
@@ -59,7 +60,7 @@ function getEntry(rootDir: string, runtimeTmpDir: string) {
   };
 }
 
-const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeTmpDir }) => {
+const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeTmpDir, userConfigHash }) => {
   const {
     mode,
     define = {},
@@ -257,7 +258,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
     } as Configuration['optimization'],
     cache: {
       type: 'filesystem',
-      version: `${process.env.__ICE_VERSION__}|${JSON.stringify(config)}`,
+      version: `${process.env.__ICE_VERSION__}|${userConfigHash}`,
       buildDependencies: { config: [path.join(rootDir, 'package.json')] },
       cacheDirectory: path.join(cacheDir, 'webpack'),
     },
