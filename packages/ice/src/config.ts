@@ -329,6 +329,16 @@ const userConfig = [
       config.splitChunks = splitChunks;
     },
   },
+  {
+    name: 'crossOriginLoading',
+    validation: 'boolean|string',
+    defaultValue: false,
+    setConfig: (config: Config, crossOriginLoading: UserConfig['crossOriginLoading']) => {
+      config.output = merge(config.output || {}, {
+        crossOriginLoading,
+      });
+    },
+  },
 ];
 
 const cliOption = [
