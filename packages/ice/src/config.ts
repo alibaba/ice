@@ -95,6 +95,13 @@ const userConfig = [
     },
   },
   {
+    name: 'polyfill',
+    validation: 'string|boolean',
+    setConfig: (config: Config, polyfill: UserConfig['polyfill']) => {
+      return mergeDefaultValue(config, 'polyfill', polyfill);
+    },
+  },
+  {
     name: 'filename',
     validation: 'string',
     setConfig: (config: Config, filename: UserConfig['filename']) => {

@@ -18,10 +18,22 @@ interface Options {
   compileExcludes?: RegExp[];
   swcOptions?: Config['swcOptions'];
   cacheDir?: string;
+  polyfill?: Config['polyfill'];
+  env?: boolean;
 }
 
 const compilationPlugin = (options: Options): UnpluginOptions => {
-  const { sourceMap, mode, fastRefresh, compileIncludes = [], compileExcludes, swcOptions = {}, cacheDir } = options;
+  const {
+    sourceMap,
+    mode,
+    fastRefresh,
+    compileIncludes = [],
+    compileExcludes,
+    swcOptions = {},
+    cacheDir,
+    polyfill,
+    env,
+  } = options;
 
   const { removeExportExprs, compilationConfig, keepPlatform, keepExports, getRoutePaths } = swcOptions;
 
@@ -61,7 +73,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
         sourceMaps: !!sourceMap,
       };
 
-      const commonOptions = getJsxTransformOptions({ suffix, fastRefresh });
+      const commonOptions = getJsxTransformOptions({ suffix, fastRefresh, polyfill, env });
 
       // auto detect development mode
       if (
@@ -154,11 +166,15 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
 interface GetJsxTransformOptions {
   suffix: JSXSuffix;
   fastRefresh: boolean;
+  polyfill: Config['polyfill'];
+  env: boolean;
 }
 
 function getJsxTransformOptions({
   suffix,
   fastRefresh,
+  polyfill,
+  env,
 }: GetJsxTransformOptions) {
   const reactTransformConfig: ReactConfig = {
     refresh: fastRefresh,
@@ -172,16 +188,27 @@ function getJsxTransformOptions({
         react: reactTransformConfig,
         legacyDecorator: true,
       },
+      // This option will greatly reduce your file size while bundling.
+      // This option depends on `@swc/helpers`.
       externalHelpers: false,
     },
     module: {
       type: 'es6',
       noInterop: false,
     },
-    env: {
-      loose: false,
-    },
   };
+  if (env) {
+    commonOptions.env = {
+      loose: false,
+      ...(polyfill ? {
+        mode: polyfill,
+        coreJs: '3.26',
+      } : {}),
+    };
+  } else {
+    // Set target `es2022` for default transform when env is false.
+    commonOptions.jsc.target = 'es2022';
+  }
   const syntaxFeatures = {
     dynamicImport: true,
     decorators: true,

@@ -107,6 +107,10 @@ export interface Config {
 
   proxy?: ProxyConfigArrayItem | ProxyConfigMap | ProxyConfigArray | undefined;
 
+  polyfill?: 'usage' | 'entry' | false;
+  // You can use `browserslist` to automatically configure supported browsers if set to be true.
+  env?: boolean;
+
   compileIncludes?: (string | RegExp)[];
 
   minify?: boolean | string;

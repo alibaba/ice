@@ -96,6 +96,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
     optimization = {},
     performance,
     enableCopyPlugin,
+    polyfill,
   } = config;
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
   const dev = mode !== 'production';
@@ -166,6 +167,8 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
     compileIncludes,
     compileExcludes,
     swcOptions,
+    polyfill,
+    env: true,
   });
   const webpackConfig = {
     mode,

@@ -1,3 +1,4 @@
+<% if (importCoreJs) { -%>import 'core-js';<% } -%>
 import { runClientApp, getAppConfig } from '<%- iceRuntimePath %>';
 import { commons, statics } from './runtimeModules';
 import * as app from '@/app';
