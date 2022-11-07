@@ -1,0 +1,19 @@
+{
+  "name": "@ice/miniapp-html-styles",
+  "version": "1.0.0",
+  "description": "html styles for ice miniapp",
+  "exports": {
+    "./html": "./html.css",
+    "./html5": "./html5.css"
+  },
+  "files": [
+    "html.css",
+    "html5.css"
+  ],
+  "author": "ICE",
+  "license": "MIT",
+  "repository": "ice-lab/ice-next",
+  "bugs": "https://github.com/ice-lab/ice-next/issues",
+  "homepage": "https://next.ice.work",
+  "sideEffects": false
+}
