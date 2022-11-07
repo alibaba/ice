@@ -3,7 +3,8 @@ import fse from 'fs-extra';
 import consola from 'consola';
 import type { Compiler } from 'webpack';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
-import type { ServerCompiler } from '../types/plugin.js';
+import type { Context } from 'build-scripts';
+import type { ServerCompiler, PluginData } from '../types/plugin.js';
 import { RUNTIME_TMP_DIR } from '../constant.js';
 import { getRoutePathsFromCache } from '../utils/getRoutePaths.js';
 
@@ -14,19 +15,31 @@ export default class DataLoaderPlugin {
   private serverCompiler: ServerCompiler;
   private rootDir: string;
   private dataCache: Map<string, string>;
+  private getAllPlugin: Context['getAllPlugin'];
 
   public constructor(options: {
     serverCompiler: ServerCompiler;
     rootDir: string;
     dataCache: Map<string, string>;
+    getAllPlugin?: Context['getAllPlugin'];
   }) {
-    const { serverCompiler, rootDir, dataCache } = options;
+    const { serverCompiler, rootDir, dataCache, getAllPlugin } = options;
     this.serverCompiler = serverCompiler;
     this.rootDir = rootDir;
     this.dataCache = dataCache;
+    this.getAllPlugin = getAllPlugin;
   }
 
   public apply(compiler: Compiler) {
+    const plugins = this.getAllPlugin(['keepExports']) as PluginData[];
+
+    let keepExports = ['getData', 'getAppData'];
+    plugins.forEach(plugin => {
+      if (plugin.keepExports) {
+        keepExports = keepExports.concat(plugin.keepExports);
+      }
+    });
+
     compiler.hooks.thisCompilation.tap(pluginName, (compilation) => {
       compilation.hooks.processAssets.tapAsync({
         name: pluginName,
@@ -45,7 +58,7 @@ export default class DataLoaderPlugin {
             },
             {
               swc: {
-                keepExports: ['getData', 'getAppData'],
+                keepExports,
                 keepPlatform: 'web',
                 getRoutePaths: () => {
                   return getRoutePathsFromCache(this.dataCache);

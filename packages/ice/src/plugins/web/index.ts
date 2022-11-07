@@ -13,7 +13,7 @@ import getServerCompilerPlugin from '../../utils/getServerCompilerPlugin.js';
 
 const plugin: Plugin = () => ({
   name: 'plugin-web',
-  setup: ({ registerTask, onHook, context, generator, serverCompileTask, dataCache }) => {
+  setup: ({ registerTask, onHook, context, generator, serverCompileTask, dataCache, getAllPlugin }) => {
     const { rootDir, commandArgs, command, userConfig } = context;
     const { ssg } = userConfig;
 
@@ -52,7 +52,7 @@ const plugin: Plugin = () => ({
       serverOutfile = path.join(outputDir, SERVER_OUTPUT_DIR, `index${userConfig?.server?.format === 'esm' ? '.mjs' : '.cjs'}`);
       webpackConfigs[0].plugins.push(
         // Add webpack plugin of data-loader in web task
-        new DataLoaderPlugin({ serverCompiler, rootDir, dataCache }),
+        new DataLoaderPlugin({ serverCompiler, rootDir, dataCache, getAllPlugin }),
         // Add ServerCompilerPlugin
         getServerCompilerPlugin(serverCompiler, {
           rootDir,
