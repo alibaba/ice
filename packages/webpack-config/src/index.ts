@@ -13,7 +13,6 @@ import ESlintPlugin from '@ice/bundles/compiled/eslint-webpack-plugin/index.js';
 import CopyPlugin from '@ice/bundles/compiled/copy-webpack-plugin/index.js';
 import type { NormalModule, Compiler, Configuration } from 'webpack';
 import type webpack from 'webpack';
-import browserslist from 'browserslist';
 import type { Config, ModifyWebpackConfig } from './types.js';
 import configAssets from './config/assets.js';
 import configCss from './config/css.js';
@@ -100,7 +99,6 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
   } = config;
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
   const dev = mode !== 'production';
-  const supportedBrowsers = getSupportedBrowsers(rootDir, dev);
   const hashKey = hash === true ? 'hash:8' : (hash || '');
   // formate alias
   const aliasWithRoot = {};
@@ -401,7 +399,6 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
   // pipe webpack by built-in functions and custom functions
   const ctx = {
     ...config,
-    supportedBrowsers,
     hashKey,
     webpack,
   };
@@ -419,23 +416,6 @@ function getDevtoolValue(sourceMap: Config['sourceMap']) {
   }
 
   return 'source-map';
-}
-
-function getSupportedBrowsers(
-  dir: string,
-  isDevelopment: boolean,
-): string[] | undefined {
-  let browsers: any;
-  try {
-    browsers = browserslist.loadConfig({
-      path: dir,
-      env: isDevelopment ? 'development' : 'production',
-    });
-  } catch {
-    consola.debug('[browsers]', 'fail to load config of browsers');
-  }
-
-  return browsers;
 }
 
 export {

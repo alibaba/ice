@@ -10,13 +10,12 @@ import type { ModifyWebpackConfig } from '../types.js';
 type CSSRuleConfig = [string, string?, Record<string, any>?];
 interface Options {
   publicPath: string;
-  browsers: string[];
 }
 
 const require = createRequire(import.meta.url);
 
 function configCSSRule(config: CSSRuleConfig, options: Options) {
-  const { publicPath, browsers } = options;
+  const { publicPath } = options;
   const [style, loader, loaderOptions] = config;
   const cssLoaderOpts = {
     sourceMap: true,
@@ -57,7 +56,6 @@ function configCSSRule(config: CSSRuleConfig, options: Options) {
           features: {
             'custom-properties': false,
           },
-          browsers,
         }],
         ['@ice/bundles/compiled/postcss-plugin-rpx2vw'],
       ],
@@ -94,7 +92,7 @@ function configCSSRule(config: CSSRuleConfig, options: Options) {
 }
 
 const css: ModifyWebpackConfig<Configuration, typeof webpack> = (config, ctx) => {
-  const { supportedBrowsers, publicPath, hashKey, cssFilename, cssChunkFilename } = ctx;
+  const { publicPath, hashKey, cssFilename, cssChunkFilename } = ctx;
   const cssOutputFolder = 'css';
   config.module.rules.push(...([
     ['css'],
@@ -105,7 +103,7 @@ const css: ModifyWebpackConfig<Configuration, typeof webpack> = (config, ctx) =>
     ['scss', require.resolve('@ice/bundles/compiled/sass-loader'), {
       implementation: sass,
     }],
-  ] as CSSRuleConfig[]).map((config) => configCSSRule(config, { publicPath, browsers: supportedBrowsers })));
+  ] as CSSRuleConfig[]).map((config) => configCSSRule(config, { publicPath })));
   config.plugins.push(
     new MiniCssExtractPlugin({
       filename: cssFilename || `${cssOutputFolder}/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`,
