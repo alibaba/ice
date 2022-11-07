@@ -139,6 +139,7 @@ async function startDevServer({
         renderMode,
         getAppConfig,
         taskConfig: webTaskConfig,
+        userConfig,
       });
       const insertIndex = middlewares.findIndex(({ name }) => name === 'serve-index');
       middlewares.splice(

@@ -10,23 +10,38 @@ import type { Config } from '@ice/webpack-config/esm/types';
 import type { ExtendsPluginAPI } from '../../types/plugin.js';
 import getRouterBasename from '../../utils/getRouterBasename.js';
 import dynamicImport from '../../utils/dynamicImport.js';
+import warnOnHashRouterEnabled from '../../utils/warnOnHashRouterEnabled.js';
+import type { UserConfig } from '../../types/userConfig.js';
 
 const require = createRequire(import.meta.url);
 
 interface Options {
   serverCompileTask: ExtendsPluginAPI['serverCompileTask'];
   routeManifestPath: string;
+  getAppConfig: () => Promise<any>;
+  userConfig: UserConfig;
   documentOnly?: boolean;
   renderMode?: RenderMode;
   taskConfig?: TaskConfig<Config>;
-  getAppConfig: () => Promise<any>;
 }
 
 export default function createRenderMiddleware(options: Options): Middleware {
-  const { documentOnly, renderMode, serverCompileTask, routeManifestPath, getAppConfig, taskConfig } = options;
+  const {
+    documentOnly,
+    renderMode,
+    serverCompileTask,
+    routeManifestPath,
+    getAppConfig,
+    taskConfig,
+    userConfig,
+  } = options;
   const middleware: ExpressRequestHandler = async function (req, res, next) {
     const routes = JSON.parse(fse.readFileSync(routeManifestPath, 'utf-8'));
-    const basename = getRouterBasename(taskConfig, (await getAppConfig()).default);
+    const appConfig = (await getAppConfig()).default;
+    if (appConfig?.router?.type === 'hash') {
+      warnOnHashRouterEnabled(userConfig);
+    }
+    const basename = getRouterBasename(taskConfig, appConfig);
     const matches = matchRoutes(routes, req.path, basename);
     // When documentOnly is true, it means that the app is CSR and it should return the html.
     if (matches.length || documentOnly) {
