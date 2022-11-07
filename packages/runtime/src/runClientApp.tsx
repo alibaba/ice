@@ -5,7 +5,7 @@ import type { HashHistory, BrowserHistory, Action, Location, InitialEntry, Memor
 import type {
   AppContext, WindowContext, AppExport, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
   RouteWrapperConfig, RuntimeModules, RouteMatch, RouteModules, AppConfig, AssetsManifest,
-} from '@ice/types';
+} from './types.js';
 import { createHistory as createHistorySingle } from './single-router.js';
 import { setHistory } from './history.js';
 import Runtime from './runtime.js';
@@ -116,9 +116,9 @@ interface RenderOptions {
 }
 async function render({ history, runtime }: RenderOptions) {
   const appContext = runtime.getAppContext();
-  const { appConfig } = appContext;
+  const { appConfig, appData } = appContext;
   const render = runtime.getRender();
-  const AppProvider = runtime.composeAppProvider() || React.Fragment;
+  const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
   const RouteWrappers = runtime.getWrappers();
   const AppRouter = runtime.getAppRouter();
 
@@ -133,20 +133,22 @@ async function render({ history, runtime }: RenderOptions) {
 
   render(
     root,
-    <BrowserEntry
-      history={history}
-      appContext={appContext}
-      AppProvider={AppProvider}
-      RouteWrappers={RouteWrappers}
-      AppRouter={AppRouter}
-    />,
+    <AppDataProvider value={appData}>
+      <AppRuntimeProvider>
+        <BrowserEntry
+          history={history}
+          appContext={appContext}
+          RouteWrappers={RouteWrappers}
+          AppRouter={AppRouter}
+        />
+      </AppRuntimeProvider>
+    </AppDataProvider>,
   );
 }
 
 interface BrowserEntryProps {
   history: HashHistory | BrowserHistory | null;
   appContext: AppContext;
-  AppProvider: React.ComponentType<any>;
   RouteWrappers: RouteWrapperConfig[];
   AppRouter: React.ComponentType<AppRouterProps>;
 }
@@ -175,7 +177,6 @@ function BrowserEntry({
     routesConfig: initialRoutesConfig,
     routeModules: initialRouteModules,
     basename,
-    appData,
   } = appContext;
 
   const [historyState, setHistoryState] = useState<HistoryState>({
@@ -229,14 +230,12 @@ function BrowserEntry({
 
   return (
     <AppContextProvider value={appContext}>
-      <AppDataProvider value={appData}>
-        <App
-          action={action}
-          location={location}
-          navigator={history}
-          {...rest}
-        />
-      </AppDataProvider>
+      <App
+        action={action}
+        location={location}
+        navigator={history}
+        {...rest}
+      />
     </AppContextProvider>
   );
 }

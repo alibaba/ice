@@ -6,6 +6,14 @@ import { defineVitestConfig } from '../src/test';
 const __dirname = fileURLToPath(path.dirname(import.meta.url));
 
 describe('defineVitestConfig', () => {
+  const builtInAlias = [
+    'ice',
+    '@',
+    'webpack/hot',
+    'regenerator-runtime',
+    '@swc/helpers',
+    'core-js',
+  ];
   beforeAll(() => {
     const spy = vi.spyOn(process, 'cwd');
     spy.mockReturnValue(path.join(__dirname, '../../../examples/with-vitest'));
@@ -15,14 +23,14 @@ describe('defineVitestConfig', () => {
     const vitestConfigFn = defineVitestConfig({});
     const vitestConfig = await vitestConfigFn({ command: 'serve', mode: 'test' });
     expect(Object.keys(vitestConfig.resolve as Record<string, string>)).toStrictEqual(['alias']);
-    expect(Object.keys(vitestConfig.resolve?.alias as Record<string, string>)).toStrictEqual(['ice', '@', 'webpack/hot', 'regenerator-runtime']);
+    expect(Object.keys(vitestConfig.resolve?.alias as Record<string, string>)).toStrictEqual(builtInAlias);
   });
 
   it('get default config with function', async () => {
     const vitestConfigFn = defineVitestConfig(() => ({}));
     const vitestConfig = await vitestConfigFn({ command: 'serve', mode: 'test' });
     expect(Object.keys(vitestConfig.resolve as Record<string, string>)).toStrictEqual(['alias']);
-    expect(Object.keys(vitestConfig.resolve?.alias as Record<string, string>)).toStrictEqual(['ice', '@', 'webpack/hot', 'regenerator-runtime']);
+    expect(Object.keys(vitestConfig.resolve?.alias as Record<string, string>)).toStrictEqual(builtInAlias);
   });
 
   it('get config with custom object config', async () => {

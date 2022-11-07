@@ -1,4 +1,4 @@
-import type { RuntimePlugin } from '@ice/types';
+import type { RuntimePlugin } from '@ice/runtime/esm/types';
 import { createAxiosInstance, setAxiosInstance } from './request.js';
 import type { RequestConfig } from './types';
 

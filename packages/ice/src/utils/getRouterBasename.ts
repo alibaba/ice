@@ -1,5 +1,5 @@
 import type { AppConfig } from '@ice/runtime';
-import type { Config } from '@ice/types';
+import type { Config } from '@ice/webpack-config/esm/types';
 import type { TaskConfig } from 'build-scripts';
 
 const getRouterBasename = (taskConfig: TaskConfig<Config>, appConfig: AppConfig) => {

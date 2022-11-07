@@ -1,12 +1,12 @@
 import * as path from 'path';
-import { createHash } from 'crypto';
 import consola from 'consola';
 import esbuild from 'esbuild';
-import type { Config, UserConfig } from '@ice/types';
-import type { ServerCompiler } from '@ice/types/esm/plugin.js';
+import type { Config } from '@ice/webpack-config/esm/types';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { TaskConfig } from 'build-scripts';
-import { getCompilerPlugins } from '@ice/webpack-config';
+import { getCompilerPlugins, getCSSModuleLocalIdent } from '@ice/webpack-config';
+import type { ServerCompiler } from '../types/plugin.js';
+import type { UserConfig } from '../types/userConfig.js';
 import escapeLocalIdent from '../utils/escapeLocalIdent.js';
 import cssModulesPlugin from '../esbuild/cssModules.js';
 import aliasPlugin from '../esbuild/alias.js';
@@ -67,6 +67,8 @@ export function createServerCompiler(options: Options) {
     const transformPlugins = getCompilerPlugins({
       ...task.config,
       fastRefresh: false,
+      env: false,
+      polyfill: false,
       swcOptions,
     }, 'esbuild');
 
@@ -129,17 +131,8 @@ export function createServerCompiler(options: Options) {
         cssModulesPlugin({
           extract: false,
           generateLocalIdentName: function (name: string, filename: string) {
-            const hash = createHash('md4');
-            hash.update(Buffer.from(filename + name, 'utf8'));
-            const localIdentHash = hash.digest('base64')
-              // Remove all leading digits
-              .replace(/^\d+/, '')
-              // Replace all slashes with underscores (same as in base64url)
-              .replace(/\//g, '_')
-              // Remove everything that is not an alphanumeric or underscore
-              .replace(/[^A-Za-z0-9_]+/g, '')
-              .slice(0, 8);
-            return escapeLocalIdent(`${name}--${localIdentHash}`);
+            // Compatible with webpack css-loader.
+            return escapeLocalIdent(getCSSModuleLocalIdent(filename, name));
           },
         }),
         assetsManifest && createAssetsPlugin(assetsManifest, rootDir),
@@ -147,7 +140,7 @@ export function createServerCompiler(options: Options) {
           plugins: [
             ...transformPlugins,
             // Plugin transformImportPlugin need after transformPlugins in case of it has onLoad lifecycle.
-            dev && preBundle && transformImportPlugin(
+            dev && preBundle && depsMetadata && transformImportPlugin(
               depsMetadata,
               path.join(rootDir, task.config.outputDir, SERVER_OUTPUT_DIR),
             ),

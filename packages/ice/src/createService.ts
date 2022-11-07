@@ -4,10 +4,12 @@ import { createRequire } from 'module';
 import { Context } from 'build-scripts';
 import consola from 'consola';
 import type { CommandArgs, CommandName } from 'build-scripts';
-import type { AppConfig, Config, PluginData } from '@ice/types';
-import type { DeclarationData } from '@ice/types/esm/generator.js';
-import type { ExtendsPluginAPI } from '@ice/types/esm/plugin.js';
+import type { Config } from '@ice/webpack-config/esm/types';
+import type { AppConfig } from '@ice/runtime/esm/types';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
+import fg from 'fast-glob';
+import type { DeclarationData } from './types/generator.js';
+import type { PluginData, ExtendsPluginAPI } from './types/plugin.js';
 import Generator from './service/runtimeGenerator.js';
 import { createServerCompiler } from './service/serverCompiler.js';
 import createWatch from './service/watchSource.js';
@@ -28,6 +30,7 @@ import ServerCompileTask from './utils/ServerCompileTask.js';
 import { getAppExportConfig, getRouteExportConfig } from './service/config.js';
 import renderExportsTemplate from './utils/renderExportsTemplate.js';
 import { getFileExports } from './service/analyze.js';
+import { getFileHash } from './utils/hash.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -96,7 +99,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         removeEvent: removeWatchEvent,
       },
       context: {
-        // @ts-expect-error repack type can not match with original type
         webpack,
       },
       serverCompileTask,
@@ -132,7 +134,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   // get userConfig after setup because of userConfig maybe modified by plugins
   const { userConfig } = ctx;
-  const { routes: routesConfig, server, syntaxFeatures } = userConfig;
+  const { routes: routesConfig, server, syntaxFeatures, polyfill } = userConfig;
+  const userConfigHash = await getFileHash(path.join(rootDir, fg.sync(configFile, { cwd: rootDir })[0]));
 
   await setEnv(rootDir, commandArgs);
   const coreEnvKeys = getCoreEnvKeys();
@@ -169,6 +172,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     basename: platformTaskConfig.config.basename || '/',
     memoryRouter: platformTaskConfig.config.memoryRouter,
     hydrate: !csr,
+    importCoreJs: polyfill === 'entry',
   });
   dataCache.set('routes', JSON.stringify(routesInfo));
   dataCache.set('hasExportAppData', hasExportAppData ? 'true' : '');
@@ -237,14 +241,18 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             appConfig,
             devPath: (routePaths[0] || '').replace(/^[/\\]/, ''),
             spinner: buildSpinner,
+            userConfigHash,
           });
         } else if (command === 'build') {
           return await build(ctx, {
             getRoutesConfig,
             getAppConfig,
+            appConfig,
             taskConfigs,
             serverCompiler,
             spinner: buildSpinner,
+            userConfigHash,
+            userConfig,
           });
         } else if (command === 'test') {
           return await test(ctx, {

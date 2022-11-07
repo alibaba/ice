@@ -2,12 +2,7 @@ import React from 'react';
 import { AppErrorBoundary, useAppContext } from '@ice/runtime';
 import { AppWrapper } from './connect.js';
 
-interface Props {
-  AppProvider: React.ComponentType<any>;
-}
-
-export default function App(props: Props) {
-  const { AppProvider } = props;
+export default function App() {
   const { appConfig } = useAppContext();
   const { strict, errorBoundary } = appConfig.app;
   const StrictMode = strict ? React.StrictMode : React.Fragment;
@@ -16,9 +11,7 @@ export default function App(props: Props) {
   return (
     <StrictMode>
       <ErrorBoundary>
-        <AppProvider>
-          <AppWrapper />
-        </AppProvider>
+        <AppWrapper />
       </ErrorBoundary>
     </StrictMode>
   );

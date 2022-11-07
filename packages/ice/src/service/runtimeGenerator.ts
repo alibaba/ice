@@ -21,7 +21,7 @@ import type {
   DeclarationData,
   Registration,
   TemplateOptions,
-} from '@ice/types/esm/generator.js';
+} from '../types/generator.js';
 import getGlobalStyleGlobPattern from '../utils/getGlobalStyleGlobPattern.js';
 
 const { debounce } = lodash;

@@ -10,7 +10,7 @@
 
 import url from 'url';
 import address from 'address';
-import type { Urls } from '@ice/types/esm/plugin.js';
+import type { Urls } from '../types/plugin.js';
 
 export default function prepareUrls(
   protocol: string,

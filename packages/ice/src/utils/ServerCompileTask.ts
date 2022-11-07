@@ -1,4 +1,4 @@
-import type { ServerCompiler } from '@ice/types/esm/plugin.js';
+import type { ServerCompiler } from '../types/plugin.js';
 
 /**
  * Get server compile promise task in middlewares or plugins.

@@ -7,7 +7,7 @@ import { transform, build } from 'esbuild';
 import type { Loader, Plugin } from 'esbuild';
 import consola from 'consola';
 import type { TaskConfig } from 'build-scripts';
-import type { Config } from '@ice/types';
+import type { Config } from '@ice/webpack-config/esm/types';
 import { getCache, setCache } from '../utils/persistentCache.js';
 import { getFileHash } from '../utils/hash.js';
 import scanPlugin from '../esbuild/scan.js';

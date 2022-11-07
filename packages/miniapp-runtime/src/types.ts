@@ -1,7 +1,7 @@
 /**
  * 微信小程序全局 Window 配置和页面配置的公共项目
  */
-interface CommonConfig {
+ interface CommonConfig {
   /** 导航栏背景颜色，HexColor
    * @default: "#000000"
    */

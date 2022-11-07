@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as dotenv from 'dotenv';
 import { expand as dotenvExpand } from 'dotenv-expand';
 import type { CommandArgs } from 'build-scripts';
-import type { AppConfig } from '@ice/types';
+import type { AppConfig } from '@ice/runtime/esm/types';
 
 export interface Envs {
   [key: string]: string;

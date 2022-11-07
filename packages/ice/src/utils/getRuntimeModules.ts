@@ -1,4 +1,4 @@
-import type { PluginData } from '@ice/types';
+import type { PluginData } from '../types/plugin.js';
 
 export interface RuntimeModule {
   staticRuntime: boolean;

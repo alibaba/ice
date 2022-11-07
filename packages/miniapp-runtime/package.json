@@ -25,7 +25,6 @@
   "sideEffects": false,
   "dependencies": {
     "@ice/shared": "^1.0.0",
-    "@ice/types": "^1.0.0",
     "@ice/runtime": "^1.0.0",
     "miniapp-history": "^0.1.7"
   },

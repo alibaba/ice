@@ -1,5 +1,4 @@
 import { defineAppConfig } from 'ice';
-import { defineAuthConfig } from '@ice/plugin-auth/esm/types';
 import { isWeb, isNode } from '@uni/env';
 import type { GetAppData } from 'ice';
 
@@ -11,6 +10,7 @@ console.log('__LOG__');
 console.warn('__WARN__');
 console.error('__ERROR__');
 console.log('process.env.HAHA', process.env.HAHA);
+console.log('process.env.undefinedEnv', process.env.undefinedEnv);
 
 if (isWeb) {
   console.error('__IS_WEB__');
@@ -19,15 +19,6 @@ if (isWeb) {
 if (isNode) {
   console.error('__IS_NODE__');
 }
-
-export const auth = defineAuthConfig((data) => {
-  // fetch auth data
-  return {
-    initialAuth: {
-      admin: data?.auth?.admin,
-    },
-  };
-});
 
 export default defineAppConfig({
   app: {
@@ -39,9 +30,6 @@ export const getAppData: GetAppData = () => {
   return new Promise((resolve) => {
     resolve({
       title: 'gogogogo',
-      auth: {
-        admin: true,
-      },
     });
   });
 };

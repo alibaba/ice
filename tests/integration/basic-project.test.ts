@@ -33,7 +33,8 @@ describe(`build ${example}`, () => {
     expect(bundleContent.includes('__IS_NODE__')).toBe(false);
     expect(fs.existsSync(path.join(__dirname, `../../examples/${example}/build/favicon.ico`))).toBe(true);
     expect(fs.existsSync(path.join(__dirname, `../../examples/${example}/build/js/data-loader.js`))).toBe(true);
-
+    const jsonContent = fs.readFileSync(path.join(__dirname, `../../examples/${example}/build/assets-manifest.json`), 'utf-8');
+    expect(JSON.parse(jsonContent).pages.about.includes('js/framework.js')).toBeFalsy();
     const dataLoaderPath = path.join(__dirname, `../../examples/${example}/build/js/data-loader.js`);
     // should not contain react
     const dataLoaderContent = fs.readFileSync(dataLoaderPath, 'utf-8');

@@ -16,7 +16,7 @@
     "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-antd"
   },
   "devDependencies": {
-    "@ice/types": "^1.0.0"
+    "@ice/app": "^3.0.0"
   },
   "dependencies": {
     "@ice/style-import": "^1.0.0"

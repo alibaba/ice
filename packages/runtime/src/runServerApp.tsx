@@ -11,7 +11,7 @@ import type {
   RenderMode,
   DocumentComponent,
   RuntimeModules,
-} from '@ice/types';
+} from './types.js';
 import Runtime from './runtime.js';
 import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
@@ -250,7 +250,7 @@ async function renderServerEntry(
   const appContext = runtime.getAppContext();
   const { appData, routePath } = appContext;
   const staticNavigator = createStaticNavigator();
-  const AppProvider = runtime.composeAppProvider() || React.Fragment;
+  const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
   const RouteWrappers = runtime.getWrappers();
   const AppRouter = runtime.getAppRouter();
 
@@ -260,20 +260,21 @@ async function renderServerEntry(
       location={location}
       navigator={staticNavigator}
       static
-      AppProvider={AppProvider}
       RouteWrappers={RouteWrappers}
       AppRouter={AppRouter}
     />,
   };
 
   const element = (
-    <AppContextProvider value={appContext}>
-      <AppDataProvider value={appData}>
-        <DocumentContextProvider value={documentContext}>
-          <Document pagePath={routePath} />
-        </DocumentContextProvider>
-      </AppDataProvider>
-    </AppContextProvider>
+    <AppDataProvider value={appData}>
+      <AppRuntimeProvider>
+        <AppContextProvider value={appContext}>
+          <DocumentContextProvider value={documentContext}>
+            <Document pagePath={routePath} />
+          </DocumentContextProvider>
+        </AppContextProvider>
+      </AppRuntimeProvider>
+    </AppDataProvider>
   );
 
   const pipe = renderToNodeStream(element, false);

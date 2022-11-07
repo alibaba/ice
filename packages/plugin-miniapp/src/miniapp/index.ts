@@ -6,7 +6,7 @@
 import * as path from 'path';
 import { createRequire } from 'node:module';
 import fg from 'fast-glob';
-import type { Config } from '@ice/types';
+import type { Config } from '@ice/app/esm/types';
 import getMiniappPlatformConfig from '../platforms/index.js';
 import getMiniappWebpackConfig from './webpack/index.js';
 

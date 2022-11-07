@@ -14,6 +14,7 @@
   "dependencies": {
     "@ice/app": "workspace:*",
     "@ice/runtime": "workspace:*",
+    "@ice/miniapp-html-styles": "workspace:*",
     "@ice/plugin-miniapp": "workspace:*",
     "@ice/miniapp-runtime": "workspace:*",
     "ahooks": "^3.3.8",

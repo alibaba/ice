@@ -17,6 +17,7 @@ export const BUILDIN_CJS_DEPS = [
 ];
 
 export const WEB = 'web';
+export const WEEX = 'weex';
 export const ALI_MINIAPP = 'ali-miniapp';
 export const WECHAT_MINIPROGRAM = 'wechat-miniprogram';
 export const BYTEDANCE_MICROAPP = 'bytedance-microapp';
@@ -29,5 +30,6 @@ export const MINIAPP_PLATFORMS = [
 ];
 export const ALL_PLATFORMS = [
   WEB,
+  WEEX,
   ...MINIAPP_PLATFORMS,
 ];

@@ -2,9 +2,10 @@ import { createRequire } from 'module';
 import trustCert from '@ice/bundles/compiled/trusted-cert/index.js';
 import fse from 'fs-extra';
 import consola from 'consola';
-import type { UserConfig, Config } from '@ice/types';
+import type { Config } from '@ice/webpack-config/esm/types';
 import type { UserConfigContext } from 'build-scripts';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
+import type { UserConfig } from './types/userConfig.js';
 
 const require = createRequire(import.meta.url);
 const { merge } = lodash;
@@ -94,6 +95,13 @@ const userConfig = [
     },
   },
   {
+    name: 'polyfill',
+    validation: 'string|boolean',
+    setConfig: (config: Config, polyfill: UserConfig['polyfill']) => {
+      return mergeDefaultValue(config, 'polyfill', polyfill);
+    },
+  },
+  {
     name: 'filename',
     validation: 'string',
     setConfig: (config: Config, filename: UserConfig['filename']) => {
@@ -128,6 +136,14 @@ const userConfig = [
         consola.error('Do not support bundle in ESM mode. Please set `server.bundle` to false.');
         process.exit(1);
       }
+    },
+  },
+  {
+    name: 'postcss',
+    validation: 'object',
+    defaultValue: {},
+    setConfig(config: Config, postcss: UserConfig['postcss']) {
+      return mergeDefaultValue(config, 'postcss', postcss);
     },
   },
   {
@@ -326,6 +342,16 @@ const userConfig = [
     defaultValue: true,
     setConfig: (config: Config, splitChunks: UserConfig['splitChunks']) => {
       config.splitChunks = splitChunks;
+    },
+  },
+  {
+    name: 'crossOriginLoading',
+    validation: 'boolean|string',
+    defaultValue: false,
+    setConfig: (config: Config, crossOriginLoading: UserConfig['crossOriginLoading']) => {
+      config.output = merge(config.output || {}, {
+        crossOriginLoading,
+      });
     },
   },
 ];

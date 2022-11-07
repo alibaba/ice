@@ -1,15 +1,18 @@
 import consola from 'consola';
 import { getWebpackConfig } from '@ice/webpack-config';
 import type { Context, TaskConfig } from 'build-scripts';
-import type { StatsError, Stats } from 'webpack';
-import type { Config } from '@ice/types';
-import type { ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI } from '@ice/types/esm/plugin.js';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
+import type { StatsError, Stats } from 'webpack';
+import type { Config } from '@ice/webpack-config/esm/types';
 import type ora from '@ice/bundles/compiled/ora/index.js';
+import type { AppConfig } from '@ice/runtime/esm/types';
+import type { ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI } from '../types/plugin.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import { RUNTIME_TMP_DIR } from '../constant.js';
 import emptyDir from '../utils/emptyDir.js';
+import type { UserConfig } from '../types/userConfig.js';
+import warnOnHashRouterEnabled from '../utils/warnOnHashRouterEnabled.js';
 
 const build = async (
   context: Context<Config, ExtendsPluginAPI>,
@@ -18,17 +21,35 @@ const build = async (
     serverCompiler: ServerCompiler;
     spinner: ora.Ora;
     getAppConfig: GetAppConfig;
+    appConfig: AppConfig;
     getRoutesConfig: GetRoutesConfig;
+    userConfigHash: string;
+    userConfig: UserConfig;
   },
 ) => {
-  const { taskConfigs, serverCompiler, spinner, getAppConfig, getRoutesConfig } = options;
+  const {
+    taskConfigs,
+    serverCompiler,
+    spinner,
+    getAppConfig,
+    appConfig,
+    getRoutesConfig,
+    userConfigHash,
+    userConfig,
+  } = options;
   const { applyHook, rootDir } = context;
+
+  if (appConfig?.router?.type === 'hash') {
+    warnOnHashRouterEnabled(userConfig);
+  }
+
   const webpackConfigs = taskConfigs.map(({ config }) => getWebpackConfig({
     config,
     rootDir,
     // @ts-expect-error fix type error of compiled webpack
     webpack,
     runtimeTmpDir: RUNTIME_TMP_DIR,
+    userConfigHash,
   }));
   const outputDir = webpackConfigs[0].output.path;
 
@@ -95,6 +116,7 @@ const build = async (
     serverEntryRef,
     getAppConfig,
     getRoutesConfig,
+    appConfig,
   });
 
   return { compiler };

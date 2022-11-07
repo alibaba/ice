@@ -17,6 +17,5 @@ export default function Blog() {
 export const getConfig = defineGetConfig(() => {
   return {
     title: 'Blog',
-    auth: ['guest'],
   };
 });

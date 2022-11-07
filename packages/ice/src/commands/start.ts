@@ -5,12 +5,12 @@ import type { Configuration as DevServerConfiguration } from 'webpack-dev-server
 import type { Context, TaskConfig } from 'build-scripts';
 import type { StatsError, Compiler, Configuration } from 'webpack';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
-import type { Config } from '@ice/types';
-import type { ExtendsPluginAPI, ServerCompiler, GetAppConfig, GetRoutesConfig } from '@ice/types/esm/plugin.js';
+import type { Config } from '@ice/webpack-config/esm/types';
 import type { AppConfig, RenderMode } from '@ice/runtime';
 import { getWebpackConfig } from '@ice/webpack-config';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type ora from '@ice/bundles/compiled/ora/index.js';
+import type { ExtendsPluginAPI, ServerCompiler, GetAppConfig, GetRoutesConfig } from '../types/plugin.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import prepareURLs from '../utils/prepareURLs.js';
@@ -32,6 +32,7 @@ const start = async (
     spinner: ora.Ora;
     getAppConfig: GetAppConfig;
     getRoutesConfig: GetRoutesConfig;
+    userConfigHash: string;
   },
 ) => {
   const {
@@ -42,6 +43,7 @@ const start = async (
     spinner,
     getAppConfig,
     getRoutesConfig,
+    userConfigHash,
   } = options;
   const { commandArgs, rootDir } = context;
   const { platform = WEB } = commandArgs;
@@ -51,6 +53,7 @@ const start = async (
     // @ts-expect-error fix type error of compiled webpack
     webpack,
     runtimeTmpDir: RUNTIME_TMP_DIR,
+    userConfigHash,
   }));
 
   const hooksAPI = {
@@ -87,7 +90,7 @@ const start = async (
 
 interface StartDevServerOptions {
   context: Context<Config, ExtendsPluginAPI>;
-  webpackConfigs: Configuration | Configuration[];
+  webpackConfigs: Configuration[];
   taskConfigs: TaskConfig<Config>[];
   spinner: ora.Ora;
   hooksAPI: {
@@ -136,6 +139,7 @@ async function startDevServer({
         renderMode,
         getAppConfig,
         taskConfig: webTaskConfig,
+        userConfig,
       });
       const insertIndex = middlewares.findIndex(({ name }) => name === 'serve-index');
       middlewares.splice(

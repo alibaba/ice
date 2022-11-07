@@ -1,10 +1,11 @@
 import React, { isValidElement } from 'react';
-import type { ComponentWithChildren } from '@ice/types';
 import useMounted from './useMounted.js';
 
-const ClientOnly: ComponentWithChildren<{ fallback: React.ReactNode }> = ({ children, fallback }) => {
+const ClientOnly: React.FC<{
+  fallback: React.ReactElement;
+  children: () => React.ReactNode;
+}> = ({ children, fallback }) => {
   const mounted = useMounted();
-
   // Ref https://github.com/facebook/docusaurus/blob/v2.1.0/packages/docusaurus/src/client/exports/BrowserOnly.tsx
   if (mounted) {
     if (

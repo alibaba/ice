@@ -1,7 +1,7 @@
 import path from 'path';
 import consola from 'consola';
 import chalk from 'chalk';
-import type { Plugin } from '@ice/types';
+import type { Plugin } from '@ice/app/esm/types';
 import getMiniappTask from './miniapp/index.js';
 import { ALL_PLATFORMS, WEB } from './constant.js';
 

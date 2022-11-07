@@ -1,12 +1,11 @@
-import type webpack from 'webpack';
+import type webpack from '@ice/bundles/compiled/webpack';
 import type { _Plugin, CommandArgs, TaskConfig } from 'build-scripts';
-import type { Configuration, Stats } from 'webpack';
-import type WebpackDevServer from 'webpack-dev-server';
+import type { Configuration, Stats, WebpackOptionsNormalized } from '@ice/bundles/compiled/webpack';
 import type { BuildOptions, BuildResult } from 'esbuild';
 import type { NestedRouteManifest } from '@ice/route-manifest';
-import type { Config } from './config.js';
+import type { Config } from '@ice/webpack-config/esm/types';
+import type { AppConfig, AssetsManifest } from '@ice/runtime/esm/types';
 import type { DeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport, Render } from './generator.js';
-import type { AssetsManifest } from './runtime.js';
 
 type AddExport = (exportData: DeclarationData) => void;
 type RemoveExport = (removeSource: string | string[]) => void;
@@ -86,10 +85,10 @@ export interface HookLifecycle {
   'before.start.run': BeforeCommandRunOptions;
   'before.build.run': BeforeCommandRunOptions;
   'after.start.compile': AfterCommandCompileOptions & { devUrlInfo?: DevServerInfo };
-  'after.build.compile': AfterCommandCompileOptions & { serverEntryRef: { current: string } };
+  'after.build.compile': AfterCommandCompileOptions & { serverEntryRef: { current: string }; appConfig: AppConfig };
   'after.start.devServer': {
     urls: Urls;
-    devServer: WebpackDevServer;
+    devServer: WebpackOptionsNormalized['devServer'];
   };
 }
 
@@ -132,6 +131,7 @@ export interface OverwritePluginAPI extends ExtendsPluginAPI {
 export interface PluginData extends _Plugin<Config, OverwritePluginAPI> {
   runtime?: string;
   staticRuntime?: boolean;
+  keepExports?: string[];
 }
 
 export type Plugin<Options = any> = (options?: Options) => PluginData;

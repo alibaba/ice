@@ -1,7 +1,7 @@
 import * as path from 'path';
 import fs from 'fs-extra';
-import type { ServerCompiler } from '@ice/types/esm/plugin.js';
 import consola from 'consola';
+import type { ServerCompiler } from '../types/plugin.js';
 import removeTopLevelCode from '../esbuild/removeTopLevelCode.js';
 import { getCache, setCache } from '../utils/persistentCache.js';
 import { getFileHash } from '../utils/hash.js';

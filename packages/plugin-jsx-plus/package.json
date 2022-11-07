@@ -28,7 +28,7 @@
     "!esm/**/*.map"
   ],
   "devDependencies": {
-    "@ice/types": "^1.0.0",
+    "@ice/app": "^3.0.0",
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6"
   },

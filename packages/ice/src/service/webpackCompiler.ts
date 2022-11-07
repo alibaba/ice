@@ -1,15 +1,15 @@
-import webpack from '@ice/bundles/compiled/webpack/index.js';
+import webpackBundler from '@ice/bundles/compiled/webpack/index.js';
 import type ora from '@ice/bundles/compiled/ora/index.js';
 import consola from 'consola';
 import type { TaskConfig, Context } from 'build-scripts';
-import type { Compiler, Configuration } from 'webpack';
-import type { Urls, ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI } from '@ice/types/esm/plugin.js';
-import type { Config } from '@ice/types';
+import type { Config } from '@ice/webpack-config/esm/types';
+import type webpack from 'webpack';
+import type { Urls, ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI } from '../types/plugin.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 
 async function webpackCompiler(options: {
   context: Context<Config, ExtendsPluginAPI>;
-  webpackConfigs: Configuration | Configuration[];
+  webpackConfigs: webpack.Configuration[];
   taskConfigs: TaskConfig<Config>[];
   urls?: Urls;
   spinner: ora.Ora;
@@ -39,7 +39,7 @@ async function webpackCompiler(options: {
   });
 
   // Add default plugins for spinner
-  webpackConfigs[0].plugins.push((compiler: Compiler) => {
+  webpackConfigs[0].plugins.push((compiler: webpack.Compiler) => {
     compiler.hooks.beforeCompile.tap('spinner', () => {
       spinner.text = 'compiling...\n';
     });
@@ -47,10 +47,10 @@ async function webpackCompiler(options: {
       spinner.stop();
     });
   });
-  let compiler: Compiler;
+  let compiler: webpack.Compiler;
   try {
-    // @ts-expect-error ignore error with different webpack referer
-    compiler = webpack(webpackConfigs as Configuration);
+    // @ts-ignore
+    compiler = webpackBundler(webpackConfigs);
   } catch (err) {
     consola.error('Webpack compile error.');
     consola.error(err.message || err);

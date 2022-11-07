@@ -1,4 +1,4 @@
-import type { Plugin } from '@ice/types';
+import type { Plugin } from '@ice/app/esm/types';
 
 const PLUGIN_NAME = '@ice/plugin-auth';
 
@@ -8,7 +8,7 @@ const plugin: Plugin = () => ({
   // Register API: `import { useAuth, withAuth } from 'ice';`
     generator.addExport({
       specifier: ['withAuth', 'useAuth'],
-      source: '@ice/plugin-auth/runtime/Auth',
+      source: '@ice/plugin-auth/esm/runtime',
     });
 
     generator.addRouteTypes({

@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import type { GetAppConfig, GetRoutesConfig, ServerCompiler } from '@ice/types/esm/plugin.js';
+import type { GetAppConfig, GetRoutesConfig, ServerCompiler } from '@ice/app/esm/types';
 import { parseManifest, rewriteAppWorker, getAppWorkerUrl, getMultipleManifest, type ParseOptions } from './manifestHelpers.js';
 import type { Compiler } from './index.js';
 

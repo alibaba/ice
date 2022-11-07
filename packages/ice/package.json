@@ -4,7 +4,10 @@
   "description": "provide scripts and configuration used by web framework ice",
   "type": "module",
   "main": "./esm/index.js",
-  "exports": "./esm/index.js",
+  "exports": {
+    ".": "./esm/index.js",
+    "./types": "./esm/types/index.js"
+  },
   "bin": {
     "ice": "./bin/ice-cli.mjs"
   },
@@ -38,10 +41,12 @@
     "@ice/route-manifest": "^1.0.0",
     "@ice/runtime": "^1.0.0",
     "@ice/webpack-config": "^1.0.0",
+    "@swc/helpers": "0.4.12",
     "address": "^1.1.2",
     "build-scripts": "^2.0.0-26",
     "chalk": "^4.0.0",
     "commander": "^9.0.0",
+    "core-js": "3.26.0",
     "consola": "^2.15.3",
     "cross-spawn": "^7.0.3",
     "detect-port": "^1.3.0",
@@ -63,7 +68,6 @@
     "temp": "^0.9.4"
   },
   "devDependencies": {
-    "@ice/types": "^1.0.0",
     "@types/babel__generator": "^7.6.4",
     "@types/babel__traverse": "^7.17.1",
     "@types/cross-spawn": "^6.0.2",

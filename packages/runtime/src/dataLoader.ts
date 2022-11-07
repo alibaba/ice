@@ -1,4 +1,4 @@
-import type { GetData, GetDataConfig } from '@ice/types';
+import type { GetData, GetDataConfig, RuntimeModules, AppExport, RuntimePlugin, CommonJsRuntime } from './types.js';
 import getRequestContext from './requestContext.js';
 
 interface Loaders {
@@ -96,28 +96,50 @@ async function load(id: string, loader: GetData) {
  * Get loaders by config of loaders.
  */
 function getLoaders(loadersConfig: LoadersConfig, fetcher: Function): Loaders {
-  const context = (window as any).__ICE_APP_CONTEXT__ || {};
-  const matchedIds = context.matchedIds || [];
-
   const loaders: Loaders = {};
-  matchedIds.forEach(id => {
-    const loaderConfig = loadersConfig[id];
-    if (loaderConfig) {
-      // If getData is an object, it is wrapped with a function.
-      loaders[id] = typeof loaderConfig === 'function' ? loadersConfig[id] : () => {
-        return fetcher(loaderConfig);
-      };
-    }
+
+  Object.keys(loadersConfig).forEach(id => {
+    const loader = loadersConfig[id];
+
+    // If getData is an object, it is wrapped with a function.
+    loaders[id] = typeof loader === 'function' ? loader : () => {
+      return fetcher(loader);
+    };
   });
 
   return loaders;
+}
+
+interface Options {
+  fetcher: Function;
+  runtimeModules: RuntimeModules['statics'];
+  appExport: AppExport;
 }
 
 /**
  * Load initial data and register global loader.
  * In order to load data, JavaScript modules, CSS and other assets in parallel.
  */
-function init(loadersConfig: LoadersConfig, fetcher: Function) {
+async function init(loadersConfig: LoadersConfig, options: Options) {
+  const {
+    fetcher,
+    runtimeModules,
+    appExport,
+  } = options;
+
+  const runtimeApi = {
+    appContext: {
+      appExport,
+    },
+  };
+
+  if (runtimeModules) {
+    await Promise.all(runtimeModules.map(module => {
+      const runtimeModule = (module as CommonJsRuntime).default || module as RuntimePlugin;
+      return runtimeModule(runtimeApi);
+    }).filter(Boolean));
+  }
+
   const loaders = getLoaders(loadersConfig, fetcher);
 
   try {
