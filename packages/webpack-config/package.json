@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "esbuild": "^0.14.51",
+    "postcss": "^8.4.18",
     "webpack": "^5.73.0",
     "webpack-dev-server": "^4.7.4"
   },

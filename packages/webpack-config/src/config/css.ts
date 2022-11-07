@@ -1,21 +1,28 @@
 import { createRequire } from 'module';
 import { createHash } from 'crypto';
+import * as path from 'path';
+import * as fs from 'fs';
 // FIXME when resolve mini-css-extract-plugin symbol in test
 import MiniCssExtractPlugin from '@ice/bundles/compiled/mini-css-extract-plugin/dist/index.js';
 import { sass, less, postcss } from '@ice/bundles';
 import type webpack from 'webpack';
 import type { LoaderContext, Configuration } from 'webpack';
-import type { ModifyWebpackConfig } from '../types.js';
+import lodash from '@ice/bundles/compiled/lodash/index.js';
+import type { ModifyWebpackConfig, Config } from '../types.js';
+
+const { mergeWith, isArray } = lodash;
 
 type CSSRuleConfig = [string, string?, Record<string, any>?];
 interface Options {
   publicPath: string;
+  postcssOptions: Config['postcss'];
+  rootDir: string;
 }
 
 const require = createRequire(import.meta.url);
 
 function configCSSRule(config: CSSRuleConfig, options: Options) {
-  const { publicPath } = options;
+  const { publicPath, rootDir, postcssOptions: userPostcssOptions } = options;
   const [style, loader, loaderOptions] = config;
   const cssLoaderOpts = {
     sourceMap: true,
@@ -39,28 +46,7 @@ function configCSSRule(config: CSSRuleConfig, options: Options) {
       },
     },
   };
-  const postcssOpts = {
-    // lock postcss version
-    implementation: postcss,
-    postcssOptions: {
-      config: false,
-      plugins: [
-        ['@ice/bundles/compiled/postcss-nested'],
-        ['@ice/bundles/compiled/postcss-preset-env', {
-          // Without any configuration options, PostCSS Preset Env enables Stage 2 features.
-          stage: 3,
-          autoprefixer: {
-            // Disable legacy flexbox support
-            flexbox: 'no-2009',
-          },
-          features: {
-            'custom-properties': false,
-          },
-        }],
-        ['@ice/bundles/compiled/postcss-plugin-rpx2vw'],
-      ],
-    },
-  };
+  const postcssOpts = getPostcssOpts({ rootDir, userPostcssOptions });
   return {
     test: new RegExp(`\\.${style}$`),
     use: [
@@ -92,7 +78,7 @@ function configCSSRule(config: CSSRuleConfig, options: Options) {
 }
 
 const css: ModifyWebpackConfig<Configuration, typeof webpack> = (config, ctx) => {
-  const { publicPath, hashKey, cssFilename, cssChunkFilename } = ctx;
+  const { publicPath, hashKey, cssFilename, cssChunkFilename, postcss, rootDir } = ctx;
   const cssOutputFolder = 'css';
   config.module.rules.push(...([
     ['css'],
@@ -103,7 +89,7 @@ const css: ModifyWebpackConfig<Configuration, typeof webpack> = (config, ctx) =>
     ['scss', require.resolve('@ice/bundles/compiled/sass-loader'), {
       implementation: sass,
     }],
-  ] as CSSRuleConfig[]).map((config) => configCSSRule(config, { publicPath })));
+  ] as CSSRuleConfig[]).map((config) => configCSSRule(config, { publicPath, postcssOptions: postcss, rootDir })));
   config.plugins.push(
     new MiniCssExtractPlugin({
       filename: cssFilename || `${cssOutputFolder}/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`,
@@ -115,5 +101,53 @@ const css: ModifyWebpackConfig<Configuration, typeof webpack> = (config, ctx) =>
 
   return config;
 };
+
+function getPostcssOpts({
+  rootDir,
+  userPostcssOptions,
+}: {
+  rootDir: string;
+  userPostcssOptions: Options['postcssOptions'];
+}) {
+  const postcssConfigPath = path.join(rootDir, 'postcss.config.js');
+  const defaultPostcssOpts = {
+    // lock postcss version
+    implementation: postcss,
+  };
+  if (fs.existsSync(postcssConfigPath)) {
+    return defaultPostcssOpts;
+  } else {
+    const postcssOpts = mergeWith(
+      {
+        ...defaultPostcssOpts,
+        postcssOptions: {
+          config: false,
+          plugins: [
+            ['@ice/bundles/compiled/postcss-nested'],
+            ['@ice/bundles/compiled/postcss-preset-env', {
+              // Without any configuration options, PostCSS Preset Env enables Stage 2 features.
+              stage: 3,
+              autoprefixer: {
+                // Disable legacy flexbox support
+                flexbox: 'no-2009',
+              },
+              features: {
+                'custom-properties': false,
+              },
+            }],
+            ['@ice/bundles/compiled/postcss-plugin-rpx2vw'],
+          ],
+        },
+      },
+      { postcssOptions: userPostcssOptions },
+      (objValue, srcValue) => {
+        if (isArray(objValue)) {
+          return objValue.concat(srcValue);
+        }
+      },
+    );
+    return postcssOpts;
+  }
+}
 
 export default css;

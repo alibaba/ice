@@ -8,3 +8,5 @@ export {
   less,
   sass,
 };
+
+export type { ProcessOptions } from 'postcss';
