@@ -110,7 +110,6 @@ importers:
   examples/basic-project:
     specifiers:
       '@ice/app': workspace:*
-      '@ice/plugin-auth': workspace:*
       '@ice/plugin-rax-compat': workspace:*
       '@ice/runtime': workspace:*
       '@types/react': ^18.0.0
@@ -123,7 +122,6 @@ importers:
       webpack: ^5.72.0
     dependencies:
       '@ice/app': link:../../packages/ice
-      '@ice/plugin-auth': link:../../packages/plugin-auth
       '@ice/plugin-rax-compat': link:../../packages/plugin-rax-compat
       '@ice/runtime': link:../../packages/runtime
       '@uni/env': 1.1.0
@@ -383,6 +381,25 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     devDependencies:
+      '@types/react': 18.0.21
+      '@types/react-dom': 18.0.6
+
+  examples/with-auth:
+    specifiers:
+      '@ice/app': workspace:*
+      '@ice/plugin-auth': workspace:*
+      '@ice/runtime': workspace:*
+      '@types/react': ^18.0.0
+      '@types/react-dom': ^18.0.0
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    dependencies:
+      '@ice/runtime': link:../../packages/runtime
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    devDependencies:
+      '@ice/app': link:../../packages/ice
+      '@ice/plugin-auth': link:../../packages/plugin-auth
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
 

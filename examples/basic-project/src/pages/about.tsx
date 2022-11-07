@@ -41,7 +41,6 @@ export function getConfig(): RouteConfig {
     scripts: [{
       src: 'https://cdn.jsdelivr.net/npm/lodash@2.4.1/dist/lodash.min.js',
     }],
-    auth: ['admin'],
   };
 }
 

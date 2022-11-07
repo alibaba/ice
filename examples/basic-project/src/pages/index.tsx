@@ -16,7 +16,6 @@ export default function Home(props) {
   const appData = useAppData<AppData>();
   const data = useData();
   const config = useConfig();
-
   if (typeof window !== 'undefined') {
     console.log('render Home', props);
     console.log('get AppData', appData);
@@ -58,7 +57,6 @@ export function getConfig() {
         content: '#f00',
       },
     ],
-    auth: ['admin'],
   };
 }
 
