@@ -247,10 +247,12 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
           return await build(ctx, {
             getRoutesConfig,
             getAppConfig,
+            appConfig,
             taskConfigs,
             serverCompiler,
             spinner: buildSpinner,
             userConfigHash,
+            userConfig,
           });
         } else if (command === 'test') {
           return await test(ctx, {

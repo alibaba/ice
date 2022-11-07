@@ -1,6 +1,7 @@
 import * as path from 'path';
 import consola from 'consola';
 import chalk from 'chalk';
+import type { RenderMode } from '@ice/runtime';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { Plugin } from '../../types/plugin.js';
 import ReCompilePlugin from '../../webpack/ReCompilePlugin.js';
@@ -100,9 +101,9 @@ const plugin: Plugin = () => ({
       }
     });
 
-    onHook('after.build.compile', async ({ webpackConfigs, serverEntryRef }) => {
+    onHook('after.build.compile', async ({ webpackConfigs, serverEntryRef, appConfig }) => {
       const outputDir = webpackConfigs[0].output.path;
-      let renderMode;
+      let renderMode: RenderMode;
       if (ssg) {
         renderMode = 'SSG';
       }
@@ -115,6 +116,7 @@ const plugin: Plugin = () => ({
         // only ssg need to generate the whole page html when build time.
         documentOnly: !ssg,
         renderMode,
+        routeType: appConfig?.router?.type,
       });
     });
 

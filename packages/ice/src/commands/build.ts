@@ -5,11 +5,14 @@ import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type { StatsError, Stats } from 'webpack';
 import type { Config } from '@ice/webpack-config/esm/types';
 import type ora from '@ice/bundles/compiled/ora/index.js';
+import type { AppConfig } from '@ice/runtime/esm/types';
 import type { ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI } from '../types/plugin.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import { RUNTIME_TMP_DIR } from '../constant.js';
 import emptyDir from '../utils/emptyDir.js';
+import type { UserConfig } from '../types/userConfig.js';
+import warnOnHashRouterEnabled from '../utils/warnOnHashRouterEnabled.js';
 
 const build = async (
   context: Context<Config, ExtendsPluginAPI>,
@@ -18,12 +21,28 @@ const build = async (
     serverCompiler: ServerCompiler;
     spinner: ora.Ora;
     getAppConfig: GetAppConfig;
+    appConfig: AppConfig;
     getRoutesConfig: GetRoutesConfig;
     userConfigHash: string;
+    userConfig: UserConfig;
   },
 ) => {
-  const { taskConfigs, serverCompiler, spinner, getAppConfig, getRoutesConfig, userConfigHash } = options;
+  const {
+    taskConfigs,
+    serverCompiler,
+    spinner,
+    getAppConfig,
+    appConfig,
+    getRoutesConfig,
+    userConfigHash,
+    userConfig,
+  } = options;
   const { applyHook, rootDir } = context;
+
+  if (appConfig?.router?.type === 'hash') {
+    warnOnHashRouterEnabled(userConfig);
+  }
+
   const webpackConfigs = taskConfigs.map(({ config }) => getWebpackConfig({
     config,
     rootDir,
@@ -97,6 +116,7 @@ const build = async (
     serverEntryRef,
     getAppConfig,
     getRoutesConfig,
+    appConfig,
   });
 
   return { compiler };
