@@ -1,6 +1,7 @@
 import * as path from 'path';
 import consola from 'consola';
 import chalk from 'chalk';
+import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { Plugin } from '../../types/plugin.js';
 import ReCompilePlugin from '../../webpack/ReCompilePlugin.js';
 import DataLoaderPlugin from '../../webpack/DataLoaderPlugin.js';
@@ -10,10 +11,13 @@ import getWebTask from '../../tasks/web/index.js';
 import generateHTML from '../../utils/generateHTML.js';
 import openBrowser from '../../utils/openBrowser.js';
 import getServerCompilerPlugin from '../../utils/getServerCompilerPlugin.js';
+import type ServerCompilerPlugin from '../../webpack/ServerCompilerPlugin.js';
+
+const { debounce } = lodash;
 
 const plugin: Plugin = () => ({
   name: 'plugin-web',
-  setup: ({ registerTask, onHook, context, generator, serverCompileTask, dataCache, getAllPlugin }) => {
+  setup: ({ registerTask, onHook, context, generator, serverCompileTask, dataCache, watch, getAllPlugin }) => {
     const { rootDir, commandArgs, command, userConfig } = context;
     const { ssg } = userConfig;
 
@@ -45,24 +49,26 @@ const plugin: Plugin = () => ({
     });
 
     let serverOutfile: string;
+    let serverCompilerPlugin: ServerCompilerPlugin;
     onHook(`before.${command as 'start' | 'build'}.run`, async ({ webpackConfigs, taskConfigs, serverCompiler }) => {
       // Compile server entry after the webpack compilation.
       const { reCompile: reCompileRouteConfig, ensureRoutesConfig } = getRouteExportConfig(rootDir);
       const outputDir = webpackConfigs[0].output.path;
       serverOutfile = path.join(outputDir, SERVER_OUTPUT_DIR, `index${userConfig?.server?.format === 'esm' ? '.mjs' : '.cjs'}`);
+      serverCompilerPlugin = getServerCompilerPlugin(serverCompiler, {
+        rootDir,
+        serverEntry: taskConfigs[0].config?.server?.entry,
+        outputDir: webpackConfigs[0].output.path,
+        dataCache,
+        serverCompileTask: command === 'start' ? serverCompileTask : null,
+        userConfig,
+        ensureRoutesConfig,
+      });
       webpackConfigs[0].plugins.push(
         // Add webpack plugin of data-loader in web task
         new DataLoaderPlugin({ serverCompiler, rootDir, dataCache, getAllPlugin }),
         // Add ServerCompilerPlugin
-        getServerCompilerPlugin(serverCompiler, {
-          rootDir,
-          serverEntry: taskConfigs[0].config?.server?.entry,
-          outputDir: webpackConfigs[0].output.path,
-          dataCache,
-          serverCompileTask: command === 'start' ? serverCompileTask : null,
-          userConfig,
-          ensureRoutesConfig,
-        }),
+        serverCompilerPlugin,
       );
 
       if (command === 'start') {
@@ -77,6 +83,20 @@ const plugin: Plugin = () => ({
             return files.some((filePath) => routeFiles.some(routeFile => filePath.includes(routeFile)));
           }),
         );
+        const debounceCompile = debounce(() => {
+          console.log('Document updated, try to reload page for latest html content.');
+          if (serverCompilerPlugin) {
+            serverCompilerPlugin.compileTask();
+          }
+        }, 200);
+        watch.addEvent([
+          /src\/document(\/index)?(.js|.jsx|.tsx)/,
+          (event: string) => {
+            if (event === 'change') {
+              debounceCompile();
+            }
+          },
+        ]);
       }
     });
 
