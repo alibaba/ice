@@ -13,6 +13,7 @@ import type { UnpluginOptions, UnpluginContext } from '@ice/bundles/compiled/unp
 import type Server from 'webpack-dev-server';
 import type { Config as SWCCompilationConfig } from '@swc/core';
 import type { BuildOptions } from 'esbuild';
+import type { ProcessOptions } from 'postcss';
 
 export type ECMA = 5 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020;
 
@@ -30,6 +31,7 @@ export type MinimizerOptions<T> = PredefinedOptions & InferDefaultType<T>;
 interface ConfigurationCtx<T = typeof webpack> extends Config {
   hashKey: string;
   webpack: T;
+  rootDir: string;
 }
 
 type Experimental = Configuration['experiments'];
@@ -164,6 +166,7 @@ export interface Config {
 
   cssChunkFilename?: string;
 
+  postcss?: ProcessOptions & { plugins?: (string | [string, Record<string, any>?])[] };
   enableCopyPlugin?: boolean;
 
   getAppConfig?: (exportNamse?: string[]) => Promise<any>;

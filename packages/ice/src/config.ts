@@ -139,6 +139,14 @@ const userConfig = [
     },
   },
   {
+    name: 'postcss',
+    validation: 'object',
+    defaultValue: {},
+    setConfig(config: Config, postcss: UserConfig['postcss']) {
+      return mergeDefaultValue(config, 'postcss', postcss);
+    },
+  },
+  {
     name: 'webpack',
     validation: 'function',
     setConfig: (config: Config, configureWebpack: UserConfig['webpack']) => {

@@ -101,10 +101,10 @@ console.log(process.env.TEST);
 
 #### dataLoader
 
-是否启用内置的数据预加载能力
-
 - 类型 `boolean`
 - 默认值 `true`
+
+是否启用内置的数据预加载能力。
 
 ### publicPath
 
@@ -122,8 +122,8 @@ console.log(process.env.TEST);
 
 ### hash
 
-类型：`boolean | string`
-默认值：`false`
+- 类型：`boolean | string`
+- 默认值：`false`
 
 如果希望构建后的资源带 hash 版本，可以将 hash 设置为 `true`，也可以设置为 `contenthash` 按文件内容生成 hash 值：
 
@@ -137,8 +137,8 @@ export default defineConfig({
 
 ### externals
 
-类型：`Record<string, string>`
-默认值：`{}`
+- 类型：`Record<string, string>`
+- 默认值：`{}`
 
 设置哪些模块不打包，转而通过 `<script>` 或其他方式引入，比如：
 
@@ -174,8 +174,8 @@ export default Document;
 
 ### outputDir
 
-类型：`string`
-默认值：`build`
+- 类型：`string`
+- 默认值：`build`
 
 构建产物输出目录，默认为 `build` 目录
 
@@ -241,12 +241,72 @@ export default defineConfig({
 });
 ```
 
+### postcss
+
+- 类型：`ProcessOptions & { plugins?: (string | [string, Record<string, any>?])[] };`
+- 默认值：`{}`
+
+用于添加 postcss 自定义配置。示例如下：
+
+```ts
+import { defineConfig } from '@ice/app';
+
+export default defineConfig({
+  postcss: {
+    plugins: [
+      'postcss-px-to-viewport-8-plugin',
+      {
+        // ...
+      },
+    ],
+    syntax: 'sugarss',
+  }
+});
+```
+
+ice.js 内置的 postcss 配置是：
+
+```json
+{
+  "plugins": [
+    ["postcss-nested"],
+    ["postcss-preset-env", {
+      "stage": 3,
+      "autoprefixer": {
+        "flexbox": "no-2009",
+      },
+      "features": {
+        "custom-properties": false,
+      },
+    }],
+    ["postcss-plugin-rpx2vw"],
+  ],
+}
+```
+
+如果需要完全重写 postcss 配置或修改内置的 postcss 配置，需要在项目根目录下新增 `postcss.config.js` 文件并加入配置，工程上会清空内置的 postcss 配置。
+
+```js title="postcss.config.js"
+module.exports = {
+  plugins: [
+    [
+      'postcss-preset-env',
+      // 修改 postcss-preset-env 的选项
+      {
+        stage: 2,
+      }
+    ]
+  ],
+}
+```
+
 ### polyfill
 
 - 类型：`'usage' | 'entry' | false`
 - 默认值：`false`
 
 框架提供了多种 polyfill 的方式，开发者可以按实际情况选择对应的设置：
+
 - `usage` 按开发者使用的语法自动引入对应的 `polyfill`，适用于 `node_modules` 也进行编译的场景（一定程度上影响编译效率以及三方依赖二次编译造成的代码冗余）
 - `entry` 自动引入 browser（浏览器）需要兼容的 `polyfill`，适用于 `node_modules` 依赖不进行编译的场景（可能存在大量未被使用的 `polyfill` 被引入）
 
@@ -326,8 +386,9 @@ export default defineConfig({
 ```
 
 其中：
-* resourceRegExp 对应文件的匹配路径
-* contextRegExp （可选）对应文件内容的匹配规则
+
+- resourceRegExp 对应文件的匹配路径
+- contextRegExp （可选）对应文件内容的匹配规则
 
 ### routes
 
@@ -433,6 +494,10 @@ export default defineConfig({
 
 ### webpack
 
+:::tip
+ice.js 对 webpack 构建配置进行了定制，并借助 esbuild 等工具提升用户开发体验，直接修改 webpack 配置的方式并不推荐。
+:::
+
 - 类型：`(config: WebpackConfig, taskConfig: TaskConfig) => WebpackConfig`
 - 默认值：`true`
 
@@ -453,5 +518,4 @@ export default defineConfig({
 });
 ```
 
-> ice.js 对 webpack 构建配置进行了定制，并借助 esbuild 等工具提升用户开发体验，直接修改 webpack 配置的方式并不推荐。
 > 如有定制需求欢迎👏 PR 或反馈：<https://github.com/alibaba/ice/issues>
