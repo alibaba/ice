@@ -20,11 +20,6 @@
       "import": "./esm/runtime/index.js",
       "default": "./esm/runtime/index.js"
     },
-    "./runtime/Auth": {
-      "types": "./esm/runtime/Auth.d.ts",
-      "import": "./esm/runtime/Auth.js",
-      "default": "./esm/runtime/Auth.js"
-    },
     "./types": {
       "types": "./esm/types.d.ts",
       "import": "./esm/types.js",

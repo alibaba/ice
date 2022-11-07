@@ -1,0 +1,20 @@
+{
+  "name": "with-auth",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "ice start",
+    "build": "ice build"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@ice/runtime": "workspace:*",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@ice/app": "workspace:*",
+    "@ice/plugin-auth": "workspace:*",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0"
+  }
+}
