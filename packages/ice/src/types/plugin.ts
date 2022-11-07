@@ -131,6 +131,7 @@ export interface OverwritePluginAPI extends ExtendsPluginAPI {
 export interface PluginData extends _Plugin<Config, OverwritePluginAPI> {
   runtime?: string;
   staticRuntime?: boolean;
+  keepExports?: string[];
 }
 
 export type Plugin<Options = any> = (options?: Options) => PluginData;

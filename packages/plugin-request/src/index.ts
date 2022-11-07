@@ -26,6 +26,7 @@ const plugin: Plugin<PluginRequestOptions | void> = () => ({
   },
   runtime: `${PLUGIN_NAME}/esm/runtime`,
   staticRuntime: true,
+  keepExports: ['request'],
 });
 
 export type {

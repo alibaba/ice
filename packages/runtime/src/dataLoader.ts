@@ -1,4 +1,4 @@
-import type { GetData, GetDataConfig } from './types.js';
+import type { GetData, GetDataConfig, RuntimeModules, AppExport, RuntimePlugin, CommonJsRuntime } from './types.js';
 import getRequestContext from './requestContext.js';
 
 interface Loaders {
@@ -110,11 +110,36 @@ function getLoaders(loadersConfig: LoadersConfig, fetcher: Function): Loaders {
   return loaders;
 }
 
+interface Options {
+  fetcher: Function;
+  runtimeModules: RuntimeModules['statics'];
+  appExport: AppExport;
+}
+
 /**
  * Load initial data and register global loader.
  * In order to load data, JavaScript modules, CSS and other assets in parallel.
  */
-function init(loadersConfig: LoadersConfig, fetcher: Function) {
+async function init(loadersConfig: LoadersConfig, options: Options) {
+  const {
+    fetcher,
+    runtimeModules,
+    appExport,
+  } = options;
+
+  const runtimeApi = {
+    appContext: {
+      appExport,
+    },
+  };
+
+  if (runtimeModules) {
+    await Promise.all(runtimeModules.map(module => {
+      const runtimeModule = (module as CommonJsRuntime).default || module as RuntimePlugin;
+      return runtimeModule(runtimeApi);
+    }).filter(Boolean));
+  }
+
   const loaders = getLoaders(loadersConfig, fetcher);
 
   try {
