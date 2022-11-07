@@ -210,6 +210,7 @@ importers:
   examples/miniapp-project:
     specifiers:
       '@ice/app': workspace:*
+      '@ice/miniapp-html-styles': workspace:*
       '@ice/miniapp-runtime': workspace:*
       '@ice/plugin-miniapp': workspace:*
       '@ice/runtime': workspace:*
@@ -223,6 +224,7 @@ importers:
       webpack: ^5.73.0
     dependencies:
       '@ice/app': link:../../packages/ice
+      '@ice/miniapp-html-styles': link:../../packages/miniapp-html-styles
       '@ice/miniapp-runtime': link:../../packages/miniapp-runtime
       '@ice/plugin-miniapp': link:../../packages/plugin-miniapp
       '@ice/runtime': link:../../packages/runtime
@@ -825,6 +827,9 @@ importers:
       '@types/react-dom': 18.0.6
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+
+  packages/miniapp-html-styles:
+    specifiers: {}
 
   packages/miniapp-loader:
     specifiers:
