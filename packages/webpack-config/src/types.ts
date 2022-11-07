@@ -28,7 +28,6 @@ interface PredefinedOptions {
 export type MinimizerOptions<T> = PredefinedOptions & InferDefaultType<T>;
 
 interface ConfigurationCtx<T = typeof webpack> extends Config {
-  supportedBrowsers: string[];
   hashKey: string;
   webpack: T;
 }
