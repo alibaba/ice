@@ -22,6 +22,8 @@ import getSplitChunksConfig, { FRAMEWORK_BUNDLES } from './config/splitChunks.js
 import compilationPlugin from './unPlugins/compilation.js';
 import compileExcludes from './compileExcludes.js';
 
+export { getCSSModuleLocalIdent } from './utils/getCSSModuleLocalIdent.js';
+
 const require = createRequire(import.meta.url);
 const { merge } = lodash;
 const { BundleAnalyzerPlugin } = bundleAnalyzer;
