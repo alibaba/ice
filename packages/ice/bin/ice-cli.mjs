@@ -7,8 +7,8 @@ import detectPort from 'detect-port';
 // hijack webpack before import other modules
 import '../esm/requireHook.js';
 import createService from '../esm/createService.js';
-import checkNodeVersion from './checkNodeVersion.mjs';
 import { ALL_PLATFORMS } from '../esm/constant.js';
+import checkNodeVersion from './checkNodeVersion.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -18,9 +18,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
   process.env.__ICE_VERSION__ = icePackageInfo.version;
   const cwd = process.cwd();
 
-  program
-    .version(icePackageInfo.version)
-    .usage('<command> [options]');
+  program.version(icePackageInfo.version).usage('<command> [options]');
 
   program
     .command('build')
