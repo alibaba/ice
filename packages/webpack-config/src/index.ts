@@ -280,6 +280,9 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
         // use webpack-dev-server overlay instead
         overlay: false,
       }),
+      new webpack.ProvidePlugin({
+        process: require.resolve('process/browser'),
+      }),
       new webpack.DefinePlugin({
         ...defineVars,
         ...runtimeDefineVars,

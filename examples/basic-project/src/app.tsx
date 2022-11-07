@@ -10,6 +10,7 @@ console.log('__LOG__');
 console.warn('__WARN__');
 console.error('__ERROR__');
 console.log('process.env.HAHA', process.env.HAHA);
+console.log('process.env.undefinedEnv', process.env.undefinedEnv);
 
 if (isWeb) {
   console.error('__IS_WEB__');
