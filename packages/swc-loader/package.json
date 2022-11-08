@@ -24,6 +24,6 @@
   },
   "dependencies": {
     "@builder/swc": "^0.1.0",
-    "loader-utils": "^2.0.0"
+    "loader-utils": "^2.0.3"
   }
 }
