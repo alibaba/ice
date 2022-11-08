@@ -62,10 +62,17 @@ const createAssetsPlugin = (assetsManifest: AssetsManifest, rootDir: string) => 
       };
     });
     build.onLoad({ filter: ASSETS_RE }, async (args) => {
+      if (args.suffix == '?raw') {
+        return {
+          loader: 'text',
+        };
+      }
       const relativePath = path.relative(rootDir, args.path);
       let content = await fs.promises.readFile(args.path);
       let url = '';
-      const contentHash = assetsManifest!.assets[relativePath];
+      // Suffix `?url` will generate content hash in assets manifest,
+      // keep the same file rule with client side.
+      const contentHash = assetsManifest!.assets[`${relativePath}${args.suffix}`];
       if (contentHash) {
         const basename = path.basename(args.path);
         const extname = path.extname(basename);

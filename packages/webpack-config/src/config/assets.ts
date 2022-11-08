@@ -32,6 +32,16 @@ const assets: ModifyWebpackConfig<Configuration, typeof webpack> = (config) => {
     [/\.(png|jpg|webp|jpeg|gif)$/i],
   ] as AssetRuleConfig[]).map((config) => configAssetsRule(config));
   config.module.rules.push(...assetsRule);
+
+  // Query rules for assets.
+  config.module.rules.push({
+    resourceQuery: /raw/,
+    type: 'asset/source',
+  }, {
+    resourceQuery: /url/,
+    type: 'asset/resource',
+  });
+
   return config;
 };
 
