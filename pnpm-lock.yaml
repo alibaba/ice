@@ -459,6 +459,27 @@ importers:
       ts-jest: 28.0.8_fztrhi54teek7om3xmnfwid3mq
       typescript: 4.8.4
 
+  examples/with-jsx-plus:
+    specifiers:
+      '@ice/app': workspace:*
+      '@ice/plugin-jsx-plus': workspace:*
+      '@ice/runtime': workspace:*
+      '@types/react': ^18.0.17
+      '@types/react-dom': ^18.0.6
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      tslib: ^2.4.0
+    dependencies:
+      '@ice/app': link:../../packages/ice
+      '@ice/plugin-jsx-plus': link:../../packages/plugin-jsx-plus
+      '@ice/runtime': link:../../packages/runtime
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tslib: 2.4.0
+    devDependencies:
+      '@types/react': 18.0.21
+      '@types/react-dom': 18.0.6
+
   examples/with-pha:
     specifiers:
       '@ice/app': workspace:*
@@ -480,7 +501,7 @@ importers:
       '@types/react-dom': 18.0.6
       webpack: 5.74.0
 
-  examples/with-plugin-request:
+  examples/with-request:
     specifiers:
       '@ice/app': workspace:*
       '@ice/plugin-request': workspace:*
@@ -489,12 +510,14 @@ importers:
       '@types/react-dom': ^18.0.6
       react: ^18.2.0
       react-dom: ^18.2.0
+      tslib: ^2.4.0
     dependencies:
       '@ice/app': link:../../packages/ice
       '@ice/plugin-request': link:../../packages/plugin-request
       '@ice/runtime': link:../../packages/runtime
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      tslib: 2.4.0
     devDependencies:
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
@@ -3490,7 +3513,7 @@ packages:
       '@docusaurus/react-loadable': 5.5.2_react@17.0.2
       '@docusaurus/types': 2.1.0_sfoxds7t5ydpegc3knd667wn6m
       '@types/history': 4.7.11
-      '@types/react': 17.0.50
+      '@types/react': 18.0.21
       '@types/react-router-config': 5.0.6
       '@types/react-router-dom': 5.3.3
       react: 17.0.2
@@ -6044,7 +6067,7 @@ packages:
     resolution: {integrity: sha512-db1mx37a1EJDf1XeX8jJN7R3PZABmJQXR8r28yUjVMFSjkmnQo6X6pOEEmNl+Tp2gYQOGPdYbFIipBtdElZ3Yg==}
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 17.0.50
+      '@types/react': 18.0.21
       '@types/react-router': 5.1.19
 
   /@types/react-router-dom/5.3.3:
@@ -8045,8 +8068,8 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
-      is-text-path: 1.0.1
       JSONStream: 1.3.5
+      is-text-path: 1.0.1
       lodash: 4.17.21
       meow: 8.1.2
       split2: 3.2.2
@@ -16145,6 +16168,12 @@ packages:
   /react-dev-utils/12.0.1_qqxisngxjbp7lstdk7boexbu3e:
     resolution: {integrity: sha512-84Ivxmr17KjUupyqzFode6xKhjwuEJDROWKJy/BthkL7Wn6NJ8h4WE6k/exAv6ImS+0oZLRRW5j/aINMHyeGeQ==}
     engines: {node: '>=14'}
+    peerDependencies:
+      typescript: '>=2.7'
+      webpack: '>=4'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
     dependencies:
       '@babel/code-frame': 7.18.6
       address: 1.2.1
@@ -16170,12 +16199,12 @@ packages:
       shell-quote: 1.7.3
       strip-ansi: 6.0.1
       text-table: 0.2.0
+      typescript: 4.8.4
+      webpack: 5.74.0
     transitivePeerDependencies:
       - eslint
       - supports-color
-      - typescript
       - vue-template-compiler
-      - webpack
 
   /react-dom/17.0.2_react@17.0.2:
     resolution: {integrity: sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==}
@@ -18427,6 +18456,7 @@ packages:
   /unified/9.2.0:
     resolution: {integrity: sha512-vx2Z0vY+a3YoTj8+pttM3tiJHCwY5UFbYdiWrwBEbHmK8pvsPj2rtAX2BFfgXen8T39CJWblWRDT4L5WGXtDdg==}
     dependencies:
+      '@types/unist': 2.0.6
       bail: 1.0.5
       extend: 3.0.2
       is-buffer: 2.0.5
@@ -18437,6 +18467,7 @@ packages:
   /unified/9.2.2:
     resolution: {integrity: sha512-Sg7j110mtefBD+qunSLO1lqOEKdrwBFBrR6Qd8f4uwkhWNlbkaqwHse6e7QvD3AP/MNoJdEDLaf8OxYyoWgorQ==}
     dependencies:
+      '@types/unist': 2.0.6
       bail: 1.0.5
       extend: 3.0.2
       is-buffer: 2.0.5
