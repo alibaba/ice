@@ -63,8 +63,7 @@ export function Links(props: React.LinkHTMLAttributes<HTMLLinkElement>) {
 }
 
 export function Scripts(props: React.ScriptHTMLAttributes<HTMLScriptElement>) {
-  const { routesData, routesConfig, matches, assetsManifest, documentOnly, downgrade } = useAppContext();
-  const appData = useAppData();
+  const { routesConfig, matches, assetsManifest } = useAppContext();
 
   const routeScripts = getScripts(matches, routesConfig);
   const pageAssets = getPageAssets(matches, assetsManifest);
@@ -84,28 +83,9 @@ export function Scripts(props: React.ScriptHTMLAttributes<HTMLScriptElement>) {
     return true;
   });
 
-  const matchedIds = matches.map(match => match.route.id);
-  const routePath = getCurrentRoutePath(matches);
-  const windowContext: WindowContext = {
-    appData,
-    routesData,
-    routesConfig,
-    routePath,
-    downgrade,
-    matchedIds,
-    documentOnly,
-  };
-
   return (
     <>
-      {/*
-       * disable hydration warning for CSR.
-       * initial app data may not equal CSR result.
-       */}
-      <script
-        suppressHydrationWarning={documentOnly}
-        dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=Object.assign(${JSON.stringify(windowContext)}, window.__ICE_APP_CONTEXT__ || {})` }}
-      />
+      <Data />
       {
         routeScripts.map(routeScriptProps => {
           return <script key={routeScriptProps.src} {...props} {...routeScriptProps} data-route-script />;
@@ -120,16 +100,29 @@ export function Scripts(props: React.ScriptHTMLAttributes<HTMLScriptElement>) {
   );
 }
 
+// use app context separately
 export function Data() {
-  const { routesData, documentOnly } = useAppContext();
+  const { routesData, documentOnly, matches, routesConfig, downgrade } = useAppContext();
   const appData = useAppData();
+
+  const matchedIds = matches.map(match => match.route.id);
+  const routePath = getCurrentRoutePath(matches);
+  const windowContext: WindowContext = {
+    appData,
+    routesData,
+    routesConfig,
+    routePath,
+    downgrade,
+    matchedIds,
+    documentOnly,
+  };
 
   return (
     // Disable hydration warning for csr.
     // initial app data may not equal csr result.
     <script
       suppressHydrationWarning={documentOnly}
-      dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=${JSON.stringify({ routesData, appData })}` }}
+      dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=${JSON.stringify(windowContext)};` }}
     />
   );
 }
