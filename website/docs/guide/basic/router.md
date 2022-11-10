@@ -3,14 +3,21 @@ title: 路由
 order: 4
 ---
 
-一个应用，通常包含多张页面，每张页面对应不同的地址。在 ICE 中，采用了约定式路由，会根据项目的目录结构自动生成应用的路由信息。
+ice.js 采用 `约定式路由`，并针对 `嵌套路由` 做了一系列加载和渲染上的优化，以构建出性能更好的 Web 应用。
 
-## 路由组件
+## 基础概念
+
+### 约定式路由
+
+框架会根据项目的目录结构自动生成应用的路由信息。`src/pages` 目录下的每一个 `.(js|jsx|tsx)` 文件会被映射为一个路由地址，示例如下：
+
+<img src="https://img.alicdn.com/imgextra/i1/O1CN01ehzrle1ym0kPnJeVH_!!6000000006620-2-tps-800-596.png" width="375px" />
+
+### 路由组件
 
 路由组件，是每一个页面的入口文件，通过 `export default` 导出其具体实现，例如:
 
-```tsx
-// src/pages/index.tsx
+```tsx title="src/pages/index.tsx"
 export default function Home() {
   return (
     <div>Hello ICE</div>
@@ -18,50 +25,9 @@ export default function Home() {
 };
 ```
 
-更多能力，详见[页面](./page.md)。
+路由组件支持配置页面级信息和数据加载逻辑，详见[页面](./page.md)。
 
-## 路由规则
-
-在 `src/pages` 目录下创建的每一个 `.(js|jsx|tsx)` 文件, 都对应着一个具体的路由。如下面的目录结构：
-
-```
-/src
-└── pages
-   └── repo
-   |  ├── index.tsx
-   |  └── preview.tsx
-   ├── about.tsx
-   └── index.tsx
-```
-
-对应的路由匹配规则为：
-
-| URL              | 路由组件                    |
-| ---------------  |:--------------------------:|
-|  /               | pages/index.tsx            |
-|  /about          | pages/about.tsx            |
-|  /repo           | pages/repo/index.tsx       |
-|  /repo/preview   | pages/repo/preview.tsx     |
-
-## 路由跳转
-
-ice.js 通过 `Link` 组件，来提供路由间的跳转能力。基于 `Link` 组件，可以只加载下一个页面相比于当前页面差异化的 Bundle 进行渲染，以达到更好的性能体验。
-
-```jsx
-// src/pages/index.tsx
-import { Link } from 'ice';
-
-export default function Home() {
-  return (
-    <>
-      <div>Hello ICE</div>
-      <Link to="/about">about ice</Link>
-    </>
-  );
-}
-```
-
-## 布局组件
+### 布局组件
 
 在 `pages` 目录下，还可以创建一类特殊的组件，来维护全局或一组页面共用的布局, 其文件名约定为 `layout.(js|jsx|tsx)`。
 
@@ -83,76 +49,87 @@ export default function Layout() {
 
 其中, `<Outlet />` 组件对应需要被布局组件嵌套的子组件。
 
+<img src="https://img.alicdn.com/imgextra/i4/O1CN01fzEkbu1ejSDqdLORM_!!6000000003907-2-tps-1010-668.png" width="500px" />
+
 布局组件：
 - 如果位于 `pages` 目录的最顶层，则它将作为全局布局，嵌套在所有路由组件外。
 - 如果位于某个子文件夹，则它将作为页面级布局，嵌套在这个目录下的其他路由组件外。
 
 如果同时存在 **全局布局组件** 和 **页面级布局组件**，则全局布局组件会嵌套于页面级布局组件之外。
 
-例如，下面的目录结构：
+### 路由跳转
 
-```diff
-/src
-├── layout.tsx
-└── pages
-   └── repo
-+  |  ├── layout.tsx  页面级布局组件
-   |  ├── index.tsx
-   |  └── preview.tsx
-   ├── about.tsx
-+  ├── layout.tsx  全局布局组件
-   └── index.tsx
+ice.js 通过 `Link` 组件，来提供路由间的跳转能力。基于 `Link` 组件，可以只加载下一个页面相比于当前页面差异化的 Bundle 进行渲染，以达到更好的性能体验。
+
+```tsx title="src/pages/index.tsx"
+import { Link } from 'ice';
+
+export default function Home() {
+  return (
+    <>
+      <div>Hello ICE</div>
+      <Link to="/about">about ice</Link>
+    </>
+  );
+}
 ```
+## 嵌套路由
 
-每个路由，对应的 Layout 匹配规则为：
+通过 `创建文件夹` 和 `布局组件`，可以轻松构建嵌套路由。例如，下面的示例中，`/repo/preview` 页面，由这三个组件嵌套而成：
+- layout.tsx
+- repo/layout.tsx
+- repo/preview.tsx
 
-| URL              | 路由组件                    |                                       布局组件 |
-| ---------------  |:--------------------------:|-------------------------------------------:|
-|  /               | pages/index.tsx            |                             src/layout.tsx |
-|  /about          | pages/about.tsx            |                             src/layout.tsx |
-|  /repo           | pages/repo/index.tsx       | src/layout.tsx + src/pages/repo/layout.tsx |
-|  /repo/preview   | pages/repo/preview.tsx     | src/layout.tsx + src/pages/repo/layout.tsx |
+<img src="https://img.alicdn.com/imgextra/i2/O1CN01r2SdhI1LAD2nH7wPU_!!6000000001258-2-tps-514-490.png" width="260px" />
+
+ice.js 针对 `嵌套路由` 的场景，应用了以下优化，来让页面达成更好的性能体验：
+- 各路由组件的 `资源` 和 `数据请求` 会被并行加载，以达到最快的资源加载速度。
+- 路由间跳转，比如从 `/repo/preview` 跳转到 `/repo/edit`，框架只会加载差异化的路由组件 `edit.tsx` 进行渲染，而不会重新渲染整个页面。
+
+利用框架对 `嵌套路由` 所做的优化，我们可以将页面中逻辑相对分离的部分，用 `嵌套路由` 的方式来组织，以获得更好的加载体验。
+
+例如，下面这个常见的移动端营销页，可以将顶部通用的 `Slider` 抽象为 `布局组件`，将不同 `tab` 下对应的瀑布流，抽象为 `路由组件`。这样，`Slider` 和 `瀑布流` 就可以做到并行加载，并且当切换 `tab` 时，新的 tab 内容将由框架触发按需加载和渲染。[示例工程](https://github.com/ice-lab/ice-next/tree/master/examples/with-nested-routes)
+
+<img src="https://img.alicdn.com/imgextra/i3/O1CN01gKRkTc1aTe5QiWmpt_!!6000000003331-2-tps-1566-704.png" width="750px" />
 
 ## 动态路由
 
-路由中包含了动态参数的路由，被称做动态路由。如果文件名或者目录名是以 `$` 开头，则判定这个路由为动态路由。
+在某些场景下可能需要动态指定路由，例如 `/user/:id`，可以以 `$` 开头创建文件名或目录名, 例如 `src/pages/user/$id.tsx`:
 
-> 注意：动态路由仅在 SSR 下生效。
-
-例如，下面的目录结构：
-
-```diff
-/src
-├── layout.tsx
-└── pages
-   └── repo
-+     ├── $id
-+     |  ├── author
-+     |  |  └── $name.tsx
-+     |  └── index.tsx
-      ├── index.tsx
-      └── preview.tsx
-```
-
-对应的路由匹配规则为：
-
-| URL                  | 路由组件                    |
-|----------------------|:--------------------------:|
-| /repo                | pages/repo/index.tsx       |
-| /repo/preview        | pages/repo/preview.tsx     |
-| /repo/ice            | src/pages/repo/$id/index.tsx            |
-| /repo/ice/author/foo | src/pages/repo/$id/author/$name.tsx |
+<img src="https://img.alicdn.com/imgextra/i4/O1CN01IzAaaD1SnKBElEVDM_!!6000000002291-2-tps-722-440.png" width="350px" />
 
 在动态路由组件中可以通过 `useParams()` 方法拿到当前路由的参数：
 
-```tsx
-// src/pages/repo/$id/author/$name.tsx
+```tsx title="src/pages/user/$id.tsx"
 import { useParams } from 'ice';
 
 export default function() {
-  const { id, name } = useParams();
-  console.log(id);   // 'ice'
-  console.log(name); // 'foo' 
+  const { id } = useParams();
+  console.log(id);   // '11432'
   return <div />;
 }
+```
+
+## 定制路由地址
+
+对于约定式路由不满足的场景，可以通过在 `src/app.ts` 中 `defineAppConfig` 方式进行自定义，例如:
+
+```js
+import { defineAppConfig } from '@ice/app';
+
+export default defineAppConfig({
+  routes: {
+    // 忽略 pages 下的 components 目录
+    ignoreFiles: ['**/components/**'],
+    defineRoutes: (route) => {
+      // 将 /about-me 路由访问内容指定为 about.tsx
+      route('/about-me', 'about.tsx');
+
+      // 为 /product 路由添加 layout.tsx 作为 layout，并渲染 products.tsx 内容
+      route('/', 'layout.tsx', () => {
+        route('/product', 'products.tsx');
+      });
+    },
+  },
+});
 ```
