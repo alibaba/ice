@@ -70,3 +70,21 @@ function App {
 - Attributes：
 
 在 React 中，原生标签的 props 是存在白名单的，而 Rax 中没有该判断。这差异导致使用非 `data-*` 的自定义属性在 React Runtime 中会被忽略（会有 warning），如果用户通过非标的自定义属性存储在 attributes 中，在 React Runtime 中会无法从真实节点的 ref 中通过 `getAttribute` 获取。如果用了这些非标自定义属性，推荐使用 `data-*` 来标识自定义属性。
+
+## rax-app 工程迁移
+
+对于之前使用 rax-app 的用户，ice.js 提供了一款工程自动化迁移工具—— [rax-migrate](https://www.npmjs.com/package/rax-migrate)，它可以辅助平滑迁移大部分工程配置。插件或者 ice.js 不再支持的能力由于构建器不同以及版本差异等需要手动确认以及迁移。
+
+### 安装
+
+```bash
+$ npm i rax-migrate -g
+```
+
+### 使用
+
+命令行进入 rax-app 工程（如工程名为 rax-project）所在的目录，通过运行 `rax-migrate` 可生成对应配置的同目录下的 ice.js 工程。
+
+```bash
+rax-migrate transform ./rax-project 
+```
