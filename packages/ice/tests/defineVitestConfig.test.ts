@@ -12,7 +12,6 @@ describe('defineVitestConfig', () => {
     'webpack/hot',
     'regenerator-runtime',
     '@swc/helpers',
-    'core-js',
   ];
   beforeAll(() => {
     const spy = vi.spyOn(process, 'cwd');

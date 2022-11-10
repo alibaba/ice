@@ -1,9 +1,11 @@
+import path from 'path';
 import { createRequire } from 'module';
 import swc from '@swc/core';
 import type { Options as SwcConfig, ReactConfig } from '@swc/core';
 import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { Config } from '../types.js';
+import transformCoreJs from '../utils/transformCoreJs.js';
 
 const { merge } = lodash;
 const require = createRequire(import.meta.url);
@@ -147,7 +149,14 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
 
         const { code } = output;
         let { map } = output;
-        return { code, map };
+        return {
+          code: polyfill
+            ? await transformCoreJs(
+              code,
+              path.dirname(require.resolve('core-js/package.json')),
+            ) : code,
+          map,
+        };
       } catch (error) {
         // Catch error for unhandled promise rejection.
         if (this) {

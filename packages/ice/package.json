@@ -46,7 +46,6 @@
     "build-scripts": "^2.0.0-26",
     "chalk": "^4.0.0",
     "commander": "^9.0.0",
-    "core-js": "3.26.0",
     "consola": "^2.15.3",
     "cross-spawn": "^7.0.3",
     "detect-port": "^1.3.0",

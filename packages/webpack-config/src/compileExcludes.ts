@@ -1,6 +1,8 @@
 const SKIP_COMPILE = [
   // polyfill and helpers
   'core-js', 'core-js-pure', '@swc/helpers', '@babel/runtime',
+  // Deprecate version of @babel/runtime.
+  'babel-runtime',
   // built-in runtime
   'react', 'react-dom',
   // dev dependencies

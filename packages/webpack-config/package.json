@@ -22,6 +22,7 @@
     "@ice/bundles": "^0.1.0",
     "@rollup/pluginutils": "^4.2.0",
     "consola": "^2.15.3",
+    "core-js": "3.26.0",
     "fast-glob": "^3.2.11",
     "process": "^0.11.10"
   },
