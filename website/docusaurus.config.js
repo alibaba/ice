@@ -15,11 +15,11 @@ const config = {
   organizationName: 'alibaba',
   projectName: 'ice',
   themeConfig: {
-    announcementBar: {
-      id: 'announcementBar-2',
-      content: 'ice.js 3，不仅是 PC，更适配移动端能力，<a href="/docs/guide/about">更多</a>',
-      isCloseable: true,
-    },
+    // announcementBar: {
+    //   id: 'announcementBar-2',
+    //   content: 'ice.js 3，不仅是 PC，更适配移动端能力，<a href="/docs/guide/about">更多</a>',
+    //   isCloseable: true,
+    // },
     navbar,
     footer,
     // algolia: {

@@ -2,9 +2,12 @@ import type { RuntimePlugin } from '@ice/runtime/esm/types';
 import { createAxiosInstance, setAxiosInstance } from './request.js';
 import type { RequestConfig } from './types';
 
+const EXPORT_NAME = 'requestConfig';
+
 const runtime: RuntimePlugin = async ({ appContext }) => {
   const { appExport } = appContext;
-  const requestConfig: RequestConfig = (typeof appExport.request === 'function' ? await appExport.request() : appExport.request) || {};
+  const exported = appExport[EXPORT_NAME];
+  const requestConfig: RequestConfig = (typeof exported === 'function' ? await exported() : exported) || {};
 
   // Support multi configs.
   if (Array.isArray(requestConfig)) {
