@@ -49,11 +49,11 @@ export default function Home() {
 
 ### 定制 SSG 的数据源
 
-如果希望在 SSG 时使用兜底数据，可以通过为路由组件定义 `getStaticData()` 方法。这样在 SSG 时，组件 `useData()` 获取的数据，为 `getStaticData()` 的返回值。
+如果希望在 SSG 时使用兜底数据，可以通过为路由组件定义 `staticDataLoader` 来实现。这样在 SSG 时，组件通过 `useData()` 获取的数据为 `staticDataLoader` 的返回值。
 
 ```tsx
 // src/pages/index.tsx
-import { useData } from 'ice';
+import { useData, defineDataLoader, defineStaticDataLoader } from 'ice';
 
 export default function Home() {
   const data = useData();
@@ -66,22 +66,24 @@ export default function Home() {
 }
 
 // 浏览器侧的常规数据请求
-export function getData() {
+export const dataLoader = defineDataLoader(() => {
   return {
     stars: 1000,
   };
-}
+});
 
 // 返回用于 SSG 的数据
-export function getStaticData() {
+export const staticDataLoader = defineStaticDataLoader(() => {
   // 浏览器侧的常规数据请求
   return {
     stars: 0,
   };
-}
+});
 ```
 
-构建 Client 端的 Bundle 时，会移除 `getStaticData()` 及其相关依赖。
+当 `defineDataLoader` 接受入参为数组时（定义了多个数据请求），`defineStaticDataLoader` 也需要与其一一对应。
+
+构建 Client 端的 Bundle 时，会移除 `staticDataLoader` 及其相关依赖。
 
 ## 关闭 SSG
 

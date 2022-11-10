@@ -166,7 +166,7 @@ function Home() {
 
 ### useData
 
-useData 返回路由组件数据，需要搭配在路由组件中定义数据获取方法进行使用。参考[页面数据请求文档](./request)
+useData 返回路由组件数据，需要搭配在路由组件中定义数据获取方法进行使用。参考[页面数据请求文档](./data-loader)
 
 ### useConfig
 

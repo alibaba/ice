@@ -29,7 +29,7 @@ export default function Home() {
 
 ## 获取页面初始数据
 
-详见[数据请求](./request.md)。
+详见[数据加载](./data-loader.md)。
 
 ## 配置页面运行时属性
 
