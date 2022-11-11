@@ -1,7 +1,7 @@
 import { defineAppConfig } from 'ice';
 
-export default defineAppConfig({
+export default defineAppConfig(() => ({
   app: {
     rootId: 'app',
   },
-});
+}));

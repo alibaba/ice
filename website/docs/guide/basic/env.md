@@ -12,7 +12,7 @@ ice.js 内置通过环境变量实现给构建或运行时传递参数的功能�
 
 ### 命令行环境变量
 
-例如需要修改 ICE 本地开发服务的端口号，可以在命令行中使用环境变量：
+例如需要修改 ice.js 本地开发服务的端口号，可以在命令行中使用环境变量：
 
 ```shell
 $ cross-env PORT=9999 npm start
@@ -22,7 +22,7 @@ $ cross-env PORT=9999 npm start
 
 ### 使用 `.env` 文件
 
-ICE 内置了加载 `.env` 文件的支持，在该文件中设置的环境变量会被自动加载到 `process.env` 上。
+ice.js 内置了加载 `.env` 文件的支持，在该文件中设置的环境变量会被自动加载到 `process.env` 上。
 
 `.env` 文件的示例：
 
@@ -53,7 +53,7 @@ DEV_PORT=9999
 
 ## 使用环境变量
 
-在 ICE 中，环境变量的使用场景分构建时与运行时两种类型。
+在 ice.js 中，环境变量的使用场景分构建时与运行时两种类型。
 
 特别注意：环境变量在使用时的类型都是 `string`，特别是设置为 `true` 或 `false` 时需要注意判断为字符串类型：
 
@@ -94,11 +94,11 @@ export default function AppID() {
 
 ## 内置的环境变量
 
-ICE 会内置一些环境变量方便使用，通常由 `ICE_CORE_` 开头，如下：
+ice.js 会内置一些环境变量方便使用，通常由 `ICE_CORE_` 开头，如下：
 
 ### ICE_CORE_MODE
 
-用于 ICE 的运行模式，可能是 `development` 或 `production`。
+用于 ice.js 的运行模式，可能是 `development` 或 `production`。
 
 ### ICE_CORE_ROUTER
 
@@ -114,4 +114,4 @@ ICE 会内置一些环境变量方便使用，通常由 `ICE_CORE_` 开头，如
 
 ### ICE_CORE_DEV_PORT
 
-用于标识 ICE 的开发服务器端口号。
+用于标识 ice.js 的开发服务器端口号。

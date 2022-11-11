@@ -20,7 +20,7 @@ import { useState, useEffect } from 'react';
 export default function Home() {
   const [data, setData] = useState();
 
-  useEffect(() => {
+  useEffect(async () => {
     const data = await fetch('https://example.com/api/xxx');
 
     setData(data);
@@ -118,7 +118,7 @@ import type { defineDataLoader } from 'ice';
 export const dataLoader = defineDataLoader(async () => {
   const data = await fetch('https://example.com/api/xxx');
   return data;
-}）;
+});
 ```
 
 在页面或其他组件中，可以通过 `useAppData` 方法获取应用级数据。示例：

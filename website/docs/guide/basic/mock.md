@@ -4,7 +4,7 @@ order: 7
 ---
 在前后端分离的开发中，Mock 数据是前端开发中很重要的一个环节，前端可以不必强依赖后端接口，只需要约定好对应的数据接口，前端可以通过 Mock 模拟数据先行开发，在后端接口开发完成后，只需要切换对应的接口地址即可，可以保证项目的同步开发。
 
-ICE 提供了开箱即用的 Mock 方案，支持 CRUD 等操作，在启动本地调试时会自动启用 Mock 服务。
+ice.js 提供了开箱即用的 Mock 方案，支持 CRUD 等操作，在启动本地调试时会自动启用 Mock 服务。
 
 ## 目录约定
 
@@ -25,12 +25,12 @@ ICE 提供了开箱即用的 Mock 方案，支持 CRUD 等操作，在启动本�
 ```js title="ice.config.mts"
 import { defineConfig } from '@ice/app';
 
-export default defineConfig({
+export default defineConfig(() => ({
   mock: {
     // 忽略 mock 目录中 custom 目录下的文件以及 api.ts 文件
     exclude: ["custom/**", "api.ts"]
   },
-});
+}));
 ```
 
 ## 编写 Mock 接口
@@ -86,10 +86,12 @@ export default {
 除此以外，还可以使用函数的形式来计算返回值，这在需要动态返回接口数据时很有用，如：
 
 ```ts
+import type { Request, Response } from '@ice/app';
+
 export default {
-  'POST /api/users/:id': (req, res) => {
-    const { id } = req.params;
-    res.send({ id: id });
+  'POST /api/users/:id': (request: Request, response: Response) => {
+    const { id } = request.params;
+    response.send({ id: id });
   },
 }
 ```

@@ -417,8 +417,17 @@ const cliOption = [
   },
 ];
 
+const defaultUserConfig = {};
+
+function defineConfig(config: UserConfig | (() => UserConfig)) {
+  if (typeof config === 'function') {
+    config = config();
+  }
+  return config || defaultUserConfig;
+}
 
 export {
+  defineConfig,
   userConfig,
   cliOption,
 };

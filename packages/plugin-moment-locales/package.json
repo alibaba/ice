@@ -1,7 +1,7 @@
 {
   "name": "@ice/plugin-moment-locales",
   "version": "1.0.0",
-  "description": "ICE plugins for reduce moment locale size",
+  "description": "ice.js plugin for reduce moment locale size.",
   "type": "module",
   "scripts": {
     "watch": "tsc -w",

@@ -1,4 +1,4 @@
-import type { Request, Response } from 'express';
+import type { Request, Response } from '@ice/app';
 
 export default {
   'GET /api/users': ['a', 'b'],

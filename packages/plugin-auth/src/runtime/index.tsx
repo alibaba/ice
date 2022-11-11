@@ -6,10 +6,12 @@ import type { InjectProps } from './Auth.js';
 
 export { withAuth, useAuth };
 
+const EXPORT_NAME = 'authConfig';
+
 const runtime: RuntimePlugin = async ({ appContext, useConfig, addProvider, addWrapper }) => {
   const { appExport, appData } = appContext;
-  const authConfig: AuthConfig = (typeof appExport.auth === 'function'
-    ? (await appExport.auth(appData)) : appExport.auth) || {};
+  const exported = appExport[EXPORT_NAME];
+  const authConfig: AuthConfig = (typeof exported === 'function' ? await exported(appData) : exported) || {};
   const initialAuth = authConfig.initialAuth || {};
 
   const AuthProviderWrapper: AppProvider = ({ children }) => {

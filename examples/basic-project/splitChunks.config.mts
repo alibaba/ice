@@ -1,6 +1,8 @@
 import { defineConfig } from '@ice/app';
+import defaultConfig from './ice.config.mjs';
 
-export default defineConfig({
+export default defineConfig(() => ({
+  ...defaultConfig,
   splitChunks: false,
   minify: false,
-});
+}));

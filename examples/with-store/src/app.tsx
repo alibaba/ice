@@ -20,4 +20,4 @@ export const getAppData: GetAppData = () => {
   });
 };
 
-export default defineAppConfig({});
+export default defineAppConfig(() => ({}));

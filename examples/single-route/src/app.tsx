@@ -6,6 +6,6 @@ if (process.env.ICE_CORE_ERROR_BOUNDARY) {
 
 console.log('ICE_VERSION', process.env.ICE_VERSION);
 
-export default defineAppConfig({
+export default defineAppConfig(() => ({
   app: {},
-});
+}));

@@ -1,9 +1,13 @@
-import type { UserConfig } from './types/userConfig.js';
+import type { Request, Response } from 'express';
+import type { UserConfig } from './types';
+import { defineConfig } from './config.js';
 
-export function defineConfig(config: UserConfig) {
-  return config;
-}
+export type {
+  UserConfig,
 
-export type { UserConfig };
-
+  // Expose for dynamic mock.
+  Request,
+  Response,
+};
+export { defineConfig };
 export * from './test/index.js';

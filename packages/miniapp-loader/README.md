@@ -4,8 +4,8 @@
 > Licensed under the MIT License
 > https://github.com/NervJS/taro/blob/next/LICENSE
 
-暴露给 ice.js 使用的 Webpack loader，用于构建小程序产物，包含以下 `loader`:
+Webpack loader exposed to ice.js for building applet artifacts, including the following `loader`:
 
 ## page
 
-小程序专用。在小程序页面文件调用 `@ice/miniapp-runtime` 的 `createPageConfig` 方法创建一个小程序 `Page` 构造函数接受的对象。
+Miniapp usage only. Call the `createPageConfig` method of `@ice/miniapp-runtime` in the miniapp page file to create an object accepted by the miniapp `Page` constructor.

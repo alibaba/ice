@@ -21,13 +21,13 @@ $ npm i @ice/plugin-rax-compat --save-dev
 ```js
 import compatRax from '@ice/plugin-rax-compat';
 
-export default defineConfig({
+export default defineConfig(() => ({
   // ...
   plugins: [
     // ...
     compatRax({ inlineStyle: true }),
   ],
-});
+}));
 ```
 
 ## `rax-compat` 兼容性

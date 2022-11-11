@@ -3,7 +3,7 @@ title: 定制 HTML
 order: 12
 ---
 
-ICE 使用 JSX 维护页面的 HTML 模板结构，其入口位于 `src/document.tsx`。
+ice.js 使用 JSX 维护页面的 HTML 模板结构，其入口位于 `src/document.tsx`。
 
 ## 初始模板
 
@@ -17,7 +17,7 @@ function Document() {
     <html>
       <head>
         <meta charSet="utf-8" />
-        <meta name="description" content="ICE DEMO" />
+        <meta name="description" content="ice.js DEMO" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Title />
@@ -42,7 +42,7 @@ export default Document;
 - `Scripts` 页面依赖的 JS 资源
 - `Main` 页面渲染的容器节点
 
-这些组件，配合各路由组件的 `getConfig()` 配置，可以实现不同页面 HTML 模板的差异化渲染。
+这些组件，配合各路由组件的 `pageConfig` 配置，可以实现不同页面 HTML 模板的差异化渲染。
 
 ## 内容定制
 

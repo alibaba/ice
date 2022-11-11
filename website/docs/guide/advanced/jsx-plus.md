@@ -21,11 +21,11 @@ $ npm i @ice/plugin-jsx-plus -D
 import { defineConfig } from '@ice/app';
 import jsxPlus from '@ice/plugin-jsx-plus';
 
-export default defineConfig({
+export default defineConfig(() => ({
   plugins: [
     jsxPlus(),
   ],
-});
+}));
 ```
 
 接下来就可以使用更强大的 JSX+ 语法了：

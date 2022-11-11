@@ -14,9 +14,9 @@ ice.js 支持常用的构建配置项，所有的配置项在 `ice.config.mts` �
 ```js
 import { defineConfig } from '@ice/app';
 
-export default defineConfig({
+export default defineConfig(() => ({
   publicPath: '/',
-});
+}));
 ```
 
 ### 兼容性配置
@@ -48,11 +48,11 @@ chrome 55
 ```js
 import { defineConfig } from '@ice/app';
 
-export default defineConfig({
+export default defineConfig(() => ({
   alias: {
     pages: './src/pages',
   },
-});
+}));
 ```
 
 ### crossOriginLoading
@@ -65,9 +65,9 @@ export default defineConfig({
 ```js
 import { defineConfig } from '@ice/app';
 
-export default defineConfig({
+export default defineConfig(() => ({
   crossOriginLoading: 'anonymous'
-});
+}));
 ```
 
 指定 webpack 启用 [cross-origin](https://webpack.js.org/configuration/output/#outputcrossoriginloading) 去加载 chunk。
@@ -82,12 +82,12 @@ export default defineConfig({
 ```js
 import { defineConfig } from '@ice/app';
 
-export default defineConfig({
+export default defineConfig(() => ({
   define: {
     ASSETS_VERSION: '0.1.0',
     'process.env.TEST': true,
   },
-});
+}));
 ```
 
 在代码中直接使用对应定义的变量：
@@ -130,9 +130,9 @@ console.log(process.env.TEST);
 ```js
 import { defineConfig } from '@ice/app';
 
-export default defineConfig({
+export default defineConfig(() => ({
   hash: 'contenthash',
-});
+}));
 ```
 
 ### externals
@@ -145,11 +145,11 @@ export default defineConfig({
 ```js
 import { defineConfig } from '@ice/app';
 
-export default defineConfig({
+export default defineConfig(() => ({
   externals: {
     react: 'React',
   },
-});
+}));
 ```
 
 对应在 `document.ts` 或者页面模版里添加 CDN 文件：
@@ -189,7 +189,7 @@ export default Document;
 ```js
 import { defineConfig } from '@ice/app';
 
-export default defineConfig({
+export default defineConfig(() => ({
   proxy: {
     '/api': {
       target: 'http://jsonplaceholder.typicode.com/',
@@ -197,7 +197,7 @@ export default defineConfig({
       pathRewrite: { '^/api' : '' },
     },
   },
-});
+}));
 ```
 
 ### minify
@@ -226,9 +226,9 @@ export default defineConfig({
 ```js
 import { defineConfig } from '@ice/app';
 
-export default defineConfig({
+export default defineConfig(() => ({
   compileDependencies: true,
-});
+}));
 ```
 
 如果明确知道哪些依赖需要进行编译也可以通过正则方式进行设置：
@@ -236,9 +236,9 @@ export default defineConfig({
 ```js
 import { defineConfig } from '@ice/app';
 
-export default defineConfig({
+export default defineConfig(() => ({
   compileDependencies: [/@alifd\/next/, /need-compile/],
-});
+}));
 ```
 
 ### postcss
@@ -251,7 +251,7 @@ export default defineConfig({
 ```ts
 import { defineConfig } from '@ice/app';
 
-export default defineConfig({
+export default defineConfig(() => ({
   postcss: {
     plugins: [
       'postcss-px-to-viewport-8-plugin',
@@ -261,7 +261,7 @@ export default defineConfig({
     ],
     syntax: 'sugarss',
   }
-});
+}));
 ```
 
 ice.js 内置的 postcss 配置是：
@@ -323,7 +323,7 @@ module.exports = {
 import { defineConfig } from '@ice/app';
 import { transformSync } from '@babel/core';
 
-export default defineConfig({
+export default defineConfig(() => ({
   transform: (originalCode, id) => {
     if (!id.includes('node_modules')) {
       // 借助 babel 编译
@@ -333,7 +333,7 @@ export default defineConfig({
       return { code, map };
     }
   },
-});
+}));
 ```
 
 > ice.js 内置通过 `swc` 提升编译体验，如果在 `transform` 配置上过多依赖 babel 等工具将可以能造成编译性能瓶颈
@@ -362,12 +362,12 @@ SSR / SSG 产物标准，推荐以 ESM 标准进行执行，如果希望打包�
 ```js
 import { defineConfig } from '@ice/app';
 
-export default defineConfig({
+export default defineConfig(() => ({
   server: {
     format: 'cjs',
     bundle: true,
   },
-});
+}));
 ```
 
 可以通过 `ignores` 参数，为 SSR / SSG 产物过滤指定文件：
@@ -375,14 +375,14 @@ export default defineConfig({
 ```js
 import { defineConfig } from '@ice/app';
 
-export default defineConfig({
+export default defineConfig(() => ({
   server: {
     ignores: [{
       resourceRegExp: /^\.\/locale$/,
       contextRegExp: /moment$/,
     }]
   },
-});
+}));
 ```
 
 其中：
@@ -400,7 +400,7 @@ export default defineConfig({
 ```js
 import { defineConfig } from '@ice/app';
 
-export default defineConfig({
+export default defineConfig(() => ({
   routes: {
     // 忽略 pages 下的 components 目录
     ignoreFiles: ['**/components/**'],
@@ -414,7 +414,7 @@ export default defineConfig({
       });
     },
   },
-});
+}));
 ```
 
 ### sourceMap
@@ -464,12 +464,12 @@ ice.js 内置了大量 ES 语法支持，便于开发者进行编码。对于 [p
 ```js
 import { defineConfig } from '@ice/app';
 
-export default defineConfig({
+export default defineConfig(() => ({
   mock: {
     // 忽略 mock 目录中 custom 目录下的文件以及 api.ts 文件
     exclude: ["custom/**", "api.ts"]
   },
-});
+}));
 ```
 
 ### plugins
@@ -484,12 +484,12 @@ import { defineConfig } from '@ice/app';
 import customPlugin from './custom-plugin';
 import myPlugin from '@ice/my-plugin';
 
-export default defineConfig({
+export default defineConfig(() => ({
   plugins: [
     customPlugin(),
     myPlugin(),
   ],
-});
+}));
 ```
 
 ### webpack
@@ -507,7 +507,7 @@ ice.js 默认基于 webpack 5 进行构建，在上述提供的构建配置无�
 import { defineConfig } from '@ice/app';
 import SpeedMeasurePlugin from 'speed-measure-webpack-plugin';
 
-export default defineConfig({
+export default defineConfig(() => ({
   webpack: (webpackConfig) => {
     if (process.env.NODE_ENV !== 'test') {
       // 添加 webpack 插件
@@ -515,7 +515,7 @@ export default defineConfig({
     }
     return webpackConfig;
   },
-});
+}));
 ```
 
 > 如有定制需求欢迎👏 PR 或反馈：<https://github.com/alibaba/ice/issues>

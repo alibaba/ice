@@ -1,12 +1,12 @@
-# ice
+# ice.js
 
-ice: best user experience for web develop based on React.
+ice.js is the best user experience for web developing based on React.
 This package includes scripts and configuration used by web framework `ice`.
 
 ## Install
 
 ```bash
-$ npm i @ice/cli -D
+$ npm i @ice/app -D
 ```
 
 ## usage
@@ -15,11 +15,11 @@ $ npm i @ice/cli -D
 {
   "name": "my-app",
   "devDependencies": {
-    "@ice/cli": "^1.0.0"
+    "@ice/app": "^3.0.0"
   },
   "scripts": {
     "start": "ice start",
-    "build": "ice build",
+    "build": "ice build"
   }
 }
 ```
@@ -36,9 +36,8 @@ Options:
 Commands:
   build [options]  build project
   start [options]  start dev server
-  test [options]   run tests with jest
 ```
 
-## License
+## Open Source
 
-MIT
+Open Source with ❤️ and MIT License.

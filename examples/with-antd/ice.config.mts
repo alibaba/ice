@@ -2,7 +2,7 @@ import { defineConfig } from '@ice/app';
 import antd from '@ice/plugin-antd';
 import moment from '@ice/plugin-moment-locales';
 
-export default defineConfig({
+export default defineConfig(() => ({
   plugins: [
     antd({
       importStyle: true,
@@ -16,4 +16,4 @@ export default defineConfig({
       locales: ['zh-cn'],
     }),
   ],
-});
+}));

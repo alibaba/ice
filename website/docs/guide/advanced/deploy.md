@@ -173,9 +173,9 @@ public String index(Model model) {
 ```ts title="./src/app.ts"
 import { defineAppConfig } from 'ice';
 
-export default defineAppConfig({
+export default defineAppConfig(() => ({
   router: {
     basename: '/abc',
   },
-});
+}));
 ```

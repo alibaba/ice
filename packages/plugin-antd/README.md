@@ -1,6 +1,6 @@
 # `@ice/plugin-antd`
 
-ICE plugin for use `antd`.
+An ice.js plugin to use `antd` components.
 
 ## Usage
 
@@ -8,13 +8,13 @@ ICE plugin for use `antd`.
 import { defineConfig } from '@ice/app';
 import antd from '@ice/plugin-antd';
 
-export default defineConfig({
+export default defineConfig(() => ({
   plugins: [antd({
     dark: true,
     compact: true,
     theme: {
       'primary-color': '#fd8',
-    }
+    },
   })],
-});
+}));
 ```

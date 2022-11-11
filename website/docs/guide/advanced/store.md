@@ -32,11 +32,11 @@ $ npm i @ice/plugin-store -D
 import { defineConfig } from '@ice/app';
 import store from '@ice/plugin-store';
 
-export default defineConfig({
+export default defineConfig(() => ({
   plugins: [
     store(),
   ],
-});
+}));
 ```
 
 ## 全局状态
@@ -480,12 +480,12 @@ function FunctionComponent() {
 import { defineConfig } from '@ice/app';
 import store from '@ice/plugin-store';
 
-export default defineConfig({
+export default defineConfig(() => ({
   plugins: [
 -   store(),
 +   store({ resetPageState: true }),
   ],
-});
+}));
 ```
 
 ### 在 Class Component 中使用

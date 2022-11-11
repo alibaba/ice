@@ -1,6 +1,6 @@
 # @ice/plugin-pha
 
-ICE plugin to enable PHA features
+An ice.js plugin to enable PHA features.
 
 ## Usage
 
@@ -8,7 +8,7 @@ ICE plugin to enable PHA features
 import { defineConfig } from '@ice/app';
 import pha from '@ice/plugin-pha';
 
-export default defineConfig({
+export default defineConfig(() => ({
   plugins: [pha()],
-});
+}));
 ```

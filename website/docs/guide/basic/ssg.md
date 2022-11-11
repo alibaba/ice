@@ -5,7 +5,7 @@ order: 10
 
 构建时渲染，简称 SSG (Static Site Generation)，是指在构建时提前生成内容 HTML 的渲染模式。
 
-ICE 默认开启 SSG 能力。SSG 不仅适用于静态站点，也适用于为普通 CSR 应用提前生成静态内容。
+ice.js 默认开启 SSG 能力。SSG 不仅适用于静态站点，也适用于为普通 CSR 应用提前生成静态内容。
 
 假设有如下路由组件，其内容为：
 
@@ -92,7 +92,7 @@ export const staticDataLoader = defineStaticDataLoader(() => {
 ```tsx
 import { defineConfig } from '@ice/app';
 
-export default defineConfig({
+export default defineConfig(() => ({
   ssg: false,
-});
+}));
 ```

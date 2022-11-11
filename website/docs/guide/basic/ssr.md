@@ -9,17 +9,17 @@ SSR 相比传统在浏览器端渲染的模式(CSR)，受设备性能和网络�
 
 ## 开启 SSR
 
-与 SSG 不同的是，ICE 中 SSR 不是默认启用的。
+与 SSG 不同的是，ice.js 中 SSR 不是默认启用的。
 
 在 `ice.config.mts` 中，增加如下配置：
 
 ```tsx
 import { defineConfig } from '@ice/app';
 
-export default defineConfig({
+export default defineConfig(() => ({
   // ...
   ssr: true,
-});
+}));
 ```
 
 ## 数据请求

@@ -20,11 +20,11 @@ if (isNode) {
   console.error('__IS_NODE__');
 }
 
-export default defineAppConfig({
+export default defineAppConfig(() => ({
   app: {
     rootId: 'app',
   },
-});
+}));
 
 export const getAppData: GetAppData = () => {
   return new Promise((resolve) => {

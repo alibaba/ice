@@ -1,5 +1,5 @@
 import * as path from 'path';
-import type { ExpressRequestHandler, Request, Middleware } from 'webpack-dev-server';
+import type { ExpressRequestHandler, Middleware } from 'webpack-dev-server';
 import { pathToRegexp } from 'path-to-regexp';
 import type { Key } from 'path-to-regexp';
 import createWatch from '../../service/watchSource.js';
@@ -54,10 +54,13 @@ export default function createMiddleware(options: MockOptions): Middleware {
   };
 }
 
-function matchPath(
-  req: Request,
-  mockConfigs: MockConfig[],
-): undefined | { keys: Key[]; mockConfig: MockConfig; match: RegExpExecArray } {
+type MatchResult = void | {
+  keys: Key[];
+  mockConfig: MockConfig;
+  match: RegExpExecArray;
+};
+
+function matchPath(req, mockConfigs: MockConfig[]): MatchResult {
   for (const mockConfig of mockConfigs) {
     const keys = [];
     if (req.method.toLocaleUpperCase() === mockConfig.method) {

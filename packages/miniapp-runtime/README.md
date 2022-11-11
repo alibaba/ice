@@ -1,37 +1,33 @@
-# `@ice/miniapp-runtime`
+# @ice/miniapp-runtime
 
 > Forked from [@tarojs/runtime](https://github.com/NervJS/taro/tree/next/packages/taro-runtime) with respect ❤️
 > Licensed under the MIT License
 > https://github.com/NervJS/taro/blob/next/LICENSE
 
-ICE 小程序运行时。连接框架（DSL）渲染机制到小程序渲染机制，连接小程序路由和生命周期到框架对应的生命周期
+ice.js miniapp runtime. Connect the framework (DSL) rendering mechanism to the miniapp rendering mechanism, and connect the miniapp routing and life cycle to the corresponding life cycle of the framework
 
-## 核心 API
+## Core API
 
 ### createPageConfig()
 
-暴露给 `@ice/miniapp-loader/page` 调用，在小程序页面文件中调用，创建一个小程序 `Page` 构造函数接受的小程序页面规范对象。
+Expose to `@ice/miniapp-loader/page` calls, called in the miniapp page file, to create a miniapp page specification object accepted by the miniapp `Page` constructor.
 
 ### window
 
-在小程序端模仿浏览器的 `window` 实现的对象，在浏览器环境中返回浏览器本身的 `window`。此对象通过 Webpack 的 [ProvidePlugin](https://webpack.js.org/plugins/provide-plugin/) 注入到全局对象以供第三方库调用。
+An object that imitates the browser's `window` implementation on the miniapp side, and returns the browser's own `window` in the browser environment. This object is injected into the global object via Webpack's [ProvidePlugin](https://webpack.js.org/plugins/provide-plugin/) for third-party libraries to call.
 
 ### navigator
 
-在小程序端模仿浏览器的 `navigator` 实现的对象，在浏览器环境中返回浏览器本身的 `navigator`。此对象通过 Webpack 的 [ProvidePlugin](https://webpack.js.org/plugins/provide-plugin/) 注入到全局对象以供第三方库调用。
+An object that imitates the browser's `navigator` implementation on the miniapp side, and returns the browser's own `navigator` in the browser environment. This object is injected into the global object via Webpack's [ProvidePlugin](https://webpack.js.org/plugins/provide-plugin/) for third-party libraries to call.
 
-### document
+###document
 
-在小程序端模仿浏览器的 `document` 实现的对象，在浏览器环境中返回浏览器本身的 `document`。此对象通过 Webpack 的 [ProvidePlugin](https://webpack.js.org/plugins/provide-plugin/) 注入到全局对象以供第三方库调用。
+An object that imitates the browser's `document` implementation on the miniapp side, and returns the browser's own `document` in the browser environment. This object is injected into the global object via Webpack's [ProvidePlugin](https://webpack.js.org/plugins/provide-plugin/) for third-party libraries to call.
 
 ### Current
 
-暴露给开发者的全局变量，目前有三个属性：
+Global variables exposed to developers currently have three properties:
 
-* `Current.app`，返回当前小程序应用实例，非小程序端返回小程序规范应用实例，可通过此实例调用小程序规范生命周期。
-* `Current.page`，返回当前小程序页面实例，非小程序端返回小程序规范页面实例，可通过此实例调用小程序规范生命周期。
-* `Current.router`，返回当前小程序路由信息，非小程序端返回小程序规范路由信息
-
-### Events
-
-消息机制
+* `Current.app`, returns the current miniapp application instance, and the non-mini program side returns the miniapp specification application instance, which can be used to call the miniapp specification life cycle.
+* `Current.page`, returns the current miniapp page instance, and the non-miniapp side returns the miniapp specification page instance, which can be used to call the miniapp specification life cycle.
+* `Current.router`, returns the current miniapp routing information, and the non-miniapp side returns the miniapp specification routing information

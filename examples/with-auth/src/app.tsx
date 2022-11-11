@@ -2,9 +2,9 @@ import { defineAppConfig, Link } from 'ice';
 import type { GetAppData } from 'ice';
 import { defineAuthConfig } from '@ice/plugin-auth/esm/types';
 
-export default defineAppConfig({});
+export default defineAppConfig(() => ({}));
 
-export const auth = defineAuthConfig((data) => {
+export const authConfig = defineAuthConfig((data) => {
   // fetch auth data
   return {
     initialAuth: {

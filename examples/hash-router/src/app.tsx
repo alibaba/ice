@@ -1,7 +1,7 @@
 import { defineAppConfig } from 'ice';
 
-export default defineAppConfig({
+export default defineAppConfig(() => ({
   router: {
     type: 'hash',
   },
-});
+}));

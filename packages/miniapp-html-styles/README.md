@@ -6,9 +6,8 @@
 
 ## html.css
 
-W3C HTML4 的内置样式，用于兼容 HTML 标签样式
+HTML4 built-in styles for compatibility with HTML tag styles.
 
 ## html5.css
 
-Chrome(Blink) HTML5 的内置样式，用于兼容 HTML 标签样式
-
+HTML5 built-in styles for compatibility with HTML tag styles.

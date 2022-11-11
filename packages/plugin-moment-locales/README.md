@@ -1,6 +1,6 @@
 # @ice/plugin-moment-locales
 
-plugin for load moment locales and reduce size of moment
+ice.js Plugin for load moment locales and reduce size of moment.
 
 ## Usage
 
@@ -8,9 +8,11 @@ plugin for load moment locales and reduce size of moment
 import { defineConfig } from '@ice/app';
 import moment from '@ice/plugin-moment-locale';
 
-export default defineConfig({
-  plugins: [moment({
-    locales: ['zh-CN']
-  })],
-});
+export default defineConfig(() => ({
+  plugins: [
+    moment({
+      locales: ['zh-CN'],
+    }),
+  ],
+}));
 ```

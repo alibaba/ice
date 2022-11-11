@@ -1,6 +1,6 @@
-# ICE 3.0
+# ice.js
 
-> v3 develop version
+> v3 develop version.
 
 ## LICENSE
 

@@ -1,6 +1,6 @@
 import { defineAppConfig } from 'ice';
 
-export default defineAppConfig({
+export default defineAppConfig(() => ({
   app: {
     rootId: 'app',
     strict: true,
@@ -10,4 +10,4 @@ export default defineAppConfig({
     type: 'browser',
     basename: '/ice',
   },
-});
+}));

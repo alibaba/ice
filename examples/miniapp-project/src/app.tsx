@@ -9,7 +9,6 @@ export const getAppData: GetAppData = () => {
   });
 };
 
-
 export const miniappManifest = {
   title: 'miniapp test',
   routes: [
@@ -19,8 +18,8 @@ export const miniappManifest = {
   ],
 };
 
-export default defineAppConfig({
+export default defineAppConfig(() => ({
   app: {
     rootId: 'app',
   },
-});
+}));

@@ -1,7 +1,7 @@
 {
   "name": "@ice/plugin-antd",
   "version": "1.0.0",
-  "description": "ice plugin for use antd",
+  "description": "ice.js plugin for use antd",
   "type": "module",
   "scripts": {
     "watch": "tsc -w",

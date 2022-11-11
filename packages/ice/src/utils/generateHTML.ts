@@ -1,5 +1,4 @@
 import * as path from 'path';
-import type { Request } from 'webpack-dev-server';
 import fse from 'fs-extra';
 import consola from 'consola';
 import type { ServerContext, RenderMode, AppConfig } from '@ice/runtime';
@@ -90,7 +89,7 @@ async function renderHTML(
   const serverContext: ServerContext = {
     req: {
       url: routePath,
-    } as Request,
+    } as any,
   };
   const { value: html } = await serverEntry.renderToHTML(serverContext, {
     renderMode,

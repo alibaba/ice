@@ -28,13 +28,13 @@ $ npm i -D @ice/plugin-fusion
 import { defineConfig } from '@ice/app';
 import fusion from '@ice/plugin-fusion';
 
-export default defineConfig({
+export default defineConfig(() => ({
   plugins: [
     fusion({
       importStyle: true,
     }),
   ],
-});
+}));
 ```
 
 ## 配置
@@ -57,13 +57,13 @@ export default defineConfig({
 import { defineConfig } from '@ice/app';
 import fusion from '@ice/plugin-fusion';
 
-export default defineConfig({
+export default defineConfig(() => ({
   plugins: [
     fusion({
       themePackage: '@alifd/theme-design-pro',
     }),
   ],
-});
+}));
 ```
 
 ### theme
@@ -77,7 +77,7 @@ export default defineConfig({
 import { defineConfig } from '@ice/app';
 import fusion from '@ice/plugin-fusion';
 
-export default defineConfig({
+export default defineConfig(() => ({
   plugins: [
     fusion({
       theme: {
@@ -85,5 +85,5 @@ export default defineConfig({
       },
     }),
   ],
-});
+}));
 ```

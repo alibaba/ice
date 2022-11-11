@@ -38,11 +38,11 @@ $ npm i @ice/plugin-auth -D
 import { defineConfig } from '@ice/app';
 import auth from '@ice/plugin-auth';
 
-export default defineConfig({
+export default defineConfig(() => ({
   plugins: [
    auth(),
   ],
-});
+}));
 ```
 
 ## 初始化权限数据
@@ -52,7 +52,7 @@ export default defineConfig({
 ```ts title="src/app.ts"
 import { defineAuthConfig } from '@ice/plugin-auth/esm/types';
 
-export const auth = defineAuthConfig(async () => {
+export const authConfig = defineAuthConfig(async () => {
   // 模拟请求权限数据
   // const data = (await fetch('/api/auth')).json();
   return {
@@ -66,38 +66,38 @@ export const auth = defineAuthConfig(async () => {
 
 ## 页面权限
 
-如需对某些页面进行权限控制，只需在页面组件的 `getConfig` 中配置准入权限即可。
+如需对某些页面进行权限控制，只需在页面组件的 `pageConfig` 中配置准入权限即可。
 
 <Tabs>
 <TabItem value="home" label="src/pages/index.tsx">
 
 ```tsx
+import { definePageConfig } from 'ice';
+
 export default function Home() {
   return <div>Home</div>
 }
 
-export function getConfig() {
-  return {
-    // 当前用户是 admin 时，有权限访问该页面
-    auth: ['admin'],
-  };
-}
+export const pageConfig = definePageConfig(() => ({
+  // 当前用户是 admin 时，有权限访问该页面
+  auth: ['admin'],
+}));
 ```
 
 </TabItem>
 <TabItem value="user" label="src/pages/about.tsx">
 
 ```tsx
+import { definePageConfig } from 'ice';
+
 export default function About() {
   return <div>About</div>
 }
 
-export function getConfig() {
-  return {
-    // 当前用户是 admin 时，无权限访问该页面
-    auth: ['guest'],
-  };
-}
+export const pageConfig = definePageConfig(() => ({
+  // 当前用户是 guest 时，无权限访问该页面
+  auth: ['guest'],
+}));
 ```
 
 </TabItem>
@@ -195,7 +195,7 @@ function Foo() {
 ```diff title="src/app.tsx"
 import { defineAuthConfig } from '@ice/plugin-auth/esm/types';
 
-export const auth = defineAuthConfig(async () => {
+export const authConfig = defineAuthConfig(async () => {
   return {
     initialAuth: {
       admin: true,
@@ -204,7 +204,7 @@ export const auth = defineAuthConfig(async () => {
 +     console.log(routeConfig); // 当前页面的配置 
 +     return (
 +       <div>没有权限</div>
-+     )
++     );
 +   },
 + };
 });

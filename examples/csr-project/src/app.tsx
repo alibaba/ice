@@ -5,7 +5,7 @@ console.log('__LOG__');
 console.warn('__WARN__');
 console.error('__ERROR__');
 
-export const auth = defineAuthConfig(() => {
+export const authConfig = defineAuthConfig(() => {
   return {
     initialAuth: {
       admin: true,
@@ -13,4 +13,4 @@ export const auth = defineAuthConfig(() => {
   };
 });
 
-export default defineAppConfig({});
+export default defineAppConfig(() => ({}));

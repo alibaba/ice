@@ -18,11 +18,11 @@ $ npm i -D @ice/plugin-css-assets-local
 import { defineConfig } from '@ice/app';
 import cssAssetsLocal from '@ice/plugin-css-assets-local';
 
-export default defineConfig({
+export default defineConfig(() => ({
   plugins: [
     cssAssetsLocal(),
   ],
-});
+}));
 ```
 
 ## 配置

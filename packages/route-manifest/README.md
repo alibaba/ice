@@ -1,6 +1,6 @@
 # @ice/route-manifest
 
-Generate route manifest based on the `src` directory in the project for ICE 3.0.
+Generate route manifest based on the `src` directory in the project for ice.js 3.
 
 ## API
 

@@ -28,13 +28,13 @@ $ npm i -D @ice/plugin-antd
 import { defineConfig } from '@ice/app';
 import antd from '@ice/plugin-antd';
 
-export default defineConfig({
+export default defineConfig(() => ({
   plugins: [
     antd({
       importStyle: true,
     }),
   ],
-});
+}));
 ```
 
 ## 配置
@@ -71,7 +71,7 @@ export default defineConfig({
 import { defineConfig } from '@ice/app';
 import antd from '@ice/plugin-antd';
 
-export default defineConfig({
+export default defineConfig(() => ({
   plugins: [
     antd({
       theme: {
@@ -80,5 +80,5 @@ export default defineConfig({
       },
     }),
   ],
-});
+}));
 ```

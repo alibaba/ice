@@ -1,8 +1,9 @@
-# `plugin-jsx-plus`
+# @ice/plugin-jsx-plus
 
-This plugin adds support for JSX+ syntax to the icejs 3.
+This plugin adds support for JSX+ syntax to the ice.js.
 
 ## Definition of JSX Plus
+
 https://github.com/jsx-plus/jsx-plus
 
 ## Usage
@@ -11,13 +12,13 @@ https://github.com/jsx-plus/jsx-plus
 import { defineConfig } from '@ice/app';
 import jsxplus from '@ice/plugin-jsx-plus';
 
-export default defineConfig({
+export default defineConfig(() => ({
   plugins: [
     jsxplus({
       // options
     }),
   ],
-});
+}));
 ```
 
 ## Options

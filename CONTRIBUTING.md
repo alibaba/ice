@@ -3,7 +3,7 @@
 ## 环境准备
 
 1. 保证 Node.js 版本是 Node.js 14 以上。推荐安装 Node.js 16+ 版本，会大大提升本地调试速度
-2. ICE 仓库是 `monorepo`，并使用 `pnpm workspace`。因此需要安装 [pnpm](https://pnpm.io/) 包管理工具
+2. ice.js 仓库是 `monorepo`，并使用 `pnpm workspace`。因此需要安装 [pnpm](https://pnpm.io/) 包管理工具
 3. 在项目根目录下执行 `pnpm setup` 后会安装依赖和编译代码
 
 > 如果在安装 puppeteer 的时候过慢，可以参考此 [issue](https://github.com/puppeteer/puppeteer/issues/6833#issuecomment-863488626) 进行配置 chromium 缓存。
@@ -25,7 +25,7 @@ ice-next
 ├── tests               # 测试用例
 |  ├── integration
 |  └── utils
-└── website             # ICE 官方文档
+└── website             # ice.js 官方文档
 ```
 
 补充说明：
@@ -66,7 +66,7 @@ $ pnpm start
 
 ## 测试
 
-ICE 使用 [vitest](https://vitest.dev/) 进行单元测试和集成测试。执行以下命令可快速运行项目中的测试用例：
+ice.js 使用 [vitest](https://vitest.dev/) 进行单元测试和集成测试。执行以下命令可快速运行项目中的测试用例：
 
 ```bash
 # 执行一次测试并生成代码覆盖率
@@ -79,7 +79,7 @@ $ pnpm test basic-project.test.ts
 
 ## 文档
 
-ICE 的文档使用了 [docusaurus](https://docusaurus.io/) 进行搭建。执行以下命令即可开始文档的开发：
+ice.js 的文档使用了 [docusaurus](https://docusaurus.io/) 进行搭建。执行以下命令即可开始文档的开发：
 
 ```bash
 # 进入到 website 目录

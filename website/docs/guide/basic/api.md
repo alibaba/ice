@@ -17,14 +17,14 @@ export default defineAppConfig(() => ({
 }));
 ```
 
-### defineGetConfig
+### definePageConfig
 
 该方法用于获取路由组件支持的配置类型，支持的配置可以被插件动态扩展。
 
 ```tsx title="src/pages/home.tsx"
-import { defineGetConfig } from 'ice';
+import { definePageConfig } from 'ice';
 
-export const getConfig = defineGetConfig(() => ({
+export const pageConfig = definePageConfig(() => ({
   title: 'About',
   meta: [
     {
@@ -170,10 +170,10 @@ useData 返回路由组件数据，需要搭配在路由组件中定义数据获
 
 ### useConfig
 
-useConfig 返回路由组件配置，搭配 [defineGetConfig](./api#definegetconfig)。
+useConfig 返回路由组件配置，搭配 [definePageConfig](./api#definepageconfig)。
 
 ```tsx title="src/pages/home.tsx"
-import { defineGetConfig, useConfig } from 'ice';
+import { definePageConfig, useConfig } from 'ice';
 
 export default function Home() {
   const config = useConfig();
@@ -184,7 +184,7 @@ export default function Home() {
   );
 }
 
-export const getConfig = defineGetConfig(() => ({
+export const pageConfig = definePageConfig(() => ({
   title: 'About',
   meta: [
     {
@@ -324,7 +324,7 @@ import type { RouteConfig } from 'ice';
 
 :::caution
 
-推荐通过 [defineGetConfig](./api#definegetconfig) 的方式在路由组件中定义类型，如果涉及到类型拓展和泛型的应用可以通过上述方式导入该类型。
+推荐通过 [definePageConfig](./api#definepageconfig) 的方式在路由组件中定义类型，如果涉及到类型拓展和泛型的应用可以通过上述方式导入该类型。
 :::
 
 ### Document 组件

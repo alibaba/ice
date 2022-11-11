@@ -1,7 +1,7 @@
 import { defineConfig } from '@ice/app';
 import pluginMiniapp from '@ice/plugin-miniapp';
 
-export default defineConfig({
+export default defineConfig(() => ({
   alias: {
     components: './src/components',
   },
@@ -10,4 +10,4 @@ export default defineConfig({
   sourceMap: false,
   plugins: [pluginMiniapp()],
   // eslint: false,
-});
+}));

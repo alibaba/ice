@@ -1,6 +1,6 @@
-# `plugin-fusion`
+# @ice/plugin-fusion
 
-plugin for use fusion component in framework `ice`.
+ice.js plugin for using fusion components.
 
 ## Usage
 
@@ -8,7 +8,7 @@ plugin for use fusion component in framework `ice`.
 import { defineConfig } from '@ice/app';
 import fusion from '@ice/plugin-fusion';
 
-export default defineConfig({
+export default defineConfig(() => ({
   plugins: [fusion({
     importStyle: true,
     themePackage: '@alifd/theme-design-pro',
@@ -16,12 +16,11 @@ export default defineConfig({
       'primary-color': '#fff',
     },
   })],
-});
+}));
 ```
 
 ## Options
 
-- importStyle: 开启后 Fusion 组件样式将自动引入
-- themePackage: Fusion 组件主题包配置，如果设置为数组则启动多主题能力
-- theme: 主题配置，通过设置 sass 变量对现有主题进行覆盖
-
+- importStyle: Fusion component styles will be automatically imported after enabling.
+- themePackage: Fusion component theme package configuration, if set to an array, multi-theme capability is enabled.
+- theme: theme configuration, overwrite existing themes by setting sass variables.

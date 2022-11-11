@@ -1,6 +1,6 @@
 # @ice/jsx-runtime
 
-JSX runtime for ice.
+JSX runtime for ice.js.
 
 ## Install
 

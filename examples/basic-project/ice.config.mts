@@ -1,8 +1,8 @@
 import { defineConfig } from '@ice/app';
 import SpeedMeasurePlugin from 'speed-measure-webpack-plugin';
-import custom from './plugin';
+import customPlugin from './plugin';
 
-export default defineConfig({
+export default defineConfig(() => ({
   publicPath: '/',
   syntaxFeatures: {
     exportDefaultFrom: true,
@@ -12,7 +12,10 @@ export default defineConfig({
     'process.env.HAHA': JSON.stringify(true),
   },
   transform: (code, id) => {
-    return id.includes('src/pages') && id.endsWith('.js') ? code : null;
+    if (id.includes('src/pages') && id.endsWith('.js')) {
+      return code;
+    }
+    return null;
   },
   webpack: (webpackConfig) => {
     if (process.env.NODE_ENV !== 'test') {
@@ -22,7 +25,7 @@ export default defineConfig({
   },
   dropLogLevel: 'warn',
   plugins: [
-    custom,
+    customPlugin(),
   ],
   eslint: true,
-});
+}));
