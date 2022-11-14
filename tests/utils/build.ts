@@ -1,5 +1,4 @@
 import path from 'path';
-import process from 'process';
 import { fileURLToPath } from 'url';
 import getPort from 'get-port';
 import createService from '../../packages/ice/src/createService';
@@ -25,12 +24,14 @@ interface IReturn {
 // get builtIn plugins
 export const buildFixture = async function (example: string, commandArgs?: Record<string, string>) {
   const rootDir = path.join(__dirname, `../../examples/${example}`);
-  process.env.DISABLE_FS_CACHE = 'true';
-  const service = await createService({ rootDir,
-command: 'build',
-commandArgs: {
-    ...(commandArgs || {}),
-  } });
+  // process.env.DISABLE_FS_CACHE = 'true';
+  const service = await createService({
+    rootDir,
+    command: 'build',
+    commandArgs: {
+      ...(commandArgs || {}),
+    },
+  });
   await service.run();
 };
 

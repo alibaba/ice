@@ -1,3 +1,7 @@
+/**
+ * @vitest-environment jsdom
+ */
+
 import { expect, it, describe } from 'vitest';
 import { render } from '@testing-library/react';
 import createFactory from '../src/create-factory';

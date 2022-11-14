@@ -199,7 +199,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
   }
   try {
     const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
-    const routesData = await loadRoutesData(matches, requestContext, routeModules, renderMode);
+    const routesData = await loadRoutesData(matches, requestContext, routeModules, { renderMode });
     const routesConfig = getRoutesConfig(matches, routesData, routeModules);
     runtime.setAppContext({ ...appContext, routeModules, routesData, routesConfig, routePath, matches, appData });
     if (runtimeModules.commons) {

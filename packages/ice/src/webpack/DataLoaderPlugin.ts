@@ -33,7 +33,7 @@ export default class DataLoaderPlugin {
   public apply(compiler: Compiler) {
     const plugins = this.getAllPlugin(['keepExports']) as PluginData[];
 
-    let keepExports = ['getData', 'getAppData'];
+    let keepExports = ['dataLoader', 'getAppData'];
     plugins.forEach(plugin => {
       if (plugin.keepExports) {
         keepExports = keepExports.concat(plugin.keepExports);

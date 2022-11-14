@@ -1,3 +1,6 @@
+/**
+ * @vitest-environment jsdom
+ */
 import { expect, it, describe } from 'vitest';
 import { generateDeclaration, checkExportData, removeDeclarations } from '../src/service/runtimeGenerator';
 

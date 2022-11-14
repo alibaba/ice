@@ -1,4 +1,5 @@
-import { Link, useData, useConfig, definePageConfig } from 'ice';
+// @ts-expect-error
+import { Link, useData, useConfig, definePageConfig, defineDataLoader } from 'ice';
 import url from './ice.png';
 
 interface Data {
@@ -41,7 +42,7 @@ export const pageConfig = definePageConfig(() => {
   };
 });
 
-export function getData() {
+export const dataLoader = defineDataLoader(() => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
@@ -49,4 +50,4 @@ export function getData() {
       });
     }, 1 * 100);
   });
-}
+});

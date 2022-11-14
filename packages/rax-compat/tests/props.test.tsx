@@ -1,3 +1,7 @@
+/**
+ * @vitest-environment jsdom
+ */
+
 import { expect, it, describe } from 'vitest';
 import transformProps from '../src/props';
 

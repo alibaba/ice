@@ -17,10 +17,10 @@ const AppDataProvider = Context.Provider;
  */
 async function getAppData(appExport: AppExport, requestContext?: RequestContext): Promise<AppData> {
   const hasGlobalLoader = typeof window !== 'undefined' && (window as any).__ICE_DATA_LOADER__;
+  const globalLoader = hasGlobalLoader ? (window as any).__ICE_DATA_LOADER__ : null;
 
-  if (hasGlobalLoader) {
-    const load = (window as any).__ICE_DATA_LOADER__;
-    return await load('__app');
+  if (globalLoader && globalLoader.hasLoad('__app')) {
+    return await globalLoader.getData('__app');
   }
 
   if (appExport?.getAppData) {

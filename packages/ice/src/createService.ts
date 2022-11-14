@@ -177,7 +177,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   dataCache.set('routes', JSON.stringify(routesInfo));
   dataCache.set('hasExportAppData', hasExportAppData ? 'true' : '');
 
-  // Render exports files if route component export getData / pageConfig.
+  // Render exports files if route component export dataLoader / pageConfig.
   renderExportsTemplate({
     ...routesInfo,
     hasExportAppData,

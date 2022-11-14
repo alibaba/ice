@@ -1,3 +1,6 @@
+/**
+ * @vitest-environment jsdom
+ */
 import { expect, it, vi, describe, beforeEach, afterEach } from 'vitest';
 
 import { updateRoutesConfig } from '../src/routesConfig';

@@ -8,6 +8,7 @@ import type { RenderMode } from '@ice/runtime';
 import assetsManifest from 'virtual:assets-manifest.json';
 import routes from './routes';
 import routesConfig from './routes-config.bundle.mjs';
+<% if(dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
 <%- runtimeOptions.imports %>
 
 const runtimeModules = { commons, statics };

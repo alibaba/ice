@@ -1,4 +1,4 @@
-import { Link, useData, useConfig, history, definePageConfig } from 'ice';
+import { Link, useData, useConfig, history, definePageConfig, defineDataLoader } from 'ice';
 import type { PageConfig } from 'ice';
 import { isWeb } from '@uni/env';
 import url from './ice.png';
@@ -44,7 +44,7 @@ export const pageConfig = definePageConfig(() => {
   };
 });
 
-export function getData() {
+export const dataLoader = defineDataLoader(() => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
@@ -52,4 +52,4 @@ export function getData() {
       });
     }, 1 * 100);
   });
-}
+});

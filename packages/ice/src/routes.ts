@@ -33,7 +33,7 @@ export async function generateRoutesInfo(rootDir: string, routesConfig: UserConf
     routeManifest,
     routesStr,
     routes,
-    loaders: generateRouteConfig(routes, 'getData', (str, imports) => {
+    loaders: generateRouteConfig(routes, 'dataLoader', (str, imports) => {
       return imports.length > 0 ? `${str}
 const loaders = {
   ${imports.map(([routeId, importKey]) => `'${routeId}': ${importKey},`).join('\n  ')}

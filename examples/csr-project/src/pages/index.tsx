@@ -1,6 +1,6 @@
 import { Suspense, lazy } from 'react';
-import { Link, useData, useConfig, definePageConfig } from 'ice';
-// not recommended but works
+import { Link, useData, useConfig, definePageConfig, defineDataLoader } from 'ice';
+// Not recommended but works.
 import { useAppContext } from '@ice/runtime';
 import { Button } from 'antd-mobile';
 import styles from './index.module.css';
@@ -47,7 +47,7 @@ export const pageConfig = definePageConfig(() => {
   };
 });
 
-export function getData() {
+export const dataLoader = defineDataLoader(() => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
@@ -55,4 +55,4 @@ export function getData() {
       });
     }, 1 * 100);
   });
-}
+});

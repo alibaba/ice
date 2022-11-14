@@ -1,4 +1,4 @@
-import { Outlet } from 'ice';
+import { Outlet, defineDataLoader } from 'ice';
 
 export default () => {
   return (
@@ -21,7 +21,7 @@ export function pageConfig() {
   };
 }
 
-export function getData() {
+export const dataLoader = defineDataLoader(() => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
@@ -29,4 +29,4 @@ export function getData() {
       });
     }, 1 * 100);
   });
-}
+});

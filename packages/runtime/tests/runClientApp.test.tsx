@@ -1,3 +1,7 @@
+/**
+ * @vitest-environment jsdom
+ */
+
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { expect, it, vi, describe, beforeEach, afterEach } from 'vitest';
@@ -38,6 +42,7 @@ describe('run client app', () => {
     }));
   });
   afterEach(() => {
+    (window as any).__ICE_DATA_LOADER__ = undefined;
     windowSpy.mockRestore();
     documentSpy.mockRestore();
   });
@@ -88,7 +93,7 @@ describe('run client app', () => {
           );
         },
         pageConfig: () => ({ title: 'home' }),
-        getData: async () => ({ data: 'test' }),
+        dataLoader: async () => ({ data: 'test' }),
       }),
     },
   ];
@@ -271,9 +276,12 @@ describe('run client app', () => {
     let executed = false;
     windowSpy.mockImplementation(() => ({
       ...mockData,
-      __ICE_DATA_LOADER__: async () => {
-        useGlobalLoader = true;
-        return { msg: '-globalData' };
+      __ICE_DATA_LOADER__: {
+        hasLoad: () => true,
+        getData: async () => {
+          useGlobalLoader = true;
+          return { msg: '-globalData' };
+        },
       },
     }));
 
@@ -317,7 +325,7 @@ describe('run client app', () => {
             );
           },
           pageConfig: () => ({ title: 'home' }),
-          getData: async () => ({ data: 'test' }),
+          dataLoader: async () => ({ data: 'test' }),
         }),
       }],
       runtimeModules: { commons: [serverRuntime] },
@@ -327,21 +335,21 @@ describe('run client app', () => {
   });
 
   it('load next page', async () => {
-    const homePage = {
+    const indexPage = {
       default: () => <></>,
-      pageConfig: () => ({ title: 'home' }),
-      getData: async () => ({ type: 'getDataHome' }),
+      pageConfig: () => ({ title: 'index' }),
+      dataLoader: async () => ({ type: 'getDataIndex' }),
     };
     const aboutPage = {
       default: () => <></>,
       pageConfig: () => ({ title: 'about' }),
-      getData: async () => ({ type: 'getDataAbout' }),
+      dataLoader: async () => ({ type: 'getDataAbout' }),
     };
     const mockedModules = [
       {
-        id: 'home',
+        id: 'index',
         load: async () => {
-          return homePage;
+          return indexPage;
         },
       },
       {
@@ -362,15 +370,15 @@ describe('run client app', () => {
       },
     );
     expect(routesData).toStrictEqual({
-      home: { type: 'getDataHome' },
+      index: { type: 'getDataIndex' },
     });
     expect(routesConfig).toStrictEqual({
-      home: {
-        title: 'home',
+      index: {
+        title: 'index',
       },
     });
     expect(routeModules).toStrictEqual({
-      home: homePage,
+      index: indexPage,
     });
   });
 });

@@ -1,17 +1,26 @@
-import type { GetData, GetDataConfig, RuntimeModules, AppExport, RuntimePlugin, CommonJsRuntime } from './types.js';
+import type { DataLoaderConfig, RuntimeModules, AppExport, RuntimePlugin, CommonJsRuntime } from './types.js';
 import getRequestContext from './requestContext.js';
+import { setFetcher, loadDataByCustomFetcher } from './dataLoaderFetcher.js';
 
 interface Loaders {
-  [routeId: string]: GetData;
-}
-
-interface LoadersConfig {
-  [routeId: string]: GetDataConfig;
+  [routeId: string]: DataLoaderConfig;
 }
 
 interface Result {
   value: any;
   status: string;
+}
+
+export function defineDataLoader(dataLoaderConfig: DataLoaderConfig): DataLoaderConfig {
+  return dataLoaderConfig;
+}
+
+export function defineServerDataLoader(dataLoaderConfig: DataLoaderConfig): DataLoaderConfig {
+  return dataLoaderConfig;
+}
+
+export function defineStaticDataLoader(dataLoaderConfig: DataLoaderConfig): DataLoaderConfig {
+  return dataLoaderConfig;
 }
 
 const cache = new Map<string, Result>();
@@ -35,79 +44,33 @@ function loadInitialData(loaders: Loaders) {
       return dataFromSSR;
     }
 
-    const getData = loaders[id];
+    const dataLoader = loaders[id];
 
-    if (getData) {
+    if (dataLoader) {
       const requestContext = getRequestContext(window.location);
 
-      const loader = getData(requestContext).then(data => {
-        cache.set(id, {
-          value: data,
-          status: 'RESOLVED',
+      let loader;
+
+      if (Array.isArray(dataLoader)) {
+        loader = dataLoader.map(loader => {
+          if (typeof loader === 'object') {
+            return loadDataByCustomFetcher(loader);
+          }
+
+          return loader(requestContext);
         });
-        return data;
-      }).catch(err => {
-        cache.set(id, {
-          value: err,
-          status: 'REJECTED',
-        });
-      });
+      } else if (typeof dataLoader === 'object') {
+        return loadDataByCustomFetcher(loader);
+      } else {
+        loader = dataLoader(requestContext);
+      }
 
       cache.set(id, {
         value: loader,
-        status: 'PENDING',
+        status: 'LOADING',
       });
     }
   });
-}
-
-/**
- * getData from cache or run it.
- */
-async function load(id: string, loader: GetData) {
-  if (!loader) {
-    return null;
-  }
-
-  const result = cache.get(id);
-
-  // get from cache first
-  if (result) {
-    const { value, status } = result;
-
-    if (status === 'RESOLVED') {
-      return value;
-    }
-
-    if (status === 'REJECTED') {
-      throw value;
-    }
-
-    // PENDING
-    return await value;
-  } else {
-    // if no cache, call the loader
-    const requestContext = getRequestContext(window.location);
-    return await loader(requestContext);
-  }
-}
-
-/**
- * Get loaders by config of loaders.
- */
-function getLoaders(loadersConfig: LoadersConfig, fetcher: Function): Loaders {
-  const loaders: Loaders = {};
-
-  Object.keys(loadersConfig).forEach(id => {
-    const loader = loadersConfig[id];
-
-    // If getData is an object, it is wrapped with a function.
-    loaders[id] = typeof loader === 'function' ? loader : () => {
-      return fetcher(loader);
-    };
-  });
-
-  return loaders;
 }
 
 interface Options {
@@ -120,7 +83,7 @@ interface Options {
  * Load initial data and register global loader.
  * In order to load data, JavaScript modules, CSS and other assets in parallel.
  */
-async function init(loadersConfig: LoadersConfig, options: Options) {
+async function init(loadersConfig: Loaders, options: Options) {
   const {
     fetcher,
     runtimeModules,
@@ -140,17 +103,39 @@ async function init(loadersConfig: LoadersConfig, options: Options) {
     }).filter(Boolean));
   }
 
-  const loaders = getLoaders(loadersConfig, fetcher);
+  if (fetcher) {
+    setFetcher(fetcher);
+  }
 
   try {
-    loadInitialData(loaders);
+    loadInitialData(loadersConfig);
   } catch (error) {
     console.error('Load initial data error: ', error);
   }
 
-  (window as any).__ICE_DATA_LOADER__ = async (id) => {
-    const loader = loaders[id];
-    return await load(id, loader);
+  (window as any).__ICE_DATA_LOADER__ = {
+    hasLoad: (id) => {
+      return cache.get(id);
+    },
+    getData: async (id) => {
+      const result = cache.get(id);
+
+      if (!result) {
+        return null;
+      }
+
+      const { status, value } = result;
+
+      if (status === 'RESOLVED') {
+        return result;
+      }
+
+      if (Array.isArray(value)) {
+        return await Promise.all(value);
+      }
+
+      return await value;
+    },
   };
 }
 

@@ -6,6 +6,7 @@ import * as app from '@/app';
 import routes from './routes';
 <% } -%>
 <%- runtimeOptions.imports %>
+<% if(dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
 
 const getRouterBasename = () => {
   const appConfig = getAppConfig(app);
@@ -29,4 +30,5 @@ runClientApp({
   basename: getRouterBasename(),
   hydrate: <%- hydrate %>,
   memoryRouter: <%- memoryRouter || false %>,
+  <% if(dataLoaderImport.imports) {-%>dataLoaderFetcher<% } -%>
 });

@@ -1,7 +1,9 @@
 import React from 'react';
+import { RouteComponent } from './types.js';
 import type { RouteItem, RouteModules, RouteWrapperConfig, RouteMatch, RequestContext, RoutesConfig, RoutesData, RenderMode } from './types.js';
 import RouteWrapper from './RouteWrapper.js';
 import { useAppContext } from './AppContext.js';
+import { loadDataByCustomFetcher } from './dataLoaderFetcher.js';
 
 type RouteModule = Pick<RouteItem, 'id' | 'load'>;
 
@@ -33,6 +35,10 @@ export async function loadRouteModules(routes: RouteModule[], originRouteModules
   return routeModules;
 }
 
+export interface LoadRoutesDataOptions {
+  renderMode?: RenderMode;
+}
+
 /**
 * get data for the matched routes.
 */
@@ -40,46 +46,49 @@ export async function loadRoutesData(
   matches: RouteMatch[],
   requestContext: RequestContext,
   routeModules: RouteModules,
-  renderMode?: RenderMode,
+  options?: LoadRoutesDataOptions,
 ): Promise<RoutesData> {
+  const { renderMode } = options || {};
   const routesData: RoutesData = {};
 
   const hasGlobalLoader = typeof window !== 'undefined' && (window as any).__ICE_DATA_LOADER__;
-
-  if (hasGlobalLoader) {
-    const load = (window as any).__ICE_DATA_LOADER__;
-
-    await Promise.all(
-      matches.map(async (match) => {
-        const { id } = match.route;
-        routesData[id] = await load(id);
-      }),
-    );
-
-    return routesData;
-  }
+  const globalLoader = hasGlobalLoader ? (window as any).__ICE_DATA_LOADER__ : null;
 
   await Promise.all(
     matches.map(async (match) => {
       const { id } = match.route;
-      const routeModule = routeModules[id];
-      const { getData, getServerData, getStaticData } = routeModule ?? {};
 
-      let dataLoader;
+      if (globalLoader && globalLoader.hasLoad(id)) {
+        routesData[id] = await globalLoader.getData(id);
+        return;
+      }
+
+      const routeModule = routeModules[id];
+      const { dataLoader, serverDataLoader, staticDataLoader } = routeModule ?? {};
+
+      let loader;
 
       // SSG -> getStaticData
       // SSR -> getServerData || getData
       // CSR -> getData
       if (renderMode === 'SSG') {
-        dataLoader = getStaticData;
+        loader = staticDataLoader;
       } else if (renderMode === 'SSR') {
-        dataLoader = getServerData || getData;
+        loader = serverDataLoader || dataLoader;
       } else {
-        dataLoader = getData;
+        loader = dataLoader;
       }
 
-      if (dataLoader) {
-        routesData[id] = await dataLoader(requestContext);
+      if (Array.isArray(loader)) {
+        routesData[id] = await Promise.all(loader.map(load => {
+          if (typeof load === 'object') {
+            return loadDataByCustomFetcher(load);
+          }
+
+          return load(requestContext);
+        }));
+      } else if (loader) {
+        routesData[id] = await loader(requestContext);
       }
     }),
   );
@@ -180,7 +189,7 @@ export function filterMatchesToLoad(prevMatches: RouteMatch[], currentMatches: R
       // splat param changed, which is not present in match.path
       // e.g. /files/images/avatar.jpg -> files/finances.xls
       (prevMatches[index].route.path?.endsWith('*') &&
-      prevMatches[index].params['*'] !== match.params['*'])
+        prevMatches[index].params['*'] !== match.params['*'])
     );
   };
 

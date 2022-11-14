@@ -18,6 +18,7 @@ import getRequestContext from './requestContext.js';
 import getAppConfig from './appConfig.js';
 import matchRoutes from './matchRoutes.js';
 import DefaultAppRouter from './AppRouter.js';
+import { setFetcher } from './dataLoaderFetcher.js';
 
 export interface RunClientAppOptions {
   app: AppExport;
@@ -27,6 +28,7 @@ export interface RunClientAppOptions {
   basename?: string;
   memoryRouter?: boolean;
   runtimeOptions?: Record<string, any>;
+  dataLoaderFetcher?: Function;
 }
 
 type History = BrowserHistory | HashHistory | MemoryHistory;
@@ -40,7 +42,9 @@ export default async function runClientApp(options: RunClientAppOptions) {
     hydrate,
     memoryRouter,
     runtimeOptions,
+    dataLoaderFetcher,
   } = options;
+
   const windowContext: WindowContext = (window as any).__ICE_APP_CONTEXT__ || {};
   const assetsManifest: AssetsManifest = (window as any).__ICE_ASSETS_MANIFEST__ || {};
   let {
@@ -78,6 +82,8 @@ export default async function runClientApp(options: RunClientAppOptions) {
     await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
   }
 
+  setFetcher(dataLoaderFetcher);
+
   if (!appData) {
     appData = await getAppData(app, requestContext);
   }
@@ -92,6 +98,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
   if (!routesData) {
     routesData = await loadRoutesData(matches, requestContext, routeModules);
   }
+
   if (!routesConfig) {
     routesConfig = getRoutesConfig(matches, routesData, routeModules);
   }
@@ -114,6 +121,7 @@ interface RenderOptions {
   history: History;
   runtime: Runtime;
 }
+
 async function render({ history, runtime }: RenderOptions) {
   const appContext = runtime.getAppContext();
   const { appConfig, appData } = appContext;
@@ -202,7 +210,10 @@ function BrowserEntry({
           throw new Error(`Routes not found in location ${location.pathname}.`);
         }
 
-        loadNextPage(currentMatches, routeState).then(({ routesData, routesConfig, routeModules }) => {
+        loadNextPage(
+          currentMatches,
+          routeState,
+        ).then(({ routesData, routesConfig, routeModules }) => {
           setHistoryState({
             action,
             location,

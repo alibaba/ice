@@ -486,7 +486,11 @@ export default class IntersectionObserver {
  * @return {number} The elapsed time since the page was requested.
  */
 function now() {
-  return window.performance && performance.now && performance.now();
+  if (typeof performance !== 'undefined' && performance.now) {
+    return performance.now();
+  } else {
+    return Date.now();
+  }
 }
 
 

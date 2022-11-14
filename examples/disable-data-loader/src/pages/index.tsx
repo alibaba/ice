@@ -1,3 +1,5 @@
+import { defineDataLoader } from 'ice';
+
 export default function Home() {
   return (
     <>
@@ -23,7 +25,7 @@ export function pageConfig() {
   };
 }
 
-export function getData({ pathname, query }) {
+export const dataLoader = defineDataLoader(({ pathname, query }) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
@@ -34,4 +36,4 @@ export function getData({ pathname, query }) {
       });
     }, 1 * 100);
   });
-}
+});

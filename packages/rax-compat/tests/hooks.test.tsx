@@ -1,3 +1,7 @@
+/**
+ * @vitest-environment jsdom
+ */
+
 import { expect, it, describe, vi } from 'vitest';
 import React from 'react';
 import { render } from '@testing-library/react';
@@ -30,8 +34,8 @@ describe('hooks', () => {
           setLoading(false);
           expect(loading).toBe(false);
         }, 1);
-      // Expect useEffect to execute once
-      // eslint-disable-next-line
+        // Expect useEffect to execute once
+        // eslint-disable-next-line
       }, []);
       return <div>{loading ? 'loading...' : 'load end'}</div>;
     }

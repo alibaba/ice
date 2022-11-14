@@ -1,4 +1,4 @@
-import { Link } from 'ice';
+import { Link, defineDataLoader } from 'ice';
 
 export default function About() {
   return (
@@ -29,7 +29,7 @@ export function pageConfig() {
   };
 }
 
-export function getData() {
+export const dataLoader = defineDataLoader(() => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
@@ -37,4 +37,4 @@ export function getData() {
       });
     }, 1 * 100);
   });
-}
+});
