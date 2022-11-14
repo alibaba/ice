@@ -3,7 +3,7 @@ title: 静态资源
 order: 7
 ---
 
-框架默认内置了处理静态资源的通用规则，一般情况下开发者无需设置资源的处理方式。另外，对于一些特殊的处理规则，框架给出了便捷方式方便开发者进行引入。
+框架默认内置了处理静态资源的通用规则，一般情况下开发者无需设置资源的处理方式。另外，对于一些特殊的处理规则，框架给出了便捷方式方便开发者引入资源。
 
 ## 基础规则
 
@@ -79,16 +79,16 @@ import txtContent from './text.txt?raw';
 
 ## public 目录
 
-`public/` 目录作为框架默认的静态资源目录，不被构建工具进行编译的资源都可以放在该目录下。
+`public` 目录作为框架默认的静态资源目录，不被构建工具进行编译的资源都可以放在该目录下。
 
-比如 `favicon.ico` 文件，我们并不希望该文件名编译（默认静态资源文件名在编译后会生成独立 hash，`favicon.ico` 希望保持原有文件名），在使用时直接在 Document 组件中进行引用：
+比如 `favicon.ico` 文件，我们并不希望该文件名编译（默认静态资源文件名在编译后会生成独立 hash，而 `favicon.ico` 希望保持原有文件名），我们可以把该文件放在 `public` 目录下，使用时在 Document 组件中引用即可：
 
-```jsx
+```diff
 export default function Document() {
   return (
     <html>
       <head>
-        <link rel="icon" href="/favicon.ico" />
++       <link rel="icon" href="/favicon.ico" />
       </head>
       <body>
         ...
@@ -102,6 +102,6 @@ export default function Document() {
 
 :::caution
 
-- public` 目录中的资源会在构建阶段完整复制到 `outputDir` 根目录，并且文件名不变，在部署时必须把资源文件放在服务器资源根目录下。（比如 `public/icon.svg` 文件应该在通过 `http:example.com/icon.svg` 进行访问）
+- `public` 目录中的资源会在构建阶段完整复制到 `outputDir` 根目录，并且文件名不变，在部署时必须把资源文件放在服务器资源根目录下。（比如 `public/icon.svg` 文件应该在通过 `http:example.com/icon.svg` 进行访问）
 
 :::
