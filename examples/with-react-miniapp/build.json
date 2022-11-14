@@ -1,4 +1,0 @@
-{
-  "entry": "src/app.ts",
-  "targets": ["web", "miniapp", "wechat-miniprogram"]
-}

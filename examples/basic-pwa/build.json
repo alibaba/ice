@@ -1,7 +1,0 @@
-{
-  "entry": "src/index.tsx",
-  "publicPath": "https://dev.alicdn.com/",
-  "pwa": true,
-  "plugins": [
-  ]
-}
