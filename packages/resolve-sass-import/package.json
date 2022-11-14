@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "fs-extra": "^8.1.0",
-    "loader-utils": "^1.2.3",
+    "loader-utils": "^2.0.3",
     "resolve": "^1.19.0"
   },
   "files": [

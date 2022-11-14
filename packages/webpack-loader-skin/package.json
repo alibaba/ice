@@ -18,7 +18,7 @@
   "dependencies": {
     "@icedesign/skin": "^0.1.13",
     "chalk": "^2.4.1",
-    "loader-utils": "^2.0.0",
+    "loader-utils": "^2.0.3",
     "tinycolor2": "^1.4.1"
   },
   "publishConfig": {
