@@ -1,6 +1,5 @@
-import { defineAppConfig } from 'ice';
+import { defineAppConfig, defineDataLoader } from 'ice';
 import { isWeb, isNode } from '@uni/env';
-import type { GetAppData } from 'ice';
 
 if (process.env.ICE_CORE_ERROR_BOUNDARY === 'true') {
   console.error('__REMOVED__');
@@ -26,10 +25,10 @@ export default defineAppConfig(() => ({
   },
 }));
 
-export const getAppData: GetAppData = () => {
+export const dataLoader = defineDataLoader(() => {
   return new Promise((resolve) => {
     resolve({
       title: 'gogogogo',
     });
   });
-};
+});

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import type { AppExport, AppData, RequestContext } from './types.js';
+import { callDataLoader } from './dataLoader.js';
 
 const Context = React.createContext<AppData | undefined>(undefined);
 
@@ -23,9 +24,15 @@ async function getAppData(appExport: AppExport, requestContext?: RequestContext)
     return await globalLoader.getData('__app');
   }
 
-  if (appExport?.getAppData) {
-    return await appExport.getAppData(requestContext);
+  if (appExport?.dataLoader) {
+    return await appExport.dataLoader(requestContext);
   }
+
+  const loader = appExport?.dataLoader;
+
+  if (!loader) return null;
+
+  await callDataLoader(loader, requestContext);
 }
 
 export {

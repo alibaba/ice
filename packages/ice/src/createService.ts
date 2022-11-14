@@ -141,7 +141,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const coreEnvKeys = getCoreEnvKeys();
 
   const routesInfo = await generateRoutesInfo(rootDir, routesConfig);
-  const hasExportAppData = (await getFileExports({ rootDir, file: 'src/app' })).includes('getAppData');
+  const hasExportAppData = (await getFileExports({ rootDir, file: 'src/app' })).includes('dataLoader');
   const csr = !userConfig.ssr && !userConfig.ssg;
 
   const disableRouter = userConfig?.optimization?.router && routesInfo.routesCount <= 1;

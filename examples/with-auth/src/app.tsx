@@ -1,5 +1,4 @@
-import { defineAppConfig, Link } from 'ice';
-import type { GetAppData } from 'ice';
+import { defineAppConfig, defineDataLoader, Link } from 'ice';
 import { defineAuthConfig } from '@ice/plugin-auth/esm/types';
 
 export default defineAppConfig(() => ({}));
@@ -21,7 +20,7 @@ export const authConfig = defineAuthConfig((data) => {
   };
 });
 
-export const getAppData: GetAppData = () => {
+export const dataLoader = defineDataLoader(() => {
   return new Promise((resolve) => {
     resolve({
       auth: {
@@ -29,4 +28,4 @@ export const getAppData: GetAppData = () => {
       },
     });
   });
-};
+});

@@ -18,7 +18,7 @@ import getRequestContext from './requestContext.js';
 import getAppConfig from './appConfig.js';
 import matchRoutes from './matchRoutes.js';
 import DefaultAppRouter from './AppRouter.js';
-import { setFetcher } from './dataLoaderFetcher.js';
+import { setFetcher } from './dataLoader.js';
 
 export interface RunClientAppOptions {
   app: AppExport;

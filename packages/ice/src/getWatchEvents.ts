@@ -92,7 +92,7 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
     /src\/app.(js|jsx|ts|tsx)/,
     async (event: string) => {
       if (event === 'change') {
-        const hasExportAppData = (await getFileExports({ rootDir, file: 'src/app' })).includes('getAppData');
+        const hasExportAppData = (await getFileExports({ rootDir, file: 'src/app' })).includes('dataLoader');
         if (hasExportAppData !== !!cache.get('hasExportAppData')) {
           cache.set('hasExportAppData', hasExportAppData ? 'true' : '');
           renderExportsTemplate({

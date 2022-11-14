@@ -1,5 +1,4 @@
-import type { GetAppData } from 'ice';
-import { defineAppConfig } from 'ice';
+import { defineAppConfig, defineDataLoader } from 'ice';
 import { defineStoreConfig } from '@ice/plugin-store/esm/types';
 
 export const store = defineStoreConfig(async (appData) => {
@@ -10,7 +9,7 @@ export const store = defineStoreConfig(async (appData) => {
   };
 });
 
-export const getAppData: GetAppData = () => {
+export const dataLoader = defineDataLoader(() => {
   return new Promise((resolve) => {
     resolve({
       user: {
@@ -18,6 +17,6 @@ export const getAppData: GetAppData = () => {
       },
     });
   });
-};
+});
 
 export default defineAppConfig(() => ({}));

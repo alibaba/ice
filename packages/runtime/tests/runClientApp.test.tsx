@@ -101,7 +101,7 @@ describe('run client app', () => {
   it('run with static runtime', async () => {
     await runClientApp({
       app: {
-        getAppData: async () => {
+        dataLoader: async () => {
           return { msg: staticMsg };
         },
       },
@@ -258,7 +258,7 @@ describe('run client app', () => {
     let executed = false;
     await runClientApp({
       app: {
-        getAppData: async () => {
+        dataLoader: async () => {
           executed = true;
           return { msg: '-getAppData' };
         },
@@ -287,7 +287,7 @@ describe('run client app', () => {
 
     await runClientApp({
       app: {
-        getAppData: async () => {
+        dataLoader: async () => {
           executed = true;
           return { msg: 'app' };
         },

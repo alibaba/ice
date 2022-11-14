@@ -140,12 +140,14 @@ function Home() {
 
 ### useAppData
 
-useAppData 返回应用全局数据，需要搭配 `src/app.ts` 中导出的 getAppData 使用：
+useAppData 返回应用全局数据，需要搭配 `src/app.ts` 中导出的 `dataLoader` 使用：
 
 ```ts title="src/app.ts"
-export async function getAppData() {
+import { defineDataLoader } from 'ice';
+
+export const dataLoader = defineDataLoader(() => {
   return await fetch('/api/user');
-}
+})
 ```
 
 在任意组件内进行消费：

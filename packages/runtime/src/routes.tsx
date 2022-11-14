@@ -3,7 +3,7 @@ import { RouteComponent } from './types.js';
 import type { RouteItem, RouteModules, RouteWrapperConfig, RouteMatch, RequestContext, RoutesConfig, RoutesData, RenderMode } from './types.js';
 import RouteWrapper from './RouteWrapper.js';
 import { useAppContext } from './AppContext.js';
-import { loadDataByCustomFetcher } from './dataLoaderFetcher.js';
+import { callDataLoader } from './dataLoader.js';
 
 type RouteModule = Pick<RouteItem, 'id' | 'load'>;
 
@@ -79,16 +79,8 @@ export async function loadRoutesData(
         loader = dataLoader;
       }
 
-      if (Array.isArray(loader)) {
-        routesData[id] = await Promise.all(loader.map(load => {
-          if (typeof load === 'object') {
-            return loadDataByCustomFetcher(load);
-          }
-
-          return load(requestContext);
-        }));
-      } else if (loader) {
-        routesData[id] = await loader(requestContext);
+      if (loader) {
+        routesData[id] = await callDataLoader(loader, requestContext);
       }
     }),
   );

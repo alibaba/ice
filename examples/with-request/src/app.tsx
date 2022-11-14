@@ -1,13 +1,13 @@
-import { request as requestAPI } from 'ice';
+import { request as requestAPI, defineDataLoader } from 'ice';
 import { defineRequestConfig } from '@ice/plugin-request/esm/types';
 
-export async function getAppData() {
+export const dataLader = defineDataLoader(async () => {
   try {
     return await requestAPI('/user');
   } catch (err) {
     console.log('request error', err);
   }
-}
+});
 
 export default {
   app: {

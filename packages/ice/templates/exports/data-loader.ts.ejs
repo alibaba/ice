@@ -17,7 +17,7 @@ import * as app from '@/app';
 const loaders = {};
 <% } -%>
 
-<% if(hasExportAppData) {-%>loaders['__app'] = app.getAppData;<% } -%>
+<% if(hasExportAppData) {-%>loaders['__app'] = app.dataLoader;<% } -%>
 
 <% if(!dataLoaderImport.imports) {-%>
 let fetcher = (options) => {
