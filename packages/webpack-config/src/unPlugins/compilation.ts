@@ -112,8 +112,8 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
         } else if (isAppEntry(id)) {
           let keepList;
 
-          if (keepExports.indexOf('getConfig') > -1) {
-            // when build for getConfig, should keep default, it equals to getAppConfig
+          if (keepExports.indexOf('pageConfig') > -1) {
+            // when build for pageConfig, should keep default, it equals to getAppConfig
             keepList = keepExports.concat(['default']);
           } else {
             keepList = keepExports;

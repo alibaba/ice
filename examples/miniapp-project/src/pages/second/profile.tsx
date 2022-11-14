@@ -8,7 +8,7 @@ export default function Profile() {
   );
 }
 
-export function getConfig() {
+export function pageConfig() {
   return {
     title: 'Second profile',
   };

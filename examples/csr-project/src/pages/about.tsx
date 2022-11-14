@@ -1,5 +1,4 @@
-import { Link, useData, useConfig } from 'ice';
-// @ts-expect-error
+import { Link, useData, useConfig, definePageConfig } from 'ice';
 import url from './ice.png';
 
 interface Data {
@@ -22,7 +21,7 @@ export default function About() {
   );
 }
 
-export function getConfig() {
+export const pageConfig = definePageConfig(() => {
   return {
     title: 'About',
     meta: [
@@ -40,7 +39,7 @@ export function getConfig() {
     }],
     auth: ['admin'],
   };
-}
+});
 
 export function getData() {
   return new Promise((resolve) => {

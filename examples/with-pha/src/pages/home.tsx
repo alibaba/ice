@@ -1,4 +1,4 @@
-import { defineGetConfig } from 'ice';
+import { definePageConfig } from 'ice';
 
 export default function Home() {
   return (
@@ -8,7 +8,7 @@ export default function Home() {
   );
 }
 
-export const getConfig = defineGetConfig(() => {
+export const pageConfig = definePageConfig(() => {
   return {
     queryParamsPassKeys: [
       'questionId',

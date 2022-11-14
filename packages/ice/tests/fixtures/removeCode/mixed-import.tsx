@@ -6,6 +6,6 @@ export default function Bar() {
   return <React.Fragment>{str}</React.Fragment>;
 }
 
-export function getConfig() {
+export function pageConfig() {
   return { a: 1 };
 }

@@ -23,7 +23,7 @@ export default function About() {
   );
 }
 
-export function getConfig() {
+export function pageConfig() {
   return {
     title: 'Home',
   };

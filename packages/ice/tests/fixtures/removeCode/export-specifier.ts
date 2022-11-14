@@ -1,6 +1,6 @@
-const getConfig = () => {};
+const pageConfig = () => {};
 const getData = () => {};
 export {
-  getConfig,
+  pageConfig,
   getData,
 };

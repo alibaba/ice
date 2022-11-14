@@ -1,2 +1,2 @@
 export const getData = () => {};
-export const getConfig = () => {};
+export const pageConfig = () => {};

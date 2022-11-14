@@ -19,7 +19,7 @@ type App = Partial<{
 export type AppData = any;
 export type RouteData = any;
 
-// route.getConfig return value
+// route.pageConfig return value
 export type RouteConfig<T = {}> = T & {
   // Support for extends config.
   title?: string;
@@ -42,8 +42,8 @@ export type GetDataConfig = (ctx: RequestContext) => (Promise<RouteData> | Route
 export type GetData = (ctx: RequestContext) => (Promise<RouteData> | RouteData);
 export type GetServerData = (ctx: RequestContext) => (Promise<RouteData> | RouteData);
 export type GetStaticData = (ctx: RequestContext) => (Promise<RouteData> | RouteData);
-// route.getConfig
-export type GetConfig = (args: { data?: RouteData }) => RouteConfig;
+// route.pageConfig
+export type PageConfig = (args: { data?: RouteData }) => RouteConfig;
 
 export interface AppConfig {
   app?: App;
@@ -106,7 +106,7 @@ export interface RouteComponent {
   getStaticData?: GetStaticData;
   getServerData?: GetServerData;
   getData?: GetData;
-  getConfig?: GetConfig;
+  pageConfig?: PageConfig;
   [key: string]: any;
 }
 

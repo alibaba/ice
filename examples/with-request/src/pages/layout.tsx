@@ -9,7 +9,7 @@ export default () => {
   );
 };
 
-export function getConfig() {
+export function pageConfig() {
   return {
     title: 'Layout',
     meta: [

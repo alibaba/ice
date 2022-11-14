@@ -1,4 +1,4 @@
-import { Link, useAuth, defineGetConfig } from 'ice';
+import { Link, useAuth, definePageConfig } from 'ice';
 import CustomAuth from '@/components/CustomAuth';
 
 export default function Index() {
@@ -16,7 +16,7 @@ export default function Index() {
   );
 }
 
-export const getConfig = defineGetConfig(() => {
+export const pageConfig = definePageConfig(() => {
   return {
     title: 'Index',
     auth: ['admin'],

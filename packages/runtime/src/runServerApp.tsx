@@ -7,7 +7,7 @@ import type {
   AppContext, RouteItem, ServerContext,
   AppExport, AssetsManifest,
   RouteMatch,
-  GetConfig,
+  PageConfig,
   RenderMode,
   DocumentComponent,
   RuntimeModules,
@@ -42,7 +42,7 @@ interface RenderOptions {
   routePath?: string;
   disableFallback?: boolean;
   routesConfig: {
-    [key: string]: GetConfig;
+    [key: string]: PageConfig;
   };
   runtimeOptions?: Record<string, any>;
 }
@@ -319,9 +319,9 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
   const matchedRoutesConfig = {};
   matches.forEach(async (match) => {
     const { id } = match.route;
-    const getConfig = routesConfig[id];
+    const pageConfig = routesConfig[id];
 
-    matchedRoutesConfig[id] = getConfig ? getConfig({}) : {};
+    matchedRoutesConfig[id] = pageConfig ? pageConfig({}) : {};
   });
 
   const appContext: AppContext = {

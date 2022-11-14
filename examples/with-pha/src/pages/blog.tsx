@@ -14,7 +14,7 @@ export default function Blog() {
   );
 }
 
-export function getConfig() {
+export function pageConfig() {
   return {
     title: 'Blog',
   };

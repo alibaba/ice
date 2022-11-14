@@ -1,4 +1,4 @@
-import { Link, useData, useConfig } from 'ice';
+import { Link, useData, useConfig, definePageConfig } from 'ice';
 
 interface Data {
   name: string;
@@ -18,9 +18,9 @@ export default function Blog() {
   );
 }
 
-export function getConfig() {
+export const pageConfig = definePageConfig(() => {
   return {
     title: 'Blog',
     auth: ['guest'],
   };
-}
+});

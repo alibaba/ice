@@ -1,4 +1,4 @@
-import { Link, useData, useConfig, defineGetConfig } from 'ice';
+import { Link, useData, useConfig, definePageConfig } from 'ice';
 
 export default function Blog() {
   const data = useData();
@@ -14,7 +14,7 @@ export default function Blog() {
   );
 }
 
-export const getConfig = defineGetConfig(() => {
+export const pageConfig = definePageConfig(() => {
   return {
     title: 'Blog',
   };

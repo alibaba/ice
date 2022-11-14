@@ -58,13 +58,13 @@ const removeTopLevelCode = (keepExports: string[] = []) => {
     ExportNamedDeclaration: {
       enter(nodePath: NodePath<t.ExportNamedDeclaration>) {
         const { node } = nodePath;
-        // Exp: export function getConfig() {}
+        // Exp: export function pageConfig() {}
         const isFunctionExport = t.isFunctionDeclaration(node.declaration) &&
           keepExportCode(node.declaration.id, keepExports);
-        // Exp: export const getConfig = () => {}
+        // Exp: export const pageConfig = () => {}
         const isVariableExport = t.isVariableDeclaration(node.declaration) &&
           keepExportCode(node.declaration.declarations![0]?.id as t.Identifier, keepExports);
-        // Exp: export { getConfig };
+        // Exp: export { pageConfig };
         if (node.specifiers && node.specifiers.length > 0) {
           nodePath.traverse({
             ExportSpecifier(nodePath: NodePath<t.ExportSpecifier>) {
@@ -110,7 +110,7 @@ const removeTopLevelCode = (keepExports: string[] = []) => {
     'IfStatement|TryStatement|WhileStatement|DoWhileStatement': {
       // Remove statement even if it's may cause variable changed.
       enter(nodePath: NodePath<t.IfStatement | t.TryStatement | t.WhileStatement>) {
-        // TODO: check expression statement if it is changed top level variable referenced by getConfig
+        // TODO: check expression statement if it is changed top level variable referenced by pageConfig
         nodePath.remove();
       },
     },

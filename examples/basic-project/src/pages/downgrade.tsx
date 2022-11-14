@@ -1,3 +1,5 @@
+import { definePageConfig } from 'ice';
+
 export default function Downgrade() {
   const isNode = typeof process !== 'undefined' && !!(process.versions && process.versions.node);
 
@@ -12,8 +14,8 @@ export default function Downgrade() {
   );
 }
 
-export function getConfig() {
+export const pageConfig = definePageConfig(() => {
   return {
     title: 'hello',
   };
-}
+});

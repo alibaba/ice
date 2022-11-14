@@ -1,4 +1,4 @@
-import { defineGetConfig, Link } from 'ice';
+import { definePageConfig, Link } from 'ice';
 
 export default function Blog() {
   return (
@@ -9,7 +9,7 @@ export default function Blog() {
   );
 }
 
-export const getConfig = defineGetConfig(() => {
+export const pageConfig = definePageConfig(() => {
   return {
     title: 'Blog',
     auth: ['guest'],

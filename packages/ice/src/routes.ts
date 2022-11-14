@@ -39,7 +39,7 @@ const loaders = {
   ${imports.map(([routeId, importKey]) => `'${routeId}': ${importKey},`).join('\n  ')}
 };` : '';
     }),
-    routesConfig: generateRouteConfig(routes, 'getConfig', (str, imports) => {
+    routesConfig: generateRouteConfig(routes, 'pageConfig', (str, imports) => {
       return `${str}
 export default {
   ${imports.map(([routeId, importKey]) => `'${routeId}': ${importKey},`).join('\n  ')}

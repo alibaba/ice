@@ -12,7 +12,7 @@ export default function Home() {
   );
 }
 
-export function getConfig() {
+export function pageConfig() {
   return {
     title: 'Home',
   };

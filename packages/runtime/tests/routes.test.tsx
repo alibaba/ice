@@ -26,14 +26,14 @@ describe('routes', () => {
   Object.defineProperty(window, 'open', open);
   const homeItem = {
     default: () => <></>,
-    getConfig: () => ({ title: 'home' }),
+    pageConfig: () => ({ title: 'home' }),
     getData: async () => ({ type: 'getData' }),
     getServerData: async () => ({ type: 'getServerData' }),
     getStaticData: async () => ({ type: 'getStaticData' }),
   };
   const aboutItem = {
     default: () => <></>,
-    getConfig: () => ({ title: 'about' }),
+    pageConfig: () => ({ title: 'about' }),
   };
   const routeModules = [
     {

@@ -25,7 +25,7 @@ export default class ReCompilePlugin {
     compiler.hooks.emit.tap(pluginName, () => {
       if (this.needRecompile) {
         // Call re compile at lifecycle of emit.
-        this.reCompile('getConfig');
+        this.reCompile('pageConfig');
       }
     });
   }

@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react';
-import { Link, useData, useAppData, useConfig } from 'ice';
+import { Link, useData, useAppData, useConfig, definePageConfig } from 'ice';
 // not recommended but works
 import { useAppContext } from '@ice/runtime';
 import { useRequest } from 'ahooks';
@@ -48,7 +48,8 @@ export default function Home(props) {
   );
 }
 
-export function getConfig() {
+
+export const pageConfig = definePageConfig(() => {
   return {
     title: 'Home',
     meta: [
@@ -62,7 +63,7 @@ export function getConfig() {
       },
     ],
   };
-}
+});
 
 export function getData({ pathname, query }) {
   return new Promise((resolve) => {

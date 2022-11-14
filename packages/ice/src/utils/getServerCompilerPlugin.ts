@@ -34,7 +34,7 @@ function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Option
       {
         preBundle: format === 'esm' && (ssr || ssg),
         swc: {
-          keepExports: (!ssg && !ssr) ? ['getConfig'] : null,
+          keepExports: (!ssg && !ssr) ? ['pageConfig'] : null,
           keepPlatform: 'node',
           getRoutePaths: () => {
             return getRoutePathsFromCache(dataCache);

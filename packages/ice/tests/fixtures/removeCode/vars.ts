@@ -9,7 +9,7 @@ const [x, ...m] = c;
 const zz = 'x';
 const { k, l, ...s } = d;
 
-export function getConfig() {
+export function pageConfig() {
   return {
     x,
     k,

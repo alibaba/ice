@@ -102,10 +102,10 @@ export function getRoutesConfig(
     const routeModule = routeModules[id];
 
     if (typeof routeModule === 'object') {
-      const { getConfig } = routeModule;
+      const { pageConfig } = routeModule;
       const data = routesData[id];
-      if (getConfig) {
-        const value = getConfig({ data });
+      if (pageConfig) {
+        const value = pageConfig({ data });
         routesConfig[id] = value;
       }
     } else {

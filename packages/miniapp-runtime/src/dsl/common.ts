@@ -86,8 +86,8 @@ export function createPageConfig(
   component: any,
   pageName: string,
   data: Record<string, unknown>,
-  { getData, getConfig },
-  pageConfig?: MiniappPageConfig) {
+  { getData, pageConfig },
+  miniappPageConfig?: MiniappPageConfig) {
   // 小程序 Page 构造器是一个傲娇小公主，不能把复杂的对象挂载到参数上
   const id = pageName ?? `ice_page_${pageId()}`;
   const [
@@ -125,7 +125,7 @@ export function createPageConfig(
       perf.start(PAGE_INIT);
 
       Current.page = this as any;
-      this.config = pageConfig || {};
+      this.config = miniappPageConfig || {};
 
       // this.$icePath 是页面唯一标识
       const uniqueOptions = Object.assign({}, options);
@@ -136,7 +136,7 @@ export function createPageConfig(
       }
 
       setCurrentRouter(this);
-      const routeConfig = getConfig?.();
+      const routeConfig = pageConfig?.();
       if (!getData) {
         getData = () => new Promise<void>(resolve => resolve());
       }

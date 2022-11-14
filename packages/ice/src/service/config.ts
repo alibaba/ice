@@ -62,7 +62,7 @@ class Config {
   };
 
   public reCompile = (taskKey: string) => {
-    // Re-compile only triggered when `getConfig` has been called.
+    // Re-compile only triggered when `pageConfig` has been called.
     if (this.compileTasks[taskKey]) {
       this.compileTasks[taskKey] = this.compiler(this.lastOptions);
     }
@@ -200,13 +200,13 @@ export const getRouteExportConfig = (rootDir: string) => {
     if (!fs.existsSync(routeConfigFile)) {
       return undefined;
     }
-    const routeConfig = (await config.getConfig(['getConfig']) || {}).default;
+    const routeConfig = (await config.getConfig(['pageConfig']) || {}).default;
     return specifyRoutId ? routeConfig[specifyRoutId] : routeConfig;
   };
 
   // ensure routes config is up to date.
   const ensureRoutesConfig = async () => {
-    await config.getConfigFile(['getConfig']);
+    await config.getConfigFile(['pageConfig']);
   };
 
   routeExportConfig = {

@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react';
-import { Link, useData, useConfig } from 'ice';
+import { Link, useData, useConfig, definePageConfig } from 'ice';
 // not recommended but works
 import { useAppContext } from '@ice/runtime';
 import { Button } from 'antd-mobile';
@@ -30,7 +30,7 @@ export default function Home(props) {
   );
 }
 
-export function getConfig() {
+export const pageConfig = definePageConfig(() => {
   return {
     title: 'Home',
     meta: [
@@ -45,7 +45,7 @@ export function getConfig() {
     ],
     auth: ['admin'],
   };
-}
+});
 
 export function getData() {
   return new Promise((resolve) => {

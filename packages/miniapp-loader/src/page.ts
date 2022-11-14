@@ -19,11 +19,11 @@ export default function (this: webpack.LoaderContext<any>) {
   const thisLoaderIndex = loaders.findIndex(item => normalizePath(item.path).indexOf('miniapp-loader/lib/page') >= 0);
   const componentPath = this.request.split('!').slice(thisLoaderIndex + 1).join('!');
 
-  let instantiatePage = `var inst = Page(createPageConfig(component, '${options.name}', {root:{cn:[]}}, { getData, getConfig }, config || {}))`;
-  // TODO: 加参数决定是否要传入 getData 及 getConfig
+  let instantiatePage = `var inst = Page(createPageConfig(component, '${options.name}', {root:{cn:[]}}, { getData, pageConfig }, config || {}))`;
+  // TODO: 加参数决定是否要传入 getData 及 pageConfig
   return `import { createPageConfig } from '@ice/miniapp-runtime';
 import component from ${stringify(componentPath)};
-import { getData, getConfig } from ${stringify(componentPath)};
+import { getData, pageConfig } from ${stringify(componentPath)};
 var config = ${configString};
 ${config.enableShareTimeline ? 'component.enableShareTimeline = true' : ''}
 ${config.enableShareAppMessage ? 'component.enableShareAppMessage = true' : ''}

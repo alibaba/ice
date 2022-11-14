@@ -1,5 +1,5 @@
-import { Link, useData, useConfig, history } from 'ice';
-import type { RouteConfig } from 'ice';
+import { Link, useData, useConfig, history, definePageConfig } from 'ice';
+import type { PageConfig } from 'ice';
 import { isWeb } from '@uni/env';
 import url from './ice.png';
 
@@ -9,7 +9,7 @@ interface Data {
 
 export default function About() {
   const data = useData<Data>();
-  const config = useConfig<RouteConfig>();
+  const config = useConfig<PageConfig>();
 
   console.log('render About', 'data', data, 'config', config);
   console.log('history in component', history);
@@ -25,7 +25,7 @@ export default function About() {
   );
 }
 
-export function getConfig(): RouteConfig {
+export const pageConfig = definePageConfig(() => {
   return {
     title: 'About',
     meta: [
@@ -42,7 +42,7 @@ export function getConfig(): RouteConfig {
       src: 'https://cdn.jsdelivr.net/npm/lodash@2.4.1/dist/lodash.min.js',
     }],
   };
-}
+});
 
 export function getData() {
   return new Promise((resolve) => {
