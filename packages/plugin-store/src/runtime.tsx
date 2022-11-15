@@ -3,10 +3,12 @@ import type { RuntimePlugin, AppProvider, RouteWrapper } from '@ice/runtime/esm/
 import { PAGE_STORE_INITIAL_STATES, PAGE_STORE_PROVIDER } from './constants.js';
 import type { StoreConfig } from './types.js';
 
+const EXPORT_CONFIG_NAME = 'storeConfig';
+
 const runtime: RuntimePlugin = async ({ appContext, addWrapper, addProvider, useAppContext }, runtimeOptions) => {
   const { appExport, appData } = appContext;
-  const storeConfig: StoreConfig = (typeof appExport.store === 'function'
-    ? (await appExport.store(appData)) : appExport.store) || {};
+  const exported = appExport[EXPORT_CONFIG_NAME];
+  const storeConfig: StoreConfig = (typeof exported === 'function' ? await exported(appData) : exported) || {};
   const { initialStates } = storeConfig;
 
   // Add app store <Provider />.

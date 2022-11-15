@@ -1,7 +1,7 @@
 import { defineAppConfig, defineDataLoader } from 'ice';
 import { defineStoreConfig } from '@ice/plugin-store/esm/types';
 
-export const store = defineStoreConfig(async (appData) => {
+export const storeConfig = defineStoreConfig(async (appData) => {
   return {
     initialStates: {
       ...appData,
