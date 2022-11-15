@@ -24,7 +24,7 @@ function getDevPath(url: string): string {
 const plugin: Plugin<PluginOptions> = (options) => ({
   name: '@ice/plugin-pha',
   setup: ({ onGetConfig, onHook, context, serverCompileTask, generator }) => {
-    const { template } = options || {};
+    const { template = true } = options || {};
     const { command, rootDir } = context;
 
     // Get variable blows from task config.
