@@ -57,6 +57,10 @@ export default defineConfig(() => ({
 
 ### crossOriginLoading
 
+:::caution
+小程序端不支持该配置。
+:::
+
 - 类型：`false | 'anonymous' | 'use-credentials'`
 - 默认值：`false`
 
@@ -99,7 +103,7 @@ console.log(process.env.TEST);
 
 对于运行时变量，ice.js 更加推荐通过[环境变量](./env.md)的方式注入。
 
-#### dataLoader
+### dataLoader
 
 - 类型 `boolean`
 - 默认值 `true`
@@ -107,6 +111,10 @@ console.log(process.env.TEST);
 是否启用内置的数据预加载能力。
 
 ### publicPath
+
+:::caution
+小程序端不支持该配置。
+:::
 
 - 类型：`string`
 - 默认值：`/`
@@ -122,6 +130,10 @@ console.log(process.env.TEST);
 
 ### hash
 
+:::caution
+小程序端不支持该配置。
+:::
+
 - 类型：`boolean | string`
 - 默认值：`false`
 
@@ -136,6 +148,10 @@ export default defineConfig(() => ({
 ```
 
 ### externals
+
+:::caution
+小程序端不支持该配置。
+:::
 
 - 类型：`Record<string, string>`
 - 默认值：`{}`
@@ -180,6 +196,10 @@ export default Document;
 构建产物输出目录，默认为 `build` 目录
 
 ### proxy
+
+:::caution
+小程序端不支持该配置。
+:::
 
 - 类型：`object`
 - 默认值：`{}`
@@ -340,6 +360,10 @@ export default defineConfig(() => ({
 
 ### ssr
 
+:::caution
+小程序端不支持该配置。
+:::
+
 - 类型：`boolean`
 - 默认值：`false`
 
@@ -347,12 +371,20 @@ export default defineConfig(() => ({
 
 ### ssg
 
+:::caution
+小程序端不支持该配置。
+:::
+
 - 类型：`boolean`
 - 默认值：`true`
 
 是否开启 SSG 能力，更多 SSG 相关内容参考 [SSG 文档](./ssg)。
 
 ### server
+
+:::caution
+小程序端不支持该配置。
+:::
 
 - 类型：`{ format: 'esm' | 'cjs'; bundle: boolean; ignores: IgnorePattern[] }`
 - 默认值：`{ format: 'esm', bundle: false, ignores: [] }`
@@ -392,6 +424,10 @@ export default defineConfig(() => ({
 
 ### routes
 
+:::caution
+小程序端不支持该配置。
+:::
+
 - 类型：`{ignoreFiles: string[]; defineRoutes: (route) => void}`
 - 默认值：`{}`
 
@@ -424,6 +460,10 @@ export default defineConfig(() => ({
 
 ### splitChunks
 
+:::caution
+小程序端不支持该配置。
+:::
+
 - 类型：`boolean`
 - 默认值：`true`
 
@@ -455,6 +495,10 @@ ice.js 内置了大量 ES 语法支持，便于开发者进行编码。对于 [p
 - `object`: 仅 Webpack 模式支持，表现等同于 true，支持配置 [eslint-webpack-plugin](https://github.com/webpack-contrib/eslint-webpack-plugin) 的更多参数
 
 ### mock
+
+:::caution
+小程序端不支持该配置。
+:::
 
 - 类型：`{ exclude: string[] }`
 - 默认值：`{}`

@@ -2,6 +2,10 @@
 title: Keep Alive
 ---
 
+:::caution
+小程序端不支持该能力。
+:::
+
 <details open>
   <summary>示例</summary>
   <ul>

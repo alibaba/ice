@@ -1,6 +1,9 @@
 ---
 title: 权限管理
 ---
+:::caution
+小程序端不支持该能力。
+:::
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';

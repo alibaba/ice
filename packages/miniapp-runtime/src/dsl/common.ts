@@ -4,7 +4,7 @@ import type * as React from 'react';
 import type { MiniappPageConfig } from '../types.js';
 
 import { raf } from '../bom/raf.js';
-import { BEHAVIORS, CUSTOM_WRAPPER, EXTERNAL_CLASSES, ON_HIDE, ON_LOAD, ON_READY, ON_SHOW, OPTIONS, PAGE_INIT, VIEW } from '../constants/index.js';
+import { BEHAVIORS, CUSTOM_WRAPPER, EXTERNAL_CLASSES, ON_HIDE, ON_LOAD, ON_READY, ON_SHOW, OPTIONS, PAGE_INIT, VIEW, APP_READY } from '../constants/index.js';
 import { Current } from '../current.js';
 import { eventHandler } from '../dom/event.js';
 import type { RootElement } from '../dom/root.js';
@@ -86,7 +86,7 @@ export function createPageConfig(
   component: any,
   pageName: string,
   data: Record<string, unknown>,
-  { getData, pageConfig },
+  { dataLoader, pageConfig },
   miniappPageConfig?: MiniappPageConfig) {
   // 小程序 Page 构造器是一个傲娇小公主，不能把复杂的对象挂载到参数上
   const id = pageName ?? `ice_page_${pageId()}`;
@@ -137,11 +137,12 @@ export function createPageConfig(
 
       setCurrentRouter(this);
       const routeConfig = pageConfig?.();
-      if (!getData) {
-        getData = () => new Promise<void>(resolve => resolve());
+      if (!dataLoader) {
+        // createRoot(render) is asynchronous
+        dataLoader = () => new Promise<void>(resolve => setTimeout(resolve, 0));
       }
       const mount = () => {
-        getData(this.$iceParams!).then(routeData => {
+        dataLoader({ pathname: id, query: this.$iceParams }).then(routeData => {
           Current.app!.mount!(component, { id: $icePath, routeData, routeConfig }, () => {
             pageElement = env.document.getElementById<RootElement>($icePath);
 
@@ -153,11 +154,15 @@ export function createPageConfig(
           });
         });
       };
-
       if (unmounting) {
         prepareMountList.push(mount);
-      } else {
+      } else if (Current.app) {
         mount();
+      } else {
+        // Only when getAppData is ready, the page can be mounted
+        eventCenter.on(APP_READY, () => {
+          mount();
+        });
       }
     },
     [ONUNLOAD]() {

@@ -17,11 +17,20 @@ module.exports = {
       collapsed: false,
       items: getDocsFromDir('guide/basic'),
     },
+
     {
       type: 'category',
       label: '进阶',
       collapsed: false,
-      items: getDocsFromDir('guide/advanced'),
+      items: [
+        {
+          type: 'category',
+          label: '小程序',
+          collapsed: true,
+          items: getDocsFromDir('guide/miniapp'),
+        },
+        ...getDocsFromDir('guide/advanced'),
+      ],
     },
     {
       type: 'category',

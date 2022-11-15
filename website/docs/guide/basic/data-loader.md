@@ -65,6 +65,10 @@ export const dataLoader = defineDataLoader(async () => {
 
 <img src="https://iceworks.oss-cn-hangzhou.aliyuncs.com/site-assets/dataloader-compare.gif" width="750px" />
 
+:::info
+受小程序环境限制，通过 `dataLoader` 定义的应用级数据加载将在 `App` 的 `onLaunch` 生命周期中进行，页面级数据加载则会在 `Page` 的 `onLoad` 生命周期中，二者均会阻塞页面的 UI 渲染。如果这不是你想要的效果，请按照常规方式进行数据请求。（比如在组件首次 `useEffect` 时发起数据请求）
+:::
+
 ## 使用示例
 
 [示例工程](https://github.com/ice-lab/ice-next/tree/master/examples/with-data-loader)

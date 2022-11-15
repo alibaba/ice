@@ -13,6 +13,24 @@ ice.js 采用 `约定式路由`，并针对 `嵌套路由` 做了一系列加载
 
 <img src="https://img.alicdn.com/imgextra/i1/O1CN01ehzrle1ym0kPnJeVH_!!6000000006620-2-tps-800-596.png" width="375px" />
 
+### 小程序端路由规则
+
+对于小程序来说，使用约定式路由会带来无法确定首页的问题（在原生小程序中，`app.json` 中 `pages` 数组的第一项即被指定为首页）。因此 ice.js 开发小程序时，用户需要在 src/app.tsx 中通过导出 `miniappManifest` 进行路由的指定，示例如下：
+
+```
+export const miniappManifest = {
+  routes: [
+    'index',
+    'about',
+    'repo/index',
+    'repo/preview',
+  ],
+};
+```
+
+注意，`routes` 中的每一项应该与文件在 `pages` 目录下的实际路径保持一致，且其第一项将作为小程序的首页被加载。
+
+
 ### 路由组件
 
 路由组件，是每一个页面的入口文件，通过 `export default` 导出其具体实现，例如:
@@ -28,6 +46,10 @@ export default function Home() {
 路由组件支持配置页面级信息和数据加载逻辑，详见[页面](./page.md)。
 
 ### 布局组件
+
+:::caution
+小程序端不支持。
+:::
 
 在 `pages` 目录下，还可以创建一类特殊的组件，来维护全局或一组页面共用的布局, 其文件名约定为 `layout.(js|jsx|tsx)`。
 
@@ -73,6 +95,10 @@ export default function Home() {
   );
 }
 ```
+
+:::info
+在小程序中，Link 组件底层实现即为原生 `navigator` 组件。
+:::
 ## 嵌套路由
 
 通过 `创建文件夹` 和 `布局组件`，可以轻松构建嵌套路由。例如，下面的示例中，`/repo/preview` 页面，由这三个组件嵌套而成：
@@ -94,6 +120,9 @@ ice.js 针对 `嵌套路由` 的场景，应用了以下优化，来让页面达
 
 ## 动态路由
 
+:::caution
+小程序端不支持。
+:::
 在某些场景下可能需要动态指定路由，例如 `/user/:id`，可以以 `$` 开头创建文件名或目录名, 例如 `src/pages/user/$id.tsx`:
 
 <img src="https://img.alicdn.com/imgextra/i4/O1CN01IzAaaD1SnKBElEVDM_!!6000000002291-2-tps-722-440.png" width="350px" />

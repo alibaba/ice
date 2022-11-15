@@ -55,6 +55,10 @@ export function historyPush (link: string) {
 
 ### useParams
 
+:::caution
+小程序端不支持该 API。
+:::
+
 useParams 函数返回动态路由的匹配参数信息。
 
 ```tsx
@@ -74,6 +78,11 @@ export default function Home() {
 ```
 
 ### useSearchParams
+
+:::caution
+小程序端会返回当前页面 `Page.onLoad` 生命周期返回的 query 参数。
+同时小程序端不支持修改 query string，即调用该 API 返回的 `setSearchParams` 不会生效。
+:::
 
 useSearchParams 用于读取和修改当前 URL 的 query string。
 
@@ -99,6 +108,10 @@ export default function Home() {
 
 ### useNavigate
 
+:::caution
+小程序端不支持该 API。可通过 Link 组件或 history 或小程序原生 API 进行跳转。
+:::
+
 useNavigate 函数返回一个可以控制跳转的函数，用于组件内部控制路径跳转
 
 ```tsx
@@ -119,6 +132,10 @@ export default function Home() {
 ```
 
 ### useLocation
+
+:::caution
+小程序端不支持该 API。
+:::
 
 useLocation 返回当前 location 信息。
 
@@ -199,6 +216,10 @@ export const pageConfig = definePageConfig(() => ({
 
 ### useMounted
 
+:::caution
+小程序端不支持该 API。
+:::
+
 该方法会在 React Hydrate 完成后返回 `true`，一般在开启 SSR/SSG 的应用中，用于控制在不同端中渲染不同的组件。
 
 :::caution
@@ -220,6 +241,10 @@ const Home = () => {
 ```
 
 ### `<ClientOnly />`
+
+:::caution
+小程序端不支持该组件。
+:::
 
 `<ClientOnly />` 组件只允许在 React Hydrate 完成后在 Client 端中渲染组件。
 
@@ -264,9 +289,17 @@ export function Home () {
 
 ### `<KeepAliveOutlet />`
 
+:::caution
+小程序端不支持该组件。
+:::
+
 缓存所有路由组件的状态。详细使用方式参考 [Keep Alive 文档](../advanced/keep-alive/#缓存路由组件)。
 
 ### `<Link />`
+
+:::info
+在小程序端 Link 组件底层为原生 `navigator` 组件。
+:::
 
 `<Link>` 是 React 组件，用于渲染带路由跳转功能的 `<a>` 元素。
 
@@ -286,6 +319,10 @@ function Home() {
 ```
 
 ### `<Outlet />`
+
+:::caution
+小程序端不支持该组件。
+:::
 
 `<Outlet>` 用于渲染父路由中渲染子路由，通常出现在 `layout.tsx` Layout 组件中。
 
@@ -331,5 +368,8 @@ import type { RouteConfig } from 'ice';
 
 ### Document 组件
 
-`Meta`、`Title`、`Links`、`Scripts` 和 `Main` 组件仅支持在 `src/document.tsx` 中使用，使用场景参考 Document 文档](./document)
+:::caution
+小程序端不支持该组件。
+:::
+`Meta`、`Title`、`Links`、`Scripts` 和 `Main` 组件仅支持在 `src/document.tsx` 中使用，使用场景参考 [Document 文档](./document)
 

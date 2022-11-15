@@ -11,7 +11,8 @@ interface PageConfig {
 const { getOptions, stringifyRequest } = loaderUtils;
 export default function (this: webpack.LoaderContext<any>) {
   const options = getOptions(this);
-  const { config: loaderConfig } = options;
+  const { config: loaderConfig, loaderMeta = {} } = options;
+  const { hasExportData, hasExportConfig } = loaderMeta;
   const config = getPageConfig(loaderConfig, this.resourcePath);
   const configString = JSON.stringify(config);
   const stringify = (s: string): string => stringifyRequest(this, s);
@@ -19,11 +20,16 @@ export default function (this: webpack.LoaderContext<any>) {
   const thisLoaderIndex = loaders.findIndex(item => normalizePath(item.path).indexOf('miniapp-loader/lib/page') >= 0);
   const componentPath = this.request.split('!').slice(thisLoaderIndex + 1).join('!');
 
-  let instantiatePage = `var inst = Page(createPageConfig(component, '${options.name}', {root:{cn:[]}}, { getData, pageConfig }, config || {}))`;
-  // TODO: 加参数决定是否要传入 getData 及 pageConfig
+  const getDataAndConfigString = `${hasExportConfig ? 'pageConfig, ' : ''}${hasExportData ? 'dataLoader' : ''}`;
+  let instantiatePage = `var inst = Page(createPageConfig(component, '${options.name}', {root:{cn:[]}}, { ${getDataAndConfigString} }, config || {}))`;
+
+  const importDataAndConfigString = hasExportConfig || hasExportData
+? `import { ${getDataAndConfigString} } from ${stringify(componentPath)};`
+: '';
+
   return `import { createPageConfig } from '@ice/miniapp-runtime';
 import component from ${stringify(componentPath)};
-import { getData, pageConfig } from ${stringify(componentPath)};
+${importDataAndConfigString}
 var config = ${configString};
 ${config.enableShareTimeline ? 'component.enableShareTimeline = true' : ''}
 ${config.enableShareAppMessage ? 'component.enableShareAppMessage = true' : ''}

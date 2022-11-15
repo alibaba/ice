@@ -1,9 +1,8 @@
 import { Document } from '../dom/document.js';
 
 import {
-  APP,
+  ICE_CONTAINER,
   BODY,
-  CONTAINER,
   HEAD,
   HTML,
 } from '../constants/index.js';
@@ -16,9 +15,7 @@ function createDocument(): Document {
      *   <html>
      *     <head></head>
      *     <body>
-     *       <container>
-     *         <app id="app" />
-     *       </container>
+     *       <ice-container id="app" />
      *     </body>
      *   </html>
      * </document>
@@ -28,15 +25,13 @@ function createDocument(): Document {
   const html = documentCreateElement(HTML);
   const head = documentCreateElement(HEAD);
   const body = documentCreateElement(BODY);
-  const app = documentCreateElement(APP);
-  app.id = APP;
-  const container = documentCreateElement(CONTAINER); // 多包一层主要为了兼容 vue
+  const iceContainer = documentCreateElement(ICE_CONTAINER);
+  iceContainer.id = ICE_CONTAINER;
 
   doc.appendChild(html);
   html.appendChild(head);
   html.appendChild(body);
-  body.appendChild(container);
-  container.appendChild(app);
+  body.appendChild(iceContainer);
 
   doc.documentElement = html;
   doc.head = head;

@@ -1,6 +1,9 @@
 ---
 title: 使用 antd 组件
 ---
+:::caution
+小程序端不支持该能力。
+:::
 
 icejs 项目中可以直接使用 antd 组件，关于 antd 组件按需引入的问题说明：
 - 脚本代码按需引入：不推荐使用 babel-plugin-import，社区主流工具 Webpack/Vite 等都已支持 tree-shaking，构建时默认都会做按需的引入

@@ -4,6 +4,18 @@ title: 从 Rax 迁移
 
 本文档面向的是使用 Rax App 的开发者，提供迁移到 ice.js 的方式。React 的社区生态显著优于 Rax，切换到 React 之后可以享受到更多的 React 生态，复用复杂场景（富文本、脑图等）社区生态可以大幅度降低成本。
 
+:::caution
+对于 Rax 小程序的用户，如果你没有使用到以下与原生小程序结合较为紧密的能力，则可以正常参考本文档进行迁移。
+
+- 引入原生 app.js、原生页面、原生自定义组件、小程序插件
+- 引入 Rax 编译时组件
+- 注册页面生命周期及事件
+- 分包加载
+
+如果使用到以上能力，则需要参考 ice.js 文档进行相应能力的迁移。
+
+:::
+
 ## 如何迁移
 
 ice.js 提供了 [rax-compat](https://github.com/ice-lab/ice-next/tree/master/packages/rax-compat) 以支持 [Rax](https://github.com/alibaba/rax) 到 React 运行时的切换。

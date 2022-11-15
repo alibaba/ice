@@ -2,7 +2,9 @@
 title: 服务端渲染 SSR
 order: 11
 ---
-
+:::caution
+小程序端不支持该能力。
+:::
 服务器渲染，简称 SSR (Server Side Rendering)，是一种在服务端运行 Node.js 程序动态生成 HTML 的渲染方式。
 
 SSR 相比传统在浏览器端渲染的模式(CSR)，受设备性能和网络情况的影响更小，可以达到更好的性能体验和 SEO 能力。

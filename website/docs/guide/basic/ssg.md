@@ -2,6 +2,9 @@
 title: 构建时渲染 SSG
 order: 10
 ---
+:::caution
+小程序端不支持该能力。
+:::
 
 构建时渲染，简称 SSG (Static Site Generation)，是指在构建时提前生成内容 HTML 的渲染模式。
 

@@ -3,19 +3,19 @@ import consola from 'consola';
 import chalk from 'chalk';
 import type { Plugin } from '@ice/app/esm/types';
 import getMiniappTask from './miniapp/index.js';
-import { ALL_PLATFORMS, WEB } from './constant.js';
+import { MINIAPP_PLATFORMS } from './constant.js';
 
 interface MiniappOptions {
   // TODO: specify the config type of native.
-  nativeConfig: any;
+  nativeConfig?: Record<string, any>;
 }
 
-const plugin: Plugin<MiniappOptions> = () => ({
+const plugin: Plugin<MiniappOptions> = ({ nativeConfig = {} }) => ({
   name: '@ice/plugin-miniapp',
   setup: ({ registerTask, onHook, context, dataCache, generator }) => {
     const { commandArgs, rootDir, command } = context;
     const { platform } = commandArgs;
-    if (platform !== WEB && ALL_PLATFORMS.includes(platform)) {
+    if (MINIAPP_PLATFORMS.includes(platform)) {
       const configAPI = {
         getAppConfig: async () => ({}),
         getRoutesConfig: async () => ({}),
@@ -32,6 +32,7 @@ const plugin: Plugin<MiniappOptions> = () => ({
           'Link',
           'useSearchParams',
           'history',
+          'defineDataLoader',
         ],
         source: miniappRuntime,
       });
@@ -53,13 +54,15 @@ const plugin: Plugin<MiniappOptions> = () => ({
         configAPI,
         dataCache,
         runtimeDir: '.ice',
-        cacheDir: path.join(rootDir, 'node_modules/.cache'),
+        nativeConfig,
       }));
-      onHook('after.start.compile', async ({ isSuccessful, isFirstCompile }) => {
-        if (isSuccessful && isFirstCompile) {
+      onHook(`after.${command as 'start' | 'build'}.compile`, async ({ isSuccessful, isFirstCompile }) => {
+        const shouldShowLog = isSuccessful && ((command === 'start' && isFirstCompile) || command === 'build');
+        if (shouldShowLog) {
+          const outputDir = context.userConfig?.outputDir || 'build';
           let logoutMessage = '\n';
           logoutMessage += chalk.green(`Use ${platform} developer tools to open the following folder:`);
-          logoutMessage += `\n${chalk.underline.white(rootDir)}`;
+          logoutMessage += `\n${chalk.underline.white(path.join(rootDir, outputDir))}\n`;
           consola.log(`${logoutMessage}\n`);
         }
       });

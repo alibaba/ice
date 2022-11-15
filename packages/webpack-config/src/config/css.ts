@@ -17,12 +17,13 @@ interface Options {
   publicPath: string;
   postcssOptions: Config['postcss'];
   rootDir: string;
+  enableRpx2Vw: boolean;
 }
 
 const require = createRequire(import.meta.url);
 
 function configCSSRule(config: CSSRuleConfig, options: Options) {
-  const { publicPath, rootDir, postcssOptions: userPostcssOptions } = options;
+  const { publicPath, rootDir, enableRpx2Vw, postcssOptions: userPostcssOptions } = options;
   const [style, loader, loaderOptions] = config;
   const cssLoaderOpts = {
     sourceMap: true,
@@ -36,7 +37,7 @@ function configCSSRule(config: CSSRuleConfig, options: Options) {
       },
     },
   };
-  const postcssOpts = getPostcssOpts({ rootDir, userPostcssOptions });
+  const postcssOpts = getPostcssOpts({ rootDir, userPostcssOptions, enableRpx2Vw });
   return {
     test: new RegExp(`\\.${style}$`),
     use: [
@@ -68,7 +69,7 @@ function configCSSRule(config: CSSRuleConfig, options: Options) {
 }
 
 const css: ModifyWebpackConfig<Configuration, typeof webpack> = (config, ctx) => {
-  const { publicPath, hashKey, cssFilename, cssChunkFilename, postcss, rootDir } = ctx;
+  const { publicPath, hashKey, cssFilename, cssChunkFilename, postcss, rootDir, enableRpx2Vw } = ctx;
   const cssOutputFolder = 'css';
   config.module.rules.push(...([
     ['css'],
@@ -79,7 +80,9 @@ const css: ModifyWebpackConfig<Configuration, typeof webpack> = (config, ctx) =>
     ['scss', require.resolve('@ice/bundles/compiled/sass-loader'), {
       implementation: sass,
     }],
-  ] as CSSRuleConfig[]).map((config) => configCSSRule(config, { publicPath, postcssOptions: postcss, rootDir })));
+  ] as CSSRuleConfig[]).map((config) => configCSSRule(config, {
+    publicPath, postcssOptions: postcss, rootDir, enableRpx2Vw },
+  )));
   config.plugins.push(
     new MiniCssExtractPlugin({
       filename: cssFilename || `${cssOutputFolder}/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`,
@@ -95,9 +98,11 @@ const css: ModifyWebpackConfig<Configuration, typeof webpack> = (config, ctx) =>
 function getPostcssOpts({
   rootDir,
   userPostcssOptions,
+  enableRpx2Vw,
 }: {
   rootDir: string;
   userPostcssOptions: Options['postcssOptions'];
+  enableRpx2Vw: boolean;
 }) {
   const postcssConfigPath = path.join(rootDir, 'postcss.config.js');
   const defaultPostcssOpts = {
@@ -107,26 +112,29 @@ function getPostcssOpts({
   if (fs.existsSync(postcssConfigPath)) {
     return defaultPostcssOpts;
   } else {
+    const defaultPostcssPlugins = [
+      ['@ice/bundles/compiled/postcss-nested'],
+      ['@ice/bundles/compiled/postcss-preset-env', {
+        // Without any configuration options, PostCSS Preset Env enables Stage 2 features.
+        stage: 3,
+        autoprefixer: {
+          // Disable legacy flexbox support
+          flexbox: 'no-2009',
+        },
+        features: {
+          'custom-properties': false,
+        },
+      }],
+    ];
+    if (enableRpx2Vw) {
+      defaultPostcssPlugins.push(['@ice/bundles/compiled/postcss-plugin-rpx2vw']);
+    }
     const postcssOpts = mergeWith(
       {
         ...defaultPostcssOpts,
         postcssOptions: {
           config: false,
-          plugins: [
-            ['@ice/bundles/compiled/postcss-nested'],
-            ['@ice/bundles/compiled/postcss-preset-env', {
-              // Without any configuration options, PostCSS Preset Env enables Stage 2 features.
-              stage: 3,
-              autoprefixer: {
-                // Disable legacy flexbox support
-                flexbox: 'no-2009',
-              },
-              features: {
-                'custom-properties': false,
-              },
-            }],
-            ['@ice/bundles/compiled/postcss-plugin-rpx2vw'],
-          ],
+          plugins: defaultPostcssPlugins,
         },
       },
       { postcssOptions: userPostcssOptions },

@@ -57,3 +57,10 @@ nrm use taobao
 - [WebStorm](https://www.jetbrains.com/webstorm/)（推荐）
 - [Sublime Text](https://www.sublimetext.com/)
 - [Atom](https://atom.io/)
+
+## 小程序开发者工具
+
+目前小程序开发调试均需使用对应的开发者工具，在此附上小程序开发者工具下载链接：
+
+- [微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)
+- [阿里小程序开发者工具](https://opendocs.alipay.com/mini/ide/download)

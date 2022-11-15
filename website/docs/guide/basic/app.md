@@ -29,6 +29,10 @@ export default defineAppConfig(() => ({
 
 #### `rootId`
 
+:::caution
+小程序端不支持修改 rootId。
+:::
+
 根节点 id
 
 - 类型：`string`
@@ -49,6 +53,10 @@ export default defineAppConfig(() => ({
 - 默认值：`false`
 
 ### router
+
+:::caution
+小程序端不支持 router 配置。关于小程序的 router 配置参考[小程序开发-路由](../miniapp/router)
+:::
 
 #### `type` 
 

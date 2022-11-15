@@ -14,14 +14,14 @@ const require = createRequire(import.meta.url);
 
 // The same as @ice/webpack-config
 function getEntry(rootDir: string, runtimeDir: string) {
-  // check entry.client.ts
+  // check entry.client.tsx
   let entryFile = fg.sync('entry.client.{tsx,ts,jsx.js}', {
     cwd: path.join(rootDir, 'src'),
     absolute: true,
   })[0];
   if (!entryFile) {
     // use generated file in template directory
-    entryFile = path.join(rootDir, runtimeDir, 'entry.client.ts');
+    entryFile = path.join(rootDir, runtimeDir, 'entry.client.tsx');
   }
   return {
     main: entryFile,
@@ -35,16 +35,18 @@ const getMiniappTask = ({
   configAPI,
   dataCache,
   runtimeDir,
-  cacheDir,
+  nativeConfig,
 }): Config => {
   const entry = getEntry(rootDir, runtimeDir);
   const mode = command === 'start' ? 'development' : 'production';
-  const { template, globalObject, fileType } = getMiniappPlatformConfig(platform);
+  const { template, globalObject, fileType, projectConfigJson } = getMiniappPlatformConfig(platform);
   const { plugins, module } = getMiniappWebpackConfig({
     rootDir,
     template,
     fileType,
     configAPI,
+    projectConfigJson,
+    nativeConfig,
   });
   const defaultLogging = command === 'start' ? 'summary' : 'summary assets';
   return {
@@ -71,7 +73,8 @@ const getMiniappTask = ({
       '@ice/shared': require.resolve('@ice/shared'),
       'react-dom$': require.resolve('@ice/miniapp-react-dom'),
     },
-    cacheDir: path.join(rootDir, cacheDir),
+    // FIXME: enable cache will cause error, disable it temporarily
+    enableCache: false,
     plugins,
     loaders: module.rules,
     optimization: {
@@ -129,6 +132,7 @@ const getMiniappTask = ({
     },
     cssFilename: `[name]${fileType.style}`,
     cssChunkFilename: `[name]${fileType.style}`,
+    enableRpx2Vw: false, // No need to transform rpx to vw in miniapp
     logging: process.env.WEBPACK_LOGGING || defaultLogging,
   };
 };

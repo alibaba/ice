@@ -1,4 +1,3 @@
-import * as path from 'path';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type { MiniappWebpackOptions } from '../../types.js';
 import MiniPlugin from './plugins/MiniPlugin.js';
@@ -52,16 +51,17 @@ export class MiniWebpackPlugin {
   }
 
   getMainPlugin() {
-    const { rootDir, template, fileType, configAPI } = this.config;
-    const sourceDir = path.join(rootDir, 'src');
+    const { rootDir, template, fileType, configAPI, nativeConfig, projectConfigJson } = this.config;
     const options = {
-      sourceDir,
+      rootDir,
       fileType,
       template,
       commonChunks: ['runtime', 'vendors', 'common', 'ice'],
       baseLevel: 16,
       minifyXML: {},
       configAPI,
+      nativeConfig,
+      projectConfigJson,
     };
     return new MiniPlugin(options);
   }

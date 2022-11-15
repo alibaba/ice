@@ -43,7 +43,7 @@ enum JSMinifier {
 }
 
 function getEntry(rootDir: string, runtimeTmpDir: string) {
-  // check entry.client.ts
+  // check entry.client.tsx
   let entryFile = fg.sync('entry.client.{tsx,ts,jsx.js}', {
     cwd: path.join(rootDir, 'src'),
     absolute: true,
@@ -79,6 +79,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
     hash,
     minify,
     minimizerOptions = {},
+    enableCache = true,
     cacheDir,
     https,
     analyzer,
@@ -98,6 +99,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
     performance,
     enableCopyPlugin,
     polyfill,
+    enableRpx2Vw = true,
   } = config;
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
   const dev = mode !== 'production';
@@ -259,12 +261,12 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
       ],
       ...optimization,
     } as Configuration['optimization'],
-    cache: {
+    cache: enableCache ? {
       type: 'filesystem',
       version: `${process.env.__ICE_VERSION__}|${userConfigHash}`,
       buildDependencies: { config: [path.join(rootDir, 'package.json')] },
       cacheDirectory: path.join(cacheDir, 'webpack'),
-    },
+    } : false,
     // custom stat output by stats.toJson() calls in plugin-app
     stats: 'none',
     infrastructureLogging: {
@@ -407,6 +409,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
     rootDir,
     hashKey,
     webpack,
+    enableRpx2Vw,
   };
   const finalWebpackConfig = [configCss, configAssets, ...(configureWebpack || [])]
     .reduce((result, next: ModifyWebpackConfig<Configuration, typeof webpack>) => next(result, ctx), webpackConfig);

@@ -2,24 +2,33 @@ import { defineAppConfig, defineDataLoader } from 'ice';
 
 export const dataLoader = defineDataLoader(() => {
   return new Promise((resolve) => {
-    resolve({
-      success: true,
-      id: 34293,
-    });
+    setTimeout(() => {
+      resolve({
+        success: true,
+        id: 34293,
+      });
+    }, 1000);
   });
 });
 
 export const miniappManifest = {
-  title: 'miniapp test',
+  window: {
+    defaultTitle: 'miniapp test',
+  },
   routes: [
     'index',
     'about',
     'second/profile',
+    'third/index',
+    'third/test',
   ],
 };
 
-export default defineAppConfig(() => ({
-  app: {
-    rootId: 'app',
-  },
-}));
+export default defineAppConfig(() => {
+  return {
+    app: {
+      strict: true,
+      errorBoundary: true,
+    },
+  };
+});

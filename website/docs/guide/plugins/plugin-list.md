@@ -3,6 +3,10 @@ title: 插件列表
 order: 2
 ---
 
+## [@ice/plugin-miniapp](../miniapp/start)
+
+提供小程序的开发能力。
+
 ## [@ice/plugin-auth](../advanced/auth)
 
 提供权限管理方案。

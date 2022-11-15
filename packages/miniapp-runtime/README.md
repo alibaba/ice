@@ -28,6 +28,6 @@ An object that imitates the browser's `document` implementation on the miniapp s
 
 Global variables exposed to developers currently have three properties:
 
-* `Current.app`, returns the current miniapp application instance, and the non-mini program side returns the miniapp specification application instance, which can be used to call the miniapp specification life cycle.
-* `Current.page`, returns the current miniapp page instance, and the non-miniapp side returns the miniapp specification page instance, which can be used to call the miniapp specification life cycle.
-* `Current.router`, returns the current miniapp routing information, and the non-miniapp side returns the miniapp specification routing information
+* `Current.app`, returns the current miniapp application instance, which can be used to call the miniapp specification life cycle.
+* `Current.page`, returns the current miniapp page instance, which can be used to call the miniapp specification life cycle.
+* `Current.router`, returns the current miniapp routing information.

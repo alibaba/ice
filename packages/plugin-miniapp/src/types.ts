@@ -40,6 +40,8 @@ export interface MiniappWebpackOptions {
     getAppConfig: Config['getAppConfig'];
     getRoutesConfig: Config['getRoutesConfig'];
   };
+  projectConfigJson?: string;
+  nativeConfig: Record<string, any>;
 }
 
 export type MiniappWebpackConfig = Pick<webpack.Configuration, 'plugins' | 'module'>;

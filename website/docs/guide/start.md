@@ -48,6 +48,45 @@ $ npm start
 
 ![img](https://img.alicdn.com/imgextra/i4/O1CN01OLXNy91dVsqNSM8x3_!!6000000003742-2-tps-654-792.png)
 
+### 小程序调试
+
+在 `ice.config.mts` 中配置 `@ice/plugin-miniapp` 插件：
+
+```js title=ice.config.mts
+import miniapp from '@ice/plugin-miniapp';
+
+export default defineConfig({
+  plugins: [miniapp()],
+});
+
+```
+
+在 `package.json` 中配置以下 scripts 命令：
+
+```json title=package.json
+  "scripts": {
+    "start": "ice start",
+    "start:wechat": "ice start --platform wechat-miniprogram",
+    "start:ali": "ice start --platform ali-miniapp",
+    "build": "ice build",
+    "build:wechat": "ice build --platform wechat-miniprogram",
+    "build:ali": "ice start --platform ali-miniapp"
+  }
+```
+
+当需要开发调试小程序时，执行对应的命令即可。例如，需要开发调试微信小程序时，执行
+
+```shell
+$ npm run start:wechat
+```
+
+编译完成后，命令行会给出相应提示，提醒开发者使用对应的小程序开发者工具打开编译产物目录进行调试预览：
+
+```shell
+Use wechat-miniprogram developer tools to open the following folder:
+~/Code/ice-next/examples/miniapp-project/build
+```
+
 ## 部署发布
 
 执行以下命令以构建生产环境产物：
@@ -71,3 +110,13 @@ $ npm build
 ```
 
 这时你可以把 `build` 目录部署到服务器上。
+
+### 小程序部署发布
+
+仍以微信小程序为例，参考调试阶段配置的 scripts 命令，执行以下命令以构建微信小程序生产环境产物：
+
+```shell
+$ npm run build:wechat
+```
+
+产物同样默认生成到 `build` 目录下。这时你可以使用对应的小程序开发者工具打开 `build` 目录并将其上传发布。

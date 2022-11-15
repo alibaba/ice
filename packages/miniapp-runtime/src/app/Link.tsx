@@ -1,33 +1,20 @@
 import React from 'react';
-import { Current } from '../current.js';
-
+import { getMiniappRoutes } from './history.js';
 interface LinkProps extends React.ComponentProps<any> {
   to: string;
 }
 
-function matchRoute(url: string, routes: Array<string>): string | undefined {
+function matchRoute(url: string): string | undefined {
   const [url_] = url.split('#');
   const [path, query] = url_.split('?');
-  /*
-  * path => route
-  * 1.  /about => about or about/index
-  * 2.  /about/profile => about/profile or about/profile/index
-  * 3. / => index
-  */
-  const matchedRoute = routes.find(route => {
-    if (path === '/') {
-      // Index is special
-      return route === 'index';
-    } else {
-      return `/${route}` === path || `/${route}` === `${path}/index`;
-    }
-  });
-  return query ? `${matchedRoute}?${query}` : matchedRoute;
+
+  const miniappRoutes = getMiniappRoutes();
+  const matchedRoute = miniappRoutes.find(route => route.path === path);
+  return query ? `${matchedRoute.source}?${query}` : matchedRoute.source;
 }
 
 export default function Link(props: LinkProps) {
-  const { routes } = Current.app.config;
-  const url = matchRoute(props.to, routes);
+  const url = matchRoute(props.to);
   // @ts-ignore
   return <navigator url={url}>{props.children}</navigator>;
 }

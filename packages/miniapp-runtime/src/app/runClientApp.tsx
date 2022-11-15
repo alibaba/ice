@@ -3,6 +3,8 @@ import type {
   AppContext, RunClientAppOptions,
 } from '@ice/runtime';
 import { AppContextProvider, AppDataProvider, getAppData, getAppConfig, Runtime } from '@ice/runtime';
+import { eventCenter } from '../emitter/emitter.js';
+import { APP_READY } from '../constants/index.js';
 import App from './App.js';
 import { createMiniApp } from './connect.js';
 import { setHistory } from './history.js';
@@ -20,6 +22,8 @@ export default async function runClientApp(options: RunClientAppOptions) {
     await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
   }
   const appData = await getAppData(app);
+  // When getAppData ready, page mount function can be invoked
+
   const { miniappManifest } = app;
 
   setHistory(miniappManifest.routes);
@@ -31,19 +35,19 @@ export default async function runClientApp(options: RunClientAppOptions) {
   render(runtime);
   // TODO: transform routes to pages in miniappManifest
   createMiniApp(miniappManifest);
+  eventCenter.trigger(APP_READY);
 }
 
 async function render(
   runtime: Runtime,
 ) {
   const appContext = runtime.getAppContext();
-  const { appConfig, appData } = appContext;
+  const { appData } = appContext;
   const render = runtime.getRender();
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
 
-  // TODO:支持设置 rootId (在 miniapp-runtime 中修改)
   render(
-    document.getElementById(appConfig.app.rootId || 'app'),
+    document.getElementById('ice-container'),
     <AppDataProvider value={appData}>
       <AppRuntimeProvider>
         <BrowserEntry appContext={appContext} />
