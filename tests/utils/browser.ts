@@ -13,7 +13,7 @@ export interface Page extends puppeteer.Page {
   push: (url: string, options?: puppeteer.WaitForOptions & { referer?: string }) => Promise<puppeteer.HTTPResponse>;
 }
 
-interface IBrowserOptions {
+interface BrowserOptions {
   cwd?: string;
   port?: number;
   server?: http.Server;
@@ -81,7 +81,13 @@ export default class Browser {
   async close() {
     if (!this.browser) { return; }
     await this.browser.close();
-    this.server.close();
+    // @ts-ignore
+    if (this.server.stop) {
+      // @ts-ignore
+      this.server.stop();
+    } else {
+      this.server.close();
+    }
   }
 
   async page(baseUrl: string, path = '/', disableJS?: boolean): Promise<Page> {

@@ -279,10 +279,7 @@ export default class Generator {
       fse.writeFileSync(realTargetPath.replace(renderExt, ''), content, 'utf-8');
     } else {
       fse.ensureDirSync(path.dirname(realTargetPath));
-      fse.writeFileSync(realTargetPath, content, 'utf-8');
-    } else {
-      fse.ensureDirSync(path.dirname(targetPath));
-      fse.copyFileSync(templatePath, targetPath);
+      fse.copyFileSync(templatePath, realTargetPath);
     }
   };
 }

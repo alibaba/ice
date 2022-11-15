@@ -115,6 +115,7 @@ async function renderPageDocument(routeId: string, serverEntry: string): Promise
   const { value } = await serverModule.renderToHTML(serverContext, {
     documentOnly: true,
     serverOnlyBasename: '/',
+    renderMode: 'SSG',
   });
   return value;
 }

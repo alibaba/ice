@@ -21,21 +21,30 @@ import shared from './shared';
 const version = '1.2.2-compat';
 
 export {
-  createElement,
+  Component,
+  Fragment,
+  PureComponent,
+
   createContext,
+  createElement,
   createRef,
   forwardRef,
-  useState,
+  memo,
+
+  render,
+
+  // This is mocked object for rax compatible.
+  shared,
+
+  useCallback,
   useContext,
   useEffect,
   useImperativeHandle,
   useLayoutEffect,
   useMemo,
   useReducer,
-  useImperativeHandle,
-  memo,
-  render,
-  Component,
-  PureComponent,
-  Fragment,
+  useRef,
+  useState,
+
+  version,
 };

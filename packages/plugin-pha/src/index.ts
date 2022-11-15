@@ -43,7 +43,8 @@ const plugin: Plugin<PluginOptions> = (options) => ({
     // Get server compiler by hooks
     onHook(`before.${command as 'start' | 'build'}.run`, async ({ serverCompiler, taskConfigs, urls, ...restAPI }) => {
       const taskConfig = taskConfigs.find(({ name }) => name === 'web').config;
-      outputDir = path.isAbsolute(taskConfig.outputDir) ? taskConfig.outputDir : path.join(rootDir, taskConfig.outputDir);
+      outputDir = path.isAbsolute(taskConfig.outputDir)
+        ? taskConfig.outputDir : path.join(rootDir, taskConfig.outputDir);
 
       getAppConfig = restAPI.getAppConfig;
       getRoutesConfig = restAPI.getRoutesConfig;

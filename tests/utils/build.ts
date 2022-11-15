@@ -7,7 +7,7 @@ import Browser from './browser';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-interface ISetupBrowser {
+interface SetupBrowser {
   (options: {
     example: string;
     outputDir?: string;
@@ -16,8 +16,8 @@ interface ISetupBrowser {
   }): Promise<ReturnValue>;
 }
 
-interface IReturn {
-  page: IPage;
+interface ReturnValue {
+  page: Page;
   browser: Browser;
 }
 
