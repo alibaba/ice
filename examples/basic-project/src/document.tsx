@@ -1,5 +1,5 @@
 import { Meta, Title, Links, Main, Scripts, useAppData } from 'ice';
-import type { AppData } from 'ice';
+import type { AppData } from '@/types';
 
 function Document() {
   const appData = useAppData<AppData>();

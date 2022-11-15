@@ -3,13 +3,13 @@ import { Link, useData, useAppData, useConfig, definePageConfig, defineDataLoade
 // Not recommended but works.
 import { useAppContext } from '@ice/runtime';
 import { useRequest } from 'ahooks';
-import type { AppData } from 'ice';
 import textContext from '../assets/robot.txt?raw';
 import textUrl from '../assets/robot.txt?url';
 import './index.css';
 import styles from './index.module.css';
 import lessStyles from './index.module.less';
 import sassStyles from './index.module.scss';
+import type { AppData } from '@/types';
 
 const Bar = lazy(() => import('../components/bar'));
 
