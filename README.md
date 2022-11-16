@@ -31,7 +31,7 @@ $ npm init ice ice-app --template @ice/lite-scaffold
 Start local server to launch project:
 
 ```bash
-$ cd <project-name>
+$ cd ice-app
 $ npm install
 $ npm run start # running on http://localhost:3000.
 ```
