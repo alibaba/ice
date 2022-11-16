@@ -61,6 +61,7 @@ const getMiniappTask = ({
       globalObject,
       enabledLibraryTypes: [],
     },
+    cacheDir: path.join(rootDir, 'node_modules', '.cache'),
     sourceMap: command === 'start' ? 'cheap-module-source-map' : false,
     alias: {
       ice: path.join(rootDir, runtimeDir, 'index.ts'),
