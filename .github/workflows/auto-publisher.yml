@@ -23,7 +23,7 @@ jobs:
       - name: Install pnpm
         run: npm i pnpm -g
       - run: npm run setup
-      - run: npm run publish:release
+      - run: npm run publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
