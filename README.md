@@ -12,11 +12,11 @@ A universal framework based on React.js, [📚 Docs](https://ice.work/).
 
 ## Features
 
-- 🐒 **Zero Config**：Out of the box support for ES6+, TypeScript, Less, Sass, CSS Modules，etc
-- 🐯 **Practice**：Practice about file-system routing, state Management, request, etc
-- 🦁 **Hybrid**： pre-render pages at build time (SSG) or request time (SSR) for default
-- 🐌 **Plugin system**：The plugin system provides rich features and allow the community to build reusable solutions
-- 🐂 **Multi-End**：Support both web, miniapp and Weex
+- 🐒 **Zero Config**: Out of the box support for ES6+, TypeScript, Less, Sass, CSS Modules，etc
+- 🐯 **Practice**: Practice about file-system routing, state Management, request, etc
+- 🦁 **Hybrid**: pre-render pages at build time (SSG) or request time (SSR) for default
+- 🐌 **Plugin system**: The plugin system provides rich features and allow the community to build reusable solutions
+- 🐂 **Multi-End**: Support both web, miniapp and Weex
 
 ## Quick start
 
