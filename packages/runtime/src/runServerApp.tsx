@@ -11,6 +11,7 @@ import type {
   RenderMode,
   DocumentComponent,
   RuntimeModules,
+  AppData,
 } from './types.js';
 import Runtime from './runtime.js';
 import App from './App.js';
@@ -151,12 +152,13 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     renderMode,
     runtimeOptions,
   } = renderOptions;
-
+  const finalBasename = serverOnlyBasename || basename;
   const location = getLocation(req.url);
 
   const requestContext = getRequestContext(location, serverContext);
   const appConfig = getAppConfig(app);
-  let appData: any;
+
+  let appData: AppData;
   const appContext: AppContext = {
     appExport: app,
     routes,
@@ -165,7 +167,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     routesData: null,
     routesConfig: null,
     assetsManifest,
-    basename,
+    basename: finalBasename,
     matches: [],
   };
   const runtime = new Runtime(appContext, runtimeOptions);
@@ -187,7 +189,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     return renderDocument({ matches: [], renderOptions });
   }
 
-  const matches = matchRoutes(routes, location, serverOnlyBasename || basename);
+  const matches = matchRoutes(routes, location, finalBasename);
   if (!matches.length) {
     return render404();
   }
