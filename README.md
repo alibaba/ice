@@ -1,4 +1,4 @@
-# icejs
+# ice.js
 
 <p align="center">
   <a href="https://www.npmjs.com/package/ice.js"><img src="https://badgen.net/npm/dm/ice.js" alt="Downloads"></a>
@@ -20,7 +20,7 @@ A universal framework based on React.js, [📚 Docs](https://ice.work/).
 
 ## Quick start
 
-We recommend creating a new icejs app using create-ice, which sets up everything automatically for you. To create a project, run:
+We recommend creating a new ice.js app using create-ice, which sets up everything automatically for you. To create a project, run:
 
 ```bash
 $ npm init ice ice-app --template @ice/lite-scaffold
