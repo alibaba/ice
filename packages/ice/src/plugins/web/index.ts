@@ -1,5 +1,4 @@
 import * as path from 'path';
-import fse from 'fs-extra';
 import consola from 'consola';
 import chalk from 'chalk';
 import type { RenderMode } from '@ice/runtime';
@@ -21,7 +20,7 @@ const plugin: Plugin = () => ({
   name: 'plugin-web',
   setup: ({ registerTask, onHook, context, generator, serverCompileTask, dataCache, watch, getAllPlugin }) => {
     const { rootDir, commandArgs, command, userConfig } = context;
-    const { ssg, ssr } = userConfig;
+    const { ssg } = userConfig;
 
     registerTask(WEB, getWebTask({ rootDir, command, dataCache }));
 
@@ -122,8 +121,6 @@ const plugin: Plugin = () => ({
         renderMode,
         routeType: appConfig?.router?.type,
       });
-
-      await removeServerOutput(outputDir, ssr);
     });
 
     onHook('after.start.compile', async ({ isSuccessful, isFirstCompile, urls, devUrlInfo }) => {
@@ -148,11 +145,5 @@ const plugin: Plugin = () => ({
     });
   },
 });
-
-async function removeServerOutput(outputDir: string, ssr: boolean) {
-  if (!ssr) {
-    await fse.remove(path.join(outputDir, SERVER_OUTPUT_DIR));
-  }
-}
 
 export default plugin;

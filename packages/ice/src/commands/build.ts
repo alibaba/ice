@@ -1,4 +1,6 @@
+import * as path from 'path';
 import consola from 'consola';
+import fse from 'fs-extra';
 import { getWebpackConfig } from '@ice/webpack-config';
 import type { Context, TaskConfig } from 'build-scripts';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
@@ -9,7 +11,7 @@ import type { AppConfig } from '@ice/runtime/esm/types';
 import type { ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI } from '../types/plugin.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
-import { RUNTIME_TMP_DIR } from '../constant.js';
+import { RUNTIME_TMP_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
 import emptyDir from '../utils/emptyDir.js';
 import type { UserConfig } from '../types/userConfig.js';
 import warnOnHashRouterEnabled from '../utils/warnOnHashRouterEnabled.js';
@@ -119,7 +121,15 @@ const build = async (
     appConfig,
   });
 
+  await removeServerOutput(outputDir, userConfig.ssr);
+
   return { compiler };
 };
+
+async function removeServerOutput(outputDir: string, ssr: boolean) {
+  if (!ssr) {
+    await fse.remove(path.join(outputDir, SERVER_OUTPUT_DIR));
+  }
+}
 
 export default build;
