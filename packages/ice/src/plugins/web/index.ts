@@ -1,5 +1,4 @@
 import * as path from 'path';
-import fse from 'fs-extra';
 import consola from 'consola';
 import chalk from 'chalk';
 import type { RenderMode } from '@ice/runtime';
