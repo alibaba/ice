@@ -122,8 +122,6 @@ const plugin: Plugin = () => ({
         renderMode,
         routeType: appConfig?.router?.type,
       });
-
-      await removeServerOutput(outputDir, ssr);
     });
 
     onHook('after.start.compile', async ({ isSuccessful, isFirstCompile, urls, devUrlInfo }) => {
@@ -148,11 +146,5 @@ const plugin: Plugin = () => ({
     });
   },
 });
-
-async function removeServerOutput(outputDir: string, ssr: boolean) {
-  if (!ssr) {
-    await fse.remove(path.join(outputDir, SERVER_OUTPUT_DIR));
-  }
-}
 
 export default plugin;
