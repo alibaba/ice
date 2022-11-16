@@ -11,7 +11,9 @@ type AddExport = (exportData: DeclarationData) => void;
 type RemoveExport = (removeSource: string | string[]) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
 
-type ServerCompilerBuildOptions = Pick<BuildOptions, 'write' |
+type ServerCompilerBuildOptions = Pick<
+  BuildOptions,
+  'write' |
   'target' |
   'minify' |
   'inject' |
@@ -24,7 +26,8 @@ type ServerCompilerBuildOptions = Pick<BuildOptions, 'write' |
   'platform' |
   'outExtension' |
   'plugins' |
-  'logLevel'
+  'logLevel' |
+  'sourcemap'
 >;
 
 export type ServerCompiler = (

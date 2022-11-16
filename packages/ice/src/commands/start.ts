@@ -19,7 +19,6 @@ import prepareURLs from '../utils/prepareURLs.js';
 import createRenderMiddleware from '../middlewares/ssr/renderMiddleware.js';
 import createMockMiddleware from '../middlewares/mock/createMiddleware.js';
 import getRouterBasename from '../utils/getRouterBasename.js';
-import emptyDir from '../utils/emptyDir.js';
 
 const { merge } = lodash;
 
@@ -62,9 +61,6 @@ const start = async (
     getAppConfig,
     getRoutesConfig,
   };
-
-  const outputDir = webpackConfigs[0].output.path;
-  await emptyDir(outputDir);
 
   const useDevServer = platform === WEB;
 

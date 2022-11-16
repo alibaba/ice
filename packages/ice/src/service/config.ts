@@ -47,6 +47,7 @@ class Config {
         format: 'esm',
         outfile,
         plugins: [removeTopLevelCode(keepExports, transformInclude)],
+        sourcemap: false,
         logLevel: 'silent', // The main server compiler process will log it.
       });
       if (!error) {
