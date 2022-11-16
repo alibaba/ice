@@ -20,7 +20,7 @@ const plugin: Plugin = () => ({
   name: 'plugin-web',
   setup: ({ registerTask, onHook, context, generator, serverCompileTask, dataCache, watch, getAllPlugin }) => {
     const { rootDir, commandArgs, command, userConfig } = context;
-    const { ssg, ssr } = userConfig;
+    const { ssg } = userConfig;
 
     registerTask(WEB, getWebTask({ rootDir, command, dataCache }));
 
