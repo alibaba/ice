@@ -19,7 +19,7 @@
     "version": "tsx ./scripts/tagVersion.ts",
     "version:check": "tsx ./scripts/versionCheck.ts",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
-    "publish": "tsx ./scripts/publishPackageWithDistTag.ts",
+    "publish": "tsx ./scripts/publishPackage.ts",
     "publish:beta": "PUBLISH_TYPE=beta tsx ./scripts/publishPackageWithDistTag.ts",
     "publish:release": "PUBLISH_TYPE=release VERSION_PREFIX=rc tsx ./scripts/publishPackageWithDistTag.ts",
     "cov": "vitest run --coverage",
