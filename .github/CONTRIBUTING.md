@@ -15,8 +15,8 @@ clone repo and initialize the setup environment：
 
 ```bash
 # 1. clone and setup
-$ git clone git@github.com:ice-lab/icejs.git
-$ cd icejs && npm run setup
+$ git clone git@github.com:alibaba/ice.git
+$ cd ice && npm run setup
 
 # 2. watch packages
 $ npm run watch
@@ -27,8 +27,7 @@ $ npm run watch
 We provide a lot of examples, you can run the examples：
 
 ```bash
-$ cd examples/basic-spa
-$ npm link ../../packages/icejs
+$ cd examples/basic-project
 $ npm start
 ```
 
@@ -46,8 +45,7 @@ $ npm run publish
 # 6. 💡 💡 💡 Start syncing...
 ```
 
-* When you need to release a latest version, the tag will be created automatically, running `npm publish` will tag your package with the `latest` dist-tag.
-* To publish a package with the `beta` dist-tag, you can choose to release rc、beta、alpha versions, the tag will not be created.
+> DO NOT manually execute the publish command, using Github Actions provided.
 
 ## Rollback Packages
 
