@@ -1,41 +1,67 @@
 {
-  "name": "build-plugin-ice-store",
-  "version": "2.0.8",
-  "description": "builtin `@ice/store` in icejs",
-  "author": "ice-admin@alibaba-inc.com",
-  "homepage": "https://github.com/alibaba/ice#readme",
+  "name": "@ice/plugin-store",
+  "version": "1.0.0",
+  "description": "",
   "license": "MIT",
-  "main": "lib/index.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./esm/index.d.ts",
+      "import": "./esm/index.js",
+      "default": "./esm/index.js"
+    },
+    "./runtime": {
+      "types": "./esm/runtime.d.ts",
+      "import": "./esm/runtime.js",
+      "default": "./esm/runtime.js"
+    },
+    "./esm/runtime": {
+      "types": "./esm/runtime.d.ts",
+      "import": "./esm/runtime.js",
+      "default": "./esm/runtime.js"
+    },
+    "./types": {
+      "types": "./esm/types.d.ts",
+      "import": "./esm/types.js",
+      "default": "./esm/types.js"
+    },
+    "./esm/types": {
+      "types": "./esm/types.d.ts",
+      "import": "./esm/types.js",
+      "default": "./esm/types.js"
+    }
   },
+  "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
   "files": [
-    "lib",
-    "src/types",
-    "src/runtime.tsx",
-    "!lib/**/*.map"
+    "esm",
+    "!esm/**/*.map"
   ],
-  "repository": {
-    "type": "http",
-    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-store"
-  },
-  "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
-  },
   "dependencies": {
-    "@builder/app-helpers": "^2.5.0",
-    "@ice/store": "^2.0.0",
-    "chalk": "^4.1.0",
-    "enhanced-resolve": "^4.3.0",
-    "es-module-lexer": "^0.9.3",
-    "fs-extra": "^8.1.0",
-    "fs-readdir-recursive": "^1.1.0",
-    "globby": "^11.0.1",
-    "loader-utils": "^2.0.3",
-    "magic-string": "^0.25.7"
+    "@ice/store": "^2.0.3",
+    "fast-glob": "^3.2.11",
+    "micromatch": "^4.0.5"
   },
   "devDependencies": {
-    "vite": "^2.4.3"
+    "@ice/app": "^3.0.0",
+    "@ice/runtime": "^1.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@types/micromatch": "^4.0.2",
+    "regenerator-runtime": "^0.13.9"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-store"
+  },
+  "scripts": {
+    "watch": "tsc -w",
+    "build": "tsc"
   }
 }

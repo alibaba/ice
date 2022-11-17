@@ -30,16 +30,29 @@ coverage
 *.swp
 *.dia~
 *.temp.json
+*.swc
+
+# yalc
+.yalc
+yalc.lock
 
 # Packages
 packages/*/lib/
+packages/*/esm/
 
 # temp folder .ice
 examples/*/.ice
-
-# temp file of test
-packages/webpack-plugin-extract-css-assets/test/actual/*
+examples/*/.swc
 
 build
 dist
 .history
+compiled
+
+# website
+.docusaurus
+.cache-loader
+
+.env
+*.local
+.fleet/

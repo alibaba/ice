@@ -1,0 +1,25 @@
+<% const moduleNames = []; -%>
+<% const staticModuleNames = []; -%>
+<% if (runtimeModules.length) { -%>
+<% runtimeModules.forEach((runtimeModule, index) => { -%>
+import module<%= index %> from '<%= runtimeModule.path %>';
+    <% if (runtimeModule.staticRuntime) { -%>
+      <% staticModuleNames.push('module' + index) -%>
+    <% } else { -%>
+      <% moduleNames.push('module' + index) -%>
+    <% } -%>
+  <% }) -%>
+<% } -%>
+
+export const statics = [
+<% staticModuleNames.forEach((moduleName, index) => { -%>
+  <%= moduleName %>,
+<% }) -%>
+];
+export const commons = [
+<% moduleNames.forEach((moduleName, index) => { -%>
+  <%= moduleName %>,
+<% }) -%>
+];
+
+

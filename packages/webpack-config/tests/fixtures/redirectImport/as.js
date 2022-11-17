@@ -1,0 +1,1 @@
+import { runApp as run } from 'ice';

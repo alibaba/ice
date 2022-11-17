@@ -1,15 +1,24 @@
 # create-ice
 
-create icejs project.
+create ice.js project.
 
 ## Usage
 
 ```bash
-$ npm init ice <projectName>
-# or with template
-$ npm init ice <projectName> <template>
-# or use yarn
+# use npm
+$ npm create ice <projectName>
+# use yarn
 $ yarn create ice <projectName>
+# use pnpm
+$ pnpm create ice <projectName>
+
+# or with template
+# use npm
+$ npm create ice <projectName> --template <template>
+# use yarn
+$ yarn create ice <projectName> --template <template>
+# use pnpm
+$ pnpm create ice <projectName> --template <template>
 
 $ cd <projectName>
 $ npm install

@@ -1,0 +1,47 @@
+name: Build Website
+on:
+  push:
+    paths:
+      - 'website/**'
+    branches:
+      - master
+      - release-next
+  workflow_dispatch:
+
+# 任务
+jobs:
+  build-and-deploy:
+    # 服务器环境：最新版 Ubuntu
+    runs-on: ubuntu-latest
+    steps:
+      # 拉取代码
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      
+      - name: Cache .pnpm-store
+        id: cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-node${{ matrix.node-version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: Install pnpm
+        run: npm i pnpm -g
+
+      - run: pnpm install --filter=./website
+
+      - run: cd website && pnpm build
+
+      # 部署到 GitHub Pages
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/release-next'
+        with:
+          BRANCH: gh-pages
+          FOLDER: website/build

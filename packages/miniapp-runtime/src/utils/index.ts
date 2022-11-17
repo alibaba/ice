@@ -1,0 +1,130 @@
+import {
+  getComponentsAlias as _getComponentsAlias,
+  internalComponents,
+  isFunction,
+  Shortcuts,
+} from '@ice/shared';
+
+import {
+  CLASS,
+  COMMENT,
+  ID,
+  ROOT_STR,
+  STYLE,
+  UID,
+} from '../constants/index.js';
+import type { Element } from '../dom/element.js';
+import type { Node } from '../dom/node.js';
+import { NodeType } from '../dom/node_types.js';
+import type { Text } from '../dom/text.js';
+import type { Func } from '../interface/index.js';
+
+export const incrementId = () => {
+  const chatCodes: number[] = [];
+  // A-Z
+  for (let i = 65; i <= 90; i++) {
+    chatCodes.push(i);
+  }
+  // a-z
+  for (let i = 97; i <= 122; i++) {
+    chatCodes.push(i);
+  }
+  const chatCodesLen = chatCodes.length - 1;
+  const list = [0, 0];
+  return () => {
+    const target = list.map(item => chatCodes[item]);
+    const res = String.fromCharCode(...target);
+
+    let tailIdx = list.length - 1;
+
+    list[tailIdx]++;
+
+    while (list[tailIdx] > chatCodesLen) {
+      list[tailIdx] = 0;
+      tailIdx = tailIdx - 1;
+      if (tailIdx < 0) {
+        list.push(0);
+        break;
+      }
+      list[tailIdx]++;
+    }
+
+    return res;
+  };
+};
+
+export function isElement(node: Node): node is Element {
+  return node.nodeType === NodeType.ELEMENT_NODE;
+}
+
+export function isText(node: Node): node is Text {
+  return node.nodeType === NodeType.TEXT_NODE;
+}
+
+export function isComment(node: Node): boolean {
+  return node.nodeName === COMMENT;
+}
+
+export function isHasExtractProp(el: Element): boolean {
+  const res = Object.keys(el.props).find(prop => {
+    return !(/^(class|style|id)$/.test(prop) || prop.startsWith('data-'));
+  });
+  return Boolean(res);
+}
+
+/**
+ * 往上寻找组件树直到 root，寻找是否有祖先组件绑定了同类型的事件
+ * @param node 当前组件
+ * @param type 事件类型
+ */
+export function isParentBinded(node: Element | null, type: string): boolean {
+  let res = false;
+  while (node?.parentElement && node.parentElement._path !== ROOT_STR) {
+    if (node.parentElement.__handlers[type]?.length) {
+      res = true;
+      break;
+    }
+    node = node.parentElement;
+  }
+  return res;
+}
+
+export function shortcutAttr(key: string): string {
+  switch (key) {
+    case STYLE:
+      return Shortcuts.Style;
+    case ID:
+      return UID;
+    case CLASS:
+      return Shortcuts.Class;
+    default:
+      return key;
+  }
+}
+
+export const customWrapperCache = new Map<string, Record<string, any>>();
+
+interface Ctor {
+  new (...args: any[]): any;
+}
+
+export function extend(ctor: Ctor, methodName: string, options: Func | Record<string, any>) {
+  if (isFunction(options)) {
+    options = {
+      value: options,
+    };
+  }
+  Object.defineProperty(ctor.prototype, methodName, {
+    configurable: true,
+    enumerable: true,
+    ...options,
+  });
+}
+
+let componentsAlias;
+export function getComponentsAlias() {
+  if (!componentsAlias) {
+    componentsAlias = _getComponentsAlias(internalComponents);
+  }
+  return componentsAlias;
+}

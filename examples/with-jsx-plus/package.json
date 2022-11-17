@@ -1,0 +1,23 @@
+{
+  "name": "with-jsx-plus",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "ice start",
+    "build": "ice build"
+  },
+  "description": "ICE example with plugin-jsx-plus",
+  "author": "ICE Team",
+  "license": "MIT",
+  "dependencies": {
+    "@ice/app": "workspace:*",
+    "@ice/plugin-jsx-plus": "workspace:*",
+    "@ice/runtime": "workspace:*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tslib": "^2.4.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6"
+  }
+}

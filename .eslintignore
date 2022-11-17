@@ -1,17 +1,18 @@
 # 忽略目录
 build/
-test/
-tests/
+fixtures/
 node_modules/
 dist/
 out/
+compiled/
 
 # node 覆盖率文件
 coverage/
 
 # 忽略测试文件
-/packages/*/__tests__
 /packages/*/lib/
+/packages/*/esm/
+/packages/*/es2017/
 
 # 忽略第三方包
 /vendor/loader.js

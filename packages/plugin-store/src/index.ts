@@ -1,171 +1,141 @@
 import * as path from 'path';
-import * as chalk from 'chalk';
-import Generator from './generator';
-import checkStoreExists from './utils/checkStoreExists';
-import { getAppStorePath } from './utils/getPath';
-import { getRouteFileType } from './utils/getFileType';
-import vitePluginPageRedirect from './vitePluginPageRedirect';
+import type { Config, Plugin } from '@ice/app/esm/types';
+import micromatch from 'micromatch';
+import fg from 'fast-glob';
+import { PAGE_STORE_MODULE, PAGE_STORE_PROVIDER, PAGE_STORE_INITIAL_STATES } from './constants.js';
 
-const { name: pluginName } = require('../package.json');
-
-interface IReplaceRouterPathOptions {
-  tempDir: string,
-  applyMethod: (...args: string[]) => void,
-  routesPaths: string,
-  rootDir:string, 
-  srcPath: string,
-  alias: Record<string, string>,
+interface Options {
+  resetPageState?: boolean;
 }
 
-export default async (api: any) => {
-  const { context, getValue, onHook, applyMethod, onGetWebpackConfig, modifyUserConfig } = api;
-  const { rootDir, userConfig, command } = context;
+const PLUGIN_NAME = '@ice/plugin-store';
+const storeFilePattern = '**/store.{js,ts}';
+const ignoreStoreFilePatterns = ['**/models/**', storeFilePattern];
 
-  // get mpa entries in src/pages
-  const { mpa: isMpa, entry, store, swc, vite, router, babelPlugins = [] } = userConfig;
+const plugin: Plugin<Options> = (options) => ({
+  name: PLUGIN_NAME,
+  setup: ({ onGetConfig, modifyUserConfig, generator, context: { rootDir, userConfig }, watch }) => {
+    const { resetPageState = false } = options || {};
+    const srcDir = path.join(rootDir, 'src');
+    const pageDir = path.join(srcDir, 'pages');
 
-  const tempPath = getValue('TEMP_PATH');
-  const srcDir = isMpa ? 'src' : applyMethod('getSourceDir', entry);
-  const srcPath = path.join(rootDir, srcDir);
-  const tempDir = (path.basename(tempPath) || '');  // .ice
-  const pagesName: string[] = applyMethod('getPages', srcPath);
+    modifyUserConfig('routes', {
+      ...(userConfig.routes || {}),
+      ignoreFiles: [...(userConfig?.routes?.ignoreFiles || []), ...ignoreStoreFilePatterns],
+    });
 
-  const storeExists = checkStoreExists(srcPath, pagesName);
+    if (getAppStorePath(srcDir)) {
+      generator.addRuntimeOptions({
+        source: '@/store',
+        specifier: 'appStore',
+      });
+    }
 
-  if (!storeExists) {
-    onHook('before.start.run', () => {
-      applyMethod('watchFileChange', /store.*/, (event: string, filePath: string) => {
+    watch.addEvent([
+      /src\/store.(js|ts)$/,
+      (event) => {
+        if (event === 'unlink') {
+          generator.removeRuntimeOptions('@/store');
+        }
         if (event === 'add') {
-          // restart WDS
-          console.log('\n');
-          console.log(chalk.magenta(`${filePath} has been created`));
-          console.log(chalk.magenta('restart dev server'));
-          process.send({ type: 'RESTART_DEV' });
+          generator.addRuntimeOptions({
+            source: '@/store',
+            specifier: 'appStore',
+          });
         }
-      });
-    });
+        if (['add', 'unlink'].includes(event)) {
+          generator.render();
+        }
+      },
+    ]);
 
-    applyMethod('addDisableRuntimePlugin', pluginName);
-    return;
-  }
-
-  const appStoreFile = applyMethod('formatPath', getAppStorePath(srcPath));
-
-  applyMethod('addExport', {
-    source: '@ice/store',
-    specifier: '{ createStore, createModel }',
-    exportName: 'createStore, createModel',
-    importSource: '@ice/store',
-    exportMembers: ['createStore', 'createModel'],
-  });
-
-  if (!appStoreFile) {
-    // set IStore to IAppConfig
-    applyMethod('addAppConfigTypes', { source: '../plugins/store/types', specifier: '{ IStore }', exportName: 'store?: IStore' });
-  }
-
-  // add babel plugins for ice lazy
-  const { configPath } = router || {};
-  // TODO: remove PROJECT_TYPE
-  const projectType = getValue('PROJECT_TYPE');
-
-  let routesPaths;
-  if (isMpa) {
-    routesPaths = pagesName.map((pageName: string) => {
-      const pagePath = path.join(rootDir, 'src', 'pages', pageName);
-      const routesFileType = getRouteFileType(pagePath);
-      return path.join(pagePath, `routes${routesFileType}`);
-    });
-  } else {
-    const routes = applyMethod('getRoutes', {
-      rootDir,
-      tempPath,
-      configPath,
-      projectType,
-      isMpa,
-      srcDir
-    });
-    routesPaths = [routes.routesPath];
-  }
-
-  // redirect route path to ice temp(.ice/pages/Home/index.tsx)
-  if (vite) {
-    modifyUserConfig(
-      'vite.plugins', 
-      [vitePluginPageRedirect(rootDir, routesPaths)],
-      { deepmerge: true }
-    );
-  } else {
-    const defaultAlias = {};
-    const options: IReplaceRouterPathOptions = {
-      tempDir,
-      applyMethod,
-      routesPaths,
-      rootDir, 
-      srcPath,
-      alias: defaultAlias,
-    };
-    onHook(`before.${command}.run`, ({ config }) => {
-      const webWebpackConfig = Array.isArray(config) ? (config.find(item => item.name === 'web') || {}) : config;
-      options.alias = webWebpackConfig?.resolve?.alias || defaultAlias;
-    });
-
-    if (swc) {
-      onGetWebpackConfig((config: any) => {
-        config.module
-          .rule('replace-router-path')
-        // ensure that replace-router-path-loader is before babel-loader
-        // @loadable/babel-plugin will transform the router paths which replace-router-path-loader couldn't transform
-          .after('tsx')
-          .test((filePath: string) => routesPaths.includes(filePath))
-          .use('replace-router-path-loader')
-          .loader(require.resolve(path.join(__dirname, 'replacePathLoader')))
-          .options(options);
-      });
-    } else {
-      const replacePathBabelPlugin = [
-        require.resolve('./babelPluginReplacePath'),
-        options
+    onGetConfig(config => {
+      config.transformPlugins = [
+        ...(config.transformPlugins || []),
+        exportStoreProviderPlugin({ pageDir, resetPageState }),
       ];
-      const loadableBabelPluginIndex = babelPlugins.indexOf('@loadable/babel-plugin');
-      if (loadableBabelPluginIndex > -1) {
-      // ensure ReplacePathBabelPlugin is before @loadable/babel-plugin
-      // @loadable/babel-plugin will transform the router paths which babelPluginReplacePath couldn't transform
-        babelPlugins.splice(loadableBabelPluginIndex, 0, replacePathBabelPlugin);
-      } else {
-        babelPlugins.push(replacePathBabelPlugin);
-      }
-      modifyUserConfig('babelPlugins', [...babelPlugins]);
-    }
-  }
-
-  onGetWebpackConfig((config: any) => {
-    config.resolve.alias.set('$store', appStoreFile || path.join(tempPath, 'plugins', 'store', 'index.ts'));
-
-    if (config.get('cache')) {
-      config.merge({
-        cache: {
-          type: 'filesystem',
-          version: `${getValue('WEBPACK_CACHE_ID')}&store=true`
-        }
-      });
-    }
-  });
-
-  const gen = new Generator({
-    tempPath,
-    applyMethod,
-    srcPath,
-    disableResetPageState: !!store?.disableResetPageState
-  });
-
-  gen.render();
-
-  onHook('before.start.run', () => {
-    applyMethod('watchFileChange', /models\/.*|model.*|store.*|pages\/\w+\/index(.jsx?|.tsx)/, (event: string) => {
-      if (event === 'add' || event === 'unlink') {
-        gen.render(true);
-      }
+      return config;
     });
-  });
-};
+
+    // Export store api: createStore, createModel from `.ice/index.ts`.
+    generator.addExport({
+      specifier: ['createStore', 'createModel'],
+      source: '@ice/plugin-store/esm/runtime',
+      type: false,
+    });
+  },
+  runtime: `${PLUGIN_NAME}/esm/runtime`,
+});
+
+function exportStoreProviderPlugin({ pageDir, resetPageState }: { pageDir: string; resetPageState: boolean }): Config['transformPlugins'][0] {
+  return {
+    name: 'export-store-provider',
+    enforce: 'post',
+    transformInclude: (id) => {
+      return (
+        /\.[jt]sx?$/i.test(id) &&
+        id.startsWith(pageDir.split(path.sep).join('/')) &&
+        !micromatch.isMatch(id, ignoreStoreFilePatterns)
+      );
+    },
+    transform: async (source, id) => {
+      const pageStorePath = getPageStorePath(id);
+      if (pageStorePath) {
+        if (
+          isLayout(id) || // Current id is layout.
+          !isLayoutExisted(id) // If current id is route and there is no layout in the current dir.
+        ) {
+          return exportPageStore(source, resetPageState);
+        }
+      }
+      return source;
+    },
+  };
+}
+
+function exportPageStore(source: string, resetPageState: boolean) {
+  const importStoreStatement = `import ${PAGE_STORE_MODULE} from './store';\n`;
+  const exportStoreProviderStatement = resetPageState ? `
+const { Provider: ${PAGE_STORE_PROVIDER}, getState } = ${PAGE_STORE_MODULE};
+const ${PAGE_STORE_INITIAL_STATES} = getState();
+export { ${PAGE_STORE_PROVIDER}, ${PAGE_STORE_INITIAL_STATES} };` : `
+const { Provider: ${PAGE_STORE_PROVIDER} } = ${PAGE_STORE_MODULE};
+export { ${PAGE_STORE_PROVIDER} };`;
+
+  return importStoreStatement + source + exportStoreProviderStatement;
+}
+
+/**
+ * Get the page store path which is at the same directory level.
+ * @param {string} id Route absolute path.
+ * @returns {string|undefined}
+ */
+function getPageStorePath(id: string): string | undefined {
+  const dir = path.dirname(id);
+  const result = fg.sync(storeFilePattern, { cwd: dir, deep: 1 });
+  return result.length ? path.join(dir, result[0]) : undefined;
+}
+
+function isLayout(id: string): boolean {
+  const extname = path.extname(id);
+  const idWithoutExtname = id.substring(0, id.length - extname.length);
+  return idWithoutExtname.endsWith('layout');
+}
+
+/**
+ * Check the current route component if there is layout.tsx at the same directory level.
+ * @param {string} id Route absolute path.
+ * @returns {boolean}
+ */
+function isLayoutExisted(id: string): boolean {
+  const dir = path.dirname(id);
+  const result = fg.sync('layout.{js,jsx,tsx}', { cwd: dir, deep: 1 });
+  return !!result.length;
+}
+
+function getAppStorePath(srcPath: string) {
+  const result = fg.sync(storeFilePattern, { cwd: srcPath, deep: 1 });
+  return result.length ? path.join(srcPath, result[0]) : undefined;
+}
+
+export default plugin;

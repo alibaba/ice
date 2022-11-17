@@ -1,0 +1,42 @@
+// Vitest Snapshot v1
+
+exports[`generateRouteManifest function > layout-routes 1`] = `
+[
+  {
+    "componentName": "blog-index",
+    "file": "blog/index.tsx",
+    "id": "blog/index",
+    "index": true,
+    "layout": false,
+    "parentId": undefined,
+    "path": "blog",
+  },
+  {
+    "componentName": "blog-$id",
+    "file": "blog/$id.tsx",
+    "id": "blog/$id",
+    "index": undefined,
+    "layout": false,
+    "parentId": undefined,
+    "path": "blog/:id",
+  },
+  {
+    "componentName": "about",
+    "file": "about.tsx",
+    "id": "about",
+    "index": undefined,
+    "layout": false,
+    "parentId": undefined,
+    "path": "about",
+  },
+  {
+    "componentName": "index",
+    "file": "index.tsx",
+    "id": "index",
+    "index": true,
+    "layout": false,
+    "parentId": undefined,
+    "path": undefined,
+  },
+]
+`;

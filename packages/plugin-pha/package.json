@@ -1,0 +1,34 @@
+{
+  "name": "@ice/plugin-pha",
+  "version": "1.0.0",
+  "description": "ice.js plugin for PHA.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
+  "files": [
+    "esm",
+    "!esm/**/*.map",
+    "template"
+  ],
+  "scripts": {
+    "watch": "tsc -w",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "chalk": "^4.0.0",
+    "consola": "^2.15.3",
+    "humps": "^2.0.1",
+    "lodash.clonedeep": "^4.5.0"
+  },
+  "devDependencies": {
+    "@ice/app": "^3.0.0",
+    "esbuild": "^0.14.51",
+    "webpack": "^5.73.0",
+    "webpack-dev-server": "^4.9.2"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-pha"
+  }
+}

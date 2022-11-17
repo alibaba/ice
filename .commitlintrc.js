@@ -1,3 +1,3 @@
-const { commitlint } = require('@ice/spec');
+const { getCommitlintConfig } = require('@applint/spec');
 
-module.exports = commitlint;
+module.exports = getCommitlintConfig('common');

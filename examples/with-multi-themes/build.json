@@ -1,7 +1,0 @@
-{
-  "plugins": [
-    ["build-plugin-theme", {
-      "theme": "dark"
-    }]
-  ]
-}

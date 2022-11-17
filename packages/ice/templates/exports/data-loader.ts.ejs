@@ -1,0 +1,40 @@
+import { dataLoader } from '@ice/runtime';
+import * as app from '@/app';
+<% if(dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
+<% const staticModuleNames = []; -%>
+<% if (runtimeModules.length) { -%>
+  <% runtimeModules.forEach((runtimeModule, index) => { -%>
+    <% if (runtimeModule.staticRuntime) { -%>
+      import module<%= index %> from '<%= runtimeModule.path %>';
+      <% staticModuleNames.push('module' + index) -%>
+    <% } -%>
+  <% }) -%>
+<% } -%>
+
+<% if (loaders) {-%>
+<%- loaders %>
+<% } else { -%>
+const loaders = {};
+<% } -%>
+
+<% if(hasExportAppData) {-%>loaders['__app'] = app.dataLoader;<% } -%>
+
+<% if(!dataLoaderImport.imports) {-%>
+let fetcher = (options) => {
+  window.fetch(options.url, options);
+}  
+<% } -%>
+
+// Only init static runtime in data-loader. 
+const staticRuntimeModules = [
+<% staticModuleNames.forEach((moduleName, index) => { -%>
+  <%= moduleName %>,
+<% }) -%>
+];
+
+dataLoader.init(loaders, {
+  fetcher,
+  runtimeModules: staticRuntimeModules,
+  appExport: app,
+  <% if(dataLoaderImport.imports) {-%>dataLoaderFetcher<% } -%>
+});

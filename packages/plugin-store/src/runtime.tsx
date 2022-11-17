@@ -1,25 +1,49 @@
-// @ts-ignore
-import AppStore from '$store';
+import * as React from 'react';
+import type { RuntimePlugin, AppProvider, RouteWrapper } from '@ice/runtime/esm/types';
+import { PAGE_STORE_INITIAL_STATES, PAGE_STORE_PROVIDER } from './constants.js';
+import type { StoreConfig } from './types.js';
 
-export default ({ addProvider, appConfig, context: { initialData = {} as any, createElement } }) => {
+const EXPORT_CONFIG_NAME = 'storeConfig';
 
-  const StoreProvider = ({ children }) => {
-    const storeConfig = appConfig.store || {};
+const runtime: RuntimePlugin = async ({ appContext, addWrapper, addProvider, useAppContext }, runtimeOptions) => {
+  const { appExport, appData } = appContext;
+  const exported = appExport[EXPORT_CONFIG_NAME];
+  const storeConfig: StoreConfig = (typeof exported === 'function' ? await exported(appData) : exported) || {};
+  const { initialStates } = storeConfig;
 
-    let initialStates = {};
-
-    if (initialData.initialStates) {
-      initialStates = initialData.initialStates;
-    } else if (storeConfig.initialStates) {
-      initialStates = storeConfig.initialStates;
+  // Add app store <Provider />.
+  const StoreProvider: AppProvider = ({ children }) => {
+    if (runtimeOptions?.appStore?.Provider) {
+      const { Provider } = runtimeOptions.appStore;
+      return (
+        <Provider initialStates={initialStates}>
+          {children}
+        </Provider>
+      );
     }
-
-    return createElement(AppStore.Provider, {
-      initialStates,
-      children
-    });
+    return <>{children}</>;
   };
-  if (AppStore && Object.prototype.hasOwnProperty.call(AppStore, 'Provider')) {
-    addProvider(StoreProvider);
-  }
+
+  addProvider(StoreProvider);
+
+  // Add page store <Provider />.
+  const StoreProviderWrapper: RouteWrapper = ({ children, routeId }) => {
+    const { routeModules } = useAppContext();
+    const routeModule = routeModules[routeId];
+    if (routeModule[PAGE_STORE_PROVIDER]) {
+      const Provider = routeModule[PAGE_STORE_PROVIDER];
+      const initialStates = routeModule[PAGE_STORE_INITIAL_STATES];
+      if (initialStates) {
+        return <Provider initialStates={initialStates}>{children}</Provider>;
+      }
+      return <Provider>{children}</Provider>;
+    }
+    return <>{children}</>;
+  };
+
+  addWrapper(StoreProviderWrapper, true);
 };
+
+export default runtime;
+
+export { createModel, createStore } from '@ice/store';

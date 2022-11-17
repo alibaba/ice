@@ -1,31 +1,28 @@
 {
-  "name": "build-plugin-moment-locales",
-  "version": "0.1.3",
-  "description": "build-scripts plugins for moment locale",
-  "main": "lib/index.js",
+  "name": "@ice/plugin-moment-locales",
+  "version": "1.0.0",
+  "description": "ice.js plugin for reduce moment locale size.",
+  "type": "module",
   "scripts": {
-    "test": "echo \"test\""
+    "watch": "tsc -w",
+    "build": "tsc"
   },
-  "keywords": [
-    "build-scripts",
-    "build-plugin"
-  ],
+  "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
+  "author": "",
+  "license": "MIT",
   "repository": {
     "type": "http",
-    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-moment-locales"
-  },
-  "author": "ICE Team",
-  "license": "MIT",
-  "dependencies": {
-    "@rollup/pluginutils": "^4.1.1",
-    "magic-string": "^0.25.7"
+    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-moment-locales"
   },
   "devDependencies": {
-    "build-scripts": "^1.1.0",
-    "vite": "^2.0.0"
+    "@ice/app": "^3.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "files": [
-    "lib",
-    "!lib/**/*.map"
+    "esm",
+    "!esm/**/*.map"
   ]
 }

@@ -1,0 +1,16 @@
+<% if (globalStyle) {-%>
+import '<%= globalStyle %>'
+<% } -%>
+import type { PageConfig } from './types';
+<%- framework.imports %>
+
+function definePageConfig(pageConfig: () => PageConfig): () => PageConfig {
+  return pageConfig;
+}
+
+export {
+  definePageConfig,
+  <% if (framework.exports) { -%><%- framework.exports %><% } -%>
+};
+
+export * from './types';

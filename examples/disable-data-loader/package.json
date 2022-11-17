@@ -1,0 +1,28 @@
+{
+  "name": "disable-data-loader",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "ice start",
+    "build": "ice build",
+    "build:splitChunks": "ice build --config splitChunks.config.mts"
+  },
+  "description": "",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@ice/app": "workspace:*",
+    "@ice/plugin-auth": "workspace:*",
+    "@ice/plugin-rax-compat": "workspace:*",
+    "@ice/runtime": "workspace:*",
+    "@uni/env": "^1.1.0",
+    "ahooks": "^3.3.8",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.2",
+    "speed-measure-webpack-plugin": "^1.5.0",
+    "webpack": "^5.73.0"
+  }
+}

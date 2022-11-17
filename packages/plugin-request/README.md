@@ -1,83 +1,66 @@
-# plugin-ice-request
+# @ice/plugin-request
 
-use `request` or `useRequest` in icejs.
-
-## Install
-
-```bash
-$ npm i --save build-plugin-ice-request
-```
-
-Add plugin to `build.json`:
-
-```json
-{
-  "plugins": [
-    "build-plugin-ice-request"
-  ]
-}
-```
-
-Set runtime options to `src/index.ts`:
-
-```js
-import { runApp } from 'ice';
-
-const appConfig = {
-  request: {
-    // ref: https://github.com/axios/axios#request-config
-    ...config,
-    // ref: https://github.com/axios/axios#interceptors
-    interceptors: {
-      request: {
-        onConfig: (config) => {},
-        onError: (error) => {}
-      },
-      response: {
-        onConfig: (config) => {},
-        onError: (error) => {}
-      },
-    }
-  }
-};
-
-runApp(appConfig);
-```
+Provides a unified request method for ice.js projects.
 
 ## Usage
 
+```bash
+$ npm i @ice/plugin-request -S
+```
+
+Add plugin.
+
+```js title="ice.config.mts"
+import { defineConfig } from '@ice/app';
+import request from '@ice/plugin-request';
+
+export default defineConfig(() => ({
+  plugins: [
+    request(),
+  ],
+}));
+```
+
+## API
+
 ### request
 
-```ts
-import { request } from 'ice'
+```js title="service.ts"
+import { request } from 'ice';
 
-request('/api/repo')
-  .then(res => console.log(res))
-  .catch(err => console.log(err))
+export async function getUser(id) {
+  return await request(`/api/user/${id}`);
+}
 ```
 
 ### useRequest
 
-```ts
-import { useRequest } from 'ice'
+```js title="home.tsx"
+import { useEffect } from 'react';
+import { useRequest } from 'ice';
 
-const View = () => {
-  const { loading, error, data, request } = useRequest({
-    url: '/api/list',
-    method: 'GET',
-  })
-
-  const list = data ? data.list : [];
+export default function Home() {
+  const {
+    data,
+    error,
+    loading,
+    request
+  } = useRequest(service.getUser);
 
   useEffect(() => {
     request();
   }, []);
 
+  if (error) {
+    return <div>failed to load</div>;
+  }
+  if (!data || loading) {
+    return <div>loading...</div>;
+  }
   return (
-    // do somethings
-  )
+    <h2 className={styles.title}>
+      Name: {data.name} Age: {data.age}
+    </h2>
+  );
 }
 ```
-## License
-
-MIT

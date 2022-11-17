@@ -1,4 +1,0 @@
-{
-  "disableRuntime": true,
-  "entry": "./src/index.js"
-}

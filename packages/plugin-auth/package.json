@@ -1,33 +1,59 @@
 {
-  "name": "build-plugin-ice-auth",
-  "version": "2.0.2",
+  "name": "@ice/plugin-auth",
+  "version": "1.0.0",
   "description": "",
-  "author": "ice-admin@alibaba-inc.com",
-  "homepage": "https://github.com/alibaba/ice#readme",
   "license": "MIT",
-  "main": "lib/index.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./esm/index.d.ts",
+      "import": "./esm/index.js",
+      "default": "./esm/index.js"
+    },
+    "./runtime": {
+      "types": "./esm/runtime/index.d.ts",
+      "import": "./esm/runtime/index.js",
+      "default": "./esm/runtime/index.js"
+    },
+    "./esm/runtime": {
+      "types": "./esm/runtime/index.d.ts",
+      "import": "./esm/runtime/index.js",
+      "default": "./esm/runtime/index.js"
+    },
+    "./types": {
+      "types": "./esm/types.d.ts",
+      "import": "./esm/types.js",
+      "default": "./esm/types.js"
+    },
+    "./esm/types": {
+      "types": "./esm/types.d.ts",
+      "import": "./esm/types.js",
+      "default": "./esm/types.js"
+    }
   },
-  "dependencies": {},
-  "peerDependencies": {
-    "react": ">16.0.0",
-    "react-dom": ">16.0.0"
-  },
+  "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
   "files": [
-    "src",
-    "lib",
-    "!lib/**/*.map"
+    "esm",
+    "!esm/**/*.map"
   ],
+  "devDependencies": {
+    "@ice/app": "^3.0.0",
+    "@ice/runtime": "^1.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "regenerator-runtime": "^0.13.9"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
   "repository": {
     "type": "http",
-    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-auth"
+    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-auth"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
-  },
-  "bugs": {
-    "url": "https://github.com/alibaba/ice/issues"
+    "watch": "tsc -w",
+    "build": "tsc"
   }
 }

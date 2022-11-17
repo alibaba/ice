@@ -1,34 +1,39 @@
-import * as path from 'path';
+import type { Plugin } from '@ice/app/esm/types';
+import type { Request, Interceptors, InterceptorRequest, InterceptorResponse } from './types';
 
-export default async function (api) {
-  const { getValue, applyMethod, onGetWebpackConfig } = api;
-  const templatePath = path.join(__dirname, '..', 'template');
-  const distPath = path.join(getValue('TEMP_PATH'), 'plugins' ,'request');
+// @ts-ignore
+// eslint-disable-next-line
+interface PluginRequestOptions { }
 
-  applyMethod('addPluginTemplate', templatePath);
+const PLUGIN_NAME = '@ice/plugin-request';
 
-  // .ice/index.ts:
-  // export * from './request';
-  // export * from './useRequest';
-  applyMethod('addExport', {
-    source: './plugins/request/request',
-    exportName: 'request',
-    importSource: '$$ice/plugins/request/request',
-    exportDefault: 'request',
-  });
+const plugin: Plugin<PluginRequestOptions | void> = () => ({
+  name: PLUGIN_NAME,
+  setup: ({ generator }) => {
+    // Add useRequest export for 'ice'.
+    //   import { useRequest } from 'ice';
+    generator.addExport({
+      specifier: 'useRequest',
+      source: '@ice/plugin-request/hooks',
+      type: false,
+    });
+    //   import { request } from 'ice';
+    generator.addExport({
+      specifier: 'request',
+      source: '@ice/plugin-request/request',
+      type: false,
+    });
+  },
+  runtime: `${PLUGIN_NAME}/esm/runtime`,
+  staticRuntime: true,
+  keepExports: ['requestConfig'],
+});
 
-  applyMethod('addExport', {
-    source: './plugins/request/useRequest',
-    exportName: 'useRequest',
-    importSource: '$$ice/plugins/request/useRequest',
-    exportDefault: 'useRequest',
-  });
-
-  // add iceTypes exports
-  applyMethod('addAppConfigTypes', { source: '../plugins/request/types', specifier: '{ IRequest }', exportName: 'request?: IRequest' });
-
-  onGetWebpackConfig((config) => {
-    // add alias for runtime.ts use $ice/createAxiosInstance
-    config.resolve.alias.set('$ice/createAxiosInstance', path.join(distPath, 'createAxiosInstance.ts'));
-  });
-}
+export type {
+  Request,
+  Interceptors,
+  InterceptorRequest,
+  InterceptorResponse,
+  PluginRequestOptions,
+};
+export default plugin;

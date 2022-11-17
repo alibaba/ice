@@ -1,16 +1,23 @@
-import { IPluginAPI } from 'build-scripts';
+import type { Plugin } from '@ice/app/esm/types';
 
-export default async function (api: IPluginAPI) {
-  const { applyMethod } = api;
+const PLUGIN_NAME = '@ice/plugin-auth';
 
-  const distPath = 'plugins/auth/pluginRuntime/runtime';
-  // 导出接口
-  // import { useAuth, withAuth } from 'ice';
-  applyMethod('addExport', { source: `./${distPath}/Auth`, importSource: `$$ice/${distPath}/Auth`, exportMembers: ['withAuth', 'useAuth'] });
+const plugin: Plugin = () => ({
+  name: PLUGIN_NAME,
+  setup: ({ generator }) => {
+  // Register API: `import { useAuth, withAuth } from 'ice';`
+    generator.addExport({
+      specifier: ['withAuth', 'useAuth'],
+      source: '@ice/plugin-auth/esm/runtime',
+    });
 
-  // 设置类型
-  // export interface IAppConfig {
-  //   auth?: IAuth;
-  // }
-  applyMethod('addAppConfigTypes', { source: `../${distPath}/types`, specifier: '{ IAuth }', exportName: 'auth?: IAuth' });
-}
+    generator.addRouteTypes({
+      specifier: ['ConfigAuth'],
+      type: true,
+      source: '@ice/plugin-auth/esm/types',
+    });
+  },
+  runtime: `${PLUGIN_NAME}/esm/runtime`,
+});
+
+export default plugin;

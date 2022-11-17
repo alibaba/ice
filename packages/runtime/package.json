@@ -1,20 +1,50 @@
 {
   "name": "@ice/runtime",
-  "version": "0.1.2",
-  "description": "runtime dependencies for plugin runtime",
-  "main": "lib/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "types": "./esm/index.d.ts",
+  "main": "./esm/index.js",
+  "exports": {
+    ".": "./esm/index.js",
+    "./client": "./esm/index.js",
+    "./server": "./esm/index.server.js",
+    "./jsx-runtime": "./esm/jsx-runtime.js",
+    "./jsx-dev-runtime": "./esm/jsx-dev-runtime.js",
+    "./matchRoutes": "./esm/matchRoutes.js",
+    "./router": "./esm/router.js",
+    "./single-router": "./esm/single-router.js",
+    "./types": "./esm/types.js",
+    "./package.json": "./package.json"
   },
   "files": [
-    "lib",
-    "!lib/**/*.map"
+    "esm",
+    "!esm/**/*.map"
   ],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "axios": "^0.21.4",
-    "path-to-regexp": "^1.8.0"
+  "author": "ICE",
+  "license": "MIT",
+  "repository": "ice-lab/ice-next",
+  "bugs": "https://github.com/ice-lab/ice-next/issues",
+  "homepage": "https://next.ice.work",
+  "scripts": {
+    "watch": "tsc -w",
+    "build": "tsc"
   },
-  "sideEffects": false
+  "devDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "@types/react": "^18.0.8",
+    "@types/react-dom": "^18.0.3",
+    "regenerator-runtime": "^0.13.9"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@ice/jsx-runtime": "^0.1.0",
+    "history": "^5.3.0",
+    "react-router-dom": "^6.2.2"
+  },
+  "peerDependencies": {
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
+  }
 }

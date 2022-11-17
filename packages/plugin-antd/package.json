@@ -1,23 +1,31 @@
 {
-  "name": "build-plugin-antd",
-  "version": "0.1.4",
-  "description": "build-scripts plugin for antd",
-  "main": "lib/index.js",
+  "name": "@ice/plugin-antd",
+  "version": "1.0.0",
+  "description": "ice.js plugin for use antd",
+  "type": "module",
   "scripts": {
-    "test": "echo \"test\""
+    "watch": "tsc -w",
+    "build": "tsc"
   },
+  "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
   "author": "",
   "license": "MIT",
   "repository": {
     "type": "http",
-    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-antd"
+    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-antd"
+  },
+  "devDependencies": {
+    "@ice/app": "^3.0.0"
   },
   "dependencies": {
-    "babel-plugin-import": "^1.11.2",
-    "vite-plugin-style-import": "1.1.1"
+    "@ice/style-import": "^1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "files": [
-    "lib",
-    "!lib/**/*.map"
+    "esm",
+    "!esm/**/*.map"
   ]
 }

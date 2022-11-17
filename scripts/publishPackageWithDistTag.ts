@@ -1,11 +1,12 @@
 /**
  * Scripts to check unpublished version and run publish
  */
-import * as path from 'path';
-import * as fs from 'fs-extra';
+import path from 'path';
 import { spawnSync } from 'child_process';
-import { setPublishedPackages } from './published-info';
-import { IPackageInfo, getPackageInfos, getVersionPrefix } from './getPackageInfos';
+import fse from 'fs-extra';
+import { setPublishedPackages } from './publishedInfo';
+import { getPackageInfos, getVersionPrefix } from './getPackageInfos';
+import type { IPackageInfo } from './getPackageInfos';
 
 const PUBLISH_TYPE = process.env.PUBLISH_TYPE || 'beta';
 const VERSION_PREFIX = process.env.VERSION_PREFIX || PUBLISH_TYPE;
@@ -27,7 +28,7 @@ function getVersionInfo(packageInfo: IPackageInfo, tag: string): ITagPackageInfo
       'show', name, 'dist-tags',
       '--json',
     ], {
-      encoding: 'utf-8'
+      encoding: 'utf-8',
     });
 
     let distTags = {};
@@ -52,7 +53,7 @@ function updatePackageJson(packageInfos: ITagPackageInfo[]): void {
     const { directory, distTagVersion } = packageInfo;
 
     const packageFile = path.join(directory, 'package.json');
-    const packageData = fs.readJsonSync(packageFile);
+    const packageData = fse.readJsonSync(packageFile);
 
     packageData.version = distTagVersion;
 
@@ -67,12 +68,11 @@ function updatePackageJson(packageInfos: ITagPackageInfo[]): void {
       }
     }
 
-    fs.writeFileSync(packageFile, JSON.stringify(packageData, null, 2));
+    fse.writeFileSync(packageFile, JSON.stringify(packageData, null, 2));
   });
 }
 
 function publish(pkg: string, distTagVersion: string, directory: string, tag: string): void {
-
   console.log(`[PUBLISH ${tag.toUpperCase()}]`, `${pkg}@${distTagVersion}`);
   spawnSync('npm', [
     'publish',
@@ -86,7 +86,6 @@ function publish(pkg: string, distTagVersion: string, directory: string, tag: st
 // Entry
 console.log(`[PUBLISH ${PUBLISH_TYPE.toUpperCase()}] Start:`);
 getPackageInfos(publishTag).then((packageInfos: IPackageInfo[]) => {
-
   const shouldPublishPackages = packageInfos
     .filter(packageInfo => packageInfo.shouldPublish)
     .map(packageInfo => getVersionInfo(packageInfo, PUBLISH_TYPE));

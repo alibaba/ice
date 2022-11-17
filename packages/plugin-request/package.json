@@ -1,39 +1,73 @@
 {
-  "name": "build-plugin-ice-request",
-  "version": "2.0.1",
-  "description": "request for build-plugin-ice-request",
-  "author": "ice-admin@alibaba-inc.com",
-  "homepage": "",
+  "name": "@ice/plugin-request",
+  "version": "1.0.0",
+  "description": "Request plugin for ice.",
   "license": "MIT",
-  "main": "lib/index.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./esm/index.d.ts",
+      "import": "./esm/index.js",
+      "default": "./esm/index.js"
+    },
+    "./runtime": {
+      "types": "./esm/runtime.d.ts",
+      "import": "./esm/runtime.js",
+      "default": "./esm/runtime.js"
+    },
+    "./hooks": {
+      "types": "./esm/hooks.d.ts",
+      "import": "./esm/hooks.js",
+      "default": "./esm/hooks.js"
+    },
+    "./request": {
+      "types": "./esm/request.d.ts",
+      "import": "./esm/request.js",
+      "default": "./esm/request.js"
+    },
+    "./types": {
+      "types": "./esm/types.d.ts",
+      "import": "./esm/types.js",
+      "default": "./esm/types.js"
+    },
+    "./esm/types": {
+      "types": "./esm/types.d.ts",
+      "import": "./esm/types.js",
+      "default": "./esm/types.js"
+    },
+    "./esm/runtime": {
+      "types": "./esm/runtime.d.ts",
+      "import": "./esm/runtime.js",
+      "default": "./esm/runtime.js"
+    }
   },
+  "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
   "files": [
-    "lib",
-    "request",
-    "template",
-    "src/runtime.ts",
-    "!lib/**/*.map"
+    "esm",
+    "!esm/**/*.map"
   ],
   "dependencies": {
-    "@ahooksjs/use-request": "^2.0.0",
-    "@ice/runtime": "^0.1.2",
-    "fs-extra": "^8.1.0"
+    "ahooks": "^3.0.0",
+    "axios": "^0.27.2"
   },
   "devDependencies": {
-    "axios": "^0.21.4"
+    "@ice/app": "^3.0.0",
+    "@ice/runtime": "^1.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "regenerator-runtime": "^0.13.9"
   },
-  "pluginConfig": {
-    "staticModule": true
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "repository": {
     "type": "http",
-    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-request"
+    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-request"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
-  },
-  "gitHead": "e9bf7c3abd03d870a637d73b70b613942777132a"
+    "watch": "tsc -w",
+    "build": "tsc"
+  }
 }

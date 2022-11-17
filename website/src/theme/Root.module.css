@@ -1,0 +1,43 @@
+.wrapper {
+  position: fixed;
+  z-index: 1000;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  min-height: 300px;
+  background-color: #303846;
+  color: #fff;
+}
+
+.container {
+  margin: 0px auto;
+  max-width: 1200px;
+  padding: 54px 24px;
+}
+
+.content {
+  font-size: 18px;
+}
+
+.action {
+  display: flex;
+  margin-top: 20px;
+  /* justify-content: flex-end; */
+}
+
+.btn {
+  display: inline-block;
+  cursor: pointer;
+  background-color: #222;
+  color: #ccc;
+  padding: 8px 12px;
+  margin-right: 20px;
+}
+.btn:hover {
+  opacity: 0.8;
+}
+
+.primaryBtn {
+  background-color: #fff;
+  color: #000;
+}

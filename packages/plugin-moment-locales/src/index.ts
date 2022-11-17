@@ -1,32 +1,24 @@
-import type { IPlugin } from 'build-scripts';
-import vitePluginMoment from './vitePluginMoment';
+import type { Plugin } from '@ice/app/esm/types';
 
 interface PluginOptions {
   locales: string | string[];
 }
 
-const plugin: IPlugin = ({ onGetWebpackConfig, modifyUserConfig, context }, options) => {
-  const { webpack, userConfig } = context;
-  const { locales } = options as unknown as PluginOptions || {};
-  const localeArray = typeof locales === 'string' ? [locales] : locales;
-  if (userConfig.vite) {
-    modifyUserConfig('vite', {
-      plugins: [vitePluginMoment(locales)],
-      optimizeDeps: {
-        // pre build moment locales
-        include: localeArray.map((locale => `moment/dist/locale/${locale}`)),
-      },
-    } , { deepmerge: true });
-  } else {
-    onGetWebpackConfig((config) => {
-      if (localeArray.length) {
-        const localesRegExp = new RegExp(localeArray.join('|'));
-        config.plugin('context-replacement')
-          .use(webpack.ContextReplacementPlugin, [/moment[/\\]locale$/, localesRegExp]);
-      }
-    });
-  }
-  
-};
+const plugin: Plugin<PluginOptions> = (options) => ({
+  name: '@ice/plugin-moment-locales',
+  setup: ({ onGetConfig, context }) => {
+    const { locales } = options || {};
+    if (locales) {
+      onGetConfig((config) => {
+        config.plugins ??= [];
+        const localeArray = typeof locales === 'string' ? [locales] : locales;
+        config.plugins.push(new context.webpack.ContextReplacementPlugin(
+          /moment[/\\]locale$/,
+          new RegExp(localeArray.join('|')),
+        ));
+      });
+    }
+  },
+});
 
 export default plugin;
