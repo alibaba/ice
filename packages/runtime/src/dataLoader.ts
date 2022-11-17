@@ -157,6 +157,7 @@ async function init(loadersConfig: Loaders, options: LoaderOptions) {
       }
 
       // Call dataLoader.
+      // In CSR, all dataLoader is called by global data loader to avoid bundle dataLoader in page bundle duplicate.
       const requestContext = getRequestContext(window.location);
       return await callDataLoader(dataLoader, requestContext);
     },
