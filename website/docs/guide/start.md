@@ -10,7 +10,15 @@ order: 2
 在终端执行以下命令：
 
 ```bash
-$ npx create-ice ice-app --template ice-scaffold-simple
+$ npm create ice ice-app
+```
+
+然后按照提示操作即可！
+
+或者你通过附加的命令行选项指定使用的模板：
+
+```bash
+$ npm create ice ice-app --template @ice/lite-scaffold
 ```
 
 看到如下信息说明项目创建成功：

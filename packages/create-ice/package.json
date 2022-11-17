@@ -1,0 +1,43 @@
+{
+  "name": "create-ice",
+  "version": "1.8.0",
+  "description": "npm init ice",
+  "type": "module",
+  "main": "./esm/index.mjs",
+  "exports": {
+    ".": "./esm/index.mjs"
+  },
+  "bin": {
+    "create-ice": "esm/index.mjs"
+  },
+  "files": [
+    "bin",
+    "esm",
+    "!esm/**/*.map"
+  ],
+  "engines": {
+    "node": ">=14.19.0",
+    "npm": ">=3.0.0"
+  },
+  "scripts": {
+    "watch": "tsc -w",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@iceworks/generate-project": "^1.0.0",
+    "chalk": "^5.0.0",
+    "commander": "^9.0.0",
+    "fs-extra": "^10.0.0",
+    "ice-npm-utils": "^3.0.0",
+    "inquirer": "^9.1.4"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/create-ice"
+  },
+  "author": "ice-admin",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/inquirer": "^9.0.3"
+  }
+}
