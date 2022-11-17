@@ -5,7 +5,7 @@
   "type": "module",
   "main": "./esm/index.mjs",
   "exports": {
-    ".": "./esm/index.js"
+    ".": "./esm/index.mjs"
   },
   "bin": {
     "create-ice": "esm/index.mjs"
