@@ -94,7 +94,7 @@ getPackageInfos(publishTag).then((packageInfos: IPackageInfo[]) => {
 
   // Publish
   let publishedCount = 0;
-  const publishedPackages = [];
+  const publishedPackages: string[] = [];
   shouldPublishPackages.forEach((packageInfo) => {
     const { name, directory, distTagVersion } = packageInfo;
     publishedCount++;
@@ -105,5 +105,6 @@ getPackageInfos(publishTag).then((packageInfos: IPackageInfo[]) => {
 
   console.log(`[PUBLISH PACKAGE ${PUBLISH_TYPE.toUpperCase()}] Complete (count=${publishedCount}):`);
   console.log(`${publishedPackages.join('\n')}`);
+  console.log(`[TNPM SYNC PACKAGES] tnpm sync ${publishedPackages.map((p: string) => p.split(':')[0]).join(' ')}`);
   setPublishedPackages(publishedPackages);
 });

@@ -2,7 +2,7 @@
  * Scripts to check unpublished version and run publish
  */
 import { spawnSync } from 'child_process';
-import { setPublishedPackages } from './published-info';
+import { setPublishedPackages } from './publishedInfo';
 import type { IPackageInfo } from './getPackageInfos';
 import { getPackageInfos } from './getPackageInfos';
 
@@ -25,7 +25,7 @@ console.log('[PUBLISH] Start:');
 getPackageInfos(publishTag).then((packageInfos: IPackageInfo[]) => {
   // Publish
   let publishedCount = 0;
-  const publishedPackages = [];
+  const publishedPackages: string[] = [];
   for (let i = 0; i < packageInfos.length; i++) {
     const { name, directory, localVersion, shouldPublish } = packageInfos[i];
     if (shouldPublish) {
