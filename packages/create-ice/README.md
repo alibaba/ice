@@ -14,7 +14,7 @@ $ yarn create ice <projectName>
 
 # or with template
 # use npm
-$ npm create ice <projectName> --template <templateName>
+$ npm create ice <projectName> --template <template>
 # use yarn
 $ yarn create ice <projectName> --template <template>
 # use pnpm
