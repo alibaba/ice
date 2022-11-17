@@ -60,11 +60,15 @@ async function selectTemplate(): Promise<string> {
   const templates: ITemplate[] = [
     {
       npmName: '@ice/lite-scaffold',
-      description: 'TypeScript + No UI Components',
+      description: 'Web Lite Scaffold',
     },
     {
       npmName: '@ice/antd-pro-scaffold',
-      description: 'TypeScript + Ant Design',
+      description: 'Web Pro Scaffold',
+    },
+    {
+      npmName: '@ice/miniapp-scaffold',
+      description: 'Miniapp Scaffold',
     },
   ];
   const defaultTemplate = templates[0];
