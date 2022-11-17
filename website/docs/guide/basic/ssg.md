@@ -2,7 +2,8 @@
 title: 构建时渲染 SSG
 order: 10
 ---
-:::caution
+
+:::tips
 小程序端不支持该能力。
 :::
 
@@ -10,10 +11,9 @@ order: 10
 
 ice.js 默认开启 SSG 能力。SSG 不仅适用于静态站点，也适用于为普通 CSR 应用提前生成静态内容。
 
-假设有如下路由组件，其内容为：
+若有如下页面，内容为：
 
-```tsx
-// src/pages/index.tsx
+```tsx title="src/pages/home.tsx"
 import { useData } from 'ice';
 
 export default function Home() {
@@ -47,15 +47,14 @@ export default function Home() {
 
 ### 注意事项
 
-- 需要在消费 data 时，做好空值判断，避免 data 为 `undefined` 或 `null` 时，产生渲染异常，无法正常构建。
-- 兼容 Node.js 端。SSG 会在构建时进行，因此代码会运行在 Node.js 侧，因此在消费一些浏览器特有的环境变量时，要做好环境判断。
+- 在消费 `data` 时，需要做好空值判断，避免 `data` 为 `undefined` 或 `null` 时，产生渲染异常，无法正常构建。
+- 代码需要兼容 Node.js 端。SSG 会在构建时进行，因此代码会运行在 Node.js 侧，因此在消费一些浏览器特有的环境变量时，要做好环境判断。
 
-### 定制 SSG 的数据源
+### SSG 的数据请求
 
-如果希望在 SSG 时使用兜底数据，可以通过为路由组件定义 `staticDataLoader` 来实现。这样在 SSG 时，组件通过 `useData()` 获取的数据为 `staticDataLoader` 的返回值。
+通常在 SSG 时，我们不能使用后端接口获取当前的数据，因为这通常与用户访问时不一致。这时我们可以为 SSG 定义特定的数据请求方法，通过为路由组件定义 `staticDataLoader` 来实现。这样在 SSG 时，组件通过 `useData()` 获取的数据为 `staticDataLoader` 的返回值。
 
-```tsx
-// src/pages/index.tsx
+```tsx title="src/pages/index.tsx"
 import { useData, defineDataLoader, defineStaticDataLoader } from 'ice';
 
 export default function Home() {
@@ -70,32 +69,32 @@ export default function Home() {
 
 // 浏览器侧的常规数据请求
 export const dataLoader = defineDataLoader(() => {
-  return {
-    stars: 1000,
-  };
+  return fetch('https://example.com/stars');
 });
 
-// 返回用于 SSG 的数据
+// 返回用于 SSG 的兜底数据
 export const staticDataLoader = defineStaticDataLoader(() => {
-  // 浏览器侧的常规数据请求
   return {
     stars: 0,
   };
 });
 ```
 
+:::tips
 当 `defineDataLoader` 接受入参为数组时（定义了多个数据请求），`defineStaticDataLoader` 也需要与其一一对应。
+:::
 
-构建 Client 端的 Bundle 时，会移除 `staticDataLoader` 及其相关依赖。
+构建 Client 端的产物时，会移除 `staticDataLoader` 及其相关依赖。
 
 ## 关闭 SSG
 
 在 `ice.config.mts` 下，按如下配置修改
 
-```tsx
+```tsx title="ice.config.mts"
 import { defineConfig } from '@ice/app';
 
 export default defineConfig(() => ({
+  // ...
   ssg: false,
 }));
 ```
