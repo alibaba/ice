@@ -1,8 +1,11 @@
-import { useData, defineDataLoader } from 'ice';
+import { useData, defineDataLoader, useAppData } from 'ice';
 import styles from './index.module.css';
 
 export default function Home() {
   const data = useData();
+  const appData = useAppData();
+
+  console.log(appData);
 
   return (
     <>

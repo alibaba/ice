@@ -58,7 +58,7 @@ export async function loadRoutesData(
     matches.map(async (match) => {
       const { id } = match.route;
 
-      if (globalLoader && globalLoader.hasLoad(id)) {
+      if (globalLoader) {
         routesData[id] = await globalLoader.getData(id);
         return;
       }

@@ -277,7 +277,6 @@ describe('run client app', () => {
     windowSpy.mockImplementation(() => ({
       ...mockData,
       __ICE_DATA_LOADER__: {
-        hasLoad: () => true,
         getData: async () => {
           useGlobalLoader = true;
           return { msg: '-globalData' };

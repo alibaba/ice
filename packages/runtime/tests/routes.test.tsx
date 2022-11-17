@@ -166,7 +166,6 @@ describe('routes', () => {
   it('load data from __ICE_DATA_LOADER__', async () => {
     windowSpy.mockImplementation(() => ({
       __ICE_DATA_LOADER__: {
-        hasLoad: () => true,
         getData: async (id) => ({ id: `${id}_data` }),
       },
     }));

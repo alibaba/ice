@@ -20,7 +20,7 @@ async function getAppData(appExport: AppExport, requestContext?: RequestContext)
   const hasGlobalLoader = typeof window !== 'undefined' && (window as any).__ICE_DATA_LOADER__;
   const globalLoader = hasGlobalLoader ? (window as any).__ICE_DATA_LOADER__ : null;
 
-  if (globalLoader && globalLoader.hasLoad('__app')) {
+  if (globalLoader) {
     return await globalLoader.getData('__app');
   }
 

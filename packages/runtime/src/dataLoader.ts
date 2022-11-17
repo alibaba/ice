@@ -69,7 +69,8 @@ function loadInitialDataInClient(loaders: Loaders) {
   const matchedIds = context.matchedIds || [];
   const routesData = context.routesData || {};
 
-  matchedIds.forEach(id => {
+  const ids = ['_app'].concat(matchedIds);
+  ids.forEach(id => {
     const dataFromSSR = routesData[id];
     if (dataFromSSR) {
       cache.set(id, {
@@ -130,27 +131,34 @@ async function init(loadersConfig: Loaders, options: LoaderOptions) {
   }
 
   (window as any).__ICE_DATA_LOADER__ = {
-    hasLoad: (id) => {
-      return cache.get(id);
-    },
     getData: async (id) => {
       const result = cache.get(id);
 
-      if (!result) {
+      // Already send data request.
+      if (result) {
+        const { status, value } = result;
+
+        if (status === 'RESOLVED') {
+          return result;
+        }
+
+        if (Array.isArray(value)) {
+          return await Promise.all(value);
+        }
+
+        return await value;
+      }
+
+      const dataLoader = loadersConfig[id];
+
+      // No data loader.
+      if (!dataLoader) {
         return null;
       }
 
-      const { status, value } = result;
-
-      if (status === 'RESOLVED') {
-        return result;
-      }
-
-      if (Array.isArray(value)) {
-        return await Promise.all(value);
-      }
-
-      return await value;
+      // Call dataLoader.
+      const requestContext = getRequestContext(window.location);
+      return await callDataLoader(dataLoader, requestContext);
     },
   };
 }
