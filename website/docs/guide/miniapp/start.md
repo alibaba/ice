@@ -24,9 +24,16 @@ ice.js 支持小程序开发。由于小程序端大部分能力及配置均与 
   }
 ```
 
-## 配置小程序开发插件
+## 配置小程序开发插件及运行时依赖
 
-在 `ice.config.mts` 中配置 `@ice/plugin-miniapp` 插件：
+安装小程序开发插件 `@ice/plugin-miniapp` 和小程序运行时依赖 `@ice/miniapp-runtime`：
+
+```shell
+$ npm install @ice/plugin-miniapp -D
+$ npm install @ice/miniapp-runtime -S
+```
+
+在 `ice.config.mts` 中配置插件：
 
 ```js title=ice.config.mts
 import miniapp from '@ice/plugin-miniapp';
@@ -34,6 +41,19 @@ import miniapp from '@ice/plugin-miniapp';
 export default defineConfig({
   plugins: [miniapp()],
 });
+```
+
+## 添加 `miniappManifest`
+
+在 `src/app.tsx` 中导出 `miniappManifest`，在其中配置 `routes` 数组用以指定小程序中的页面（详见[小程序-路由](./router)）:
+
+```js
+export const miniappManifest = {
+  routes: [
+    // 初始化项目中仅有 index 一个页面
+    'index' 
+  ]
+};
 ```
 
 ## 调试与构建

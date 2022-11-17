@@ -199,10 +199,13 @@ async function invokeCompilerWatch({
     spinner,
     hooksAPI,
   });
+  const { userConfig, rootDir } = context;
+  const { outputDir } = userConfig;
+  const absoluteOutputDir = path.resolve(rootDir, outputDir);
   let messages: { errors: string[]; warnings: string[] };
   compiler.watch({
-    aggregateTimeout: 300,
-    poll: undefined,
+    aggregateTimeout: 200,
+    ignored: ['**/node_modules/**', `${absoluteOutputDir}/**`],
   }, async (err, stats) => {
     if (err) {
       if (!err.message) {
