@@ -21,11 +21,10 @@ const pkgContent = fs.readJSONSync(path.join(__dirname, '..', 'package.json'));
     console.log('');
     console.log('Examples:');
     console.log('  $ npm init ice');
-    console.log('  $ npm init ice --template @alifd/fusion-design-pro');
+    console.log('  $ npm init ice --template @ice/lite-scaffold');
     console.log('');
     console.log('  $ npm init ice ice-app');
-    console.log('  $ npm init ice ice-app @alifd/fusion-design-pro');
-    console.log('  $ npm init ice ice-app --template @alifd/fusion-design-pro');
+    console.log('  $ npm init ice ice-app --template @ice/lite-scaffold');
     process.exit(0);
   });
 
