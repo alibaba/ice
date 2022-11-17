@@ -4,7 +4,7 @@
 
 import { expect, it, describe, vi } from 'vitest';
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, renderHook } from '@testing-library/react';
 import {
   useState,
   useEffect,
@@ -41,6 +41,22 @@ describe('hooks', () => {
     }
 
     render(<App />);
+  });
+
+  it('useState update value', () => {
+    const { result, rerender } = renderHook(() => useState(0));
+    expect(result.current[0]).toEqual(0);
+
+    result.current[1](1);
+    rerender();
+    expect(result.current[0]).toEqual(1);
+
+    result.current[1]((count) => {
+      expect(count).toEqual(1);
+      return count + 10;
+    });
+    rerender();
+    expect(result.current[0]).toEqual(11);
   });
 
   it('useEffect', () => {
