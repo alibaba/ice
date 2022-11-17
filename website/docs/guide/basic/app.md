@@ -29,14 +29,14 @@ export default defineAppConfig(() => ({
 
 #### `rootId`
 
-:::caution
-小程序端不支持修改 rootId。
-:::
-
 根节点 id
 
 - 类型：`string`
 - 默认值：`ice-container`
+
+:::tip
+小程序端不支持修改 rootId。
+:::
 
 #### `strict`
 
@@ -54,8 +54,8 @@ export default defineAppConfig(() => ({
 
 ### router
 
-:::caution
-小程序端不支持 router 配置。关于小程序的 router 配置参考[小程序开发-路由](../miniapp/router)
+:::tip
+小程序端不支持 `router` 配置。关于小程序的 `router` 配置参考[小程序开发-路由](../miniapp/router)
 :::
 
 #### `type` 
@@ -85,8 +85,8 @@ export default defineAppConfig(() => ({
   router: {
     type: 'memory',
     // 渲染 home 页面
-    initialEntries: ['/home']
-  }
+    initialEntries: ['/home'],
+  },
 }));
 ```
 
@@ -120,5 +120,3 @@ export default defineAppConfig(() => ({
   },
 }));
 ```
-
-[//]: # (更多运行时插件能力，请参考[官方插件]&#40;/plugin/list/auth&#41;。)
