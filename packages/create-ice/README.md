@@ -10,7 +10,7 @@ $ npm create ice <projectName>
 # use yarn
 $ yarn create ice <projectName>
 # use pnpm
-$ yarn create ice <projectName>
+$ pnpm create ice <projectName>
 
 # or with template
 # use npm
