@@ -2,6 +2,7 @@
   "name": "@ice/miniapp-html-styles",
   "version": "1.0.0",
   "description": "html styles for ice miniapp",
+  "main": "./html.css",
   "exports": {
     "./html": "./html.css",
     "./html5": "./html5.css"
