@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import * as path from 'path';
 import { fileURLToPath } from 'url';
-import * as fs from 'fs-extra';
+import fs from 'fs-extra';
 import { program } from 'commander';
 import create from './create.js';
 
