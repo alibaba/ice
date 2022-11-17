@@ -3,7 +3,7 @@ title: 数据模拟 Mock
 order: 7
 ---
 
-:::caution
+:::tips
 小程序端不支持该能力。
 :::
 

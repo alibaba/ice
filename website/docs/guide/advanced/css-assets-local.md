@@ -2,7 +2,7 @@
 title: CSS 资源本地化
 ---
 
-:::caution
+:::tips
 小程序端不支持该能力。
 :::
 
