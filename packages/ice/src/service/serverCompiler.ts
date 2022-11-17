@@ -124,6 +124,7 @@ export function createServerCompiler(options: Options) {
           alias,
           externalDependencies: externalDependencies ?? !server.bundle,
           format,
+          externals: server.externals,
         }),
         server?.ignores && ignorePlugin(server.ignores),
         cssModulesPlugin({
