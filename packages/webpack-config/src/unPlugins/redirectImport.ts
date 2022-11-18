@@ -107,8 +107,7 @@ export async function redirectImport(code: string, options: Options): Promise<st
     if (targetImport.n === targetSource) {
       let importStr = code.substring(targetImport.ss, targetImport.se);
       const matched = importStr.match(ICE_REG_EXP);
-      let matchAll = true;
-      let missMatchedIdentifiers = [];
+      const missMatchedIdentifiers = [];
       if (matched) {
         let matchedImports: MatchedImports = {};
         const [, identifiers] = matched;
@@ -141,7 +140,6 @@ export async function redirectImport(code: string, options: Options): Promise<st
               },
             });
           } else {
-            matchAll = false;
             missMatchedIdentifiers.push(identifier);
           }
         });
@@ -150,7 +148,7 @@ export async function redirectImport(code: string, options: Options): Promise<st
           const transformedImport = generateImport(matchedImports);
           consola.debug(`transform ${importStr} to ${transformedImport}`);
 
-          if (!matchAll) {
+          if (missMatchedIdentifiers.length > 0) {
             const replacedImportStr = importStr.replace(ICE_REG_EXP, (str, matchStr) => {
               return str.replace(matchStr, ` ${missMatchedIdentifiers.join(',')} `);
             });
