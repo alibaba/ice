@@ -13,9 +13,10 @@ interface Options {
   documentOnly: boolean;
   routeType: AppConfig['router']['type'];
   renderMode?: RenderMode;
+  entryType?: 'html' | 'js';
 }
 
-export default async function generateHTML(options: Options) {
+export default async function generateEntry(options: Options) {
   const {
     rootDir,
     entry,
@@ -23,6 +24,7 @@ export default async function generateHTML(options: Options) {
     documentOnly,
     renderMode,
     routeType,
+    entryType = 'html',
   } = options;
 
   let serverEntry;

@@ -9,7 +9,7 @@ import DataLoaderPlugin from '../../webpack/DataLoaderPlugin.js';
 import { getRouteExportConfig } from '../../service/config.js';
 import { WEB, SERVER_OUTPUT_DIR } from '../../constant.js';
 import getWebTask from '../../tasks/web/index.js';
-import generateHTML from '../../utils/generateHTML.js';
+import generateEntry from '../../utils/generateEntry.js';
 import openBrowser from '../../utils/openBrowser.js';
 import getServerCompilerPlugin from '../../utils/getServerCompilerPlugin.js';
 import type ServerCompilerPlugin from '../../webpack/ServerCompilerPlugin.js';
@@ -112,7 +112,7 @@ const plugin: Plugin = () => ({
       }
       serverEntryRef.current = serverOutfile;
 
-      await generateHTML({
+      await generateEntry({
         rootDir,
         outputDir,
         entry: serverOutfile,
