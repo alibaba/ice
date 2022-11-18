@@ -107,6 +107,8 @@ export async function redirectImport(code: string, options: Options): Promise<st
     if (targetImport.n === targetSource) {
       let importStr = code.substring(targetImport.ss, targetImport.se);
       const matched = importStr.match(ICE_REG_EXP);
+      let matchAll = true;
+      let missMatchedIdentifiers = [];
       if (matched) {
         let matchedImports: MatchedImports = {};
         const [, identifiers] = matched;
@@ -139,16 +141,28 @@ export async function redirectImport(code: string, options: Options): Promise<st
               },
             });
           } else {
-            consola.error('[ERROR]', `can not found redirect data for import statement: \n${importStr}`);
+            matchAll = false;
+            missMatchedIdentifiers.push(identifier);
           }
         });
-        const transformedImport = generateImport(matchedImports);
-        consola.debug(`transform ${importStr} to ${transformedImport}`);
-        str().overwrite(targetImport.ss, targetImport.se, transformedImport);
+
+        if (Object.keys(matchedImports).length > 0) {
+          const transformedImport = generateImport(matchedImports);
+          consola.debug(`transform ${importStr} to ${transformedImport}`);
+
+          if (!matchAll) {
+            const replacedImportStr = importStr.replace(ICE_REG_EXP, (str, matchStr) => {
+              return str.replace(matchStr, ` ${missMatchedIdentifiers.join(',')} `);
+            });
+            str().overwrite(targetImport.ss, targetImport.se, `${replacedImportStr};\n${transformedImport}`);
+          } else {
+            str().overwrite(targetImport.ss, targetImport.se, transformedImport);
+          }
+        }
       }
     }
   });
-  return s.toString();
+  return s ? s.toString() : code;
 }
 
 
