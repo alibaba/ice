@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charSet="utf-8" />
+  <meta name="description" content="ICE 3.0 Demo" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="ice-meta-count" content="0" />
+  <title></title>
+</head>
+
+<body>
+  <div id="app">
+    <h2>Home Page</h2>
+    <!--$?--><template id="B:0"></template>
+    <div>Loading...</div>
+    <!--/$-->
+  </div>
+  <script>window.__ICE_APP_CONTEXT__ = Object.assign({ "routesData": {}, "routesConfig": {}, "routePath": "/", "matchedIds": ["index"] }, window.__ICE_APP_CONTEXT__ || {})</script>
+  <script src="/js/framework.js"></script>
+  <script src="/js/index.js"></script>
+  <script src="/js/framework.js"></script>
+  <script
+    src="/js/vendors-node_modules_pnpm_core-js-pure_3_25_3_node_modules_core-js-pure_features_global-this_-4be7a4.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+
+</html>
+<div hidden id="S:0">
+  <div>
+    <script>
+      window.fakeData = ["Wait, it doesn't wait for React to load?", "How does this even work?", "I like marshmallows"]
+    </script>
+    <p class="comment">Wait, it doesn&#x27;t wait for React to load?</p>
+    <p class="comment">How does this even work?</p>
+    <p class="comment">I like marshmallows</p>
+  </div>
+</div>
+<script>function $RC(a, b) { a = document.getElementById(a); b = document.getElementById(b); b.parentNode.removeChild(b); if (a) { a = a.previousSibling; var f = a.parentNode, c = a.nextSibling, e = 0; do { if (c && 8 === c.nodeType) { var d = c.data; if ("/$" === d) if (0 === e) break; else e--; else "$" !== d && "$?" !== d && "$!" !== d || e++ } d = c.nextSibling; f.removeChild(c); c = d } while (c); for (; b.firstChild;)f.insertBefore(b.firstChild, c); a.data = "$"; a._reactRetry && a._reactRetry() } }; $RC("B:0", "S:0")</script>
