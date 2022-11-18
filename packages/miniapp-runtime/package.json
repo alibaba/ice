@@ -1,6 +1,6 @@
 {
   "name": "@ice/miniapp-runtime",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ice runtime for miniapps.",
   "type": "module",
   "types": "./esm/index.d.ts",
