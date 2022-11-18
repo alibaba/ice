@@ -11,7 +11,7 @@ function createServerData() {
     read() {
       if (typeof window !== 'undefined') {
         // @ts-ignore
-        return window.fakeData;
+        return window.__DATA_COMMENTS__;
       }
 
       if (done) {

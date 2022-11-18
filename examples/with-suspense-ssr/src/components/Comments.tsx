@@ -8,7 +8,7 @@ export default function Comments() {
   return (
     <div>
       <script dangerouslySetInnerHTML={{ __html: `
-        window.fakeData = ${JSON.stringify(comments)}
+        window.__DATA_COMMENTS__ = ${JSON.stringify(comments)}
       ` }}
       />
       {comments.map((comment, i) => (
