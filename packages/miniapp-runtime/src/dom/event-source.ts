@@ -6,6 +6,11 @@ interface IEventSource extends Map<string | undefined | null, Node> {
 }
 
 class EventSource extends Map {
+  static create(): IEventSource {
+    const inst = new Map();
+    inst['__proto__'] = EventSource.prototype;
+    return inst as IEventSource;
+  }
   removeNode(child: Node) {
     const { sid, uid } = child;
     this.delete(sid);
@@ -19,4 +24,4 @@ class EventSource extends Map {
   }
 }
 
-export const eventSource: IEventSource = new EventSource();
+export const eventSource: IEventSource = EventSource.create();
