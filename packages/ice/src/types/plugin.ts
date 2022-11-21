@@ -38,6 +38,7 @@ export type ServerCompiler = (
     externalDependencies?: boolean;
     transformEnv?: boolean;
     assetsManifest?: AssetsManifest;
+    redirectImports?: Config['redirectImports'];
   }
 ) => Promise<Partial<BuildResult & { serverEntry: string; error: any }>>;
 export type WatchEvent = [
