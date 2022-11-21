@@ -43,14 +43,17 @@ interface CreateServiceOptions {
 
 async function createService({ rootDir, command, commandArgs }: CreateServiceOptions) {
   const buildSpinner = createSpinner('loading config...');
-  const templateDir = path.join(__dirname, '../templates/core/');
+  const templateDir = path.join(__dirname, '../templates/');
+  const coreTemplate = path.join(templateDir, 'core/');
   const configFile = 'ice.config.(mts|mjs|ts|js|cjs|json)';
   const dataCache = new Map<string, string>();
   const generator = new Generator({
+    // Directory of templates includes `core` and `exports`.
+    templateDir,
     rootDir,
     targetDir: RUNTIME_TMP_DIR,
     // add default template of ice
-    templates: [templateDir],
+    templates: [coreTemplate],
   });
 
   const { addWatchEvent, removeWatchEvent } = createWatch({
@@ -159,13 +162,11 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const platformTaskConfig = taskConfigs[0];
 
   const iceRuntimePath = '@ice/runtime';
-  const enableRoutes = platform === WEB;
   // add render data
   generator.setRenderData({
     ...routesInfo,
     platform,
     iceRuntimePath,
-    enableRoutes,
     hasExportAppData,
     runtimeModules,
     coreEnvKeys,
@@ -173,6 +174,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     memoryRouter: platformTaskConfig.config.memoryRouter,
     hydrate: !csr,
     importCoreJs: polyfill === 'entry',
+    // Enable react-router for web as default.
+    enableRoutes: true,
   });
   dataCache.set('routes', JSON.stringify(routesInfo));
   dataCache.set('hasExportAppData', hasExportAppData ? 'true' : '');
@@ -184,7 +187,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   }, generator.addRenderFile, {
     rootDir,
     runtimeDir: RUNTIME_TMP_DIR,
-    templateDir: path.join(templateDir, '../exports'),
+    templateDir: path.join(templateDir, 'exports'),
     dataLoader: userConfig.dataLoader,
   });
 
@@ -207,7 +210,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     ...getWatchEvents({
       generator,
       targetDir: RUNTIME_TMP_DIR,
-      templateDir,
+      templateDir: coreTemplate,
       cache: dataCache,
       ctx,
       serverCompiler,

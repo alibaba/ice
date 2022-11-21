@@ -24,24 +24,26 @@ const plugin: Plugin<MiniappOptions> = (miniappOptions = {}) => ({
       // Recommand add @ice/miniapp-runtime in dependencies when use pnpm.
       // Use `@ice/miniapp-runtime/esm/app` for vscode type hint.
       const miniappRuntime = '@ice/miniapp-runtime/esm/app';
-      generator.addExport({
-        specifier: [
-          'defineAppConfig',
-          'useAppData',
-          'useData',
-          'useConfig',
-          'Link',
-          'useSearchParams',
-          'history',
-          'defineDataLoader',
-        ],
-        source: miniappRuntime,
+      const importSpecifiers = [
+        'defineAppConfig',
+        'useAppData',
+        'useData',
+        'useConfig',
+        'Link',
+        'useSearchParams',
+        'history',
+        'defineDataLoader',
+      ];
+      generator.addRenderFile('core/entry.client.tsx.ejs', 'entry.miniapp.tsx', {
+        iceRuntimePath: miniappRuntime,
+        enableRoutes: false,
       });
-      generator.modifyRenderData((renderData) => {
-        return {
-          ...renderData,
-          iceRuntimePath: miniappRuntime,
-        };
+
+      generator.addRenderFile('core/index.ts.ejs', 'index.miniapp.ts', {
+        framework: {
+          imports: `import { ${importSpecifiers.join(',\n')} } from '${miniappRuntime}';`,
+          exports: importSpecifiers.join(',\n'),
+        },
       });
       // Get server compiler by hooks
       onHook(`before.${command as 'start' | 'build'}.run`, async ({ getAppConfig, getRoutesConfig }) => {
