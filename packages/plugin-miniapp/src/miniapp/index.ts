@@ -5,6 +5,7 @@
  * */
 import * as path from 'path';
 import { createRequire } from 'node:module';
+import fs from 'fs-extra';
 import fg from 'fast-glob';
 import type { Config } from '@ice/app/esm/types';
 import getMiniappPlatformConfig from '../platforms/index.js';
@@ -48,6 +49,7 @@ const getMiniappTask = ({
     projectConfigJson,
     nativeConfig,
   });
+  const isPublicDirExist = fs.existsSync(path.join(rootDir, 'public'));
   const defaultLogging = command === 'start' ? 'summary' : 'summary assets';
   return {
     mode,
@@ -61,6 +63,7 @@ const getMiniappTask = ({
       globalObject,
       enabledLibraryTypes: [],
     },
+    cacheDir: path.join(rootDir, 'node_modules', '.cache'),
     sourceMap: command === 'start' ? 'cheap-module-source-map' : false,
     alias: {
       ice: path.join(rootDir, runtimeDir, 'index.ts'),
@@ -113,7 +116,7 @@ const getMiniappTask = ({
       maxEntrypointSize: 2 * 1000 * 1000,
     },
     devServer: {}, // No need to use devServer in miniapp
-    enableCopyPlugin: true,
+    enableCopyPlugin: isPublicDirExist, // Only when public dir exists should copy-webpack-plugin be enabled
     swcOptions: {
       // compatible with former design that miniapp represents ali miniapp
       keepPlatform: platform === 'ali-miniapp' ? 'miniapp' : platform,

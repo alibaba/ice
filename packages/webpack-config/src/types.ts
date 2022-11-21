@@ -44,6 +44,13 @@ interface SwcOptions {
   getRoutePaths?: Function;
 }
 
+interface ImportDeclaration {
+  specifier: string | string[];
+  source: string;
+  type?: boolean;
+  alias?: Record<string, string>;
+}
+
 type Output = Configuration['output'];
 type Optimization = Configuration['optimization'];
 type Performance = Configuration['performance'];
@@ -134,6 +141,8 @@ export interface Config {
   eslintOptions?: Options;
 
   swcOptions?: SwcOptions;
+
+  redirectImports?: ImportDeclaration[];
 
   entry?: {
     [key: string]: string;

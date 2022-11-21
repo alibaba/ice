@@ -1,7 +1,7 @@
 ---
 title: 使用 antd 组件
 ---
-:::caution
+:::tips
 小程序端不支持该能力。
 :::
 

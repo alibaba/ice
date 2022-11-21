@@ -10,9 +10,10 @@ interface MiniappOptions {
   nativeConfig?: Record<string, any>;
 }
 
-const plugin: Plugin<MiniappOptions> = ({ nativeConfig = {} }) => ({
+const plugin: Plugin<MiniappOptions> = (miniappOptions = {}) => ({
   name: '@ice/plugin-miniapp',
   setup: ({ registerTask, onHook, context, dataCache, generator }) => {
+    const { nativeConfig = {} } = miniappOptions;
     const { commandArgs, rootDir, command } = context;
     const { platform } = commandArgs;
     if (MINIAPP_PLATFORMS.includes(platform)) {
