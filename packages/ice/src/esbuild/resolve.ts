@@ -12,15 +12,17 @@ interface PluginOptions {
   externals?: Config['externals'];
 }
 
-const aliasPlugin = (options: PluginOptions): Plugin => {
+const resolvePlugin = (options: PluginOptions): Plugin => {
   const { alias, externalDependencies, format, externals } = options;
   return {
-    name: 'esbuild-alias',
+    name: 'esbuild-resolve',
     setup(build: PluginBuild) {
       build.onResolve({ filter: /.*/ }, (args) => {
         const id = args.path;
+
         // ice do not support alias with config onlyModule
         const resolved = resolveId(id, alias);
+
         if (resolved && resolved !== id) {
           let resolvedPath = resolved;
 
@@ -40,7 +42,7 @@ const aliasPlugin = (options: PluginOptions): Plugin => {
 
           const external = shouldExternal(resolvedPath, externals);
 
-          // absolute path will be resolved by other plugins, so we need to check external here.
+          // absolute path can not be resolved by other plugins, so we need to check external here.
           if (external) {
             return {
               path: resolvedPath,
@@ -50,10 +52,7 @@ const aliasPlugin = (options: PluginOptions): Plugin => {
 
           return { path: resolvedPath };
         }
-      });
 
-      build.onResolve({ filter: /.*/ }, (args) => {
-        const id = args.path;
         // external ids which is third-party dependencies
         if (id[0] !== '.' && !path.isAbsolute(id) && externalDependencies && isExternalBuiltinDep(id, format)) {
           return {
@@ -84,4 +83,4 @@ function shouldExternal(id, externals) {
   });
 }
 
-export default aliasPlugin;
+export default resolvePlugin;
