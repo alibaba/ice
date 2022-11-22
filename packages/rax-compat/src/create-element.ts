@@ -29,7 +29,7 @@ import transformProps from './props';
 // borderImageOutset|borderImageSlice|borderImageWidth -> erim
 const NON_DIMENSIONAL_REG = /opa|ntw|ne[ch]|ex(?:s|g|n|p|$)|^ord|zoo|grid|orp|ows|mnc|^columns$|bs|erim|onit/i;
 
-function InputCompat(props: any, inputRef: any) {
+const InputCompat = forwardRef((props: any, inputRef: any) => {
   const { value, onInput, onChange, inputType, ...rest } = props;
   const [v, setV] = useState(value);
   const changeCallback = useCallback((event: SyntheticEvent) => {
@@ -66,7 +66,7 @@ function InputCompat(props: any, inputRef: any) {
     onChange: changeCallback,
     ref,
   });
-}
+});
 
 /**
  * Compat createElement for rax export.
@@ -109,7 +109,7 @@ export function createElement<P extends {
   // So we should compat input to InputCompat, the same as textarea.
   if (type === 'input' || type === 'textarea') {
     rest.inputType = type;
-    type = forwardRef(InputCompat);
+    type = InputCompat;
   }
 
   // Compat for visibility events.
