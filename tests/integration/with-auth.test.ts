@@ -17,7 +17,7 @@ describe(`build ${example}`, () => {
     page = res.page;
     browser = res.browser;
     expect(await page.$$text('h1')).toStrictEqual(['Index']);
-  }, 120000);
+  });
 
   test('open /blog', async () => {
     await page.push('/blog.html');
@@ -46,7 +46,7 @@ describe(`start ${example}`, () => {
     page = res.page;
     browser = res.browser;
     expect(await page.$$text('h1')).toStrictEqual(['Index']);
-  }, 120000);
+  });
 
   test('open /blog', async () => {
     await page.push('/blog');

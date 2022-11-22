@@ -4,6 +4,7 @@ import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import type { Configuration } from 'webpack';
 import type { Config } from './types.js';
 import compilationPlugin from './unPlugins/compilation.js';
+import redirectImportPlugin from './unPlugins/redirectImport.js';
 import compileExcludes from './compileExcludes.js';
 
 type Compiler = 'webpack' | 'esbuild';
@@ -40,6 +41,7 @@ function getCompilerPlugins(config: Config, compiler: Compiler) {
     mode,
     compileIncludes,
     swcOptions,
+    redirectImports,
     fastRefresh,
     cacheDir,
     polyfill,
@@ -52,6 +54,14 @@ function getCompilerPlugins(config: Config, compiler: Compiler) {
     ...(transformPlugins.filter(({ enforce }) => !enforce || enforce === 'pre') || []),
     ...transforms.map((transform, index) => ({ name: `transform_${index}`, transform, transformInclude })),
   );
+
+  if (redirectImports) {
+    compilerPlugins.push(redirectImportPlugin({
+      sourceMap,
+      exportData: redirectImports,
+    }));
+  }
+
   // Use webpack loader instead of webpack plugin to do the compilation.
   // Reason: https://github.com/unjs/unplugin/issues/154
   if (swcOptions && compiler !== 'webpack') {

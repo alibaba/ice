@@ -9,7 +9,7 @@ import type { ServerCompiler } from '../types/plugin.js';
 import type { UserConfig } from '../types/userConfig.js';
 import escapeLocalIdent from '../utils/escapeLocalIdent.js';
 import cssModulesPlugin from '../esbuild/cssModules.js';
-import aliasPlugin from '../esbuild/alias.js';
+import resolvePlugin from '../esbuild/resolve.js';
 import ignorePlugin from '../esbuild/ignore.js';
 import createAssetsPlugin from '../esbuild/assets.js';
 import { CACHE_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
@@ -53,6 +53,7 @@ export function createServerCompiler(options: Options) {
     externalDependencies,
     transformEnv = true,
     assetsManifest,
+    redirectImports,
   } = {}) => {
     let depsMetadata: DepsMetaData;
     let swcOptions = merge({}, {
@@ -70,6 +71,7 @@ export function createServerCompiler(options: Options) {
       env: false,
       polyfill: false,
       swcOptions,
+      redirectImports,
     }, 'esbuild');
 
     if (preBundle) {
@@ -120,10 +122,11 @@ export function createServerCompiler(options: Options) {
       plugins: [
         ...(customBuildOptions.plugins || []),
         emptyCSSPlugin(),
-        aliasPlugin({
+        resolvePlugin({
           alias,
           externalDependencies: externalDependencies ?? !server.bundle,
           format,
+          externals: server.externals,
         }),
         server?.ignores && ignorePlugin(server.ignores),
         cssModulesPlugin({

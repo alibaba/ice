@@ -67,6 +67,11 @@ export default class DataLoaderPlugin {
               preBundle: false,
               externalDependencies: false,
               transformEnv: false,
+              // Redirect import defineDataLoader from @ice/runtime to avoid build plugin side effect code.
+              redirectImports: [{
+                specifier: ['defineDataLoader'],
+                source: '@ice/runtime',
+              }],
             },
           );
           if (error) {

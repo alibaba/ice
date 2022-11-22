@@ -23,7 +23,7 @@ describe(`build ${example}`, () => {
     expect((await page.$$text('span'))[2]).toStrictEqual('Visit https://rax.js.org');
     expect((await page.$$text('img')).length).toEqual(1);
     expect(fs.existsSync(path.join(__dirname, `../../examples/${example}/build/js/data-loader.js`))).toBe(false);
-  }, 120000);
+  });
 
   afterAll(async () => {
     await browser.close();
@@ -45,7 +45,7 @@ describe(`start ${example}`, () => {
     expect((await page.$$text('span'))[1]).toStrictEqual('More information about Rax');
     expect((await page.$$text('span'))[2]).toStrictEqual('Visit https://rax.js.org');
     expect((await page.$$text('img')).length).toEqual(1);
-  }, 120000);
+  });
 
   afterAll(async () => {
     await browser.close();
