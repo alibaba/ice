@@ -55,7 +55,7 @@ export interface UserConfig {
     format?: 'esm' | 'cjs';
     bundle?: boolean;
     ignores?: IgnorePattern[];
-    externals?: Config['externals'];
+    externals?: string[];
   };
   optimization?: Optimization;
   mock?: { exclude?: string[] };

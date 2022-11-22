@@ -9,7 +9,7 @@ interface PluginOptions {
   alias: Record<string, string | false>;
   externalDependencies: boolean;
   format: BuildOptions['format'];
-  externals?: Config['externals'];
+  externals?: string[];
 }
 
 const resolvePlugin = (options: PluginOptions): Plugin => {
@@ -73,7 +73,7 @@ const resolvePlugin = (options: PluginOptions): Plugin => {
   };
 };
 
-function shouldExternal(id, externals) {
+function shouldExternal(id: string, externals?: string[]) {
   if (!externals) {
     return;
   }
