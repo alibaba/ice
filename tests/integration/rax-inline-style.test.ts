@@ -23,7 +23,7 @@ describe(`build ${example}`, () => {
     expect((await page.$$attr('span', 'style'))[0]).contain('display:block');
     // inline index.css
     expect((await page.$$attr('span', 'style'))[1]).contain('color:rgb(85,85,85)');
-  }, 120000);
+  });
 
   afterAll(async () => {
     await browser.close();
@@ -49,7 +49,7 @@ describe(`start ${example}`, () => {
     expect((await page.$$attr('span', 'style'))[0]).contain('display:block');
     // inline index.css
     expect((await page.$$attr('span', 'style'))[1]).contain('color:rgb(85,85,85)');
-  }, 120000);
+  });
 
   afterAll(async () => {
     await browser.close();
