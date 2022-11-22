@@ -1,7 +1,6 @@
 import path from 'path';
 import type { Plugin, PluginBuild, BuildOptions } from 'esbuild';
 import fg from 'fast-glob';
-import type { Config } from '@ice/webpack-config/esm/types';
 import { resolveId } from '../service/analyze.js';
 import isExternalBuiltinDep from '../utils/isExternalBuiltinDep.js';
 
