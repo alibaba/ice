@@ -21,6 +21,7 @@ import {
   createContext as _createContext,
 } from 'react';
 import is from './is';
+import { isFunction } from './type';
 
 /**
  * Compat useState for rax export.
@@ -36,6 +37,9 @@ export function useState<S>(initialState: S | (() => S)): ReturnType<typeof _use
   });
   // @NOTE: Rax will not re-render if set a same value.
   function updateState(newState: S) {
+    if (isFunction(newState)) {
+      newState = newState(stateHook[0].eagerState);
+    }
     // Filter shallow-equal value set.
     if (!is(newState, stateHook[0].eagerState)) {
       stateHook[1]({

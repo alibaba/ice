@@ -53,6 +53,7 @@ export function createServerCompiler(options: Options) {
     externalDependencies,
     transformEnv = true,
     assetsManifest,
+    redirectImports,
   } = {}) => {
     let depsMetadata: DepsMetaData;
     let swcOptions = merge({}, {
@@ -70,6 +71,7 @@ export function createServerCompiler(options: Options) {
       env: false,
       polyfill: false,
       swcOptions,
+      redirectImports,
     }, 'esbuild');
 
     if (preBundle) {

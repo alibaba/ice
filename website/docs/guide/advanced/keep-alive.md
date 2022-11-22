@@ -2,7 +2,7 @@
 title: Keep Alive
 ---
 
-:::caution
+:::tips
 小程序端不支持该能力。
 :::
 
