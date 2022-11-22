@@ -1,0 +1,26 @@
+import { modifyLoader } from '@ice/webpack-modify';
+
+const plugin = () => ({
+  name: 'plugin-babel-loaders',
+  setup: ({ onGetConfig }) => {
+    onGetConfig((config) => {
+      config.configureWebpack ??= [];
+      config.configureWebpack.push((webpackConfig) => {
+        return modifyLoader(webpackConfig, {
+          rule: '',
+          loader: 'babel-loader',
+          options: (loaderOptions) => {
+            return {
+              presets: [...(loaderOptions.presets || []), ...(<%-JSON.stringify(babelPlugins)%> || [])],
+              plugins: [...(loaderOptions.plugins || []), ...(<%-JSON.stringify(babelPresets)%> || [])],
+            }
+          }
+        });
+      });
+
+      return config;
+    })
+  }
+});
+
+export default plugin;

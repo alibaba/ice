@@ -1,0 +1,21 @@
+import { addLoader } from '@ice/webpack-modify';
+
+const plugin = () => ({
+  name: 'plugin-webpack-loaders',
+  setup: ({ onGetConfig }) => {
+    onGetConfig((config) => {
+      config.configureWebpack ??= [];
+      config.configureWebpack.push((webpackConfig) => {
+        webpackConfig.module ??= {};
+        webpackConfig.module.rules ??= [];
+        <% for (const [webpackLoaderName, config] of Object.entries(webpackLoaders)) { %>
+        return addLoader(webpackConfig, config);
+        <% }; %>
+      });
+
+      return config;
+    })
+  }
+});
+
+export default plugin;

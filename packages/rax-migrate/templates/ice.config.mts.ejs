@@ -1,0 +1,62 @@
+import { defineConfig } from '@ice/app';
+import type { UserConfig } from '@ice/app';
+import compatRax from '@ice/plugin-rax-compat';
+import jsxplus from '@ice/plugin-jsx-plus';
+import path from 'path';
+<% (extraPlugins || []).forEach(function(pluginPackageName){ %>
+import <%-pluginPackageName.slice(pluginPackageName.lastIndexOf('/') + 1, pluginPackageName.length).replace('.js', '').replace(/\-(\w)/g, (all, letter) => letter.toUpperCase())%> from '<%-pluginPackageName%>';
+<% }); %>
+import weexExternals from './plugins/plugin-weex-external.js';
+
+const config: UserConfig = <%-JSON.stringify(iceConfig)%>
+
+// Route config.
+config.routes = {
+  ignoreFiles: ['**/**'],
+  <% if(routeConfig) {-%>
+  defineRoutes: (route) => {
+    <% (routeConfig.defineRoutesConfig || []).forEach(function(config){ %>route('<%- config.route %>', '<%- config.fileName %>');<% }); %>
+  },
+  <% } -%>
+};
+
+// External weex modules.
+config.externals = {
+  '@weex-module/storage': 'commonjs @weex-module/storage',
+  '@weex-module/windvane': 'commonjs @weex-module/windvane',
+  '@weex-module/dom': 'commonjs @weex-module/dom',
+  '@weex-module/mtop': 'commonjs @weex-module/mtop',
+  '@weex-module/broadcast': 'commonjs @weex-module/broadcast',
+};
+
+// Compat alias, the member of alias is relative path in rax build.json. 
+if (config.alias) {
+  for (let [key, value] of Object.entries(config.alias)) {
+    config.alias[key] = path.resolve(process.cwd(), value)
+  }
+}
+
+// TODO: Delete bundle and format, there is currently a problem with ems packaging.
+if (!config.server) {
+  config.server = {};
+}
+config.server.bundle = true;
+config.server.format = 'cjs';
+
+if (!config.plugins) {
+  config.plugins = [];
+}
+
+config.plugins.push(weexExternals());
+config.plugins.push(compatRax(<%-JSON.stringify(compatRaxConfig)%>));
+config.plugins.push(jsxplus());
+<% (extraPlugins || []).forEach(function(pluginPackageName){ %>
+config.plugins.push(<%-pluginPackageName.slice(pluginPackageName.lastIndexOf('/') + 1, pluginPackageName.length).replace('.js', '').replace(/\-(\w)/g, (all, letter) => letter.toUpperCase())%>());
+<% }); %>
+
+// Turn of ssg and ssr to avoid error in node.
+config.ssg = false;
+config.ssr = false;
+
+// The project config, see https://v3.ice.work/docs/guide/basic/config
+export default defineConfig(config);
