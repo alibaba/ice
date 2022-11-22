@@ -151,7 +151,7 @@ describe(`start ${example}`, () => {
     expect(await page.$$text('#mounted')).toStrictEqual(['Client']);
     const pageUrlText = await page.$$text('#page-url');
     expect((pageUrlText as string[])[0].endsWith('/client-only')).toBeTruthy();
-  });
+  }, 120000);
 
   afterAll(async () => {
     await browser.close();

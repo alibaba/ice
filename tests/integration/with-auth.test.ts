@@ -22,7 +22,7 @@ describe(`build ${example}`, () => {
   test('open /blog', async () => {
     await page.push('/blog.html');
     expect(await page.$$text('#no-auth')).toStrictEqual(['无权限访问']);
-  });
+  }, 120000);
 
   afterAll(async () => {
     await browser.close();
