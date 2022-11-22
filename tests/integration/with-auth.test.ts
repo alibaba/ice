@@ -17,12 +17,12 @@ describe(`build ${example}`, () => {
     page = res.page;
     browser = res.browser;
     expect(await page.$$text('h1')).toStrictEqual(['Index']);
-  }, 120000);
+  });
 
   test('open /blog', async () => {
     await page.push('/blog.html');
     expect(await page.$$text('#no-auth')).toStrictEqual(['无权限访问']);
-  }, 120000);
+  });
 
   afterAll(async () => {
     await browser.close();
@@ -46,7 +46,7 @@ describe(`start ${example}`, () => {
     page = res.page;
     browser = res.browser;
     expect(await page.$$text('h1')).toStrictEqual(['Index']);
-  }, 120000);
+  });
 
   test('open /blog', async () => {
     await page.push('/blog');

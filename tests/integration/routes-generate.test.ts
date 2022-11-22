@@ -17,7 +17,7 @@ describe(`build ${example}`, () => {
     browser = res.browser;
     expect(await page.$$text('h1')).toStrictEqual(['Layout']);
     expect(await page.$$text('h2')).toStrictEqual(['Home']);
-  }, 120000);
+  });
 
   test('define extra routes', async () => {
     await page.push('/about-me.html');
@@ -27,7 +27,7 @@ describe(`build ${example}`, () => {
     await page.push('/product.html');
     expect(await page.$$text('h1')).toStrictEqual(['Layout']);
     expect(await page.$$text('h2')).toStrictEqual(['Products Page']);
-  }, 120000);
+  });
 
   test('page layout', async () => {
     await page.push('/dashboard/a.html');
@@ -39,7 +39,7 @@ describe(`build ${example}`, () => {
     expect(await page.$$text('h1')).toStrictEqual(['Layout']);
     expect(await page.$$text('h2')).toStrictEqual(['Dashboard']);
     expect(await page.$$text('h3')).toStrictEqual(['B page']);
-  }, 120000);
+  });
 
   // TODO: dynamic-routes test
   test.todo('dynamic routes', async () => {});
@@ -60,7 +60,7 @@ describe(`start ${example}`, () => {
     browser = res.browser;
     expect(await page.$$text('h1')).toStrictEqual(['Layout']);
     expect(await page.$$text('h2')).toStrictEqual(['Home']);
-  }, 120000);
+  });
 
   test('define extra routes', async () => {
     await page.push('/about-me');
@@ -70,7 +70,7 @@ describe(`start ${example}`, () => {
     await page.push('/product');
     expect(await page.$$text('h1')).toStrictEqual(['Layout']);
     expect(await page.$$text('h2')).toStrictEqual(['Products Page']);
-  }, 120000);
+  });
 
   test('page layout', async () => {
     await page.push('/dashboard/a');
@@ -82,7 +82,7 @@ describe(`start ${example}`, () => {
     expect(await page.$$text('h1')).toStrictEqual(['Layout']);
     expect(await page.$$text('h2')).toStrictEqual(['Dashboard']);
     expect(await page.$$text('h3')).toStrictEqual(['B page']);
-  }, 120000);
+  });
 
   test('dynamic routes layout', async () => {
     await page.push('/detail/a');
@@ -92,7 +92,7 @@ describe(`start ${example}`, () => {
     await page.push('/detail/b');
     expect(await page.$$text('h1')).toStrictEqual(['Layout']);
     expect(await page.$$text('h2')).toStrictEqual(['Detail id: b']);
-  }, 120000);
+  });
 
   afterAll(async () => {
     await browser.close();

@@ -29,7 +29,7 @@ describe(`build ${example}`, () => {
     // size of data loader should be less than 14kib
     const stats = fs.statSync(dataLoaderPath);
     expect(stats.size).toBeLessThan(1024 * 14);
-  }, 120000);
+  });
 
   afterAll(async () => {
     await browser.close();
