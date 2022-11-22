@@ -6,7 +6,7 @@ import type {
   RefObject,
   SyntheticEvent,
 } from 'react';
-import { createElement as _createElement, useEffect, useCallback, useRef, useState } from 'react';
+import { createElement as _createElement, useEffect, useCallback, useRef, forwardRef, useState } from 'react';
 import { cached, convertUnit } from 'style-unit';
 import VisibilityChange from '@ice/appear';
 import { isFunction, isObject, isNumber } from './type';
@@ -29,7 +29,7 @@ import transformProps from './props';
 // borderImageOutset|borderImageSlice|borderImageWidth -> erim
 const NON_DIMENSIONAL_REG = /opa|ntw|ne[ch]|ex(?:s|g|n|p|$)|^ord|zoo|grid|orp|ows|mnc|^columns$|bs|erim|onit/i;
 
-function InputCompat(props: any) {
+function InputCompat(props: any, inputRef: any) {
   const { value, onInput, onChange, inputType, ...rest } = props;
   const [v, setV] = useState(value);
   const changeCallback = useCallback((event: SyntheticEvent) => {
@@ -38,8 +38,8 @@ function InputCompat(props: any) {
     // Event of onInput should be native event.
     onInput && onInput(event.nativeEvent);
   }, [onInput]);
-
-  const ref = useRef();
+  const defaultRef = useRef();
+  const ref = inputRef || defaultRef;
 
   useEffect(() => {
     setV(value);
@@ -58,7 +58,7 @@ function InputCompat(props: any) {
         eventTarget.removeEventListener('change', onChange);
       }
     };
-  }, [onChange]);
+  }, [onChange, ref]);
 
   return _createElement(inputType, {
     ...rest,
@@ -109,7 +109,7 @@ export function createElement<P extends {
   // So we should compat input to InputCompat, the same as textarea.
   if (type === 'input' || type === 'textarea') {
     rest.inputType = type;
-    type = InputCompat;
+    type = forwardRef(InputCompat);
   }
 
   // Compat for visibility events.
