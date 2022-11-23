@@ -27,7 +27,8 @@ type ServerCompilerBuildOptions = Pick<
   'outExtension' |
   'plugins' |
   'logLevel' |
-  'sourcemap'
+  'sourcemap' |
+  'metafile'
 >;
 
 export type ServerCompiler = (
@@ -39,6 +40,7 @@ export type ServerCompiler = (
     transformEnv?: boolean;
     assetsManifest?: AssetsManifest;
     redirectImports?: Config['redirectImports'];
+    removeOutputs?: boolean;
   }
 ) => Promise<Partial<BuildResult & { serverEntry: string; error: any }>>;
 export type WatchEvent = [

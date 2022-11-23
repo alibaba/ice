@@ -210,7 +210,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       templateDir,
       cache: dataCache,
       ctx,
-      serverCompiler,
     }),
   );
 

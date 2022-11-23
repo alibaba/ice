@@ -2,7 +2,7 @@ import * as path from 'path';
 import consola from 'consola';
 import esbuild from 'esbuild';
 import fse from 'fs-extra';
-import type { BuildResult } from 'esbuild';
+import fg from 'fast-glob';
 import type { Config } from '@ice/webpack-config/esm/types';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { TaskConfig } from 'build-scripts';
@@ -34,7 +34,6 @@ interface Options {
 }
 
 const { merge, difference } = lodash;
-const serverCompilerResultMap = new Map<string, BuildResult>();
 
 export function createServerCompiler(options: Options) {
   const { task, rootDir, command, server, syntaxFeatures } = options;
@@ -58,6 +57,7 @@ export function createServerCompiler(options: Options) {
     transformEnv = true,
     assetsManifest,
     redirectImports,
+    removeOutputs,
   } = {}) => {
     let depsMetadata: DepsMetaData;
     let swcOptions = merge({}, {
@@ -154,7 +154,6 @@ export function createServerCompiler(options: Options) {
           ].filter(Boolean),
         }),
       ].filter(Boolean),
-      metafile: true,
     };
     if (typeof task.config?.server?.buildOptions === 'function') {
       buildOptions = task.config.server.buildOptions(buildOptions);
@@ -172,18 +171,13 @@ export function createServerCompiler(options: Options) {
       const outJSExtension = esm ? '.mjs' : '.cjs';
       const serverEntry = path.join(rootDir, task.config.outputDir, SERVER_OUTPUT_DIR, `index${outJSExtension}`);
 
-      const serverCompilerResultMapKey = (Array.isArray(buildOptions.entryPoints) ? buildOptions.entryPoints : Object.keys(buildOptions.entryPoints)).join('-');
-      const oldServerCompilerResult = serverCompilerResultMap.get(serverCompilerResultMapKey);
-      if (oldServerCompilerResult) {
-        const { metafile: { outputs }, outputFiles } = oldServerCompilerResult;
-        if (!outputFiles) {
-          const oldOutputFileNames = Object.keys(outputs);
-          const currentOutputFileNames = Object.keys(esbuildResult.metafile.outputs);
-          const outdatedFileNames = difference(oldOutputFileNames, currentOutputFileNames);
-          outdatedFileNames.forEach(outdatedFileName => fse.removeSync(outdatedFileName));
-        }
+      if (removeOutputs && esbuildResult.metafile) {
+        // build/server/a.mjs -> a.mjs
+        const currentOutputFiles = Object.keys(esbuildResult.metafile.outputs).map(output => output.replace(RegExp(`^${path.relative(rootDir, buildOptions.outdir)}${path.sep}`), ''));
+        const allOutputFiles = fg.sync('**', { cwd: buildOptions.outdir });
+        const outdatedFiles = difference(allOutputFiles, currentOutputFiles);
+        outdatedFiles.forEach(outdatedFile => fse.removeSync(path.join(buildOptions.outdir, outdatedFile)));
       }
-      serverCompilerResultMap.set(serverCompilerResultMapKey, esbuildResult);
 
       return {
         ...esbuildResult,
