@@ -124,6 +124,7 @@ export function createServerCompiler(options: Options) {
         ? sourceMap : (sourceMap.includes('inline') ? 'inline' : !!sourceMap),
       ...customBuildOptions,
       define,
+      absWorkingDir: rootDir,
       external: Object.keys(externals),
       plugins: [
         ...(customBuildOptions.plugins || []),
@@ -173,7 +174,7 @@ export function createServerCompiler(options: Options) {
 
       if (removeOutputs && esbuildResult.metafile) {
         // build/server/a.mjs -> a.mjs
-        const currentOutputFiles = Object.keys(esbuildResult.metafile.outputs).map(output => path.join(process.cwd(), output).replace(RegExp(`^${buildOptions.outdir}${path.sep}`), ''));
+        const currentOutputFiles = Object.keys(esbuildResult.metafile.outputs).map(output => output.replace(RegExp(`^${path.relative(rootDir, buildOptions.outdir)}${path.sep}`), ''));
         const allOutputFiles = fg.sync('**', { cwd: buildOptions.outdir });
         const outdatedFiles = difference(allOutputFiles, currentOutputFiles);
         outdatedFiles.forEach(outdatedFile => fse.removeSync(path.join(buildOptions.outdir, outdatedFile)));
