@@ -81,7 +81,7 @@ export default function Layout() {
 
 ## 嵌套路由
 
-通过 `创建文件夹` 和 `布局组件`，可以轻松构建嵌套路由。例如，下面的示例中，`/repo/preview` 页面，由这三个组件嵌套而成：
+通过创建`文件夹` 和 `布局组件`，可以轻松构建嵌套路由。例如，下面的示例中，`/repo/preview` 页面，由这三个组件嵌套而成：
 - layout.tsx
 - repo/layout.tsx
 - repo/preview.tsx
@@ -97,6 +97,10 @@ ice.js 针对 `嵌套路由` 的场景，应用了以下优化，来让页面达
 例如，下面这个常见的移动端营销页，可以将顶部通用的 `Slider` 抽象为 `布局组件`，将不同 `tab` 下对应的瀑布流，抽象为 `路由组件`。这样，`Slider` 和 `瀑布流` 就可以做到并行加载，并且当切换 `tab` 时，新的 tab 内容将由框架触发按需加载和渲染。[示例工程](https://github.com/ice-lab/ice-next/tree/master/examples/with-nested-routes)
 
 <img src="https://img.alicdn.com/imgextra/i3/O1CN01gKRkTc1aTe5QiWmpt_!!6000000003331-2-tps-1566-704.png" width="750px" />
+
+:::tip
+假如同时存在 `src/pages/home.tsx` 和 `src/pages/home/index.tsx`，则访问 `/home` 路由地址时，只有 `src/pages/home/index.tsx` 组件渲染。
+:::
 
 ## 动态路由
 
