@@ -55,13 +55,6 @@ function getCompilerPlugins(config: Config, compiler: Compiler) {
     ...transforms.map((transform, index) => ({ name: `transform_${index}`, transform, transformInclude })),
   );
 
-  if (redirectImports) {
-    compilerPlugins.push(redirectImportPlugin({
-      sourceMap,
-      exportData: redirectImports,
-    }));
-  }
-
   // Use webpack loader instead of webpack plugin to do the compilation.
   // Reason: https://github.com/unjs/unplugin/issues/154
   if (swcOptions && compiler !== 'webpack') {
@@ -81,6 +74,14 @@ function getCompilerPlugins(config: Config, compiler: Compiler) {
   compilerPlugins.push(
     ...(transformPlugins.filter(({ enforce }) => enforce === 'post') || []),
   );
+
+  // Add redirect import after compilationPlugin.
+  if (redirectImports) {
+    compilerPlugins.push(redirectImportPlugin({
+      sourceMap,
+      exportData: redirectImports,
+    }));
+  }
 
   return compiler === 'webpack'
     // Plugins will be transformed as webpack loader, the execute order of webpack loader is reversed.
