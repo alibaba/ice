@@ -79,98 +79,6 @@ export default function Layout() {
 
 如果同时存在 **全局布局组件** 和 **页面级布局组件**，则全局布局组件会嵌套于页面级布局组件之外。
 
-### 路由跳转
-
-ice.js 提供三种方式进行路由间跳转，这样就可以只加载下一个页面相比于当前页面差异化的 Bundle 进行渲染，以达到更好的性能体验。
-
-#### history
-
-可使用 [history](./api#history) API 进行路由跳转。
-
-```tsx
-import { history } from 'ice';
-
-export default () => {
-  history.push('/dashboard');
-}
-```
-
-#### useNavigate
-
-组件内可以使用 [useNavigate](./api#usenavigate) Hook 进行路由跳转。
-
-```tsx
-import { useNavigate } from 'ice';
-
-export default () => {
-  const navigate = useNavigate();
-  navigate('/logout');
-}
-```
-
-#### Link 组件
-
-```tsx title="src/pages/index.tsx"
-import { Link } from 'ice';
-
-export default function Home() {
-  return (
-    <>
-      <div>Hello ICE</div>
-      <Link to="/about">about ice</Link>
-    </>
-  );
-}
-```
-
-:::info
-在小程序中，Link 组件底层实现即为原生 `navigator` 组件。
-:::
-
-### 路由组件信息
-
-#### location
-
-使用 [useLocation](./api#uselocation) 获取 location 信息。
-
-```tsx
-import { useLocation } from 'ice';
-
-export default function () {
-  const location = useLocation();
-}
-```
-
-#### query
-
-使用 [useSearchParams](./api#usesearchparams) 获取和修改 query 信息。
-
-```tsx
-import { useSearchParams } from 'ice';
-
-export default function Repo() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  console.log(searchParams);
-  setSearchParams({ tab: 'a' })
-}
-```
-
-#### 动态路由参数
-
-使用 [useParams](./api#useparams) 获取动态路由的参数。
-
-```tsx
-import { useParams } from 'ice';
-
-// 路由规则为  /repo/:id
-// 当前路径    /repo/123
-export default function Repo() {
-  const params = useParams();
-  console.log(params);
-  // { id: 123 }
-}
-```
-
 ## 嵌套路由
 
 通过 `创建文件夹` 和 `布局组件`，可以轻松构建嵌套路由。例如，下面的示例中，`/repo/preview` 页面，由这三个组件嵌套而成：
@@ -199,21 +107,120 @@ ice.js 针对 `嵌套路由` 的场景，应用了以下优化，来让页面达
 
 <img src="https://img.alicdn.com/imgextra/i4/O1CN01IzAaaD1SnKBElEVDM_!!6000000002291-2-tps-722-440.png" width="350px" />
 
-在动态路由组件中可以通过 `useParams()` 方法拿到当前路由的参数：
+## 路由跳转
 
-```tsx title="src/pages/user/$id.tsx"
+ice.js 提供三种方式进行路由间跳转，这样就可以只加载下一个页面相比于当前页面差异化的 Bundle 进行渲染，以达到更好的性能体验。
+
+### history
+
+可使用 [history](./api#history) API 进行路由跳转。
+
+```tsx
+import { history } from 'ice';
+
+export default () => {
+  history.push('/dashboard');
+}
+```
+
+### useNavigate
+
+组件内可以使用 [useNavigate](./api#usenavigate) Hook 进行路由跳转。
+
+```tsx
+import { useNavigate } from 'ice';
+
+export default () => {
+  const navigate = useNavigate();
+  navigate('/logout');
+}
+```
+
+### Link 组件
+
+组件内可以使用 [`<Link />`](./api#link-) 组件进行路由跳转。
+
+```tsx title="src/pages/index.tsx"
+import { Link } from 'ice';
+
+export default function Home() {
+  return (
+    <>
+      <div>Hello ICE</div>
+      <Link to="/about">about ice</Link>
+    </>
+  );
+}
+```
+
+:::info
+在小程序中，Link 组件底层实现即为原生 `navigator` 组件。
+:::
+
+## 获取路由信息
+
+### location
+
+使用 [useLocation](./api#uselocation) 获取 location 信息。
+
+```tsx
+import { useLocation } from 'ice';
+
+export default function () {
+  const location = useLocation();
+}
+```
+
+### query
+
+使用 [useSearchParams](./api#usesearchparams) 获取和修改 query 信息。
+
+```tsx
+import { useSearchParams } from 'ice';
+
+export default function Repo() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  console.log(searchParams);
+  setSearchParams({ tab: 'a' })
+}
+```
+
+### 动态路由参数
+
+在动态路由组件使用 [useParams](./api#useparams) 获取当前路由的参数。
+
+```tsx
 import { useParams } from 'ice';
 
-export default function() {
-  const { id } = useParams();
-  console.log(id);   // '11432'
-  return <div />;
+// 路由规则为  /repo/:id
+// 当前路径    /repo/123
+export default function Repo() {
+  const params = useParams();
+  console.log(params);
+  // { id: 123 }
 }
+```
+
+## 忽略被解析为路由组件
+
+默认情况下，ice.js 会把 `src/pages` 目录下的每一个 `.(js|jsx|tsx)` 文件映射为一个路由地址。如果你有一些组件不想被解析成路由组件，可通过 [ignoreFiles](./config#ignorefiles) 进行配置。
+
+```ts title="ice.config.mts"
+import { defineConfig } from '@ice/app';
+
+export default defineConfig({
+  routes: {
+    ignoreFiles: [
+      'custom.tsx',
+      '**/components/**',   // 如果每个页面下有 components 目录存放当前页面的组件，可以通过添加此配置忽略被解析成路由组件
+    ],
+  },
+});
 ```
 
 ## 定制路由地址
 
-对于约定式路由不满足的场景，可以通过在 `ice.config.mts` 中 `defineConfig` 方式进行自定义，例如:
+对于约定式路由不满足的场景，可以通过 [defineRoutes](./config#defineroutes) 方式进行自定义。
 
 ```ts title="ice.config.mts"
 import { defineConfig } from '@ice/app';
@@ -221,13 +228,8 @@ import { defineConfig } from '@ice/app';
 export default defineConfig({
   routes: {
     defineRoutes: (route) => {
-      // 将 /about-me 路由访问内容指定为 about.tsx
-      route('/about-me', 'about.tsx');
-
-      // 为 /product 路由添加 layout.tsx 作为 layout，并渲染 products.tsx 内容
-      route('/', 'layout.tsx', () => {
-        route('/product', 'products.tsx');
-      });
+      // 将 /hello 路由访问内容指定为 about.tsx
+      route('/hello', 'about.tsx');
     },
   },
 });
