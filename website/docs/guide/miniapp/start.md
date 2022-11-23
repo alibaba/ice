@@ -9,9 +9,27 @@ ice.js 支持小程序开发。由于小程序端大部分能力及配置均与 
 当你准备开发小程序时，请务必阅读本模块文档。
 :::
 
-## 配置命令
+## 创建小程序应用
 
-参考[快速开始-创建应用](../start)并安装依赖后，在 `package.json` 中配置以下 scripts 命令：
+共有两种方式创建 ice.js 小程序应用：
+
+### 1. 通过小程序模板创建
+
+```bash
+$ npm create ice ice-app --template @ice/miniapp-scaffold
+$ cd ice-app
+$ npm install
+```
+
+创建完毕后可以直接跳到调试与构建章节。
+
+### 2. 改造已有的 Web 应用
+
+将已有的 ice.js Web 应用改造为支持小程序开发，只需进行以下几步：
+
+#### 配置命令
+
+在 `package.json` 中配置以下 scripts 命令：
 
 ```json
   "scripts": {
@@ -24,7 +42,7 @@ ice.js 支持小程序开发。由于小程序端大部分能力及配置均与 
   }
 ```
 
-## 配置小程序开发插件及运行时依赖
+#### 配置小程序开发插件及运行时依赖
 
 安装小程序开发插件 `@ice/plugin-miniapp` 和小程序运行时依赖 `@ice/miniapp-runtime`：
 
@@ -43,7 +61,7 @@ export default defineConfig({
 });
 ```
 
-## 添加 `miniappManifest`
+#### 添加 `miniappManifest`
 
 在 `src/app.tsx` 中导出 `miniappManifest`，在其中配置 `routes` 数组用以指定小程序中的页面（详见[小程序-路由](./router)）:
 
@@ -55,6 +73,16 @@ export const miniappManifest = {
   ]
 };
 ```
+
+#### 适配 HTML 标签样式
+
+从 Web 应用迁移而来意味着你的项目中使用了 HTML 标签，为了适配样式，你还需要在 `src/global.css` 引入样式的 polyfill：
+
+```css
+@import '@ice/miniapp-html-styles/html';
+```
+
+关于在小程序中使用 HTML 标签的注意事项，详见文档[使用 HTML 标签](./use-html)。
 
 ## 调试与构建
 
