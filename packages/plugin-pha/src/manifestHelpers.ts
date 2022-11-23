@@ -110,7 +110,6 @@ async function getPageConfig(routeId: string, routeManifest: string, routesConfi
       };
     }, {});
   }
-  // const routeConfig = routesConfig![`${routeId}`]?.() as MixedPage || {};
   const filteredConfig = {};
   Object.keys(routeConfig).forEach((key) => {
     if (validPageConfigKeys.includes(key)) {
