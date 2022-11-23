@@ -141,12 +141,12 @@ export default function() {
 
 ## 定制路由地址
 
-对于约定式路由不满足的场景，可以通过在 `src/app.ts` 中 `defineAppConfig` 方式进行自定义，例如:
+对于约定式路由不满足的场景，可以通过在 `ice.config.mts` 中 `defineConfig` 方式进行自定义，例如:
 
 ```js
-import { defineAppConfig } from '@ice/app';
+import { defineConfig } from '@ice/app';
 
-export default defineAppConfig({
+export default defineConfig({
   routes: {
     // 忽略 pages 下的 components 目录
     ignoreFiles: ['**/components/**'],
