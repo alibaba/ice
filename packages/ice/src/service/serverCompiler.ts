@@ -176,6 +176,9 @@ export function createServerCompiler(options: Options) {
         // build/server/a.mjs -> a.mjs
         const currentOutputFiles = Object.keys(esbuildResult.metafile.outputs).map(output => output.replace(RegExp(`^${path.relative(rootDir, buildOptions.outdir)}${path.sep}`), ''));
         const allOutputFiles = fg.sync('**', { cwd: buildOptions.outdir });
+        consola.log('currentOutputFiles===>', currentOutputFiles);
+        consola.log('allOutputFiles===>', allOutputFiles);
+        consola.log('esbuildResult.metafile.outputs===>', esbuildResult.metafile.outputs);
         const outdatedFiles = difference(allOutputFiles, currentOutputFiles);
         outdatedFiles.forEach(outdatedFile => fse.removeSync(path.join(buildOptions.outdir, outdatedFile)));
       }
@@ -186,8 +189,8 @@ export function createServerCompiler(options: Options) {
       };
     } catch (error) {
       consola.error('Server compile error.', `\nEntryPoints: ${JSON.stringify(buildOptions.entryPoints)}`);
-      consola.debug('Build options: ', buildOptions);
-      consola.debug(error.stack);
+      consola.error('Build options: ', buildOptions);
+      consola.error(error.stack);
       return {
         error: error as Error,
       };
