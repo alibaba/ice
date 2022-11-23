@@ -1121,6 +1121,7 @@ importers:
   packages/plugin-pha:
     specifiers:
       '@ice/app': ^3.0.0
+      '@remix-run/router': ^1.0.3
       chalk: ^4.0.0
       consola: ^2.15.3
       esbuild: ^0.14.51
@@ -1129,6 +1130,7 @@ importers:
       webpack: ^5.73.0
       webpack-dev-server: ^4.9.2
     dependencies:
+      '@remix-run/router': 1.0.3
       chalk: 4.1.2
       consola: 2.15.3
       humps: 2.0.1
@@ -5204,6 +5206,11 @@ packages:
   /@remix-run/router/1.0.1:
     resolution: {integrity: sha512-eBV5rvW4dRFOU1eajN7FmYxjAIVz/mRHgUE9En9mBn6m3mulK3WTR5C3iQhL9MZ14rWAq+xOlEaCkDiW0/heOg==}
     engines: {node: '>=14'}
+
+  /@remix-run/router/1.0.3:
+    resolution: {integrity: sha512-ceuyTSs7PZ/tQqi19YZNBc5X7kj1f8p+4DIyrcIYFY9h+hd1OKm4RqtiWldR9eGEvIiJfsqwM4BsuCtRIuEw6Q==}
+    engines: {node: '>=14'}
+    dev: false
 
   /@rollup/plugin-alias/3.1.9_rollup@2.79.1:
     resolution: {integrity: sha512-QI5fsEvm9bDzt32k39wpOwZhVzRcL5ydcffUHMyLVaVaLeC70I8TJZ17F1z1eMoLu4E/UOcH9BWVkKpIKdrfiw==}
