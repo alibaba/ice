@@ -3,7 +3,7 @@ title: 定制 HTML
 order: 12
 ---
 
-:::tips
+:::tip
 小程序端不支持该能力。
 :::
 
