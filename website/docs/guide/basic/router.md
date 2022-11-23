@@ -81,17 +81,34 @@ export default function Layout() {
 
 ### 路由跳转
 
+ice.js 提供三种方式进行路由间跳转，这样就可以只加载下一个页面相比于当前页面差异化的 Bundle 进行渲染，以达到更好的性能体验。
+
 #### history
 
 可使用 [history](./api#history) API 进行路由跳转。
 
 ```tsx
+import { history } from 'ice';
 
+export default () => {
+  history.push('/dashboard');
+}
+```
+
+#### useNavigate
+
+组件内可以使用 [useNavigate](./api#usenavigate) Hook 进行路由跳转。
+
+```tsx
+import { useNavigate } from 'ice';
+
+export default () => {
+  const navigate = useNavigate();
+  navigate('/logout');
+}
 ```
 
 #### Link 组件
-
-ice.js 通过 `Link` 组件，来提供路由间的跳转能力。基于 `Link` 组件，可以只加载下一个页面相比于当前页面差异化的 Bundle 进行渲染，以达到更好的性能体验。
 
 ```tsx title="src/pages/index.tsx"
 import { Link } from 'ice';
@@ -126,7 +143,7 @@ export default function () {
 
 #### query
 
-使用 [useSearchParams](./api#usesearchparams) 获取和修改 query 信息
+使用 [useSearchParams](./api#usesearchparams) 获取和修改 query 信息。
 
 ```tsx
 import { useSearchParams } from 'ice';
