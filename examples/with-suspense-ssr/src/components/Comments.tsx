@@ -1,16 +1,10 @@
-import { useDataContext } from './DataContext';
-
+import { useSuspenseData } from './IceSuspense';
 
 export default function Comments() {
-  const data = useDataContext();
-  const comments = data.read();
+  const comments = useSuspenseData();
 
   return (
     <div>
-      <script dangerouslySetInnerHTML={{ __html: `
-        window.__DATA_COMMENTS__ = ${JSON.stringify(comments)}
-      ` }}
-      />
       {comments.map((comment, i) => (
         <p className="comment" key={i}>
           {comment}
@@ -20,3 +14,33 @@ export default function Comments() {
   );
 }
 
+export function Loading() {
+  return (
+    <div>loading...</div>
+  );
+}
+
+const fakeData = [
+  "Wait, it doesn't wait for React to load?",
+  'How does this even work?',
+  'I like marshmallows',
+];
+
+export const serverDataLoader = () => {
+  console.log('serverDataLoader');
+
+  return new Promise<any>((resolve) => {
+    setTimeout(() => resolve(fakeData), 5000);
+  });
+};
+
+export const dataLoader = () => {
+  console.log('clientDataLoader');
+
+  return new Promise<any>((resolve) => {
+    setTimeout(() => resolve(fakeData), 5000);
+  });
+};
+
+export const suspense = true;
+export const routerId = 'comments';
