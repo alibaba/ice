@@ -81,6 +81,16 @@ export default function Layout() {
 
 ### 路由跳转
 
+#### history
+
+可使用 [history](./api#history) API 进行路由跳转。
+
+```tsx
+
+```
+
+#### Link 组件
+
 ice.js 通过 `Link` 组件，来提供路由间的跳转能力。基于 `Link` 组件，可以只加载下一个页面相比于当前页面差异化的 Bundle 进行渲染，以达到更好的性能体验。
 
 ```tsx title="src/pages/index.tsx"
@@ -99,6 +109,51 @@ export default function Home() {
 :::info
 在小程序中，Link 组件底层实现即为原生 `navigator` 组件。
 :::
+
+### 路由组件信息
+
+#### location
+
+使用 [useLocation](./api#uselocation) 获取 location 信息。
+
+```tsx
+import { useLocation } from 'ice';
+
+export default function () {
+  const location = useLocation();
+}
+```
+
+#### query
+
+使用 [useSearchParams](./api#usesearchparams) 获取和修改 query 信息
+
+```tsx
+import { useSearchParams } from 'ice';
+
+export default function Repo() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  console.log(searchParams);
+  setSearchParams({ tab: 'a' })
+}
+```
+
+#### 动态路由参数
+
+使用 [useParams](./api#useparams) 获取动态路由的参数。
+
+```tsx
+import { useParams } from 'ice';
+
+// 路由规则为  /repo/:id
+// 当前路径    /repo/123
+export default function Repo() {
+  const params = useParams();
+  console.log(params);
+  // { id: 123 }
+}
+```
+
 ## 嵌套路由
 
 通过 `创建文件夹` 和 `布局组件`，可以轻松构建嵌套路由。例如，下面的示例中，`/repo/preview` 页面，由这三个组件嵌套而成：
@@ -143,13 +198,11 @@ export default function() {
 
 对于约定式路由不满足的场景，可以通过在 `ice.config.mts` 中 `defineConfig` 方式进行自定义，例如:
 
-```js
+```ts title="ice.config.mts"
 import { defineConfig } from '@ice/app';
 
 export default defineConfig({
   routes: {
-    // 忽略 pages 下的 components 目录
-    ignoreFiles: ['**/components/**'],
     defineRoutes: (route) => {
       // 将 /about-me 路由访问内容指定为 about.tsx
       route('/about-me', 'about.tsx');
