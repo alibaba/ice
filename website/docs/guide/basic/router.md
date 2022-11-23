@@ -103,9 +103,17 @@ ice.js 针对 `嵌套路由` 的场景，应用了以下优化，来让页面达
 :::caution
 小程序端不支持。
 :::
-在某些场景下可能需要动态指定路由，例如 `/user/:id`，可以以 `$` 开头创建文件名或目录名, 例如 `src/pages/user/$id.tsx`:
+在某些场景下可能需要动态指定路由，例如 `/user/:id`，可以以 `$` 开头创建文件名或目录名，比如 `src/pages/user/$id.tsx`：
 
 <img src="https://img.alicdn.com/imgextra/i4/O1CN01IzAaaD1SnKBElEVDM_!!6000000002291-2-tps-722-440.png" width="350px" />
+
+## 通配路由
+
+`src/pages` 目录下的 `$.tsx` 文件将会被解析成通配路由。如果当前访问的路由没有任何组件能匹配，将会渲染通配路由组件。
+
+<img src="https://img.alicdn.com/imgextra/i4/O1CN01bqlzGA1vQ4wBR4Hr8_!!6000000006166-2-tps-1152-744.png" width="350px" />
+
+通常可以增加 `src/pages/$.tsx` 作为自定义 404 页面。
 
 ## 路由跳转
 
