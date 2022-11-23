@@ -22,7 +22,7 @@ function getEntry(rootDir: string, runtimeDir: string) {
   })[0];
   if (!entryFile) {
     // use generated file in template directory
-    entryFile = path.join(rootDir, runtimeDir, 'entry.client.tsx');
+    entryFile = path.join(rootDir, runtimeDir, 'entry.miniapp.tsx');
   }
   return {
     main: entryFile,
@@ -66,7 +66,7 @@ const getMiniappTask = ({
     cacheDir: path.join(rootDir, 'node_modules', '.cache'),
     sourceMap: command === 'start' ? 'cheap-module-source-map' : false,
     alias: {
-      ice: path.join(rootDir, runtimeDir, 'index.ts'),
+      ice: path.join(rootDir, runtimeDir, 'index.miniapp.ts'),
       '@': path.join(rootDir, 'src'),
       // 小程序使用 regenerator-runtime@0.11
       'regenerator-runtime': require.resolve('regenerator-runtime'),

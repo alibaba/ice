@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import humps from 'humps';
 import consola from 'consola';
 import cloneDeep from 'lodash.clonedeep';
+import { matchRoutes } from '@remix-run/router';
 import { decamelizeKeys, camelizeKeys, validPageConfigKeys } from './constants.js';
 import type { Page, PHAPage, PageHeader, PageConfig, Manifest, PHAManifest } from './types';
 
@@ -17,6 +18,7 @@ interface TransformOptions {
 export interface ParseOptions {
   urlPrefix: string;
   publicPath: string;
+  routeManifest: string;
   routesConfig?: Record<string, any>;
   serverEntry: string;
   template?: boolean;
@@ -94,8 +96,20 @@ function getPageUrl(routeId: string, options: ParseOptions) {
   return `${urlPrefix}${splitCharacter}${routeId}${urlSuffix}`;
 }
 
-async function getPageConfig(routeId: string, routesConfig: Record<string, any>): Promise<MixedPage> {
-  const routeConfig = routesConfig![`${routeId}`]?.() as MixedPage || {};
+async function getPageConfig(routeId: string, routeManifest: string, routesConfig: Record<string, any>): Promise<MixedPage> {
+  const routes = fs.readFileSync(routeManifest, 'utf-8');
+  const matches = matchRoutes(JSON.parse(routes), routeId.startsWith('/') ? routeId : `/${routeId}`);
+  let routeConfig: MixedPage = {};
+  if (matches) {
+    // Merge route config when return muitiple route.
+    routeConfig = matches.reduce((prev, curr) => {
+      const { id } = curr.route;
+      return {
+        ...prev,
+        ...(routesConfig![id]?.() as MixedPage || {}),
+      };
+    }, {});
+  }
   const filteredConfig = {};
   Object.keys(routeConfig).forEach((key) => {
     if (validPageConfigKeys.includes(key)) {
@@ -121,11 +135,11 @@ async function renderPageDocument(routeId: string, serverEntry: string): Promise
 }
 
 async function getPageManifest(page: string | Page, options: ParseOptions): Promise<MixedPage> {
-  const { template, serverEntry, routesConfig } = options;
+  const { template, serverEntry, routesConfig, routeManifest } = options;
   // Page will be type string when it is a source frame.
   if (typeof page === 'string') {
     // Get html content by render document.
-    const pageConfig = await getPageConfig(page, routesConfig);
+    const pageConfig = await getPageConfig(page, routeManifest, routesConfig);
     const { queryParams = '', ...rest } = pageConfig;
     const pageManifest = {
       key: page,
