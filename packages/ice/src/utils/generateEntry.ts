@@ -6,6 +6,10 @@ import { ROUTER_MANIFEST } from '../constant.js';
 import getRoutePaths from './getRoutePaths.js';
 import dynamicImport from './dynamicImport.js';
 
+enum RenderType {
+  JAVASCRIPT,
+  HTML,
+}
 interface Options {
   rootDir: string;
   entry: string;
@@ -13,7 +17,7 @@ interface Options {
   documentOnly: boolean;
   routeType: AppConfig['router']['type'];
   renderMode?: RenderMode;
-  entryType?: 'html' | 'js';
+  entryType?: RenderType;
 }
 
 export default async function generateEntry(options: Options) {
@@ -24,7 +28,7 @@ export default async function generateEntry(options: Options) {
     documentOnly,
     renderMode,
     routeType,
-    entryType = 'html',
+    entryType = RenderType.HTML,
   } = options;
 
   let serverEntry;
@@ -42,7 +46,7 @@ export default async function generateEntry(options: Options) {
   const paths = routeType === 'hash' ? ['/'] : getRoutePaths(routes);
   for (let i = 0, n = paths.length; i < n; i++) {
     const routePath = paths[i];
-    const htmlContent = await renderHTML({ routePath, serverEntry, documentOnly, renderMode });
+    const htmlContent = await renderEntry({ routePath, serverEntry, documentOnly, renderMode });
     await writeFile(
       await generateHTMLPath({ rootDir, routePath, outputDir }),
       htmlContent,
@@ -75,7 +79,7 @@ async function generateHTMLPath(
   return path.join(outputDir, fileName);
 }
 
-async function renderHTML(
+async function renderEntry(
   {
     routePath,
     serverEntry,
@@ -93,11 +97,11 @@ async function renderHTML(
       url: routePath,
     } as any,
   };
-  const { value: html } = await serverEntry.renderToHTML(serverContext, {
+  const { value: entryStr } = await serverEntry.renderToEntry(serverContext, {
     renderMode,
     documentOnly,
     routePath,
     serverOnlyBasename: '/',
   });
-  return html;
+  return entryStr;
 }

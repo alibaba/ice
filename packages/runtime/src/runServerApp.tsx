@@ -2,6 +2,7 @@ import type { ServerResponse } from 'http';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { Action, parsePath } from 'history';
+import * as htmlparser2 from 'htmlparser2';
 import type { Location } from 'history';
 import type {
   AppContext, RouteItem, ServerContext,
@@ -55,12 +56,16 @@ interface Piper {
 interface RenderResult {
   statusCode?: number;
   value?: string | Piper;
+  javascriptStr?: string;
 }
 
 /**
  * Render and return the result as html string.
  */
-export async function renderToHTML(requestContext: ServerContext, renderOptions: RenderOptions): Promise<RenderResult> {
+export async function renderToEntry(
+  requestContext: ServerContext,
+  renderOptions: RenderOptions,
+): Promise<RenderResult> {
   const result = await doRender(requestContext, renderOptions);
 
   const { value } = result;
@@ -72,10 +77,10 @@ export async function renderToHTML(requestContext: ServerContext, renderOptions:
   const { pipe, fallback } = value;
 
   try {
-    const html = await piperToString(pipe);
+    const entryStr = await piperToString(pipe);
 
     return {
-      value: html,
+      value: entryStr,
       statusCode: 200,
     };
   } catch (error) {
@@ -207,6 +212,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     if (runtimeModules.commons) {
       await Promise.all(runtimeModules.commons.map(m => runtime.loadModule(m)).filter(Boolean));
     }
+
     return await renderServerEntry({
       runtime,
       matches,
@@ -299,12 +305,19 @@ interface RenderDocumentOptions {
   routePath?: string;
   downgrade?: boolean;
 }
+
+enum RenderType {
+  JAVASCRIPT,
+  HTML,
+}
+
 /**
  * Render Document for CSR.
  */
-function renderDocument(options: RenderDocumentOptions): RenderResult {
+function renderDocument(options: RenderDocumentOptions, renderType?: RenderType): RenderResult {
   const { matches, renderOptions, routePath, downgrade }: RenderDocumentOptions = options;
-
+  console.log('renderDocument=', routePath);
+  renderType = RenderType.JAVASCRIPT;
   const {
     routes,
     assetsManifest,
@@ -344,7 +357,8 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
     main: null,
   };
 
-  const html = ReactDOMServer.renderToString(
+
+  const htmlStr = ReactDOMServer.renderToString(
     <AppContextProvider value={appContext}>
       <DocumentContextProvider value={documentContext}>
         <Document pagePath={routePath} />
@@ -352,8 +366,43 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
     </AppContextProvider>,
   );
 
+  let resStr = htmlStr;
+  if (renderType === RenderType.JAVASCRIPT) {
+    const dom = htmlparser2.parseDocument(htmlStr);
+
+    function parseToJson(node) {
+      const children = [];
+      if (node.children) {
+        children.push(node.children.map(parseToJson));
+      }
+
+      return {
+        tagName: node.name,
+        attributes: node.attribs,
+        children,
+        text: node.data,
+      };
+    }
+    const res = parseToJson(dom);
+    resStr = `function __ICE__CREATE_ELEMENT({ tagName, attributes = {}, children = [], text }) {
+      const ele = text ? document.createTextNode(text) : document.createElement(tagName);
+      for (const key in attributes) {
+        ele.setAttribute(key, attributes[key]);
+      }
+      children.forEach(function (child) {
+        const e = __ICE__CREATE_ELEMENT(child);
+        ele.appendChild(e);
+      });
+
+      return ele;
+    }
+    document.body.appendChild(__ice__createElement(${JSON.stringify(res)}));`;
+  } else {
+    resStr = `<!DOCTYPE html>${resStr}`;
+  }
+
   return {
-    value: `<!DOCTYPE html>${html}`,
+    value: resStr,
     statusCode: 200,
   };
 }

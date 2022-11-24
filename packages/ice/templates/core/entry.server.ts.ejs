@@ -35,11 +35,11 @@ interface RenderOptions {
   disableFallback?: boolean;
 }
 
-export async function renderToHTML(requestContext, options: RenderOptions = {}) {
+export async function renderToEntry(requestContext, options: RenderOptions = {}) {
   const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback } = options;
   setRuntimeEnv(renderMode);
 
-  return await runtime.renderToHTML(requestContext, {
+  return await runtime.renderToEntry(requestContext, {
     app,
     assetsManifest,
     routes,
