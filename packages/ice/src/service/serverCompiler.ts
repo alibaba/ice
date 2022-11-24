@@ -21,6 +21,7 @@ import transformPipePlugin from '../esbuild/transformPipe.js';
 import isExternalBuiltinDep from '../utils/isExternalBuiltinDep.js';
 import getServerEntry from '../utils/getServerEntry.js';
 import type { DepScanData } from '../esbuild/scan.js';
+import formatPath from '../utils/formatPath.js';
 import { scanImports } from './analyze.js';
 import type { DepsMetaData } from './preBundleCJSDeps.js';
 import preBundleCJSDeps from './preBundleCJSDeps.js';
@@ -174,7 +175,8 @@ export function createServerCompiler(options: Options) {
 
       if (removeOutputs && esbuildResult.metafile) {
         // build/server/a.mjs -> a.mjs
-        const currentOutputFiles = Object.keys(esbuildResult.metafile.outputs).map(output => output.replace(`${path.relative(rootDir, buildOptions.outdir)}${path.sep}`, ''));
+        const currentOutputFiles = Object.keys(esbuildResult.metafile.outputs)
+          .map(output => output.replace(formatPath(`${path.relative(rootDir, buildOptions.outdir)}${path.sep}`), ''));
         const allOutputFiles = fg.sync('**', { cwd: buildOptions.outdir });
         const outdatedFiles = difference(allOutputFiles, currentOutputFiles);
         outdatedFiles.forEach(outdatedFile => fse.removeSync(path.join(buildOptions.outdir, outdatedFile)));
