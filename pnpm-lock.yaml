@@ -1249,6 +1249,7 @@ importers:
       '@types/react': ^18.0.8
       '@types/react-dom': ^18.0.3
       history: ^5.3.0
+      htmlparser2: ^8.0.1
       react: ^18.0.0
       react-dom: ^18.0.0
       react-router-dom: ^6.2.2
@@ -1256,6 +1257,7 @@ importers:
     dependencies:
       '@ice/jsx-runtime': link:../jsx-runtime
       history: 5.3.0
+      htmlparser2: 8.0.1
       react-router-dom: 6.4.1_biqbaboplfbrettd7655fr4n2y
     devDependencies:
       '@types/react': 18.0.21
