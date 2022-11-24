@@ -370,20 +370,34 @@ function renderDocument(options: RenderDocumentOptions, renderType?: RenderType)
   if (renderType === RenderType.JAVASCRIPT) {
     const dom = htmlparser2.parseDocument(htmlStr);
 
+    const extraScript = [];
     function parseToJson(node) {
-      const children = [];
-      if (node.children) {
-        children.push(node.children.map(parseToJson));
+      const {
+        name,
+        attribs,
+        data,
+        children,
+      } = node;
+      const resChildren = [];
+
+      if (children) {
+        if (name === 'script' && children[0] && children[0].data) {
+          extraScript.push(`(function(){${children[0].data}})();`);
+        } else {
+          resChildren.push(node.children.map(parseToJson));
+        }
       }
 
       return {
-        tagName: node.name,
-        attributes: node.attribs,
-        children,
-        text: node.data,
+        tagName: name,
+        attributes: attribs,
+        children: resChildren,
+        text: data,
       };
     }
-    const res = parseToJson(dom);
+
+    const json = parseToJson(dom);
+
     resStr = `function __ICE__CREATE_ELEMENT({ tagName, attributes = {}, children = [], text }) {
       const ele = text ? document.createTextNode(text) : document.createElement(tagName);
       for (const key in attributes) {
@@ -396,7 +410,8 @@ function renderDocument(options: RenderDocumentOptions, renderType?: RenderType)
 
       return ele;
     }
-    document.body.appendChild(__ice__createElement(${JSON.stringify(res)}));`;
+    document.body.appendChild(__ice__createElement(${JSON.stringify(json)}));
+    ${extraScript.join()};`;
   } else {
     resStr = `<!DOCTYPE html>${resStr}`;
   }
