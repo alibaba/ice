@@ -1,0 +1,26 @@
+import { modifyLoader } from '@ice/webpack-modify';
+
+const plugin = () => ({
+  name: '<%-JSON.stringify(loaderName)%>',
+  setup: ({ onGetConfig }) => {
+    onGetConfig((config) => {
+      config.configureWebpack ??= [];
+      config.configureWebpack.push((webpackConfig) => {
+        return modifyLoader(webpackConfig, {
+          rule: 'css',
+          loader: 'css-loader',
+          options: (loaderOptions = {}) => {
+            return {
+              ...loaderOptions,
+              ...(<%-JSON.stringify(loaderOptions)%> || {})
+            }
+          }
+        });
+      });
+
+      return config;
+    })
+  }
+});
+
+export default plugin;

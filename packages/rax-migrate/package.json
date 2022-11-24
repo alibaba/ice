@@ -1,0 +1,56 @@
+{
+  "name": "rax-migrate",
+  "version": "0.1.5",
+  "description": "A tool for rax project to migrate into ICE 3 project.",
+  "type": "module",
+  "bin": {
+    "rax-migrate": "./bin/raxMigrateCli.js"
+  },
+  "files": [
+    "bin",
+    "esm",
+    "templates",
+    "plugins"
+  ],
+  "module": "esm/index.js",
+  "exports": {
+    "import": "./esm/index.js"
+  },
+  "sideEffects": [
+    "dist/*",
+    "*.scss",
+    "*.less",
+    "*.css"
+  ],
+  "scripts": {
+    "start": "tsc -w",
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
+    "eslint:fix": "npm run eslint -- --fix",
+    "lint": "npm run eslint && npm run stylelint"
+  },
+  "keywords": [
+    "ice",
+    "js",
+    "library",
+    "rax"
+  ],
+  "dependencies": {
+    "commander": "^9.4.0",
+    "cross-spawn": "^7.0.3",
+    "ejs": "^3.1.8",
+    "fs-extra": "^10.1.0",
+    "node-fetch": "^3.3.0",
+    "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "@iceworks/spec": "^1.0.0",
+    "@types/node": "^18.6.3",
+    "eslint": "^7.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT"
+}

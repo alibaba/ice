@@ -1,0 +1,15 @@
+const plugin = () => ({
+  name: 'plugin-webpack-plugins',
+  setup: ({ onGetConfig }) => {
+    onGetConfig((config) => {
+      config.configureWebpack ??= [];
+      config.configureWebpack.push((webpackConfig) => {
+        webpackConfig.devServer = <%-JSON.stringify(devServer)%>;
+      });
+
+      return config;
+    })
+  }
+});
+
+export default plugin;

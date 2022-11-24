@@ -1,0 +1,30 @@
+import { modifyLoader } from '@ice/webpack-modify';
+
+const plugin = () => ({
+  name: 'plugin-postcss',
+  setup: ({ onGetConfig }) => {
+    onGetConfig((config) => {
+      config.configureWebpack ??= [];
+      config.configureWebpack.push((webpackConfig) => {
+        return modifyLoader(webpackConfig, {
+          rule: 'css',
+          loader: 'postcss-loader',
+          options: (loaderOptions) => {
+            const { plugins = [] } = loaderOptions;
+            const { plugins: customPlugins = [], ...rest } = <%-JSON.stringify(postcssOptions)%>;
+
+            return {
+              config: <%-postcssrc === undefined ? false : postcssrc%>,
+              plugins: [...plugins, ...customPlugins],
+              ...rest,
+            }
+          }
+        });
+      });
+
+      return config;
+    })
+  }
+});
+
+export default plugin;
