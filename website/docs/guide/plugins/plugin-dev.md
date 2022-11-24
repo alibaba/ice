@@ -52,7 +52,7 @@ const plugin: Plugin = () => ({
 export default plugin;
 ```
 
-开发完成后，我们需要把插件添加到构建配置中：
+开发完成后，我们需要把插件添加到应用的构建配置中：
 
 ```diff title="ice.config.mts"
 import { defineConfig } from '@ice/app';
@@ -66,6 +66,10 @@ export default defineConfig(() => ({
 ```
 
 ### 发布插件到 npm 
+
+:::tip
+插件模板可参考：https://github.com/ice-lab/icejs-plugin-template
+:::
 
 假设现在需要开发一个插件（包括修改工程配置和运行时配置），并发布到 npm 上。插件的文件目录如下：
 
@@ -263,7 +267,7 @@ export default () => ({
 - `after.build.compile` 构建命令 build 执行结束，同 start
 - `after.start.devServer` dev 阶段的 server 服务启动后，该阶段可以获取相关 dev server 启动的 url 等信息
 
-> 每个周期可以获取的具体的参数类型可以参考 [TS 类型](https://github.com/ice-lab/ice-next/blob/master/packages/types/src/plugin.ts)
+> 每个周期可以获取的具体的参数类型可以参考 [TS 类型](https://github.com/alibaba/ice/blob/master/packages/ice/src/types/plugin.ts)。
 
 ### `registerUserConfig`
 
