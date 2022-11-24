@@ -30,8 +30,8 @@
   "author": "ice-admin",
   "license": "MIT",
   "repository": "ice-lab/ice-next",
-  "bugs": "https://github.com/ice-lab/ice-next/issues",
-  "homepage": "https://next.ice.work",
+  "bugs": "https://github.com/alibaba/ice/issues",
+  "homepage": "https://v3.ice.work",
   "dependencies": {
     "@babel/generator": "7.18.10",
     "@babel/parser": "7.18.10",
