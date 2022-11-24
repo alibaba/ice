@@ -2,10 +2,10 @@
 
 ## 1.0.1
 
-- [fix] update version `@swc/core`, keep the same version of `@ice/bundles`
-- [fix] lock version of `@ice/bundles`
-- [feat] support redirect imports
+- [fix] Lock version of `@ice/bundles`.
+- [feat] Support redirect imports.
+- [refactor] Move @swc/core, core-js and all swc plugins into `@ice/bundles`, to lock the version of them.
 
 ## 1.0.0
 
-- [feat] basic webpack configuration
+- [feat] Basic webpack configuration.

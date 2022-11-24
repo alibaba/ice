@@ -50,7 +50,7 @@
   },
   "repository": {
     "type": "http",
-    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-auth"
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-auth"
   },
   "scripts": {
     "watch": "tsc -w",

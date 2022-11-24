@@ -51,7 +51,7 @@ export function indent(str: string, size: number): string {
     if (process.env.NODE_ENV === 'production') {
       throw new Error(msg);
     } else {
-      const reportIssue = '\n如有疑问，请提交 issue 至：https://github.com/ice-lab/ice-next/issues';
+      const reportIssue = '\n如有疑问，请提交 issue 至：https://github.com/alibaba/ice/issues';
       throw new Error(msg + reportIssue);
     }
   }

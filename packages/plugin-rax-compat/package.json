@@ -33,7 +33,7 @@
   },
   "repository": {
     "type": "http",
-    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-rax-compat"
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-rax-compat"
   },
   "scripts": {
     "watch": "tsc -w",
