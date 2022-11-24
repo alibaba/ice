@@ -50,6 +50,8 @@ export default Document;
 
 ## 内容定制
 
+### 添加 HTML 元素
+
 像开发其他 JSX 组件一样，可以在 `Document` 组件内插入自定义的其他 HTML 内容。例如：
 
 ```jsx
@@ -61,9 +63,13 @@ export default Document;
 </body>
 ```
 
+:::caution
 注意： 在 `Scripts` 前插入外部资源，会阻塞主 Bundle 的解析执行，影响页面性能。
+:::
 
-另外，在 JSX 中添加内联的 `style` 或 `script` 需要结合 `dangerouslySetInnerHTML` 的方式，示例如下:
+### 添加内联代码
+
+另外，由于 Document 使用的是 JSX 语法，而非普通的 HTML。在 `<style />` 或 `<script />` 元素中添加内联代码需要结合 [dangerouslySetInnerHTML](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml) 的方式，示例如下:
 
 ```jsx
 <style dangerouslySetInnerHTML={{__html: `
@@ -78,4 +84,21 @@ export default Document;
   console.log("Hello World!")
 `}}>
 </script>
+```
+
+### 定制不同页面的 HTML
+
+可以通过 `props.pagePath` 参数（当前页面的路由地址）区分页面并差异化渲染 HTML：
+
+```tsx
+function Document({ pagePath }) {
+  return (
+    <html>
+      <body>
+        ...
+        <script src={pagePath === '/' ? 'a.js' : 'b.js' } />
+      </body>
+    </html>
+  )
+}
 ```
