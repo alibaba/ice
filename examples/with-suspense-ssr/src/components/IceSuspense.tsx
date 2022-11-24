@@ -6,6 +6,15 @@ if (typeof window !== 'undefined') {
   window[LOADER] = new Map();
 }
 
+const DataContext = createContext<any>(undefined);
+
+DataContext.displayName = 'DataContext';
+
+export function useSuspenseData() {
+  const dataLoader = useContext(DataContext);
+  return dataLoader.read();
+}
+
 export function IceSuspense(props) {
   const { module } = props;
 
@@ -16,18 +25,18 @@ export function IceSuspense(props) {
   const data = createDataLoader(serverDataLoader, dataLoader, routerId);
 
   return (
-    <DataContextProvider value={data}>
+    <DataContext.Provider value={data}>
       <Suspense fallback={Loading ? <Loading /> : null}>
         <>
-          <Content id={routerId} />
+          <Data id={routerId} />
           <Children />
         </>
       </Suspense>
-    </DataContextProvider>
+    </DataContext.Provider>
   );
 }
 
-function Content(props) {
+function Data(props) {
   const data = useSuspenseData();
 
   return (
@@ -37,17 +46,6 @@ function Content(props) {
     />
   );
 }
-
-const Context = createContext<any>(undefined);
-
-Context.displayName = 'DataContext';
-
-export function useSuspenseData() {
-  const dataLoader = useContext(Context);
-  return dataLoader.read();
-}
-
-const DataContextProvider = Context.Provider;
 
 function createDataLoader(serverDataLoader, dataLoader, id) {
   let done = false;
