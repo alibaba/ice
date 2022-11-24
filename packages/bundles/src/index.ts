@@ -6,9 +6,9 @@ import sass from 'sass';
 import swc from '@swc/core';
 
 const require = createRequire(import.meta.url);
-const SwcPluginRemoveExport = require.resolve('@ice/swc-plugin-remove-export');
-const SwcPluginKeepExport = require.resolve('@ice/swc-plugin-keep-export');
-const SwcPluginKeepPlatform = require.resolve('@ice/swc-plugin-keep-platform');
+const swcPluginRemoveExport = require.resolve('@ice/swc-plugin-remove-export');
+const swcPluginKeepExport = require.resolve('@ice/swc-plugin-keep-export');
+const swcPluginKeepPlatform = require.resolve('@ice/swc-plugin-keep-platform');
 const coreJsPath = dirname(require.resolve('core-js/package.json'));
 
 export {
@@ -17,9 +17,9 @@ export {
   sass,
 
   swc,
-  SwcPluginRemoveExport,
-  SwcPluginKeepExport,
-  SwcPluginKeepPlatform,
+  swcPluginRemoveExport,
+  swcPluginKeepExport,
+  swcPluginKeepPlatform,
 
   coreJsPath,
 };

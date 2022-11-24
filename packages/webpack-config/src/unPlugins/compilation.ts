@@ -1,4 +1,4 @@
-import { swc, SwcPluginRemoveExport, SwcPluginKeepExport, SwcPluginKeepPlatform, coreJsPath } from '@ice/bundles';
+import { swc, swcPluginRemoveExport, swcPluginKeepExport, swcPluginKeepPlatform, coreJsPath } from '@ice/bundles';
 import type { SwcConfig, ReactConfig } from '@ice/bundles';
 import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
@@ -94,7 +94,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
       if (removeExportExprs) {
         if (isRouteEntry(id) || isAppEntry(id)) {
           swcPlugins.push([
-            SwcPluginRemoveExport,
+            swcPluginRemoveExport,
             removeExportExprs,
           ]);
         }
@@ -103,7 +103,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
       if (keepExports) {
         if (isRouteEntry(id)) {
           swcPlugins.push([
-            SwcPluginKeepExport,
+            swcPluginKeepExport,
             keepExports,
           ]);
         } else if (isAppEntry(id)) {
@@ -117,7 +117,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
           }
 
           swcPlugins.push([
-            SwcPluginKeepExport,
+            swcPluginKeepExport,
             keepList,
           ]);
         }
@@ -125,7 +125,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
 
       if (keepPlatform) {
         swcPlugins.push([
-          SwcPluginKeepPlatform,
+          swcPluginKeepPlatform,
           keepPlatform,
         ]);
       }
