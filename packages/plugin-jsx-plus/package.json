@@ -34,7 +34,7 @@
   },
   "repository": {
     "type": "http",
-    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-jsx-plus"
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-jsx-plus"
   },
   "scripts": {
     "watch": "tsc -w",

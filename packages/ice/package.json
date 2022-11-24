@@ -29,7 +29,7 @@
   },
   "author": "ice-admin",
   "license": "MIT",
-  "repository": "ice-lab/ice-next",
+  "repository": "alibaba/ice",
   "bugs": "https://github.com/alibaba/ice/issues",
   "homepage": "https://v3.ice.work",
   "dependencies": {
