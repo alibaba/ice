@@ -1,5 +1,16 @@
 import { defineDataLoader } from 'ice';
 export default function Home() {
+  window.addEventListener('onLoad', () => {
+    console.log('yes, page onload in about page');
+  });
+
+  window.addEventListener('onShow', () => {
+    console.log('yes, page onshow in about page');
+  });
+
+  window.addEventListener('onReady', () => {
+    console.log('yes, page onready in about page');
+  });
   return (
     <>
       <view className="title">About</view>

@@ -4,6 +4,23 @@
   "description": "ice.js plugin for miniapp.",
   "license": "MIT",
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./esm/index.d.ts",
+      "import": "./esm/index.js",
+      "default": "./esm/index.js"
+    },
+    "./runtime": {
+      "types": "./esm/runtime/index.d.ts",
+      "import": "./esm/runtime/index.js",
+      "default": "./esm/runtime/index.js"
+    },
+    "./esm/runtime": {
+      "types": "./esm/runtime/index.d.ts",
+      "import": "./esm/runtime/index.js",
+      "default": "./esm/runtime/index.js"
+    }
+  },
   "main": "./esm/index.js",
   "types": "./esm/index.d.ts",
   "files": [
@@ -31,6 +48,7 @@
   },
   "devDependencies": {
     "@ice/app": "^3.0.0",
+    "@ice/runtime": "^1.0.0",
     "webpack": "^5.73.0"
   },
   "repository": {

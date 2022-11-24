@@ -1,6 +1,5 @@
 import { defineConfig } from '@ice/app';
 import miniapp from '@ice/plugin-miniapp';
-console.log('process.env.FOO', process.env.FOO);
 export default defineConfig({
   ssg: false,
   hash: true,

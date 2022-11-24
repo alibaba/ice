@@ -535,7 +535,7 @@ export default class MiniPlugin {
     config: MiniappConfig & { component?: boolean },
   ) {
     const fileConfigName = this.getConfigPath(this.getComponentName(filePath));
-    const unOfficalConfigs = ['enableShareAppMessage', 'enableShareTimeline', 'components'];
+    const unOfficalConfigs = ['components'];
     unOfficalConfigs.forEach(item => {
       delete config[item];
     });

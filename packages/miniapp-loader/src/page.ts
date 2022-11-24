@@ -31,8 +31,6 @@ export default function (this: webpack.LoaderContext<any>) {
 import component from ${stringify(componentPath)};
 ${importDataAndConfigString}
 var config = ${configString};
-${config.enableShareTimeline ? 'component.enableShareTimeline = true' : ''}
-${config.enableShareAppMessage ? 'component.enableShareAppMessage = true' : ''}
 ${instantiatePage}
 `;
 }

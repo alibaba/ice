@@ -26,6 +26,10 @@ interface MiniLifecycle {
     string, /** onLaunch */
     string, /** onShow */
     string, /** onHide */
+    string, /** onError */
+    string, /** onPageNotFound */
+    string, /** onUnhandledRejection */
+    string, /** onShareAppMessage */
   ];
   page: [
     string, /** onLoad */
@@ -35,6 +39,7 @@ interface MiniLifecycle {
     string, /** onHide */
     string[], /** others */
     string[], /** side-effects */
+    string[], /** ali miniapp events */
   ];
 }
 
@@ -74,6 +79,10 @@ const defaultMiniLifecycle: MiniLifecycle = {
     'onLaunch',
     'onShow',
     'onHide',
+    'onError',
+    'onPageNotFound',
+    'onUnhandledRejection',
+    'onShareAppMessage',
   ],
   page: [
     'onLoad',
@@ -84,7 +93,6 @@ const defaultMiniLifecycle: MiniLifecycle = {
     [
       'onPullDownRefresh',
       'onReachBottom',
-      'onPageScroll',
       'onResize',
       'onTabItemTap',
       'onTitleClick',
@@ -92,10 +100,20 @@ const defaultMiniLifecycle: MiniLifecycle = {
       'onPopMenuClick',
       'onPullIntercept',
       'onAddToFavorites',
+      'onSaveExitState',
     ],
     [
+      'onPageScroll',
       'onShareAppMessage',
       'onShareTimeline',
+    ],
+    // 阿里小程序某些页面事件必须存放于 events 对象中
+    [
+      'onBack',
+      'onKeyboardHeight',
+      'beforeTabItemTap',
+      'onResize',
+      'onSelectedTabItemTap',
     ],
   ],
 };

@@ -10,8 +10,10 @@ interface MiniappOptions {
   nativeConfig?: Record<string, any>;
 }
 
+const PLUGIN_NAME = '@ice/plugin-miniapp';
+
 const plugin: Plugin<MiniappOptions> = (miniappOptions = {}) => ({
-  name: '@ice/plugin-miniapp',
+  name: PLUGIN_NAME,
   setup: ({ registerTask, onHook, context, dataCache, generator }) => {
     const { nativeConfig = {} } = miniappOptions;
     const { commandArgs, rootDir, command } = context;
@@ -69,6 +71,7 @@ const plugin: Plugin<MiniappOptions> = (miniappOptions = {}) => ({
       });
     }
   },
+  runtime: `${PLUGIN_NAME}/esm/runtime`,
 });
 
 export default plugin;

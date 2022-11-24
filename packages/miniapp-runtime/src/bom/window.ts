@@ -2,6 +2,7 @@ import { isString } from '@ice/shared';
 
 import { Events } from '../emitter/emitter.js';
 import env from '../env.js';
+import { lifecycleHooks, lifecycleArray } from '../app/hooks.js';
 import { getComputedStyle } from './getComputedStyle.js';
 import { navigator } from './navigator.js';
 import { caf, raf } from './raf.js';
@@ -39,6 +40,11 @@ class Window extends Events {
 
   addEventListener(event: string, callback: (arg: any) => void) {
     if (!isString(event)) return;
+    // For miniapp page lifecycle events
+    if (lifecycleArray.includes(event)) {
+      lifecycleHooks[event](callback);
+      return;
+    }
     this.on(event, callback, null);
   }
 
