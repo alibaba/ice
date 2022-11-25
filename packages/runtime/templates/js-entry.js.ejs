@@ -1,0 +1,30 @@
+function __ICE__CREATE_ELEMENT({ tagName, attributes = {}, children = [], text }, container) {
+  const ele = text ? document.createTextNode(text) : document.createElement(tagName);
+  for (const key in attributes) {
+    ele.setAttribute(key, attributes[key]);
+  }
+  children.forEach(function (child) {
+    const e = __ICE__CREATE_ELEMENT(child, ele);
+  });
+
+  container.appendChild(ele);
+  return ele;
+}
+
+<% if (head && head.children) {-%>
+<%- JSON.stringify(head.children) %>.forEach(ele => {
+  __ICE__CREATE_ELEMENT(ele, document.head);
+});
+<% } -%>
+
+<% if (body && body.children) {-%>
+<%- JSON.stringify(body.children) %>.forEach(ele => {
+__ICE__CREATE_ELEMENT(ele, document.body);
+});
+<% } -%>
+
+<% if (extraScript) {-%>
+<% extraScript.forEach((script, index) => { -%>
+<%- script %>
+<% }) -%>
+<% } -%>

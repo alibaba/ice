@@ -1,8 +1,12 @@
 import type { ServerResponse } from 'http';
+import * as path from 'path';
+import { fileURLToPath } from 'url';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { Action, parsePath } from 'history';
 import * as htmlparser2 from 'htmlparser2';
+import ejs from 'ejs';
+import fse from 'fs-extra';
 import type { Location } from 'history';
 import type {
   AppContext, RouteItem, ServerContext,
@@ -28,6 +32,8 @@ import getRequestContext from './requestContext.js';
 import matchRoutes from './matchRoutes.js';
 import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
 import DefaultAppRouter from './AppRouter.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 interface RenderOptions {
   app: AppExport;
@@ -359,28 +365,12 @@ function renderDocumentToJs(html) {
   const head = parse(headElement);
   const body = parse(bodyElement);
 
-  jsEntryStr = `function __ICE__CREATE_ELEMENT({ tagName, attributes = {}, children = [], text }, container) {
-    const ele = text ? document.createTextNode(text) : document.createElement(tagName);
-    for (const key in attributes) {
-      ele.setAttribute(key, attributes[key]);
-    }
-    children.forEach(function (child) {
-      const e = __ICE__CREATE_ELEMENT(child, ele);
-    });
-
-    container.appendChild(ele);
-    return ele;
-  }
-
-  ${JSON.stringify(head.children || [])}.forEach(ele => {
-    __ICE__CREATE_ELEMENT(ele, document.head);
+  const templateContent = fse.readFileSync(path.join(__dirname, '../templates/js-entry.js.ejs'), 'utf-8');
+  jsEntryStr = ejs.render(templateContent, {
+    head,
+    body,
+    extraScript,
   });
-
-  ${JSON.stringify(body.children || [])}.forEach(ele => {
-    __ICE__CREATE_ELEMENT(ele, document.body);
-  });
-
-  ${extraScript.reduce((str, script) => str + script, '')};`;
 
   return jsEntryStr;
 }
