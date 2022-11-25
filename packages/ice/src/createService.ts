@@ -45,7 +45,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const buildSpinner = createSpinner('loading config...');
   const templateDir = path.join(__dirname, '../templates/');
   const coreTemplate = path.join(templateDir, 'core/');
-  const configFile = 'ice.config.(mts|mjs|ts|js|cjs|json)';
+  const configFile = commandArgs.config || 'ice.config.(mts|mjs|ts|js|cjs|json)';
   const dataCache = new Map<string, string>();
   const generator = new Generator({
     // Directory of templates includes `core` and `exports`.
