@@ -102,3 +102,8 @@ function Document({ pagePath }) {
   )
 }
 ```
+
+
+:::tip
+在 `script` 标签中添加 `crossOrigin="anonymous"` 有助于错误分析器获取到跨域的全局异常。
+:::
