@@ -96,7 +96,7 @@ function Document({ pagePath }) {
     <html>
       <body>
         ...
-        <script src={pagePath === '/' ? 'a.js' : 'b.js' } />
+        <script crossOrigin="anonymous" src={pagePath === '/' ? 'a.js' : 'b.js' } />
       </body>
     </html>
   )
