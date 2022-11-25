@@ -47,6 +47,7 @@ interface RenderOptions {
     [key: string]: PageConfig;
   };
   runtimeOptions?: Record<string, any>;
+  entryType?: Array<'html' | 'javascript'>;
 }
 
 interface Piper {
@@ -56,11 +57,11 @@ interface Piper {
 interface RenderResult {
   statusCode?: number;
   value?: string | Piper;
-  javascriptStr?: string;
+  javascript?: string;
 }
 
 /**
- * Render and return the result as html string.
+ * Render and return the result as entry string.
  */
 export async function renderToEntry(
   requestContext: ServerContext,
@@ -304,20 +305,21 @@ interface RenderDocumentOptions {
   renderOptions: RenderOptions;
   routePath?: string;
   downgrade?: boolean;
-}
-
-enum RenderType {
-  JAVASCRIPT,
-  HTML,
+  entryType?: Array<'html' | 'javascript'>;
 }
 
 /**
  * Render Document for CSR.
  */
-function renderDocument(options: RenderDocumentOptions, renderType?: RenderType): RenderResult {
-  const { matches, renderOptions, routePath, downgrade }: RenderDocumentOptions = options;
-  console.log('renderDocument=', routePath);
-  renderType = RenderType.JAVASCRIPT;
+function renderDocument(options: RenderDocumentOptions): RenderResult {
+  const {
+    matches,
+    renderOptions,
+    routePath,
+    downgrade,
+    entryType = ['html'],
+  }: RenderDocumentOptions = options;
+
   const {
     routes,
     assetsManifest,
@@ -366,8 +368,8 @@ function renderDocument(options: RenderDocumentOptions, renderType?: RenderType)
     </AppContextProvider>,
   );
 
-  let resStr = htmlStr;
-  if (renderType === RenderType.JAVASCRIPT) {
+  let javascriptStr = '';
+  if (entryType.includes('javascript')) {
     const dom = htmlparser2.parseDocument(htmlStr);
 
     const extraScript = [];
@@ -398,7 +400,7 @@ function renderDocument(options: RenderDocumentOptions, renderType?: RenderType)
 
     const json = parseToJson(dom);
 
-    resStr = `function __ICE__CREATE_ELEMENT({ tagName, attributes = {}, children = [], text }) {
+    javascriptStr = `function __ICE__CREATE_ELEMENT({ tagName, attributes = {}, children = [], text }) {
       const ele = text ? document.createTextNode(text) : document.createElement(tagName);
       for (const key in attributes) {
         ele.setAttribute(key, attributes[key]);
@@ -412,12 +414,11 @@ function renderDocument(options: RenderDocumentOptions, renderType?: RenderType)
     }
     document.body.appendChild(__ice__createElement(${JSON.stringify(json)}));
     ${extraScript.join()};`;
-  } else {
-    resStr = `<!DOCTYPE html>${resStr}`;
   }
 
   return {
-    value: resStr,
+    value: `<!DOCTYPE html>${htmlStr}`,
+    javascript: javascriptStr,
     statusCode: 200,
   };
 }

@@ -5,11 +5,6 @@ import type { ServerContext, RenderMode, AppConfig } from '@ice/runtime';
 import { ROUTER_MANIFEST } from '../constant.js';
 import getRoutePaths from './getRoutePaths.js';
 import dynamicImport from './dynamicImport.js';
-
-enum RenderType {
-  JAVASCRIPT,
-  HTML,
-}
 interface Options {
   rootDir: string;
   entry: string;
@@ -17,7 +12,6 @@ interface Options {
   documentOnly: boolean;
   routeType: AppConfig['router']['type'];
   renderMode?: RenderMode;
-  entryType?: RenderType;
 }
 
 export default async function generateEntry(options: Options) {
@@ -28,7 +22,6 @@ export default async function generateEntry(options: Options) {
     documentOnly,
     renderMode,
     routeType,
-    entryType = RenderType.HTML,
   } = options;
 
   let serverEntry;
