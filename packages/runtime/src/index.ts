@@ -15,6 +15,7 @@ import type {
   AppProvider,
   RouteWrapper,
   RenderMode,
+  EntryType,
   DataLoaderConfig,
   RouteWrapperConfig,
 } from './types.js';
@@ -93,6 +94,7 @@ export type {
   AppProvider,
   RouteWrapper,
   RenderMode,
+  EntryType,
   DataLoaderConfig,
   RunClientAppOptions,
 };

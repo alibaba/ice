@@ -57,7 +57,7 @@ interface Piper {
 interface RenderResult {
   statusCode?: number;
   value?: string | Piper;
-  javascript?: string;
+  jsEntryStr?: string;
 }
 
 /**
@@ -317,7 +317,6 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
     renderOptions,
     routePath,
     downgrade,
-    entryType = ['html'],
   }: RenderDocumentOptions = options;
 
   const {
@@ -327,6 +326,7 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
     Document,
     basename,
     routesConfig = {},
+    entryType = ['html'],
   } = renderOptions;
 
   const routesData = null;
@@ -368,7 +368,7 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
     </AppContextProvider>,
   );
 
-  let javascriptStr = '';
+  let jsEntryStr = '';
   if (entryType.includes('javascript')) {
     const dom = htmlparser2.parseDocument(htmlStr);
 
@@ -400,7 +400,7 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
 
     const json = parseToJson(dom);
 
-    javascriptStr = `function __ICE__CREATE_ELEMENT({ tagName, attributes = {}, children = [], text }) {
+    jsEntryStr = `function __ICE__CREATE_ELEMENT({ tagName, attributes = {}, children = [], text }) {
       const ele = text ? document.createTextNode(text) : document.createElement(tagName);
       for (const key in attributes) {
         ele.setAttribute(key, attributes[key]);
@@ -412,13 +412,13 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
 
       return ele;
     }
-    document.body.appendChild(__ice__createElement(${JSON.stringify(json)}));
-    ${extraScript.join()};`;
+    document.body.appendChild(__ICE__CREATE_ELEMENT(${JSON.stringify(json)}));
+    ${extraScript.reduce((str, script) => str + script, '')};`;
   }
 
   return {
     value: `<!DOCTYPE html>${htmlStr}`,
-    javascript: javascriptStr,
+    jsEntryStr,
     statusCode: 200,
   };
 }

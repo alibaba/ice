@@ -1,7 +1,7 @@
 import * as path from 'path';
 import fse from 'fs-extra';
 import consola from 'consola';
-import type { ServerContext, RenderMode, AppConfig } from '@ice/runtime';
+import type { ServerContext, RenderMode, AppConfig, EntryType } from '@ice/runtime';
 import { ROUTER_MANIFEST } from '../constant.js';
 import getRoutePaths from './getRoutePaths.js';
 import dynamicImport from './dynamicImport.js';
@@ -12,6 +12,7 @@ interface Options {
   documentOnly: boolean;
   routeType: AppConfig['router']['type'];
   renderMode?: RenderMode;
+  entryType: EntryType;
 }
 
 export default async function generateEntry(options: Options) {
@@ -22,6 +23,7 @@ export default async function generateEntry(options: Options) {
     documentOnly,
     renderMode,
     routeType,
+    entryType,
   } = options;
 
   let serverEntry;
@@ -39,11 +41,24 @@ export default async function generateEntry(options: Options) {
   const paths = routeType === 'hash' ? ['/'] : getRoutePaths(routes);
   for (let i = 0, n = paths.length; i < n; i++) {
     const routePath = paths[i];
-    const htmlContent = await renderEntry({ routePath, serverEntry, documentOnly, renderMode });
-    await writeFile(
-      await generateHTMLPath({ rootDir, routePath, outputDir }),
-      htmlContent,
-    );
+    const {
+      htmlEntryStr,
+      jsEntryStr,
+    } = await renderEntry({ routePath, serverEntry, documentOnly, renderMode, entryType });
+
+    if (htmlEntryStr) {
+      await writeFile(
+        await generateHTMLPath({ rootDir, routePath, outputDir }),
+        htmlEntryStr,
+      );
+    }
+
+    if (jsEntryStr) {
+      await writeFile(
+        await generateJSPath({ rootDir, routePath, outputDir }),
+        jsEntryStr,
+      );
+    }
   }
 }
 
@@ -72,16 +87,38 @@ async function generateHTMLPath(
   return path.join(outputDir, fileName);
 }
 
+async function generateJSPath(
+  {
+    rootDir,
+    routePath,
+    outputDir,
+  }: {
+    rootDir: string;
+    routePath: string;
+    outputDir: string;
+  },
+) {
+  // Win32 do not support file name with
+  const fileName = routePath === '/' ? 'index.js' : `${routePath.replace(/\/:/g, '/$')}.js`;
+  if (fse.existsSync(path.join(rootDir, 'public', fileName))) {
+    consola.warn(`${fileName} is overwrite by framework, rename file name if it is necessary.`);
+  }
+
+  return path.join(outputDir, fileName);
+}
+
 async function renderEntry(
   {
     routePath,
     serverEntry,
     documentOnly,
+    entryType = ['html'],
     renderMode,
   }: {
     routePath: string;
     serverEntry: any;
     documentOnly: boolean;
+    entryType?: EntryType;
     renderMode?: RenderMode;
   },
 ) {
@@ -90,11 +127,18 @@ async function renderEntry(
       url: routePath,
     } as any,
   };
-  const { value: entryStr } = await serverEntry.renderToEntry(serverContext, {
+  const {
+    value,
+    jsEntryStr,
+  } = await serverEntry.renderToEntry(serverContext, {
     renderMode,
     documentOnly,
     routePath,
     serverOnlyBasename: '/',
+    entryType,
   });
-  return entryStr;
+  return {
+    htmlEntryStr: value,
+    jsEntryStr,
+  };
 }
