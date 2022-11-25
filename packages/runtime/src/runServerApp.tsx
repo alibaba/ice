@@ -308,6 +308,83 @@ interface RenderDocumentOptions {
   entryType?: Array<'html' | 'javascript'>;
 }
 
+function renderDocumentToJs(html) {
+  let jsEntryStr = '';
+  const dom = htmlparser2.parseDocument(html);
+
+  let headElement;
+  let bodyElement;
+  function findElement(node) {
+    if (headElement && bodyElement) return;
+
+    if (node.name === 'head') {
+      headElement = node;
+    } else if (node.name === 'body') {
+      bodyElement = node;
+    }
+
+    const {
+      children = [],
+    } = node;
+    children.forEach(findElement);
+  }
+  findElement(dom);
+
+  const extraScript = [];
+  function parse(node) {
+    const {
+      name,
+      attribs,
+      data,
+      children,
+    } = node;
+    let resChildren = [];
+
+    if (children) {
+      if (name === 'script' && children[0] && children[0].data) {
+        extraScript.push(`(function(){${children[0].data}})();`);
+      } else {
+        resChildren = node.children.map(parse);
+      }
+    }
+
+    return {
+      tagName: name,
+      attributes: attribs,
+      children: resChildren,
+      text: data,
+    };
+  }
+
+  const head = parse(headElement);
+  const body = parse(bodyElement);
+
+  jsEntryStr = `function __ICE__CREATE_ELEMENT({ tagName, attributes = {}, children = [], text }, container) {
+    const ele = text ? document.createTextNode(text) : document.createElement(tagName);
+    for (const key in attributes) {
+      ele.setAttribute(key, attributes[key]);
+    }
+    children.forEach(function (child) {
+      const e = __ICE__CREATE_ELEMENT(child, ele);
+    });
+
+    container.appendChild(ele);
+    return ele;
+  }
+
+  ${JSON.stringify(head.children || [])}.forEach(ele => {
+    __ICE__CREATE_ELEMENT(ele, document.head);
+  });
+
+  ${JSON.stringify(body.children || [])}.forEach(ele => {
+    __ICE__CREATE_ELEMENT(ele, document.body);
+  });
+
+  ${extraScript.reduce((str, script) => str + script, '')};`;
+
+  return jsEntryStr;
+}
+
 /**
  * Render Document for CSR.
  */
@@ -370,50 +447,7 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
 
   let jsEntryStr = '';
   if (entryType.includes('javascript')) {
-    const dom = htmlparser2.parseDocument(htmlStr);
-
-    const extraScript = [];
-    function parseToJson(node) {
-      const {
-        name,
-        attribs,
-        data,
-        children,
-      } = node;
-      const resChildren = [];
-
-      if (children) {
-        if (name === 'script' && children[0] && children[0].data) {
-          extraScript.push(`(function(){${children[0].data}})();`);
-        } else {
-          resChildren.push(node.children.map(parseToJson));
-        }
-      }
-
-      return {
-        tagName: name,
-        attributes: attribs,
-        children: resChildren,
-        text: data,
-      };
-    }
-
-    const json = parseToJson(dom);
-
-    jsEntryStr = `function __ICE__CREATE_ELEMENT({ tagName, attributes = {}, children = [], text }) {
-      const ele = text ? document.createTextNode(text) : document.createElement(tagName);
-      for (const key in attributes) {
-        ele.setAttribute(key, attributes[key]);
-      }
-      children.forEach(function (child) {
-        const e = __ICE__CREATE_ELEMENT(child);
-        ele.appendChild(e);
-      });
-
-      return ele;
-    }
-    document.body.appendChild(__ICE__CREATE_ELEMENT(${JSON.stringify(json)}));
-    ${extraScript.reduce((str, script) => str + script, '')};`;
+    jsEntryStr = renderDocumentToJs(htmlStr);
   }
 
   return {
