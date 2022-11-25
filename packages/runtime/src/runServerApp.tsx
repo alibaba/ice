@@ -32,6 +32,7 @@ import getRequestContext from './requestContext.js';
 import matchRoutes from './matchRoutes.js';
 import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
 import DefaultAppRouter from './AppRouter.js';
+import __createElement from './domRender.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -367,6 +368,7 @@ function renderDocumentToJs(html) {
 
   const templateContent = fse.readFileSync(path.join(__dirname, '../templates/js-entry.js.ejs'), 'utf-8');
   jsEntryStr = ejs.render(templateContent, {
+    createElement: __createElement,
     head,
     body,
     extraScript,
