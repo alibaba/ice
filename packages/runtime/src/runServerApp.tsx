@@ -53,7 +53,7 @@ interface RenderOptions {
     [key: string]: PageConfig;
   };
   runtimeOptions?: Record<string, any>;
-  entryType?: Array<'html' | 'javascript'>;
+  distType?: Array<'html' | 'javascript'>;
 }
 
 interface Piper {
@@ -311,7 +311,7 @@ interface RenderDocumentOptions {
   renderOptions: RenderOptions;
   routePath?: string;
   downgrade?: boolean;
-  entryType?: Array<'html' | 'javascript'>;
+  distType?: Array<'html' | 'javascript'>;
 }
 
 function renderDocumentToJs(html) {
@@ -393,7 +393,7 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
     Document,
     basename,
     routesConfig = {},
-    entryType = ['html'],
+    distType = ['html'],
   } = renderOptions;
 
   const routesData = null;
@@ -436,7 +436,7 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
   );
 
   let jsEntryStr = '';
-  if (entryType.includes('javascript')) {
+  if (distType.includes('javascript')) {
     jsEntryStr = renderDocumentToJs(htmlStr);
   }
 

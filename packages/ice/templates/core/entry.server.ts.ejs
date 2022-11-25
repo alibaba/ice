@@ -33,11 +33,11 @@ interface RenderOptions {
   serverOnlyBasename?: string;
   routePath?: string;
   disableFallback?: boolean;
-  entryType: Array<'html' | 'javascript'>
+  distType: Array<'html' | 'javascript'>
 }
 
 export async function renderToEntry(requestContext, options: RenderOptions = {}) {
-  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback, entryType } = options;
+  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback, distType } = options;
   setRuntimeEnv(renderMode);
 
   return await runtime.renderToEntry(requestContext, {
@@ -58,7 +58,7 @@ export async function renderToEntry(requestContext, options: RenderOptions = {})
       <%- runtimeOptions.exports %>
     },
 <% } -%>
-    entryType,
+    distType,
   });
 }
 

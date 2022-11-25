@@ -20,9 +20,12 @@ const plugin: Plugin = () => ({
   name: 'plugin-web',
   setup: ({ registerTask, onHook, context, generator, serverCompileTask, dataCache, watch, getAllPlugin }) => {
     const { rootDir, commandArgs, command, userConfig } = context;
-    const { ssg, entry: {
-      type: entryType,
-    } } = userConfig;
+    const {
+      ssg,
+      output: {
+        distType,
+      },
+    } = userConfig;
 
     registerTask(WEB, getWebTask({ rootDir, command, dataCache }));
 
@@ -122,7 +125,7 @@ const plugin: Plugin = () => ({
         documentOnly: !ssg,
         renderMode,
         routeType: appConfig?.router?.type,
-        entryType,
+        distType,
       });
     });
 

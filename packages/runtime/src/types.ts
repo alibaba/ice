@@ -244,4 +244,4 @@ export interface RouteMatch {
 
 export type RenderMode = 'SSR' | 'SSG' | 'CSR';
 
-export type EntryType = 'html' | 'javascript';
+export type DistType = 'html' | 'javascript';

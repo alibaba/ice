@@ -25,11 +25,11 @@ interface IgnorePattern {
   contextRegExp?: RegExp;
 }
 
-type EntryType = 'javascript' | 'html';
+type DistType = 'javascript' | 'html';
 
 export interface UserConfig {
   entry?: {
-    type: Array<EntryType>;
+    type: Array<DistType>;
   };
   alias?: Record<string, string | false>;
   define?: Record<string, string | boolean>;

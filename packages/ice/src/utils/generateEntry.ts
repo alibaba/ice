@@ -1,7 +1,7 @@
 import * as path from 'path';
 import fse from 'fs-extra';
 import consola from 'consola';
-import type { ServerContext, RenderMode, AppConfig, EntryType } from '@ice/runtime';
+import type { ServerContext, RenderMode, AppConfig, DistType } from '@ice/runtime';
 import { ROUTER_MANIFEST } from '../constant.js';
 import getRoutePaths from './getRoutePaths.js';
 import dynamicImport from './dynamicImport.js';
@@ -12,7 +12,7 @@ interface Options {
   documentOnly: boolean;
   routeType: AppConfig['router']['type'];
   renderMode?: RenderMode;
-  entryType: EntryType;
+  distType: DistType;
 }
 
 export default async function generateEntry(options: Options) {
@@ -23,7 +23,7 @@ export default async function generateEntry(options: Options) {
     documentOnly,
     renderMode,
     routeType,
-    entryType,
+    distType,
   } = options;
 
   let serverEntry;
@@ -44,7 +44,7 @@ export default async function generateEntry(options: Options) {
     const {
       htmlEntryStr,
       jsEntryStr,
-    } = await renderEntry({ routePath, serverEntry, documentOnly, renderMode, entryType });
+    } = await renderEntry({ routePath, serverEntry, documentOnly, renderMode, distType });
 
     if (htmlEntryStr) {
       await writeFile(
@@ -112,13 +112,13 @@ async function renderEntry(
     routePath,
     serverEntry,
     documentOnly,
-    entryType = ['html'],
+    distType = ['html'],
     renderMode,
   }: {
     routePath: string;
     serverEntry: any;
     documentOnly: boolean;
-    entryType?: EntryType;
+    distType?: DistType;
     renderMode?: RenderMode;
   },
 ) {
@@ -135,7 +135,7 @@ async function renderEntry(
     documentOnly,
     routePath,
     serverOnlyBasename: '/',
-    entryType,
+    distType,
   });
   return {
     htmlEntryStr: value,

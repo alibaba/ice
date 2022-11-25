@@ -38,10 +38,10 @@ const userConfig = [
     },
   },
   {
-    name: 'entry',
+    name: 'output',
     validation: 'object',
     defaultValue: {
-      type: ['html'],
+      distType: ['html'],
     },
   },
   {
