@@ -19,7 +19,8 @@
   },
   "files": [
     "esm",
-    "!esm/**/*.map"
+    "!esm/**/*.map",
+    "templates"
   ],
   "author": "ICE",
   "license": "MIT",
