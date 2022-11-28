@@ -43,9 +43,6 @@ const userConfig = [
     defaultValue: {
       distType: ['html'],
     },
-    setConfig: (config: Config, output: UserConfig['output']) => {
-      return mergeDefaultValue(config, 'output', output);
-    },
   },
   {
     name: 'define',
