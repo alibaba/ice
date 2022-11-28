@@ -43,7 +43,7 @@ export default async function generateEntry(options: Options) {
     const routePath = paths[i];
     const {
       htmlEntryStr,
-      jsEntryStr,
+      jsOutput,
     } = await renderEntry({ routePath, serverEntry, documentOnly, renderMode, distType });
 
     if (htmlEntryStr) {
@@ -53,10 +53,10 @@ export default async function generateEntry(options: Options) {
       );
     }
 
-    if (jsEntryStr) {
+    if (jsOutput) {
       await writeFile(
         await generateJSPath({ rootDir, routePath, outputDir }),
-        jsEntryStr,
+        jsOutput,
       );
     }
   }
@@ -129,7 +129,7 @@ async function renderEntry(
   };
   const {
     value,
-    jsEntryStr,
+    jsOutput,
   } = await serverEntry.renderToEntry(serverContext, {
     renderMode,
     documentOnly,
@@ -139,6 +139,6 @@ async function renderEntry(
   });
   return {
     htmlEntryStr: value,
-    jsEntryStr,
+    jsOutput,
   };
 }

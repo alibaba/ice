@@ -64,7 +64,7 @@ interface Piper {
 interface RenderResult {
   statusCode?: number;
   value?: string | Piper;
-  jsEntryStr?: string;
+  jsOutput?: string;
 }
 
 /**
@@ -316,7 +316,7 @@ interface RenderDocumentOptions {
 }
 
 function renderDocumentToJs(html) {
-  let jsEntryStr = '';
+  let jsOutput = '';
   const dom = htmlparser2.parseDocument(html);
 
   let headElement;
@@ -367,14 +367,14 @@ function renderDocumentToJs(html) {
   const body = parse(bodyElement);
 
   const templateContent = fse.readFileSync(path.join(__dirname, '../templates/js-entry.js.ejs'), 'utf-8');
-  jsEntryStr = ejs.render(templateContent, {
+  jsOutput = ejs.render(templateContent, {
     createElement: __createElement,
     head,
     body,
     extraScript,
   });
 
-  return jsEntryStr;
+  return jsOutput;
 }
 
 /**
@@ -437,14 +437,14 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
     </AppContextProvider>,
   );
 
-  let jsEntryStr = '';
+  let jsOutput = '';
   if (distType.includes('javascript')) {
-    jsEntryStr = renderDocumentToJs(htmlStr);
+    jsOutput = renderDocumentToJs(htmlStr);
   }
 
   return {
     value: `<!DOCTYPE html>${htmlStr}`,
-    jsEntryStr,
+    jsOutput,
     statusCode: 200,
   };
 }
