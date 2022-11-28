@@ -140,7 +140,7 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
  */
 async function sendResult(res: ServerResponse, result: RenderResult, distType: DistType) {
   res.statusCode = result.statusCode;
-  if (distType && distType.includes('js') || distType === 'javascript') {
+  if (distType && distType.includes('javascript') || distType === 'javascript') {
     res.setHeader('Content-Type', 'text/js; charset=utf-8');
     res.end(result.jsOutput);
   } else {
