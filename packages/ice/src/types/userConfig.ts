@@ -28,8 +28,8 @@ interface IgnorePattern {
 type DistType = 'javascript' | 'html';
 
 export interface UserConfig {
-  entry?: {
-    type: Array<DistType>;
+  output?: {
+    distType: Array<DistType>;
   };
   alias?: Record<string, string | false>;
   define?: Record<string, string | boolean>;
