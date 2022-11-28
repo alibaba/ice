@@ -15,7 +15,11 @@ interface Options {
   distType: DistType;
 }
 
-export default async function generateEntry(options: Options) {
+interface EntryResult {
+  outputPaths: Array<string>;
+}
+
+export default async function generateEntry(options: Options): Promise<EntryResult> {
   const {
     rootDir,
     entry,
@@ -39,6 +43,7 @@ export default async function generateEntry(options: Options) {
   const routes = JSON.parse(fse.readFileSync(routeManifest, 'utf8'));
   // When enable hash-router, only generate one html(index.html).
   const paths = routeType === 'hash' ? ['/'] : getRoutePaths(routes);
+  const outputPaths = [];
   for (let i = 0, n = paths.length; i < n; i++) {
     const routePath = paths[i];
     const {
@@ -47,19 +52,27 @@ export default async function generateEntry(options: Options) {
     } = await renderEntry({ routePath, serverEntry, documentOnly, renderMode, distType });
 
     if (htmlEntryStr) {
+      const path = await generateHTMLPath({ rootDir, routePath, outputDir });
       await writeFile(
-        await generateHTMLPath({ rootDir, routePath, outputDir }),
+        path,
         htmlEntryStr,
       );
+      outputPaths.push(path);
     }
 
     if (jsOutput) {
+      const path = await generateJSPath({ rootDir, routePath, outputDir });
       await writeFile(
-        await generateJSPath({ rootDir, routePath, outputDir }),
+        path,
         jsOutput,
       );
+      outputPaths.push(path);
     }
   }
+
+  return {
+    outputPaths,
+  };
 }
 
 const writeFile = async (file: string, content: string) => {

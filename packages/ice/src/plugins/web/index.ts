@@ -109,7 +109,7 @@ const plugin: Plugin = () => ({
       }
     });
 
-    onHook('after.build.compile', async ({ webpackConfigs, serverEntryRef, appConfig }) => {
+    onHook('after.build.compile', async ({ webpackConfigs, serverEntryRef, appConfig, output }) => {
       const outputDir = webpackConfigs[0].output.path;
       let renderMode: RenderMode;
       if (ssg) {
@@ -117,7 +117,9 @@ const plugin: Plugin = () => ({
       }
       serverEntryRef.current = serverOutfile;
 
-      await generateEntry({
+      const {
+        outputPaths = [],
+      } = await generateEntry({
         rootDir,
         outputDir,
         entry: serverOutfile,
@@ -127,6 +129,8 @@ const plugin: Plugin = () => ({
         routeType: appConfig?.router?.type,
         distType,
       });
+
+      output.path = [...outputPaths];
     });
 
     onHook('after.start.compile', async ({ isSuccessful, isFirstCompile, urls, devUrlInfo }) => {

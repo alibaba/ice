@@ -70,6 +70,9 @@ const build = async (
   });
 
   const serverEntryRef = { current: null };
+  const output = {
+    paths: [],
+  };
 
   type CompileResults = {
     stats: Stats;
@@ -97,7 +100,7 @@ const build = async (
         reject(new Error(messages.errors.join('\n\n')));
         return;
       } else {
-        compiler?.close?.(() => {});
+        compiler?.close?.(() => { });
         const isSuccessful = !messages.errors.length;
         resolve({
           stats,
@@ -116,6 +119,7 @@ const build = async (
     webpackConfigs,
     serverCompiler,
     serverEntryRef,
+    output,
     getAppConfig,
     getRoutesConfig,
     appConfig,
