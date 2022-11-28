@@ -20,13 +20,6 @@ const plugin: Plugin = () => ({
   name: 'plugin-web',
   setup: ({ registerTask, onHook, context, generator, serverCompileTask, dataCache, watch, getAllPlugin }) => {
     const { rootDir, commandArgs, command, userConfig } = context;
-    const {
-      ssg,
-      output: {
-        distType,
-      },
-    } = userConfig;
-
     registerTask(WEB, getWebTask({ rootDir, command, dataCache }));
 
     generator.addExport({
@@ -110,6 +103,12 @@ const plugin: Plugin = () => ({
     });
 
     onHook('after.build.compile', async ({ webpackConfigs, serverEntryRef, appConfig, output }) => {
+      const {
+        ssg,
+        output: {
+          distType,
+        },
+      } = userConfig;
       const outputDir = webpackConfigs[0].output.path;
       let renderMode: RenderMode;
       if (ssg) {
@@ -130,7 +129,7 @@ const plugin: Plugin = () => ({
         distType,
       });
 
-      output.path = [...outputPaths];
+      output.paths = [...outputPaths];
     });
 
     onHook('after.start.compile', async ({ isSuccessful, isFirstCompile, urls, devUrlInfo }) => {
