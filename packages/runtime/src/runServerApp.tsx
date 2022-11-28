@@ -17,6 +17,7 @@ import type {
   DocumentComponent,
   RuntimeModules,
   AppData,
+  DistType,
 } from './types.js';
 import Runtime from './runtime.js';
 import App from './App.js';
@@ -54,7 +55,7 @@ interface RenderOptions {
     [key: string]: PageConfig;
   };
   runtimeOptions?: Record<string, any>;
-  distType?: Array<'html' | 'javascript'>;
+  distType?: Array<'html' | 'javascript'> | 'html' | 'javascript';
 }
 
 interface Piper {
@@ -107,12 +108,13 @@ export async function renderToEntry(
  */
 export async function renderToResponse(requestContext: ServerContext, renderOptions: RenderOptions) {
   const { res } = requestContext;
+  const { distType } = renderOptions;
   const result = await doRender(requestContext, renderOptions);
 
   const { value } = result;
 
   if (typeof value === 'string') {
-    sendResult(res, result);
+    sendResult(res, result, distType);
   } else {
     const { pipe, fallback } = value;
 
@@ -128,7 +130,7 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
       console.error('PiperToResponse error, downgrade to CSR.', error);
       // downgrade to CSR.
       const result = await fallback();
-      sendResult(res, result);
+      sendResult(res, result, distType);
     }
   }
 }
@@ -136,10 +138,15 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
 /**
  * Send string result to ServerResponse.
  */
-async function sendResult(res: ServerResponse, result: RenderResult) {
+async function sendResult(res: ServerResponse, result: RenderResult, distType: DistType) {
   res.statusCode = result.statusCode;
-  res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  res.end(result.value);
+  if (distType && distType.includes('js') || distType === 'javascript') {
+    res.setHeader('Content-Type', 'text/js; charset=utf-8');
+    res.end(result.jsOutput);
+  } else {
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.end(result.value);
+  }
 }
 
 /**
@@ -164,6 +171,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     runtimeModules,
     renderMode,
     runtimeOptions,
+    distType,
   } = renderOptions;
   const finalBasename = serverOnlyBasename || basename;
   const location = getLocation(req.url);
@@ -198,7 +206,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     }
   }
   // HashRouter loads route modules by the CSR.
-  if (appConfig?.router?.type === 'hash') {
+  if (appConfig?.router?.type === 'hash' || distType === 'javascript') {
     return renderDocument({ matches: [], renderOptions });
   }
 
@@ -438,7 +446,7 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
   );
 
   let jsOutput = '';
-  if (distType.includes('javascript')) {
+  if (distType.includes('javascript') || distType === 'javascript') {
     jsOutput = renderDocumentToJs(htmlStr);
   }
 

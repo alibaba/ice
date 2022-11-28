@@ -63,7 +63,7 @@ export async function renderToEntry(requestContext, options: RenderOptions = {})
 }
 
 export async function renderToResponse(requestContext, options: RenderOptions = {}) {
-  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, disableFallback } = options;
+  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, disableFallback, distType } = options;
   setRuntimeEnv(options);
 
   runtime.renderToResponse(requestContext, {
@@ -78,6 +78,7 @@ export async function renderToResponse(requestContext, options: RenderOptions = 
     renderMode,
     disableFallback,
     routesConfig,
+    distType,
 <% if (runtimeOptions.exports) { -%>
     runtimeOptions: {
       <%- runtimeOptions.exports %>
