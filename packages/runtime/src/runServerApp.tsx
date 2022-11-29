@@ -35,7 +35,7 @@ import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
 import DefaultAppRouter from './AppRouter.js';
 import __createElement from './domRender.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const dirname = __dirname || path.dirname(fileURLToPath(import.meta.url));
 
 interface RenderOptions {
   app: AppExport;
@@ -374,7 +374,7 @@ function renderDocumentToJs(html) {
   const head = parse(headElement);
   const body = parse(bodyElement);
 
-  const templateContent = fse.readFileSync(path.join(__dirname, '../templates/js-entry.js.ejs'), 'utf-8');
+  const templateContent = fse.readFileSync(path.join(dirname, '../templates/js-entry.js.ejs'), 'utf-8');
   jsOutput = ejs.render(templateContent, {
     createElement: __createElement,
     head,
