@@ -31,6 +31,7 @@ function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Option
         platform: 'node',
         mainFields: ['module', 'main'],
         outExtension: { '.js': isEsm ? '.mjs' : '.cjs' },
+        metafile: true,
       },
       {
         preBundle: format === 'esm' && (ssr || ssg),
@@ -41,6 +42,7 @@ function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Option
             return getRoutePathsFromCache(dataCache);
           },
         },
+        removeOutputs: true,
       },
     ],
     ensureRoutesConfig,
