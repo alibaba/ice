@@ -1,6 +1,8 @@
 import * as path from 'path';
 import consola from 'consola';
 import esbuild from 'esbuild';
+import fse from 'fs-extra';
+import fg from 'fast-glob';
 import type { Config } from '@ice/webpack-config/esm/types';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { TaskConfig } from 'build-scripts';
@@ -9,7 +11,7 @@ import type { ServerCompiler } from '../types/plugin.js';
 import type { UserConfig } from '../types/userConfig.js';
 import escapeLocalIdent from '../utils/escapeLocalIdent.js';
 import cssModulesPlugin from '../esbuild/cssModules.js';
-import aliasPlugin from '../esbuild/alias.js';
+import resolvePlugin from '../esbuild/resolve.js';
 import ignorePlugin from '../esbuild/ignore.js';
 import createAssetsPlugin from '../esbuild/assets.js';
 import { CACHE_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
@@ -19,6 +21,7 @@ import transformPipePlugin from '../esbuild/transformPipe.js';
 import isExternalBuiltinDep from '../utils/isExternalBuiltinDep.js';
 import getServerEntry from '../utils/getServerEntry.js';
 import type { DepScanData } from '../esbuild/scan.js';
+import formatPath from '../utils/formatPath.js';
 import { scanImports } from './analyze.js';
 import type { DepsMetaData } from './preBundleCJSDeps.js';
 import preBundleCJSDeps from './preBundleCJSDeps.js';
@@ -31,7 +34,8 @@ interface Options {
   syntaxFeatures: UserConfig['syntaxFeatures'];
 }
 
-const { merge } = lodash;
+const { merge, difference } = lodash;
+
 export function createServerCompiler(options: Options) {
   const { task, rootDir, command, server, syntaxFeatures } = options;
 
@@ -53,6 +57,8 @@ export function createServerCompiler(options: Options) {
     externalDependencies,
     transformEnv = true,
     assetsManifest,
+    redirectImports,
+    removeOutputs,
   } = {}) => {
     let depsMetadata: DepsMetaData;
     let swcOptions = merge({}, {
@@ -70,6 +76,7 @@ export function createServerCompiler(options: Options) {
       env: false,
       polyfill: false,
       swcOptions,
+      redirectImports,
     }, 'esbuild');
 
     if (preBundle) {
@@ -113,17 +120,21 @@ export function createServerCompiler(options: Options) {
       // while it is not recommended
       loader: { '.js': 'jsx' },
       jsx: 'automatic',
-      sourcemap: sourceMap ? 'inline' : false,
+      sourcemap: typeof sourceMap === 'boolean'
+        // Transform sourceMap for esbuild.
+        ? sourceMap : (sourceMap.includes('inline') ? 'inline' : !!sourceMap),
       ...customBuildOptions,
       define,
+      absWorkingDir: rootDir,
       external: Object.keys(externals),
       plugins: [
         ...(customBuildOptions.plugins || []),
         emptyCSSPlugin(),
-        aliasPlugin({
+        resolvePlugin({
           alias,
           externalDependencies: externalDependencies ?? !server.bundle,
           format,
+          externals: server.externals,
         }),
         server?.ignores && ignorePlugin(server.ignores),
         cssModulesPlugin({
@@ -145,7 +156,6 @@ export function createServerCompiler(options: Options) {
           ].filter(Boolean),
         }),
       ].filter(Boolean),
-
     };
     if (typeof task.config?.server?.buildOptions === 'function') {
       buildOptions = task.config.server.buildOptions(buildOptions);
@@ -162,6 +172,15 @@ export function createServerCompiler(options: Options) {
       const esm = server?.format === 'esm';
       const outJSExtension = esm ? '.mjs' : '.cjs';
       const serverEntry = path.join(rootDir, task.config.outputDir, SERVER_OUTPUT_DIR, `index${outJSExtension}`);
+
+      if (removeOutputs && esbuildResult.metafile) {
+        // build/server/a.mjs -> a.mjs
+        const currentOutputFiles = Object.keys(esbuildResult.metafile.outputs)
+          .map(output => output.replace(formatPath(`${path.relative(rootDir, buildOptions.outdir)}${path.sep}`), ''));
+        const allOutputFiles = fg.sync('**', { cwd: buildOptions.outdir });
+        const outdatedFiles = difference(allOutputFiles, currentOutputFiles);
+        outdatedFiles.forEach(outdatedFile => fse.removeSync(path.join(buildOptions.outdir, outdatedFile)));
+      }
 
       return {
         ...esbuildResult,

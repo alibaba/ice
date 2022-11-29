@@ -2,7 +2,7 @@ import * as path from 'path';
 import consola from 'consola';
 import type { Context } from 'build-scripts';
 import type { Config } from '@ice/webpack-config/esm/types';
-import type { ServerCompiler, WatchEvent } from './types/plugin.js';
+import type { WatchEvent } from './types/plugin.js';
 import { generateRoutesInfo } from './routes.js';
 import type Generator from './service/runtimeGenerator';
 import getGlobalStyleGlobPattern from './utils/getGlobalStyleGlobPattern.js';
@@ -15,7 +15,6 @@ interface Options {
   generator: Generator;
   cache: Map<string, string>;
   ctx: Context<Config>;
-  serverCompiler: ServerCompiler;
 }
 
 const getWatchEvents = (options: Options): WatchEvent[] => {

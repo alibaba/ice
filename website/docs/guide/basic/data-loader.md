@@ -71,7 +71,7 @@ export const dataLoader = defineDataLoader(async () => {
 
 ## 使用示例
 
-[示例工程](https://github.com/ice-lab/ice-next/tree/master/examples/with-data-loader)
+[示例工程](https://github.com/alibaba/ice/tree/master/examples/with-data-loader)
 
 ### 页面级数据加载
 

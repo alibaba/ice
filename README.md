@@ -328,4 +328,4 @@ Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
 
 ## LICENSE
 
-[MIT](https://github.com/ice-lab/ice-next/blob/master/LICENSE)
+[MIT](https://github.com/alibaba/ice/blob/master/LICENSE)

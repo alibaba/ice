@@ -6,12 +6,12 @@ title: 单元测试
   <summary>示例</summary>
   <ul>
     <li>
-      <a href="https://github.com/ice-lab/ice-next/tree/master/examples/with-jest" target="_blank" rel="noopener noreferrer">
+      <a href="https://github.com/alibaba/ice/tree/master/examples/with-jest" target="_blank" rel="noopener noreferrer">
         with-jest
       </a>
     </li>
     <li>
-      <a href="https://github.com/ice-lab/ice-next/tree/master/examples/with-vitest" target="_blank" rel="noopener noreferrer">
+      <a href="https://github.com/alibaba/ice/tree/master/examples/with-vitest" target="_blank" rel="noopener noreferrer">
         with-vitest
       </a>
     </li>

@@ -29,6 +29,7 @@ const { debounce } = lodash;
 const RENDER_WAIT = 150;
 
 interface Options {
+  templateDir: string;
   rootDir: string;
   targetDir: string;
   defaultRenderData?: RenderData;
@@ -102,6 +103,8 @@ export function removeDeclarations(exportList: DeclarationData[], removeSource: 
 export default class Generator {
   private targetDir: string;
 
+  private templateDir: string;
+
   private renderData: RenderData;
 
   private contentRegistration: Registration;
@@ -117,9 +120,10 @@ export default class Generator {
   private contentTypes: string[];
 
   public constructor(options: Options) {
-    const { rootDir, targetDir, defaultRenderData = {}, templates } = options;
+    const { rootDir, targetDir, defaultRenderData = {}, templates, templateDir } = options;
     this.rootDir = rootDir;
     this.targetDir = targetDir;
+    this.templateDir = templateDir;
     this.renderData = defaultRenderData;
     this.contentRegistration = {};
     this.rerender = false;
@@ -243,8 +247,7 @@ export default class Generator {
     templates.forEach((templateFile) => {
       const templatePath = path.isAbsolute(templateFile) ? templateFile : path.join(template, templateFile);
       const filePath = path.isAbsolute(templateFile) ? path.basename(templateFile) : templateFile;
-      const targetPath = path.join(this.targetDir, targetDir, filePath);
-
+      const targetPath = path.join(targetDir, filePath);
       this.addRenderFile(templatePath, targetPath, extraData);
     });
     if (this.rerender) {
@@ -261,11 +264,14 @@ export default class Generator {
 
   public renderFile: RenderFile = (templatePath, targetPath, extraData = {}) => {
     const renderExt = '.ejs';
-    const realTargetPath = path.isAbsolute(targetPath) ? targetPath : path.join(this.rootDir, targetPath);
+    const realTargetPath = path.isAbsolute(targetPath)
+      ? targetPath : path.join(this.rootDir, this.targetDir, targetPath);
     // example: templatePath = 'routes.ts.ejs'
+    const realTemplatePath = path.isAbsolute(templatePath)
+      ? templatePath : path.join(this.templateDir, templatePath);
     const { ext } = path.parse(templatePath);
     if (ext === renderExt) {
-      const templateContent = fse.readFileSync(templatePath, 'utf-8');
+      const templateContent = fse.readFileSync(realTemplatePath, 'utf-8');
       let renderData = { ...this.renderData };
       if (typeof extraData === 'function') {
         renderData = extraData(this.renderData);
@@ -279,7 +285,7 @@ export default class Generator {
       fse.writeFileSync(realTargetPath.replace(renderExt, ''), content, 'utf-8');
     } else {
       fse.ensureDirSync(path.dirname(realTargetPath));
-      fse.copyFileSync(templatePath, realTargetPath);
+      fse.copyFileSync(realTemplatePath, realTargetPath);
     }
   };
 }

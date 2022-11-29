@@ -1,14 +1,11 @@
-import path from 'path';
-import { createRequire } from 'module';
-import swc from '@swc/core';
-import type { Options as SwcConfig, ReactConfig } from '@swc/core';
+import { swc, swcPluginRemoveExport, swcPluginKeepExport, swcPluginKeepPlatform, coreJsPath } from '@ice/bundles';
+import type { SwcConfig, ReactConfig } from '@ice/bundles';
 import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { Config } from '../types.js';
 import transformCoreJs from '../utils/transformCoreJs.js';
 
 const { merge } = lodash;
-const require = createRequire(import.meta.url);
 
 type JSXSuffix = 'jsx' | 'tsx';
 
@@ -97,7 +94,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
       if (removeExportExprs) {
         if (isRouteEntry(id) || isAppEntry(id)) {
           swcPlugins.push([
-            require.resolve('@ice/swc-plugin-remove-export'),
+            swcPluginRemoveExport,
             removeExportExprs,
           ]);
         }
@@ -106,7 +103,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
       if (keepExports) {
         if (isRouteEntry(id)) {
           swcPlugins.push([
-            require.resolve('@ice/swc-plugin-keep-export'),
+            swcPluginKeepExport,
             keepExports,
           ]);
         } else if (isAppEntry(id)) {
@@ -120,7 +117,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
           }
 
           swcPlugins.push([
-            require.resolve('@ice/swc-plugin-keep-export'),
+            swcPluginKeepExport,
             keepList,
           ]);
         }
@@ -128,7 +125,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
 
       if (keepPlatform) {
         swcPlugins.push([
-          require.resolve('@ice/swc-plugin-keep-platform'),
+          swcPluginKeepPlatform,
           keepPlatform,
         ]);
       }
@@ -153,7 +150,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
           code: polyfill
             ? await transformCoreJs(
               code,
-              path.dirname(require.resolve('core-js/package.json')),
+              coreJsPath,
             ) : code,
           map,
         };

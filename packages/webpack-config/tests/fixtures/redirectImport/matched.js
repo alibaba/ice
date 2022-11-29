@@ -1,0 +1,1 @@
+import { runApp, defineDataLoader } from 'ice';
