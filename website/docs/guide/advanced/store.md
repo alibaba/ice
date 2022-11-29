@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
   <summary>示例</summary>
   <ul>
     <li>
-      <a href="https://github.com/ice-lab/ice-next/tree/master/examples/with-store" target="_blank" rel="noopener noreferrer">
+      <a href="https://github.com/alibaba/ice/tree/master/examples/with-store" target="_blank" rel="noopener noreferrer">
         with-store
       </a>
     </li>

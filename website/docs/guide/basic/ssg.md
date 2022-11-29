@@ -3,7 +3,7 @@ title: 构建时渲染 SSG
 order: 10
 ---
 
-:::tips
+:::tip
 小程序端不支持该能力。
 :::
 
@@ -80,7 +80,7 @@ export const staticDataLoader = defineStaticDataLoader(() => {
 });
 ```
 
-:::tips
+:::tip
 当 `defineDataLoader` 接受入参为数组时（定义了多个数据请求），`defineStaticDataLoader` 也需要与其一一对应。
 :::
 
