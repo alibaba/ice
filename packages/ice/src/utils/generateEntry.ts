@@ -47,15 +47,15 @@ export default async function generateEntry(options: Options): Promise<EntryResu
   for (let i = 0, n = paths.length; i < n; i++) {
     const routePath = paths[i];
     const {
-      htmlEntryStr,
+      htmlOutput,
       jsOutput,
     } = await renderEntry({ routePath, serverEntry, documentOnly, renderMode, distType });
 
-    if (htmlEntryStr) {
+    if (htmlOutput) {
       const path = await generateHTMLPath({ rootDir, routePath, outputDir });
       await writeFile(
         path,
-        htmlEntryStr,
+        htmlOutput,
       );
       outputPaths.push(path);
     }
@@ -151,7 +151,7 @@ async function renderEntry(
     distType,
   });
   return {
-    htmlEntryStr: value,
+    htmlOutput: value,
     jsOutput,
   };
 }
