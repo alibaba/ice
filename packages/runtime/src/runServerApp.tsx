@@ -35,7 +35,12 @@ import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
 import DefaultAppRouter from './AppRouter.js';
 import __createElement from './domRender.js';
 
-const dirname = __dirname || path.dirname(fileURLToPath(import.meta.url));
+let dirname;
+if (typeof __dirname === 'string') {
+  dirname = __dirname;
+} else {
+  dirname = path.dirname(fileURLToPath(import.meta.url));
+}
 
 interface RenderOptions {
   app: AppExport;
