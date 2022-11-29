@@ -185,12 +185,13 @@ export function createPageConfig(
       });
     },
     [ONREADY]() {
-      // FIXME: 存在 appdata 的时候，on ready 提前触发，类似 onShow 一样搞个回调
-      // 触发生命周期
-      safeExecute(this.$icePath, ON_READY);
-      // 通过事件触发子组件的生命周期
-      raf(() => eventCenter.trigger(getOnReadyEventKey(id)));
-      this.onReady.called = true;
+      hasLoaded.then(() => {
+        // 触发生命周期
+        safeExecute(this.$icePath, ON_READY);
+        // 通过事件触发子组件的生命周期
+        raf(() => eventCenter.trigger(getOnReadyEventKey(id)));
+        this.onReady.called = true;
+      });
     },
     [ONSHOW](options = {}) {
       hasLoaded.then(() => {

@@ -1,7 +1,6 @@
 declare const ASSETS_VERSION: string;
 
 export default function Fourth() {
-  debugger;
   console.log('[Fourth] ASSETS_VERSION', ASSETS_VERSION);
   return (
     <>

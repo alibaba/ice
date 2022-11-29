@@ -47,7 +47,6 @@ export const miniappLifecycles = defineMiniappConfig(() => {
 export default defineAppConfig(() => {
   return {
     app: {
-      strict: true,
       errorBoundary: true,
     },
   };

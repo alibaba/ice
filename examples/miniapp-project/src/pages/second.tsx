@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useConfig, useSearchParams, usePageLifecycle } from 'ice';
 
 export default function Second() {
-  debugger;
   const config = useConfig();
   console.log('[Second] use config', config);
   const [params] = useSearchParams();
@@ -13,8 +12,8 @@ export default function Second() {
   usePageLifecycle('onLoad', (options) => {
     console.log('[Second] page onLoad', options);
   });
-  usePageLifecycle('onReady', (options) => {
-    console.log('[Second] onReady', options);
+  usePageLifecycle('onReady', () => {
+    console.log('[Second] page onReady');
   });
   usePageLifecycle('onShareAppMessage', (options) => {
     console.log('[Second] onShareAppMessage', options);
