@@ -1,4 +1,5 @@
 import * as path from 'path';
+import url from 'url';
 import fse from 'fs-extra';
 import temp from 'temp';
 import cssModules from '@ice/bundles/compiled/postcss-modules/index.js';
@@ -90,11 +91,15 @@ async function parseStyle(filePath: string) {
   }
 
   if (ext === '.scss') {
-    return (await sass.compileStringAsync(content)).css;
+    return (await sass.compileStringAsync(content, {
+      url: url.pathToFileURL(filePath),
+    })).css;
   }
 
   if (ext === '.less') {
-    return (await less.render(content)).css;
+    return (await less.render(content, {
+      filename: filePath,
+    })).css;
   }
 
   throw new Error(`Can't parse the style '${ext}'.`);

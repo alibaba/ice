@@ -11,7 +11,7 @@ import type { Options } from '@ice/bundles/compiled/eslint-webpack-plugin';
 import type { ForkTsCheckerWebpackPluginOptions } from '@ice/bundles/compiled/fork-ts-checker-webpack-plugin';
 import type { UnpluginOptions, UnpluginContext } from '@ice/bundles/compiled/unplugin';
 import type Server from 'webpack-dev-server';
-import type { Config as SWCCompilationConfig } from '@swc/core';
+import type { SwcCompilationConfig } from '@ice/bundles';
 import type { BuildOptions } from 'esbuild';
 import type { ProcessOptions } from 'postcss';
 
@@ -38,10 +38,17 @@ interface ConfigurationCtx<T = typeof webpack> extends Config {
 type Experimental = Configuration['experiments'];
 interface SwcOptions {
   removeExportExprs?: string[];
-  compilationConfig?: SWCCompilationConfig;
+  compilationConfig?: SwcCompilationConfig;
   keepPlatform?: 'node' | 'web' | 'weex' | 'miniapp' | 'wechat-miniprogram' | 'bytedance-microapp' | 'baidu-smartprogram' | 'kuaishou-miniprogram';
   keepExports?: string[];
   getRoutePaths?: Function;
+}
+
+interface ImportDeclaration {
+  specifier: string | string[];
+  source: string;
+  type?: boolean;
+  alias?: Record<string, string>;
 }
 
 type Output = Configuration['output'];
@@ -134,6 +141,8 @@ export interface Config {
   eslintOptions?: Options;
 
   swcOptions?: SwcOptions;
+
+  redirectImports?: ImportDeclaration[];
 
   entry?: {
     [key: string]: string;

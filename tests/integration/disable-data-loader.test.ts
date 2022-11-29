@@ -9,5 +9,5 @@ describe(`build ${example}`, () => {
   test('open /', async () => {
     await buildFixture(example);
     expect(fs.existsSync(path.join(__dirname, `../../examples/${example}/build/js/data-loader.js`))).toBe(false);
-  }, 120000);
+  });
 });

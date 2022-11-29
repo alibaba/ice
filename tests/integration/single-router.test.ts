@@ -15,13 +15,13 @@ describe(`build ${example}`, () => {
     });
     const dataLoaderPath = path.join(__dirname, `../../examples/${example}/build/js/framework.js`);
     sizeWithOptimize = fs.statSync(dataLoaderPath).size;
-  }, 120000);
+  });
 
   test('disable optimize router', async () => {
     await buildFixture(example);
     const dataLoaderPath = path.join(__dirname, `../../examples/${example}/build/js/framework.js`);
     sizeWithoutOptimize = fs.statSync(dataLoaderPath).size;
-  }, 120000);
+  });
 
   afterAll(async () => {
     expect(sizeWithOptimize).toBeLessThan(sizeWithoutOptimize);

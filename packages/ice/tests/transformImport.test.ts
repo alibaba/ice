@@ -7,7 +7,7 @@ import { createUnplugin } from 'unplugin';
 import preBundleCJSDeps from '../src/service/preBundleCJSDeps';
 import { scanImports } from '../src/service/analyze';
 import transformImport from '../src/esbuild/transformImport';
-import aliasPlugin from '../src/esbuild/alias';
+import resolvePlugin from '../src/esbuild/resolve';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const alias = { '@': path.join(__dirname, './fixtures/scan') };
@@ -29,7 +29,7 @@ it('transform module import', async () => {
     entryPoints: [appEntry],
     outdir,
     plugins: [
-      aliasPlugin({ alias, format: 'esm', externalDependencies: false }),
+      resolvePlugin({ alias, format: 'esm', externalDependencies: false }),
       transformImportPlugin(),
     ],
   });

@@ -40,6 +40,9 @@ const plugin: Plugin<PluginOptions> = (options) => ({
       type: true,
       source: '@ice/plugin-pha/esm/types',
     });
+
+    // TODO: get route manifest by API.
+    const routeManifest = path.join(rootDir, '.ice', 'route-manifest.json');
     // Get server compiler by hooks
     onHook(`before.${command as 'start' | 'build'}.run`, async ({ serverCompiler, taskConfigs, urls, ...restAPI }) => {
       const taskConfig = taskConfigs.find(({ name }) => name === 'web').config;
@@ -79,6 +82,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
           urlPrefix,
           serverEntry: serverEntryRef.current,
           template,
+          routeManifest,
         },
       });
     });
@@ -126,6 +130,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
             publicPath,
             urlPrefix,
             template,
+            routeManifest,
           },
         });
 

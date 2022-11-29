@@ -19,7 +19,7 @@ describe(`build ${example}`, () => {
     await page.waitForFunction('document.getElementsByTagName(\'h2\').length > 0');
     expect(await page.$$text('h1')).toStrictEqual(['Layout']);
     expect(await page.$$text('h2')).toStrictEqual(['Home']);
-  }, 120000);
+  });
 
   afterAll(async () => {
     await browser.close();
@@ -37,5 +37,5 @@ describe(`start ${example}`, () => {
     await page.waitForFunction('document.getElementsByTagName(\'h2\').length > 0');
     expect(await page.$$text('h1')).toStrictEqual(['Layout']);
     expect(await page.$$text('h2')).toStrictEqual(['Home']);
-  }, 120000);
+  });
 });

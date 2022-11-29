@@ -7,7 +7,7 @@ import { getCache, setCache } from '../utils/persistentCache.js';
 import { getFileHash } from '../utils/hash.js';
 import dynamicImport from '../utils/dynamicImport.js';
 import formatPath from '../utils/formatPath.js';
-import { RUNTIME_TMP_DIR } from '../constant.js';
+import { RUNTIME_TMP_DIR, CACHE_DIR } from '../constant.js';
 
 type GetOutfile = (entry: string, exportNames: string[]) => string;
 
@@ -115,7 +115,7 @@ export const getAppExportConfig = (rootDir: string) => {
   }
   const appEntry = path.join(rootDir, 'src/app');
   const getOutfile = (entry: string, keepExports: string[]) =>
-    formatPath(path.join(rootDir, 'node_modules', `${keepExports.join('_')}_${path.basename(entry)}.mjs`));
+    formatPath(path.join(rootDir, CACHE_DIR, `${keepExports.join('_')}_${path.basename(entry)}.mjs`));
   const config = new Config({
     entry: appEntry,
     rootDir,
