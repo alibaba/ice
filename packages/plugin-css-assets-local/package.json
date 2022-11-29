@@ -4,7 +4,7 @@
   "license": "MIT",
   "repository": {
     "type": "http",
-    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-css-assets-local"
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-css-assets-local"
   },
   "type": "module",
   "files": [

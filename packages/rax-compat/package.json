@@ -67,9 +67,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ice-lab/ice-next.git"
+    "url": "git+https://github.com/alibaba/ice.git"
   },
   "author": "ice-admin@alibaba-inc.com",
   "license": "MIT",
-  "homepage": "https://github.com/ice-lab/ice-next#readme"
+  "homepage": "https://github.com/alibaba/ice#readme"
 }
