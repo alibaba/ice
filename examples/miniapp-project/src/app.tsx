@@ -18,24 +18,23 @@ export const miniappManifest = {
   },
   routes: [
     'index',
-    'about',
-    'second/profile',
+    'second',
     'third/index',
-    'third/test',
-    'classComponent',
+    'fourth',
   ],
 };
 
 export const miniappLifecycles = defineMiniappConfig(() => {
   return {
     onLaunch(options) {
-      console.log('on launch', options);
+      console.log('[App] on launch', options);
     },
     onShow(options) {
-      console.log('on show', options);
+      console.log('[App] on show', options);
     },
     onShareAppMessage(options) {
-      console.log('onShareAppMessage', options);
+      // Only works in ali miniapp
+      console.log('[App] onShareAppMessage', options);
       return {
         title: 'test',
         path: 'pages/index',

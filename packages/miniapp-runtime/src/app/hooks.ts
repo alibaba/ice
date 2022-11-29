@@ -18,7 +18,6 @@ const createIceMiniappHook = (lifecycle: keyof PageLifeCycle | string) => {
     // hold fn ref and keep up to date
     const fnRef = React.useRef(fn);
     if (fnRef.current !== fn) fnRef.current = fn;
-
     React.useLayoutEffect(() => {
       let inst = getPageInstance(id);
       let first = false;
@@ -58,13 +57,13 @@ const createIceMiniappHook = (lifecycle: keyof PageLifeCycle | string) => {
 };
 
 const pageLifecycle = hooks.call('getMiniLifecycleImpl')!.page;
-const lifecycleArray = pageLifecycle.toString().split(',') as Array<keyof PageLifeCycle | string>;
-const lifecycleHooks = {};
-lifecycleArray.forEach(lifecycle => {
-  lifecycleHooks[lifecycle] = createIceMiniappHook(lifecycle);
+const pgeLifecycleArray = pageLifecycle.toString().split(',') as Array<keyof PageLifeCycle | string>;
+const pageLifecycleHooks = {};
+pgeLifecycleArray.forEach(lifecycle => {
+  pageLifecycleHooks[lifecycle] = createIceMiniappHook(lifecycle);
 });
 
 export {
-  lifecycleHooks,
-  lifecycleArray,
+  pageLifecycleHooks,
+  pgeLifecycleArray,
 };

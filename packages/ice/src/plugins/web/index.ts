@@ -48,6 +48,7 @@ const plugin: Plugin = () => ({
         'defineDataLoader',
         'defineServerDataLoader',
         'defineStaticDataLoader',
+        'usePageLifecycle',
       ],
       source: '@ice/runtime',
     });

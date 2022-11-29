@@ -36,6 +36,7 @@ const plugin: Plugin<MiniappOptions> = (miniappOptions = {}) => ({
           'useSearchParams',
           'history',
           'defineDataLoader',
+          'usePageLifecycle',
         ],
         source: miniappRuntime,
       });

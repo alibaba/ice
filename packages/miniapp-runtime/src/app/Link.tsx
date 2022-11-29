@@ -10,7 +10,8 @@ function matchRoute(url: string): string | undefined {
 
   const miniappRoutes = getMiniappRoutes();
   const matchedRoute = miniappRoutes.find(route => route.path === path);
-  return query ? `${matchedRoute.source}?${query}` : matchedRoute.source;
+  // / prefix is required in wechat miniprogram
+  return query ? `/${matchedRoute.source}?${query}` : `/${matchedRoute.source}`;
 }
 
 export default function Link(props: LinkProps) {

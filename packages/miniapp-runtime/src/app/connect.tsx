@@ -2,7 +2,7 @@ import { EMPTY_OBJ, hooks } from '@ice/shared';
 import React, { createElement } from 'react';
 import * as ReactDOM from 'react-dom';
 import { ConfigProvider, DataProvider } from '@ice/runtime';
-import type { MiniappAppConfig } from '../types.js';
+import type { MiniappAppConfig, MiniappLifecycles } from '../types.js';
 import { Current, getPageInstance,
   incrementId, injectPageInstance,
 } from '../index.js';
@@ -14,7 +14,6 @@ import type {
 } from '../index.js';
 import enableHtmlRuntime from './html/runtime.js';
 import { reactMeta } from './react-meta.js';
-import { getMiniappConfig } from './defineMiniappConfig.js';
 import { ensureIsArray, HOOKS_APP_ID, isClassComponent, setDefaultDescriptor, setRouterParams } from './utils.js';
 
 type PageComponent = React.CElement<PageProps, React.Component<PageProps, any, any>>;
@@ -158,6 +157,7 @@ export class AppWrapper extends React.Component {
  */
  export function createMiniApp(
   config: MiniappAppConfig,
+  lifecycles: MiniappLifecycles,
 ) {
   setReconciler();
   enableHtmlRuntime();
@@ -221,7 +221,7 @@ export class AppWrapper extends React.Component {
     }),
   });
 
-  if (getMiniappConfig().onShareAppMessage) {
+  if (lifecycles.onShareAppMessage) {
     // Only works in ali miniapp
     appObj.onShareAppMessage = function (res) {
       return triggerAppHook('onShareAppMessage', res);

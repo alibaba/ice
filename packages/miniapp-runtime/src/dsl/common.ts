@@ -234,20 +234,21 @@ export function createPageConfig(
       config.events[nativeEvent] = function (...args) {
         return safeExecute(this.$icePath, nativeEvent, ...args);
       };
-    }
-    config[nativeEvent] = function (...args) {
-      if (nativeEvent === 'onShareAppMessage') {
-        const target = args?.[0].target;
-        if (target) {
-          const { id } = target;
-          const element = document.getElementById(id);
-          if (element) {
-            target!.dataset = element.dataset;
+    } else {
+      config[nativeEvent] = function (...args) {
+        if (nativeEvent === 'onShareAppMessage') {
+          const target = args?.[0].target;
+          if (target) {
+            const { id } = target;
+            const element = document.getElementById(id);
+            if (element) {
+              target!.dataset = element.dataset;
+            }
           }
         }
-      }
-      return safeExecute(this.$icePath, nativeEvent, ...args);
-    };
+        return safeExecute(this.$icePath, nativeEvent, ...args);
+      };
+    }
   });
 
   config.eh = eventHandler;

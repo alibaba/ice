@@ -1,29 +1,16 @@
-import type { RuntimeAPI } from '@ice/runtime/esm/types';
+import type { RuntimePlugin } from '@ice/runtime/esm/types';
 import type { MiniappLifecycles } from '@ice/miniapp-runtime/esm/types';
 
-let miniappLifecycles: MiniappLifecycles = {};
-
-export function defineMiniappConfig(miniappConfigOrDefineMiniappConfig: MiniappLifecycles | (() => MiniappLifecycles)): void {
+export function defineMiniappConfig(miniappConfigOrDefineMiniappConfig: MiniappLifecycles | (() => MiniappLifecycles)): MiniappLifecycles {
+  let miniappLifecycles: MiniappLifecycles = {};
   if (typeof miniappConfigOrDefineMiniappConfig === 'function') {
     miniappLifecycles = miniappConfigOrDefineMiniappConfig();
   } else {
     miniappLifecycles = miniappConfigOrDefineMiniappConfig;
   }
+
+  return miniappLifecycles;
 }
 
-declare type SetMiniappLifecycles = (miniappLifecycles: MiniappLifecycles) => void;
-
-interface MiniappRuntimeAPI extends RuntimeAPI {
-  setMiniappLifecycles?: SetMiniappLifecycles;
-}
-
-
-interface RuntimePlugin {
-  (apis: MiniappRuntimeAPI, runtimeOptions?: Record<string, any>): Promise<void> | void;
-}
-
-const runtime: RuntimePlugin = ({ setMiniappLifecycles }) => {
-  setMiniappLifecycles(miniappLifecycles);
-};
-
+const runtime: RuntimePlugin = ({}) => {};
 export default runtime;

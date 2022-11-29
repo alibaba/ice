@@ -3,6 +3,7 @@ import runClientApp from './runClientApp.js';
 import Link from './Link.js';
 import useSearchParams from './useSearchParams.js';
 import { routerHistory as history } from './history.js';
+import usePageLifecycle from './usePageLifecycle.js';
 
 export {
   runClientApp,
@@ -15,4 +16,5 @@ export {
   useSearchParams,
   history,
   defineDataLoader,
+  usePageLifecycle,
 };
