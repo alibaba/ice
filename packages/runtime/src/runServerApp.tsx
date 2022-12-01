@@ -74,6 +74,17 @@ interface RenderResult {
 }
 
 /**
+ * Render and return the result as html string.
+ */
+export async function renderToHTML(
+  requestContext: ServerContext,
+  renderOptions: RenderOptions,
+): Promise<RenderResult> {
+  renderOptions.distType = 'html';
+  return renderToEntry(requestContext, renderOptions);
+}
+
+/**
  * Render and return the result as entry string.
  */
 export async function renderToEntry(
