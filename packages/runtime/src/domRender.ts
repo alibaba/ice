@@ -1,7 +1,7 @@
 interface CreateElementOptions {
-  tagName: string;
+  tagName?: string;
   attributes?: {
-    [attribute: string]: string;
+    [attribute: string]: any;
   };
   children?: Array<CreateElementOptions>;
   text?: string;
