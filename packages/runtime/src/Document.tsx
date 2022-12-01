@@ -122,7 +122,7 @@ export function Data() {
     // Should merge global context when there are multiple <Data />.
     <script
       suppressHydrationWarning={documentOnly}
-      dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=Object.assign(${JSON.stringify(windowContext)}, window.__ICE_APP_CONTEXT__ || {})` }}
+      dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=Object.assign(window.__ICE_APP_CONTEXT__ || {}, ${JSON.stringify(windowContext)})` }}
     />
   );
 }
