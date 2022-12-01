@@ -106,17 +106,23 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
-    try {
-      await pipeToResponse(res, pipe);
-    } catch (error) {
-      if (renderOptions.disableFallback) {
-        throw error;
-      }
-      console.error('PiperToResponse error, downgrade to CSR.', error);
-      // downgrade to CSR.
-      const result = await fallback();
-      sendResult(res, result);
-    }
+    // Send stream result to ServerResponse.
+    pipe(res, {
+      onShellError: async (err) => {
+        if (renderOptions.disableFallback) {
+          throw err;
+        }
+
+        // downgrade to CSR.
+        console.error('PiperToResponse onShellError, downgrade to CSR.', err);
+        const result = await fallback();
+        sendResult(res, result);
+      },
+      onError: async (err) => {
+        // onError triggered after shell ready, should not downgrade to csr.
+        console.error('PiperToResponse error.', err);
+      },
+    });
   }
 }
 
@@ -127,15 +133,6 @@ async function sendResult(res: ServerResponse, result: RenderResult) {
   res.statusCode = result.statusCode;
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.end(result.value);
-}
-
-/**
- * Send stream result to ServerResponse.
- */
-function pipeToResponse(res: ServerResponse, pipe: NodeWritablePiper) {
-  return new Promise((resolve, reject) => {
-    pipe(res, (err) => (err ? reject(err) : resolve(null)));
-  });
 }
 
 async function doRender(serverContext: ServerContext, renderOptions: RenderOptions): Promise<RenderResult> {
@@ -279,7 +276,7 @@ async function renderServerEntry(
     </AppDataProvider>
   );
 
-  const pipe = renderToNodeStream(element, false);
+  const pipe = renderToNodeStream(element);
 
   const fallback = () => {
     return renderDocument({ matches, routePath, renderOptions, downgrade: true });
