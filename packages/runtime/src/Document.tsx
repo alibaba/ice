@@ -21,49 +21,49 @@ function useDocumentContext() {
 export const DocumentContextProvider = Context.Provider;
 
 interface MetaProps extends React.HTMLAttributes<HTMLMetaElement>{
-  MetaRender?: React.ComponentType<React.HTMLAttributes<HTMLMetaElement>>;
+  MetaElement?: React.ComponentType<React.HTMLAttributes<HTMLMetaElement>>;
 }
 
 export function Meta(props: MetaProps) {
   const { matches, routesConfig } = useAppContext();
   const meta = getMeta(matches, routesConfig);
   const {
-    MetaRender = 'meta',
+    MetaElement = 'meta',
   } = props;
 
   return (
     <>
-      {meta.map(item => <MetaRender key={item.name} {...props} {...item} />)}
-      <MetaRender {...props} name="ice-meta-count" content={meta.length.toString()} />
+      {meta.map(item => <MetaElement key={item.name} {...props} {...item} />)}
+      <MetaElement {...props} name="ice-meta-count" content={meta.length.toString()} />
     </>
   );
 }
 
 interface TitleProps extends React.HTMLAttributes<HTMLTitleElement>{
-  TitleRender?: React.ComponentType<React.HTMLAttributes<HTMLTitleElement>>;
+  TitleElement?: React.ComponentType<React.HTMLAttributes<HTMLTitleElement>>;
 }
 
 export function Title(props: TitleProps) {
   const { matches, routesConfig } = useAppContext();
   const title = getTitle(matches, routesConfig);
   const {
-    TitleRender = 'title',
+    TitleElement = 'title',
     ...rest
   } = props;
 
   return (
-    <TitleRender {...rest}>{title}</TitleRender>
+    <TitleElement {...rest}>{title}</TitleElement>
   );
 }
 
 interface LinksProps extends React.LinkHTMLAttributes<HTMLLinkElement>{
-  LinkRender?: React.ComponentType<React.LinkHTMLAttributes<HTMLLinkElement>>;
+  LinkElement?: React.ComponentType<React.LinkHTMLAttributes<HTMLLinkElement>>;
 }
 
 export function Links(props: LinksProps) {
   const { routesConfig, matches, assetsManifest } = useAppContext();
   const {
-    LinkRender = 'link',
+    LinkElement = 'link',
     ...rest
   } = props;
 
@@ -76,22 +76,22 @@ export function Links(props: LinksProps) {
     <>
       {
         routeLinks.map(routeLinkProps => {
-          return <LinkRender key={routeLinkProps.href} {...rest} {...routeLinkProps} data-route-link />;
+          return <LinkElement key={routeLinkProps.href} {...rest} {...routeLinkProps} data-route-link />;
         })
       }
-      {styles.map(style => <LinkRender key={style} {...rest} rel="stylesheet" type="text/css" href={style} />)}
+      {styles.map(style => <LinkElement key={style} {...rest} rel="stylesheet" type="text/css" href={style} />)}
     </>
   );
 }
 
 interface ScriptsProps extends React.ScriptHTMLAttributes<HTMLScriptElement>{
-  ScriptRender?: React.ComponentType<React.ScriptHTMLAttributes<HTMLScriptElement>> | string;
+  ScriptElement?: React.ComponentType<React.ScriptHTMLAttributes<HTMLScriptElement>> | string;
 }
 
 export function Scripts(props: ScriptsProps) {
   const { routesConfig, matches, assetsManifest } = useAppContext();
   const {
-    ScriptRender = 'script',
+    ScriptElement = 'script',
     ...rest
   } = props;
 
@@ -115,15 +115,15 @@ export function Scripts(props: ScriptsProps) {
 
   return (
     <>
-      <Data ScriptRender={ScriptRender} />
+      <Data ScriptElement={ScriptElement} />
       {
         routeScripts.map(routeScriptProps => {
-          return <ScriptRender key={routeScriptProps.src} {...rest} {...routeScriptProps} data-route-script />;
+          return <ScriptElement key={routeScriptProps.src} {...rest} {...routeScriptProps} data-route-script />;
         })
       }
       {
         scripts.map(script => {
-          return <ScriptRender key={script} src={script} {...rest} />;
+          return <ScriptElement key={script} src={script} {...rest} />;
         })
       }
     </>
@@ -131,7 +131,7 @@ export function Scripts(props: ScriptsProps) {
 }
 
 interface DataProps {
-  ScriptRender?: React.ComponentType<React.ScriptHTMLAttributes<HTMLScriptElement>> | string;
+  ScriptElement?: React.ComponentType<React.ScriptHTMLAttributes<HTMLScriptElement>> | string;
 }
 
 // use app context separately
@@ -139,7 +139,7 @@ export function Data(props: DataProps) {
   const { routesData, documentOnly, matches, routesConfig, downgrade } = useAppContext();
   const appData = useAppData();
   const {
-    ScriptRender = 'script',
+    ScriptElement = 'script',
   } = props;
 
   const matchedIds = matches.map(match => match.route.id);
@@ -157,7 +157,7 @@ export function Data(props: DataProps) {
   return (
     // Disable hydration warning for csr, initial app data may not equal csr result.
     // Should merge global context when there are multiple <Data />.
-    <ScriptRender
+    <ScriptElement
       suppressHydrationWarning={documentOnly}
       dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=Object.assign(${JSON.stringify(windowContext)}, window.__ICE_APP_CONTEXT__ || {})` }}
     />
