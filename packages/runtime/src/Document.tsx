@@ -20,8 +20,8 @@ function useDocumentContext() {
 
 export const DocumentContextProvider = Context.Provider;
 
-interface MetaProps extends React.HTMLAttributes<HTMLTitleElement>{
-  MetaRender?: React.ReactElement;
+interface MetaProps extends React.HTMLAttributes<HTMLMetaElement>{
+  MetaRender?: React.ComponentType<React.HTMLAttributes<HTMLMetaElement>>;
 }
 
 export function Meta(props: MetaProps) {
@@ -40,7 +40,7 @@ export function Meta(props: MetaProps) {
 }
 
 interface TitleProps extends React.HTMLAttributes<HTMLTitleElement>{
-  TitleRender?: React.ReactElement;
+  TitleRender?: React.ComponentType<React.HTMLAttributes<HTMLTitleElement>>;
 }
 
 export function Title(props: TitleProps) {
@@ -57,7 +57,7 @@ export function Title(props: TitleProps) {
 }
 
 interface LinksProps extends React.LinkHTMLAttributes<HTMLLinkElement>{
-  LinkRender?: React.ReactElement;
+  LinkRender?: React.ComponentType<React.LinkHTMLAttributes<HTMLLinkElement>>;
 }
 
 export function Links(props: LinksProps) {
@@ -85,7 +85,7 @@ export function Links(props: LinksProps) {
 }
 
 interface ScriptsProps extends React.ScriptHTMLAttributes<HTMLScriptElement>{
-  ScriptRender?: React.ReactElement;
+  ScriptRender?: React.ComponentType<React.ScriptHTMLAttributes<HTMLScriptElement>> | string;
 }
 
 export function Scripts(props: ScriptsProps) {
@@ -131,7 +131,7 @@ export function Scripts(props: ScriptsProps) {
 }
 
 interface DataProps {
-  ScriptRender?: React.ReactElement;
+  ScriptRender?: React.ComponentType<React.ScriptHTMLAttributes<HTMLScriptElement>> | string;
 }
 
 // use app context separately
