@@ -4,6 +4,7 @@ import customPlugin from './plugin';
 
 export default defineConfig(() => ({
   publicPath: '/',
+  polyfill: 'usage',
   syntaxFeatures: {
     exportDefaultFrom: true,
   },

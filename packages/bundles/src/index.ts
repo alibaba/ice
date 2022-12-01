@@ -1,3 +1,4 @@
+import path from 'path';
 import { createRequire } from 'module';
 import { dirname } from 'path';
 import postcss from 'postcss';
@@ -10,7 +11,6 @@ const swcPluginRemoveExport = require.resolve('@ice/swc-plugin-remove-export');
 const swcPluginKeepExport = require.resolve('@ice/swc-plugin-keep-export');
 const swcPluginKeepPlatform = require.resolve('@ice/swc-plugin-keep-platform');
 const coreJsPath = dirname(require.resolve('core-js/package.json'));
-
 export {
   postcss,
   less,
