@@ -1,6 +1,6 @@
 {
   "name": "rax-compat",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Rax compatible mode, running rax project on the react runtime.",
   "files": [
     "esm",
@@ -67,9 +67,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ice-lab/ice-next.git"
+    "url": "git+https://github.com/alibaba/ice.git"
   },
   "author": "ice-admin@alibaba-inc.com",
   "license": "MIT",
-  "homepage": "https://github.com/ice-lab/ice-next#readme"
+  "homepage": "https://github.com/alibaba/ice#readme"
 }

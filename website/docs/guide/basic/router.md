@@ -95,7 +95,7 @@ ice.js 针对嵌套路由的场景，应用了以下优化，来让页面达成�
 
 利用框架对`嵌套路由`所做的优化，我们可以将页面中逻辑相对分离的部分，用嵌套路由的方式来组织，以获得更好的加载体验。
 
-例如，下面这个常见的移动端营销页，可以将顶部通用的 `Slider` 抽象为布局组件，将不同 `tab` 下对应的瀑布流，抽象为路由组件。这样，`Slider` 和瀑布流就可以做到并行加载，并且当切换 `tab` 时，新的 tab 内容将由框架触发按需加载和渲染。[示例工程](https://github.com/ice-lab/ice-next/tree/master/examples/with-nested-routes)
+例如，下面这个常见的移动端营销页，可以将顶部通用的 `Slider` 抽象为布局组件，将不同 `tab` 下对应的瀑布流，抽象为路由组件。这样，`Slider` 和瀑布流就可以做到并行加载，并且当切换 `tab` 时，新的 tab 内容将由框架触发按需加载和渲染。[示例工程](https://github.com/alibaba/ice/tree/master/examples/with-nested-routes)
 
 <img src="https://img.alicdn.com/imgextra/i3/O1CN01gKRkTc1aTe5QiWmpt_!!6000000003331-2-tps-1566-704.png" width="750px" />
 

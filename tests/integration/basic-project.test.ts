@@ -42,7 +42,7 @@ describe(`build ${example}`, () => {
     // size of data loader should be less than 14kib
     const stats = fs.statSync(dataLoaderPath);
     expect(stats.size).toBeLessThan(1024 * 14);
-  }, 120000);
+  });
 
   test('ClientOnly Component', async () => {
     await page.push('/client-only.html');
@@ -60,13 +60,13 @@ describe(`build ${example}`, () => {
 
     const files = fs.readdirSync(path.join(__dirname, `../../examples/${example}/build/js`), 'utf-8');
     expect(files.length).toBe(10);
-  }, 120000);
+  });
 
   test('render route config when downgrade to CSR.', async () => {
     await page.push('/downgrade.html');
     expect(await page.$$text('title')).toStrictEqual(['hello']);
     expect((await page.$$text('h2')).length).toEqual(0);
-  }, 120000);
+  });
 
   afterAll(async () => {
     await browser.close();
@@ -92,7 +92,7 @@ describe(`start ${example}`, () => {
     browser = res.browser;
     expect(await page.$$text('h2')).toStrictEqual(['Home Page']);
     expect(await page.$$text('#data-from')).toStrictEqual(['getServerData']);
-  }, 120000);
+  });
 
   test('update route', async () => {
     const targetPath = path.join(rootDir, 'src/pages/blog.tsx');
@@ -101,7 +101,7 @@ describe(`start ${example}`, () => {
     fs.writeFileSync(targetPath, routeContent);
     await page.reload();
     expect(JSON.parse(routeManifest)[0].children.length).toBe(5);
-  }, 120000);
+  });
 
   test('update watched file: global.css', () => {
     const targetPath = path.join(rootDir, 'src/global.css');
@@ -144,7 +144,7 @@ describe(`start ${example}`, () => {
     expect(
       await page.$$eval('script[src*="lodash"]', (els) => els.length),
     ).toBe(1);
-  }, 120000);
+  });
 
   test('ClientOnly Component', async () => {
     await page.push('/client-only');

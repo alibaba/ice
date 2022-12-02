@@ -3,7 +3,7 @@ title: 命令行
 order: 14
 ---
 
-:::tip
+## 指定命令行参数
 
 指定命令行参数有两种方式：
 
@@ -24,16 +24,12 @@ order: 14
 $ npm start -- --https
 ```
 
-:::
-
 ## start
 
 启动本地开发服务器，用于调试项目。
 
 ```bash
 Usage: ice-cli start [options]
-
-start server
 
 Options:
   --platform <platform>  指定编译的 platform
@@ -55,8 +51,6 @@ Options:
 
 ```bash
 Usage: ice-cli build [options]
-
-build project
 
 Options:
   --platform <platform>  指定编译的 platform
@@ -90,8 +84,6 @@ Commands:
 $ ice help build
 Usage: ice-cli build [options]
 
-build project
-
 Options:
   --platform <platform>  set platform
   --mode <mode>          set mode
@@ -103,7 +95,7 @@ Options:
 
 ## version
 
-查看 icejs 的版本。
+查看 ice.js 的版本。
 
 ```bash
 $ ice --version

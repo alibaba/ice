@@ -54,4 +54,14 @@ describe('redirect import', () => {
     const transformed = await redirectImport(code, { exportData, targetSource: 'ice' });
     expect(transformed).toBe('import request from \'axios\';\nimport store from \'@ice/store\';');
   });
+  it('matched transform', async () => {
+    const code = fs.readFileSync(path.join(__dirname, './fixtures/redirectImport/matched.js'), 'utf-8');
+    const transformed = await redirectImport(code, { exportData, targetSource: 'ice' });
+    expect(transformed).toBe('import { defineDataLoader } from \'ice\';\nimport { runApp } from \'@ice/runtime\';');
+  });
+  it('missmatched transform', async () => {
+    const code = fs.readFileSync(path.join(__dirname, './fixtures/redirectImport/missmatch.js'), 'utf-8');
+    const transformed = await redirectImport(code, { exportData, targetSource: 'ice' });
+    expect(transformed).toBe('import { defineDataLoader } from \'ice\';');
+  });
 });

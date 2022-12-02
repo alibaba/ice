@@ -35,6 +35,6 @@
   },
   "repository": {
     "type": "http",
-    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-miniapp"
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-miniapp"
   }
 }

@@ -8,18 +8,23 @@ interface PluginOptions {
   alias: Record<string, string | false>;
   externalDependencies: boolean;
   format: BuildOptions['format'];
+  externals?: string[];
 }
 
-const aliasPlugin = (options: PluginOptions): Plugin => {
-  const { alias, externalDependencies, format } = options;
+const resolvePlugin = (options: PluginOptions): Plugin => {
+  const { alias, externalDependencies, format, externals } = options;
   return {
-    name: 'esbuild-alias',
+    name: 'esbuild-resolve',
     setup(build: PluginBuild) {
       build.onResolve({ filter: /.*/ }, (args) => {
         const id = args.path;
+
         // ice do not support alias with config onlyModule
         const resolved = resolveId(id, alias);
+
         if (resolved && resolved !== id) {
+          let resolvedPath = resolved;
+
           // glob specified file module aliased with absolute path
           if (!path.extname(resolved) && path.isAbsolute(resolved)) {
             const basename = path.basename(resolved);
@@ -28,20 +33,37 @@ const aliasPlugin = (options: PluginOptions): Plugin => {
               cwd: path.dirname(resolved),
               absolute: true,
             })[0];
+
             if (absoluteId) {
-              return {
-                path: absoluteId,
-              };
+              resolvedPath = absoluteId;
             }
           }
-          return { path: resolved };
+
+          const external = shouldExternal(resolvedPath, externals);
+
+          // absolute path can not be resolved by other plugins, so we need to check external here.
+          if (external) {
+            return {
+              path: resolvedPath,
+              external: true,
+            };
+          }
+
+          return { path: resolvedPath };
         }
-      });
-      build.onResolve({ filter: /.*/ }, (args) => {
-        const id = args.path;
+
         // external ids which is third-party dependencies
         if (id[0] !== '.' && !path.isAbsolute(id) && externalDependencies && isExternalBuiltinDep(id, format)) {
           return {
+            external: true,
+          };
+        }
+
+        const external = shouldExternal(id, externals);
+
+        if (external) {
+          return {
+            path: id,
             external: true,
           };
         }
@@ -50,4 +72,14 @@ const aliasPlugin = (options: PluginOptions): Plugin => {
   };
 };
 
-export default aliasPlugin;
+function shouldExternal(id: string, externals?: string[]) {
+  if (!externals) {
+    return;
+  }
+
+  return externals.find(regexStr => {
+    return new RegExp(regexStr).test(id);
+  });
+}
+
+export default resolvePlugin;

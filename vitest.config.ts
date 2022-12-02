@@ -11,6 +11,7 @@ export default defineConfig({
     alias: { ...moduleNameMapper },
   },
   test: {
+    testTimeout: 120000,
     // To avoid error `Segmentation fault (core dumped)` in CI environment, disable threads
     // ref: https://github.com/vitest-dev/vitest/issues/317
     threads: false,
