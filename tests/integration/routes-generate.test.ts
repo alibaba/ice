@@ -17,7 +17,7 @@ describe(`build ${example}`, () => {
     browser = res.browser;
     expect(await page.$$text('h1')).toStrictEqual(['Layout']);
     expect(await page.$$text('h2')).toStrictEqual(['Home']);
-  }, 120000);
+  });
 
   test('define extra routes', async () => {
     await page.push('/about-me.html');
@@ -60,7 +60,7 @@ describe(`start ${example}`, () => {
     browser = res.browser;
     expect(await page.$$text('h1')).toStrictEqual(['Layout']);
     expect(await page.$$text('h2')).toStrictEqual(['Home']);
-  }, 120000);
+  });
 
   test('define extra routes', async () => {
     await page.push('/about-me');

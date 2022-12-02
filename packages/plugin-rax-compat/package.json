@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-rax-compat",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "license": "MIT",
   "type": "module",
@@ -33,7 +33,7 @@
   },
   "repository": {
     "type": "http",
-    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-rax-compat"
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-rax-compat"
   },
   "scripts": {
     "watch": "tsc -w",

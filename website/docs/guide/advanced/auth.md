@@ -1,7 +1,7 @@
 ---
 title: 权限管理
 ---
-:::tips
+:::tip
 小程序端不支持该能力。
 :::
 
@@ -12,7 +12,7 @@ import TabItem from '@theme/TabItem';
   <summary>示例</summary>
   <ul>
     <li>
-      <a href="https://github.com/ice-lab/ice-next/tree/master/examples/with-auth" target="_blank" rel="noopener noreferrer">
+      <a href="https://github.com/alibaba/ice/tree/master/examples/with-auth" target="_blank" rel="noopener noreferrer">
         with-auth
       </a>
     </li>

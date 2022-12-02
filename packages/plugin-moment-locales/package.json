@@ -13,7 +13,7 @@
   "license": "MIT",
   "repository": {
     "type": "http",
-    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-moment-locales"
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-moment-locales"
   },
   "devDependencies": {
     "@ice/app": "^3.0.0"

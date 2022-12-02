@@ -1,6 +1,6 @@
 {
   "name": "@ice/runtime",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "type": "module",
   "types": "./esm/index.d.ts",
@@ -23,9 +23,9 @@
   ],
   "author": "ICE",
   "license": "MIT",
-  "repository": "ice-lab/ice-next",
-  "bugs": "https://github.com/ice-lab/ice-next/issues",
-  "homepage": "https://next.ice.work",
+  "repository": "alibaba/ice",
+  "bugs": "https://github.com/alibaba/ice/issues",
+  "homepage": "https://v3.ice.work",
   "scripts": {
     "watch": "tsc -w",
     "build": "tsc"

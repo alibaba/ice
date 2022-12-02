@@ -5,7 +5,7 @@
 import React from 'react';
 import { expect, it, describe } from 'vitest';
 import { render } from '@testing-library/react';
-import { useState } from '../src/index';
+import { useEffect, useState } from '../src/index';
 import { createElement } from '../src/create-element';
 
 describe('inputElement', () => {
@@ -85,6 +85,25 @@ describe('inputElement', () => {
 
       const node = wrapper.queryByTestId('changeInput');
       node!.dispatchEvent(new Event('change'));
+    });
+  });
+
+  it('should work with ref', () => {
+    return new Promise((resolve) => {
+      function TestInput() {
+        const ref = React.useRef();
+        useEffect(() => {
+          if (ref.current) {
+            resolve();
+          }
+        }, [ref]);
+
+        return createElement('input', {
+          ref,
+        });
+      }
+
+      render(createElement(TestInput));
     });
   });
 });

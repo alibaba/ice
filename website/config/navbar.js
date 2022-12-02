@@ -70,7 +70,7 @@ module.exports = {
       ],
     },
     {
-      href: 'https://github.com/ice-lab/ice-next',
+      href: 'https://github.com/alibaba/ice',
       label: 'GitHub',
       position: 'right',
     },

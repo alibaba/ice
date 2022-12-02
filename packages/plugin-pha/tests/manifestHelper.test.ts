@@ -245,6 +245,7 @@ describe('parse manifest', async () => {
     urlPrefix: 'https://url-prefix.com/',
     routesConfig: (await import(path.join(__dirname, './mockConfig.mjs')))?.default,
     serverEntry: path.join(__dirname, './mockServer.mjs'),
+    routeManifest: path.join(__dirname, './route-manifest.json'),
   };
 
   it('should add urlPrefix to manifest', async () => {
@@ -453,6 +454,7 @@ describe('get multiple manifest', async () => {
     urlPrefix: 'https://url-prefix.com/',
     routesConfig: (await import(path.join(__dirname, './mockConfig.mjs')))?.default,
     serverEntry: path.join(__dirname, './mockServer.mjs'),
+    routeManifest: path.join(__dirname, './route-manifest.json'),
   };
 
   it('simple routes', async () => {

@@ -11,9 +11,9 @@
     "!esm/**/*.map"
   ],
   "license": "MIT",
-  "repository": "ice-lab/ice-next",
-  "bugs": "https://github.com/ice-lab/ice-next/issues",
-  "homepage": "https://next.ice.work",
+  "repository": "alibaba/ice",
+  "bugs": "https://github.com/alibaba/ice/issues",
+  "homepage": "https://v3.ice.work",
   "dependencies": {
     "minimatch": "^5.0.1"
   },
