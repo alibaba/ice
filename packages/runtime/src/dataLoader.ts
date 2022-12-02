@@ -28,6 +28,16 @@ export function defineStaticDataLoader(dataLoaderConfig: DataLoaderConfig): Data
   return dataLoaderConfig;
 }
 
+export function getGlobalDataLoader() {
+  const hasGlobalLoader = typeof window !== 'undefined' && (window as any).__ICE_DATA_LOADER__;
+
+  if (hasGlobalLoader) {
+    return (window as any).__ICE_DATA_LOADER__;
+  }
+
+  return null;
+}
+
 /**
  * Custom fetcher for load static data loader config.
  * Set globally to avoid passing this fetcher too deep.
@@ -66,10 +76,16 @@ const cache = new Map<string, CachedResult>();
  */
 function loadInitialDataInClient(loaders: Loaders) {
   const context = (window as any).__ICE_APP_CONTEXT__ || {};
-  const matchedIds = context.matchedIds || [];
-  const routesData = context.routesData || {};
+
+  const {
+    matchedIds = [],
+    routesData = {},
+    renderMode,
+    downgrade,
+  } = context;
 
   const ids = ['_app'].concat(matchedIds);
+
   ids.forEach(id => {
     const dataFromSSR = routesData[id];
     if (dataFromSSR) {
@@ -79,6 +95,11 @@ function loadInitialDataInClient(loaders: Loaders) {
       });
 
       return dataFromSSR;
+    }
+
+    // If ssr is success, should not call data loader again.
+    if (renderMode == 'SSR' && !downgrade) {
+      return;
     }
 
     const dataLoader = loaders[id];

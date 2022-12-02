@@ -102,7 +102,7 @@ export function Scripts(props: React.ScriptHTMLAttributes<HTMLScriptElement>) {
 
 // use app context separately
 export function Data() {
-  const { routesData, documentOnly, matches, routesConfig, downgrade } = useAppContext();
+  const { routesData, documentOnly, matches, routesConfig, downgrade, renderMode } = useAppContext();
   const appData = useAppData();
 
   const matchedIds = matches.map(match => match.route.id);
@@ -115,6 +115,7 @@ export function Data() {
     downgrade,
     matchedIds,
     documentOnly,
+    renderMode,
   };
 
   return (

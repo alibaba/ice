@@ -87,11 +87,12 @@ export interface AppContext {
   appExport?: AppExport;
   basename?: string;
   downgrade?: boolean;
+  renderMode?: string;
 }
 
 export type WindowContext = Pick<
   AppContext,
-  'appData' | 'routesData' | 'routesConfig' | 'routePath' | 'downgrade' | 'matchedIds' | 'documentOnly'
+  'appData' | 'routesData' | 'routesConfig' | 'routePath' | 'downgrade' | 'matchedIds' | 'documentOnly' | 'renderMode'
 >;
 
 export type Renderer = (
@@ -117,6 +118,8 @@ export interface RouteComponent {
   dataLoader?: DataLoaderConfig;
   pageConfig?: PageConfig;
   [key: string]: any;
+  Loading: ComponentType<any>;
+  suspense?: boolean;
 }
 
 export interface RouteItem {

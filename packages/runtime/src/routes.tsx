@@ -4,6 +4,7 @@ import type { RouteItem, RouteModules, RouteWrapperConfig, RouteMatch, RequestCo
 import RouteWrapper from './RouteWrapper.js';
 import { useAppContext } from './AppContext.js';
 import { callDataLoader } from './dataLoader.js';
+import { Suspense } from './Suspense.js';
 
 type RouteModule = Pick<RouteItem, 'id' | 'load'>;
 
@@ -58,13 +59,18 @@ export async function loadRoutesData(
     matches.map(async (match) => {
       const { id } = match.route;
 
+      const routeModule = routeModules[id];
+      const { dataLoader, serverDataLoader, staticDataLoader, suspense } = routeModule ?? {};
+
+      // Call data loader by Suspense Component.
+      if (suspense) {
+        return;
+      }
+
       if (globalLoader) {
         routesData[id] = await globalLoader.getData(id);
         return;
       }
-
-      const routeModule = routeModules[id];
-      const { dataLoader, serverDataLoader, staticDataLoader } = routeModule ?? {};
 
       let loader;
 
@@ -151,7 +157,7 @@ export function createRouteElements(
 export function RouteComponent({ id }: { id: string }) {
   // get current route component from latest routeModules
   const { routeModules } = useAppContext();
-  const { default: Component } = routeModules[id] || {};
+  const { default: Component, suspense } = routeModules[id] || {};
   if (process.env.NODE_ENV === 'development') {
     if (!Component) {
       throw new Error(
@@ -160,6 +166,13 @@ export function RouteComponent({ id }: { id: string }) {
       );
     }
   }
+
+  if (suspense) {
+    return (
+      <Suspense module={routeModules[id]} id={id} />
+    );
+  }
+
   return <Component />;
 }
 

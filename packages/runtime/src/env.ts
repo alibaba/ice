@@ -1,0 +1,1 @@
+export const isClient = typeof window !== 'undefined' && 'onload' in window;

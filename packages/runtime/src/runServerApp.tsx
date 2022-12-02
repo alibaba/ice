@@ -166,6 +166,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     assetsManifest,
     basename: finalBasename,
     matches: [],
+    renderMode,
   };
   const runtime = new Runtime(appContext, runtimeOptions);
   runtime.setAppRouter(DefaultAppRouter);
