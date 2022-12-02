@@ -71,7 +71,7 @@ export default function Layout() {
 
 其中, `<Outlet />` 组件对应需要被布局组件嵌套的子组件。
 
-<img src="https://img.alicdn.com/imgextra/i4/O1CN01fzEkbu1ejSDqdLORM_!!6000000003907-2-tps-1010-668.png" width="500px" />
+<img src="https://img.alicdn.com/imgextra/i3/O1CN01Zezxbi21qXWDzWc9d_!!6000000007036-2-tps-890-588.png" width="500px" />
 
 布局组件：
 - 如果位于 `pages` 目录的最顶层，则它将作为全局布局，嵌套在所有路由组件外。
@@ -81,20 +81,21 @@ export default function Layout() {
 
 ## 嵌套路由
 
-通过创建`文件夹` 和 `布局组件`，可以轻松构建嵌套路由。例如，下面的示例中，`/repo/preview` 页面，由这三个组件嵌套而成：
+通过创建**文件夹**和**布局组件**，可以轻松构建嵌套路由。例如，下面的示例中，`/repo/preview` 页面，由这三个组件嵌套而成：
+
 - layout.tsx
 - repo/layout.tsx
 - repo/preview.tsx
 
-<img src="https://img.alicdn.com/imgextra/i2/O1CN01r2SdhI1LAD2nH7wPU_!!6000000001258-2-tps-514-490.png" width="260px" />
+<img src="https://img.alicdn.com/imgextra/i1/O1CN01Zax1Rz1r5gqZhs4LX_!!6000000005580-2-tps-578-634.png" width="260px" />
 
-ice.js 针对 `嵌套路由` 的场景，应用了以下优化，来让页面达成更好的性能体验：
-- 各路由组件的 `资源` 和 `数据请求` 会被并行加载，以达到最快的资源加载速度。
+ice.js 针对嵌套路由的场景，应用了以下优化，来让页面达成更好的性能体验：
+- 各路由组件的**资源**和**数据请求**会被并行加载，以达到最快的资源加载速度。
 - 路由间跳转，比如从 `/repo/preview` 跳转到 `/repo/edit`，框架只会加载差异化的路由组件 `edit.tsx` 进行渲染，而不会重新渲染整个页面。
 
-利用框架对 `嵌套路由` 所做的优化，我们可以将页面中逻辑相对分离的部分，用 `嵌套路由` 的方式来组织，以获得更好的加载体验。
+利用框架对`嵌套路由`所做的优化，我们可以将页面中逻辑相对分离的部分，用嵌套路由的方式来组织，以获得更好的加载体验。
 
-例如，下面这个常见的移动端营销页，可以将顶部通用的 `Slider` 抽象为 `布局组件`，将不同 `tab` 下对应的瀑布流，抽象为 `路由组件`。这样，`Slider` 和 `瀑布流` 就可以做到并行加载，并且当切换 `tab` 时，新的 tab 内容将由框架触发按需加载和渲染。[示例工程](https://github.com/ice-lab/ice-next/tree/master/examples/with-nested-routes)
+例如，下面这个常见的移动端营销页，可以将顶部通用的 `Slider` 抽象为布局组件，将不同 `tab` 下对应的瀑布流，抽象为路由组件。这样，`Slider` 和瀑布流就可以做到并行加载，并且当切换 `tab` 时，新的 tab 内容将由框架触发按需加载和渲染。[示例工程](https://github.com/ice-lab/ice-next/tree/master/examples/with-nested-routes)
 
 <img src="https://img.alicdn.com/imgextra/i3/O1CN01gKRkTc1aTe5QiWmpt_!!6000000003331-2-tps-1566-704.png" width="750px" />
 
