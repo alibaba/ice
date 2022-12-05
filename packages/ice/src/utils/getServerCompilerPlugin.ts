@@ -28,7 +28,7 @@ function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Option
         outdir: path.join(outputDir, SERVER_OUTPUT_DIR),
         splitting: isEsm,
         format,
-        platform: isEsm ? 'browser' : 'node',
+        platform: 'node',
         outExtension: { '.js': isEsm ? '.mjs' : '.cjs' },
         metafile: true,
       },
