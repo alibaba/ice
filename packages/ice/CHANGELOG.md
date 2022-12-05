@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.0.2
+
+- [fix] change main fields order for ssr
+
 ## v3.0.1
 
 - [fix] file resolve when use css module in server compiling
