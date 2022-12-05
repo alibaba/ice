@@ -1,4 +1,3 @@
-import path from 'path';
 import { createRequire } from 'module';
 import { dirname } from 'path';
 import postcss from 'postcss';
