@@ -191,6 +191,24 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     dataLoader: userConfig.dataLoader,
   });
 
+  if (typeof userConfig.dataLoader === 'object' && userConfig.dataLoader.fetcher) {
+    const {
+      packageName,
+      method,
+    } = userConfig.dataLoader.fetcher;
+
+    generatorAPI.addDataLoaderImport(method ? {
+      source: packageName,
+      alias: {
+        [method]: 'fetcher',
+      },
+      specifier: [method],
+    } : {
+      source: packageName,
+      specifier: '',
+    });
+  }
+
   // render template before webpack compile
   const renderStart = new Date().getTime();
   generator.render();
