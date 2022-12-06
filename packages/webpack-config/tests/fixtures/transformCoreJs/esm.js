@@ -1,2 +1,2 @@
 import 'core-js/modules/test';
-import 'react';
+export default 'a';
