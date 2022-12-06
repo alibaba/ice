@@ -2,6 +2,7 @@
 
 ## v3.0.2
 
+- [fix] load env before resolve user config
 - [fix] change main fields order for ssr
 
 ## v3.0.1
