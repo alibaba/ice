@@ -2,6 +2,7 @@
 
 ## v3.0.2
 
+- [fix] rule of page chunk name
 - [fix] change main fields order for ssr
 
 ## v3.0.1
