@@ -1,2 +1,1 @@
-import 'core-js/modules/test';
-module.exports = {};
+import 'core-js/modules/test';module.exports = {};

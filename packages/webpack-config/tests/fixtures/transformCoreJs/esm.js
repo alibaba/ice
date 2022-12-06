@@ -1,2 +1,1 @@
-import 'core-js/modules/test';
-export default 'a';
+import 'core-js/modules/test';export default 'a';

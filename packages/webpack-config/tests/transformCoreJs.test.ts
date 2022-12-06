@@ -11,19 +11,19 @@ describe('transform core js path', () => {
   it('matched', async () => {
     const orignalCode = fs.readFileSync(path.join(__dirname, './fixtures/transformCoreJs/match.js'), 'utf-8');
     expect(await transformCoreJs(orignalCode, coreJsPath))
-      .toBe('import \'/path/to/core-js/modules/test\';\nimport \'react\';');
+      .toBe('import \'/path/to/core-js/modules/test\';import \'react\';');
   });
 
   it('matched esm', async () => {
     const orignalCode = fs.readFileSync(path.join(__dirname, './fixtures/transformCoreJs/esm.js'), 'utf-8');
     expect(await transformCoreJs(orignalCode, coreJsPath))
-      .toBe('import \'/path/to/core-js/modules/test\';\nexport default \'a\';');
+      .toBe('import \'/path/to/core-js/modules/test\';export default \'a\';');
   });
 
   it('matched cjs', async () => {
     const orignalCode = fs.readFileSync(path.join(__dirname, './fixtures/transformCoreJs/cjs.js'), 'utf-8');
     expect(await transformCoreJs(orignalCode, coreJsPath))
-      .toBe('require (\'/path/to/core-js/modules/test\');\nmodule.exports = {};');
+      .toBe('require (\'/path/to/core-js/modules/test\');module.exports = {};');
   });
 
   it('miss match', async () => {
@@ -35,6 +35,6 @@ describe('transform core js path', () => {
   it('string included', async () => {
     const orignalCode = fs.readFileSync(path.join(__dirname, './fixtures/transformCoreJs/stringInclude.js'), 'utf-8');
     expect(await transformCoreJs(orignalCode, coreJsPath))
-      .toBe('import \'somepack/core-js/modules/test\';\nimport \'react\';');
+      .toBe('import \'somepack/core-js/modules/test\';import \'react\';');
   });
 });
