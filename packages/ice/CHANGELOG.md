@@ -3,7 +3,7 @@
 ## v3.0.2
 
 - [fix] change css module export to make it be compatible with cjs output
-
+- [fix] change main fields order for ssr
 
 ## v3.0.1
 
