@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-stark-module",
-  "version": "2.2.4",
+  "version": "2.3.0",
   "description": "build-scripts plugin for build stark module",
   "main": "lib/index.js",
   "files": [
@@ -28,9 +28,10 @@
   },
   "dependencies": {
     "build-scripts-config": "^3.0.0",
-    "fs-extra": "^9.0.0",
     "chalk": "^4.1.0",
+    "fs-extra": "^9.0.0",
     "handlebars": "^4.7.6",
+    "postcss-prefix-selector": "^1.15.0",
     "webpack-plugin-import": "^0.2.7"
   }
 }
