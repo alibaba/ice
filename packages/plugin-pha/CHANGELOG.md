@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+- [fix] add title of manifest
+
 ## 1.0.2
 
 - [fix] fix dev lanUrlForTerminal err

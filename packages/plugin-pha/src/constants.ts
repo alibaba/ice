@@ -1,5 +1,6 @@
 // Keys of appConfig  need transform to manifest.
 export const decamelizeKeys = [
+  'title',
   'name',
   'startUrl',
   'shortName',
