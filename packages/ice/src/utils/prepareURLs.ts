@@ -16,21 +16,24 @@ export default function prepareUrls(
   protocol: string,
   host: string,
   port: number,
-  pathname = '/',
+  pathname: string,
+  enabledHashRouter: boolean,
 ): Urls {
   const formatUrl = (hostname: string): string =>
     url.format({
       protocol,
       hostname,
       port,
-      pathname,
+      pathname: enabledHashRouter ? undefined : pathname,
+      hash: enabledHashRouter ? `${pathname || '/'}` : undefined,
     });
   const prettyPrintUrl = (hostname: string): string =>
     url.format({
       protocol,
       hostname,
       port: port.toString(),
-      pathname,
+      pathname: enabledHashRouter ? undefined : pathname,
+      hash: enabledHashRouter ? `${pathname || '/'}` : undefined,
     });
 
   const isUnspecifiedHost = host === '0.0.0.0' || host === '::';
