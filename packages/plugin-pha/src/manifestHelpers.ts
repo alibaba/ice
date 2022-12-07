@@ -96,7 +96,11 @@ function getPageUrl(routeId: string, options: ParseOptions) {
   return `${urlPrefix}${splitCharacter}${routeId}${urlSuffix}`;
 }
 
-async function getPageConfig(routeId: string, routeManifest: string, routesConfig: Record<string, any>): Promise<MixedPage> {
+async function getPageConfig(
+  routeId: string,
+  routeManifest: string,
+  routesConfig: Record<string, any>,
+): Promise<MixedPage> {
   const routes = fs.readFileSync(routeManifest, 'utf-8');
   const matches = matchRoutes(JSON.parse(routes), routeId.startsWith('/') ? routeId : `/${routeId}`);
   let routeConfig: MixedPage = {};

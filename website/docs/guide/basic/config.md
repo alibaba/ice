@@ -428,23 +428,40 @@ export default defineConfig(() => ({
 小程序端不支持该配置。
 :::
 
-- 类型：`{ignoreFiles: string[]; defineRoutes: (route) => void}`
+- 类型：`{ ignoreFiles: string[]; defineRoutes: (route: DefineRouteFunction) => void }`
 - 默认值：`{}`
 
-定制路由地址，对于约定式路由不满足的场景，可以通过 `routes` 方式进行自定义：
+#### ignoreFiles
 
-```js
+用于忽略 `src/pages` 下的文件被处理成路由模块，使用 glob 表达式([minimatch](https://github.com/isaacs/minimatch))对文件路径匹配。
+
+```ts
 import { defineConfig } from '@ice/app';
 
 export default defineConfig(() => ({
   routes: {
-    // 忽略 pages 下的 components 目录
+    // 忽略 src/pages 下所有 components 目录
     ignoreFiles: ['**/components/**'],
+  },
+}));
+```
+
+#### defineRoutes
+
+对于约定式路由不满足的场景，可以通过以下方式自定义路由地址。
+
+```ts
+import { defineConfig } from '@ice/app';
+
+export default defineConfig(() => ({
+  routes: {
     defineRoutes: (route) => {
       // 将 /about-me 路由访问内容指定为 about.tsx
+      // 第一个参数是路由地址
+      // 第二个参数是页面组件的相对地址（前面不能带 `/`），相对于 `src/pages` 目录
       route('/about-me', 'about.tsx');
 
-      // 为 /product 路由添加 layout.tsx 作为 layout，并渲染 products.tsx 内容
+      // 嵌套路由的场景需要使用第三个 callback 参数来定义嵌套路由
       route('/', 'layout.tsx', () => {
         route('/product', 'products.tsx');
       });

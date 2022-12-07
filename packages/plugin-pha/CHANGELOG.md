@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+- [fix] fix dev lanUrlForTerminal err
+
 ## 1.0.1
 
 - [fix] failed to get route config when re-define route path
