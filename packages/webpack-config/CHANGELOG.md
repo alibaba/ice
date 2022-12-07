@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+- [fix] format core-js path
+
 ## 1.0.1
 
 - [fix] Lock version of `@ice/bundles`.
