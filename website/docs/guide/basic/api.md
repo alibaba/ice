@@ -87,7 +87,7 @@ export default function Home() {
 useSearchParams 用于读取和修改当前 URL 的 query string。
 
 ```tsx
-import { useParams } from 'ice';
+import { useSearchParams } from 'ice';
 
 // 路由规则  home?uid=1234
 export default function Home() {
@@ -96,7 +96,7 @@ export default function Home() {
   
   const changeSearch = () => {
     // 通过 setSearchParams 可以修改对应 query string
-    setSearchParams({ uid: '4321'});
+    setSearchParams({ uid: '4321' });
   }
   return (
     <>
