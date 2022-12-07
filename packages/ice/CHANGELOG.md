@@ -1,5 +1,10 @@
 # Changelog
 
+## v3.0.2
+
+- [fix] change css module export to make it be compatible with cjs output
+
+
 ## v3.0.1
 
 - [fix] file resolve when use css module in server compiling
