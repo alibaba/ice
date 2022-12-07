@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+- [fix] add title of manifest
+
 ## 1.0.1
 
 - [fix] failed to get route config when re-define route path
