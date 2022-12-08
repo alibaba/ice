@@ -8,7 +8,6 @@
 // This file is based on  https://github.com/facebook/create-react-app/blob/main/packages/react-dev-utils/prepareURLs.js
 // It's been rewrite to ts and ICE specific logic
 
-import url from 'url';
 import address from 'address';
 import type { Urls } from '../types/plugin.js';
 
