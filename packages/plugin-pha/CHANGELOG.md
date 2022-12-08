@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4
+
+- [fix] add pha = true when dev
+
 ## 1.0.3
 
 - [fix] add title of manifest

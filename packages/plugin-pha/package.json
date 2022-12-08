@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-pha",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "ice.js plugin for PHA.",
   "license": "MIT",
   "type": "module",
