@@ -108,6 +108,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       dataCache,
     },
   });
+  // Load .env before resolve user config, so we can access env variables defined in .env files.
+  await setEnv(rootDir, commandArgs);
   // resolve userConfig from ice.config.ts before registerConfig
   await ctx.resolveUserConfig();
 
@@ -140,7 +142,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const { routes: routesConfig, server, syntaxFeatures, polyfill } = userConfig;
   const userConfigHash = await getFileHash(path.join(rootDir, fg.sync(configFile, { cwd: rootDir })[0]));
 
-  await setEnv(rootDir, commandArgs);
   const coreEnvKeys = getCoreEnvKeys();
 
   const routesInfo = await generateRoutesInfo(rootDir, routesConfig);

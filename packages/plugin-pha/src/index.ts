@@ -52,11 +52,13 @@ const plugin: Plugin<PluginOptions> = (options) => ({
       getAppConfig = restAPI.getAppConfig;
       getRoutesConfig = restAPI.getRoutesConfig;
 
+      const urlForTerminal = urls.lanUrlForTerminal || urls.localUrlForTerminal;
+
       // Need absolute path for pha dev.
-      publicPath = command === 'start' ? getDevPath(urls.lanUrlForTerminal) : (taskConfig.publicPath || '/');
+      publicPath = command === 'start' ? getDevPath(urlForTerminal) : (taskConfig.publicPath || '/');
 
       // process.env.DEPLOY_PATH is defined by cloud environment such as DEF plugin.
-      urlPrefix = command === 'start' ? urls.lanUrlForTerminal : process.env.DEPLOY_PATH;
+      urlPrefix = command === 'start' ? urlForTerminal : process.env.DEPLOY_PATH;
 
       compiler = async (options) => {
         const { entry, outfile, minify = false } = options;
@@ -94,13 +96,13 @@ const plugin: Plugin<PluginOptions> = (options) => ({
       const { phaManifest } = appConfig || {};
       const phaDevUrls = [];
       if (phaManifest?.tabBar) {
-        phaDevUrls.push(`${lanUrl}manifest.json`);
+        phaDevUrls.push(`${lanUrl}manifest.json?pha=true`);
       } else if (phaManifest?.routes?.length > 0) {
         phaManifest.routes.forEach((route) => {
           if (typeof route === 'string') {
-            phaDevUrls.push(`${lanUrl}${route}-manifest.json`);
+            phaDevUrls.push(`${lanUrl}${route}-manifest.json?pha=true`);
           } else if (typeof route?.frames![0] === 'string') {
-            phaDevUrls.push(`${lanUrl}${route.frames[0]}-manifest.json`);
+            phaDevUrls.push(`${lanUrl}${route.frames[0]}-manifest.json?pha=true`);
           }
         });
       }
