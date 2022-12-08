@@ -3,6 +3,7 @@
 ## v1.0.2
 
 - [fix] window context merge order
+- [feat] support custom document components
 
 ## v1.0.1
 

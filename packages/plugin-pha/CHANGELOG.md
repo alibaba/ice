@@ -1,16 +1,10 @@
 # Changelog
 
-## 1.0.4
-
-- [fix] add pha = true when dev
-
-## 1.0.3
-
-- [fix] add title of manifest
-
 ## 1.0.2
 
 - [fix] fix dev lanUrlForTerminal err
+- [fix] add title of manifest
+- [fix] add pha = true when dev
 
 ## 1.0.1
 
