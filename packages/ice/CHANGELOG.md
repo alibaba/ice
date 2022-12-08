@@ -1,5 +1,17 @@
 # Changelog
 
+## v3.0.3
+
+- [fix] no log when parse mock file failed
+
+## v3.0.2
+
+- [fix] rule of page chunk name
+- [fix] load env before resolve user config
+- [fix] change css module export to make it be compatible with cjs output
+- [fix] change main fields order for ssr
+- [feat]: force to use port which user set in commandArgs
+
 ## v3.0.1
 
 - [fix] file resolve when use css module in server compiling

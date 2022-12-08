@@ -31,7 +31,7 @@ export async function setEnv(
 
   dotenvFiles.forEach(dotenvFile => {
     const filepath = path.join(rootDir, dotenvFile);
-    if (fs.existsSync(dotenvFile)) {
+    if (fs.existsSync(filepath)) {
       dotenvExpand(
         dotenv.config({
           path: filepath,
