@@ -22,6 +22,7 @@ function renderExportsTemplate(
   const renderList: [string, boolean][] = [
     ['data-loader.ts.ejs', dataLoader && (!!renderData.loaders || renderData.hasExportAppData)],
     ['routes-config.ts.ejs', !!renderData.routesConfig],
+    ['dataloader-config.ts.ejs', dataLoader && (!!renderData.loaders || renderData.hasExportAppData)],
   ];
 
   renderList.forEach(([filePath, needRender]) => {

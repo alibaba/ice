@@ -45,6 +45,12 @@ export default {
   ${imports.map(([routeId, importKey]) => `'${routeId}': ${importKey},`).join('\n  ')}
 };`;
     }),
+    dataLoadersConfig: generateRouteConfig(routes, 'dataLoader', (str, imports) => {
+      return `${str}
+export default {
+  ${imports.map(([routeId, importKey]) => `'${routeId}': ${importKey},`).join('\n  ')}
+};`;
+    }),
   };
 }
 
