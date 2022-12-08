@@ -3,6 +3,7 @@
 ## v3.0.2
 
 - [fix] change main fields order for ssr
+- [feat] add fetcher config in dataLoader
 
 ## v3.0.1
 
