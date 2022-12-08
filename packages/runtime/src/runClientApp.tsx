@@ -125,7 +125,7 @@ interface RenderOptions {
 async function render({ history, runtime }: RenderOptions) {
   const appContext = runtime.getAppContext();
   const { appConfig, appData } = appContext;
-  const render = runtime.getRender();
+  const appRender = runtime.getRender();
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
   const RouteWrappers = runtime.getWrappers();
   const AppRouter = runtime.getAppRouter();
@@ -139,7 +139,7 @@ async function render({ history, runtime }: RenderOptions) {
     console.warn(`Root node #${rootId} is not found, current root is automatically created by the framework.`);
   }
 
-  render(
+  appRender(
     root,
     <AppDataProvider value={appData}>
       <AppRuntimeProvider>

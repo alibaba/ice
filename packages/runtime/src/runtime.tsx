@@ -37,6 +37,7 @@ class Runtime {
     this.render = (container, element) => {
       const root = ReactDOM.createRoot(container);
       root.render(element);
+      return root;
     };
     this.RouteWrappers = [];
     this.runtimeOptions = runtimeOptions;

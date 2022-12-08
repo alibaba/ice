@@ -1060,6 +1060,23 @@ importers:
     devDependencies:
       '@ice/app': link:../ice
 
+  packages/plugin-icestark:
+    specifiers:
+      '@ice/app': ^3.0.0
+      '@ice/runtime': ^1.0.0
+      '@ice/stark': ^2.0.0
+      '@ice/stark-app': ^1.2.0
+      '@types/react': ^18.0.0
+      '@types/react-dom': ^18.0.0
+    dependencies:
+      '@ice/stark': 2.7.3
+      '@ice/stark-app': 1.5.0
+    devDependencies:
+      '@ice/app': link:../ice
+      '@ice/runtime': link:../runtime
+      '@types/react': 18.0.21
+      '@types/react-dom': 18.0.6
+
   packages/plugin-jsx-plus:
     specifiers:
       '@babel/core': ^7.19.1
@@ -4374,6 +4391,26 @@ packages:
       - supports-color
       - ts-node
     dev: true
+
+  /@ice/sandbox/1.1.4:
+    resolution: {integrity: sha512-MEVF0Ze3McKDutnFiUAhUoc+WwOFxITVBgSSHmbGpKtWbXJX9kUVlx3VsEVJvdqU3O1kiBNx6zE1sFMjKPRTIQ==}
+    dev: false
+
+  /@ice/stark-app/1.5.0:
+    resolution: {integrity: sha512-9fuCri48eZj6TnfPkCju4vVLhGurz+mt6lFx4JQFHhnRBQ5MuiBqRZg5F/3vdnJ7dAYQJlCXmHlQtBHok82z+g==}
+    dev: false
+
+  /@ice/stark/2.7.3:
+    resolution: {integrity: sha512-gNfVlrYI9UpZIJ88j4xC7Kk40uvPYGg43oYLxHEBQCJh1Vz6Gc3pu5juN+FVW/vpM1xFUftGlkaz8fjYai2xDQ==}
+    peerDependencies:
+      react: '>=15.0.0'
+    dependencies:
+      '@ice/sandbox': 1.1.4
+      lodash.isempty: 4.4.0
+      lodash.isequal: 4.5.0
+      path-to-regexp: 1.8.0
+      url-parse: 1.5.10
+    dev: false
 
   /@ice/store/2.0.3_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-U1YcY380bejqc3+WtkEqIwE6HnjBjSKd4IWFyq8gakPeAvA6fEJ58Qx9hzscYxlogWbiCb0Wm9kqkcDU+njx7g==}
@@ -13429,6 +13466,14 @@ packages:
     resolution: {integrity: sha512-ff3BX/tSioo+XojX4MOsOMhJw0nZoUEF011LX8g8d3gvjVbxd89cCio4BCXronjxcTUIJUoqKEUA+n4CqvvRPw==}
     dev: false
 
+  /lodash.isempty/4.4.0:
+    resolution: {integrity: sha512-oKMuF3xEeqDltrGMfDxAPGIVMSSRv8tbRSODbrs4KGsRRLEhrW8N8Rd4DRgB2+621hY8A8XwwrTVhXWpxFvMzg==}
+    dev: false
+
+  /lodash.isequal/4.5.0:
+    resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
+    dev: false
+
   /lodash.isfunction/3.0.9:
     resolution: {integrity: sha512-AirXNj15uRIMMPihnkInB4i3NHeb4iBtNg9WRWuK2o31S+ePwwNmDPaTL3o7dTJ+VXNZim7rFs4rxN4YU1oUJw==}
     dev: false
@@ -16155,7 +16200,6 @@ packages:
 
   /querystringify/2.2.0:
     resolution: {integrity: sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==}
-    dev: true
 
   /queue-microtask/1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
@@ -19312,7 +19356,6 @@ packages:
     dependencies:
       querystringify: 2.2.0
       requires-port: 1.0.0
-    dev: true
 
   /use-composed-ref/1.3.0_react@17.0.2:
     resolution: {integrity: sha512-GLMG0Jc/jiKov/3Ulid1wbv3r54K9HlMW29IWcDFPEqFkSO2nS0MuefWgMJpeHQ9YJeXDL3ZUF+P3jdXlZX/cQ==}
