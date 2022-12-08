@@ -188,7 +188,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     rootDir,
     runtimeDir: RUNTIME_TMP_DIR,
     templateDir: path.join(templateDir, 'exports'),
-    dataLoader: userConfig.dataLoader,
+    dataLoader: Boolean(userConfig.dataLoader),
   });
 
   if (typeof userConfig.dataLoader === 'object' && userConfig.dataLoader.fetcher) {

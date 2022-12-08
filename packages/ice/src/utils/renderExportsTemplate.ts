@@ -14,12 +14,7 @@ function renderExportsTemplate(
     rootDir: string;
     runtimeDir: string;
     templateDir: string;
-    dataLoader?: boolean | {
-      fetcher: {
-        packageName: string;
-        method?: string;
-      };
-    };
+    dataLoader?: boolean;
   },
 ) {
   const { rootDir, runtimeDir, templateDir, dataLoader } = renderOptions;
