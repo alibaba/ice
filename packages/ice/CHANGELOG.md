@@ -2,7 +2,12 @@
 
 ## v3.0.2
 
+- [fix] rule of page chunk name
+- [fix] load env before resolve user config
+- [fix] change css module export to make it be compatible with cjs output
 - [fix] change main fields order for ssr
+- [feat] add fetcher config in dataLoader
+- [feat]: force to use port which user set in commandArgs
 
 ## v3.0.1
 

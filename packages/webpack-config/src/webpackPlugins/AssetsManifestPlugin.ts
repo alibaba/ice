@@ -54,7 +54,7 @@ export default class AssetsManifestPlugin {
       chunks.forEach((chunk) => {
         const chunkName = chunk.name;
         const chunkFiles = filterAssets(chunk);
-        pages[chunkName] = chunkFiles;
+        pages[chunkName.replace(/^p_/, '')] = chunkFiles;
       });
     }
 
