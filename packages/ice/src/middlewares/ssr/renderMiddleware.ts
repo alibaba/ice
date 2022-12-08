@@ -48,6 +48,7 @@ export default function createRenderMiddleware(options: Options): Middleware {
       // Wait for the server compilation to finish
       const { serverEntry, error } = await serverCompileTask.get();
       if (error) {
+        consola.error('Server compile error in render middleware.');
         return;
       }
       let serverModule;
