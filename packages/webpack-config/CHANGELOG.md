@@ -2,6 +2,7 @@
 
 ## 1.0.2
 
+- [fix] rule of page chunk name
 - [fix] format core-js path
 
 ## 1.0.1
