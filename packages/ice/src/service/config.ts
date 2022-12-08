@@ -173,6 +173,7 @@ export const getRouteExportConfig = (rootDir: string) => {
 
   const routeConfigFile = path.join(rootDir, RUNTIME_TMP_DIR, 'routes-config.ts');
   const getOutfile = () => formatPath(path.join(rootDir, RUNTIME_TMP_DIR, 'routes-config.bundle.mjs'));
+  const cachedKey = `route_config_file_${process.env.__ICE_VERSION__}`;
 
   const config = new Config({
     entry: routeConfigFile,
@@ -182,7 +183,6 @@ export const getRouteExportConfig = (rootDir: string) => {
     transformInclude: (id) => id.includes('src/pages'),
     needRecompile: async (entry) => {
       let cached = false;
-      const cachedKey = `route_config_file_${process.env.__ICE_VERSION__}`;
       try {
         cached = await getCache(rootDir, cachedKey);
       } catch (err) {}
@@ -207,7 +207,10 @@ export const getRouteExportConfig = (rootDir: string) => {
 
   // ensure routes config is up to date.
   const ensureRoutesConfig = async () => {
-    await config.getConfigFile(['pageConfig']);
+    const configFile = await config.getConfigFile(['pageConfig']);
+    if (!configFile) {
+      setCache(rootDir, cachedKey, '');
+    }
   };
 
   routeExportConfig = {
