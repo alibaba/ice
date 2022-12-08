@@ -132,7 +132,6 @@ const plugin: Plugin = () => ({
         if (process.env.CLOUDIDE_ENV) {
           logoutMessage += `\n   - IDE server: https://${process.env.WORKSPACE_UUID}-${port}.${process.env.WORKSPACE_HOST}${devPath}`;
         } else {
-          console.log('devPath', devPath, urls);
           logoutMessage += `\n
     - Local  : ${chalk.underline.white(`${urls.localUrlForBrowser}${devPath}`)}
     - Network: ${chalk.underline.white(`${urls.lanUrlForTerminal}${devPath}`)}`;

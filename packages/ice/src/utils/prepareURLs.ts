@@ -19,22 +19,18 @@ export default function prepareUrls(
   pathname: string,
   enabledHashRouter: boolean,
 ): Urls {
-  const formatUrl = (hostname: string): string =>
-    url.format({
-      protocol,
-      hostname,
-      port,
-      pathname: enabledHashRouter ? undefined : pathname,
-      hash: enabledHashRouter ? `${pathname || '/'}` : undefined,
-    });
-  const prettyPrintUrl = (hostname: string): string =>
-    url.format({
-      protocol,
-      hostname,
-      port: port.toString(),
-      pathname: enabledHashRouter ? undefined : pathname,
-      hash: enabledHashRouter ? `${pathname || '/'}` : undefined,
-    });
+  const formatUrl = (hostname: string): string => {
+    const url = new URL(`${protocol}://${hostname}:${port}`);
+    url.pathname = enabledHashRouter ? '' : pathname;
+    url.hash = enabledHashRouter ? `${pathname || '/'}` : '';
+    return url.href;
+  };
+  const prettyPrintUrl = (hostname: string): string => {
+    const url = new URL(`${protocol}://${hostname}:${port}`);
+    url.pathname = enabledHashRouter ? '' : pathname;
+    url.hash = enabledHashRouter ? `${pathname || '/'}` : '';
+    return url.href;
+  };
 
   const isUnspecifiedHost = host === '0.0.0.0' || host === '::';
   let prettyHost: string;
