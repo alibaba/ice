@@ -147,7 +147,7 @@ export const getAppExportConfig = (rootDir: string) => {
         config.setCompiler(serverCompiler);
       } catch (error) {
         consola.error('Get app export config error.');
-        console.debug(error.stack);
+        consola.debug(error.stack);
       }
     },
     getAppConfig,
@@ -217,7 +217,7 @@ export const getRouteExportConfig = (rootDir: string) => {
         config.setCompiler(serverCompiler);
       } catch (error) {
         consola.error('Get route export config error.');
-        console.debug(error.stack);
+        consola.debug(error.stack);
       }
     },
     getRoutesConfig,
