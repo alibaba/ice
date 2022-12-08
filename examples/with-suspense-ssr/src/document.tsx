@@ -12,8 +12,8 @@ function Document() {
         <Links />
       </head>
       <body>
-        <Main />
-        <Scripts />
+        <Main suspense />
+        <Scripts async />
       </body>
     </html>
   );

@@ -5,10 +5,6 @@ import { getGlobalDataLoader } from './dataLoader.js';
 
 const LOADER = '__ICE_SUSPENSE_LOADER__';
 
-if (isClient) {
-  window[LOADER] = new Map();
-}
-
 export function Suspense(props) {
   const { module, id } = props;
 
@@ -35,6 +31,7 @@ function Data(props) {
 
   return (
     <script dangerouslySetInnerHTML={{ __html: `
+    console.log('set data', '${props.id}');
       window.${LOADER} && window.${LOADER}.set('${props.id}', ${JSON.stringify(data)})
     ` }}
     />

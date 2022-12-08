@@ -128,14 +128,30 @@ export function Data() {
   );
 }
 
-export function Main(props: React.HTMLAttributes<HTMLDivElement>) {
+interface MainProps extends React.HTMLAttributes<HTMLDivElement> {
+  suspense?: boolean;
+}
+
+export function Main(props: MainProps) {
   const { main } = useDocumentContext();
   const { appConfig } = useAppContext();
-  return (
+
+  const mainElement = (
     <div id={appConfig.app.rootId} {...props}>
       {main}
     </div>
   );
+
+  if (props.suspense) {
+    return (
+      <>
+        <script dangerouslySetInnerHTML={{ __html: 'window.__ICE_SUSPENSE_LOADER__ = new Map();' }} />
+        {mainElement}
+      </>
+    );
+  }
+
+  return mainElement;
 }
 
 /**
