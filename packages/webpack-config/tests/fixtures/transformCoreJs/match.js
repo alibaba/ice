@@ -1,1 +1,1 @@
-import 'core-js/modules/test';
+import 'core-js/modules/test';import 'react';
