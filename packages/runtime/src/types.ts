@@ -1,7 +1,7 @@
 import type { IncomingMessage, ServerResponse } from 'http';
 import type { Action, InitialEntry, Location } from 'history';
 import type { ComponentType, ReactNode, PropsWithChildren } from 'react';
-import type { HydrationOptions } from 'react-dom/client';
+import type { HydrationOptions, Root } from 'react-dom/client';
 import type { Navigator, Params } from 'react-router-dom';
 
 type UseConfig = () => RouteConfig<Record<string, any>>;
@@ -98,7 +98,7 @@ export type Renderer = (
   container: Element | Document,
   initialChildren: React.ReactNode,
   options?: HydrationOptions,
-) => void;
+) => Root;
 
 export interface ServerContext {
   req?: IncomingMessage;
@@ -193,7 +193,7 @@ export interface RuntimePlugin {
   ): Promise<void> | void;
 }
 
-export interface RuntimePlugin {
+export interface StaticRuntimePlugin {
   (
     apis: StaticRuntimeAPI,
     runtimeOptions?: Record<string, any>,
@@ -201,11 +201,11 @@ export interface RuntimePlugin {
 }
 
 export interface CommonJsRuntime {
-  default: RuntimePlugin;
+  default: RuntimePlugin | StaticRuntimePlugin;
 }
 
 export interface RuntimeModules {
-  statics?: (RuntimePlugin | CommonJsRuntime)[];
+  statics?: (StaticRuntimePlugin | CommonJsRuntime)[];
   commons?: (RuntimePlugin | CommonJsRuntime)[];
 }
 
