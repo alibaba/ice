@@ -1,15 +1,16 @@
-import { Children, useRef, useEffect, useCallback } from 'react';
+import { Children, useRef, useEffect, useCallback, forwardRef } from 'react';
+import type { Ref } from 'react';
 import { isFunction } from './type';
 import { observerElement, VisibilityChangeEvent } from './visibility';
 
-function VisibilityChange(props: any, ref: any) {
+function VisibilityChange(props: any, ref: Ref<Node>) {
   const {
     onAppear,
     onDisappear,
     children,
   } = props;
 
-  const defaultRef = useRef();
+  const defaultRef = useRef<Node>();
   const visibilityRef = ref || defaultRef;
 
   const listen = useCallback((eventName: string, handler: Function) => {
@@ -19,7 +20,7 @@ function VisibilityChange(props: any, ref: any) {
     // https://github.com/raxjs/rax-components/blob/master/packages/rax-textinput/src/index.tsx#L151
     if (current && isFunction(handler)) {
       const eventTarget = current._nativeNode || current;
-      observerElement(eventTarget as HTMLElement);
+      observerElement(eventTarget as Element);
       eventTarget.addEventListener(eventName, handler);
     }
     return () => {
