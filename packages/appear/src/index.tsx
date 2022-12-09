@@ -1,20 +1,20 @@
-import { Children, useRef, useEffect, useCallback, forwardRef } from 'react';
+import { Children, useRef, useEffect, useCallback } from 'react';
 import type { Ref } from 'react';
 import { isFunction } from './type';
 import { observerElement, VisibilityChangeEvent } from './visibility';
 
-function VisibilityChange(props: any, ref: Ref<Node>) {
+function VisibilityChange(props: any) {
   const {
     onAppear,
     onDisappear,
     children,
   } = props;
 
-  const defaultRef = useRef<Node>();
-  const visibilityRef = ref || defaultRef;
+  const defaultRef: Ref<Node> = useRef<Node>();
+  const ref: Ref<Node> = (children && children.ref) ? children.ref : defaultRef;
 
   const listen = useCallback((eventName: string, handler: Function) => {
-    const { current } = visibilityRef;
+    const { current } = ref;
     // Rax components will set custom ref by useImperativeHandle.
     // So We should get eventTarget by _nativeNode.
     // https://github.com/raxjs/rax-components/blob/master/packages/rax-textinput/src/index.tsx#L151
@@ -24,18 +24,18 @@ function VisibilityChange(props: any, ref: Ref<Node>) {
       eventTarget.addEventListener(eventName, handler);
     }
     return () => {
-      const { current } = visibilityRef;
+      const { current } = ref;
       if (current) {
         const eventTarget = current._nativeNode || current;
         eventTarget.removeEventListener(eventName, handler);
       }
     };
-  }, [visibilityRef]);
+  }, [ref]);
 
-  useEffect(() => listen(VisibilityChangeEvent.appear, onAppear), [visibilityRef, onAppear, listen]);
-  useEffect(() => listen(VisibilityChangeEvent.disappear, onDisappear), [visibilityRef, onDisappear, listen]);
+  useEffect(() => listen(VisibilityChangeEvent.appear, onAppear), [ref, onAppear, listen]);
+  useEffect(() => listen(VisibilityChangeEvent.disappear, onDisappear), [ref, onDisappear, listen]);
 
-  return Children.only({ ...children, visibilityRef });
+  return Children.only({ ...children, ref });
 }
 
 export default VisibilityChange;
