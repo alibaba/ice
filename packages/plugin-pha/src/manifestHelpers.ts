@@ -24,6 +24,7 @@ export interface ParseOptions {
   template?: boolean;
   urlSuffix?: string;
   ssr?: boolean;
+  loadersConfig?: object | Function | Array<object | Function>;
 }
 
 interface TabConfig {
@@ -249,8 +250,10 @@ export function rewriteAppWorker(manifest: Manifest): Manifest {
 }
 
 export async function parseManifest(manifest: Manifest, options: ParseOptions): Promise<PHAManifest> {
-  const { publicPath } = options;
-
+  const {
+    publicPath,
+    loadersConfig,
+  } = options;
   const { appWorker, tabBar, routes } = manifest;
 
   if (appWorker?.url && !appWorker.url.startsWith('http')) {
@@ -275,6 +278,23 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
   if (routes && routes.length > 0) {
     manifest.pages = await Promise.all(routes.map(async (page) => {
       const pageManifest = await getPageManifest(page, options);
+
+      // Set static dataloader to data_prefetch of manifest.
+      if (typeof page === 'string' && loadersConfig[page]) {
+        const staticPrefetches = [];
+        if (Array.isArray(loadersConfig[page])) {
+          loadersConfig[page].forEach(item => {
+            if (typeof item === 'object') {
+              staticPrefetches.push(item);
+            }
+          });
+        } else if (typeof loadersConfig[page] === 'object') {
+          // Single prefetch loader config.
+          staticPrefetches.push(loadersConfig[page]);
+        }
+        pageManifest.data_prefetch = [...(pageManifest.data_prefetch || []), ...staticPrefetches];
+      }
+
       if (pageManifest.frames && pageManifest.frames.length > 0) {
         pageManifest.frames = await Promise.all(pageManifest.frames.map((frame) => getPageManifest(frame, options)));
       }

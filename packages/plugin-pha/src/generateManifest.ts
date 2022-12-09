@@ -53,6 +53,7 @@ export default async function generateManifest({
     });
   }
   const phaManifest = await parseManifest(manifest, {
+    loadersConfig,
     ...parseOptions,
     routesConfig,
   } as ParseOptions);
