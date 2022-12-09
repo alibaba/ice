@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.0.3
+
+- [fix] remove dataLoaderFetcher api for init of dataLoader
+
 ## v3.0.2
 
 - [fix] rule of page chunk name
