@@ -279,7 +279,7 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
     manifest.pages = await Promise.all(routes.map(async (page) => {
       const pageManifest = await getPageManifest(page, options);
 
-      // Set static dataloader to data_prefetch of manifest.
+      // Set static dataloader to data_prefetch of page.
       if (typeof page === 'string' && loadersConfig[page]) {
         const staticPrefetches = [];
         if (Array.isArray(loadersConfig[page])) {
@@ -297,7 +297,27 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
 
       if (pageManifest.frames && pageManifest.frames.length > 0) {
         pageManifest.frames = await Promise.all(pageManifest.frames.map((frame) => getPageManifest(frame, options)));
+        // Set static dataloader to data_prefetch of frames.
+        pageManifest.frames.forEach(frame => {
+          const title = frame.title.toLocaleLowerCase();
+          if (typeof title === 'string' && loadersConfig[title.toLocaleLowerCase()]) {
+            const staticPrefetches = [];
+            if (Array.isArray(loadersConfig[title])) {
+              loadersConfig[title].forEach(item => {
+                if (typeof item === 'object') {
+                  staticPrefetches.push(item);
+                }
+              });
+            } else if (typeof loadersConfig[title] === 'object') {
+              // Single prefetch loader config.
+              staticPrefetches.push(loadersConfig[title]);
+            }
+
+            frame.data_prefetch = [...(frame.data_prefetch || []), ...staticPrefetches];
+          }
+        });
       }
+
       if (pageManifest?.pageHeader?.source) {
         if (!pageManifest.pageHeader.url) {
           pageManifest.pageHeader = {
