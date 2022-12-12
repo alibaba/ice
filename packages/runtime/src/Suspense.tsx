@@ -6,19 +6,21 @@ import { getGlobalDataLoader } from './dataLoader.js';
 const LOADER = '__ICE_SUSPENSE_LOADER__';
 
 export function Suspense(props) {
-  const { module, id } = props;
+  const { module } = props;
 
   const { serverDataLoader, dataLoader, Loading } = module;
 
+  const moduleId = module.id || props.id;
+
   const Children = module.default;
 
-  const data = createDataLoader(serverDataLoader, dataLoader, id);
+  const data = createDataLoader(serverDataLoader, dataLoader, moduleId);
 
   return (
     <DataProvider value={data}>
       <React.Suspense fallback={Loading ? <Loading /> : null}>
         <>
-          <Data id={id} />
+          <Data id={moduleId} />
           <Children />
         </>
       </React.Suspense>
@@ -31,7 +33,6 @@ function Data(props) {
 
   return (
     <script dangerouslySetInnerHTML={{ __html: `
-    console.log('set data', '${props.id}');
       window.${LOADER} && window.${LOADER}.set('${props.id}', ${JSON.stringify(data)})
     ` }}
     />

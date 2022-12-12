@@ -1,7 +1,9 @@
-import { useSuspenseData } from './IceSuspense';
+import { useData } from 'ice';
 
 export default function Comments() {
-  const comments = useSuspenseData();
+  const comments = useData();
+
+  console.log('Render: Comments');
 
   return (
     <div>
@@ -27,20 +29,19 @@ const fakeData = [
 ];
 
 export const serverDataLoader = () => {
-  console.log('serverDataLoader');
+  console.log('Call serverDataLoader for: Comments');
 
   return new Promise<any>((resolve) => {
-    setTimeout(() => resolve(fakeData), 5000);
+    setTimeout(() => resolve(fakeData), 8000);
   });
 };
 
 export const dataLoader = () => {
-  console.log('clientDataLoader');
+  console.log('Call clientDataLoader for: Comments');
 
   return new Promise<any>((resolve) => {
     setTimeout(() => resolve(fakeData), 5000);
   });
 };
 
-export const suspense = true;
-export const routerId = 'comments';
+export const id = 'comments';

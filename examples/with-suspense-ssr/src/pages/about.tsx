@@ -20,7 +20,7 @@ const fakeData = {
 };
 
 export const serverDataLoader = () => {
-  console.log('call dataLoader in server side.');
+  console.log('Call serverDataLoader for: About');
 
   return new Promise<any>((resolve) => {
     setTimeout(() => resolve(fakeData), 2000);
@@ -28,7 +28,7 @@ export const serverDataLoader = () => {
 };
 
 export const dataLoader = () => {
-  console.log('call dataLoader in client side.');
+  console.log('Call clientDataLoader for: About');
 
   return new Promise<any>((resolve) => {
     setTimeout(() => resolve(fakeData), 2000);
