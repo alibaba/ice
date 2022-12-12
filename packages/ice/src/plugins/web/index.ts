@@ -20,9 +20,9 @@ const plugin: Plugin = () => ({
   name: 'plugin-web',
   setup: ({ registerTask, onHook, context, generator, serverCompileTask, dataCache, watch, getAllPlugin }) => {
     const { rootDir, commandArgs, command, userConfig } = context;
-    const { ssg } = userConfig;
+    const { ssg, dataLoader } = userConfig;
 
-    registerTask(WEB, getWebTask({ rootDir, command, dataCache }));
+    registerTask(WEB, getWebTask({ rootDir, command, dataCache, dataLoader }));
 
     generator.addExport({
       specifier: ['Link', 'Outlet', 'useParams', 'useSearchParams', 'useLocation', 'useNavigate'],

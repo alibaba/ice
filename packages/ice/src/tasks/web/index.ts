@@ -5,9 +5,10 @@ import { CACHE_DIR, RUNTIME_TMP_DIR } from '../../constant.js';
 import { getRoutePathsFromCache } from '../../utils/getRoutePaths.js';
 
 const require = createRequire(import.meta.url);
-const getWebTask = ({ rootDir, command, dataCache }): Config => {
+const getWebTask = ({ rootDir, command, dataCache, dataLoader }): Config => {
   // basic task config of web task
   const defaultLogging = command === 'start' ? 'summary' : 'summary assets';
+
   return {
     mode: command === 'start' ? 'development' : 'production',
     sourceMap: command === 'start' ? 'cheap-module-source-map' : false,
@@ -25,8 +26,8 @@ const getWebTask = ({ rootDir, command, dataCache }): Config => {
       ),
     },
     swcOptions: {
-      // The dataLoader is built by data-loader
-      removeExportExprs: ['dataLoader', 'serverDataLoader', 'staticDataLoader'],
+      // When enable dataLoader, all dataLoader is built to data-loader.js.
+      removeExportExprs: dataLoader ? ['dataLoader', 'serverDataLoader', 'staticDataLoader'] : ['serverDataLoader', 'staticDataLoader'],
       keepPlatform: 'web',
       getRoutePaths: () => {
         return getRoutePathsFromCache(dataCache);
