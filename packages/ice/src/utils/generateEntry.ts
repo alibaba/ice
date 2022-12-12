@@ -1,11 +1,10 @@
 import * as path from 'path';
 import fse from 'fs-extra';
 import consola from 'consola';
-import type { ServerContext, RenderMode, AppConfig } from '@ice/runtime';
+import type { ServerContext, RenderMode, AppConfig, DistType } from '@ice/runtime';
 import { ROUTER_MANIFEST } from '../constant.js';
 import getRoutePaths from './getRoutePaths.js';
 import dynamicImport from './dynamicImport.js';
-
 interface Options {
   rootDir: string;
   entry: string;
@@ -13,9 +12,14 @@ interface Options {
   documentOnly: boolean;
   routeType: AppConfig['router']['type'];
   renderMode?: RenderMode;
+  distType: DistType;
 }
 
-export default async function generateHTML(options: Options) {
+interface EntryResult {
+  outputPaths: Array<string>;
+}
+
+export default async function generateEntry(options: Options): Promise<EntryResult> {
   const {
     rootDir,
     entry,
@@ -23,6 +27,7 @@ export default async function generateHTML(options: Options) {
     documentOnly,
     renderMode,
     routeType,
+    distType,
   } = options;
 
   let serverEntry;
@@ -38,14 +43,36 @@ export default async function generateHTML(options: Options) {
   const routes = JSON.parse(fse.readFileSync(routeManifest, 'utf8'));
   // When enable hash-router, only generate one html(index.html).
   const paths = routeType === 'hash' ? ['/'] : getRoutePaths(routes);
+  const outputPaths = [];
   for (let i = 0, n = paths.length; i < n; i++) {
     const routePath = paths[i];
-    const htmlContent = await renderHTML({ routePath, serverEntry, documentOnly, renderMode });
-    await writeFile(
-      await generateHTMLPath({ rootDir, routePath, outputDir }),
-      htmlContent,
-    );
+    const {
+      htmlOutput,
+      jsOutput,
+    } = await renderEntry({ routePath, serverEntry, documentOnly, renderMode, distType });
+
+    if (htmlOutput) {
+      const path = await generateHTMLPath({ rootDir, routePath, outputDir });
+      await writeFile(
+        path,
+        htmlOutput,
+      );
+      outputPaths.push(path);
+    }
+
+    if (jsOutput) {
+      const path = await generateJSPath({ rootDir, routePath, outputDir });
+      await writeFile(
+        path,
+        jsOutput,
+      );
+      outputPaths.push(path);
+    }
   }
+
+  return {
+    outputPaths,
+  };
 }
 
 const writeFile = async (file: string, content: string) => {
@@ -73,16 +100,38 @@ async function generateHTMLPath(
   return path.join(outputDir, fileName);
 }
 
-async function renderHTML(
+async function generateJSPath(
+  {
+    rootDir,
+    routePath,
+    outputDir,
+  }: {
+    rootDir: string;
+    routePath: string;
+    outputDir: string;
+  },
+) {
+  // Win32 do not support file name with
+  const fileName = routePath === '/' ? 'index.js' : `${routePath.replace(/\/:/g, '/$')}.js`;
+  if (fse.existsSync(path.join(rootDir, 'public', fileName))) {
+    consola.warn(`${fileName} is overwrite by framework, rename file name if it is necessary.`);
+  }
+
+  return path.join(outputDir, fileName);
+}
+
+async function renderEntry(
   {
     routePath,
     serverEntry,
     documentOnly,
+    distType = ['html'],
     renderMode,
   }: {
     routePath: string;
     serverEntry: any;
     documentOnly: boolean;
+    distType?: DistType;
     renderMode?: RenderMode;
   },
 ) {
@@ -91,11 +140,18 @@ async function renderHTML(
       url: routePath,
     } as any,
   };
-  const { value: html } = await serverEntry.renderToHTML(serverContext, {
+  const {
+    value,
+    jsOutput,
+  } = await serverEntry.renderToEntry(serverContext, {
     renderMode,
     documentOnly,
     routePath,
     serverOnlyBasename: '/',
+    distType,
   });
-  return html;
+  return {
+    htmlOutput: value,
+    jsOutput,
+  };
 }

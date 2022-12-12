@@ -38,6 +38,13 @@ const userConfig = [
     },
   },
   {
+    name: 'output',
+    validation: 'object',
+    defaultValue: {
+      distType: ['html'],
+    },
+  },
+  {
     name: 'define',
     validation: 'object',
     setConfig: (config: Config, define: UserConfig['define']) => {

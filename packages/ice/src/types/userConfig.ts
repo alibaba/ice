@@ -25,12 +25,18 @@ interface IgnorePattern {
   contextRegExp?: RegExp;
 }
 
+
 interface Fetcher {
   packageName: string;
   method?: string;
 }
 
+type DistType = 'javascript' | 'html';
+
 export interface UserConfig {
+  output?: {
+    distType: Array<DistType>;
+  };
   alias?: Record<string, string | false>;
   define?: Record<string, string | boolean>;
   devPublicPath?: string;
