@@ -1,3 +1,4 @@
+import path from 'path';
 import { swc, swcPluginRemoveExport, swcPluginKeepExport, swcPluginKeepPlatform, coreJsPath } from '@ice/bundles';
 import type { SwcConfig, ReactConfig } from '@ice/bundles';
 import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
@@ -58,7 +59,9 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
   return {
     name: 'compilation-plugin',
     transformInclude(id) {
-      return extensionRegex.test(id) && !compileExcludes.some((regex) => regex.test(id));
+      // Resolved id is not formatted when used in webpack loader test.
+      const formatId = id.split(path.sep).join('/');
+      return extensionRegex.test(formatId) && !compileExcludes.some((regex) => regex.test(formatId));
     },
     async transform(source: string, id: string) {
       if ((/node_modules/.test(id) && !compileRegex.some((regex) => regex.test(id)))) {
