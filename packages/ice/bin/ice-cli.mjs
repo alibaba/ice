@@ -9,7 +9,7 @@ import { program, Option } from 'commander';
 // hijack webpack before import other modules
 import '../esm/requireHook.js';
 import createService from '../esm/createService.js';
-import { TARGETS } from '../esm/constant.js';
+import { TARGETS, WEB } from '../esm/constant.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -25,8 +25,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .command('build')
     .description('build project')
     .allowUnknownOption()
-    .addOption(new Option('--target <target>', 'set build target').default('web').choices(TARGETS))
-    .option('--platform <platform>', 'same as --target', 'web')
+    .addOption(new Option('--target <target>', 'set build target').default(WEB).choices(TARGETS))
+    .option('--platform <platform>', 'same as --target', WEB)
     .option('--mode <mode>', 'set mode', 'production')
     .option('--analyzer', 'visualize size of output files', false)
     .option('--config <config>', 'use custom config')
@@ -42,8 +42,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .command('start')
     .description('start server')
     .allowUnknownOption()
-    .addOption(new Option('--target <target>', 'set build target').default('web').choices(TARGETS))
-    .option('--platform <platform>', 'same as --target', 'web')
+    .addOption(new Option('--target <target>', 'set build target').default(WEB).choices(TARGETS))
+    .option('--platform <platform>', 'same as --target', WEB)
     .option('--mode <mode>', 'set mode', 'development')
     .option('--config <config>', 'custom config path')
     .option('-h, --host <host>', 'dev server host', '0.0.0.0')

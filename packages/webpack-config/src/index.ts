@@ -288,7 +288,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
       }),
       new webpack.DefinePlugin({
         'import.meta.target': JSON.stringify(target),
-        'import.meta.renderMode': JSON.stringify('CSR'),
+        'import.meta.renderer': JSON.stringify('client'),
         ...defineVars,
         ...runtimeDefineVars,
       }),

@@ -108,10 +108,10 @@ export function createServerCompiler(options: Options) {
       // ref: https://github.com/evanw/esbuild/blob/master/CHANGELOG.md#01117
       // in esm, this in the global should be undefined. Set the following config to avoid warning
       this: undefined,
+      'import.meta.target': JSON.stringify(target),
+      'import.meta.renderer': JSON.stringify('server'),
       ...defineVars,
       ...runtimeDefineVars,
-      'import.meta.target': JSON.stringify(target),
-      'import.meta.renderMode': JSON.stringify('SSR'),
     };
     const format = customBuildOptions?.format || 'esm';
 

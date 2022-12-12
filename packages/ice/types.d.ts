@@ -154,6 +154,6 @@ interface ImportMeta {
   // Usually `web` or `node` or `weex`
   target: string;
 
-  // The render mode for ice.js
-  renderMode: 'CSR' | 'SSR';
+  // The renderer for ice.js
+  renderer: 'client' | 'server';
 }
