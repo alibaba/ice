@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+- [fix] fix lanUrlForTerminal when dev start
+
 ## 1.0.2
 
 - [fix] fix dev lanUrlForTerminal err
