@@ -1,5 +1,9 @@
 # @ice/runtime
 
+## v1.0.3
+
+- [revert] window context merge order
+
 ## v1.0.2
 
 - [fix] window context merge order
