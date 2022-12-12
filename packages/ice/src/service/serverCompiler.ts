@@ -59,6 +59,7 @@ export function createServerCompiler(options: Options) {
     assetsManifest,
     redirectImports,
     removeOutputs,
+    target,
   } = {}) => {
     let depsMetadata: DepsMetaData;
     let swcOptions = merge({}, {
@@ -109,6 +110,8 @@ export function createServerCompiler(options: Options) {
       this: undefined,
       ...defineVars,
       ...runtimeDefineVars,
+      'import.meta.target': JSON.stringify(target),
+      'import.meta.renderMode': JSON.stringify('SSR'),
     };
     const format = customBuildOptions?.format || 'esm';
 

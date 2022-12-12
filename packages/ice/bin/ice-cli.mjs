@@ -1,14 +1,15 @@
 #!/usr/bin/env node
 import path from 'path';
-import { fileURLToPath } from 'url';
+import chalk from 'chalk';
+import semver from 'semver';
 import fse from 'fs-extra';
-import { program, Option } from 'commander';
 import detectPort from 'detect-port';
+import { fileURLToPath } from 'url';
+import { program, Option } from 'commander';
 // hijack webpack before import other modules
 import '../esm/requireHook.js';
 import createService from '../esm/createService.js';
-import { ALL_PLATFORMS } from '../esm/constant.js';
-import checkNodeVersion from './checkNodeVersion.mjs';
+import { TARGETS } from '../esm/constant.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -24,12 +25,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .command('build')
     .description('build project')
     .allowUnknownOption()
-    .addOption(new Option('--platform <platform>', 'set platform').default('web').choices(ALL_PLATFORMS))
+    .addOption(new Option('--target <target>', 'set build target').default('web').choices(TARGETS))
+    .option('--platform <platform>', 'same as --target', 'web')
     .option('--mode <mode>', 'set mode', 'production')
     .option('--analyzer', 'visualize size of output files', false)
     .option('--config <config>', 'use custom config')
     .option('--rootDir <rootDir>', 'project root directory', cwd)
-    .action(async ({ rootDir, ...commandArgs }) => {
+    .action(async ({ rootDir, ...commandArgs }, ctx) => {
+      renamePlatformToTarget(commandArgs);
       process.env.NODE_ENV = 'production';
       const service = await createService({ rootDir, command: 'build', commandArgs });
       service.run();
@@ -39,7 +42,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .command('start')
     .description('start server')
     .allowUnknownOption()
-    .addOption(new Option('--platform <platform>', 'set platform').default('web').choices(ALL_PLATFORMS))
+    .addOption(new Option('--target <target>', 'set build target').default('web').choices(TARGETS))
+    .option('--platform <platform>', 'same as --target', 'web')
     .option('--mode <mode>', 'set mode', 'development')
     .option('--config <config>', 'custom config path')
     .option('-h, --host <host>', 'dev server host', '0.0.0.0')
@@ -51,6 +55,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .option('--https [https]', 'enable https', false)
     .option('--force', 'force remove cache directory', false)
     .action(async ({ rootDir, ...commandArgs }) => {
+      renamePlatformToTarget(commandArgs);
       process.env.NODE_ENV = 'development';
       const DEFAULT_PORT = 3000;
       commandArgs.port = typeof commandArgs.port === 'undefined' ? await detectPort(DEFAULT_PORT) : commandArgs.port;
@@ -74,3 +79,24 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     program.help();
   }
 })();
+
+// Rename `platform` to `target`, for compatibility.
+// For ice.js <3.0.3, using --platform to set build target.
+function renamePlatformToTarget(commandArgs) {
+  // Rename `platform` to `target`.
+  if (commandArgs.hasOwnProperty('platform')) {
+    commandArgs.target = commandArgs.platform;
+    delete commandArgs.platform;
+  }
+}
+
+function checkNodeVersion (requireNodeVersion, frameworkName = 'ice') {
+  if (!semver.satisfies(process.version, requireNodeVersion)) {
+    console.log();
+    console.log(chalk.red(`  You are using Node ${process.version}`));
+    console.log(chalk.red(`  ${frameworkName} requires Node ${requireNodeVersion}, please update Node.`));
+    console.log();
+    console.log();
+    process.exit(1);
+  }
+}

@@ -67,6 +67,7 @@ const plugin: Plugin = () => ({
         serverCompileTask: command === 'start' ? serverCompileTask : null,
         userConfig,
         ensureRoutesConfig,
+        target: 'web',
       });
       webpackConfigs[0].plugins.push(
         // Add webpack plugin of data-loader in web task

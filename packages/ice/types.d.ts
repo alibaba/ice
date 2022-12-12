@@ -148,3 +148,12 @@ declare namespace NodeJS {
     ICE_CORE_DEV_PORT: number;
   }
 }
+
+interface ImportMeta {
+  // The build target for ice.js
+  // Usually `web` or `node` or `weex`
+  target: string;
+
+  // The render mode for ice.js
+  renderMode: 'CSR' | 'SSR';
+}

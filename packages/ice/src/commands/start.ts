@@ -46,7 +46,7 @@ const start = async (
     userConfigHash,
   } = options;
   const { commandArgs, rootDir } = context;
-  const { platform = WEB } = commandArgs;
+  const { target = WEB } = commandArgs;
   const webpackConfigs = taskConfigs.map(({ config }) => getWebpackConfig({
     config,
     rootDir,
@@ -54,6 +54,7 @@ const start = async (
     webpack,
     runtimeTmpDir: RUNTIME_TMP_DIR,
     userConfigHash,
+    target,
   }));
 
   const hooksAPI = {
@@ -62,7 +63,7 @@ const start = async (
     getRoutesConfig,
   };
 
-  const useDevServer = platform === WEB;
+  const useDevServer = target === WEB;
 
   if (useDevServer) {
     return (await startDevServer({

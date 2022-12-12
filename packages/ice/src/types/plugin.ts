@@ -42,6 +42,7 @@ export type ServerCompiler = (
     assetsManifest?: AssetsManifest;
     redirectImports?: Config['redirectImports'];
     removeOutputs?: boolean;
+    target?: string;
   }
 ) => Promise<Partial<BuildResult & { serverEntry: string; error: any }>>;
 export type WatchEvent = [
