@@ -678,6 +678,25 @@ importers:
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
 
+  examples/with-weex:
+    specifiers:
+      '@ice/app': workspace:*
+      '@ice/plugin-rax-compat': workspace:*
+      '@ice/runtime': workspace:*
+      '@types/react': ^18.0.0
+      '@types/react-dom': ^18.0.2
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    dependencies:
+      '@ice/app': link:../../packages/ice
+      '@ice/plugin-rax-compat': link:../../packages/plugin-rax-compat
+      '@ice/runtime': link:../../packages/runtime
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    devDependencies:
+      '@types/react': 18.0.21
+      '@types/react-dom': 18.0.6
+
   packages/appear:
     specifiers:
       react: ^18.0.0
