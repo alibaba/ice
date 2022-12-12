@@ -18,13 +18,13 @@ if (!window.ICESTARK) {
   render();
 }
 let root;
-export mount(props) {
+export function mount(props) {
   if (app?.icestark?.mount) {
     app?.icestark?.mount(props);
   }
   root = render({ runtimeOptions: props });
 }
-export unmount(props) {
+export function unmount(props) {
   root.unmount();
   if (app?.icestark?.unmount) {
     app?.icestark?.unmount(props);

@@ -7,13 +7,15 @@ interface RuntimeOptions {
   customProps?: Record<string, any>;
 }
 
-const runtime: RuntimePlugin<RuntimeOptions> = ({ setRender }, { container }) => {
-  setRender((_, element) => {
-    // Replace render root when app rendered as a child app.
-    const root = ReactDOM.createRoot(container);
-    root.render(element);
-    return root;
-  });
+const runtime: RuntimePlugin<RuntimeOptions> = ({ setRender }, runtimeOptions) => {
+  if (runtimeOptions?.container) {
+    setRender((_, element) => {
+      // Replace render root when app rendered as a child app.
+      const root = ReactDOM.createRoot(runtimeOptions.container);
+      root.render(element);
+      return root;
+    });
+  }
 };
 
 export default runtime;

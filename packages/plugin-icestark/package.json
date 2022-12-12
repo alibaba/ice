@@ -6,6 +6,7 @@
   "homepage": "",
   "license": "MIT",
   "main": "esm/index.js",
+  "type": "module",
   "files": [
     "esm",
     "!esm/**/*.map"
