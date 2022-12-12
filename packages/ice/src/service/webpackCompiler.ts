@@ -18,7 +18,7 @@ async function webpackCompiler(options: {
     serverCompiler: ServerCompiler;
     getAppConfig: GetAppConfig;
     getRoutesConfig: GetRoutesConfig;
-    getLoaderConfig: GetLoadersConfig;
+    getLoadersConfig: GetLoadersConfig;
   };
 }) {
   const {
