@@ -11,6 +11,28 @@
     "esm",
     "!esm/**/*.map"
   ],
+  "exports": {
+    ".": {
+      "types": "./esm/index.d.ts",
+      "import": "./esm/index.js",
+      "default": "./esm/index.js"
+    },
+    "./esm/runtime/child": {
+      "types": "./esm/runtime/child.d.ts",
+      "import": "./esm/runtime/child.js",
+      "default": "./esm/runtime/child.js"
+    },
+    "./esm/runtime/framework": {
+      "types": "./esm/runtime/framework.d.ts",
+      "import": "./esm/runtime/framework.js",
+      "default": "./esm/runtime/framework.js"
+    },
+    "./esm/types": {
+      "types": "./esm/types.d.ts",
+      "import": "./esm/types.js",
+      "default": "./esm/types.js"
+    }
+  },
   "dependencies": {
     "@ice/stark": "^2.0.0",
     "@ice/stark-app": "^1.2.0"

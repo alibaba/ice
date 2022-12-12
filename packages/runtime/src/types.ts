@@ -147,6 +147,7 @@ export type AppProvider = ComponentWithChildren<any>;
 export type RouteWrapper = ComponentType<any>;
 
 export type SetAppRouter = (AppRouter: ComponentType<AppRouterProps>) => void;
+export type GetAppRouter = () => AppProvider;
 export type AddProvider = (Provider: AppProvider) => void;
 export type SetRender = (render: Renderer) => void;
 export type AddWrapper = (wrapper: RouteWrapper, forLayout?: boolean) => void;
@@ -171,6 +172,7 @@ export interface AssetsManifest {
 
 export interface RuntimeAPI {
   setAppRouter?: SetAppRouter;
+  getAppRouter: GetAppRouter;
   addProvider: AddProvider;
   setRender: SetRender;
   addWrapper: AddWrapper;

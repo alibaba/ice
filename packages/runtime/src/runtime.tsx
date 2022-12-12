@@ -61,6 +61,7 @@ class Runtime {
   public async loadModule(module: RuntimePlugin | StaticRuntimePlugin | CommonJsRuntime) {
     let runtimeAPI: RuntimeAPI = {
       addProvider: this.addProvider,
+      getAppRouter: this.getAppRouter,
       setRender: this.setRender,
       addWrapper: this.addWrapper,
       appContext: this.appContext,

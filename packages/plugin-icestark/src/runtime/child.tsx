@@ -1,13 +1,8 @@
-
 import * as ReactDOM from 'react-dom/client';
 import type { RuntimePlugin } from '@ice/runtime/esm/types';
+import type { LifecycleOptions } from '../types';
 
-interface RuntimeOptions {
-  container: Element;
-  customProps?: Record<string, any>;
-}
-
-const runtime: RuntimePlugin<RuntimeOptions> = ({ setRender }, runtimeOptions) => {
+const runtime: RuntimePlugin<LifecycleOptions> = ({ setRender }, runtimeOptions) => {
   if (runtimeOptions?.container) {
     setRender((_, element) => {
       // Replace render root when app rendered as a child app.

@@ -8,10 +8,20 @@ interface PluginOptions {
 const PLUGIN_NAME = '@ice/plugin-icestark';
 const plugin: Plugin<PluginOptions> = ({ type, library }) => ({
   name: PLUGIN_NAME,
-  setup: ({ onGetConfig, context, generator }) => {
-    if (type === 'framework') {
-
-    } else {
+  setup: ({ onGetConfig, context, generator, modifyUserConfig }) => {
+    onGetConfig((config) => {
+      config.configureWebpack ??= [];
+      config.configureWebpack.push((webpackConfig) => {
+        if (type !== 'framework') {
+          const { pkg } = context;
+          webpackConfig.output.library = library || pkg.name as string || 'microApp';
+          webpackConfig.output.libraryTarget = 'umd';
+        }
+        return webpackConfig;
+      });
+      return config;
+    });
+    if (type !== 'framework') {
       generator.addEntryCode(() => {
         return `
 if (!window.ICESTARK) {
@@ -31,16 +41,10 @@ export function unmount(props) {
   }
 }`;
 });
-      onGetConfig((config) => {
-        config.configureWebpack ??= [];
-        config.configureWebpack.push((webpackConfig) => {
-          const { pkg } = context;
-          webpackConfig.output.library = library || pkg.name as string || 'microApp';
-          webpackConfig.output.libraryTarget = 'umd';
-          return webpackConfig;
-        });
-        return config;
-      });
+    } else {
+      // Plugin icestark do not support ssr yet.
+      modifyUserConfig('ssr', false);
+      modifyUserConfig('ssg', false);
     }
   },
   runtime: `${PLUGIN_NAME}/esm/runtime/${type === 'framework' ? 'framework' : 'child'}`,
