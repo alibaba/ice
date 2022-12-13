@@ -156,12 +156,13 @@ async function startDevServer({
   devServerConfig = merge(webpackConfigs[0].devServer, devServerConfig);
   const protocol = devServerConfig.https ? 'https' : 'http';
   let urlPathname = getRouterBasename(webTaskConfig, appConfig) || '/';
-
+  const enabledHashRouter = appConfig.router?.type === 'hash';
   const urls = prepareURLs(
     protocol,
     devServerConfig.host,
     devServerConfig.port as number,
     urlPathname.endsWith('/') ? urlPathname : `${urlPathname}/`,
+    enabledHashRouter,
   );
   const compiler = await webpackCompiler({
     context,
