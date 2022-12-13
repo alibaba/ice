@@ -54,7 +54,7 @@ const userConfig = [
   },
   {
     name: 'dataLoader',
-    validation: 'boolean',
+    validation: 'boolean|object',
     defaultValue: true,
   },
   {
