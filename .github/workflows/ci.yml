@@ -37,9 +37,9 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        name: List the state of node modules
+        name: cache hit false
         continue-on-error: true
-        run: echo "match cache"
+        run: echo "miss cache"
       - name: Install pnpm
         run: npm i pnpm -g
       - run: npm run setup
