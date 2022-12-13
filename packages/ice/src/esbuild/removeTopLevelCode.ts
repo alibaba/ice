@@ -5,6 +5,7 @@ import { parse, type ParserOptions } from '@babel/parser';
 import babelTraverse from '@babel/traverse';
 import babelGenerate from '@babel/generator';
 import removeTopLevelCode from '../utils/babelPluginRemoveCode.js';
+import formatPath from '../utils/formatPath.js';
 
 // @ts-ignore @babel/traverse is not a valid export in esm
 const traverse = babelTraverse.default || babelTraverse;
@@ -26,7 +27,7 @@ const removeCodePlugin = (keepExports: string[], transformInclude: (id: string) 
     name: 'esbuild-remove-top-level-code',
     setup(build) {
       build.onLoad({ filter: /\.(js|jsx|ts|tsx)$/ }, async ({ path: id }) => {
-        if (!transformInclude(id)) {
+        if (!transformInclude(formatPath(id))) {
           return;
         }
         const source = fs.readFileSync(id, 'utf-8');
