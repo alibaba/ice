@@ -26,6 +26,10 @@ interface IgnorePattern {
 }
 
 type DistType = 'javascript' | 'html';
+interface Fetcher {
+  packageName: string;
+  method?: string;
+}
 
 export interface UserConfig {
   output?: {
@@ -68,6 +72,8 @@ export interface UserConfig {
   transform?: UnpluginOptions['transform'];
   syntaxFeatures?: SyntaxFeatures;
   splitChunks?: boolean;
-  dataLoader?: boolean;
+  dataLoader?: {
+    fetcher?: Fetcher;
+  } | Boolean;
   crossOriginLoading?: Config['output']['crossOriginLoading'];
 }
