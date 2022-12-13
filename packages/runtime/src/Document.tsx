@@ -181,6 +181,7 @@ export function Main(props: MainProps) {
     </div>
   );
 
+  // Suspense loader will be used by steam chunk before bundle is loaded.
   if (suspense) {
     return (
       <>

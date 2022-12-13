@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { DataProvider, useData } from './RouteContext.js';
-import { isClient } from './env.js';
 import { getGlobalDataLoader } from './dataLoader.js';
 
 const LOADER = '__ICE_SUSPENSE_LOADER__';
+const isClient = typeof window !== 'undefined' && 'onload' in window;
 
 export function Suspense(props) {
   const { module } = props;
 
   const { serverDataLoader, dataLoader, Loading } = module;
 
+  // module.id is export by common component.
+  // props.id is passed by router component.
   const moduleId = module.id || props.id;
 
   const Children = module.default;
