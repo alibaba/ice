@@ -126,21 +126,21 @@ const plugin: Plugin = () => ({
 
     onHook('after.start.compile', async ({ isSuccessful, isFirstCompile, urls, devUrlInfo }) => {
       const { port, open } = commandArgs;
-      const { devPath, hashChar } = devUrlInfo;
+      const { devPath } = devUrlInfo;
       if (isSuccessful && isFirstCompile) {
         let logoutMessage = '\n';
         logoutMessage += chalk.green(' Starting the development server at:');
         if (process.env.CLOUDIDE_ENV) {
-          logoutMessage += `\n   - IDE server: https://${process.env.WORKSPACE_UUID}-${port}.${process.env.WORKSPACE_HOST}${hashChar}${devPath}`;
+          logoutMessage += `\n   - IDE server: https://${process.env.WORKSPACE_UUID}-${port}.${process.env.WORKSPACE_HOST}${devPath}`;
         } else {
           logoutMessage += `\n
-    - Local  : ${chalk.underline.white(`${urls.localUrlForBrowser}${hashChar}${devPath}`)}
-    - Network: ${chalk.underline.white(`${urls.lanUrlForTerminal}${hashChar}${devPath}`)}`;
+    - Local  : ${chalk.underline.white(`${urls.localUrlForBrowser}${devPath}`)}
+    - Network: ${chalk.underline.white(`${urls.lanUrlForTerminal}${devPath}`)}`;
         }
         consola.log(`${logoutMessage}\n`);
 
         if (open) {
-          openBrowser(`${urls.localUrlForBrowser}${hashChar}${devPath}`);
+          openBrowser(`${urls.localUrlForBrowser}${devPath}`);
         }
       }
     });
