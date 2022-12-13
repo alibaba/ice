@@ -130,6 +130,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
           outputDir,
           getAppConfig,
           getRoutesConfig,
+          getLoadersConfig,
           compileTask: () => serverCompileTask.get(),
           parseOptions: {
             publicPath,
