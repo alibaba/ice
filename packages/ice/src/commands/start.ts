@@ -12,7 +12,7 @@ import webpack from '@ice/bundles/compiled/webpack/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import { getWebpackConfig } from '@ice/webpack-config';
 import type { ExtendsPluginAPI, ServerCompiler, GetAppConfig, GetRoutesConfig } from '../types';
-import { ROUTER_MANIFEST, RUNTIME_TMP_DIR, WEB } from '../constant.js';
+import { IMPORT_META_RENDERER, IMPORT_META_TARGET, ROUTER_MANIFEST, RUNTIME_TMP_DIR, WEB } from '../constant.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import prepareURLs from '../utils/prepareURLs.js';
@@ -54,7 +54,10 @@ const start = async (
     webpack,
     runtimeTmpDir: RUNTIME_TMP_DIR,
     userConfigHash,
-    target,
+    runtimeDefineVars: {
+      [IMPORT_META_TARGET]: JSON.stringify(target),
+      [IMPORT_META_RENDERER]: JSON.stringify('client'),
+    },
   }));
 
   const hooksAPI = {

@@ -7,7 +7,7 @@ import type { Plugin } from '../../types/plugin.js';
 import ReCompilePlugin from '../../webpack/ReCompilePlugin.js';
 import DataLoaderPlugin from '../../webpack/DataLoaderPlugin.js';
 import { getRouteExportConfig } from '../../service/config.js';
-import { WEB, SERVER_OUTPUT_DIR } from '../../constant.js';
+import { WEB, SERVER_OUTPUT_DIR, IMPORT_META_TARGET, IMPORT_META_RENDERER } from '../../constant.js';
 import getWebTask from '../../tasks/web/index.js';
 import generateHTML from '../../utils/generateHTML.js';
 import openBrowser from '../../utils/openBrowser.js';
@@ -67,7 +67,10 @@ const plugin: Plugin = () => ({
         serverCompileTask: command === 'start' ? serverCompileTask : null,
         userConfig,
         ensureRoutesConfig,
-        target: 'web',
+        runtimeDefineVars: {
+          [IMPORT_META_TARGET]: JSON.stringify('web'),
+          [IMPORT_META_RENDERER]: JSON.stringify('server'),
+        },
       });
       webpackConfigs[0].plugins.push(
         // Add webpack plugin of data-loader in web task
