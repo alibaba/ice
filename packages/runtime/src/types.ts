@@ -118,7 +118,7 @@ export interface RouteComponent {
   dataLoader?: DataLoaderConfig;
   pageConfig?: PageConfig;
   [key: string]: any;
-  Loading: ComponentType<any>;
+  Loading?: ComponentType<any>;
   suspense?: boolean;
 }
 

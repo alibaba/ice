@@ -1,11 +1,17 @@
 import * as React from 'react';
 import { DataProvider, useData } from './RouteContext.js';
 import { getGlobalDataLoader } from './dataLoader.js';
+import type { RouteComponent } from './types.js';
 
 const LOADER = '__ICE_SUSPENSE_LOADER__';
 const isClient = typeof window !== 'undefined' && 'onload' in window;
 
-export function Suspense(props) {
+interface SuspenseProps {
+  id: string;
+  module: RouteComponent;
+}
+
+export function Suspense(props: SuspenseProps) {
   const { module } = props;
 
   const { serverDataLoader, dataLoader, Loading } = module;
@@ -46,7 +52,6 @@ function createDataLoader(serverDataLoader, dataLoader, id) {
   return {
     read() {
       if (isClient && window[LOADER] && window[LOADER].has(id)) {
-        // @ts-ignore
         return window[LOADER].get(id);
       }
 
@@ -58,17 +63,7 @@ function createDataLoader(serverDataLoader, dataLoader, id) {
         throw promise;
       }
 
-      if (serverDataLoader) {
-        promise = serverDataLoader();
-      } else if (dataLoader) {
-        promise = dataLoader();
-      } else if (isClient) {
-        const globalLoader = getGlobalDataLoader();
-
-        if (globalLoader) {
-          promise = globalLoader.getData(id);
-        }
-      }
+      promise = serverDataLoader?.() || dataLoader?.() || getGlobalDataLoader?.()?.getData(id);
 
       if (promise) {
         promise.then((response) => {
