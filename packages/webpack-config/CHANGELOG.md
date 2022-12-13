@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+- [feat] enable remove exports for all components
+
 ## 1.0.2
 
 - [fix] rule of page chunk name

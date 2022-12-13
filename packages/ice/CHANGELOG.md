@@ -4,6 +4,8 @@
 
 - [fix] remove dataLoaderFetcher api for init of dataLoader
 - [fix] incorrect dev url when enable hash router
+- [fix] bundle dataLoader to page chunk when dataLoader is disabled
+- [feat] add suspense to exports
 
 ## v3.0.2
 
