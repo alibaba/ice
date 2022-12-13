@@ -12,7 +12,7 @@ function Document() {
         <Links />
       </head>
       <body>
-        <Main suspense />
+        <Main />
         <Scripts async />
       </body>
     </html>

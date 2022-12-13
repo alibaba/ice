@@ -166,32 +166,15 @@ export function Data(props: DataProps) {
   );
 }
 
-interface MainProps extends React.HTMLAttributes<HTMLDivElement> {
-  suspense?: boolean;
-}
-
-export function Main(props: MainProps) {
+export function Main(props: React.HTMLAttributes<HTMLDivElement>) {
   const { main } = useDocumentContext();
   const { appConfig } = useAppContext();
-  const { suspense, ...nativeProps } = props;
 
-  const mainElement = (
-    <div id={appConfig.app.rootId} {...nativeProps}>
+  return (
+    <div id={appConfig.app.rootId} {...props}>
       {main}
     </div>
   );
-
-  // Suspense loader will be used by steam chunk before bundle is loaded.
-  if (suspense) {
-    return (
-      <>
-        <script dangerouslySetInnerHTML={{ __html: 'window.__ICE_SUSPENSE_LOADER__ = new Map();' }} />
-        {mainElement}
-      </>
-    );
-  }
-
-  return mainElement;
 }
 
 /**

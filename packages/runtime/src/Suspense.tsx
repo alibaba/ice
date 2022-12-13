@@ -34,10 +34,7 @@ function Data(props) {
   const data = useData();
 
   return (
-    <script dangerouslySetInnerHTML={{ __html: `
-      window.${LOADER} && window.${LOADER}.set('${props.id}', ${JSON.stringify(data)})
-    ` }}
-    />
+    <script dangerouslySetInnerHTML={{ __html: `if (!window.${LOADER}) { window.${LOADER} = new Map();} window.${LOADER}.set('${props.id}', ${JSON.stringify(data)})` }} />
   );
 }
 
