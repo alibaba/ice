@@ -85,12 +85,14 @@ function loadInitialDataInClient(loaders: Loaders) {
 
     if (dataLoader) {
       const requestContext = getRequestContext(window.location);
-      const loader = callDataLoader(dataLoader, requestContext);
+      callDataLoader(dataLoader, requestContext);
 
-      cache.set(id, {
-        value: loader,
-        status: 'LOADING',
-      });
+      // 在这里处理 caching 并不够，loadInitialDataInClient 似乎只在初次执行，导致后续逻辑不统一
+      // 暂时不处理，可能需要结合后续的方案进行修改
+      // cache.set(id, {
+      //   value: loader,
+      //   status: 'LOADING',
+      // });
     }
   });
 }

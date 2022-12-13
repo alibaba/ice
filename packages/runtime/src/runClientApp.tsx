@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState, useRef } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { createHashHistory, createBrowserHistory, createMemoryHistory } from 'history';
 import type { HashHistory, BrowserHistory, Action, Location, InitialEntry, MemoryHistory } from 'history';
@@ -198,6 +198,12 @@ function BrowserEntry({
     routeModules: initialRouteModules,
   });
 
+  const routeStateRef = useRef<RouteState>(routeState);
+
+  if (routeStateRef.current !== routeState) {
+    routeStateRef.current = routeState;
+  }
+
   const { action, location } = historyState;
   const { routesData, routesConfig, matches, routeModules } = routeState;
 
@@ -212,7 +218,7 @@ function BrowserEntry({
 
         loadNextPage(
           currentMatches,
-          routeState,
+          routeStateRef?.current,
         ).then(({ routesData, routesConfig, routeModules }) => {
           setHistoryState({
             action,
@@ -228,19 +234,20 @@ function BrowserEntry({
       });
     }
     // just trigger once
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // update app context for the current route.
-  Object.assign(appContext, {
+  const _appContext = {
+    ...appContext,
     matches,
     routesData,
     routesConfig,
     routeModules,
-  });
+  };
 
   return (
-    <AppContextProvider value={appContext}>
+    <AppContextProvider value={_appContext}>
       <App
         action={action}
         location={location}
