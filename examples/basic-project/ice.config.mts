@@ -4,6 +4,7 @@ import customPlugin from './plugin';
 
 export default defineConfig(() => ({
   publicPath: '/',
+  polyfill: 'entry',
   syntaxFeatures: {
     exportDefaultFrom: true,
   },
@@ -23,7 +24,7 @@ export default defineConfig(() => ({
     }
     return webpackConfig;
   },
-  dropLogLevel: 'warn',
+  dropLogLevel: process.env.ICE_ENV === 'common' ? 'warn' : 'error',
   plugins: [
     customPlugin(),
   ],

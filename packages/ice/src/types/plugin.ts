@@ -24,6 +24,7 @@ type ServerCompilerBuildOptions = Pick<
   'outdir' |
   'splitting' |
   'platform' |
+  'mainFields' |
   'outExtension' |
   'plugins' |
   'logLevel' |

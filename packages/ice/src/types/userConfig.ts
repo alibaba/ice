@@ -25,6 +25,11 @@ interface IgnorePattern {
   contextRegExp?: RegExp;
 }
 
+interface Fetcher {
+  packageName: string;
+  method?: string;
+}
+
 export interface UserConfig {
   alias?: Record<string, string | false>;
   define?: Record<string, string | boolean>;
@@ -63,6 +68,8 @@ export interface UserConfig {
   transform?: UnpluginOptions['transform'];
   syntaxFeatures?: SyntaxFeatures;
   splitChunks?: boolean;
-  dataLoader?: boolean;
+  dataLoader?: {
+    fetcher?: Fetcher;
+  } | Boolean;
   crossOriginLoading?: Config['output']['crossOriginLoading'];
 }

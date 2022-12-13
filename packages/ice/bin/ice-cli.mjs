@@ -43,7 +43,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .option('--mode <mode>', 'set mode', 'development')
     .option('--config <config>', 'custom config path')
     .option('-h, --host <host>', 'dev server host', '0.0.0.0')
-    .option('-p, --port <port>', 'dev server port', 3000)
+    .option('-p, --port <port>', 'dev server port')
     .option('--no-open', "don't open browser on startup")
     .option('--no-mock', "don't start mock service")
     .option('--rootDir <rootDir>', 'project root directory', cwd)
@@ -52,7 +52,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .option('--force', 'force remove cache directory', false)
     .action(async ({ rootDir, ...commandArgs }) => {
       process.env.NODE_ENV = 'development';
-      commandArgs.port = await detectPort(commandArgs.port);
+      const DEFAULT_PORT = 3000;
+      commandArgs.port = typeof commandArgs.port === 'undefined' ? await detectPort(DEFAULT_PORT) : commandArgs.port;
       const service = await createService({ rootDir, command: 'start', commandArgs });
       service.run();
     });
