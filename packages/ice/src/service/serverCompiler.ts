@@ -59,7 +59,7 @@ export function createServerCompiler(options: Options) {
     assetsManifest,
     redirectImports,
     removeOutputs,
-    target,
+    runtimeDefineVars = {},
   } = {}) => {
     let depsMetadata: DepsMetaData;
     let swcOptions = merge({}, {
@@ -94,7 +94,6 @@ export function createServerCompiler(options: Options) {
     }
 
     // get runtime variable for server build
-    const runtimeDefineVars = {};
     Object.keys(process.env).forEach((key) => {
       // Do not transform env when bundle client side code.
       if (/^ICE_CORE_/i.test(key) && transformEnv) {
@@ -108,8 +107,6 @@ export function createServerCompiler(options: Options) {
       // ref: https://github.com/evanw/esbuild/blob/master/CHANGELOG.md#01117
       // in esm, this in the global should be undefined. Set the following config to avoid warning
       this: undefined,
-      'import.meta.target': JSON.stringify(target),
-      'import.meta.renderer': JSON.stringify('server'),
       ...defineVars,
       ...runtimeDefineVars,
     };

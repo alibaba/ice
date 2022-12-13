@@ -35,7 +35,7 @@ interface GetWebpackConfigOptions {
   webpack: typeof webpack;
   runtimeTmpDir: string;
   userConfigHash: string;
-  target: string;
+  runtimeDefineVars?: Record<string, any>;
 }
 type GetWebpackConfig = (options: GetWebpackConfigOptions) => Configuration;
 enum JSMinifier {
@@ -62,7 +62,7 @@ function getEntry(rootDir: string, runtimeTmpDir: string) {
   };
 }
 
-const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeTmpDir, userConfigHash, target }) => {
+const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeTmpDir, userConfigHash, runtimeDefineVars = {} }) => {
   const {
     mode,
     define = {},
@@ -118,7 +118,6 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
     defineVars[key] = JSON.stringify(define[key]);
   });
 
-  const runtimeDefineVars = {};
   const RUNTIME_PREFIX = /^ICE_/i;
   Object.keys(process.env).filter((key) => {
     return RUNTIME_PREFIX.test(key) || ['NODE_ENV'].includes(key);
@@ -287,8 +286,6 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
         process: require.resolve('process/browser'),
       }),
       new webpack.DefinePlugin({
-        'import.meta.target': JSON.stringify(target),
-        'import.meta.renderer': JSON.stringify('client'),
         ...defineVars,
         ...runtimeDefineVars,
       }),
