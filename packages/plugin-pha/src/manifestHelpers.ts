@@ -278,9 +278,8 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
   if (routes && routes.length > 0) {
     manifest.pages = await Promise.all(routes.map(async (page) => {
       const pageManifest = await getPageManifest(page, options);
-
       // Set static dataloader to data_prefetch of page.
-      if (typeof page === 'string' && loadersConfig[page]) {
+      if (typeof page === 'string' && loadersConfig && loadersConfig[page]) {
         const staticPrefetches = [];
         if (Array.isArray(loadersConfig[page])) {
           loadersConfig[page].forEach(item => {
@@ -299,8 +298,8 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
         pageManifest.frames = await Promise.all(pageManifest.frames.map((frame) => getPageManifest(frame, options)));
         // Set static dataloader to data_prefetch of frames.
         pageManifest.frames.forEach(frame => {
-          const title = frame.title.toLocaleLowerCase();
-          if (typeof title === 'string' && loadersConfig[title.toLocaleLowerCase()]) {
+          const title = frame.title || '';
+          if (typeof title === 'string' && loadersConfig && loadersConfig[title.toLocaleLowerCase()]) {
             const staticPrefetches = [];
             if (Array.isArray(loadersConfig[title])) {
               loadersConfig[title].forEach(item => {
