@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "@ice/app": "workspace:*",
+    "@ice/stark-app": "^1.5.0",
     "@ice/plugin-icestark": "workspace:*",
     "@ice/runtime": "workspace:*",
     "react": "^18.0.0",

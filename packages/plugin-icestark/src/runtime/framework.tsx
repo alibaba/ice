@@ -37,23 +37,15 @@ const runtime: RuntimePlugin = ({ getAppRouter, setAppRouter, appContext }) => {
 
       function handleRouteChange(pathname: string, query: Record<string, string>, hash: string, routeType: string) {
         setRouteInfo({ pathname, query, hash, routeType });
-        console.log('first', { pathname, query, hash, routeType });
       }
 
       function handleAppLeave(config: AppConfig) {
-        console.log('config', config);
-        if (config.path) {
-          setAppLeave(config);
-        }
+        setAppLeave(config);
       }
 
       function handleAppEnter(config: AppConfig) {
-        console.log('config entry', config);
-        if (config.path) {
-          setAppEnter(config);
-        }
+        setAppEnter(config);
       }
-      console.log('apps', appInfo);
       return (
         <FrameworkLayout {...appInfo}>
           {apps && (
@@ -73,6 +65,7 @@ const runtime: RuntimePlugin = ({ getAppRouter, setAppRouter, appContext }) => {
               })}
               <AppRoute
                 path="/"
+                location={props.location}
                 render={() => {
                   return <OriginalRouter {...props} />;
                 }}

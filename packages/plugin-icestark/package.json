@@ -34,7 +34,7 @@
     }
   },
   "dependencies": {
-    "@ice/stark": "^2.0.0",
+    "@ice/stark": "^2.7.4",
     "@ice/stark-app": "^1.2.0"
   },
   "devDependencies": {

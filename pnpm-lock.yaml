@@ -229,6 +229,7 @@ importers:
       '@ice/app': workspace:*
       '@ice/plugin-icestark': workspace:*
       '@ice/runtime': workspace:*
+      '@ice/stark-app': ^1.5.0
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.2
       react: ^18.0.0
@@ -237,6 +238,7 @@ importers:
       '@ice/app': link:../../packages/ice
       '@ice/plugin-icestark': link:../../packages/plugin-icestark
       '@ice/runtime': link:../../packages/runtime
+      '@ice/stark-app': 1.5.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     devDependencies:
@@ -1102,12 +1104,12 @@ importers:
     specifiers:
       '@ice/app': ^3.0.0
       '@ice/runtime': ^1.0.0
-      '@ice/stark': ^2.0.0
+      '@ice/stark': ^2.7.4
       '@ice/stark-app': ^1.2.0
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
     dependencies:
-      '@ice/stark': 2.7.3
+      '@ice/stark': 2.7.4
       '@ice/stark-app': 1.5.0
     devDependencies:
       '@ice/app': link:../ice
@@ -4438,8 +4440,8 @@ packages:
     resolution: {integrity: sha512-9fuCri48eZj6TnfPkCju4vVLhGurz+mt6lFx4JQFHhnRBQ5MuiBqRZg5F/3vdnJ7dAYQJlCXmHlQtBHok82z+g==}
     dev: false
 
-  /@ice/stark/2.7.3:
-    resolution: {integrity: sha512-gNfVlrYI9UpZIJ88j4xC7Kk40uvPYGg43oYLxHEBQCJh1Vz6Gc3pu5juN+FVW/vpM1xFUftGlkaz8fjYai2xDQ==}
+  /@ice/stark/2.7.4:
+    resolution: {integrity: sha512-MSJv8GKMoFkrLpmqUupIHtnLS1oY9kk2QQlGnc9o4IVtuqLLHbE3cM23PwuZWlMsnR6Z1Enrli73Ry7c7KSaxA==}
     peerDependencies:
       react: '>=15.0.0'
     dependencies:
