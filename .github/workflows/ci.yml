@@ -26,6 +26,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: https://registry.npmjs.org/
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          run_install: false
       - name: Get pnpm store directory
         id: pnpm-cache
         run: |
@@ -37,8 +41,6 @@ jobs:
           key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-node-${{ matrix.node-version }}
-      - name: Install pnpm
-        run: npm i pnpm -g
       - run: npm run setup
       - run: npm run dependency:check
       - run: npm run lint
