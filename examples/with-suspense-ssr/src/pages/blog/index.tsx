@@ -1,4 +1,5 @@
 import { useData, Link } from 'ice';
+import styles from './index.module.css';
 
 export default function Blog() {
   const comments = useData();
@@ -7,7 +8,7 @@ export default function Blog() {
 
   return (
     <>
-      <h2>Comments</h2>
+      <h2 className={styles.title}>Comments</h2>
       {comments.map((comment, i) => (
         <p className="comment" key={i}>
           {comment}

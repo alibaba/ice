@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Suspense } from 'ice';
+import { Suspense, Link } from 'ice';
 import styles from './index.module.css';
 import * as Comments from '@/components/Comments';
 import * as Footer from '@/components/Footer';
@@ -13,6 +13,7 @@ export default function Home() {
       <Counter />
       <Suspense module={Comments} />
       <Suspense module={Footer} />
+      <Link to="/blog">link to blog</Link>
     </div>
   );
 }
