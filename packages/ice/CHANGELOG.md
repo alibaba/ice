@@ -4,6 +4,7 @@
 
 - [fix] remove dataLoaderFetcher api for init of dataLoader
 - [fix] incorrect dev url when enable hash router
+- [feat] optimize log
 
 ## v3.0.2
 

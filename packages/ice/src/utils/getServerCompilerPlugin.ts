@@ -35,6 +35,7 @@ function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Option
         mainFields: ['module', 'main'],
         outExtension: { '.js': isEsm ? '.mjs' : '.cjs' },
         metafile: true,
+        logLevel: 'silent', // The server compiler process will log it in debug.
       },
       {
         preBundle: format === 'esm' && (ssr || ssg),
