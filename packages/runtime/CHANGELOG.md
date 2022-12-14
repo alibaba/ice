@@ -1,5 +1,9 @@
 # @ice/runtime
 
+## v1.0.3
+
+- [feat] optimize log when load route module failed
+
 ## v1.0.2
 
 - [fix] window context merge order

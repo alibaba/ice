@@ -3,6 +3,7 @@
 ## 1.0.3
 
 - [fix] fix lanUrlForTerminal when dev start
+- [feat] optimize log
 
 ## 1.0.2
 
