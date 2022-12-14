@@ -3,11 +3,15 @@ module.exports = async function compilationLoader(source: string, map: any) {
   const callback = this.async();
   const { transform } = options;
 
-  const result = await transform(source, this.resourcePath);
-  if (result) {
-    const { code, map } = result;
-    callback(null, code, map);
-  } else {
-    callback(null, source, map);
+  try {
+    const result = await transform(source, this.resourcePath);
+    if (result) {
+      const { code, map } = result;
+      callback(null, code, map);
+    } else {
+      callback(null, source, map);
+    }
+  } catch (error) {
+    callback(error);
   }
 };

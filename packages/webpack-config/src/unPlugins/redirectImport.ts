@@ -95,7 +95,7 @@ export async function redirectImport(code: string, options: Options): Promise<st
   try {
     imports = parse(code)[0];
   } catch (e) {
-    consola.error('[parse error]', e);
+    consola.debug('[parse error]', e);
   }
   if (!imports.length) {
     return code;

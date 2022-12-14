@@ -87,7 +87,6 @@ interface AfterCommandCompileOptions {
 
 interface DevServerInfo {
   devPath: string;
-  hashChar: string;
 }
 
 export interface HookLifecycle {

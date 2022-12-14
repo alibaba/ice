@@ -147,7 +147,7 @@ export const getAppExportConfig = (rootDir: string) => {
         config.setCompiler(serverCompiler);
       } catch (error) {
         consola.error('Get app export config error.');
-        console.debug(error.stack);
+        consola.debug(error.stack);
       }
     },
     getAppConfig,
@@ -176,6 +176,7 @@ export const getRouteExportConfig = (rootDir: string) => {
   const loadersConfigFile = path.join(rootDir, RUNTIME_TMP_DIR, 'dataloader-config.ts');
   const getRouteConfigOutfile = () => formatPath(path.join(rootDir, RUNTIME_TMP_DIR, 'routes-config.bundle.mjs'));
   const getdataLoadersConfigOutfile = () => formatPath(path.join(rootDir, RUNTIME_TMP_DIR, 'dataloader-config.bundle.mjs'));
+  const cachedKey = `route_config_file_${process.env.__ICE_VERSION__}`;
 
   const routeConfig = new Config({
     entry: routeConfigFile,
@@ -185,7 +186,6 @@ export const getRouteExportConfig = (rootDir: string) => {
     transformInclude: (id) => id.includes('src/pages'),
     needRecompile: async (entry) => {
       let cached = false;
-      const cachedKey = `route_config_file_${process.env.__ICE_VERSION__}`;
       try {
         cached = await getCache(rootDir, cachedKey);
       } catch (err) { }
@@ -241,7 +241,10 @@ export const getRouteExportConfig = (rootDir: string) => {
 
   // ensure routes config is up to date.
   const ensureRoutesConfig = async () => {
-    await routeConfig.getConfigFile(['pageConfig']);
+    const configFile = await routeConfig.getConfigFile(['pageConfig']);
+    if (!configFile) {
+      setCache(rootDir, cachedKey, '');
+    }
   };
 
   routeExportConfig = {
@@ -252,7 +255,7 @@ export const getRouteExportConfig = (rootDir: string) => {
         dataloaderConfig.setCompiler(serverCompiler);
       } catch (error) {
         consola.error('Get route export config error.');
-        console.debug(error.stack);
+        consola.debug(error.stack);
       }
     },
     getRoutesConfig,

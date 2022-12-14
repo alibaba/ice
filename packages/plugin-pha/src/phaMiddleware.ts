@@ -32,7 +32,7 @@ const createPHAMiddleware = ({
       // Get serverEntry from middleware of server-compile.
       const { error, serverEntry } = await compileTask();
       if (error) {
-        consola.error('Server compile error in PHA middleware.');
+        consola.error('Server compile error in plugin-pha middleware.');
         return;
       }
       const [appConfig, routesConfig, loadersConfig] = await Promise.all([getAppConfig(['phaManifest']), getRoutesConfig(), getLoadersConfig()]);
