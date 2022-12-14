@@ -1,5 +1,10 @@
 # Changelog
 
+## v3.0.3
+
+- [fix] remove dataLoaderFetcher api for init of dataLoader
+- [fix] incorrect dev url when enable hash router
+
 ## v3.0.2
 
 - [fix] rule of page chunk name
