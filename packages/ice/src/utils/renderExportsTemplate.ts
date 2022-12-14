@@ -4,7 +4,6 @@ import type Generator from '../service/runtimeGenerator.js';
 
 type RenderData = {
   loaders: string;
-  routesConfig: string;
 } & Record<string, any>;
 
 function renderExportsTemplate(
