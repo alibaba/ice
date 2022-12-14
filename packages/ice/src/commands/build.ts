@@ -118,20 +118,6 @@ const build = async (
     });
   });
 
-  await applyHook('after.build.compile', {
-    stats,
-    isSuccessful,
-    messages,
-    taskConfigs,
-    webpackConfigs,
-    serverCompiler,
-    serverEntryRef,
-    output,
-    getAppConfig,
-    getRoutesConfig,
-    appConfig,
-  });
-
   const {
     ssg,
     output: {
@@ -156,7 +142,22 @@ const build = async (
     routeType: appConfig?.router?.type,
     distType,
   });
+  // This depends on orders.
   output.paths = [...outputPaths];
+
+  await applyHook('after.build.compile', {
+    stats,
+    isSuccessful,
+    messages,
+    taskConfigs,
+    webpackConfigs,
+    serverCompiler,
+    serverEntryRef,
+    output,
+    getAppConfig,
+    getRoutesConfig,
+    appConfig,
+  });
 
   await removeServerOutput(outputDir, userConfig.ssr);
 
