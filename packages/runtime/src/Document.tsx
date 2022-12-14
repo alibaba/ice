@@ -136,7 +136,7 @@ interface DataProps {
 
 // use app context separately
 export function Data(props: DataProps) {
-  const { routesData, documentOnly, matches, routesConfig, downgrade } = useAppContext();
+  const { routesData, documentOnly, matches, routesConfig, downgrade, renderMode } = useAppContext();
   const appData = useAppData();
   const {
     ScriptElement = 'script',
@@ -146,7 +146,7 @@ export function Data(props: DataProps) {
   const routePath = getCurrentRoutePath(matches);
   const windowContext: WindowContext = {
     appData,
-    routesData,
+    routesData: renderMode === 'SSG' ? null : routesData,
     routesConfig,
     routePath,
     downgrade,

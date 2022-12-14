@@ -47,9 +47,10 @@ export function loadDataByCustomFetcher(config) {
  */
 export function callDataLoader(dataLoader: DataLoaderConfig, requestContext): DataLoaderResult {
   if (Array.isArray(dataLoader)) {
-    return dataLoader.map(loader => {
+    const loaders = dataLoader.map(loader => {
       return typeof loader === 'object' ? loadDataByCustomFetcher(loader) : loader(requestContext);
     });
+    return Promise.all(loaders);
   }
 
   if (typeof dataLoader === 'object') {

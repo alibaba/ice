@@ -3,6 +3,8 @@
 ## v1.0.3
 
 - [revert] window context merge order
+- [fix] should call dataLoader when hydrate for SSG
+- [fix] pass dataLoader as list
 
 ## v1.0.2
 
