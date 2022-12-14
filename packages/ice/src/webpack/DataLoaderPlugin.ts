@@ -75,7 +75,6 @@ export default class DataLoaderPlugin {
             },
           );
           if (error) {
-            consola.error('Server compile error in DataLoaderPlugin.');
             consola.debug(error.stack);
           } else {
             compilation.emitAsset('js/data-loader.js', new RawSource(new TextDecoder('utf-8').decode(outputFiles[0].contents)));

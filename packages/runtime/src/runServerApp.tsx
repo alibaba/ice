@@ -166,6 +166,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     appData,
     routesData: null,
     routesConfig: null,
+    renderMode,
     assetsManifest,
     basename: finalBasename,
     matches: [],

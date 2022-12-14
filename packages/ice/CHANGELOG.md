@@ -5,6 +5,7 @@
 - [fix] remove dataLoaderFetcher api for init of dataLoader
 - [fix] incorrect dev url when enable hash router
 - [fix] no log when parse mock files failed
+- [feat] optimize log
 
 ## v3.0.2
 

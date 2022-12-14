@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+- [fix] did not catch error when transform code error
+
 ## 1.0.2
 
 - [fix] rule of page chunk name
