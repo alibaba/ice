@@ -16,8 +16,18 @@ interface Options {
   ensureRoutesConfig: () => Promise<void>;
   runtimeDefineVars: Record<string, string>;
 }
+
 function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Options) {
-  const { outputDir, rootDir, serverEntry, userConfig, dataCache, serverCompileTask, ensureRoutesConfig, runtimeDefineVars } = options;
+  const {
+    outputDir,
+    rootDir,
+    serverEntry,
+    userConfig,
+    dataCache,
+    serverCompileTask,
+    ensureRoutesConfig,
+    runtimeDefineVars,
+  } = options;
   const entryPoint = getServerEntry(rootDir, serverEntry);
   const { ssg, ssr, server: { format } } = userConfig;
   const isEsm = userConfig?.server?.format === 'esm';

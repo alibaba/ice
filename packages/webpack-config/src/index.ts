@@ -37,7 +37,7 @@ interface GetWebpackConfigOptions {
   userConfigHash: string;
   runtimeDefineVars?: Record<string, any>;
 }
-type GetWebpackConfig = (options: GetWebpackConfigOptions) => Configuration;
+
 enum JSMinifier {
   terser = 'terser',
   swc = 'swc',
@@ -62,7 +62,8 @@ function getEntry(rootDir: string, runtimeTmpDir: string) {
   };
 }
 
-const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeTmpDir, userConfigHash, runtimeDefineVars = {} }) => {
+export function getWebpackConfig(options: GetWebpackConfigOptions): Configuration {
+  const { rootDir, config, webpack, runtimeTmpDir, userConfigHash, runtimeDefineVars = {} } = options;
   const {
     mode,
     define = {},
@@ -415,7 +416,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
     .reduce((result, next: ModifyWebpackConfig<Configuration, typeof webpack>) => next(result, ctx), webpackConfig);
   consola.debug('[webpack]', finalWebpackConfig);
   return finalWebpackConfig;
-};
+}
 
 function getDevtoolValue(sourceMap: Config['sourceMap']) {
   if (typeof sourceMap === 'string') {
@@ -427,7 +428,4 @@ function getDevtoolValue(sourceMap: Config['sourceMap']) {
   return 'source-map';
 }
 
-export {
-  getWebpackConfig,
-  getCompilerPlugins,
-};
+export { getCompilerPlugins };
