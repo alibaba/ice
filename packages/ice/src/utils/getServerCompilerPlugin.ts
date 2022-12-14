@@ -28,10 +28,14 @@ function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Option
         outdir: path.join(outputDir, SERVER_OUTPUT_DIR),
         splitting: isEsm,
         format,
-        platform: 'node',
+        // When format set to esm and platform set to node,
+        // will cause error `Dynamic require of "XXX" is not supported`.
+        // https://github.com/evanw/esbuild/issues/1921
+        platform: isEsm ? 'browser' : 'node',
         mainFields: ['module', 'main'],
         outExtension: { '.js': isEsm ? '.mjs' : '.cjs' },
         metafile: true,
+        logLevel: 'silent', // The server compiler process will log it in debug.
       },
       {
         preBundle: format === 'esm' && (ssr || ssg),
