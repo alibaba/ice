@@ -1,6 +1,6 @@
 import { dataLoader } from '@ice/runtime';
 import * as app from '@/app';
-import loaders from './dataloader-config'
+import dataloaders from './dataloader-config'
 <% if(dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
 <% const staticModuleNames = []; -%>
 <% if (runtimeModules.length) { -%>
@@ -12,7 +12,10 @@ import loaders from './dataloader-config'
   <% }) -%>
 <% } -%>
 
-<% if(hasExportAppData) {-%>loaders['__app'] = app.dataLoader;<% } -%>
+const loaders = {
+  ...dataloaders,
+  <% if(hasExportAppData) {-%>__app: app.dataLoader,<% } -%>
+}
 
 <% if(!dataLoaderImport.imports) {-%>
 let fetcher = (options) => {
