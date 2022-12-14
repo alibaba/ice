@@ -1,3 +1,6 @@
+import { readFileSync } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { expect, test, describe, afterAll } from 'vitest';
 import { buildFixture, setupBrowser } from '../utils/build';
 import { startFixture, setupStartBrowser } from '../utils/start';
@@ -6,19 +9,15 @@ import type { Page } from '../utils/browser';
 const example = 'multi-target';
 
 describe(`build ${example}`, () => {
-  let page: Page = null;
   let browser = null;
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
   test('open /about', async () => {
     await buildFixture(example);
-    const res = await setupBrowser({ example, defaultHtml: 'about.html' });
 
-    page = res.page;
-    browser = res.browser;
-    // await page.waitForNavigation({waitUntil: 'domcontentloaded'})
+    const aboutFileContent = readFileSync(path.join(__dirname, `../../examples/${example}/build/about.html`), 'utf-8');
     // Compare text.
-    console.log('build', (await page.$$text('#about'))[0]);
-    expect((await page.$$text('#about'))[0]).contains('Target=web Renderer=server');
+    expect(aboutFileContent).contains('<div id="about">Target=<!-- -->web<!-- --> Renderer=<!-- -->server</div>');
   });
 
   afterAll(async () => {
