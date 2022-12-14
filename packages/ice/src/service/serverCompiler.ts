@@ -1,6 +1,6 @@
 import * as path from 'path';
 import consola from 'consola';
-import esbuild from 'esbuild';
+import { esbuild } from '@ice/bundles';
 import fse from 'fs-extra';
 import fg from 'fast-glob';
 import type { Config } from '@ice/webpack-config/esm/types';
@@ -104,9 +104,6 @@ export function createServerCompiler(options: Options) {
       }
     });
     const define = {
-      // ref: https://github.com/evanw/esbuild/blob/master/CHANGELOG.md#01117
-      // in esm, this in the global should be undefined. Set the following config to avoid warning
-      this: undefined,
       ...defineVars,
       ...runtimeDefineVars,
     };
@@ -188,8 +185,8 @@ export function createServerCompiler(options: Options) {
       };
     } catch (error) {
       consola.error('Server compile error.', `\nEntryPoints: ${JSON.stringify(buildOptions.entryPoints)}`);
-      consola.debug('Build options: ', buildOptions);
-      consola.debug(error.stack);
+      consola.error('Build options: ', buildOptions);
+      consola.error(error.stack);
       return {
         error: error as Error,
       };

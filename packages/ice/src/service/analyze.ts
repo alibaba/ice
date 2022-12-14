@@ -3,7 +3,7 @@ import { performance } from 'perf_hooks';
 import fs from 'fs-extra';
 import fg from 'fast-glob';
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
-import { transform, build } from 'esbuild';
+import { esbuild } from '@ice/bundles';
 import type { Loader, Plugin } from 'esbuild';
 import consola from 'consola';
 import type { TaskConfig } from 'build-scripts';
@@ -104,7 +104,7 @@ export async function analyzeImports(files: string[], options: Options) {
     try {
       if (loader) {
         // transform content first since es-module-lexer can't handle ts file
-        source = (await transform(source, { loader })).code;
+        source = (await esbuild.transform(source, { loader })).code;
       }
       await init;
       const imports = parse(source)[0];
@@ -172,7 +172,7 @@ export async function scanImports(entries: string[], options?: ScanOptions) {
   try {
     await Promise.all(
       entries.map((entry) =>
-        build({
+        esbuild.build({
           absWorkingDir: rootDir,
           write: false,
           entryPoints: [entry],
@@ -227,7 +227,7 @@ export async function getFileExports(options: FileOptions): Promise<CachedRouteE
   if (!cached || cached.hash !== fileHash) {
     try {
       // get route export by esbuild
-      const result = await build({
+      const result = await esbuild.build({
         loader: { '.js': 'jsx' },
         entryPoints: [filePath],
         platform: 'neutral',

@@ -1,7 +1,7 @@
 import type webpack from '@ice/bundles/compiled/webpack';
 import type { _Plugin, CommandArgs, TaskConfig } from 'build-scripts';
 import type { Configuration, Stats, WebpackOptionsNormalized } from '@ice/bundles/compiled/webpack';
-import type { BuildOptions, BuildResult } from 'esbuild';
+import type { esbuild } from '@ice/bundles';
 import type { NestedRouteManifest } from '@ice/route-manifest';
 import type { Config } from '@ice/webpack-config/esm/types';
 import type { AppConfig, AssetsManifest } from '@ice/runtime/esm/types';
@@ -12,7 +12,7 @@ type RemoveExport = (removeSource: string | string[]) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
 
 type ServerCompilerBuildOptions = Pick<
-  BuildOptions,
+  esbuild.BuildOptions,
   'write' |
   'target' |
   'minify' |
@@ -43,7 +43,7 @@ export type ServerCompiler = (
     redirectImports?: Config['redirectImports'];
     removeOutputs?: boolean;
   }
-) => Promise<Partial<BuildResult & { serverEntry: string; error: any }>>;
+) => Promise<Partial<esbuild.BuildResult & { serverEntry: string; error: any }>>;
 export type WatchEvent = [
   pattern: RegExp | string,
   event: (eventName: EventName, filePath: string) => void,

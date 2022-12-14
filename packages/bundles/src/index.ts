@@ -4,6 +4,7 @@ import postcss from 'postcss';
 import less from 'less';
 import sass from 'sass';
 import swc from '@swc/core';
+import esbuild from 'esbuild';
 
 const require = createRequire(import.meta.url);
 const swcPluginRemoveExport = require.resolve('@ice/swc-plugin-remove-export');
@@ -21,6 +22,8 @@ export {
   swcPluginKeepPlatform,
 
   coreJsPath,
+
+  esbuild,
 };
 
 export type { ProcessOptions } from 'postcss';

@@ -2,7 +2,9 @@ import path from 'path';
 import { createRequire } from 'module';
 import assert from 'assert';
 import fg from 'fast-glob';
-import { register } from 'esbuild-register/dist/node.js';
+import esbuildRegister from '@ice/bundles/compiled/esbuild-register/node.js';
+
+const { register } = esbuildRegister;
 
 const require = createRequire(import.meta.url);
 
