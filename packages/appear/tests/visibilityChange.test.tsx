@@ -13,7 +13,28 @@ describe('visibilytyChange', () => {
       function App() {
         return (<VisibilityChange
           onAppear={() => {
-            resolve();
+            resolve(true);
+          }}
+        >
+          <span>content</span>
+        </VisibilityChange>);
+      }
+
+      render(<App />);
+    });
+  });
+
+  it('child shold work with ref', () => {
+    return new Promise(resolve => {
+      function App() {
+        const ref = React.useRef(null);
+        React.useEffect(() => {
+          if (ref) {
+            resolve(true);
+          }
+        }, [ref]);
+        return (<VisibilityChange
+          onAppear={() => {
           }}
         >
           <span>content</span>
