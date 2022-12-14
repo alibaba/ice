@@ -1,5 +1,6 @@
 import { dataLoader } from '@ice/runtime';
 import * as app from '@/app';
+import loaders from './dataloader-config'
 <% if(dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
 <% const staticModuleNames = []; -%>
 <% if (runtimeModules.length) { -%>
@@ -9,12 +10,6 @@ import * as app from '@/app';
       <% staticModuleNames.push('module' + index) -%>
     <% } -%>
   <% }) -%>
-<% } -%>
-
-<% if (loaders) {-%>
-<%- loaders %>
-<% } else { -%>
-const loaders = {};
 <% } -%>
 
 <% if(hasExportAppData) {-%>loaders['__app'] = app.dataLoader;<% } -%>

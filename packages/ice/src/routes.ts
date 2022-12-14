@@ -35,17 +35,11 @@ export async function generateRoutesInfo(rootDir: string, routesConfig: UserConf
     routes,
     loaders: generateRouteConfig(routes, 'dataLoader', (str, imports) => {
       return imports.length > 0 ? `${str}
-const loaders = {
+export default {
   ${imports.map(([routeId, importKey]) => `'${routeId}': ${importKey},`).join('\n  ')}
 };` : '';
     }),
     routesConfig: generateRouteConfig(routes, 'pageConfig', (str, imports) => {
-      return `${str}
-export default {
-  ${imports.map(([routeId, importKey]) => `'${routeId}': ${importKey},`).join('\n  ')}
-};`;
-    }),
-    dataLoadersConfig: generateRouteConfig(routes, 'dataLoader', (str, imports) => {
       return `${str}
 export default {
   ${imports.map(([routeId, importKey]) => `'${routeId}': ${importKey},`).join('\n  ')}
