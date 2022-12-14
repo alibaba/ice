@@ -8,6 +8,7 @@ import type { StatsError, Stats } from 'webpack';
 import type { Config } from '@ice/webpack-config/esm/types';
 import type ora from '@ice/bundles/compiled/ora/index.js';
 import type { AppConfig } from '@ice/runtime/esm/types';
+import type { RenderMode } from '@ice/runtime';
 import type { ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI } from '../types/plugin.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
@@ -15,6 +16,7 @@ import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR, SERVER_OUTPU
 import emptyDir from '../utils/emptyDir.js';
 import type { UserConfig } from '../types/userConfig.js';
 import warnOnHashRouterEnabled from '../utils/warnOnHashRouterEnabled.js';
+import generateEntry from '../utils/generateEntry.js';
 
 const build = async (
   context: Context<Config, ExtendsPluginAPI>,
@@ -129,6 +131,32 @@ const build = async (
     getRoutesConfig,
     appConfig,
   });
+
+  const {
+    ssg,
+    output: {
+      distType,
+    },
+  } = userConfig;
+  let renderMode: RenderMode;
+  if (ssg) {
+    renderMode = 'SSG';
+  }
+  const serverOutfile = path.join(outputDir, SERVER_OUTPUT_DIR, `index${userConfig?.server?.format === 'esm' ? '.mjs' : '.cjs'}`);
+  serverEntryRef.current = serverOutfile;
+  const {
+    outputPaths = [],
+  } = await generateEntry({
+    rootDir,
+    outputDir,
+    entry: serverOutfile,
+    // only ssg need to generate the whole page html when build time.
+    documentOnly: !ssg,
+    renderMode,
+    routeType: appConfig?.router?.type,
+    distType,
+  });
+  output.paths = [...outputPaths];
 
   await removeServerOutput(outputDir, userConfig.ssr);
 

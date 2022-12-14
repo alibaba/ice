@@ -87,6 +87,35 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   const serverCompileTask = new ServerCompileTask();
 
+  // Register framework level API.
+  generatorAPI.addExport({
+    specifier: ['Link', 'Outlet', 'useParams', 'useSearchParams', 'useLocation', 'useNavigate'],
+    source: '@ice/runtime/router',
+  });
+
+  generatorAPI.addExport({
+    specifier: [
+      'defineAppConfig',
+      'useAppData',
+      'useData',
+      'useConfig',
+      'Meta',
+      'Title',
+      'Links',
+      'Scripts',
+      'Data',
+      'Main',
+      'history',
+      'KeepAliveOutlet',
+      'useMounted',
+      'ClientOnly',
+      'defineDataLoader',
+      'defineServerDataLoader',
+      'defineStaticDataLoader',
+    ],
+    source: '@ice/runtime',
+  });
+
   const { target = WEB } = commandArgs;
   const plugins = [];
 

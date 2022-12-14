@@ -1,0 +1,25 @@
+{
+  "name": "with-weex",
+  "version": "1.0.0",
+  "scripts": {
+    "start:web": "ice start",
+    "start:weex": "ice start --target weex",
+    "build": "npm run build:web && npm run build:weex",
+    "build:web": "ice build",
+    "build:weex": "ice build --target weex"
+  },
+  "description": "",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@ice/app": "workspace:*",
+    "@ice/plugin-rax-compat": "workspace:*",
+    "@ice/runtime": "workspace:*",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.2"
+  }
+}

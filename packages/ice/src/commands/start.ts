@@ -19,6 +19,7 @@ import prepareURLs from '../utils/prepareURLs.js';
 import createRenderMiddleware from '../middlewares/ssr/renderMiddleware.js';
 import createMockMiddleware from '../middlewares/mock/createMiddleware.js';
 import getRouterBasename from '../utils/getRouterBasename.js';
+import ServerCompilerPlugin from '../webpack/ServerCompilerPlugin';
 
 const { merge } = lodash;
 
@@ -66,8 +67,7 @@ const start = async (
     getRoutesConfig,
   };
 
-  const useDevServer = target === WEB;
-
+  const useDevServer = taskConfigs.reduce((prev, curr) => prev || curr.config.useDevServer, false);
   if (useDevServer) {
     return (await startDevServer({
       context,
