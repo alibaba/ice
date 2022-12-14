@@ -8,7 +8,7 @@ export default function Normal() {
 
   return (
     <div>
-      <h2>{data.title}</h2>
+      <h2>{data?.title}</h2>
       <p>This demo is without suspense.</p>
     </div>
   );
