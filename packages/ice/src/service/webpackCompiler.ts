@@ -4,7 +4,7 @@ import consola from 'consola';
 import type { TaskConfig, Context } from 'build-scripts';
 import type { Config } from '@ice/webpack-config/esm/types';
 import type webpack from 'webpack';
-import type { Urls, ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI } from '../types/plugin.js';
+import type { Urls, ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI, GetDataloaderConfig } from '../types/plugin.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 
 async function webpackCompiler(options: {
@@ -18,6 +18,7 @@ async function webpackCompiler(options: {
     serverCompiler: ServerCompiler;
     getAppConfig: GetAppConfig;
     getRoutesConfig: GetRoutesConfig;
+    getDataloaderConfig: GetDataloaderConfig;
   };
 }) {
   const {
@@ -82,8 +83,6 @@ async function webpackCompiler(options: {
       consola.warn(messages.warnings.join('\n'));
     }
     if (command === 'start') {
-      const appConfig = (await hooksAPI.getAppConfig()).default;
-      const hashChar = appConfig?.router?.type === 'hash' ? '#/' : '';
       // compiler.hooks.done is AsyncSeriesHook which does not support async function
       await applyHook('after.start.compile', {
         stats,
@@ -91,7 +90,6 @@ async function webpackCompiler(options: {
         isFirstCompile,
         urls,
         devUrlInfo: {
-          hashChar,
           devPath,
         },
         messages,

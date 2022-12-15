@@ -166,6 +166,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     appData,
     routesData: null,
     routesConfig: null,
+    renderMode,
     assetsManifest,
     basename: finalBasename,
     matches: [],
@@ -190,14 +191,14 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
   }
 
   const matches = matchRoutes(routes, location, finalBasename);
-  if (!matches.length) {
-    return render404();
-  }
+
 
   const routePath = getCurrentRoutePath(matches);
 
   if (documentOnly) {
     return renderDocument({ matches, routePath, renderOptions });
+  } else if (!matches.length) {
+    return render404();
   }
   try {
     const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));

@@ -2,6 +2,7 @@ import path from 'path';
 import { createRequire } from 'module';
 import assert from 'assert';
 import fg from 'fast-glob';
+import consola from 'consola';
 import { register } from 'esbuild-register/dist/node.js';
 
 const require = createRequire(import.meta.url);
@@ -41,8 +42,13 @@ export default function getConfigs(rootDir: string, exclude: string[] = []): Moc
   mockFiles.forEach(mockFile => {
     // disable require cache
     delete require.cache[mockFile];
-
-    const mockModule = require(mockFile);
+    let mockModule;
+    try {
+      mockModule = require(mockFile);
+    } catch (error) {
+      consola.error(`Failed to parse mock file ${mockFile}.\n${error.message}`);
+      return;
+    }
     const config = mockModule.default || mockModule || {};
     for (const key of Object.keys(config)) {
       const { method, path } = parseMockKey(key);

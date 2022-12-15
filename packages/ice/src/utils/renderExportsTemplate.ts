@@ -4,7 +4,6 @@ import type Generator from '../service/runtimeGenerator.js';
 
 type RenderData = {
   loaders: string;
-  routesConfig: string;
 } & Record<string, any>;
 
 function renderExportsTemplate(
@@ -22,6 +21,7 @@ function renderExportsTemplate(
   const renderList: [string, boolean][] = [
     ['data-loader.ts.ejs', dataLoader && (!!renderData.loaders || renderData.hasExportAppData)],
     ['routes-config.ts.ejs', !!renderData.routesConfig],
+    ['dataloader-config.ts.ejs', dataLoader && (!!renderData.loaders || renderData.hasExportAppData)],
   ];
 
   renderList.forEach(([filePath, needRender]) => {
