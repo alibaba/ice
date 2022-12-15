@@ -59,6 +59,7 @@ export interface Urls {
 
 export type GetAppConfig = (exportNames?: string[]) => Promise<any>;
 export type GetRoutesConfig = (specifyRoutId?: string) => Promise<any>;
+export type GetDataloaderConfig = (specifyRoutId?: string) => Promise<any>;
 
 interface BeforeCommandRunOptions {
   commandArgs: CommandArgs;
@@ -67,6 +68,7 @@ interface BeforeCommandRunOptions {
   urls?: Urls;
   getAppConfig: GetAppConfig;
   getRoutesConfig: GetRoutesConfig;
+  getDataloaderConfig: GetDataloaderConfig;
   serverCompiler: ServerCompiler;
 }
 

@@ -101,7 +101,7 @@ function loadInitialDataInClient(loaders: Loaders) {
  * Load initial data and register global loader.
  * In order to load data, JavaScript modules, CSS and other assets in parallel.
  */
-async function init(loadersConfig: Loaders, options: LoaderOptions) {
+async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
   const {
     fetcher,
     runtimeModules,
@@ -126,7 +126,7 @@ async function init(loadersConfig: Loaders, options: LoaderOptions) {
   }
 
   try {
-    loadInitialDataInClient(loadersConfig);
+    loadInitialDataInClient(dataloaderConfig);
   } catch (error) {
     console.error('Load initial data error: ', error);
   }
@@ -150,7 +150,7 @@ async function init(loadersConfig: Loaders, options: LoaderOptions) {
         return await value;
       }
 
-      const dataLoader = loadersConfig[id];
+      const dataLoader = dataloaderConfig[id];
 
       // No data loader.
       if (!dataLoader) {

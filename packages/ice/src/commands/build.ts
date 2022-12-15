@@ -8,7 +8,7 @@ import type { StatsError, Stats } from 'webpack';
 import type { Config } from '@ice/webpack-config/esm/types';
 import type ora from '@ice/bundles/compiled/ora/index.js';
 import type { AppConfig } from '@ice/runtime/esm/types';
-import type { ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI } from '../types/plugin.js';
+import type { ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI, GetDataloaderConfig } from '../types/plugin.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import { RUNTIME_TMP_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
@@ -25,6 +25,7 @@ const build = async (
     getAppConfig: GetAppConfig;
     appConfig: AppConfig;
     getRoutesConfig: GetRoutesConfig;
+    getDataloaderConfig: GetDataloaderConfig;
     userConfigHash: string;
     userConfig: UserConfig;
   },
@@ -36,6 +37,7 @@ const build = async (
     getAppConfig,
     appConfig,
     getRoutesConfig,
+    getDataloaderConfig,
     userConfigHash,
     userConfig,
   } = options;
@@ -60,6 +62,7 @@ const build = async (
     serverCompiler,
     getAppConfig,
     getRoutesConfig,
+    getDataloaderConfig,
   };
   const compiler = await webpackCompiler({
     context,
@@ -97,7 +100,7 @@ const build = async (
         reject(new Error(messages.errors.join('\n\n')));
         return;
       } else {
-        compiler?.close?.(() => {});
+        compiler?.close?.(() => { });
         const isSuccessful = !messages.errors.length;
         resolve({
           stats,
@@ -118,6 +121,7 @@ const build = async (
     serverEntryRef,
     getAppConfig,
     getRoutesConfig,
+    getDataloaderConfig,
     appConfig,
   });
 
