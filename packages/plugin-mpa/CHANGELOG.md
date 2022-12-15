@@ -1,5 +1,9 @@
 # changelog
 
+## 2.1.2
+
+- [feat] custom optimizeRuntime when build
+
 ## 2.1.1
 
 - [fix] additional analyze for auth
