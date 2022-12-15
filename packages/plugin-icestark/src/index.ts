@@ -12,7 +12,7 @@ const plugin: Plugin<PluginOptions> = ({ type, library }) => ({
     onGetConfig((config) => {
       config.configureWebpack ??= [];
       config.configureWebpack.push((webpackConfig) => {
-        if (type !== 'framework') {
+        if (type === 'child') {
           const { pkg } = context;
           webpackConfig.output.library = library || pkg.name as string || 'microApp';
           webpackConfig.output.libraryTarget = 'umd';
@@ -21,7 +21,7 @@ const plugin: Plugin<PluginOptions> = ({ type, library }) => ({
       });
       return config;
     });
-    if (type !== 'framework') {
+    if (type === 'child') {
       generator.addEntryCode(() => {
         return `
 if (!window.ICESTARK) {
