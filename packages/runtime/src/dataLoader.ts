@@ -1,4 +1,4 @@
-import type { DataLoaderConfig, DataLoaderResult, RuntimeModules, AppExport, RuntimePlugin, CommonJsRuntime } from './types.js';
+import type { DataLoaderConfig, DataLoaderResult, RuntimeModules, AppExport, StaticRuntimePlugin, CommonJsRuntime } from './types.js';
 import getRequestContext from './requestContext.js';
 
 interface Loaders {
@@ -116,7 +116,7 @@ async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
 
   if (runtimeModules) {
     await Promise.all(runtimeModules.map(module => {
-      const runtimeModule = (module as CommonJsRuntime).default || module as RuntimePlugin;
+      const runtimeModule = ((module as CommonJsRuntime).default || module) as StaticRuntimePlugin;
       return runtimeModule(runtimeApi);
     }).filter(Boolean));
   }

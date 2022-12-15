@@ -105,7 +105,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
 
   if (hydrate && !downgrade && !documentOnly) {
     runtime.setRender((container, element) => {
-      ReactDOM.hydrateRoot(container, element);
+      return ReactDOM.hydrateRoot(container, element);
     });
   }
   // Reset app context after app context is updated.
@@ -114,7 +114,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     await Promise.all(runtimeModules.commons.map(m => runtime.loadModule(m)).filter(Boolean));
   }
 
-  render({ runtime, history });
+  return render({ runtime, history });
 }
 
 interface RenderOptions {
@@ -125,7 +125,7 @@ interface RenderOptions {
 async function render({ history, runtime }: RenderOptions) {
   const appContext = runtime.getAppContext();
   const { appConfig, appData } = appContext;
-  const render = runtime.getRender();
+  const appRender = runtime.getRender();
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
   const RouteWrappers = runtime.getWrappers();
   const AppRouter = runtime.getAppRouter();
@@ -139,7 +139,7 @@ async function render({ history, runtime }: RenderOptions) {
     console.warn(`Root node #${rootId} is not found, current root is automatically created by the framework.`);
   }
 
-  render(
+  return appRender(
     root,
     <AppDataProvider value={appData}>
       <AppRuntimeProvider>

@@ -61,6 +61,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     command,
   });
 
+  let entryCode = 'render();';
+
   const generatorAPI = {
     addExport: (declarationData: DeclarationData) => {
       generator.addDeclaration('framework', declarationData);
@@ -79,6 +81,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     },
     addRenderFile: generator.addRenderFile,
     addRenderTemplate: generator.addTemplateFiles,
+    addEntryCode: (callback: (originalCode: string) => string) => {
+      entryCode = callback(entryCode);
+    },
     modifyRenderData: generator.modifyRenderData,
     addDataLoaderImport: (declarationData: DeclarationData) => {
       generator.addDeclaration('dataLoaderImport', declarationData);
@@ -177,6 +182,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     importCoreJs: polyfill === 'entry',
     // Enable react-router for web as default.
     enableRoutes: true,
+    entryCode,
   });
   dataCache.set('routes', JSON.stringify(routesInfo));
   dataCache.set('hasExportAppData', hasExportAppData ? 'true' : '');

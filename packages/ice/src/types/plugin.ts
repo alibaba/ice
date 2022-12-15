@@ -8,6 +8,7 @@ import type { AppConfig, AssetsManifest } from '@ice/runtime/esm/types';
 import type { DeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport, Render } from './generator.js';
 
 type AddExport = (exportData: DeclarationData) => void;
+type AddEntryCode = (callback: (code: string) => string) => void;
 type RemoveExport = (removeSource: string | string[]) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
 
@@ -120,6 +121,7 @@ export interface ExtendsPluginAPI {
     modifyRenderData: ModifyRenderData;
     render: Render;
     addDataLoaderImport: AddDataLoaderImport;
+    addEntryCode: AddEntryCode;
   };
   watch: {
     addEvent?: (watchEvent: WatchEvent) => void;
