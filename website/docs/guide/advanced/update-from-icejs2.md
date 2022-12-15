@@ -27,25 +27,23 @@ title: 从 ice.js 2.x 升级
 - build-plugin-fusion -> @ice/plugin-fusion (多主题能力暂不支持)
 - build-plugin-antd -> @ice/plugin-antd
 - build-plugin-css-assets-local -> @ice/plugin-css-assets-local
-- build-plugin-jsx-plus -> @ice/plugin-jsx-plus
-- build-plugin-keep-alive 不再支持，有 ice.js 3.0 的 keep alive 方案替代
+- build-plugin-jsx-plus -> @ice/plugin-jsx-plus [文档](../advanced/jsx-plus.md)
+- build-plugin-keep-alive 不再支持，有 ice.js 3.0 的 [keep alive 方案](../advanced/keep-alive.md)替代
 
 插件使用方式变更为函数调用：
 
-```ts
-
+```ts title="ice.config.mts"
 import { defineConfig } from '@ice/app';
-import { def } from '@ali/ice-plugin-def';
+import jsxPlus from '@ice/plugin-jsx-plus';
 
-export default defineConfig({
-  // Set your configs here.
+export default defineConfig(() => ({
   plugins: [
-    def(),
+    jsxPlus(),
   ],
-});
+}));
 ```
 
-> 完成依赖升级后推荐重新安装依赖，即执行 tnpm update
+> 完成依赖升级后推荐重新安装依赖，即执行 npm update
 
 ### 工程配置文件升级
 
@@ -96,17 +94,15 @@ export default defineConfig({
 | disableRuntime | ❌ | - |
 | babelPlugins / babelPresets / webpackPlugins / webpackLoaders | ❌ | 不推荐直接配置 |
 
-ice.js 新版本中不再支持 vite 模式，并且 webpack 相关的快捷配置也不再支持。我们将会将内置的逻辑做到最优。如果存在 webpack 定制需求，可以参考如下自定义方式定制：
+ice.js 3 新版本中不再支持 vite 模式，并且 webpack 相关的快捷配置也不再支持。我们将会将内置的逻辑做到最优。如果存在 webpack 定制需求，可以参考如下自定义方式定制：
 
-```js
-// ice.config.mts 文件中
-
+```js title="ice.config.mts"
 import { defineConfig } from '@ice/app';
 import { modifyLoader } from '@ice/webpack-modify';
 
-export default defineConfig({
+export default defineConfig(() => ({
   // Set your configs here.
-  ...
+  // ...
   webpack: (webpackConfig) => {
     if (typeof webpackConfig.devServer?.client === 'object') {
       // 修改 webpack 配置
@@ -114,21 +110,20 @@ export default defineConfig({
     }
 
     // 修改内置的 webpack 规则，借助官方工具可以更便捷的修改
-	// 修改 css 样式规则下的 postcss-loader 配置项
+    // 修改 css 样式规则下的 postcss-loader 配置项
     return modifyLoader(webpackConfig, {
-		rule: '.css',
-		loader: 'postcss-loader',
-		options: (originOptions) => ({}),
-	});
+    rule: '.css',
+    loader: 'postcss-loader',
+    options: (originOptions) => ({}),
+  });
   }
-});
+}));
 ```
 
-其他新版配置参考：[链接](../basic/config)
-新版插件规范：[链接](../plugins/plugin-dev)
+其他新版配置参考：[链接](../basic/config.md)
+新版插件规范：[链接](../plugins/plugin-dev.md)
 
 > 新版的 webpack 配置不再依赖 webpack-chain，如果有定制 webpack 的诉求可以直接通过 webpack-merge 的方式合并配置
-
 
 ### 常见配置迁移
 
@@ -136,108 +131,98 @@ export default defineConfig({
 
 #### cssLoaderOptions
 
-```js
-// ice.config.mts 文件中
-
+```js title="ice.config.mts"
 import { defineConfig } from '@ice/app';
 import { modifyLoader } from '@ice/webpack-modify';
 
-export default defineConfig({
+export default defineConfig(() => ({
   // Set your configs here.
-  ...
+  // ...
   webpack: (webpackConfig) => {
     return ['css', 'less', 'sass'].reduce((acc, cur) => {
       return modifyLoader(acc, {
         rule: `.${cur}`,
-		loader: 'css-loader',
-		options: (originOptions) => ({}),
+        loader: 'css-loader',
+        options: (originOptions) => ({}),
       });
     }, webpackConfig);
-  }
-});
+  },
+}));
 ```
 
 #### lessLoaderOptions
 
-```js
-// ice.config.mts 文件中
-
+```js title="ice.config.mts"
 import { defineConfig } from '@ice/app';
 import { modifyLoader } from '@ice/webpack-modify';
 
-export default defineConfig({
+export default defineConfig(() => ({
   // Set your configs here.
-  ...
+  // ...
   webpack: (webpackConfig) => {
     return modifyLoader(webpackConfig, {
-		rule: '.less',
-		loader: 'less-loader',
-		options: (originOptions) => ({}),
-  	});
-  }
-});
+      rule: '.less',
+      loader: 'less-loader',
+      options: (originOptions) => ({}),
+    });
+  },
+}));
 ```
 
 #### sassLoaderOptions
 
 
-```js
-// ice.config.mts 文件中
-
+```js title="ice.config.mts"
 import { defineConfig } from '@ice/app';
 import { modifyLoader } from '@ice/webpack-modify';
 
-export default defineConfig({
+export default defineConfig(() => ({
   // Set your configs here.
   ...
   webpack: (webpackConfig) => {
     return modifyLoader(webpackConfig, {
-		rule: '.sass',
-		loader: 'sass-loader',
-		options: (originOptions) => ({}),
-  	});
+      rule: '.sass',
+      loader: 'sass-loader',
+      options: (originOptions) => ({}),
+    });
   }
-});
+}));
 ```
 
 #### postcssOptions / postcssrc
 
-```js
-// ice.config.mts 文件中
-
+```js title="ice.config.mts"
 import { defineConfig } from '@ice/app';
 import { modifyLoader } from '@ice/webpack-modify';
 
-export default defineConfig({
+export default defineConfig(() => ({
   // Set your configs here.
-  ...
+  // ...
   webpack: (webpackConfig) => {
     return ['css', 'less', 'sass'].reduce((acc, cur) => {
       return modifyLoader(acc, {
         rule: `.${cur}`,
-		loader: 'postcss-loader',
-		options: (originOptions) => ({}),
+        loader: 'postcss-loader',
+        options: (originOptions) => ({}),
       });
     }, webpackConfig);
-  }
-});
+  },
+}));
 ```
 
 > 如果希望使用 postcssrc 能力，将 options 配置成如上空对象即可
 
 #### webpackPlugins
 
-```js
-// ice.config.mts 文件中
-
+```js title="ice.config.mts"
 import { defineConfig } from '@ice/app';
 import { removePlugin } from '@ice/webpack-modify';
 
-export default defineConfig({
+export default defineConfig(() => ({
   // Set your configs here.
-  ...
+  // ...
   webpack: (webpackConfig) => {
-	let modifiedConfig = webpackConfig;
+    let modifiedConfig = webpackConfig;
     // 添加插件
     webpackConfig.plugins.push(new WebpackPlugin());
     // webpack 插件修改，先删除插件在重新添加
@@ -246,22 +231,20 @@ export default defineConfig({
     });
     webpackConfig.plugins.push(new AssetsManifestPlugin());
   }
-});
+}));
 ```
 
 #### webpackLoaders
 
-```js
-// ice.config.mts 文件中
-
+```js title="ice.config.mts"
 import { defineConfig } from '@ice/app';
 import { addLoader, modifyLoader, removeLoader } from '@ice/webpack-modify';
 
-export default defineConfig({
+export default defineConfig(() => ({
   // Set your configs here.
-  ...
+  //...
   webpack: (webpackConfig) => {
-	let modifiedConfig = webpackConfig;
+    let modifiedConfig = webpackConfig;
     // 为 css 规则添加 loader
     modifiedConfig = addLoader(modifiedConfig, {
       rule: '.css',
@@ -280,36 +263,34 @@ export default defineConfig({
       rule: '.css',
       loader: 'css-loader',
       options: () => ({ module: true }),
-    }))
+    });
     return modifiedConfig;
-  }
-});
+  },
+}));
 ```
 
 #### babelPlugins / babelPresets
 
 框架内置不再支持 babel 转换，一些常见语法转化逻辑已内置，如果存在定制 babel 插件的情况下，推荐以下方式转化
 
-```js
-// ice.config.mts 文件中
-
+```js title="ice.config.mts"
 import { defineConfig } from '@ice/app';
 import { modifyLoader } from '@ice/webpack-modify';
 
-export default defineConfig({
+export default defineConfig(() => ({
   // Set your configs here.
-  ...
+  // ...
   transform: async (source, id) => {
     // 过滤条件
     if (id.match(/\.(j|t)s(x)?$/) && !id.includes('node_modules')) {
-	  // 借助 babel 编译
+    // 借助 babel 编译
       const { code, map } = transformSync(source, {
         plugins: ['transform-decorators-legacy'],
       });
       return { code, map };
     }
   },
-});
+}));
 ```
 
 ### 运行时修改
@@ -330,27 +311,26 @@ const appConfing = {};
 ```ts
 import { defineAppConfig } from 'ice';
 
-export default defineAppConfig({
+export default defineAppConfig(() => ({
   app: {
-    strict: true,
+    strict: false,
   },
-});
+}));
 ```
 
-原 appConfig 上大部分能力均通过不同的插件进行承载，目前应用入口能力，请参考[文档](../basic/app#%E9%85%8D%E7%BD%AE%E9%A1%B9)
+原 appConfig 上大部分能力均通过不同的插件进行承载，目前应用入口能力，请参考[文档](../basic/app.md#%E9%85%8D%E7%BD%AE%E9%A1%B9)
 
 
 #### 路由修改
 
-为了提供更好的框架能力，新版 ice 默认提供的路由规则为[约定式路由](../basic/router)
+为了提供更好的框架能力，新版 ice 默认提供的路由规则为[约定式路由](../basic/router.md)
 
 原配置式路由推荐通过上述的规则重新组织目录结构，如果路由过于复杂，推荐如下方式进行迁移：
 
-```js
-// ice.config.mts
+```js title="ice.config.mts"
 import { defineConfig } from '@ice/app';
 
-export default defineConfig({
+export default defineConfig(() => ({
   routes: {
     // 忽略所有约定式规则
     ignoreFiles: ['**'],
@@ -363,7 +343,7 @@ export default defineConfig({
       });
     },
   },
-});
+}));
 ```
 
 ### 进阶方案迁移
@@ -382,14 +362,14 @@ $ npm i @ice/plugin-store -D
 import { defineConfig } from '@ice/app';
 import store from '@ice/plugin-store';
 
-export default defineConfig({
+export default defineConfig(() => ({
   plugins: [
     store({ resetPageState: true }),
   ],
-});
+}));
 ```
 
-更多用法参考[状态管理](./store)
+更多用法参考[状态管理](./store.md)
 
 #### 数据请求
 
@@ -405,11 +385,11 @@ $ npm i @ice/plugin-request -D
 import { defineConfig } from '@ice/app';
 import request from '@ice/plugin-request';
 
-export default defineConfig({
+export default defineConfig(() => ({
   plugins: [
     request(),
   ],
-});
+}));
 ```
 
 在 `src/app.ts` 中导出统一的请求配置：
@@ -420,7 +400,7 @@ export const requestConfig = {
 };
 ```
 
-更多配置和用法参考[网络请求](./request)
+更多配置和用法参考[网络请求](./request.md)
 
 #### 权限方案
 
@@ -436,11 +416,11 @@ $ npm i @ice/plugin-auth -D
 import { defineConfig } from '@ice/app';
 import auth from '@ice/plugin-auth';
 
-export default defineConfig({
+export default defineConfig(() => ({
   plugins: [
     auth(),
   ],
-});
+}));
 ```
 
 在 `src/app.ts` 中导出的权限配置：
@@ -451,4 +431,4 @@ export const authConfig = {
 };
 ```
 
-更多配置和用法参考[权限管理](./auth)
+更多配置和用法参考[权限管理](./auth.md)
