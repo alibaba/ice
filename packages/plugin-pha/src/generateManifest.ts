@@ -41,7 +41,7 @@ export default async function generateManifest({
   getDataloaderConfig,
   compiler,
 }: Options) {
-  const [appConfig, routesConfig, loadersConfig] = await Promise.all([getAppConfig(['phaManifest']), getRoutesConfig(), getDataloaderConfig()]);
+  const [appConfig, routesConfig, dataloaderConfig] = await Promise.all([getAppConfig(['phaManifest']), getRoutesConfig(), getDataloaderConfig()]);
   let manifest = appConfig.phaManifest;
   const appWorkerPath = getAppWorkerUrl(manifest, path.join(rootDir, 'src'));
   if (appWorkerPath) {
@@ -53,7 +53,7 @@ export default async function generateManifest({
     });
   }
   const phaManifest = await parseManifest(manifest, {
-    loadersConfig,
+    dataloaderConfig,
     ...parseOptions,
     routesConfig,
   } as ParseOptions);

@@ -259,7 +259,7 @@ export const getRouteExportConfig = (rootDir: string) => {
       }
     },
     getRoutesConfig,
-    getLoadersConfig,
+    getDataloaderConfig,
     ensureRoutesConfig,
     reCompile: routeConfig.reCompile,
   };

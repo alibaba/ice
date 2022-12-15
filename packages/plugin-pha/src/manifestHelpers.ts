@@ -24,7 +24,7 @@ export interface ParseOptions {
   template?: boolean;
   urlSuffix?: string;
   ssr?: boolean;
-  loadersConfig?: object | Function | Array<object | Function>;
+  dataloaderConfig?: object | Function | Array<object | Function>;
 }
 
 interface TabConfig {
@@ -252,7 +252,7 @@ export function rewriteAppWorker(manifest: Manifest): Manifest {
 export async function parseManifest(manifest: Manifest, options: ParseOptions): Promise<PHAManifest> {
   const {
     publicPath,
-    loadersConfig,
+    dataloaderConfig,
   } = options;
   const { appWorker, tabBar, routes } = manifest;
 
@@ -279,17 +279,17 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
     manifest.pages = await Promise.all(routes.map(async (page) => {
       const pageManifest = await getPageManifest(page, options);
       // Set static dataloader to data_prefetch of page.
-      if (typeof page === 'string' && loadersConfig && loadersConfig[page]) {
+      if (typeof page === 'string' && dataloaderConfig && dataloaderConfig[page]) {
         const staticPrefetches = [];
-        if (Array.isArray(loadersConfig[page])) {
-          loadersConfig[page].forEach(item => {
+        if (Array.isArray(dataloaderConfig[page])) {
+          dataloaderConfig[page].forEach(item => {
             if (typeof item === 'object') {
               staticPrefetches.push(item);
             }
           });
-        } else if (typeof loadersConfig[page] === 'object') {
+        } else if (typeof dataloaderConfig[page] === 'object') {
           // Single prefetch loader config.
-          staticPrefetches.push(loadersConfig[page]);
+          staticPrefetches.push(dataloaderConfig[page]);
         }
         pageManifest.data_prefetch = [...(pageManifest.data_prefetch || []), ...staticPrefetches];
       }
@@ -299,17 +299,17 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
         // Set static dataloader to data_prefetch of frames.
         pageManifest.frames.forEach(frame => {
           const title = frame.title || '';
-          if (typeof title === 'string' && loadersConfig && loadersConfig[title.toLocaleLowerCase()]) {
+          if (typeof title === 'string' && dataloaderConfig && dataloaderConfig[title.toLocaleLowerCase()]) {
             const staticPrefetches = [];
-            if (Array.isArray(loadersConfig[title])) {
-              loadersConfig[title].forEach(item => {
+            if (Array.isArray(dataloaderConfig[title])) {
+              dataloaderConfig[title].forEach(item => {
                 if (typeof item === 'object') {
                   staticPrefetches.push(item);
                 }
               });
-            } else if (typeof loadersConfig[title] === 'object') {
+            } else if (typeof dataloaderConfig[title] === 'object') {
               // Single prefetch loader config.
-              staticPrefetches.push(loadersConfig[title]);
+              staticPrefetches.push(dataloaderConfig[title]);
             }
 
             frame.data_prefetch = [...(frame.data_prefetch || []), ...staticPrefetches];

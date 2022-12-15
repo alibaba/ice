@@ -35,7 +35,7 @@ const createPHAMiddleware = ({
         consola.error('Server compile error in plugin-pha middleware.');
         return;
       }
-      const [appConfig, routesConfig, loadersConfig] = await Promise.all([getAppConfig(['phaManifest']), getRoutesConfig(), getDataloaderConfig()]);
+      const [appConfig, routesConfig, dataloaderConfig] = await Promise.all([getAppConfig(['phaManifest']), getRoutesConfig(), getDataloaderConfig()]);
       let manifest: Manifest = appConfig.phaManifest;
       const appWorkerPath = getAppWorkerUrl(manifest, path.join(rootDir, 'src'));
       if (appWorkerPath) {
@@ -56,7 +56,7 @@ const createPHAMiddleware = ({
       const phaManifest = await parseManifest(manifest, {
         ...parseOptions,
         routesConfig,
-        loadersConfig,
+        dataloaderConfig,
         serverEntry: serverEntry,
       } as ParseOptions);
       if (!phaManifest?.tab_bar) {

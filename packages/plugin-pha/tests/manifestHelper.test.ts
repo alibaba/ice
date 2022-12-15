@@ -477,7 +477,7 @@ describe('parse manifest', async () => {
 
     const manifest = await parseManifest(phaManifest, {
       ...options,
-      loadersConfig: {
+      dataloaderConfig: {
         home: [
           () => {
             return new Promise((resolve) => {
