@@ -11,7 +11,7 @@ import WebpackDevServer from '@ice/bundles/compiled/webpack-dev-server/lib/Serve
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import { getWebpackConfig } from '@ice/webpack-config';
-import type { ExtendsPluginAPI, ServerCompiler, GetAppConfig, GetRoutesConfig, GetLoadersConfig } from '../types';
+import type { ExtendsPluginAPI, ServerCompiler, GetAppConfig, GetRoutesConfig, GetDataloaderConfig } from '../types';
 import { ROUTER_MANIFEST, RUNTIME_TMP_DIR, WEB } from '../constant.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
@@ -32,7 +32,7 @@ const start = async (
     spinner: ora.Ora;
     getAppConfig: GetAppConfig;
     getRoutesConfig: GetRoutesConfig;
-    getLoadersConfig: GetLoadersConfig;
+    getDataloaderConfig: GetDataloaderConfig;
     userConfigHash: string;
   },
 ) => {
@@ -44,7 +44,7 @@ const start = async (
     spinner,
     getAppConfig,
     getRoutesConfig,
-    getLoadersConfig,
+    getDataloaderConfig,
     userConfigHash,
   } = options;
   const { commandArgs, rootDir } = context;
@@ -62,7 +62,7 @@ const start = async (
     serverCompiler,
     getAppConfig,
     getRoutesConfig,
-    getLoadersConfig,
+    getDataloaderConfig,
   };
 
   const useDevServer = platform === WEB;
@@ -97,7 +97,7 @@ interface StartDevServerOptions {
     serverCompiler: ServerCompiler;
     getAppConfig: GetAppConfig;
     getRoutesConfig: GetRoutesConfig;
-    getLoadersConfig: GetLoadersConfig;
+    getDataloaderConfig: GetDataloaderConfig;
   };
   appConfig: AppConfig;
   devPath: string;

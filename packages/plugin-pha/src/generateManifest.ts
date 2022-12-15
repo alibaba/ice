@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import type { GetAppConfig, GetLoadersConfig, GetRoutesConfig, ServerCompiler } from '@ice/app/esm/types';
+import type { GetAppConfig, GetDataloaderConfig, GetRoutesConfig, ServerCompiler } from '@ice/app/esm/types';
 import { parseManifest, rewriteAppWorker, getAppWorkerUrl, getMultipleManifest, type ParseOptions } from './manifestHelpers.js';
 import type { Compiler } from './index.js';
 
@@ -11,7 +11,7 @@ export interface Options {
   compiler: Compiler;
   getAppConfig: GetAppConfig;
   getRoutesConfig: GetRoutesConfig;
-  getLoadersConfig: GetLoadersConfig;
+  getDataloaderConfig: GetDataloaderConfig;
   compileTask?: () => ReturnType<ServerCompiler>;
 }
 
@@ -38,10 +38,10 @@ export default async function generateManifest({
   parseOptions,
   getAppConfig,
   getRoutesConfig,
-  getLoadersConfig,
+  getDataloaderConfig,
   compiler,
 }: Options) {
-  const [appConfig, routesConfig, loadersConfig] = await Promise.all([getAppConfig(['phaManifest']), getRoutesConfig(), getLoadersConfig()]);
+  const [appConfig, routesConfig, loadersConfig] = await Promise.all([getAppConfig(['phaManifest']), getRoutesConfig(), getDataloaderConfig()]);
   let manifest = appConfig.phaManifest;
   const appWorkerPath = getAppWorkerUrl(manifest, path.join(rootDir, 'src'));
   if (appWorkerPath) {

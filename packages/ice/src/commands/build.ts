@@ -8,7 +8,7 @@ import type { StatsError, Stats } from 'webpack';
 import type { Config } from '@ice/webpack-config/esm/types';
 import type ora from '@ice/bundles/compiled/ora/index.js';
 import type { AppConfig } from '@ice/runtime/esm/types';
-import type { ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI, GetLoadersConfig } from '../types/plugin.js';
+import type { ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI, GetDataloaderConfig } from '../types/plugin.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import { RUNTIME_TMP_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
@@ -25,7 +25,7 @@ const build = async (
     getAppConfig: GetAppConfig;
     appConfig: AppConfig;
     getRoutesConfig: GetRoutesConfig;
-    getLoadersConfig: GetLoadersConfig;
+    getDataloaderConfig: GetDataloaderConfig;
     userConfigHash: string;
     userConfig: UserConfig;
   },
@@ -37,7 +37,7 @@ const build = async (
     getAppConfig,
     appConfig,
     getRoutesConfig,
-    getLoadersConfig,
+    getDataloaderConfig,
     userConfigHash,
     userConfig,
   } = options;
@@ -62,7 +62,7 @@ const build = async (
     serverCompiler,
     getAppConfig,
     getRoutesConfig,
-    getLoadersConfig,
+    getDataloaderConfig,
   };
   const compiler = await webpackCompiler({
     context,
@@ -121,7 +121,7 @@ const build = async (
     serverEntryRef,
     getAppConfig,
     getRoutesConfig,
-    getLoadersConfig,
+    getDataloaderConfig,
     appConfig,
   });
 

@@ -159,7 +159,7 @@ export const getAppExportConfig = (rootDir: string) => {
 type RouteExportConfig = {
   init: (serverCompiler: ServerCompiler) => void;
   getRoutesConfig: (specifyRoutId?: string) => undefined | Promise<Record<string, any>>;
-  getLoadersConfig: (specifyRoutId?: string) => undefined | Promise<Record<string, any>>;
+  getDataloaderConfig: (specifyRoutId?: string) => undefined | Promise<Record<string, any>>;
   reCompile: (taskKey: string) => void;
   ensureRoutesConfig: () => Promise<void>;
 };
@@ -230,7 +230,7 @@ export const getRouteExportConfig = (rootDir: string) => {
     return specifyRoutId ? res[specifyRoutId] : res;
   };
 
-  const getLoadersConfig = async (specifyRoutId?: string) => {
+  const getDataloaderConfig = async (specifyRoutId?: string) => {
     // Loaders config file may be removed after file changed.
     if (!fs.existsSync(loadersConfigFile)) {
       return undefined;

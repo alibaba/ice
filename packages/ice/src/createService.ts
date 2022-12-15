@@ -118,7 +118,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const runtimeModules = getRuntimeModules(plugins);
 
   const { getAppConfig, init: initAppConfigCompiler } = getAppExportConfig(rootDir);
-  const { getRoutesConfig, getLoadersConfig, init: initRouteConfigCompiler } = getRouteExportConfig(rootDir);
+  const { getRoutesConfig, getDataloaderConfig, init: initRouteConfigCompiler } = getRouteExportConfig(rootDir);
 
   // register config
   ['userConfig', 'cliOption'].forEach((configType) => {
@@ -258,7 +258,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             taskConfigs,
             serverCompiler,
             getRoutesConfig,
-            getLoadersConfig,
+            getDataloaderConfig,
             getAppConfig,
             appConfig,
             devPath: (routePaths[0] || '').replace(/^[/\\]/, ''),
@@ -268,7 +268,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         } else if (command === 'build') {
           return await build(ctx, {
             getRoutesConfig,
-            getLoadersConfig,
+            getDataloaderConfig,
             getAppConfig,
             appConfig,
             taskConfigs,
