@@ -1,4 +1,4 @@
-import * as createTestServer from '../createTestServer';
+import * as createTestServer from './createTestServer';
 import request from '../template/request';
 
 const MOCK_DATA = {
