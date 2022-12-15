@@ -8,12 +8,7 @@ const runtime: RuntimePlugin = ({ getAppRouter, setAppRouter, appContext }) => {
   const { appExport, appData } = appContext;
   const OriginalRouter = getAppRouter();
   const { layout, getApps, appRouter } = appExport?.icestark || {};
-  if (!getApps) {
-    console.warn(`
-      [plugin-icestark]: appConfig.icestark.getApps should be not empty if this is an framework app.
-      see https://ice.work/docs/guide/advanced/icestark/
-    `);
-  } else {
+  if (getApps) {
     const FrameworkRouter = (props: AppRouterProps) => {
       const [routeInfo, setRouteInfo] = useState<RouteInfo>({});
       const [appEnter, setAppEnter] = useState<AppConfig>({});
@@ -76,6 +71,11 @@ const runtime: RuntimePlugin = ({ getAppRouter, setAppRouter, appContext }) => {
       );
     };
     setAppRouter(FrameworkRouter);
+  } else {
+    console.warn(`
+      [plugin-icestark]: appConfig.icestark.getApps should be not empty if this is an framework app.
+      see https://ice.work/docs/guide/advanced/icestark/
+    `);
   }
 };
 
