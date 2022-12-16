@@ -1,4 +1,4 @@
-import * as createTestServer from 'create-test-server';
+import * as createTestServer from './createTestServer';
 import { act, renderHook } from '@testing-library/react-hooks';
 import useRequest from '../template/useRequest';
 

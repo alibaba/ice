@@ -4820,7 +4820,7 @@ cosmiconfig@^7.0.0:
 create-cert@^1.0.2:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/create-cert/-/create-cert-1.0.6.tgz#7ed01fff7f9f0cea500aba5eff119af4c8de84f6"
-  integrity sha1-ftAf/3+fDOpQCrpe/xGa9MjehPY=
+  integrity sha512-jOVt/HWAWhFFlt3H8TrnlAfvZMUoVf4XjvZqLxZ1Yzy+VTEm/rTgnfliKs3yioYENs9mNoHRWZQKAmVSrHfESw==
   dependencies:
     pem "^1.9.7"
     pify "^3.0.0"
@@ -10796,9 +10796,9 @@ path-type@^4.0.0:
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
 
 pem@^1.9.7:
-  version "1.14.4"
-  resolved "https://registry.yarnpkg.com/pem/-/pem-1.14.4.tgz#a68c70c6e751ccc5b3b5bcd7af78b0aec1177ff9"
-  integrity sha512-v8lH3NpirgiEmbOqhx0vwQTxwi0ExsiWBGYh0jYNq7K6mQuO4gI6UEFlr6fLAdv9TPXRt6GqiwE37puQdIDS8g==
+  version "1.14.6"
+  resolved "https://registry.yarnpkg.com/pem/-/pem-1.14.6.tgz#89babca3a73466fb844df70666dbf1b25eb0dc56"
+  integrity sha512-I5GKUer2PPv5qzUfxaZ6IGRkhp+357Kyv2t1JJg9vP8hGGI13qU34N2QupmggbpIZGPuudH0jn8KU5hjFpPk3g==
   dependencies:
     es6-promisify "^6.0.0"
     md5 "^2.2.1"
