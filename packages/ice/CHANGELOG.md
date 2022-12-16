@@ -2,8 +2,11 @@
 
 ## v3.0.3
 
+- [feat] support `generator.addEntryCode` for add code in entry file
 - [fix] remove dataLoaderFetcher api for init of dataLoader
 - [fix] incorrect dev url when enable hash router
+- [fix] no log when parse mock files failed
+- [feat] optimize log
 
 ## v3.0.2
 

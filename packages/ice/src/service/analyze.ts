@@ -250,7 +250,8 @@ export async function getFileExports(options: FileOptions): Promise<CachedRouteE
         }
       }
     } catch (error) {
-      consola.debug(`Failed to get route ${filePath} exports.`, error.stack);
+      consola.error(`Failed to get route ${filePath} exports.`);
+      consola.debug(error.stack);
     }
   }
   return cached.exports;

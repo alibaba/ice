@@ -61,6 +61,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     command,
   });
 
+  let entryCode = 'render();';
+
   const generatorAPI = {
     addExport: (declarationData: DeclarationData) => {
       generator.addDeclaration('framework', declarationData);
@@ -79,6 +81,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     },
     addRenderFile: generator.addRenderFile,
     addRenderTemplate: generator.addTemplateFiles,
+    addEntryCode: (callback: (originalCode: string) => string) => {
+      entryCode = callback(entryCode);
+    },
     modifyRenderData: generator.modifyRenderData,
     addDataLoaderImport: (declarationData: DeclarationData) => {
       generator.addDeclaration('dataLoaderImport', declarationData);
@@ -118,7 +123,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const runtimeModules = getRuntimeModules(plugins);
 
   const { getAppConfig, init: initAppConfigCompiler } = getAppExportConfig(rootDir);
-  const { getRoutesConfig, init: initRouteConfigCompiler } = getRouteExportConfig(rootDir);
+  const { getRoutesConfig, getDataloaderConfig, init: initRouteConfigCompiler } = getRouteExportConfig(rootDir);
 
   // register config
   ['userConfig', 'cliOption'].forEach((configType) => {
@@ -177,6 +182,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     importCoreJs: polyfill === 'entry',
     // Enable react-router for web as default.
     enableRoutes: true,
+    entryCode,
   });
   dataCache.set('routes', JSON.stringify(routesInfo));
   dataCache.set('hasExportAppData', hasExportAppData ? 'true' : '');
@@ -258,6 +264,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             taskConfigs,
             serverCompiler,
             getRoutesConfig,
+            getDataloaderConfig,
             getAppConfig,
             appConfig,
             devPath: (routePaths[0] || '').replace(/^[/\\]/, ''),
@@ -267,6 +274,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         } else if (command === 'build') {
           return await build(ctx, {
             getRoutesConfig,
+            getDataloaderConfig,
             getAppConfig,
             appConfig,
             taskConfigs,

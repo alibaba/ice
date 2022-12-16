@@ -8,6 +8,7 @@ import type { AppConfig, AssetsManifest } from '@ice/runtime/esm/types';
 import type { DeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport, Render } from './generator.js';
 
 type AddExport = (exportData: DeclarationData) => void;
+type AddEntryCode = (callback: (code: string) => string) => void;
 type RemoveExport = (removeSource: string | string[]) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
 
@@ -59,6 +60,7 @@ export interface Urls {
 
 export type GetAppConfig = (exportNames?: string[]) => Promise<any>;
 export type GetRoutesConfig = (specifyRoutId?: string) => Promise<any>;
+export type GetDataloaderConfig = (specifyRoutId?: string) => Promise<any>;
 
 interface BeforeCommandRunOptions {
   commandArgs: CommandArgs;
@@ -67,6 +69,7 @@ interface BeforeCommandRunOptions {
   urls?: Urls;
   getAppConfig: GetAppConfig;
   getRoutesConfig: GetRoutesConfig;
+  getDataloaderConfig: GetDataloaderConfig;
   serverCompiler: ServerCompiler;
 }
 
@@ -118,6 +121,7 @@ export interface ExtendsPluginAPI {
     modifyRenderData: ModifyRenderData;
     render: Render;
     addDataLoaderImport: AddDataLoaderImport;
+    addEntryCode: AddEntryCode;
   };
   watch: {
     addEvent?: (watchEvent: WatchEvent) => void;

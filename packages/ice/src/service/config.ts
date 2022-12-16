@@ -127,7 +127,7 @@ export const getAppExportConfig = (rootDir: string) => {
       const cachedKey = `app_${keepExports.join('_')}_${process.env.__ICE_VERSION__}`;
       try {
         cached = await getCache(rootDir, cachedKey);
-      } catch (err) {}
+      } catch (err) { }
       const fileHash = await getFileHash(appEntry);
       if (!cached || fileHash !== cached) {
         await setCache(rootDir, cachedKey, fileHash);
@@ -147,7 +147,7 @@ export const getAppExportConfig = (rootDir: string) => {
         config.setCompiler(serverCompiler);
       } catch (error) {
         consola.error('Get app export config error.');
-        console.debug(error.stack);
+        consola.debug(error.stack);
       }
     },
     getAppConfig,
@@ -159,6 +159,7 @@ export const getAppExportConfig = (rootDir: string) => {
 type RouteExportConfig = {
   init: (serverCompiler: ServerCompiler) => void;
   getRoutesConfig: (specifyRoutId?: string) => undefined | Promise<Record<string, any>>;
+  getDataloaderConfig: (specifyRoutId?: string) => undefined | Promise<Record<string, any>>;
   reCompile: (taskKey: string) => void;
   ensureRoutesConfig: () => Promise<void>;
 };
@@ -172,20 +173,44 @@ export const getRouteExportConfig = (rootDir: string) => {
   }
 
   const routeConfigFile = path.join(rootDir, RUNTIME_TMP_DIR, 'routes-config.ts');
-  const getOutfile = () => formatPath(path.join(rootDir, RUNTIME_TMP_DIR, 'routes-config.bundle.mjs'));
+  const loadersConfigFile = path.join(rootDir, RUNTIME_TMP_DIR, 'dataloader-config.ts');
+  const getRouteConfigOutfile = () => formatPath(path.join(rootDir, RUNTIME_TMP_DIR, 'routes-config.bundle.mjs'));
+  const getdataLoadersConfigOutfile = () => formatPath(path.join(rootDir, RUNTIME_TMP_DIR, 'dataloader-config.bundle.mjs'));
+  const cachedKey = `route_config_file_${process.env.__ICE_VERSION__}`;
 
-  const config = new Config({
+  const routeConfig = new Config({
     entry: routeConfigFile,
     rootDir,
-    getOutfile,
+    getOutfile: getRouteConfigOutfile,
     // Only remove top level code for route component file.
     transformInclude: (id) => id.includes('src/pages'),
     needRecompile: async (entry) => {
       let cached = false;
-      const cachedKey = `route_config_file_${process.env.__ICE_VERSION__}`;
       try {
         cached = await getCache(rootDir, cachedKey);
-      } catch (err) {}
+      } catch (err) { }
+      if (cached) {
+        // Always use cached file path while `routes-config` trigger re-compile by webpack plugin.
+        return entry;
+      } else {
+        setCache(rootDir, cachedKey, 'true');
+        return false;
+      }
+    },
+  });
+
+  const dataloaderConfig = new Config({
+    entry: loadersConfigFile,
+    rootDir,
+    getOutfile: getdataLoadersConfigOutfile,
+    // Only remove top level code for route component file.
+    transformInclude: (id) => id.includes('src/pages'),
+    needRecompile: async (entry) => {
+      let cached = false;
+      const cachedKey = `loader_config_file_${process.env.__ICE_VERSION__}`;
+      try {
+        cached = await getCache(rootDir, cachedKey);
+      } catch (err) { }
       if (cached) {
         // Always use cached file path while `routes-config` trigger re-compile by webpack plugin.
         return entry;
@@ -201,29 +226,44 @@ export const getRouteExportConfig = (rootDir: string) => {
     if (!fs.existsSync(routeConfigFile)) {
       return undefined;
     }
-    const routeConfig = (await config.getConfig(['pageConfig']) || {}).default;
-    return specifyRoutId ? routeConfig[specifyRoutId] : routeConfig;
+    const res = (await routeConfig.getConfig(['pageConfig']) || {}).default;
+    return specifyRoutId ? res[specifyRoutId] : res;
+  };
+
+  const getDataloaderConfig = async (specifyRoutId?: string) => {
+    // Loaders config file may be removed after file changed.
+    if (!fs.existsSync(loadersConfigFile)) {
+      return undefined;
+    }
+    const res = (await dataloaderConfig.getConfig(['dataLoader']) || {}).default;
+    return specifyRoutId ? res[specifyRoutId] : res;
   };
 
   // ensure routes config is up to date.
   const ensureRoutesConfig = async () => {
-    await config.getConfigFile(['pageConfig']);
+    const configFile = await routeConfig.getConfigFile(['pageConfig']);
+    if (!configFile) {
+      setCache(rootDir, cachedKey, '');
+    }
   };
 
   routeExportConfig = {
     init(serverCompiler: ServerCompiler) {
-      config.clearTasks();
+      routeConfig.clearTasks();
       try {
-        config.setCompiler(serverCompiler);
+        routeConfig.setCompiler(serverCompiler);
+        dataloaderConfig.setCompiler(serverCompiler);
       } catch (error) {
         consola.error('Get route export config error.');
-        console.debug(error.stack);
+        consola.debug(error.stack);
       }
     },
     getRoutesConfig,
+    getDataloaderConfig,
     ensureRoutesConfig,
-    reCompile: config.reCompile,
+    reCompile: routeConfig.reCompile,
   };
+
   return routeExportConfig;
 };
 
