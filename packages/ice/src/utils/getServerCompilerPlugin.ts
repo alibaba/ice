@@ -31,7 +31,7 @@ function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Option
         // When format set to esm and platform set to node,
         // will cause error `Dynamic require of "XXX" is not supported`.
         // https://github.com/evanw/esbuild/issues/1921
-        platform: isEsm ? 'browser' : 'node',
+        platform: 'node',
         mainFields: ['module', 'main'],
         outExtension: { '.js': isEsm ? '.mjs' : '.cjs' },
         metafile: true,

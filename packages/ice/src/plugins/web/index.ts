@@ -9,7 +9,7 @@ import DataLoaderPlugin from '../../webpack/DataLoaderPlugin.js';
 import { getRouteExportConfig } from '../../service/config.js';
 import { WEB, SERVER_OUTPUT_DIR } from '../../constant.js';
 import getWebTask from '../../tasks/web/index.js';
-import generateHTML from '../../utils/generateHTML.js';
+import generateEntry from '../../utils/generateEntry.js';
 import openBrowser from '../../utils/openBrowser.js';
 import getServerCompilerPlugin from '../../utils/getServerCompilerPlugin.js';
 import type ServerCompilerPlugin from '../../webpack/ServerCompilerPlugin.js';
@@ -20,8 +20,6 @@ const plugin: Plugin = () => ({
   name: 'plugin-web',
   setup: ({ registerTask, onHook, context, generator, serverCompileTask, dataCache, watch, getAllPlugin }) => {
     const { rootDir, commandArgs, command, userConfig } = context;
-    const { ssg } = userConfig;
-
     registerTask(WEB, getWebTask({ rootDir, command, dataCache }));
 
     generator.addExport({
@@ -104,7 +102,13 @@ const plugin: Plugin = () => ({
       }
     });
 
-    onHook('after.build.compile', async ({ webpackConfigs, serverEntryRef, appConfig }) => {
+    onHook('after.build.compile', async ({ webpackConfigs, serverEntryRef, appConfig, output }) => {
+      const {
+        ssg,
+        output: {
+          distType,
+        },
+      } = userConfig;
       const outputDir = webpackConfigs[0].output.path;
       let renderMode: RenderMode;
       if (ssg) {
@@ -112,7 +116,9 @@ const plugin: Plugin = () => ({
       }
       serverEntryRef.current = serverOutfile;
 
-      await generateHTML({
+      const {
+        outputPaths = [],
+      } = await generateEntry({
         rootDir,
         outputDir,
         entry: serverOutfile,
@@ -120,7 +126,10 @@ const plugin: Plugin = () => ({
         documentOnly: !ssg,
         renderMode,
         routeType: appConfig?.router?.type,
+        distType,
       });
+
+      output.paths = [...outputPaths];
     });
 
     onHook('after.start.compile', async ({ isSuccessful, isFirstCompile, urls, devUrlInfo }) => {
