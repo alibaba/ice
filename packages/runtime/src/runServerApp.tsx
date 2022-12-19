@@ -222,8 +222,12 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     }
   }
 
-  // HashRouter loads route modules by the CSR.
-  if (appConfig?.router?.type === 'hash' || distType === 'javascript' || distType.includes('javascript')) {
+  // HashRouter and js entry bundle loads route modules by the CSR.
+  if (
+    appConfig?.router?.type === 'hash' ||
+    distType === 'javascript' ||
+    (Array.isArray(distType) && distType.includes('javascript'))
+  ) {
     return renderDocument({ matches: [], renderOptions });
   }
 
