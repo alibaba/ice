@@ -896,7 +896,7 @@ importers:
       '@ice/bundles': 0.1.1
       '@ice/route-manifest': 1.0.0
       '@ice/runtime': ^1.0.0
-      '@ice/webpack-config': 1.0.3
+      '@ice/webpack-config': 1.0.4
       '@swc/helpers': 0.4.12
       '@types/babel__generator': ^7.6.4
       '@types/babel__traverse': ^7.17.1
