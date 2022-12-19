@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.0.4
+
+- [feat] support incremental compile for server bundle
+
 ## v3.0.3
 
 - [feat] support `generator.addEntryCode` for add code in entry file

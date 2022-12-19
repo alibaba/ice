@@ -30,8 +30,11 @@ type ServerCompilerBuildOptions = Pick<
   'plugins' |
   'logLevel' |
   'sourcemap' |
-  'metafile'
+  'metafile' |
+  'incremental'
 >;
+
+export type ServerBuildResult = Partial<esbuild.BuildResult & { serverEntry: string; error: any }>;
 
 export type ServerCompiler = (
   buildOptions: ServerCompilerBuildOptions,
@@ -40,11 +43,13 @@ export type ServerCompiler = (
     preBundle?: boolean;
     externalDependencies?: boolean;
     transformEnv?: boolean;
-    assetsManifest?: AssetsManifest;
+    compilationInfo?: {
+      assetsManifest?: AssetsManifest;
+    };
     redirectImports?: Config['redirectImports'];
     removeOutputs?: boolean;
   }
-) => Promise<Partial<esbuild.BuildResult & { serverEntry: string; error: any }>>;
+) => Promise<ServerBuildResult>;
 export type WatchEvent = [
   pattern: RegExp | string,
   event: (eventName: EventName, filePath: string) => void,

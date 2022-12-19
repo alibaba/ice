@@ -56,7 +56,7 @@ export function createServerCompiler(options: Options) {
     swc,
     externalDependencies,
     transformEnv = true,
-    assetsManifest,
+    compilationInfo,
     redirectImports,
     removeOutputs,
   } = {}) => {
@@ -141,7 +141,7 @@ export function createServerCompiler(options: Options) {
             return escapeLocalIdent(getCSSModuleLocalIdent(filename, name));
           },
         }),
-        assetsManifest && createAssetsPlugin(assetsManifest, rootDir),
+        compilationInfo && createAssetsPlugin(compilationInfo, rootDir),
         transformPipePlugin({
           plugins: [
             ...transformPlugins,
