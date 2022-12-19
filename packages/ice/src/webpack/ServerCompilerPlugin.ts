@@ -1,4 +1,3 @@
-import type webpack from '@ice/bundles/compiled/webpack';
 import type { Compiler, Compilation } from 'webpack';
 import type { ExtendsPluginAPI, ServerCompiler, ServerBuildResult } from '../types/plugin.js';
 
