@@ -222,18 +222,19 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     }
   }
 
-  // HashRouter and js entry bundle loads route modules by the CSR.
-  if (
-    appConfig?.router?.type === 'hash' ||
-    distType === 'javascript' ||
-    (Array.isArray(distType) && distType.includes('javascript'))
-  ) {
+  // HashRouter loads route modules by the CSR.
+  if (appConfig?.router?.type === 'hash') {
     return renderDocument({ matches: [], renderOptions });
   }
 
   const matches = matchRoutes(routes, location, finalBasename);
   if (!matches.length) {
     return render404();
+  }
+
+  if (distType === 'javascript' || (Array.isArray(distType) && distType.includes('javascript'))
+  ) {
+    return renderDocument({ matches, renderOptions });
   }
 
   const routePath = getCurrentRoutePath(matches);
