@@ -1,8 +1,12 @@
 # Changelog
 
+## 1.1.1
+
+- [feat] support enable_expired_manifest
+
 ## 1.1.0
 
-- [feat] support static dataloader set to manifest.
+- [feat] support static dataloader set to manifest
 
 ## 1.0.3
 
