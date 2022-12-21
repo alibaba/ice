@@ -48,11 +48,17 @@ function createDataLoader(serverDataLoader, dataLoader, id) {
   let done = false;
   let promise: Promise<any> | null = null;
   let data = null;
+  let error = null;
 
   return {
     read() {
       if (isClient && window[LOADER] && window[LOADER].has(id)) {
         return window[LOADER].get(id);
+      }
+
+      // react will catch this error and retry when hydrate.
+      if (error) {
+        throw error;
       }
 
       if (done) {
@@ -69,6 +75,10 @@ function createDataLoader(serverDataLoader, dataLoader, id) {
         promise.then((response) => {
           done = true;
           data = response;
+          promise = null;
+        }).catch(e => {
+          done = true;
+          error = e;
           promise = null;
         });
       }
