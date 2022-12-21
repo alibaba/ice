@@ -49,10 +49,10 @@ export function createServerCompiler(options: Options) {
   const alias: Record<string, string> = {};
   Object.keys(taskAlias).forEach((aliasKey) => {
     const value = taskAlias[aliasKey];
-    if (!value) {
-      emptyList.push(aliasKey);
-    } else {
+    if (value) {
       alias[aliasKey] = value;
+    } else {
+      emptyList.push(aliasKey);
     }
   });
 
@@ -198,8 +198,8 @@ export function createServerCompiler(options: Options) {
       };
     } catch (error) {
       consola.error('Server compile error.', `\nEntryPoints: ${JSON.stringify(buildOptions.entryPoints)}`);
-      consola.error('Build options: ', buildOptions);
-      consola.error(error.stack);
+      consola.debug('Build options: ', buildOptions);
+      consola.debug(error.stack);
       return {
         error: error as Error,
       };
