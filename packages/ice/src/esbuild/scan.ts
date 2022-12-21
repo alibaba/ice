@@ -29,7 +29,7 @@ interface Options {
  */
 const scanPlugin = (options: Options): Plugin => {
   // deps for record scanned imports
-  const { deps, exclude, alias, rootDir, emptyList } = options;
+  const { deps, exclude, alias, rootDir, emptyList = [] } = options;
   const dataUrlRE = /^\s*data:/i;
   const httpUrlRE = /^(https?:)?\/\//;
   const cache = new Map<string, string | false>();
@@ -119,17 +119,15 @@ const scanPlugin = (options: Options): Plugin => {
           // aliased dependencies
           if (!path.isAbsolute(resolved) && !resolved.startsWith('.') && !id.startsWith('.')) {
             const resolvePath = require.resolve(resolved, { paths: [path.dirname(importer)] });
-            if (resolvePath.includes('node_modules')) {
-              const { pkgPath } = getPackageData(resolvePath);
-              deps[id] = {
-                name: resolved,
-                pkgPath,
-              };
-              return {
-                path: resolved,
-                external: true,
-              };
-            }
+            const { pkgPath } = getPackageData(resolvePath);
+            deps[id] = {
+              name: resolved,
+              pkgPath,
+            };
+            return {
+              path: resolved,
+              external: true,
+            };
           // deal with aliased absolute path
           } else if (id !== resolved && path.isAbsolute(resolved)) {
             if (
