@@ -14,7 +14,7 @@ import scanPlugin from '../esbuild/scan.js';
 import type { DepScanData } from '../esbuild/scan.js';
 import formatPath from '../utils/formatPath.js';
 
-type Alias = TaskConfig<Config>['config']['alias'];
+type Alias = Record<string, string>;
 
 interface Options {
   parallel?: number;
@@ -162,22 +162,25 @@ interface ScanOptions {
   depImports?: Record<string, DepScanData>;
   plugins?: Plugin[];
   exclude?: string[];
+  emptyList?: string[];
 }
 
 export async function scanImports(entries: string[], options?: ScanOptions) {
   const start = performance.now();
-  const { alias = {}, depImports = {}, exclude = [], rootDir, plugins } = options;
+  const { alias = {}, depImports = {}, exclude = [], rootDir, plugins, emptyList } = options;
   const deps = { ...depImports };
 
   try {
     await Promise.all(
       entries.map((entry) =>
         esbuild.build({
+          alias,
           absWorkingDir: rootDir,
           write: false,
           entryPoints: [entry],
           bundle: true,
           format: 'esm',
+          platform: 'node',
           logLevel: 'silent',
           loader: { '.js': 'jsx' },
           plugins: [
@@ -185,6 +188,7 @@ export async function scanImports(entries: string[], options?: ScanOptions) {
               rootDir,
               deps,
               alias,
+              emptyList,
               exclude,
             }),
             ...(plugins || []),
@@ -195,7 +199,7 @@ export async function scanImports(entries: string[], options?: ScanOptions) {
     consola.debug(`Scan completed in ${(performance.now() - start).toFixed(2)}ms:`, deps);
   } catch (error) {
     consola.error('Failed to scan module imports.');
-    consola.debug(error.stack);
+    consola.error(error.stack);
   }
   return orderedDependencies(deps);
 }

@@ -11,11 +11,11 @@ import type { ServerCompiler } from '../types/plugin.js';
 import type { UserConfig } from '../types/userConfig.js';
 import escapeLocalIdent from '../utils/escapeLocalIdent.js';
 import cssModulesPlugin from '../esbuild/cssModules.js';
-import resolvePlugin from '../esbuild/resolve.js';
+import externalPlugin from '../esbuild/external.js';
 import ignorePlugin from '../esbuild/ignore.js';
 import createAssetsPlugin from '../esbuild/assets.js';
 import { CACHE_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
-import emptyCSSPlugin from '../esbuild/emptyCSS.js';
+import emptyPlugin from '../esbuild/empty.js';
 import transformImportPlugin from '../esbuild/transformImport.js';
 import transformPipePlugin from '../esbuild/transformPipe.js';
 import isExternalBuiltinDep from '../utils/isExternalBuiltinDep.js';
@@ -38,12 +38,23 @@ const { merge, difference } = lodash;
 
 export function createServerCompiler(options: Options) {
   const { task, rootDir, command, server, syntaxFeatures } = options;
-
-  const alias = task.config?.alias || {};
   const externals = task.config?.externals || {};
   const define = task.config?.define || {};
   const sourceMap = task.config?.sourceMap;
   const dev = command === 'start';
+
+  // Filter empty alias.
+  const emptyList = [];
+  const taskAlias = task.config?.alias || {};
+  const alias: Record<string, string> = {};
+  Object.keys(taskAlias).forEach((aliasKey) => {
+    const value = taskAlias[aliasKey];
+    if (!value) {
+      emptyList.push(aliasKey);
+    } else {
+      alias[aliasKey] = value;
+    }
+  });
 
   const defineVars = {};
   // auto stringify define value
@@ -82,6 +93,8 @@ export function createServerCompiler(options: Options) {
     if (preBundle) {
       depsMetadata = await createDepsMetadata({
         task,
+        alias,
+        emptyList,
         rootDir,
         // Pass transformPlugins only if syntaxFeatures is enabled
         plugins: enableSyntaxFeatures ? [
@@ -113,6 +126,7 @@ export function createServerCompiler(options: Options) {
       bundle: true,
       format,
       target: 'node12.20.0',
+      alias,
       // enable JSX syntax in .js files by default for compatible with migrate project
       // while it is not recommended
       loader: { '.js': 'jsx' },
@@ -126,9 +140,8 @@ export function createServerCompiler(options: Options) {
       external: Object.keys(externals),
       plugins: [
         ...(customBuildOptions.plugins || []),
-        emptyCSSPlugin(),
-        resolvePlugin({
-          alias,
+        emptyPlugin(emptyList),
+        externalPlugin({
           externalDependencies: externalDependencies ?? !server.bundle,
           format,
           externals: server.externals,
@@ -185,8 +198,8 @@ export function createServerCompiler(options: Options) {
       };
     } catch (error) {
       consola.error('Server compile error.', `\nEntryPoints: ${JSON.stringify(buildOptions.entryPoints)}`);
-      consola.debug('Build options: ', buildOptions);
-      consola.debug(error.stack);
+      consola.error('Build options: ', buildOptions);
+      consola.error(error.stack);
       return {
         error: error as Error,
       };
@@ -199,16 +212,18 @@ interface CreateDepsMetadataOptions {
   rootDir: string;
   task: TaskConfig<Config>;
   plugins: esbuild.Plugin[];
+  alias: Record<string, string>;
+  emptyList: string[];
 }
 /**
  *  Create dependencies metadata only when server entry is bundled to esm.
  */
-async function createDepsMetadata({ rootDir, task, plugins }: CreateDepsMetadataOptions) {
+async function createDepsMetadata({ rootDir, task, plugins, alias, emptyList }: CreateDepsMetadataOptions) {
   const serverEntry = getServerEntry(rootDir, task.config?.server?.entry);
-  const alias = (task.config?.alias || {}) as TaskConfig<Config>['config']['alias'];
   const deps = await scanImports([serverEntry], {
     rootDir,
     alias,
+    emptyList,
     plugins,
   });
 
@@ -230,6 +245,7 @@ async function createDepsMetadata({ rootDir, task, plugins }: CreateDepsMetadata
     cacheDir,
     taskConfig: task.config,
     alias,
+    emptyList,
     plugins,
   });
 

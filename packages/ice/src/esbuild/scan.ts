@@ -18,7 +18,8 @@ export interface DepScanData {
 
 interface Options {
   rootDir: string;
-  alias: Record<string, string | false>;
+  alias: Record<string, string>;
+  emptyList: string[];
   deps: Record<string, DepScanData>;
   exclude: string[];
 }
@@ -28,7 +29,7 @@ interface Options {
  */
 const scanPlugin = (options: Options): Plugin => {
   // deps for record scanned imports
-  const { deps, exclude, alias, rootDir } = options;
+  const { deps, exclude, alias, rootDir, emptyList } = options;
   const dataUrlRE = /^\s*data:/i;
   const httpUrlRE = /^(https?:)?\/\//;
   const cache = new Map<string, string | false>();
@@ -116,16 +117,19 @@ const scanPlugin = (options: Options): Plugin => {
         const resolved = resolve(id, importer);
         if (resolved) {
           // aliased dependencies
-          if (!path.isAbsolute(resolved) && !id.startsWith('.')) {
-            const { pkgPath } = getPackageData(require.resolve(resolved, { paths: [path.dirname(importer)] }));
-            deps[id] = {
-              name: resolved,
-              pkgPath,
-            };
-            return {
-              path: resolved,
-              external: true,
-            };
+          if (!path.isAbsolute(resolved) && !resolved.startsWith('.') && !id.startsWith('.')) {
+            const resolvePath = require.resolve(resolved, { paths: [path.dirname(importer)] });
+            if (resolvePath.includes('node_modules')) {
+              const { pkgPath } = getPackageData(resolvePath);
+              deps[id] = {
+                name: resolved,
+                pkgPath,
+              };
+              return {
+                path: resolved,
+                external: true,
+              };
+            }
           // deal with aliased absolute path
           } else if (id !== resolved && path.isAbsolute(resolved)) {
             if (
@@ -143,11 +147,10 @@ const scanPlugin = (options: Options): Plugin => {
                 external: true,
               };
             }
-            return {
-              path: resolved,
-            };
           }
-        } else if (resolved === false) {
+        }
+
+        if (emptyList.includes(id)) {
           // alias set to be false
           return {
             path: id,
