@@ -14,7 +14,7 @@ import formatPath from '../utils/formatPath.js';
 import { BUILDIN_CJS_DEPS, BUILDIN_ESM_DEPS } from '../constant.js';
 import type { DepScanData } from '../esbuild/scan.js';
 import externalPlugin from '../esbuild/external.js';
-import emptyCSSPlugin from '../esbuild/empty.js';
+import emptyCSSPlugin from '../esbuild/emptyCSS.js';
 import cssModulesPlugin from '../esbuild/cssModules.js';
 import escapeLocalIdent from '../utils/escapeLocalIdent.js';
 
@@ -97,8 +97,8 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
       ignoreAnnotations: true,
       alias,
       plugins: [
-        emptyCSSPlugin(emptyList),
-        externalPlugin({ format: 'cjs', externalDependencies: false }),
+        emptyCSSPlugin(),
+        externalPlugin({ emptyList, format: 'cjs', externalDependencies: false }),
         cssModulesPlugin({
           extract: false,
           generateLocalIdentName: function (name: string, filename: string) {

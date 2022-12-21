@@ -15,7 +15,7 @@ import externalPlugin from '../esbuild/external.js';
 import ignorePlugin from '../esbuild/ignore.js';
 import createAssetsPlugin from '../esbuild/assets.js';
 import { CACHE_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
-import emptyPlugin from '../esbuild/empty.js';
+import emptyPlugin from '../esbuild/emptyCSS.js';
 import transformImportPlugin from '../esbuild/transformImport.js';
 import transformPipePlugin from '../esbuild/transformPipe.js';
 import isExternalBuiltinDep from '../utils/isExternalBuiltinDep.js';
@@ -140,8 +140,9 @@ export function createServerCompiler(options: Options) {
       external: Object.keys(externals),
       plugins: [
         ...(customBuildOptions.plugins || []),
-        emptyPlugin(emptyList),
+        emptyPlugin(),
         externalPlugin({
+          emptyList,
           externalDependencies: externalDependencies ?? !server.bundle,
           format,
           externals: server.externals,

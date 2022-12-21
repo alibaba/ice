@@ -6,15 +6,23 @@ interface PluginOptions {
   externalDependencies: boolean;
   format: BuildOptions['format'];
   externals?: string[];
+  emptyList: string[];
 }
 
 const externalPlugin = (options: PluginOptions): Plugin => {
-  const { externalDependencies, format, externals } = options;
+  const { externalDependencies, format, externals, emptyList = [] } = options;
   return {
     name: 'esbuild-external',
     setup(build: PluginBuild) {
       build.onResolve({ filter: /.*/ }, (args) => {
         const id = args.path;
+        if (emptyList.includes(id)) {
+          return {
+            path: id,
+            namespace: 'empty-content',
+          };
+        }
+
         // Custom external rule by userConfig.server.externals.
         const external = shouldExternal(id, externals);
         if (external) {
@@ -30,6 +38,11 @@ const externalPlugin = (options: PluginOptions): Plugin => {
             external: true,
           };
         }
+      });
+      build.onLoad({ filter: /.*/, namespace: 'empty-content' }, () => {
+        return {
+          contents: '',
+        };
       });
     },
   };
