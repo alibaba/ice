@@ -119,6 +119,7 @@ export interface RouteComponent {
   pageConfig?: PageConfig;
   [key: string]: any;
   Loading?: ComponentType<any>;
+  Fallback?: ComponentType<any>;
   suspense?: boolean;
 }
 
