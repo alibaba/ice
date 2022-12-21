@@ -1,8 +1,15 @@
 # @ice/runtime
 
-## v1.0.3
+## v1.1.0
 
 - [feat] suspense ssr
+
+## v1.0.3
+
+- [feat] optimize log when load route module failed
+- [revert] window context merge order
+- [fix] should call dataLoader when hydrate for SSG
+- [fix] pass dataLoader as list
 
 ## v1.0.2
 

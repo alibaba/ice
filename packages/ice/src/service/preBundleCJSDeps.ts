@@ -2,7 +2,7 @@ import path from 'path';
 import { createHash } from 'crypto';
 import consola from 'consola';
 import fse from 'fs-extra';
-import { build } from 'esbuild';
+import { esbuild } from '@ice/bundles';
 import type { Plugin } from 'esbuild';
 import { resolve as resolveExports } from 'resolve.exports';
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
@@ -84,7 +84,7 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
   }
 
   try {
-    await build({
+    await esbuild.build({
       absWorkingDir: process.cwd(),
       entryPoints: flatIdDeps,
       bundle: true,

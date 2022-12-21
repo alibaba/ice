@@ -11,7 +11,7 @@ import WebpackDevServer from '@ice/bundles/compiled/webpack-dev-server/lib/Serve
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import { getWebpackConfig } from '@ice/webpack-config';
-import type { ExtendsPluginAPI, ServerCompiler, GetAppConfig, GetRoutesConfig } from '../types';
+import type { ExtendsPluginAPI, ServerCompiler, GetAppConfig, GetRoutesConfig, GetDataloaderConfig } from '../types';
 import { ROUTER_MANIFEST, RUNTIME_TMP_DIR, WEB } from '../constant.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
@@ -32,6 +32,7 @@ const start = async (
     spinner: ora.Ora;
     getAppConfig: GetAppConfig;
     getRoutesConfig: GetRoutesConfig;
+    getDataloaderConfig: GetDataloaderConfig;
     userConfigHash: string;
   },
 ) => {
@@ -43,6 +44,7 @@ const start = async (
     spinner,
     getAppConfig,
     getRoutesConfig,
+    getDataloaderConfig,
     userConfigHash,
   } = options;
   const { commandArgs, rootDir } = context;
@@ -60,6 +62,7 @@ const start = async (
     serverCompiler,
     getAppConfig,
     getRoutesConfig,
+    getDataloaderConfig,
   };
 
   const useDevServer = platform === WEB;
@@ -94,6 +97,7 @@ interface StartDevServerOptions {
     serverCompiler: ServerCompiler;
     getAppConfig: GetAppConfig;
     getRoutesConfig: GetRoutesConfig;
+    getDataloaderConfig: GetDataloaderConfig;
   };
   appConfig: AppConfig;
   devPath: string;
@@ -145,12 +149,12 @@ async function startDevServer({
         serverRenderMiddleware,
       );
 
-    if (commandArgs.mock) {
-      const mockMiddleware = createMockMiddleware({ rootDir, exclude: userConfig?.mock?.exclude });
-      middlewares.splice(insertIndex, 0, mockMiddleware);
-    }
-    return customMiddlewares ? customMiddlewares(middlewares, devServer) : middlewares;
-  },
+      if (commandArgs.mock) {
+        const mockMiddleware = createMockMiddleware({ rootDir, exclude: userConfig?.mock?.exclude });
+        middlewares.splice(insertIndex, 0, mockMiddleware);
+      }
+      return customMiddlewares ? customMiddlewares(middlewares, devServer) : middlewares;
+    },
   };
   // merge devServerConfig with webpackConfig.devServer
   devServerConfig = merge(webpackConfigs[0].devServer, devServerConfig);

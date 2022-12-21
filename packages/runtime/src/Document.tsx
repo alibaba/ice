@@ -147,7 +147,7 @@ export function Data(props: DataProps) {
   const routePath = getCurrentRoutePath(matches);
   const windowContext: WindowContext = {
     appData,
-    routesData,
+    routesData: renderMode === 'SSG' ? null : routesData,
     routesConfig,
     routePath,
     downgrade,
@@ -161,7 +161,7 @@ export function Data(props: DataProps) {
     // Should merge global context when there are multiple <Data />.
     <ScriptElement
       suppressHydrationWarning={documentOnly}
-      dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=Object.assign(window.__ICE_APP_CONTEXT__ || {}, ${JSON.stringify(windowContext)})` }}
+      dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=Object.assign(${JSON.stringify(windowContext)}, window.__ICE_APP_CONTEXT__ || {});` }}
     />
   );
 }

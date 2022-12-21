@@ -1,8 +1,12 @@
 # Changelog
 
-## 1.0.3
+## 1.0.4
 
 - [feat] enable remove exports for all components
+
+## 1.0.3
+
+- [fix] did not catch error when transform code error
 
 ## 1.0.2
 

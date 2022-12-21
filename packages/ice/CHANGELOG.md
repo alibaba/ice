@@ -1,11 +1,18 @@
 # Changelog
 
-## v3.0.3
+## v3.0.4
 
-- [fix] remove dataLoaderFetcher api for init of dataLoader
-- [fix] incorrect dev url when enable hash router
+- [feat] support incremental compile for server bundle
 - [fix] should not remove dataLoader for page when dataLoader is disabled
 - [feat] add suspense to exports
+
+## v3.0.3
+
+- [feat] support `generator.addEntryCode` for add code in entry file
+- [fix] remove dataLoaderFetcher api for init of dataLoader
+- [fix] incorrect dev url when enable hash router
+- [fix] no log when parse mock files failed
+- [feat] optimize log
 
 ## v3.0.2
 

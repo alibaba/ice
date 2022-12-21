@@ -19,6 +19,7 @@ export const taskExternals = {
   postcss: 'postcss',
   '@swc/core': '@swc/core',
   'jest-worker': 'jest-worker',
+  esbuild: 'esbuild',
 };
 
 const commonDeps = ['terser', 'tapable', 'cssnano', 'terser-webpack-plugin', 'webpack', 'schema-utils',
@@ -63,6 +64,12 @@ const tasks = [
     // Dependencies of webpack-dev-server.
     ...webpackDevServerDeps,
   ].map((pkgName) => ({ pkgName, externals: taskExternals })),
+  {
+    pkgName: 'esbuild-register',
+    file: 'node_modules/esbuild-register/dist/node.js',
+    externals: taskExternals,
+    bundleName: 'node.js',
+  },
   {
     pkgName: 'unplugin',
     declaration: false,

@@ -1,7 +1,7 @@
 import type { IncomingMessage, ServerResponse } from 'http';
 import type { Action, InitialEntry, Location } from 'history';
 import type { ComponentType, ReactNode, PropsWithChildren } from 'react';
-import type { HydrationOptions } from 'react-dom/client';
+import type { HydrationOptions, Root } from 'react-dom/client';
 import type { Navigator, Params } from 'react-router-dom';
 
 type UseConfig = () => RouteConfig<Record<string, any>>;
@@ -99,7 +99,7 @@ export type Renderer = (
   container: Element | Document,
   initialChildren: React.ReactNode,
   options?: HydrationOptions,
-) => void;
+) => Root;
 
 export interface ServerContext {
   req?: IncomingMessage;
@@ -151,6 +151,7 @@ export type AppProvider = ComponentWithChildren<any>;
 export type RouteWrapper = ComponentType<any>;
 
 export type SetAppRouter = (AppRouter: ComponentType<AppRouterProps>) => void;
+export type GetAppRouter = () => AppProvider;
 export type AddProvider = (Provider: AppProvider) => void;
 export type SetRender = (render: Renderer) => void;
 export type AddWrapper = (wrapper: RouteWrapper, forLayout?: boolean) => void;
@@ -175,6 +176,7 @@ export interface AssetsManifest {
 
 export interface RuntimeAPI {
   setAppRouter?: SetAppRouter;
+  getAppRouter: GetAppRouter;
   addProvider: AddProvider;
   setRender: SetRender;
   addWrapper: AddWrapper;
@@ -190,26 +192,26 @@ export interface StaticRuntimeAPI {
   };
 }
 
-export interface RuntimePlugin {
+export interface RuntimePlugin<T = Record<string, any>> {
   (
     apis: RuntimeAPI,
-    runtimeOptions?: Record<string, any>,
+    runtimeOptions?: T,
   ): Promise<void> | void;
 }
 
-export interface RuntimePlugin {
+export interface StaticRuntimePlugin<T = Record<string, any>> {
   (
     apis: StaticRuntimeAPI,
-    runtimeOptions?: Record<string, any>,
+    runtimeOptions?: T,
   ): Promise<void> | void;
 }
 
 export interface CommonJsRuntime {
-  default: RuntimePlugin;
+  default: RuntimePlugin | StaticRuntimePlugin;
 }
 
 export interface RuntimeModules {
-  statics?: (RuntimePlugin | CommonJsRuntime)[];
+  statics?: (StaticRuntimePlugin | CommonJsRuntime)[];
   commons?: (RuntimePlugin | CommonJsRuntime)[];
 }
 

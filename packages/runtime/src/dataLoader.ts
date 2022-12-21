@@ -1,4 +1,4 @@
-import type { DataLoaderConfig, DataLoaderResult, RuntimeModules, AppExport, RuntimePlugin, CommonJsRuntime } from './types.js';
+import type { DataLoaderConfig, DataLoaderResult, RuntimeModules, AppExport, StaticRuntimePlugin, CommonJsRuntime } from './types.js';
 import getRequestContext from './requestContext.js';
 
 interface Loaders {
@@ -57,9 +57,10 @@ export function loadDataByCustomFetcher(config) {
  */
 export function callDataLoader(dataLoader: DataLoaderConfig, requestContext): DataLoaderResult {
   if (Array.isArray(dataLoader)) {
-    return dataLoader.map(loader => {
+    const loaders = dataLoader.map(loader => {
       return typeof loader === 'object' ? loadDataByCustomFetcher(loader) : loader(requestContext);
     });
+    return Promise.all(loaders);
   }
 
   if (typeof dataLoader === 'object') {
@@ -121,7 +122,7 @@ function loadInitialDataInClient(loaders: Loaders) {
  * Load initial data and register global loader.
  * In order to load data, JavaScript modules, CSS and other assets in parallel.
  */
-async function init(loadersConfig: Loaders, options: LoaderOptions) {
+async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
   const {
     fetcher,
     runtimeModules,
@@ -136,7 +137,7 @@ async function init(loadersConfig: Loaders, options: LoaderOptions) {
 
   if (runtimeModules) {
     await Promise.all(runtimeModules.map(module => {
-      const runtimeModule = (module as CommonJsRuntime).default || module as RuntimePlugin;
+      const runtimeModule = ((module as CommonJsRuntime).default || module) as StaticRuntimePlugin;
       return runtimeModule(runtimeApi);
     }).filter(Boolean));
   }
@@ -146,7 +147,7 @@ async function init(loadersConfig: Loaders, options: LoaderOptions) {
   }
 
   try {
-    loadInitialDataInClient(loadersConfig);
+    loadInitialDataInClient(dataloaderConfig);
   } catch (error) {
     console.error('Load initial data error: ', error);
   }
@@ -170,7 +171,7 @@ async function init(loadersConfig: Loaders, options: LoaderOptions) {
         return await value;
       }
 
-      const dataLoader = loadersConfig[id];
+      const dataLoader = dataloaderConfig[id];
 
       // No data loader.
       if (!dataLoader) {
