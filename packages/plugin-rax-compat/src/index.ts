@@ -1,5 +1,4 @@
 import fs from 'fs';
-import path from 'path';
 import { createRequire } from 'module';
 import type { Plugin } from '@ice/app/esm/types';
 import type { RuleSetRule } from 'webpack';
