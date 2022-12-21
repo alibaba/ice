@@ -3,6 +3,7 @@
 ## v3.0.4
 
 - [feat] support incremental compile for server bundle
+- [feat] refactor server bundle alias
 
 ## v3.0.3
 

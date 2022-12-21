@@ -238,15 +238,7 @@ const inlineStylePlugin = () => {
   return {
     name: 'esbuild-inline-style',
     setup: (build) => {
-      build.onResolve({ filter: /\.(css|sass|scss|less)$/ }, (args) => {
-        const absolutePath = path.resolve(args.resolveDir, args.path);
-        return {
-          path: absolutePath,
-          namespace: 'css-content',
-        };
-      });
-
-      build.onLoad({ filter: /.*/, namespace: 'css-content' }, async (args) => {
+      build.onLoad({ filter: /\.(css|sass|scss|less)$/ }, async (args) => {
         const cssContent = fs.readFileSync(args.path, 'utf8');
         const content = await styleSheetLoader(cssContent, args.path.includes('.less') ? 'less' : 'css');
 

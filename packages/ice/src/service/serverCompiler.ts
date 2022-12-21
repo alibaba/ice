@@ -199,8 +199,8 @@ export function createServerCompiler(options: Options) {
       };
     } catch (error) {
       consola.error('Server compile error.', `\nEntryPoints: ${JSON.stringify(buildOptions.entryPoints)}`);
-      consola.debug('Build options: ', buildOptions);
-      consola.debug(error.stack);
+      consola.error('Build options: ', buildOptions);
+      consola.error(error.stack);
       return {
         error: error as Error,
       };
