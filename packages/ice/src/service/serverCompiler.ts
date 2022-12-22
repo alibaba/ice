@@ -1,6 +1,6 @@
 import * as path from 'path';
 import consola from 'consola';
-import esbuild from 'esbuild';
+import { esbuild } from '@ice/bundles';
 import fse from 'fs-extra';
 import fg from 'fast-glob';
 import type { Config } from '@ice/webpack-config/esm/types';
@@ -56,7 +56,7 @@ export function createServerCompiler(options: Options) {
     swc,
     externalDependencies,
     transformEnv = true,
-    assetsManifest,
+    compilationInfo,
     redirectImports,
     removeOutputs,
   } = {}) => {
@@ -104,9 +104,6 @@ export function createServerCompiler(options: Options) {
       }
     });
     const define = {
-      // ref: https://github.com/evanw/esbuild/blob/master/CHANGELOG.md#01117
-      // in esm, this in the global should be undefined. Set the following config to avoid warning
-      this: undefined,
       ...defineVars,
       ...runtimeDefineVars,
     };
@@ -144,7 +141,7 @@ export function createServerCompiler(options: Options) {
             return escapeLocalIdent(getCSSModuleLocalIdent(filename, name));
           },
         }),
-        assetsManifest && createAssetsPlugin(assetsManifest, rootDir),
+        compilationInfo && createAssetsPlugin(compilationInfo, rootDir),
         transformPipePlugin({
           plugins: [
             ...transformPlugins,
