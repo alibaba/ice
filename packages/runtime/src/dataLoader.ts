@@ -41,7 +41,7 @@ export function setFetcher(customFetcher) {
 /**
  * Parse template for static dataLoader.
  */
-export function parseTemplate(config: DataLoader | StaticDataLoader) {
+export function parseTemplate(config: StaticDataLoader) {
   const queryParams = {};
   const getQueryParams = () => {
     if (Object.keys(queryParams).length === 0) {
@@ -94,7 +94,7 @@ export function parseTemplate(config: DataLoader | StaticDataLoader) {
   return JSON.parse(strConfig);
 }
 
-export function loadDataByCustomFetcher(config: DataLoader | StaticDataLoader) {
+export function loadDataByCustomFetcher(config: StaticDataLoader) {
   let parsedConfig = config;
   try {
     parsedConfig = parseTemplate(config);
