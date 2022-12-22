@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { ElementType, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { DataProvider, useData } from './RouteContext.js';
 import { getGlobalDataLoader } from './dataLoader.js';
 import type { RouteComponent } from './types.js';
@@ -43,7 +43,7 @@ function Data(props) {
 
 type EProps = {
   children: ReactNode[];
-  fallback?: ElementType;
+  fallback?: ReactNode;
 };
 
 type EState = {
