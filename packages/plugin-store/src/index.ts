@@ -74,7 +74,7 @@ function exportStoreProviderPlugin({ pageDir, resetPageState }: { pageDir: strin
     transformInclude: (id) => {
       return (
         /\.[jt]sx?$/i.test(id) &&
-        id.startsWith(pageDir.split(path.sep).join('/')) &&
+        id.startsWith(pageDir) &&
         !micromatch.isMatch(id, ignoreStoreFilePatterns)
       );
     },
