@@ -8,8 +8,8 @@ export default function Home() {
   return (
     <div>
       <h2>Home Page</h2>
-      <Suspense module={CommentsWithServerDataError} />
-      <Suspense module={Footer} />
+      <Suspense module={CommentsWithServerDataError} id="comments" />
+      <Suspense module={Footer} id="footer" />
       <Link to="/blog">link to blog</Link>
     </div>
   );

@@ -11,8 +11,8 @@ export default function Home() {
     <div>
       <h2>Home Page</h2>
       <Counter />
-      <Suspense module={Comments} />
-      <Suspense module={Footer} />
+      <Suspense module={Comments} id="comments" />
+      <Suspense module={Footer} id="footer" />
       <Link to="/blog">link to blog</Link>
     </div>
   );

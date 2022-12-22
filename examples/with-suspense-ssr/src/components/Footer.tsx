@@ -37,5 +37,3 @@ export const dataLoader = () => {
     setTimeout(() => resolve(fakeData), 2000);
   });
 };
-
-export const id = 'footer';

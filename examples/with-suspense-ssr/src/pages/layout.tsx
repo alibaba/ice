@@ -1,7 +1,6 @@
 import { Outlet } from 'ice';
 
 export default function Layout() {
-  console.log('-------');
   console.log('Render: Layout');
 
   return (

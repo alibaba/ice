@@ -13,23 +13,19 @@ interface SuspenseProps {
 }
 
 export function Suspense(props: SuspenseProps) {
-  const { module } = props;
+  const { module, id } = props;
 
   const { serverDataLoader, dataLoader, Loading, Fallback } = module;
 
-  // module.id is export by common component.
-  // props.id is passed by router component.
-  const moduleId = module.id || props.id;
-
   const Children = module.default;
 
-  const data = createDataLoader(serverDataLoader, dataLoader, moduleId);
+  const data = createDataLoader(serverDataLoader, dataLoader, id);
 
   return (
     <DataProvider value={data}>
       <React.Suspense fallback={Loading ? <Loading /> : null}>
         <ErrorBoundary fallback={Fallback}>
-          <Data id={moduleId} />
+          <Data id={id} />
           <Children />
         </ErrorBoundary>
       </React.Suspense>
@@ -82,7 +78,7 @@ function createDataLoader(serverDataLoader, dataLoader, id) {
 
   return {
     read() {
-      if (isClient && window[LOADER] && window[LOADER].has(id)) {
+      if (isClient && (window[LOADER] as Map<string, any>) && window[LOADER].has(id)) {
         return window[LOADER].get(id);
       }
 
@@ -95,10 +91,12 @@ function createDataLoader(serverDataLoader, dataLoader, id) {
         return data;
       }
 
+      // read data during pending.
       if (promise) {
         throw promise;
       }
 
+      // generate loader promise and throw to suspense.
       promise = serverDataLoader?.() || dataLoader?.() || getGlobalDataLoader?.()?.getData(id);
 
       if (promise) {

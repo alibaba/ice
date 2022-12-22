@@ -43,5 +43,3 @@ export const dataLoader = () => {
     setTimeout(() => resolve(fakeData), 5000);
   });
 };
-
-export const id = 'comments';

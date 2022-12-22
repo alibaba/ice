@@ -51,5 +51,3 @@ export const dataLoader = () => {
     }, 100);
   });
 };
-
-export const id = 'comments';
