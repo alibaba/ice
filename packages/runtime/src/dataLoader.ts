@@ -78,7 +78,8 @@ export function parseTemplate(config) {
     }
   });
 
-  strConfig.replace('${url}', location.href);
+  // Replace url.
+  strConfig = strConfig.replace('${url}', location.href);
 
   return JSON.parse(strConfig);
 }
