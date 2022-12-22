@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { ComponentType, ReactNode } from 'react';
+import type { ElementType, ReactNode } from 'react';
 import { DataProvider, useData } from './RouteContext.js';
 import { getGlobalDataLoader } from './dataLoader.js';
 import type { RouteComponent } from './types.js';
@@ -24,7 +24,7 @@ export function Suspense(props: SuspenseProps) {
   return (
     <DataProvider value={data}>
       <React.Suspense fallback={Loading ? <Loading /> : null}>
-        <ErrorBoundary fallback={Fallback}>
+        <ErrorBoundary fallback={Fallback ? <Fallback /> : null}>
           <Data id={id} />
           <Children />
         </ErrorBoundary>
@@ -43,7 +43,7 @@ function Data(props) {
 
 type EProps = {
   children: ReactNode[];
-  fallback?: ComponentType;
+  fallback?: ElementType;
 };
 
 type EState = {
@@ -62,8 +62,7 @@ class ErrorBoundary extends React.Component<EProps, EState> {
 
   render() {
     if (this.state.hasError) {
-      const Fallback = this.props.fallback;
-      return Fallback ? <Fallback /> : null;
+      return this.props.fallback;
     }
 
     return this.props.children;
