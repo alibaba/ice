@@ -66,7 +66,7 @@ const plugin: Plugin<Options> = (options) => ({
   },
   runtime: `${PLUGIN_NAME}/esm/runtime`,
 });
-
+const formatId = (id: string) => id.split(path.sep).join('/');
 function exportStoreProviderPlugin({ pageDir, resetPageState }: { pageDir: string; resetPageState: boolean }): Config['transformPlugins'][0] {
   return {
     name: 'export-store-provider',
@@ -74,7 +74,7 @@ function exportStoreProviderPlugin({ pageDir, resetPageState }: { pageDir: strin
     transformInclude: (id) => {
       return (
         /\.[jt]sx?$/i.test(id) &&
-        id.startsWith(pageDir) &&
+        formatId(id).startsWith(formatId(pageDir)) &&
         !micromatch.isMatch(id, ignoreStoreFilePatterns)
       );
     },
