@@ -1,4 +1,4 @@
-import type { DataLoaderConfig, DataLoaderResult, RuntimeModules, AppExport, StaticRuntimePlugin, CommonJsRuntime } from './types.js';
+import type { DataLoaderConfig, DataLoaderResult, RuntimeModules, AppExport, StaticRuntimePlugin, CommonJsRuntime, DataLoader, StaticDataLoader } from './types.js';
 import getRequestContext from './requestContext.js';
 
 interface Loaders {
@@ -38,8 +38,70 @@ export function setFetcher(customFetcher) {
   dataLoaderFetcher = customFetcher;
 }
 
-export function loadDataByCustomFetcher(config) {
-  return dataLoaderFetcher(config);
+/**
+ * Parse template for static dataLoader.
+ */
+export function parseTemplate(config: DataLoader | StaticDataLoader) {
+  const queryParams = {};
+  const getQueryParams = () => {
+    if (Object.keys(queryParams).length === 0) {
+      if (location.search.includes('?')) {
+        location.search.substring(1).split('&').forEach(query => {
+          const res = query.split('=');
+          // ?test=1&hello=world
+          if (res[0] !== undefined && res[1] !== undefined) {
+            queryParams[res[0]] = res[1];
+          }
+        });
+      }
+    }
+    return queryParams;
+  };
+
+  const cookie = {};
+  const getCookie = () => {
+    if (Object.keys(cookie).length === 0) {
+      document.cookie.split(';').forEach(c => {
+        const res = c.split('=');
+        if (res[0] !== undefined && res[1] !== undefined) {
+          cookie[res[0].trim()] = res[1].trim();
+        }
+      });
+    }
+    return cookie;
+  };
+
+  const regexp = /\$\{(queryParams|cookie|storage)(\.(\w|-)+)?}/g;
+  let strConfig = JSON.stringify(config);
+  [...strConfig.matchAll(regexp)].forEach(item => {
+    if (item && item[0] && item[1] && item[2].startsWith('.') && item[2]) {
+      if (item[1] === 'queryParams') {
+        // Replace query params.
+        strConfig = strConfig.replace(item[0], getQueryParams()[item[2].substring(1)]);
+      } else if (item[1] === 'cookie') {
+        // Replace cookie.
+        strConfig = strConfig.replace(item[0], getCookie()[item[2].substring(1)]);
+      } else if (item[1] === 'storage') {
+        // Replace storage.
+        strConfig = strConfig.replace(item[0], localStorage.getItem(item[2].substring(1)));
+      }
+    }
+  });
+
+  // Replace url.
+  strConfig = strConfig.replace('${url}', location.href);
+
+  return JSON.parse(strConfig);
+}
+
+export function loadDataByCustomFetcher(config: DataLoader | StaticDataLoader) {
+  let parsedConfig = config;
+  try {
+    parsedConfig = parseTemplate(config);
+  } catch (error) {
+    console.error('parse template error: ', error);
+  }
+  return dataLoaderFetcher(parsedConfig);
 }
 
 /**
