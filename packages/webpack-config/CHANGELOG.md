@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4
+
+- [fix] format id for win32 compatible
+
 ## 1.0.3
 
 - [fix] did not catch error when transform code error

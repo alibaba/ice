@@ -22,6 +22,8 @@ interface Options {
   env?: boolean;
 }
 
+const formatId = (id: string) => id.split(path.sep).join('/');
+
 const compilationPlugin = (options: Options): UnpluginOptions => {
   const {
     sourceMap,
@@ -60,10 +62,11 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
     name: 'compilation-plugin',
     transformInclude(id) {
       // Resolved id is not formatted when used in webpack loader test.
-      const formatId = id.split(path.sep).join('/');
-      return extensionRegex.test(formatId) && !compileExcludes.some((regex) => regex.test(formatId));
+      const formatedId = formatId(id);
+      return extensionRegex.test(formatedId) && !compileExcludes.some((regex) => regex.test(formatedId));
     },
-    async transform(source: string, id: string) {
+    async transform(source: string, fileId: string) {
+      const id = formatId(fileId);
       if ((/node_modules/.test(id) && !compileRegex.some((regex) => regex.test(id)))) {
         return;
       }
