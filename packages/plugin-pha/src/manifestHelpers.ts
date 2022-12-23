@@ -97,13 +97,22 @@ function getPageUrl(routeId: string, options: ParseOptions) {
   return `${urlPrefix}${splitCharacter}${routeId}${urlSuffix}`;
 }
 
+function getRouteManifest(routeManifest: string) {
+  try {
+    const routes = fs.readFileSync(routeManifest, 'utf-8');
+    return JSON.parse(routes);
+  } catch (e) {
+    return [];
+  }
+}
+
 async function getPageConfig(
   routeId: string,
   routeManifest: string,
   routesConfig: Record<string, any>,
 ): Promise<MixedPage> {
-  const routes = fs.readFileSync(routeManifest, 'utf-8');
-  const matches = matchRoutes(JSON.parse(routes), routeId.startsWith('/') ? routeId : `/${routeId}`);
+  const routes = getRouteManifest(routeManifest);
+  const matches = matchRoutes(routes, routeId.startsWith('/') ? routeId : `/${routeId}`);
   let routeConfig: MixedPage = {};
   if (matches) {
     // Merge route config when return muitiple route.
@@ -248,11 +257,25 @@ export function rewriteAppWorker(manifest: Manifest): Manifest {
     appWorker,
   };
 }
-
+export function getRouteIdByPage(routeManifest: string, page: Page) {
+  const routes = getRouteManifest(routeManifest);
+  const routeId = typeof page === 'string' ? page : page?.name;
+  const locationArg = routeId?.startsWith('/') ? routeId : `/${routeId}`;
+  const matches = matchRoutes(routes, locationArg);
+  const targetRoute = (matches || []).reduce((prev, cur) => {
+    if (cur?.pathname === locationArg) {
+      return cur;
+    } else {
+      return prev;
+    }
+  }, {} as Record<string, any>);
+  return targetRoute?.route?.id;
+}
 export async function parseManifest(manifest: Manifest, options: ParseOptions): Promise<PHAManifest> {
   const {
     publicPath,
     dataloaderConfig,
+    routeManifest,
   } = options;
   const { appWorker, tabBar, routes } = manifest;
 
@@ -277,19 +300,20 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
 
   if (routes && routes.length > 0) {
     manifest.pages = await Promise.all(routes.map(async (page) => {
+      const pageId = getRouteIdByPage(routeManifest, page);
       const pageManifest = await getPageManifest(page, options);
       // Set static dataloader to data_prefetch of page.
-      if (typeof page === 'string' && dataloaderConfig && dataloaderConfig[page]) {
+      if (typeof page === 'string' && dataloaderConfig && dataloaderConfig[pageId]) {
         const staticPrefetches = [];
-        if (Array.isArray(dataloaderConfig[page])) {
-          dataloaderConfig[page].forEach(item => {
+        if (Array.isArray(dataloaderConfig[pageId])) {
+          dataloaderConfig[pageId].forEach(item => {
             if (typeof item === 'object') {
               staticPrefetches.push(item);
             }
           });
-        } else if (typeof dataloaderConfig[page] === 'object') {
+        } else if (typeof dataloaderConfig[pageId] === 'object') {
           // Single prefetch loader config.
-          staticPrefetches.push(dataloaderConfig[page]);
+          staticPrefetches.push(dataloaderConfig[pageId]);
         }
         pageManifest.data_prefetch = [...(pageManifest.data_prefetch || []), ...staticPrefetches];
       }
@@ -299,7 +323,8 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
         // Set static dataloader to data_prefetch of frames.
         pageManifest.frames.forEach(frame => {
           const title = frame.title || '';
-          if (typeof title === 'string' && dataloaderConfig && dataloaderConfig[title.toLocaleLowerCase()]) {
+          const titleId = getRouteIdByPage(routeManifest, title);
+          if (typeof title === 'string' && dataloaderConfig && dataloaderConfig[titleId]) {
             const staticPrefetches = [];
             if (Array.isArray(dataloaderConfig[title])) {
               dataloaderConfig[title].forEach(item => {
