@@ -15,6 +15,7 @@ export const phaManifest: Manifest = {
     },
     'home',
     'about',
+    'test',
   ],
 };
 
