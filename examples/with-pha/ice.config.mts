@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [pha({ template: true })],
   routes: {
     defineRoutes: (route) => {
-      route('/test', 'Test/index.tsx');
+      route('/custom', 'Custom/index.tsx');
     },
   },
 });

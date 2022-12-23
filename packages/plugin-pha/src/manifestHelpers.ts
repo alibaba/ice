@@ -102,6 +102,7 @@ function getRouteManifest(routeManifest: string) {
     const routes = fs.readFileSync(routeManifest, 'utf-8');
     return JSON.parse(routes);
   } catch (e) {
+    console.warn(`[plugin-pha warn] ${JSON.stringify(e)}`);
     return [];
   }
 }
