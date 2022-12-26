@@ -1,6 +1,7 @@
 import type { Consola } from 'consola';
 import consola from 'consola';
 
+// In ice.js, we use DEBUG_TAG instead of DEBUG to avoid other libs which use `DEBUG` as their flag log debug info.
 const { DEBUG_TAG } = process.env;
 
 function getEnableAndDisabledNamespaces(namespaces?: string) {
@@ -52,12 +53,15 @@ export type CreateLoggerReturnType = Pick<Consola, |
   'trace'
 >;
 export function createLogger(namespace?: ICELogNamespace): CreateLoggerReturnType {
+  if (DEBUG_TAG) {
+    consola.level = 4;
+  }
+
   if (!namespace) {
     return consola;
   }
 
   if (DEBUG_TAG) {
-    consola.level = 4;
     if (enabled(namespace)) {
       return consola.withTag(namespace);
     } else {
