@@ -2,9 +2,10 @@ import path from 'path';
 import { createRequire } from 'module';
 import assert from 'assert';
 import fg from 'fast-glob';
+import esbuildRegister from '@ice/bundles/compiled/esbuild-register/node.js';
 import consola from 'consola';
-import { register } from 'esbuild-register/dist/node.js';
 
+const { register } = esbuildRegister;
 const require = createRequire(import.meta.url);
 
 export const VALID_METHODS = [
