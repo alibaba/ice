@@ -1,5 +1,9 @@
 # @ice/runtime
 
+## v1.0.4
+
+- [fix] call dataLoader after hydrate for ssg
+
 ## v1.0.3
 
 - [feat] optimize log when load route module failed
