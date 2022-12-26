@@ -172,9 +172,9 @@ interface HistoryState {
 
 interface RouteState {
   routesData: RoutesData;
-  routesConfig?: RoutesConfig;
-  matches?: RouteMatch[];
-  routeModules?: RouteModules;
+  routesConfig: RoutesConfig;
+  matches: RouteMatch[];
+  routeModules: RouteModules;
 }
 
 function BrowserEntry({
