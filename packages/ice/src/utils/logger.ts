@@ -7,6 +7,7 @@ const { DEBUG_TAG } = process.env;
 function getEnableAndDisabledNamespaces(namespaces?: string) {
   const enabledNamespaces: RegExp[] = [];
   const disabledNamespaces: RegExp[] = [];
+  // Support namespace wildcards rules which are same as https://github.com/debug-js/debug#wildcards
   const namespaceSplits = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
   for (const namespaceSplit of namespaceSplits) {
     if (!namespaceSplit) {

@@ -1,5 +1,9 @@
 # @ice/runtime
 
+## v1.0.4
+
+- [chore] show more log when failed to load route module
+
 ## v1.0.3
 
 - [feat] optimize log when load route module failed

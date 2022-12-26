@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4
+
+- [chore] do not show webpack config on debug mode
+
 ## 1.0.3
 
 - [fix] did not catch error when transform code error

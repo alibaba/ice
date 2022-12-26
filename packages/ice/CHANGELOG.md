@@ -3,6 +3,7 @@
 ## v3.0.4
 
 - [feat] support incremental compile for server bundle
+- [feat] support log debug info with different namespaces
 
 ## v3.0.3
 
