@@ -1,8 +1,8 @@
 import fs from 'fs';
 import * as path from 'path';
-import consola from 'consola';
 import type { Plugin, PluginBuild, Loader } from 'esbuild';
 import type { UnpluginOptions, UnpluginContext } from 'unplugin';
+import { logger } from '../utils/logger.js';
 
 interface PluginOptions {
   plugins?: UnpluginOptions[];
@@ -152,7 +152,7 @@ const transformPipe = (options: PluginOptions = {}): Plugin => {
             return transformedResult;
           }
         } catch (error) {
-          consola.debug('Error occurs in esbuild-transform-pipe.', error.stack);
+          logger.debug(error.stack);
         }
       });
     },

@@ -413,7 +413,8 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
   };
   const finalWebpackConfig = [configCss, configAssets, ...(configureWebpack || [])]
     .reduce((result, next: ModifyWebpackConfig<Configuration, typeof webpack>) => next(result, ctx), webpackConfig);
-  consola.debug('[webpack]', finalWebpackConfig);
+    // TODO: Log webpack config with namespace.
+    // consola.debug('[webpack]', finalWebpackConfig);
   return finalWebpackConfig;
 };
 

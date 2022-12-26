@@ -1,5 +1,4 @@
 import * as path from 'path';
-import consola from 'consola';
 import chalk from 'chalk';
 import type { RenderMode } from '@ice/runtime';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
@@ -13,6 +12,7 @@ import generateHTML from '../../utils/generateHTML.js';
 import openBrowser from '../../utils/openBrowser.js';
 import getServerCompilerPlugin from '../../utils/getServerCompilerPlugin.js';
 import type ServerCompilerPlugin from '../../webpack/ServerCompilerPlugin.js';
+import { logger } from '../../utils/logger.js';
 
 const { debounce } = lodash;
 
@@ -136,7 +136,7 @@ const plugin: Plugin = () => ({
     - Local  : ${chalk.underline.white(`${urls.localUrlForBrowser}${devPath}`)}
     - Network: ${chalk.underline.white(`${urls.lanUrlForTerminal}${devPath}`)}`;
         }
-        consola.log(`${logoutMessage}\n`);
+        logger.log(`${logoutMessage}\n`);
 
         if (open) {
           openBrowser(`${urls.localUrlForBrowser}${devPath}`);

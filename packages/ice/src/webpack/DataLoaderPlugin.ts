@@ -1,6 +1,5 @@
 import * as path from 'path';
 import fse from 'fs-extra';
-import consola from 'consola';
 import type { Compiler } from 'webpack';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type { Context } from 'build-scripts';
@@ -74,9 +73,7 @@ export default class DataLoaderPlugin {
               }],
             },
           );
-          if (error) {
-            consola.debug(error.stack);
-          } else {
+          if (!error) {
             compilation.emitAsset('js/data-loader.js', new RawSource(new TextDecoder('utf-8').decode(outputFiles[0].contents)));
           }
         } else {

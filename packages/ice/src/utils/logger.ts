@@ -1,0 +1,82 @@
+import type { Consola } from 'consola';
+import consola from 'consola';
+
+const { DEBUG_TAG } = process.env;
+
+function getEnableAndDisabledNamespaces(namespaces?: string) {
+  const enabledNamespaces: RegExp[] = [];
+  const disabledNamespaces: RegExp[] = [];
+  const namespaceSplits = (typeof namespaces === 'string' ? namespaces : '').split(/[\s,]+/);
+  for (const namespaceSplit of namespaceSplits) {
+    if (!namespaceSplit) {
+      // ignore empty strings
+      continue;
+    }
+    const formatNamespace = namespaceSplit.replace(/\*/g, '.*?');
+
+    if (formatNamespace[0] === '-') {
+      disabledNamespaces.push(new RegExp(`^${formatNamespace.slice(1)}$`));
+    } else {
+      enabledNamespaces.push(new RegExp(`^${formatNamespace}$`));
+    }
+  }
+  return { enabledNamespaces, disabledNamespaces };
+}
+
+const { enabledNamespaces, disabledNamespaces } = getEnableAndDisabledNamespaces(DEBUG_TAG);
+
+function enabled(namespace: ICELogNamespace) {
+  for (const disabledNamespace of disabledNamespaces) {
+    if (disabledNamespace.test(namespace)) {
+      return false;
+    }
+  }
+  for (const enabledNamespace of enabledNamespaces) {
+    if (enabledNamespace.test(namespace)) {
+      return true;
+    }
+  }
+}
+
+export type ICELogNamespace = string;
+export type CreateLoggerReturnType = Pick<Consola, |
+  'fatal' |
+  'error' |
+  'warn' |
+  'log' |
+  'info' |
+  'start' |
+  'success' |
+  'ready' |
+  'debug' |
+  'trace'
+>;
+export function createLogger(namespace?: ICELogNamespace): CreateLoggerReturnType {
+  if (!namespace) {
+    return consola;
+  }
+
+  if (DEBUG_TAG) {
+    consola.level = 4;
+    if (enabled(namespace)) {
+      return consola.withTag(namespace);
+    } else {
+      return {
+        fatal() { },
+        error() { },
+        warn() { },
+        log() { },
+        info() { },
+        start() { },
+        success() { },
+        ready() { },
+        debug() { },
+        trace() { },
+      };
+    }
+  } else {
+    return consola.withTag(namespace);
+  }
+}
+
+export const logger = createLogger();

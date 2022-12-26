@@ -5,7 +5,6 @@ import fg from 'fast-glob';
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
 import { esbuild } from '@ice/bundles';
 import type { Loader, Plugin } from 'esbuild';
-import consola from 'consola';
 import type { TaskConfig } from 'build-scripts';
 import type { Config } from '@ice/webpack-config/esm/types';
 import { getCache, setCache } from '../utils/persistentCache.js';
@@ -13,6 +12,9 @@ import { getFileHash } from '../utils/hash.js';
 import scanPlugin from '../esbuild/scan.js';
 import type { DepScanData } from '../esbuild/scan.js';
 import formatPath from '../utils/formatPath.js';
+import { createLogger } from '../utils/logger.js';
+
+const logger = createLogger('scan-modules');
 
 type Alias = TaskConfig<Config>['config']['alias'];
 
@@ -134,8 +136,8 @@ export async function analyzeImports(files: string[], options: Options) {
         })();
       }));
     } catch (err) {
-      consola.error('[ERROR]', `optimize runtime failed when analyze ${filePath}`);
-      consola.debug(err);
+      logger.error('[ERROR]', `optimize runtime failed when analyze ${filePath}`);
+      logger.debug(err);
       throw err;
     }
   }
@@ -151,7 +153,7 @@ export async function analyzeImports(files: string[], options: Options) {
     }
     return importSet;
   } catch (err) {
-    consola.debug(err);
+    logger.debug(err);
     return false;
   }
 }
@@ -192,10 +194,10 @@ export async function scanImports(entries: string[], options?: ScanOptions) {
         }),
       ),
     );
-    consola.debug(`Scan completed in ${(performance.now() - start).toFixed(2)}ms:`, deps);
+    logger.debug(`Scan completed in ${(performance.now() - start).toFixed(2)}ms:`, deps);
   } catch (error) {
-    consola.error('Failed to scan module imports.');
-    consola.debug(error.stack);
+    logger.error('Failed to scan module imports.', `\n${error.message}`);
+    logger.debug(error.stack);
   }
   return orderedDependencies(deps);
 }
@@ -250,8 +252,8 @@ export async function getFileExports(options: FileOptions): Promise<CachedRouteE
         }
       }
     } catch (error) {
-      consola.error(`Failed to get route ${filePath} exports.`);
-      consola.debug(error.stack);
+      logger.error(`Failed to get route ${filePath} exports.`, `\n${error.message}`);
+      logger.debug(error.stack);
     }
   }
   return cached.exports;

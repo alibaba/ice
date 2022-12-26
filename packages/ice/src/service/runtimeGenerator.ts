@@ -1,6 +1,5 @@
 import path from 'path';
 import fse from 'fs-extra';
-import consola from 'consola';
 import fg from 'fast-glob';
 import ejs from 'ejs';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
@@ -23,6 +22,7 @@ import type {
   TemplateOptions,
 } from '../types/generator.js';
 import getGlobalStyleGlobPattern from '../utils/getGlobalStyleGlobPattern.js';
+import { logger } from '../utils/logger.js';
 
 const { debounce } = lodash;
 
@@ -84,8 +84,8 @@ export function checkExportData(
         return alias?.[specifierStr] || specifierStr;
       });
       if (currentExportNames.some((name) => exportNames.includes(name))) {
-        consola.error('specifier:', specifier, 'alias:', alias);
-        consola.error('duplicate with', data);
+        logger.error('specifier:', specifier, 'alias:', alias);
+        logger.error('duplicate with', data);
         throw new Error(`duplicate export data added by ${apiName}`);
       }
     });
@@ -227,7 +227,7 @@ export default class Generator {
     if (renderIndex > -1) {
       const targetTemplate = this.renderTemplates[renderIndex];
       if (targetTemplate[0] !== templatePath) {
-        consola.error('[template]', `path ${targetPath} already been rendered as file ${targetTemplate[0]}`);
+        logger.error('[template]', `path ${targetPath} already been rendered as file ${targetTemplate[0]}`);
       }
       // replace template with latest content
       this.renderTemplates[renderIndex] = [templatePath, targetPath, extraData];

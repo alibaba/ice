@@ -1,6 +1,5 @@
 import path from 'path';
 import { createHash } from 'crypto';
-import consola from 'consola';
 import fse from 'fs-extra';
 import { esbuild } from '@ice/bundles';
 import type { Plugin } from 'esbuild';
@@ -17,6 +16,9 @@ import resolvePlugin from '../esbuild/resolve.js';
 import emptyCSSPlugin from '../esbuild/emptyCSS.js';
 import cssModulesPlugin from '../esbuild/cssModules.js';
 import escapeLocalIdent from '../utils/escapeLocalIdent.js';
+import { createLogger } from '../utils/logger.js';
+
+const logger = createLogger('pre-bundle-deps');
 
 interface DepInfo {
   file: string;
@@ -109,8 +111,8 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
       external: [...BUILDIN_CJS_DEPS, ...BUILDIN_ESM_DEPS],
     });
   } catch (error) {
-    consola.error('Failed to bundle dependencies.');
-    consola.debug(error);
+    logger.error('Failed to bundle dependencies.');
+    logger.debug(error);
     return {};
   }
 
