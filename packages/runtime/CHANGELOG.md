@@ -2,7 +2,7 @@
 
 ## v1.0.4
 
-- [fix] call dataLoader after hydrate for ssg
+- [fix] rerender after hydrate for ssg page
 
 ## v1.0.3
 

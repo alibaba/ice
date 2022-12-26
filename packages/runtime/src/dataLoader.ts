@@ -75,8 +75,6 @@ function loadInitialDataInClient(loaders: Loaders) {
   ids.forEach(id => {
     const dataFromSSR = routesData[id];
     if (dataFromSSR) {
-      // first render for ssg use data from build time.
-      // second render for ssg will use the actual data from data loader.
       cache.set(renderMode === 'SSG' ? `${id}_ssg` : id, {
         value: dataFromSSR,
         status: 'RESOLVED',
@@ -140,6 +138,8 @@ async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
     getData: async (id, options) => {
       let result;
 
+      // first render for ssg use data from build time.
+      // second render for ssg will use data from data loader.
       if (options?.ssg) {
         result = cache.get(`${id}_ssg`);
       } else {
