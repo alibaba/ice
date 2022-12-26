@@ -71,9 +71,16 @@ export function parseTemplate(config: StaticDataLoader) {
     return cookie;
   };
 
+  // Match all template of query cookie and storage.
+  let strConfig = JSON.stringify(config) || '';
   const regexp = /\$\{(queryParams|cookie|storage)(\.(\w|-)+)?}/g;
-  let strConfig = JSON.stringify(config);
-  [...strConfig.matchAll(regexp)].forEach(item => {
+  let cap = [];
+  let matched = [];
+  while ((cap = regexp.exec(strConfig)) !== null) {
+    matched.push(cap);
+  }
+
+  matched.forEach(item => {
     if (item && item[0] && item[1] && item[2].startsWith('.') && item[2]) {
       if (item[1] === 'queryParams') {
         // Replace query params.
