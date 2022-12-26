@@ -54,6 +54,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routePath,
     downgrade,
     documentOnly,
+    renderMode,
   } = windowContext;
 
   const requestContext = getRequestContext(window.location);
@@ -72,6 +73,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     assetsManifest,
     basename,
     routePath,
+    renderMode,
   };
 
   const runtime = new Runtime(appContext, runtimeOptions);
@@ -96,7 +98,9 @@ export default async function runClientApp(options: RunClientAppOptions) {
   const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
 
   if (!routesData) {
-    routesData = await loadRoutesData(matches, requestContext, routeModules);
+    routesData = await loadRoutesData(matches, requestContext, routeModules, {
+      ssg: renderMode === 'SSG',
+    });
   }
 
   if (!routesConfig) {
@@ -168,9 +172,9 @@ interface HistoryState {
 
 interface RouteState {
   routesData: RoutesData;
-  routesConfig: RoutesConfig;
-  matches: RouteMatch[];
-  routeModules: RouteModules;
+  routesConfig?: RoutesConfig;
+  matches?: RouteMatch[];
+  routeModules?: RouteModules;
 }
 
 function BrowserEntry({
@@ -185,6 +189,7 @@ function BrowserEntry({
     routesConfig: initialRoutesConfig,
     routeModules: initialRouteModules,
     basename,
+    renderMode,
   } = appContext;
 
   const [historyState, setHistoryState] = useState<HistoryState>({
@@ -227,6 +232,18 @@ function BrowserEntry({
         });
       });
     }
+
+    // rerender page use actual data for ssg.
+    if (renderMode === 'SSG') {
+      const initialContext = getRequestContext(window.location);
+      loadRoutesData(matches, initialContext, routeModules).then(data => {
+        setRouteState({
+          ...routeState,
+          routesData: data,
+        });
+      });
+    }
+
     // just trigger once
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

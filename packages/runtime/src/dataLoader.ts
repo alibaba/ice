@@ -69,17 +69,22 @@ function loadInitialDataInClient(loaders: Loaders) {
   const context = (window as any).__ICE_APP_CONTEXT__ || {};
   const matchedIds = context.matchedIds || [];
   const routesData = context.routesData || {};
+  const { renderMode } = context;
 
   const ids = ['_app'].concat(matchedIds);
   ids.forEach(id => {
     const dataFromSSR = routesData[id];
     if (dataFromSSR) {
-      cache.set(id, {
+      // first render for ssg use data from build time.
+      // second render for ssg will use the actual data from data loader.
+      cache.set(renderMode === 'SSG' ? `${id}_ssg` : id, {
         value: dataFromSSR,
         status: 'RESOLVED',
       });
 
-      return dataFromSSR;
+      if (renderMode === 'SSR') {
+        return;
+      }
     }
 
     const dataLoader = loaders[id];
@@ -132,8 +137,14 @@ async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
   }
 
   (window as any).__ICE_DATA_LOADER__ = {
-    getData: async (id) => {
-      const result = cache.get(id);
+    getData: async (id, options) => {
+      let result;
+
+      if (options?.ssg) {
+        result = cache.get(`${id}_ssg`);
+      } else {
+        result = cache.get(id);
+      }
 
       // Already send data request.
       if (result) {
