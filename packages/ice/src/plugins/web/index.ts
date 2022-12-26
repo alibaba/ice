@@ -22,7 +22,7 @@ const plugin: Plugin = () => ({
     const { rootDir, commandArgs, command, userConfig } = context;
     const { ssg } = userConfig;
 
-    registerTask(WEB, getWebTask({ rootDir, command, dataCache }));
+    registerTask(WEB, getWebTask({ rootDir, command, dataCache, userConfig }));
 
     generator.addExport({
       specifier: ['Link', 'Outlet', 'useParams', 'useSearchParams', 'useLocation', 'useNavigate'],
