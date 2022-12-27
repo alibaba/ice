@@ -17,7 +17,7 @@ export default function __ICE__CREATE_ELEMENT(options: CreateElementOptions, con
 
   let node: Element | Text;
   if (text) {
-    node = document.createTextNode(text);
+    container.textContent = text;
   } else {
     node = document.createElement(tagName);
 
@@ -28,9 +28,9 @@ export default function __ICE__CREATE_ELEMENT(options: CreateElementOptions, con
     children.forEach((child) => {
       __ICE__CREATE_ELEMENT(child, node);
     });
-  }
 
-  container.appendChild(node);
+    container.appendChild(node);
+  }
 
   return node;
 }
