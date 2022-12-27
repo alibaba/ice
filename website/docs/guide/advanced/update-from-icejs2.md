@@ -373,7 +373,7 @@ export default defineConfig(() => ({
 
 #### 数据请求
 
-数据请求方案需主动安装 `@ice/plugin-request`：
+使用数据请求方案需主动安装 `@ice/plugin-request`：
 
 ```bash
 $ npm i @ice/plugin-request -D
