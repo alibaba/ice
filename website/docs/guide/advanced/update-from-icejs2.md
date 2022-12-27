@@ -350,7 +350,7 @@ export default defineConfig(() => ({
 
 #### 状态管理
 
-状态管理方案需主动安装 `@ice/plugin-store`：
+使用状态管理方案需主动安装 `@ice/plugin-store`：
 
 ```bash
 $ npm i @ice/plugin-store -D
@@ -404,7 +404,7 @@ export const requestConfig = {
 
 #### 权限方案
 
-数据请求方案需主动安装 `@ice/plugin-auth`：
+使用权限方案需主动安装 `@ice/plugin-auth`：
 
 ```bash
 $ npm i @ice/plugin-auth -D
