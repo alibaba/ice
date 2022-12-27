@@ -66,10 +66,11 @@ export function createServerCompiler(options: Options) {
     preBundle,
     swc,
     externalDependencies,
-    transformEnv = true,
     compilationInfo,
     redirectImports,
     removeOutputs,
+    enableEnv = false,
+    transformEnv = true,
   } = {}) => {
     let depsMetadata: DepsMetaData;
     let swcOptions = merge({}, {
@@ -84,7 +85,7 @@ export function createServerCompiler(options: Options) {
     const transformPlugins = getCompilerPlugins({
       ...task.config,
       fastRefresh: false,
-      env: false,
+      enableEnv,
       polyfill: false,
       swcOptions,
       redirectImports,
