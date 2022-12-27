@@ -37,7 +37,7 @@ interface PreBundleDepsOptions {
   cacheDir: string;
   taskConfig: Config;
   alias: Record<string, string>;
-  emptyList?: string[];
+  ignores?: string[];
   plugins?: Plugin[];
 }
 
@@ -45,7 +45,7 @@ interface PreBundleDepsOptions {
  * Pre bundle dependencies from esm to cjs.
  */
 export default async function preBundleCJSDeps(options: PreBundleDepsOptions): Promise<PreBundleDepsResult> {
-  const { depsInfo, cacheDir, taskConfig, plugins = [], alias, emptyList } = options;
+  const { depsInfo, cacheDir, taskConfig, plugins = [], alias, ignores } = options;
   const metadata = createDepsMetadata(depsInfo, taskConfig);
 
   if (!Object.keys(depsInfo)) {
@@ -98,7 +98,7 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
       alias,
       plugins: [
         emptyCSSPlugin(),
-        externalPlugin({ emptyList, format: 'cjs', externalDependencies: false }),
+        externalPlugin({ ignores, format: 'cjs', externalDependencies: false }),
         cssModulesPlugin({
           extract: false,
           generateLocalIdentName: function (name: string, filename: string) {

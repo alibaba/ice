@@ -15,7 +15,7 @@ import externalPlugin from '../esbuild/external.js';
 import ignorePlugin from '../esbuild/ignore.js';
 import createAssetsPlugin from '../esbuild/assets.js';
 import { CACHE_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
-import emptyPlugin from '../esbuild/emptyCSS.js';
+import emptyCSSPlugin from '../esbuild/emptyCSS.js';
 import transformImportPlugin from '../esbuild/transformImport.js';
 import transformPipePlugin from '../esbuild/transformPipe.js';
 import isExternalBuiltinDep from '../utils/isExternalBuiltinDep.js';
@@ -44,7 +44,7 @@ export function createServerCompiler(options: Options) {
   const dev = command === 'start';
 
   // Filter empty alias.
-  const emptyList = [];
+  const ignores = [];
   const taskAlias = task.config?.alias || {};
   const alias: Record<string, string> = {};
   Object.keys(taskAlias).forEach((aliasKey) => {
@@ -52,7 +52,7 @@ export function createServerCompiler(options: Options) {
     if (value) {
       alias[aliasKey] = value;
     } else {
-      emptyList.push(aliasKey);
+      ignores.push(aliasKey);
     }
   });
 
@@ -94,7 +94,7 @@ export function createServerCompiler(options: Options) {
       depsMetadata = await createDepsMetadata({
         task,
         alias,
-        emptyList,
+        ignores,
         rootDir,
         // Pass transformPlugins only if syntaxFeatures is enabled
         plugins: enableSyntaxFeatures ? [
@@ -140,9 +140,9 @@ export function createServerCompiler(options: Options) {
       external: Object.keys(externals),
       plugins: [
         ...(customBuildOptions.plugins || []),
-        emptyPlugin(),
+        emptyCSSPlugin(),
         externalPlugin({
-          emptyList,
+          ignores,
           externalDependencies: externalDependencies ?? !server.bundle,
           format,
           externals: server.externals,
@@ -214,17 +214,17 @@ interface CreateDepsMetadataOptions {
   task: TaskConfig<Config>;
   plugins: esbuild.Plugin[];
   alias: Record<string, string>;
-  emptyList: string[];
+  ignores: string[];
 }
 /**
  *  Create dependencies metadata only when server entry is bundled to esm.
  */
-async function createDepsMetadata({ rootDir, task, plugins, alias, emptyList }: CreateDepsMetadataOptions) {
+async function createDepsMetadata({ rootDir, task, plugins, alias, ignores }: CreateDepsMetadataOptions) {
   const serverEntry = getServerEntry(rootDir, task.config?.server?.entry);
   const deps = await scanImports([serverEntry], {
     rootDir,
     alias,
-    emptyList,
+    ignores,
     plugins,
   });
 
@@ -246,7 +246,7 @@ async function createDepsMetadata({ rootDir, task, plugins, alias, emptyList }: 
     cacheDir,
     taskConfig: task.config,
     alias,
-    emptyList,
+    ignores,
     plugins,
   });
 

@@ -6,17 +6,17 @@ interface PluginOptions {
   externalDependencies: boolean;
   format: BuildOptions['format'];
   externals?: string[];
-  emptyList: string[];
+  ignores: string[];
 }
 
 const externalPlugin = (options: PluginOptions): Plugin => {
-  const { externalDependencies, format, externals, emptyList = [] } = options;
+  const { externalDependencies, format, externals, ignores = [] } = options;
   return {
     name: 'esbuild-external',
     setup(build: PluginBuild) {
       build.onResolve({ filter: /.*/ }, (args) => {
         const id = args.path;
-        if (emptyList.includes(id)) {
+        if (ignores.includes(id)) {
           return {
             path: id,
             namespace: 'empty-content',

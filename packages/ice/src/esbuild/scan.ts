@@ -19,7 +19,7 @@ export interface DepScanData {
 interface Options {
   rootDir: string;
   alias: Record<string, string>;
-  emptyList: string[];
+  ignores: string[];
   deps: Record<string, DepScanData>;
   exclude: string[];
 }
@@ -29,7 +29,7 @@ interface Options {
  */
 const scanPlugin = (options: Options): Plugin => {
   // deps for record scanned imports
-  const { deps, exclude, alias, rootDir, emptyList = [] } = options;
+  const { deps, exclude, alias, rootDir, ignores = [] } = options;
   const dataUrlRE = /^\s*data:/i;
   const httpUrlRE = /^(https?:)?\/\//;
   const cache = new Map<string, string | false>();
@@ -148,7 +148,7 @@ const scanPlugin = (options: Options): Plugin => {
           }
         }
 
-        if (emptyList.includes(id)) {
+        if (ignores.includes(id)) {
           // alias set to be false
           return {
             path: id,

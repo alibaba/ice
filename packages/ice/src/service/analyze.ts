@@ -160,12 +160,12 @@ interface ScanOptions {
   depImports?: Record<string, DepScanData>;
   plugins?: Plugin[];
   exclude?: string[];
-  emptyList?: string[];
+  ignores?: string[];
 }
 
 export async function scanImports(entries: string[], options?: ScanOptions) {
   const start = performance.now();
-  const { alias = {}, depImports = {}, exclude = [], rootDir, plugins, emptyList } = options;
+  const { alias = {}, depImports = {}, exclude = [], rootDir, plugins, ignores } = options;
   const deps = { ...depImports };
 
   try {
@@ -186,7 +186,7 @@ export async function scanImports(entries: string[], options?: ScanOptions) {
               rootDir,
               deps,
               alias,
-              emptyList,
+              ignores,
               exclude,
             }),
             ...(plugins || []),
@@ -197,7 +197,7 @@ export async function scanImports(entries: string[], options?: ScanOptions) {
     consola.debug(`Scan completed in ${(performance.now() - start).toFixed(2)}ms:`, deps);
   } catch (error) {
     consola.error('Failed to scan module imports.');
-    consola.error(error.stack);
+    consola.debug(error.stack);
   }
   return orderedDependencies(deps);
 }
