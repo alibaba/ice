@@ -105,10 +105,10 @@ console.log(process.env.TEST);
 
 ### dataLoader
 
-- 类型 `boolean`
+- 类型： `boolean | { fetcher: { packageName: string; method: string } }`
 - 默认值 `true`
 
-是否启用内置的数据预加载能力。
+是否启用内置的数据预加载能力以及自定义发送者（fetcher）。
 
 ### publicPath
 
@@ -386,8 +386,8 @@ export default defineConfig(() => ({
 小程序端不支持该配置。
 :::
 
-- 类型：`{ format: 'esm' | 'cjs'; bundle: boolean; ignores: IgnorePattern[] }`
-- 默认值：`{ format: 'esm', bundle: false, ignores: [] }`
+- 类型：`{ format: 'esm' | 'cjs'; bundle: boolean; ignores: IgnorePattern[]; externals: string[] }`
+- 默认值：`{ format: 'esm', bundle: false, ignores: [], externals: [] }`
 
 SSR / SSG 产物标准，推荐以 ESM 标准进行执行，如果希望打包成一个 cjs 模块，可以进行如下设置：
 
@@ -421,6 +421,18 @@ export default defineConfig(() => ({
 
 - resourceRegExp 对应文件的匹配路径
 - contextRegExp （可选）对应文件内容的匹配规则
+
+通过 `externals` 参数，可以在构建 Server 端产物时 external 指定内容：
+
+```js
+import { defineConfig } from '@ice/app';
+
+export default defineConfig(() => ({
+  server: {
+    externals: ['react', 'react-dom']
+  },
+}));
+```
 
 ### routes
 

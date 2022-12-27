@@ -3,6 +3,7 @@
 ## 1.0.4
 
 - [chore] do not show webpack config on debug mode
+- [fix] md4 -> md5 while md4 algorithm is not available anymore in NodeJS 17+ 
 
 ## 1.0.3
 
