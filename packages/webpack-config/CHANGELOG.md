@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.4
+
+- [fix] format id for win32 compatible
+- [fix] md4 -> md5 while md4 algorithm is not available anymore in NodeJS 17+ 
+
 ## 1.0.3
 
 - [fix] did not catch error when transform code error
