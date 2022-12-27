@@ -105,10 +105,10 @@ console.log(process.env.TEST);
 
 ### dataLoader
 
-- 类型 `boolean`
+- 类型： `boolean | { fetcher: { packageName: string; method: string } }`
 - 默认值 `true`
 
-是否启用内置的数据预加载能力。
+是否启用内置的数据预加载能力以及自定义发送者（fetcher）。
 
 ### publicPath
 
