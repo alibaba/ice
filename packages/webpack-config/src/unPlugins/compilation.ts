@@ -4,7 +4,7 @@ import type { SwcConfig, ReactConfig } from '@ice/bundles';
 import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { Config } from '../types.js';
-import transformCoreJs from '../utils/transformCoreJs.js';
+import transformImport from '../utils/transformImport.js';
 
 const { merge } = lodash;
 
@@ -153,11 +153,10 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
         const { code } = output;
         let { map } = output;
         return {
-          code: polyfill
-            ? await transformCoreJs(
-              code,
-              coreJsPath,
-            ) : code,
+          code: await transformImport(
+            code,
+            coreJsPath,
+          ),
           map,
         };
       } catch (error) {
@@ -202,7 +201,7 @@ function getJsxTransformOptions({
       },
       // This option will greatly reduce your file size while bundling.
       // This option depends on `@swc/helpers`.
-      externalHelpers: false,
+      externalHelpers: true,
     },
     module: {
       type: 'es6',
