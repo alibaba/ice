@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.4
+
+- [feat] custom optimizeRuntime when build
+
 ## 2.2.3
 
 - [fix] skip public folder for minimization
