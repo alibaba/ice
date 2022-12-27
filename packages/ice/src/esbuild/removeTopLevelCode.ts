@@ -45,7 +45,7 @@ const removeCodePlugin = (keepExports: string[], transformInclude: (id: string) 
             loader: isTS ? 'tsx' : 'jsx',
           };
         } catch (error) {
-          logger.debug(`File id:${id}`, `\n${error.stack}`);
+          logger.debug('Remove top level code error.', `\nFile id: ${id}`, `\n${error.stack}`);
         }
       });
     },

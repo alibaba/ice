@@ -152,7 +152,7 @@ const transformPipe = (options: PluginOptions = {}): Plugin => {
             return transformedResult;
           }
         } catch (error) {
-          logger.debug(error.stack);
+          logger.debug('Error occurs in esbuild-transform-pipe.', error.stack);
         }
       });
     },
