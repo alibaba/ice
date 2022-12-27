@@ -1,6 +1,5 @@
 import * as path from 'path';
-import consola from 'consola';
-import esbuild from 'esbuild';
+import { esbuild } from '@ice/bundles';
 import fse from 'fs-extra';
 import fg from 'fast-glob';
 import type { Config } from '@ice/webpack-config/esm/types';
@@ -11,7 +10,7 @@ import type { ServerCompiler } from '../types/plugin.js';
 import type { UserConfig } from '../types/userConfig.js';
 import escapeLocalIdent from '../utils/escapeLocalIdent.js';
 import cssModulesPlugin from '../esbuild/cssModules.js';
-import resolvePlugin from '../esbuild/resolve.js';
+import externalPlugin from '../esbuild/external.js';
 import ignorePlugin from '../esbuild/ignore.js';
 import createAssetsPlugin from '../esbuild/assets.js';
 import { CACHE_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
@@ -22,9 +21,12 @@ import isExternalBuiltinDep from '../utils/isExternalBuiltinDep.js';
 import getServerEntry from '../utils/getServerEntry.js';
 import type { DepScanData } from '../esbuild/scan.js';
 import formatPath from '../utils/formatPath.js';
+import { createLogger } from '../utils/logger.js';
 import { scanImports } from './analyze.js';
 import type { DepsMetaData } from './preBundleCJSDeps.js';
 import preBundleCJSDeps from './preBundleCJSDeps.js';
+
+const logger = createLogger('server-compiler');
 
 interface Options {
   rootDir: string;
@@ -38,12 +40,23 @@ const { merge, difference } = lodash;
 
 export function createServerCompiler(options: Options) {
   const { task, rootDir, command, server, syntaxFeatures } = options;
-
-  const alias = task.config?.alias || {};
   const externals = task.config?.externals || {};
   const define = task.config?.define || {};
   const sourceMap = task.config?.sourceMap;
   const dev = command === 'start';
+
+  // Filter empty alias.
+  const ignores = [];
+  const taskAlias = task.config?.alias || {};
+  const alias: Record<string, string> = {};
+  Object.keys(taskAlias).forEach((aliasKey) => {
+    const value = taskAlias[aliasKey];
+    if (value) {
+      alias[aliasKey] = value;
+    } else {
+      ignores.push(aliasKey);
+    }
+  });
 
   const defineVars = {};
   // auto stringify define value
@@ -55,10 +68,11 @@ export function createServerCompiler(options: Options) {
     preBundle,
     swc,
     externalDependencies,
-    transformEnv = true,
-    assetsManifest,
+    compilationInfo,
     redirectImports,
     removeOutputs,
+    enableEnv = false,
+    transformEnv = true,
   } = {}) => {
     let depsMetadata: DepsMetaData;
     let swcOptions = merge({}, {
@@ -73,7 +87,7 @@ export function createServerCompiler(options: Options) {
     const transformPlugins = getCompilerPlugins({
       ...task.config,
       fastRefresh: false,
-      env: false,
+      enableEnv,
       polyfill: false,
       swcOptions,
       redirectImports,
@@ -82,6 +96,8 @@ export function createServerCompiler(options: Options) {
     if (preBundle) {
       depsMetadata = await createDepsMetadata({
         task,
+        alias,
+        ignores,
         rootDir,
         // Pass transformPlugins only if syntaxFeatures is enabled
         plugins: enableSyntaxFeatures ? [
@@ -104,9 +120,6 @@ export function createServerCompiler(options: Options) {
       }
     });
     const define = {
-      // ref: https://github.com/evanw/esbuild/blob/master/CHANGELOG.md#01117
-      // in esm, this in the global should be undefined. Set the following config to avoid warning
-      this: undefined,
       ...defineVars,
       ...runtimeDefineVars,
     };
@@ -116,6 +129,7 @@ export function createServerCompiler(options: Options) {
       bundle: true,
       format,
       target: 'node12.20.0',
+      alias,
       // enable JSX syntax in .js files by default for compatible with migrate project
       // while it is not recommended
       loader: { '.js': 'jsx' },
@@ -130,8 +144,8 @@ export function createServerCompiler(options: Options) {
       plugins: [
         ...(customBuildOptions.plugins || []),
         emptyCSSPlugin(),
-        resolvePlugin({
-          alias,
+        externalPlugin({
+          ignores,
           externalDependencies: externalDependencies ?? !server.bundle,
           format,
           externals: server.externals,
@@ -144,7 +158,7 @@ export function createServerCompiler(options: Options) {
             return escapeLocalIdent(getCSSModuleLocalIdent(filename, name));
           },
         }),
-        assetsManifest && createAssetsPlugin(assetsManifest, rootDir),
+        compilationInfo && createAssetsPlugin(compilationInfo, rootDir),
         transformPipePlugin({
           plugins: [
             ...transformPlugins,
@@ -162,12 +176,12 @@ export function createServerCompiler(options: Options) {
     }
 
     const startTime = new Date().getTime();
-    consola.debug('[esbuild]', `start compile for: ${JSON.stringify(buildOptions.entryPoints)}`);
+    logger.debug('[esbuild]', `start compile for: ${JSON.stringify(buildOptions.entryPoints)}`);
 
     try {
       const esbuildResult = await esbuild.build(buildOptions);
 
-      consola.debug('[esbuild]', `time cost: ${new Date().getTime() - startTime}ms`);
+      logger.debug('[esbuild]', `time cost: ${new Date().getTime() - startTime}ms`);
 
       const esm = server?.format === 'esm';
       const outJSExtension = esm ? '.mjs' : '.cjs';
@@ -187,9 +201,14 @@ export function createServerCompiler(options: Options) {
         serverEntry,
       };
     } catch (error) {
-      consola.error('Server compile error.', `\nEntryPoints: ${JSON.stringify(buildOptions.entryPoints)}`);
-      consola.debug('Build options: ', buildOptions);
-      consola.debug(error.stack);
+      logger.error(
+        'Server compile error.',
+        `\nEntryPoints: ${JSON.stringify(buildOptions.entryPoints)}`,
+        `\n${error.message}`,
+      );
+      // TODO: Log esbuild options with namespace.
+      // logger.debug('esbuild options: ', buildOptions);
+      logger.debug(error.stack);
       return {
         error: error as Error,
       };
@@ -202,16 +221,18 @@ interface CreateDepsMetadataOptions {
   rootDir: string;
   task: TaskConfig<Config>;
   plugins: esbuild.Plugin[];
+  alias: Record<string, string>;
+  ignores: string[];
 }
 /**
  *  Create dependencies metadata only when server entry is bundled to esm.
  */
-async function createDepsMetadata({ rootDir, task, plugins }: CreateDepsMetadataOptions) {
+async function createDepsMetadata({ rootDir, task, plugins, alias, ignores }: CreateDepsMetadataOptions) {
   const serverEntry = getServerEntry(rootDir, task.config?.server?.entry);
-  const alias = (task.config?.alias || {}) as TaskConfig<Config>['config']['alias'];
   const deps = await scanImports([serverEntry], {
     rootDir,
     alias,
+    ignores,
     plugins,
   });
 
@@ -233,6 +254,7 @@ async function createDepsMetadata({ rootDir, task, plugins }: CreateDepsMetadata
     cacheDir,
     taskConfig: task.config,
     alias,
+    ignores,
     plugins,
   });
 

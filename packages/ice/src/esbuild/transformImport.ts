@@ -1,6 +1,6 @@
 import path from 'path';
 import type { TransformOptions } from 'esbuild';
-import { transform } from 'esbuild';
+import { esbuild } from '@ice/bundles';
 import acorn from '@ice/bundles/compiled/acorn/index.js';
 import MagicString from '@ice/bundles/compiled/magic-string/index.js';
 import esModuleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
@@ -101,7 +101,7 @@ async function transformWithESBuild(
     loader,
   } as TransformOptions;
 
-  return await transform(input, transformOptions);
+  return await esbuild.transform(input, transformOptions);
 }
 
 function transformCjsImport(

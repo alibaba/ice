@@ -4,7 +4,7 @@ import type { SwcConfig, ReactConfig } from '@ice/bundles';
 import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { Config } from '../types.js';
-import transformCoreJs from '../utils/transformCoreJs.js';
+import transformImport from '../utils/transformImport.js';
 
 const { merge } = lodash;
 
@@ -19,8 +19,10 @@ interface Options {
   swcOptions?: Config['swcOptions'];
   cacheDir?: string;
   polyfill?: Config['polyfill'];
-  env?: boolean;
+  enableEnv?: boolean;
 }
+
+const formatId = (id: string) => id.split(path.sep).join('/');
 
 const compilationPlugin = (options: Options): UnpluginOptions => {
   const {
@@ -32,7 +34,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
     swcOptions = {},
     cacheDir,
     polyfill,
-    env,
+    enableEnv,
   } = options;
 
   const { removeExportExprs, compilationConfig, keepPlatform, keepExports, getRoutePaths } = swcOptions;
@@ -60,10 +62,11 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
     name: 'compilation-plugin',
     transformInclude(id) {
       // Resolved id is not formatted when used in webpack loader test.
-      const formatId = id.split(path.sep).join('/');
-      return extensionRegex.test(formatId) && !compileExcludes.some((regex) => regex.test(formatId));
+      const formatedId = formatId(id);
+      return extensionRegex.test(formatedId) && !compileExcludes.some((regex) => regex.test(formatedId));
     },
-    async transform(source: string, id: string) {
+    async transform(source: string, fileId: string) {
+      const id = formatId(fileId);
       if ((/node_modules/.test(id) && !compileRegex.some((regex) => regex.test(id)))) {
         return;
       }
@@ -75,7 +78,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
         sourceMaps: !!sourceMap,
       };
 
-      const commonOptions = getJsxTransformOptions({ suffix, fastRefresh, polyfill, env });
+      const commonOptions = getJsxTransformOptions({ suffix, fastRefresh, polyfill, enableEnv });
 
       // auto detect development mode
       if (
@@ -150,11 +153,10 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
         const { code } = output;
         let { map } = output;
         return {
-          code: polyfill
-            ? await transformCoreJs(
-              code,
-              coreJsPath,
-            ) : code,
+          code: await transformImport(
+            code,
+            coreJsPath,
+          ),
           map,
         };
       } catch (error) {
@@ -176,14 +178,14 @@ interface GetJsxTransformOptions {
   suffix: JSXSuffix;
   fastRefresh: boolean;
   polyfill: Config['polyfill'];
-  env: boolean;
+  enableEnv: boolean;
 }
 
 function getJsxTransformOptions({
   suffix,
   fastRefresh,
   polyfill,
-  env,
+  enableEnv,
 }: GetJsxTransformOptions) {
   const reactTransformConfig: ReactConfig = {
     refresh: fastRefresh,
@@ -199,14 +201,14 @@ function getJsxTransformOptions({
       },
       // This option will greatly reduce your file size while bundling.
       // This option depends on `@swc/helpers`.
-      externalHelpers: false,
+      externalHelpers: true,
     },
     module: {
       type: 'es6',
       noInterop: false,
     },
   };
-  if (env) {
+  if (enableEnv) {
     commonOptions.env = {
       loose: false,
       ...(polyfill ? {

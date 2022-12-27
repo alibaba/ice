@@ -146,6 +146,7 @@ export async function redirectImport(code: string, options: Options): Promise<st
 
         if (Object.keys(matchedImports).length > 0) {
           const transformedImport = generateImport(matchedImports);
+          // TODO: Add file name detail.
           consola.debug(`transform ${importStr} to ${transformedImport}`);
 
           if (missMatchedIdentifiers.length > 0) {

@@ -3,18 +3,18 @@ import { performance } from 'perf_hooks';
 import fs from 'fs-extra';
 import fg from 'fast-glob';
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
-import { transform, build } from 'esbuild';
+import { esbuild } from '@ice/bundles';
 import type { Loader, Plugin } from 'esbuild';
-import consola from 'consola';
-import type { TaskConfig } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/esm/types';
 import { getCache, setCache } from '../utils/persistentCache.js';
 import { getFileHash } from '../utils/hash.js';
 import scanPlugin from '../esbuild/scan.js';
 import type { DepScanData } from '../esbuild/scan.js';
 import formatPath from '../utils/formatPath.js';
+import { createLogger } from '../utils/logger.js';
 
-type Alias = TaskConfig<Config>['config']['alias'];
+const logger = createLogger('scan-modules');
+
+type Alias = Record<string, string>;
 
 interface Options {
   parallel?: number;
@@ -104,7 +104,7 @@ export async function analyzeImports(files: string[], options: Options) {
     try {
       if (loader) {
         // transform content first since es-module-lexer can't handle ts file
-        source = (await transform(source, { loader })).code;
+        source = (await esbuild.transform(source, { loader })).code;
       }
       await init;
       const imports = parse(source)[0];
@@ -134,8 +134,8 @@ export async function analyzeImports(files: string[], options: Options) {
         })();
       }));
     } catch (err) {
-      consola.error('[ERROR]', `optimize runtime failed when analyze ${filePath}`);
-      consola.debug(err);
+      logger.error('[ERROR]', `optimize runtime failed when analyze ${filePath}`);
+      logger.debug(err);
       throw err;
     }
   }
@@ -151,7 +151,7 @@ export async function analyzeImports(files: string[], options: Options) {
     }
     return importSet;
   } catch (err) {
-    consola.debug(err);
+    logger.debug(err);
     return false;
   }
 }
@@ -162,22 +162,25 @@ interface ScanOptions {
   depImports?: Record<string, DepScanData>;
   plugins?: Plugin[];
   exclude?: string[];
+  ignores?: string[];
 }
 
 export async function scanImports(entries: string[], options?: ScanOptions) {
   const start = performance.now();
-  const { alias = {}, depImports = {}, exclude = [], rootDir, plugins } = options;
+  const { alias = {}, depImports = {}, exclude = [], rootDir, plugins, ignores } = options;
   const deps = { ...depImports };
 
   try {
     await Promise.all(
       entries.map((entry) =>
-        build({
+        esbuild.build({
+          alias,
           absWorkingDir: rootDir,
           write: false,
           entryPoints: [entry],
           bundle: true,
           format: 'esm',
+          platform: 'node',
           logLevel: 'silent',
           loader: { '.js': 'jsx' },
           plugins: [
@@ -185,6 +188,7 @@ export async function scanImports(entries: string[], options?: ScanOptions) {
               rootDir,
               deps,
               alias,
+              ignores,
               exclude,
             }),
             ...(plugins || []),
@@ -192,10 +196,10 @@ export async function scanImports(entries: string[], options?: ScanOptions) {
         }),
       ),
     );
-    consola.debug(`Scan completed in ${(performance.now() - start).toFixed(2)}ms:`, deps);
+    logger.debug(`Scan completed in ${(performance.now() - start).toFixed(2)}ms:`, deps);
   } catch (error) {
-    consola.error('Failed to scan module imports.');
-    consola.debug(error.stack);
+    logger.error('Failed to scan module imports.', `\n${error.message}`);
+    logger.debug(error.stack);
   }
   return orderedDependencies(deps);
 }
@@ -227,7 +231,7 @@ export async function getFileExports(options: FileOptions): Promise<CachedRouteE
   if (!cached || cached.hash !== fileHash) {
     try {
       // get route export by esbuild
-      const result = await build({
+      const result = await esbuild.build({
         loader: { '.js': 'jsx' },
         entryPoints: [filePath],
         platform: 'neutral',
@@ -250,8 +254,8 @@ export async function getFileExports(options: FileOptions): Promise<CachedRouteE
         }
       }
     } catch (error) {
-      consola.error(`Failed to get route ${filePath} exports.`);
-      consola.debug(error.stack);
+      logger.error(`Failed to get route ${filePath} exports.`, `\n${error.message}`);
+      logger.debug(error.stack);
     }
   }
   return cached.exports;

@@ -1,5 +1,4 @@
 import * as path from 'path';
-import consola from 'consola';
 import fse from 'fs-extra';
 import { getWebpackConfig } from '@ice/webpack-config';
 import type { Context, TaskConfig } from 'build-scripts';
@@ -15,6 +14,7 @@ import { RUNTIME_TMP_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
 import emptyDir from '../utils/emptyDir.js';
 import type { UserConfig } from '../types/userConfig.js';
 import warnOnHashRouterEnabled from '../utils/warnOnHashRouterEnabled.js';
+import { logger } from '../utils/logger.js';
 
 const build = async (
   context: Context<Config, ExtendsPluginAPI>,
@@ -96,7 +96,7 @@ const build = async (
       }
 
       if (messages.errors.length) {
-        consola.error('webpack compile error');
+        logger.error('Webpack compile error.');
         reject(new Error(messages.errors.join('\n\n')));
         return;
       } else {

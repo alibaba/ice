@@ -1,8 +1,7 @@
 import path from 'path';
 import { createHash } from 'crypto';
-import consola from 'consola';
 import fse from 'fs-extra';
-import { build } from 'esbuild';
+import { esbuild } from '@ice/bundles';
 import type { Plugin } from 'esbuild';
 import { resolve as resolveExports } from 'resolve.exports';
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
@@ -13,10 +12,13 @@ import flattenId from '../utils/flattenId.js';
 import formatPath from '../utils/formatPath.js';
 import { BUILDIN_CJS_DEPS, BUILDIN_ESM_DEPS } from '../constant.js';
 import type { DepScanData } from '../esbuild/scan.js';
-import resolvePlugin from '../esbuild/resolve.js';
+import externalPlugin from '../esbuild/external.js';
 import emptyCSSPlugin from '../esbuild/emptyCSS.js';
 import cssModulesPlugin from '../esbuild/cssModules.js';
 import escapeLocalIdent from '../utils/escapeLocalIdent.js';
+import { createLogger } from '../utils/logger.js';
+
+const logger = createLogger('pre-bundle-deps');
 
 interface DepInfo {
   file: string;
@@ -36,7 +38,8 @@ interface PreBundleDepsOptions {
   depsInfo: Record<string, DepScanData>;
   cacheDir: string;
   taskConfig: Config;
-  alias: TaskConfig<Config>['config']['alias'];
+  alias: Record<string, string>;
+  ignores?: string[];
   plugins?: Plugin[];
 }
 
@@ -44,7 +47,7 @@ interface PreBundleDepsOptions {
  * Pre bundle dependencies from esm to cjs.
  */
 export default async function preBundleCJSDeps(options: PreBundleDepsOptions): Promise<PreBundleDepsResult> {
-  const { depsInfo, cacheDir, taskConfig, plugins = [], alias } = options;
+  const { depsInfo, cacheDir, taskConfig, plugins = [], alias, ignores } = options;
   const metadata = createDepsMetadata(depsInfo, taskConfig);
 
   if (!Object.keys(depsInfo)) {
@@ -84,7 +87,7 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
   }
 
   try {
-    await build({
+    await esbuild.build({
       absWorkingDir: process.cwd(),
       entryPoints: flatIdDeps,
       bundle: true,
@@ -94,9 +97,10 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
       platform: 'node',
       loader: { '.js': 'jsx' },
       ignoreAnnotations: true,
+      alias,
       plugins: [
         emptyCSSPlugin(),
-        resolvePlugin({ alias, format: 'cjs', externalDependencies: false }),
+        externalPlugin({ ignores, format: 'cjs', externalDependencies: false }),
         cssModulesPlugin({
           extract: false,
           generateLocalIdentName: function (name: string, filename: string) {
@@ -109,8 +113,8 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
       external: [...BUILDIN_CJS_DEPS, ...BUILDIN_ESM_DEPS],
     });
   } catch (error) {
-    consola.error('Failed to bundle dependencies.');
-    consola.debug(error);
+    logger.error('Failed to bundle dependencies.');
+    logger.debug(error);
     return {};
   }
 
