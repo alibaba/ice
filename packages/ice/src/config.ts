@@ -1,11 +1,11 @@
 import { createRequire } from 'module';
 import trustCert from '@ice/bundles/compiled/trusted-cert/index.js';
 import fse from 'fs-extra';
-import consola from 'consola';
 import type { Config } from '@ice/webpack-config/esm/types';
 import type { UserConfigContext } from 'build-scripts';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { UserConfig } from './types/userConfig.js';
+import { logger } from './utils/logger.js';
 
 const require = createRequire(import.meta.url);
 const { merge } = lodash;
@@ -140,7 +140,7 @@ const userConfig = [
     },
     setConfig: (_config: Config, server: UserConfig['server']) => {
       if (server.format === 'esm' && server.bundle) {
-        consola.error('Do not support bundle in ESM mode. Please set `server.bundle` to false.');
+        logger.error('Do not support bundle in ESM mode. Please set `server.bundle` to false.');
         process.exit(1);
       }
     },
@@ -160,7 +160,7 @@ const userConfig = [
       if (configureWebpack) {
         // create warning for user
         const customConfigWebpack: Config['configureWebpack'][0] = (...args) => {
-          consola.warn('It is not recommended to configure webpack directly.');
+          logger.warn('It is not recommended to configure webpack directly.');
           return configureWebpack(...args);
         };
         config.configureWebpack = [...(config.configureWebpack || []), customConfigWebpack];
@@ -204,7 +204,7 @@ const userConfig = [
           },
         });
       } else {
-        consola.warn(`dropLogLevel only support [${Object.keys(levels).join(',')}]`);
+        logger.warn(`dropLogLevel only support [${Object.keys(levels).join(',')}]`);
       }
     },
   },
@@ -278,7 +278,7 @@ const userConfig = [
         const dependenciesMsg = 'Please check dependencies of eslint(> 7.0.0)';
 
         if (dependencyError) {
-          consola.warn(dependenciesMsg);
+          logger.warn(dependenciesMsg);
           return;
         }
         let eslintOptions = {

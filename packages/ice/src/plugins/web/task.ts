@@ -5,9 +5,17 @@ import { CACHE_DIR, RUNTIME_TMP_DIR } from '../../constant.js';
 import { getRoutePathsFromCache } from '../../utils/getRoutePaths.js';
 
 const require = createRequire(import.meta.url);
-const getWebTask = ({ rootDir, command, dataCache }): Config => {
+const getWebTask = ({ rootDir, command, dataCache, userConfig }): Config => {
   // basic task config of web task
   const defaultLogging = command === 'start' ? 'summary' : 'summary assets';
+  const removeExportExprs = ['serverDataLoader', 'staticDataLoader'];
+
+  // Remove dataLoader exports only when build in production
+  // and configure to generate data-loader.js.
+  if (command === 'build' && userConfig.dataLoader) {
+    removeExportExprs.push('dataLoader');
+  }
+
   return {
     mode: command === 'start' ? 'development' : 'production',
     sourceMap: command === 'start' ? 'cheap-module-source-map' : false,
@@ -26,7 +34,7 @@ const getWebTask = ({ rootDir, command, dataCache }): Config => {
     },
     swcOptions: {
       // The dataLoader is built by data-loader
-      removeExportExprs: ['dataLoader', 'serverDataLoader', 'staticDataLoader'],
+      removeExportExprs,
       keepPlatform: 'web',
       getRoutePaths: () => {
         return getRoutePathsFromCache(dataCache);

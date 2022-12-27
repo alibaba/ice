@@ -95,7 +95,7 @@ export async function redirectImport(code: string, options: Options): Promise<st
   try {
     imports = parse(code)[0];
   } catch (e) {
-    consola.error('[parse error]', e);
+    consola.debug('[parse error]', e);
   }
   if (!imports.length) {
     return code;
@@ -146,6 +146,7 @@ export async function redirectImport(code: string, options: Options): Promise<st
 
         if (Object.keys(matchedImports).length > 0) {
           const transformedImport = generateImport(matchedImports);
+          // TODO: Add file name detail.
           consola.debug(`transform ${importStr} to ${transformedImport}`);
 
           if (missMatchedIdentifiers.length > 0) {

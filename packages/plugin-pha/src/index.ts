@@ -1,7 +1,7 @@
 import * as path from 'path';
 import consola from 'consola';
 import chalk from 'chalk';
-import type { Plugin, GetAppConfig, GetRoutesConfig } from '@ice/app/esm/types';
+import type { Plugin, GetAppConfig, GetRoutesConfig, GetDataloaderConfig } from '@ice/app/esm/types';
 import generateManifest from './generateManifest.js';
 import createPHAMiddleware from './phaMiddleware.js';
 
@@ -34,6 +34,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
     let urlPrefix: string;
     let getAppConfig: GetAppConfig;
     let getRoutesConfig: GetRoutesConfig;
+    let getDataloaderConfig: GetDataloaderConfig;
 
     generator.addRouteTypes({
       specifier: ['PageConfig'],
@@ -51,6 +52,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
 
       getAppConfig = restAPI.getAppConfig;
       getRoutesConfig = restAPI.getRoutesConfig;
+      getDataloaderConfig = restAPI.getDataloaderConfig;
 
       // Need absolute path for pha dev.
       publicPath = command === 'start' ? getDevPath(urls.lanUrlForTerminal || urls.localUrlForTerminal) : (taskConfig.publicPath || '/');
@@ -77,6 +79,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
         compiler,
         getAppConfig,
         getRoutesConfig,
+        getDataloaderConfig,
         parseOptions: {
           publicPath,
           urlPrefix,
@@ -125,6 +128,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
           outputDir,
           getAppConfig,
           getRoutesConfig,
+          getDataloaderConfig,
           compileTask: () => serverCompileTask.get(),
           parseOptions: {
             publicPath,

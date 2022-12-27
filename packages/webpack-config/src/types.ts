@@ -118,7 +118,7 @@ export interface Config {
 
   polyfill?: 'usage' | 'entry' | false;
   // You can use `browserslist` to automatically configure supported browsers if set to be true.
-  env?: boolean;
+  enableEnv?: boolean;
 
   compileIncludes?: (string | RegExp)[];
 

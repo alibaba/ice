@@ -71,7 +71,7 @@ const plugin: Plugin<PluginOptions> = (options = {}) => ({
           silent: true,
         });
         if (iconFile) {
-          config.transformPlugins = [...(config.transformPlugins || []), importIcon(iconFile, theme['css-prefix'] || 'next-')];
+          config.transformPlugins = [...(config.transformPlugins || []), importIcon(iconFile, theme?.['css-prefix'] || 'next-')];
         }
         // Modify webpack config of scss rule for fusion theme.
         config.configureWebpack ??= [];

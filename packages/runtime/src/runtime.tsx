@@ -4,6 +4,7 @@ import type { ComponentType } from 'react';
 import type {
   Renderer,
   AppContext,
+  StaticRuntimePlugin,
   RuntimePlugin,
   CommonJsRuntime,
   RuntimeAPI,
@@ -37,6 +38,7 @@ class Runtime {
     this.render = (container, element) => {
       const root = ReactDOM.createRoot(container);
       root.render(element);
+      return root;
     };
     this.RouteWrappers = [];
     this.runtimeOptions = runtimeOptions;
@@ -56,9 +58,10 @@ class Runtime {
 
   public getWrappers = () => this.RouteWrappers;
 
-  public async loadModule(module: RuntimePlugin | CommonJsRuntime) {
+  public async loadModule(module: RuntimePlugin | StaticRuntimePlugin | CommonJsRuntime) {
     let runtimeAPI: RuntimeAPI = {
       addProvider: this.addProvider,
+      getAppRouter: this.getAppRouter,
       setRender: this.setRender,
       addWrapper: this.addWrapper,
       appContext: this.appContext,
@@ -68,7 +71,7 @@ class Runtime {
       useAppContext,
     };
 
-    const runtimeModule = (module as CommonJsRuntime).default || module as RuntimePlugin;
+    const runtimeModule = ((module as CommonJsRuntime).default || module) as RuntimePlugin;
     if (module) {
       return await runtimeModule(runtimeAPI, this.runtimeOptions);
     }

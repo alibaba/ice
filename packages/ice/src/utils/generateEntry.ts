@@ -5,6 +5,8 @@ import type { ServerContext, RenderMode, AppConfig, DistType } from '@ice/runtim
 import { ROUTER_MANIFEST } from '../constant.js';
 import getRoutePaths from './getRoutePaths.js';
 import dynamicImport from './dynamicImport.js';
+import { logger } from './logger.js';
+
 interface Options {
   rootDir: string;
   entry: string;
@@ -94,7 +96,7 @@ async function generateHTMLPath(
   // Win32 do not support file name with
   const fileName = routePath === '/' ? 'index.html' : `${routePath.replace(/\/:/g, '/$')}.html`;
   if (fse.existsSync(path.join(rootDir, 'public', fileName))) {
-    consola.warn(`${fileName} is overwrite by framework, rename file name if it is necessary.`);
+    logger.warn(`${fileName} is overwrite by framework, rename file name if it is necessary.`);
   }
 
   return path.join(outputDir, fileName);
