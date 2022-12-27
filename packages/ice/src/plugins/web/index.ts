@@ -7,8 +7,8 @@ import getWebTask from './task.js';
 
 const plugin: Plugin = () => ({
   name: 'plugin-web',
-  setup: ({ registerTask, onHook, context, generator, serverCompileTask, dataCache, watch, getAllPlugin }) => {
-    const { rootDir, commandArgs, command, userConfig } = context;
+  setup: ({ registerTask, onHook, context, dataCache }) => {
+    const { rootDir, commandArgs, command } = context;
     registerTask(WEB, getWebTask({ rootDir, command, dataCache }));
 
     onHook('after.start.compile', async ({ isSuccessful, isFirstCompile, urls, devUrlInfo }) => {

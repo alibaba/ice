@@ -222,7 +222,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     }
   }
   // HashRouter loads route modules by the CSR.
-  if (appConfig?.router?.type === 'hash') {
+  if (appConfig?.router?.type === 'hash' || distType === 'javascript') {
     return renderDocument({ matches: [], renderOptions });
   }
 
