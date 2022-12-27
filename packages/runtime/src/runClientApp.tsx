@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useEffect, useState } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { createHashHistory, createBrowserHistory, createMemoryHistory } from 'history';
 import type { HashHistory, BrowserHistory, Action, Location, InitialEntry, MemoryHistory } from 'history';
@@ -232,7 +232,11 @@ function BrowserEntry({
         });
       });
     }
+    // just trigger once
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
+  useEffect(() => {
     // rerender page use actual data for ssg.
     if (renderMode === 'SSG') {
       const initialContext = getRequestContext(window.location);
@@ -243,21 +247,21 @@ function BrowserEntry({
         });
       });
     }
-
     // just trigger once
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // update app context for the current route.
-  const context = Object.assign(appContext, {
+  const context = {
+    ...appContext,
     matches,
     routesData,
     routesConfig,
     routeModules,
-  });
+  };
 
   return (
-    <AppContextProvider value={{ ...context }}>
+    <AppContextProvider value={context}>
       <App
         action={action}
         location={location}
