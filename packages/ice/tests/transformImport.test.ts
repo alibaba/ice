@@ -7,7 +7,7 @@ import { createUnplugin } from 'unplugin';
 import preBundleCJSDeps from '../src/service/preBundleCJSDeps';
 import { scanImports } from '../src/service/analyze';
 import transformImport from '../src/esbuild/transformImport';
-import resolvePlugin from '../src/esbuild/resolve';
+import externalPlugin from '../src/esbuild/external';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const alias = { '@': path.join(__dirname, './fixtures/scan') };
@@ -26,10 +26,12 @@ it('transform module import', async () => {
   });
   const transformImportPlugin = createUnplugin(() => transformImport(metadata, path.join(outdir, 'server'))).esbuild;
   await esbuild.build({
+    alias,
+    bundle: true,
     entryPoints: [appEntry],
     outdir,
     plugins: [
-      resolvePlugin({ alias, format: 'esm', externalDependencies: false }),
+      externalPlugin({ format: 'esm', externalDependencies: false }),
       transformImportPlugin(),
     ],
   });

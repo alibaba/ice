@@ -19,7 +19,7 @@ $ npm i @ice/appear --save
 
 ## 当元素进入可见状态时
 
-```js
+```jsx
 import VisibilityChange from '@ice/appear';
 
 export default function Home() {
@@ -37,7 +37,7 @@ export default function Home() {
 
 ## 当元素进入不可见状态时
 
-```js
+```jsx
 import VisibilityChange from '@ice/appear';
 
 export default function Home() {

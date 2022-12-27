@@ -3,8 +3,10 @@
 ## v3.0.4
 
 - [feat] support incremental compile for server bundle
-- [fix] should not remove dataLoader for page when dataLoader is disabled
 - [feat] add suspense to exports
+- [feat] refactor server bundle alias
+- [fix] support HMR when modules is used by dataLoader
+- [fix] error occur when configure `dataLoader: false`
 
 ## v3.0.3
 

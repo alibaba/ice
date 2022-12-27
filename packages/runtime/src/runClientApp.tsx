@@ -214,15 +214,15 @@ function BrowserEntry({
           currentMatches,
           routeState,
         ).then(({ routesData, routesConfig, routeModules }) => {
-          setHistoryState({
-            action,
-            location,
-          });
           setRouteState({
             routesData,
             routesConfig,
             matches: currentMatches,
             routeModules,
+          });
+          setHistoryState({
+            action,
+            location,
           });
         });
       });
