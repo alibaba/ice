@@ -7,6 +7,7 @@
 - [feat] support log debug info with different namespaces
 - [fix] support HMR when modules is used by dataLoader
 - [fix] error occur when configure `dataLoader: false`
+- [fix] don't compile data-loader to lower ES version
 
 ## v3.0.3
 
