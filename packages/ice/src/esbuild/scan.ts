@@ -18,7 +18,8 @@ export interface DepScanData {
 
 interface Options {
   rootDir: string;
-  alias: Record<string, string | false>;
+  alias: Record<string, string>;
+  ignores: string[];
   deps: Record<string, DepScanData>;
   exclude: string[];
 }
@@ -28,7 +29,7 @@ interface Options {
  */
 const scanPlugin = (options: Options): Plugin => {
   // deps for record scanned imports
-  const { deps, exclude, alias, rootDir } = options;
+  const { deps, exclude, alias, rootDir, ignores = [] } = options;
   const dataUrlRE = /^\s*data:/i;
   const httpUrlRE = /^(https?:)?\/\//;
   const cache = new Map<string, string | false>();
@@ -116,8 +117,9 @@ const scanPlugin = (options: Options): Plugin => {
         const resolved = resolve(id, importer);
         if (resolved) {
           // aliased dependencies
-          if (!path.isAbsolute(resolved) && !id.startsWith('.')) {
-            const { pkgPath } = getPackageData(require.resolve(resolved, { paths: [path.dirname(importer)] }));
+          if (!path.isAbsolute(resolved) && !resolved.startsWith('.') && !id.startsWith('.')) {
+            const resolvePath = require.resolve(resolved, { paths: [path.dirname(importer)] });
+            const { pkgPath } = getPackageData(resolvePath);
             deps[id] = {
               name: resolved,
               pkgPath,
@@ -143,11 +145,10 @@ const scanPlugin = (options: Options): Plugin => {
                 external: true,
               };
             }
-            return {
-              path: resolved,
-            };
           }
-        } else if (resolved === false) {
+        }
+
+        if (ignores.includes(id)) {
           // alias set to be false
           return {
             path: id,

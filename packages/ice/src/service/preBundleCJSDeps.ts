@@ -12,7 +12,7 @@ import flattenId from '../utils/flattenId.js';
 import formatPath from '../utils/formatPath.js';
 import { BUILDIN_CJS_DEPS, BUILDIN_ESM_DEPS } from '../constant.js';
 import type { DepScanData } from '../esbuild/scan.js';
-import resolvePlugin from '../esbuild/resolve.js';
+import externalPlugin from '../esbuild/external.js';
 import emptyCSSPlugin from '../esbuild/emptyCSS.js';
 import cssModulesPlugin from '../esbuild/cssModules.js';
 import escapeLocalIdent from '../utils/escapeLocalIdent.js';
@@ -38,7 +38,8 @@ interface PreBundleDepsOptions {
   depsInfo: Record<string, DepScanData>;
   cacheDir: string;
   taskConfig: Config;
-  alias: TaskConfig<Config>['config']['alias'];
+  alias: Record<string, string>;
+  ignores?: string[];
   plugins?: Plugin[];
 }
 
@@ -46,7 +47,7 @@ interface PreBundleDepsOptions {
  * Pre bundle dependencies from esm to cjs.
  */
 export default async function preBundleCJSDeps(options: PreBundleDepsOptions): Promise<PreBundleDepsResult> {
-  const { depsInfo, cacheDir, taskConfig, plugins = [], alias } = options;
+  const { depsInfo, cacheDir, taskConfig, plugins = [], alias, ignores } = options;
   const metadata = createDepsMetadata(depsInfo, taskConfig);
 
   if (!Object.keys(depsInfo)) {
@@ -96,9 +97,10 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
       platform: 'node',
       loader: { '.js': 'jsx' },
       ignoreAnnotations: true,
+      alias,
       plugins: [
         emptyCSSPlugin(),
-        resolvePlugin({ alias, format: 'cjs', externalDependencies: false }),
+        externalPlugin({ ignores, format: 'cjs', externalDependencies: false }),
         cssModulesPlugin({
           extract: false,
           generateLocalIdentName: function (name: string, filename: string) {

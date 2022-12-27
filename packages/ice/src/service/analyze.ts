@@ -5,8 +5,6 @@ import fg from 'fast-glob';
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
 import { esbuild } from '@ice/bundles';
 import type { Loader, Plugin } from 'esbuild';
-import type { TaskConfig } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/esm/types';
 import { getCache, setCache } from '../utils/persistentCache.js';
 import { getFileHash } from '../utils/hash.js';
 import scanPlugin from '../esbuild/scan.js';
@@ -16,7 +14,7 @@ import { createLogger } from '../utils/logger.js';
 
 const logger = createLogger('scan-modules');
 
-type Alias = TaskConfig<Config>['config']['alias'];
+type Alias = Record<string, string>;
 
 interface Options {
   parallel?: number;
@@ -164,22 +162,25 @@ interface ScanOptions {
   depImports?: Record<string, DepScanData>;
   plugins?: Plugin[];
   exclude?: string[];
+  ignores?: string[];
 }
 
 export async function scanImports(entries: string[], options?: ScanOptions) {
   const start = performance.now();
-  const { alias = {}, depImports = {}, exclude = [], rootDir, plugins } = options;
+  const { alias = {}, depImports = {}, exclude = [], rootDir, plugins, ignores } = options;
   const deps = { ...depImports };
 
   try {
     await Promise.all(
       entries.map((entry) =>
         esbuild.build({
+          alias,
           absWorkingDir: rootDir,
           write: false,
           entryPoints: [entry],
           bundle: true,
           format: 'esm',
+          platform: 'node',
           logLevel: 'silent',
           loader: { '.js': 'jsx' },
           plugins: [
@@ -187,6 +188,7 @@ export async function scanImports(entries: string[], options?: ScanOptions) {
               rootDir,
               deps,
               alias,
+              ignores,
               exclude,
             }),
             ...(plugins || []),

@@ -3,6 +3,7 @@
 ## v3.0.4
 
 - [feat] support incremental compile for server bundle
+- [feat] refactor server bundle alias
 - [feat] support log debug info with different namespaces
 - [fix] support HMR when modules is used by dataLoader
 - [fix] error occur when configure `dataLoader: false`
