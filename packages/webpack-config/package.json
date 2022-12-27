@@ -15,7 +15,7 @@
     "!esm/**/*.map"
   ],
   "dependencies": {
-    "@ice/bundles": "0.1.1",
+    "@ice/bundles": "0.1.2",
     "@rollup/pluginutils": "^4.2.0",
     "consola": "^2.15.3",
     "fast-glob": "^3.2.11",

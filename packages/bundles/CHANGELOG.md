@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+- [fix] add esbuild and esbuild-register
+
 ## 0.1.1
 
 - [fix] Bump version of `@swc/core`(1.3.3 -> 1.3.19), https://github.com/swc-project/swc/issues/6371
