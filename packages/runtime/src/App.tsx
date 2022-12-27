@@ -25,7 +25,7 @@ export default function App(props: Props) {
     RouteWrappers,
   } = props;
 
-  const { appConfig, routes: originRoutes, basename, routesData } = useAppContext();
+  const { appConfig, routes: originRoutes, basename } = useAppContext();
   const { strict, errorBoundary } = appConfig.app;
   const StrictMode = strict ? React.StrictMode : React.Fragment;
 
@@ -37,7 +37,7 @@ export default function App(props: Props) {
     () => createRouteElements(originRoutes, RouteWrappers),
     // `originRoutes` and `RouteWrappers` will not be changed
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [routesData],
+    [],
   );
 
   const ErrorBoundary = errorBoundary ? AppErrorBoundary : React.Fragment;

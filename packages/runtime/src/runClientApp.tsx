@@ -249,7 +249,7 @@ function BrowserEntry({
   }, []);
 
   // update app context for the current route.
-  Object.assign(appContext, {
+  const context = Object.assign(appContext, {
     matches,
     routesData,
     routesConfig,
@@ -257,7 +257,7 @@ function BrowserEntry({
   });
 
   return (
-    <AppContextProvider value={appContext}>
+    <AppContextProvider value={{ ...context }}>
       <App
         action={action}
         location={location}
