@@ -4,9 +4,9 @@ import fse from 'fs-extra';
 import type { Plugin } from 'esbuild';
 import fg from 'fast-glob';
 import findUp from 'find-up';
-import consola from 'consola';
 import { resolveId } from '../service/analyze.js';
 import formatPath from '../utils/formatPath.js';
+import { logger } from '../utils/logger.js';
 import { ASSET_TYPES } from './assets.js';
 
 const require = createRequire(import.meta.url);
@@ -64,12 +64,12 @@ const scanPlugin = (options: Options): Plugin => {
       pkgNameCache.set(resolved, result);
       return result;
     } catch (err) {
-      consola.error(`cant resolve package of path: ${resolved}`, err);
+      logger.error(`cant resolve package of path: ${resolved}`, err);
     }
   };
 
   return {
-    name: 'esbuild-scan',
+    name: 'esbuild-scan-deps',
     setup(build) {
       // external urls
       build.onResolve({ filter: httpUrlRE }, ({ path }) => ({

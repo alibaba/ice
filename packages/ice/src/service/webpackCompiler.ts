@@ -1,11 +1,11 @@
 import webpackBundler from '@ice/bundles/compiled/webpack/index.js';
 import type ora from '@ice/bundles/compiled/ora/index.js';
-import consola from 'consola';
 import type { TaskConfig, Context } from 'build-scripts';
 import type { Config } from '@ice/webpack-config/esm/types';
 import type webpack from 'webpack';
 import type { Urls, ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI, GetDataloaderConfig } from '../types/plugin.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
+import { logger } from '../utils/logger.js';
 
 async function webpackCompiler(options: {
   context: Context<Config, ExtendsPluginAPI>;
@@ -53,8 +53,8 @@ async function webpackCompiler(options: {
     // @ts-ignore
     compiler = webpackBundler(webpackConfigs);
   } catch (err) {
-    consola.error('Webpack compile error.');
-    consola.error(err.message || err);
+    logger.error('Webpack compile error.');
+    logger.error(err.message || err);
   }
 
   let isFirstCompile = true;
@@ -75,12 +75,12 @@ async function webpackCompiler(options: {
       if (messages.errors.length > 1) {
         messages.errors.length = 1;
       }
-      consola.error('Compiled with errors.');
+      logger.error('Compiled with errors.');
       console.error(messages.errors.join('\n'));
       return;
     } else if (messages.warnings.length) {
-      consola.warn('Compiled with warnings.');
-      consola.warn(messages.warnings.join('\n'));
+      logger.warn('Compiled with warnings.');
+      logger.warn(messages.warnings.join('\n'));
     }
     if (command === 'start') {
       // compiler.hooks.done is AsyncSeriesHook which does not support async function

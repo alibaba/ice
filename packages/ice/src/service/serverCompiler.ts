@@ -1,5 +1,4 @@
 import * as path from 'path';
-import consola from 'consola';
 import { esbuild } from '@ice/bundles';
 import fse from 'fs-extra';
 import fg from 'fast-glob';
@@ -22,9 +21,12 @@ import isExternalBuiltinDep from '../utils/isExternalBuiltinDep.js';
 import getServerEntry from '../utils/getServerEntry.js';
 import type { DepScanData } from '../esbuild/scan.js';
 import formatPath from '../utils/formatPath.js';
+import { createLogger } from '../utils/logger.js';
 import { scanImports } from './analyze.js';
 import type { DepsMetaData } from './preBundleCJSDeps.js';
 import preBundleCJSDeps from './preBundleCJSDeps.js';
+
+const logger = createLogger('server-compiler');
 
 interface Options {
   rootDir: string;
@@ -174,12 +176,12 @@ export function createServerCompiler(options: Options) {
     }
 
     const startTime = new Date().getTime();
-    consola.debug('[esbuild]', `start compile for: ${JSON.stringify(buildOptions.entryPoints)}`);
+    logger.debug('[esbuild]', `start compile for: ${JSON.stringify(buildOptions.entryPoints)}`);
 
     try {
       const esbuildResult = await esbuild.build(buildOptions);
 
-      consola.debug('[esbuild]', `time cost: ${new Date().getTime() - startTime}ms`);
+      logger.debug('[esbuild]', `time cost: ${new Date().getTime() - startTime}ms`);
 
       const esm = server?.format === 'esm';
       const outJSExtension = esm ? '.mjs' : '.cjs';
@@ -199,9 +201,14 @@ export function createServerCompiler(options: Options) {
         serverEntry,
       };
     } catch (error) {
-      consola.error('Server compile error.', `\nEntryPoints: ${JSON.stringify(buildOptions.entryPoints)}`);
-      consola.debug('Build options: ', buildOptions);
-      consola.debug(error.stack);
+      logger.error(
+        'Server compile error.',
+        `\nEntryPoints: ${JSON.stringify(buildOptions.entryPoints)}`,
+        `\n${error.message}`,
+      );
+      // TODO: Log esbuild options with namespace.
+      // logger.debug('esbuild options: ', buildOptions);
+      logger.debug(error.stack);
       return {
         error: error as Error,
       };
