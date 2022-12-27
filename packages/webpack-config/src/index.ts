@@ -169,7 +169,7 @@ const getWebpackConfig: GetWebpackConfig = ({ rootDir, config, webpack, runtimeT
     compileExcludes,
     swcOptions,
     polyfill,
-    env: true,
+    enableEnv: true,
   });
   const webpackConfig = {
     mode,

@@ -19,7 +19,7 @@ interface Options {
   swcOptions?: Config['swcOptions'];
   cacheDir?: string;
   polyfill?: Config['polyfill'];
-  env?: boolean;
+  enableEnv?: boolean;
 }
 
 const formatId = (id: string) => id.split(path.sep).join('/');
@@ -34,7 +34,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
     swcOptions = {},
     cacheDir,
     polyfill,
-    env,
+    enableEnv,
   } = options;
 
   const { removeExportExprs, compilationConfig, keepPlatform, keepExports, getRoutePaths } = swcOptions;
@@ -78,7 +78,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
         sourceMaps: !!sourceMap,
       };
 
-      const commonOptions = getJsxTransformOptions({ suffix, fastRefresh, polyfill, env });
+      const commonOptions = getJsxTransformOptions({ suffix, fastRefresh, polyfill, enableEnv });
 
       // auto detect development mode
       if (
@@ -178,14 +178,14 @@ interface GetJsxTransformOptions {
   suffix: JSXSuffix;
   fastRefresh: boolean;
   polyfill: Config['polyfill'];
-  env: boolean;
+  enableEnv: boolean;
 }
 
 function getJsxTransformOptions({
   suffix,
   fastRefresh,
   polyfill,
-  env,
+  enableEnv,
 }: GetJsxTransformOptions) {
   const reactTransformConfig: ReactConfig = {
     refresh: fastRefresh,
@@ -208,7 +208,7 @@ function getJsxTransformOptions({
       noInterop: false,
     },
   };
-  if (env) {
+  if (enableEnv) {
     commonOptions.env = {
       loose: false,
       ...(polyfill ? {

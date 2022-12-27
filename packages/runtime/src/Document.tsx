@@ -146,12 +146,13 @@ export function Data(props: DataProps) {
   const routePath = getCurrentRoutePath(matches);
   const windowContext: WindowContext = {
     appData,
-    routesData: renderMode === 'SSG' ? null : routesData,
+    routesData,
     routesConfig,
     routePath,
     downgrade,
     matchedIds,
     documentOnly,
+    renderMode,
   };
 
   return (
