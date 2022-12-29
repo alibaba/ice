@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useEffect, useState } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { createHashHistory, createBrowserHistory, createMemoryHistory } from 'history';
 import type { HashHistory, BrowserHistory, Action, Location, InitialEntry, MemoryHistory } from 'history';
@@ -54,6 +54,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routePath,
     downgrade,
     documentOnly,
+    renderMode,
   } = windowContext;
 
   const requestContext = getRequestContext(window.location);
@@ -72,6 +73,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     assetsManifest,
     basename,
     routePath,
+    renderMode,
   };
 
   const runtime = new Runtime(appContext, runtimeOptions);
@@ -96,7 +98,9 @@ export default async function runClientApp(options: RunClientAppOptions) {
   const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
 
   if (!routesData) {
-    routesData = await loadRoutesData(matches, requestContext, routeModules);
+    routesData = await loadRoutesData(matches, requestContext, routeModules, {
+      ssg: renderMode === 'SSG',
+    });
   }
 
   if (!routesConfig) {
@@ -105,7 +109,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
 
   if (hydrate && !downgrade && !documentOnly) {
     runtime.setRender((container, element) => {
-      ReactDOM.hydrateRoot(container, element);
+      return ReactDOM.hydrateRoot(container, element);
     });
   }
   // Reset app context after app context is updated.
@@ -114,7 +118,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     await Promise.all(runtimeModules.commons.map(m => runtime.loadModule(m)).filter(Boolean));
   }
 
-  render({ runtime, history });
+  return render({ runtime, history });
 }
 
 interface RenderOptions {
@@ -125,7 +129,7 @@ interface RenderOptions {
 async function render({ history, runtime }: RenderOptions) {
   const appContext = runtime.getAppContext();
   const { appConfig, appData } = appContext;
-  const render = runtime.getRender();
+  const appRender = runtime.getRender();
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
   const RouteWrappers = runtime.getWrappers();
   const AppRouter = runtime.getAppRouter();
@@ -139,7 +143,7 @@ async function render({ history, runtime }: RenderOptions) {
     console.warn(`Root node #${rootId} is not found, current root is automatically created by the framework.`);
   }
 
-  render(
+  return appRender(
     root,
     <AppDataProvider value={appData}>
       <AppRuntimeProvider>
@@ -185,6 +189,7 @@ function BrowserEntry({
     routesConfig: initialRoutesConfig,
     routeModules: initialRouteModules,
     basename,
+    renderMode,
   } = appContext;
 
   const [historyState, setHistoryState] = useState<HistoryState>({
@@ -214,15 +219,15 @@ function BrowserEntry({
           currentMatches,
           routeState,
         ).then(({ routesData, routesConfig, routeModules }) => {
-          setHistoryState({
-            action,
-            location,
-          });
           setRouteState({
             routesData,
             routesConfig,
             matches: currentMatches,
             routeModules,
+          });
+          setHistoryState({
+            action,
+            location,
           });
         });
       });
@@ -231,16 +236,32 @@ function BrowserEntry({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    // rerender page use actual data for ssg.
+    if (renderMode === 'SSG') {
+      const initialContext = getRequestContext(window.location);
+      loadRoutesData(matches, initialContext, routeModules).then(data => {
+        setRouteState({
+          ...routeState,
+          routesData: data,
+        });
+      });
+    }
+    // just trigger once
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // update app context for the current route.
-  Object.assign(appContext, {
+  const context = {
+    ...appContext,
     matches,
     routesData,
     routesConfig,
     routeModules,
-  });
+  };
 
   return (
-    <AppContextProvider value={appContext}>
+    <AppContextProvider value={context}>
       <App
         action={action}
         location={location}

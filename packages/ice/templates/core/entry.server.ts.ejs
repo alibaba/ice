@@ -1,6 +1,6 @@
 import './env.server';
 import * as runtime from '@ice/runtime/server';
-import { commons, statics } from './runtimeModules';
+<% if(hydrate) {-%>import { commons, statics } from './runtimeModules';<% } -%>
 import * as app from '@/app';
 import Document from '@/document';
 import type { RenderMode } from '@ice/runtime';
@@ -10,7 +10,11 @@ import routes from './routes';
 import routesConfig from './routes-config.bundle.mjs';
 <% if(dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
 <%- runtimeOptions.imports %>
-
+<% if(!hydrate) {-%>
+// Do not inject runtime modules when render mode is document only.
+const commons = [];
+const statics = [];
+<% } -%>
 const runtimeModules = { commons, statics };
 
 const getRouterBasename = () => {

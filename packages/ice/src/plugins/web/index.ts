@@ -1,5 +1,4 @@
 import * as path from 'path';
-import consola from 'consola';
 import chalk from 'chalk';
 import type { RenderMode } from '@ice/runtime';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
@@ -13,6 +12,7 @@ import generateHTML from '../../utils/generateHTML.js';
 import openBrowser from '../../utils/openBrowser.js';
 import getServerCompilerPlugin from '../../utils/getServerCompilerPlugin.js';
 import type ServerCompilerPlugin from '../../webpack/ServerCompilerPlugin.js';
+import { logger } from '../../utils/logger.js';
 
 const { debounce } = lodash;
 
@@ -22,7 +22,7 @@ const plugin: Plugin = () => ({
     const { rootDir, commandArgs, command, userConfig } = context;
     const { ssg } = userConfig;
 
-    registerTask(WEB, getWebTask({ rootDir, command, dataCache }));
+    registerTask(WEB, getWebTask({ rootDir, command, dataCache, userConfig }));
 
     generator.addExport({
       specifier: ['Link', 'Outlet', 'useParams', 'useSearchParams', 'useLocation', 'useNavigate'],
@@ -71,6 +71,7 @@ const plugin: Plugin = () => ({
           [IMPORT_META_TARGET]: JSON.stringify('web'),
           [IMPORT_META_RENDERER]: JSON.stringify('server'),
         },
+        incremental: command === 'start',
       });
       webpackConfigs[0].plugins.push(
         // Add webpack plugin of data-loader in web task
@@ -129,21 +130,21 @@ const plugin: Plugin = () => ({
 
     onHook('after.start.compile', async ({ isSuccessful, isFirstCompile, urls, devUrlInfo }) => {
       const { port, open } = commandArgs;
-      const { devPath, hashChar } = devUrlInfo;
+      const { devPath } = devUrlInfo;
       if (isSuccessful && isFirstCompile) {
         let logoutMessage = '\n';
         logoutMessage += chalk.green(' Starting the development server at:');
         if (process.env.CLOUDIDE_ENV) {
-          logoutMessage += `\n   - IDE server: https://${process.env.WORKSPACE_UUID}-${port}.${process.env.WORKSPACE_HOST}${hashChar}${devPath}`;
+          logoutMessage += `\n   - IDE server: https://${process.env.WORKSPACE_UUID}-${port}.${process.env.WORKSPACE_HOST}${devPath}`;
         } else {
           logoutMessage += `\n
-    - Local  : ${chalk.underline.white(`${urls.localUrlForBrowser}${hashChar}${devPath}`)}
-    - Network: ${chalk.underline.white(`${urls.lanUrlForTerminal}${hashChar}${devPath}`)}`;
+    - Local  : ${chalk.underline.white(`${urls.localUrlForBrowser}${devPath}`)}
+    - Network: ${chalk.underline.white(`${urls.lanUrlForTerminal}${devPath}`)}`;
         }
-        consola.log(`${logoutMessage}\n`);
+        logger.log(`${logoutMessage}\n`);
 
         if (open) {
-          openBrowser(`${urls.localUrlForBrowser}${hashChar}${devPath}`);
+          openBrowser(`${urls.localUrlForBrowser}${devPath}`);
         }
       }
     });

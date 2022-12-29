@@ -11,6 +11,7 @@ interface Options {
   userConfig: UserConfig;
   outputDir: string;
   serverEntry: string;
+  incremental: boolean;
   dataCache: Map<string, string>;
   serverCompileTask: ExtendsPluginAPI['serverCompileTask'];
   ensureRoutesConfig: () => Promise<void>;
@@ -27,6 +28,7 @@ function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Option
     serverCompileTask,
     ensureRoutesConfig,
     runtimeDefineVars,
+    incremental,
   } = options;
   const entryPoint = getServerEntry(rootDir, serverEntry);
   const { ssg, ssr, server: { format } } = userConfig;
@@ -46,6 +48,8 @@ function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Option
         mainFields: ['module', 'main'],
         outExtension: { '.js': isEsm ? '.mjs' : '.cjs' },
         metafile: true,
+        logLevel: 'silent', // The server compiler process will log it in debug.
+        incremental,
       },
       {
         preBundle: format === 'esm' && (ssr || ssg),
