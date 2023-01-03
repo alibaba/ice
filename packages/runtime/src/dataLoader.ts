@@ -42,6 +42,9 @@ export function setFetcher(customFetcher) {
  * Parse template for static dataLoader.
  */
 export function parseTemplate(config: StaticDataLoader) {
+  // Not parse template in SSG/SSR.
+  if (typeof window === 'undefined') return config;
+
   const queryParams = {};
   const getQueryParams = () => {
     if (Object.keys(queryParams).length === 0) {
