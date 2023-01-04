@@ -301,20 +301,18 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
       // Set static dataloader to data_prefetch of page.
       pageIds.forEach((pageId) => {
         if (typeof page === 'string' && dataloaderConfig && dataloaderConfig[pageId]) {
-          const staticPrefetches = [];
+          const staticDataLoaders = [];
           if (Array.isArray(dataloaderConfig[pageId])) {
             dataloaderConfig[pageId].forEach(item => {
-              console.log('item-outer', item);
               if (typeof item === 'object') {
-                console.log('item', item);
-                staticPrefetches.push(item);
+                staticDataLoaders.push(item);
               }
             });
           } else if (typeof dataloaderConfig[pageId] === 'object') {
             // Single prefetch loader config.
-            staticPrefetches.push(dataloaderConfig[pageId]);
+            staticDataLoaders.push(dataloaderConfig[pageId]);
           }
-          pageManifest.data_prefetch = [...(pageManifest.data_prefetch || []), ...staticPrefetches];
+          pageManifest.data_prefetch = [...(pageManifest.data_prefetch || []), ...staticDataLoaders];
         }
       });
 
@@ -326,19 +324,19 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
           const titleIds = getRouteIdByPage(routeManifest, title);
           titleIds.forEach((titleId) => {
             if (dataloaderConfig && dataloaderConfig[titleId]) {
-              const staticPrefetches = [];
+              const staticDataLoaders = [];
               if (Array.isArray(dataloaderConfig[title])) {
                 dataloaderConfig[title].forEach(item => {
                   if (typeof item === 'object') {
-                    staticPrefetches.push(item);
+                    staticDataLoaders.push(item);
                   }
                 });
               } else if (typeof dataloaderConfig[title] === 'object') {
                 // Single prefetch loader config.
-                staticPrefetches.push(dataloaderConfig[title]);
+                staticDataLoaders.push(dataloaderConfig[title]);
               }
 
-              frame.data_prefetch = [...(frame.data_prefetch || []), ...staticPrefetches];
+              frame.data_prefetch = [...(frame.data_prefetch || []), ...staticDataLoaders];
             }
           });
         });
