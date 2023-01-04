@@ -42,9 +42,6 @@ export function setFetcher(customFetcher) {
  * Parse template for static dataLoader.
  */
 export function parseTemplate(config: StaticDataLoader) {
-  // Not parse template in SSG/SSR.
-  if (typeof window === 'undefined') return config;
-
   const queryParams = {};
   const getQueryParams = () => {
     if (Object.keys(queryParams).length === 0) {
@@ -58,6 +55,7 @@ export function parseTemplate(config: StaticDataLoader) {
         });
       }
     }
+
     return queryParams;
   };
 
@@ -65,12 +63,13 @@ export function parseTemplate(config: StaticDataLoader) {
   const getCookie = () => {
     if (Object.keys(cookie).length === 0) {
       document.cookie.split(';').forEach(c => {
-        const res = c.split('=');
-        if (res[0] !== undefined && res[1] !== undefined) {
-          cookie[res[0].trim()] = res[1].trim();
+        const [key, value] = c.split('=');
+        if (key !== undefined && value !== undefined) {
+          cookie[key.trim()] = value.trim();
         }
       });
     }
+
     return cookie;
   };
 
@@ -108,7 +107,10 @@ export function parseTemplate(config: StaticDataLoader) {
 export function loadDataByCustomFetcher(config: StaticDataLoader) {
   let parsedConfig = config;
   try {
-    parsedConfig = parseTemplate(config);
+    // Not parse template in SSG/SSR.
+    if (typeof window === 'undefined') {
+      parsedConfig = parseTemplate(config);
+    }
   } catch (error) {
     console.error('parse template error: ', error);
   }
