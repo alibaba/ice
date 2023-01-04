@@ -1,15 +1,13 @@
-import { Link, useData, useConfig, defineDataLoader } from 'ice';
+import { Link, useData, defineDataLoader } from 'ice';
 
 export default function Custom() {
   const data = useData();
-  const config = useConfig();
-
-  console.log('render Test', 'data', data, 'config', config);
 
   return (
     <>
       <h2>Custom Page</h2>
       <Link to="/home">home</Link>
+      {data}
     </>
   );
 }
