@@ -221,14 +221,20 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
       console.error('Error: get app data error when SSR.', err);
     }
   }
+
   // HashRouter loads route modules by the CSR.
-  if (appConfig?.router?.type === 'hash' || distType === 'javascript') {
+  if (appConfig?.router?.type === 'hash') {
     return renderDocument({ matches: [], renderOptions });
   }
 
   const matches = matchRoutes(routes, location, finalBasename);
   if (!matches.length) {
     return render404();
+  }
+
+  if (distType === 'javascript' || (Array.isArray(distType) && distType.includes('javascript'))
+  ) {
+    return renderDocument({ matches, renderOptions });
   }
 
   const routePath = getCurrentRoutePath(matches);
