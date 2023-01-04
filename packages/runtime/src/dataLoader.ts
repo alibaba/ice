@@ -84,16 +84,17 @@ export function parseTemplate(config: StaticDataLoader) {
   }
 
   matched.forEach(item => {
-    if (item && item[0] && item[1] && item[2].startsWith('.') && item[2]) {
-      if (item[1] === 'queryParams') {
+    const [origin, key, value] = item;
+    if (item && origin && key && value && value.startsWith('.')) {
+      if (key === 'queryParams') {
         // Replace query params.
-        strConfig = strConfig.replace(item[0], getQueryParams()[item[2].substring(1)]);
-      } else if (item[1] === 'cookie') {
+        strConfig = strConfig.replace(origin, getQueryParams()[value.substring(1)]);
+      } else if (key === 'cookie') {
         // Replace cookie.
-        strConfig = strConfig.replace(item[0], getCookie()[item[2].substring(1)]);
-      } else if (item[1] === 'storage') {
+        strConfig = strConfig.replace(origin, getCookie()[value.substring(1)]);
+      } else if (key === 'storage') {
         // Replace storage.
-        strConfig = strConfig.replace(item[0], localStorage.getItem(item[2].substring(1)));
+        strConfig = strConfig.replace(origin, localStorage.getItem(value.substring(1)));
       }
     }
   });
