@@ -263,14 +263,9 @@ export function getRouteIdByPage(routeManifest: string, page: Page) {
   const routeId = typeof page === 'string' ? page : page?.name;
   const locationArg = routeId?.startsWith('/') ? routeId : `/${routeId}`;
   const matches = matchRoutes(routes, locationArg);
-  const targetRoute = (matches || []).reduce((prev, cur) => {
-    if (cur?.pathname === locationArg) {
-      return cur;
-    } else {
-      return prev;
-    }
-  }, {} as Record<string, any>);
-  return targetRoute?.route?.id;
+  return (matches || []).map((match) => {
+    return match?.route?.id;
+  });
 }
 export async function parseManifest(manifest: Manifest, options: ParseOptions): Promise<PHAManifest> {
   const {
@@ -301,45 +296,51 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
 
   if (routes && routes.length > 0) {
     manifest.pages = await Promise.all(routes.map(async (page) => {
-      const pageId = getRouteIdByPage(routeManifest, page);
+      const pageIds = getRouteIdByPage(routeManifest, page);
       const pageManifest = await getPageManifest(page, options);
       // Set static dataloader to data_prefetch of page.
-      if (typeof page === 'string' && dataloaderConfig && dataloaderConfig[pageId]) {
-        const staticPrefetches = [];
-        if (Array.isArray(dataloaderConfig[pageId])) {
-          dataloaderConfig[pageId].forEach(item => {
-            if (typeof item === 'object') {
-              staticPrefetches.push(item);
-            }
-          });
-        } else if (typeof dataloaderConfig[pageId] === 'object') {
-          // Single prefetch loader config.
-          staticPrefetches.push(dataloaderConfig[pageId]);
+      pageIds.forEach((pageId) => {
+        if (typeof page === 'string' && dataloaderConfig && dataloaderConfig[pageId]) {
+          const staticPrefetches = [];
+          if (Array.isArray(dataloaderConfig[pageId])) {
+            dataloaderConfig[pageId].forEach(item => {
+              console.log('item-outer', item);
+              if (typeof item === 'object') {
+                console.log('item', item);
+                staticPrefetches.push(item);
+              }
+            });
+          } else if (typeof dataloaderConfig[pageId] === 'object') {
+            // Single prefetch loader config.
+            staticPrefetches.push(dataloaderConfig[pageId]);
+          }
+          pageManifest.data_prefetch = [...(pageManifest.data_prefetch || []), ...staticPrefetches];
         }
-        pageManifest.data_prefetch = [...(pageManifest.data_prefetch || []), ...staticPrefetches];
-      }
+      });
 
       if (pageManifest.frames && pageManifest.frames.length > 0) {
         pageManifest.frames = await Promise.all(pageManifest.frames.map((frame) => getPageManifest(frame, options)));
         // Set static dataloader to data_prefetch of frames.
         pageManifest.frames.forEach(frame => {
           const title = frame.title || '';
-          const titleId = getRouteIdByPage(routeManifest, title);
-          if (typeof title === 'string' && dataloaderConfig && dataloaderConfig[titleId]) {
-            const staticPrefetches = [];
-            if (Array.isArray(dataloaderConfig[title])) {
-              dataloaderConfig[title].forEach(item => {
-                if (typeof item === 'object') {
-                  staticPrefetches.push(item);
-                }
-              });
-            } else if (typeof dataloaderConfig[title] === 'object') {
-              // Single prefetch loader config.
-              staticPrefetches.push(dataloaderConfig[title]);
-            }
+          const titleIds = getRouteIdByPage(routeManifest, title);
+          titleIds.forEach((titleId) => {
+            if (dataloaderConfig && dataloaderConfig[titleId]) {
+              const staticPrefetches = [];
+              if (Array.isArray(dataloaderConfig[title])) {
+                dataloaderConfig[title].forEach(item => {
+                  if (typeof item === 'object') {
+                    staticPrefetches.push(item);
+                  }
+                });
+              } else if (typeof dataloaderConfig[title] === 'object') {
+                // Single prefetch loader config.
+                staticPrefetches.push(dataloaderConfig[title]);
+              }
 
-            frame.data_prefetch = [...(frame.data_prefetch || []), ...staticPrefetches];
-          }
+              frame.data_prefetch = [...(frame.data_prefetch || []), ...staticPrefetches];
+            }
+          });
         });
       }
 
