@@ -1,5 +1,4 @@
 import * as path from 'path';
-import consola from 'consola';
 import chalk from 'chalk';
 import type { RenderMode } from '@ice/runtime';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
@@ -13,6 +12,7 @@ import generateHTML from '../../utils/generateHTML.js';
 import openBrowser from '../../utils/openBrowser.js';
 import getServerCompilerPlugin from '../../utils/getServerCompilerPlugin.js';
 import type ServerCompilerPlugin from '../../webpack/ServerCompilerPlugin.js';
+import { logger } from '../../utils/logger.js';
 
 const { debounce } = lodash;
 
@@ -22,7 +22,7 @@ const plugin: Plugin = () => ({
     const { rootDir, commandArgs, command, userConfig } = context;
     const { ssg } = userConfig;
 
-    registerTask(WEB, getWebTask({ rootDir, command, dataCache }));
+    registerTask(WEB, getWebTask({ rootDir, command, dataCache, userConfig }));
 
     generator.addExport({
       specifier: ['Link', 'Outlet', 'useParams', 'useSearchParams', 'useLocation', 'useNavigate'],
@@ -67,6 +67,7 @@ const plugin: Plugin = () => ({
         serverCompileTask: command === 'start' ? serverCompileTask : null,
         userConfig,
         ensureRoutesConfig,
+        incremental: command === 'start',
       });
       webpackConfigs[0].plugins.push(
         // Add webpack plugin of data-loader in web task
@@ -136,7 +137,7 @@ const plugin: Plugin = () => ({
     - Local  : ${chalk.underline.white(`${urls.localUrlForBrowser}${devPath}`)}
     - Network: ${chalk.underline.white(`${urls.lanUrlForTerminal}${devPath}`)}`;
         }
-        consola.log(`${logoutMessage}\n`);
+        logger.log(`${logoutMessage}\n`);
 
         if (open) {
           openBrowser(`${urls.localUrlForBrowser}${devPath}`);
