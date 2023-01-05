@@ -1,32 +1,3 @@
----
-name: 'RFC Discussion'
-about: 'To submit a feature request or a proposal, follow the RFC process'
-title: '[RFC]'
-labels: ''
-assignees: ''
----
-
-# Summary 概述
-
-Optional, brief explanation of the feature.
-
-# Motivation 背景动机
-
-Why are we doing this? What use cases does it support? What is the expected
-outcome?
-
-# Basic example 基础示例
-
-
-
-# Detailed design 方案设计
-
-
-
-# Unresolved questions 遗留问题
-
-
-
 name: RFC Discussion
 description: To submit a feature request or a proposal, follow the RFC process.
 labels: rfc
