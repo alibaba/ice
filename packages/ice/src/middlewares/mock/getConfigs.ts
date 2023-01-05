@@ -3,7 +3,7 @@ import { createRequire } from 'module';
 import assert from 'assert';
 import fg from 'fast-glob';
 import esbuildRegister from '@ice/bundles/compiled/esbuild-register/node.js';
-import consola from 'consola';
+import { logger } from '../../utils/logger.js';
 
 const { register } = esbuildRegister;
 const require = createRequire(import.meta.url);
@@ -47,7 +47,7 @@ export default function getConfigs(rootDir: string, exclude: string[] = []): Moc
     try {
       mockModule = require(mockFile);
     } catch (error) {
-      consola.error(`Failed to parse mock file ${mockFile}.\n${error.message}`);
+      logger.error(`Failed to parse mock file ${mockFile}.\n${error.message}`);
       return;
     }
     const config = mockModule.default || mockModule || {};

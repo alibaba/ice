@@ -6,7 +6,6 @@ import type { Config } from '@ice/webpack-config/esm/types';
 import type { AppConfig, RenderMode } from '@ice/runtime';
 import type ora from '@ice/bundles/compiled/ora/index.js';
 
-import consola from 'consola';
 import WebpackDevServer from '@ice/bundles/compiled/webpack-dev-server/lib/Server.js';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
@@ -19,6 +18,7 @@ import prepareURLs from '../utils/prepareURLs.js';
 import createRenderMiddleware from '../middlewares/ssr/renderMiddleware.js';
 import createMockMiddleware from '../middlewares/mock/createMiddleware.js';
 import getRouterBasename from '../utils/getRouterBasename.js';
+import { logger } from '../utils/logger.js';
 
 const { merge } = lodash;
 
@@ -225,7 +225,7 @@ async function invokeCompilerWatch({
     }
 
     if (messages.errors.length) {
-      consola.error('webpack compile error');
+      logger.error('Webpack compile error');
       throw new Error(messages.errors.join('\n\n'));
     }
   });

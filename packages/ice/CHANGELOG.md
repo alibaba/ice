@@ -1,8 +1,17 @@
 # Changelog
 
+## v3.0.5
+
+- [fix] bump @swc/helpers version (0.4.12-> 0.4.14) for module cannot resolve of `@swc/helpers/src/_object_destructuring_empty.mjs`
+
 ## v3.0.4
 
 - [feat] support incremental compile for server bundle
+- [feat] refactor server bundle alias
+- [feat] support log debug info with different namespaces
+- [fix] support HMR when modules is used by dataLoader
+- [fix] error occur when configure `dataLoader: false`
+- [fix] don't compile data-loader to lower ES version
 
 ## v3.0.3
 

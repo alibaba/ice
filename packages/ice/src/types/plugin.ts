@@ -48,6 +48,7 @@ export type ServerCompiler = (
     };
     redirectImports?: Config['redirectImports'];
     removeOutputs?: boolean;
+    enableEnv?: boolean;
   }
 ) => Promise<ServerBuildResult>;
 export type WatchEvent = [
