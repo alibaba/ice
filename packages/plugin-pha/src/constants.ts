@@ -43,7 +43,7 @@ export const decamelizeKeys = [
   'pullRefresh',
   'cacheQueryParams',
   'customDataSource',
-  'enable_expired_manifest',
+  'enableExpiredManifest',
 ];
 
 // Do not decamelize list.
