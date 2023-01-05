@@ -18,8 +18,7 @@ body:
     id: example
     attributes:
       label: Usage example | 使用示例
-      placeholder: If the proposal involves a new or changed API, include a basic code example.
-Omit this section if it's not applicable.
+      placeholder: If the proposal involves a new or changed API, include a basic code example. Omit this section if it's not applicable.
   - type: textarea
     id: design
     attributes:
