@@ -215,6 +215,17 @@ describe('transform config keys', () => {
     expect(manifestJSON).toMatchObject({ a: 123 });
   });
 
+  it('should transform enableExpiredManifest', () => {
+    const manifestJSON = transformManifestKeys(
+      {
+        enableExpiredManifest: true,
+      },
+      { isRoot: false },
+    );
+
+    expect(manifestJSON).toMatchObject({ enable_expired_manifest: true });
+  });
+
   it('should filter unknown fields in root', () => {
     const manifestJSON = transformManifestKeys(
       {
