@@ -1,5 +1,9 @@
 # @ice/runtime
 
+## v1.0.5
+
+- [feat] support template parse for dataLoader
+
 ## v1.0.4
 
 - [chore] show more log when failed to load route module
@@ -7,7 +11,6 @@
 
 ## v1.0.3
 
-- [feat] support template parse for dataLoader
 - [feat] optimize log when load route module failed
 - [revert] window context merge order
 - [fix] should call dataLoader when hydrate for SSG
