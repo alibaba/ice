@@ -15,9 +15,7 @@ describe(`build ${example}`, () => {
 
     page = res.page;
     browser = res.browser;
-    // await page.waitForNavigation({waitUntil: 'domcontentloaded'})
     // Compare text.
-    console.log('build', (await page.$$text('#about'))[0]);
     expect((await page.$$text('#about'))[0]).contains('Target=web Renderer=server');
   });
 
