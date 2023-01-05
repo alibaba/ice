@@ -11,8 +11,7 @@ body:
     id: motivation
     attributes:
       label: Motivation | 背景
-      placeholder: Why are we doing this? What use cases does it support? What is the expected
-outcome?
+      placeholder: Why are we doing this? What use cases does it support? What is the expected outcome?
     validations:
       required: true
   - type: textarea
