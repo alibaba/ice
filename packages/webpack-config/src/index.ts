@@ -1,11 +1,11 @@
 import * as path from 'path';
 import { createRequire } from 'module';
 import fg from 'fast-glob';
-// FIXME when prepack @pmmmwh/react-refresh-webpack-plugin
 import ReactRefreshWebpackPlugin from '@ice/bundles/compiled/@pmmmwh/react-refresh-webpack-plugin/lib/index.js';
 import bundleAnalyzer from '@ice/bundles/compiled/webpack-bundle-analyzer/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import CssMinimizerPlugin from '@ice/bundles/compiled/css-minimizer-webpack-plugin/index.js';
+import { DefinePlugin } from '@ice/bundles/compiled/webpack/index.js';
 import TerserPlugin from '@ice/bundles/compiled/terser-webpack-plugin/index.js';
 import ForkTsCheckerPlugin from '@ice/bundles/compiled/fork-ts-checker-webpack-plugin/index.js';
 import ESlintPlugin from '@ice/bundles/compiled/eslint-webpack-plugin/index.js';
@@ -34,6 +34,7 @@ interface GetWebpackConfigOptions {
   webpack: typeof webpack;
   runtimeTmpDir: string;
   userConfigHash: string;
+  getImportMetaEnv: () => Record<string, string>;
   runtimeDefineVars?: Record<string, any>;
 }
 
@@ -61,11 +62,68 @@ function getEntry(rootDir: string, runtimeTmpDir: string) {
   };
 }
 
+// format alias
+function getAliasWithRoot(rootDir: string, alias?: Record<string, string | boolean>) {
+  const aliasWithRoot = {};
+  Object.keys(alias).forEach((key) => {
+    const aliasValue = alias[key];
+    aliasWithRoot[key] = (aliasValue && typeof aliasValue === 'string' && aliasValue.startsWith('.')) ? path.join(rootDir, aliasValue) : aliasValue;
+  });
+  return aliasWithRoot;
+}
+
+
+const RUNTIME_PREFIX = /^ICE_/i;
+
+function getDefineVars(config: Config, runtimeDefineVars: Record<string, any>, getExpandedEnvs: () => Record<string, string>) {
+  const { define = {} } = config;
+  // auto stringify define value
+  const defineVars = {};
+  Object.keys(define).forEach((key) => {
+    defineVars[key] = JSON.stringify(define[key]);
+  });
+
+  Object.keys(process.env).filter((key) => {
+    return RUNTIME_PREFIX.test(key) || ['NODE_ENV'].includes(key);
+  }).forEach((key) => {
+    runtimeDefineVars[`process.env.${key}`] =
+      /^ICE_CORE_/i.test(key)
+        // ICE_CORE_* will be updated dynamically, so we need to make it effectively
+        ? DefinePlugin.runtimeValue(() => JSON.stringify(process.env[key]), true)
+        : JSON.stringify(process.env[key]);
+  });
+  // ImportMeta.env is ice defined env variables.
+  runtimeDefineVars['import.meta.env'] = getImportMetaEnv(getExpandedEnvs);
+
+  return {
+    ...define,
+    ...runtimeDefineVars,
+  };
+}
+
+function getImportMetaEnv(getExpandedEnvs: () => Record<string, string>): Record<string, string> {
+  const env = {};
+  const validEnvKeys = ['NODE_ENV'];
+
+  Object.keys(process.env)
+    .filter((key) => RUNTIME_PREFIX.test(key) || validEnvKeys.includes(key))
+    .forEach((key) => {
+      env[key] = JSON.stringify(process.env[key]);
+    });
+
+  // User defined envs at `.env` series files.
+  const expandedEnvs = getExpandedEnvs();
+  for (const [key, value] of Object.entries(expandedEnvs)) {
+    env[`import.meta.env.${key}`] = JSON.stringify(value);
+  }
+
+  return env;
+}
+
 export function getWebpackConfig(options: GetWebpackConfigOptions): Configuration {
-  const { rootDir, config, webpack, runtimeTmpDir, userConfigHash, runtimeDefineVars = {} } = options;
+  const { rootDir, config, webpack, runtimeTmpDir, userConfigHash, getImportMetaEnv, runtimeDefineVars = {} } = options;
   const {
     mode,
-    define = {},
     externals = {},
     publicPath = '/',
     outputDir,
@@ -105,29 +163,9 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
   const dev = mode !== 'production';
   const hashKey = hash === true ? 'hash:8' : (hash || '');
-  // formate alias
-  const aliasWithRoot = {};
-  Object.keys(alias).forEach((key) => {
-    const aliasValue = alias[key];
-    aliasWithRoot[key] = (aliasValue && typeof aliasValue === 'string' && aliasValue.startsWith('.')) ? path.join(rootDir, aliasValue) : aliasValue;
-  });
 
-  // auto stringify define value
-  const defineVars = {};
-  Object.keys(define).forEach((key) => {
-    defineVars[key] = JSON.stringify(define[key]);
-  });
-
-  const RUNTIME_PREFIX = /^ICE_/i;
-  Object.keys(process.env).filter((key) => {
-    return RUNTIME_PREFIX.test(key) || ['NODE_ENV'].includes(key);
-  }).forEach((key) => {
-    runtimeDefineVars[`process.env.${key}`] =
-      /^ICE_CORE_/i.test(key)
-        // ICE_CORE_* will be updated dynamically, so we need to make it effectively
-        ? webpack.DefinePlugin.runtimeValue(() => JSON.stringify(process.env[key]), true)
-        : JSON.stringify(process.env[key]);
-  });
+  const aliasWithRoot = getAliasWithRoot(rootDir, alias);
+  const defineVars = getDefineVars(config, runtimeDefineVars, getImportMetaEnv);
 
   const lazyCompilationConfig = dev && experimental?.lazyCompilation ? {
     lazyCompilation: {

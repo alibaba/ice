@@ -15,6 +15,7 @@ import emptyDir from '../utils/emptyDir.js';
 import type { UserConfig } from '../types/userConfig.js';
 import warnOnHashRouterEnabled from '../utils/warnOnHashRouterEnabled.js';
 import { logger } from '../utils/logger.js';
+import { getExpandedEnvs } from '../utils/runtimeEnv.js';
 
 const build = async (
   context: Context<Config, ExtendsPluginAPI>,
@@ -55,6 +56,7 @@ const build = async (
     webpack,
     runtimeTmpDir: RUNTIME_TMP_DIR,
     userConfigHash,
+    getExpandedEnvs,
     runtimeDefineVars: {
       [IMPORT_META_TARGET]: JSON.stringify(target),
       [IMPORT_META_RENDERER]: JSON.stringify('client'),
