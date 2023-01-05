@@ -1,5 +1,9 @@
 # @ice/runtime
 
+## v1.0.5
+
+- [feat] support template parse for dataLoader
+
 ## v1.0.4
 
 - [chore] show more log when failed to load route module
