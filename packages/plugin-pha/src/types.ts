@@ -181,7 +181,7 @@ export type PHAManifest = Partial<{
   icons: Icon[];
   data_prefetch: PHADataPrefetch[];
   app_worker: AppWorker;
-  enable_expired_manifest: boolean;
+  enableExpiredManifest: boolean;
   tab_bar: PHATabBar;
   pages: PHAPage[];
   query_params_pass_keys: string[];
