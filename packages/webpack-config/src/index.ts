@@ -5,7 +5,6 @@ import ReactRefreshWebpackPlugin from '@ice/bundles/compiled/@pmmmwh/react-refre
 import bundleAnalyzer from '@ice/bundles/compiled/webpack-bundle-analyzer/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import CssMinimizerPlugin from '@ice/bundles/compiled/css-minimizer-webpack-plugin/index.js';
-import { DefinePlugin } from '@ice/bundles/compiled/webpack/index.js';
 import TerserPlugin from '@ice/bundles/compiled/terser-webpack-plugin/index.js';
 import ForkTsCheckerPlugin from '@ice/bundles/compiled/fork-ts-checker-webpack-plugin/index.js';
 import ESlintPlugin from '@ice/bundles/compiled/eslint-webpack-plugin/index.js';
@@ -75,7 +74,12 @@ function getAliasWithRoot(rootDir: string, alias?: Record<string, string | boole
 
 const RUNTIME_PREFIX = /^ICE_/i;
 
-function getDefineVars(config: Config, runtimeDefineVars: Record<string, any>, getExpandedEnvs: () => Record<string, string>) {
+function getDefineVars(
+  config: Config,
+  runtimeDefineVars: Record<string, any>,
+  getExpandedEnvs: () => Record<string, string>,
+  webpack,
+) {
   const { define = {} } = config;
   // auto stringify define value
   const defineVars = {};
@@ -89,7 +93,7 @@ function getDefineVars(config: Config, runtimeDefineVars: Record<string, any>, g
     runtimeDefineVars[`process.env.${key}`] =
       /^ICE_CORE_/i.test(key)
         // ICE_CORE_* will be updated dynamically, so we need to make it effectively
-        ? DefinePlugin.runtimeValue(() => JSON.stringify(process.env[key]), true)
+        ? webpack.DefinePlugin.runtimeValue(() => JSON.stringify(process.env[key]), true)
         : JSON.stringify(process.env[key]);
   });
   // ImportMeta.env is ice defined env variables.
@@ -165,7 +169,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
   const hashKey = hash === true ? 'hash:8' : (hash || '');
 
   const aliasWithRoot = getAliasWithRoot(rootDir, alias);
-  const defineVars = getDefineVars(config, runtimeDefineVars, getImportMetaEnv);
+  const defineVars = getDefineVars(config, runtimeDefineVars, getImportMetaEnv, webpack);
 
   const lazyCompilationConfig = dev && experimental?.lazyCompilation ? {
     lazyCompilation: {
@@ -449,11 +453,8 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     webpack,
     enableRpx2Vw,
   };
-  const finalWebpackConfig = [configCss, configAssets, ...(configureWebpack || [])]
+  return [configCss, configAssets, ...(configureWebpack || [])]
     .reduce((result, next: ModifyWebpackConfig<Configuration, typeof webpack>) => next(result, ctx), webpackConfig);
-    // TODO: Log webpack config with namespace.
-    // consola.debug('[webpack]', finalWebpackConfig);
-  return finalWebpackConfig;
 }
 
 function getDevtoolValue(sourceMap: Config['sourceMap']) {
