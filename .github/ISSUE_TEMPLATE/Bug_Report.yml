@@ -39,7 +39,7 @@ body:
     id: build-config
     attributes:
       label: Content of build.json or ice.config.mts
-    render: TypeScript
+      render: TypeScript
   - type: textarea
     id: addition
     attributes:
