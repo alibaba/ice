@@ -10,11 +10,12 @@ import type { AppConfig } from '@ice/runtime/esm/types';
 import type { ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI, GetDataloaderConfig } from '../types/plugin.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
-import { RUNTIME_TMP_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
+import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
 import emptyDir from '../utils/emptyDir.js';
 import type { UserConfig } from '../types/userConfig.js';
 import warnOnHashRouterEnabled from '../utils/warnOnHashRouterEnabled.js';
 import { logger } from '../utils/logger.js';
+import { getExpandedEnvs } from '../utils/runtimeEnv.js';
 
 const build = async (
   context: Context<Config, ExtendsPluginAPI>,
@@ -41,7 +42,8 @@ const build = async (
     userConfigHash,
     userConfig,
   } = options;
-  const { applyHook, rootDir } = context;
+  const { applyHook, commandArgs, rootDir } = context;
+  const { target } = commandArgs;
 
   if (appConfig?.router?.type === 'hash') {
     warnOnHashRouterEnabled(userConfig);
@@ -54,6 +56,11 @@ const build = async (
     webpack,
     runtimeTmpDir: RUNTIME_TMP_DIR,
     userConfigHash,
+    getExpandedEnvs,
+    runtimeDefineVars: {
+      [IMPORT_META_TARGET]: JSON.stringify(target),
+      [IMPORT_META_RENDERER]: JSON.stringify('client'),
+    },
   }));
   const outputDir = webpackConfigs[0].output.path;
 

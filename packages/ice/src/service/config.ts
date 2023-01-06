@@ -49,7 +49,7 @@ class Config {
         plugins: [removeTopLevelCode(keepExports, transformInclude)],
         sourcemap: false,
         logLevel: 'silent', // The main server compiler process will log it.
-      });
+      }, {});
       if (!error) {
         this.status = 'RESOLVED';
         return outfile;

@@ -22,6 +22,7 @@ import getServerEntry from '../utils/getServerEntry.js';
 import type { DepScanData } from '../esbuild/scan.js';
 import formatPath from '../utils/formatPath.js';
 import { createLogger } from '../utils/logger.js';
+import { getExpandedEnvs } from '../utils/runtimeEnv.js';
 import { scanImports } from './analyze.js';
 import type { DepsMetaData } from './preBundleCJSDeps.js';
 import preBundleCJSDeps from './preBundleCJSDeps.js';
@@ -71,6 +72,7 @@ export function createServerCompiler(options: Options) {
     compilationInfo,
     redirectImports,
     removeOutputs,
+    runtimeDefineVars = {},
     enableEnv = false,
     transformEnv = true,
   } = {}) => {
@@ -109,7 +111,6 @@ export function createServerCompiler(options: Options) {
     }
 
     // get runtime variable for server build
-    const runtimeDefineVars = {};
     Object.keys(process.env).forEach((key) => {
       // Do not transform env when bundle client side code.
       if (/^ICE_CORE_/i.test(key) && transformEnv) {
@@ -123,6 +124,18 @@ export function createServerCompiler(options: Options) {
       ...defineVars,
       ...runtimeDefineVars,
     };
+    const expandedEnvs = getExpandedEnvs();
+    // Add user defined envs.
+    for (const [key, value] of Object.entries(expandedEnvs)) {
+      define[`import.meta.env.${key}`] = JSON.stringify(value);
+    }
+    // Add process.env.
+    Object.keys(process.env)
+      .filter((key) => /^ICE_/.test(key) || key === 'NODE_ENV')
+      .forEach((key) => {
+        define[`import.meta.env.${key}`] = JSON.stringify(process.env[key]);
+      });
+
     const format = customBuildOptions?.format || 'esm';
 
     let buildOptions: esbuild.BuildOptions = {

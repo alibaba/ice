@@ -11,13 +11,14 @@ import webpack from '@ice/bundles/compiled/webpack/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import { getWebpackConfig } from '@ice/webpack-config';
 import type { ExtendsPluginAPI, ServerCompiler, GetAppConfig, GetRoutesConfig, GetDataloaderConfig } from '../types';
-import { ROUTER_MANIFEST, RUNTIME_TMP_DIR, WEB } from '../constant.js';
+import { ROUTER_MANIFEST, RUNTIME_TMP_DIR, WEB, IMPORT_META_TARGET, IMPORT_META_RENDERER } from '../constant.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import prepareURLs from '../utils/prepareURLs.js';
 import createRenderMiddleware from '../middlewares/ssr/renderMiddleware.js';
 import createMockMiddleware from '../middlewares/mock/createMiddleware.js';
 import getRouterBasename from '../utils/getRouterBasename.js';
+import { getExpandedEnvs } from '../utils/runtimeEnv.js';
 import { logger } from '../utils/logger.js';
 
 const { merge } = lodash;
@@ -48,7 +49,7 @@ const start = async (
     userConfigHash,
   } = options;
   const { commandArgs, rootDir } = context;
-  const { platform = WEB } = commandArgs;
+  const { target = WEB } = commandArgs;
   const webpackConfigs = taskConfigs.map(({ config }) => getWebpackConfig({
     config,
     rootDir,
@@ -56,6 +57,11 @@ const start = async (
     webpack,
     runtimeTmpDir: RUNTIME_TMP_DIR,
     userConfigHash,
+    getExpandedEnvs,
+    runtimeDefineVars: {
+      [IMPORT_META_TARGET]: JSON.stringify(target),
+      [IMPORT_META_RENDERER]: JSON.stringify('client'),
+    },
   }));
 
   const hooksAPI = {
@@ -65,7 +71,7 @@ const start = async (
     getDataloaderConfig,
   };
 
-  const useDevServer = platform === WEB;
+  const useDevServer = target === WEB;
 
   if (useDevServer) {
     return (await startDevServer({
