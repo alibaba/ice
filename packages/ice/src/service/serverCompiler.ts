@@ -125,9 +125,16 @@ export function createServerCompiler(options: Options) {
       ...runtimeDefineVars,
     };
     const expandedEnvs = getExpandedEnvs();
+    // Add user defined envs.
     for (const [key, value] of Object.entries(expandedEnvs)) {
       define[`import.meta.env.${key}`] = JSON.stringify(value);
     }
+    // Add process.env.
+    Object.keys(process.env)
+      .filter((key) => /^ICE_/.test(key) || key === 'NODE_ENV')
+      .forEach((key) => {
+        define[`import.meta.env.${key}`] = JSON.stringify(process.env[key]);
+      });
 
     const format = customBuildOptions?.format || 'esm';
 

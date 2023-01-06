@@ -33,7 +33,7 @@ interface GetWebpackConfigOptions {
   webpack: typeof webpack;
   runtimeTmpDir: string;
   userConfigHash: string;
-  getImportMetaEnv: () => Record<string, string>;
+  getExpandedEnvs: () => Record<string, string>;
   runtimeDefineVars?: Record<string, any>;
 }
 
@@ -125,7 +125,7 @@ function getImportMetaEnv(getExpandedEnvs: () => Record<string, string>): Record
 }
 
 export function getWebpackConfig(options: GetWebpackConfigOptions): Configuration {
-  const { rootDir, config, webpack, runtimeTmpDir, userConfigHash, getImportMetaEnv, runtimeDefineVars = {} } = options;
+  const { rootDir, config, webpack, runtimeTmpDir, userConfigHash, getExpandedEnvs, runtimeDefineVars = {} } = options;
   const {
     mode,
     externals = {},
@@ -169,7 +169,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
   const hashKey = hash === true ? 'hash:8' : (hash || '');
 
   const aliasWithRoot = getAliasWithRoot(rootDir, alias);
-  const defineVars = getDefineVars(config, runtimeDefineVars, getImportMetaEnv, webpack);
+  const defineVars = getDefineVars(config, runtimeDefineVars, getExpandedEnvs, webpack);
 
   const lazyCompilationConfig = dev && experimental?.lazyCompilation ? {
     lazyCompilation: {
