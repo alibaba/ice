@@ -1209,6 +1209,7 @@ importers:
       chalk: ^4.0.0
       consola: ^2.15.3
       esbuild: ^0.16.5
+      htmlparser2: ^8.0.1
       humps: ^2.0.1
       lodash.clonedeep: ^4.5.0
       webpack: ^5.73.0
@@ -1222,6 +1223,7 @@ importers:
     devDependencies:
       '@ice/app': link:../ice
       esbuild: 0.16.10
+      htmlparser2: 8.0.1
       webpack: 5.75.0_esbuild@0.16.10
       webpack-dev-server: 4.11.1_webpack@5.75.0
 

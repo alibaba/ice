@@ -141,6 +141,12 @@ type TabHeader = Partial<{
 export type PHAPage = Partial<{
   key: string;
   document: string;
+  resource_prefetch: Array<{
+    src: string;
+    mime_type?: string;
+    headers?: string;
+    query_params?: string;
+  }>;
   path: string;
   background_color: string;
   enable_pull_refresh: boolean;

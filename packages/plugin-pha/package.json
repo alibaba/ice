@@ -23,6 +23,7 @@
     "lodash.clonedeep": "^4.5.0"
   },
   "devDependencies": {
+    "htmlparser2": "^8.0.1",
     "@ice/app": "^3.0.0",
     "esbuild": "^0.16.5",
     "webpack": "^5.73.0",

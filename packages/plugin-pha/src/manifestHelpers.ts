@@ -5,6 +5,7 @@ import humps from 'humps';
 import consola from 'consola';
 import cloneDeep from 'lodash.clonedeep';
 import { matchRoutes } from '@remix-run/router';
+import * as htmlparser2 from 'htmlparser2';
 import { decamelizeKeys, camelizeKeys, validPageConfigKeys } from './constants.js';
 import type { Page, PHAPage, PageHeader, PageConfig, Manifest, PHAManifest } from './types';
 
@@ -160,9 +161,31 @@ async function getPageManifest(page: string | Page, options: ParseOptions): Prom
       key: page,
       ...rest,
     };
+    const html = await renderPageDocument(page, serverEntry);
     if (template && !Array.isArray(pageConfig.frames)) {
-      pageManifest.document = await renderPageDocument(page, serverEntry);
+      pageManifest.document = html;
     }
+
+    let scripts = [];
+    let links = [];
+    function getPreload(dom) {
+      if (dom.name === 'script' && dom.attribs && dom.attribs.src) {
+        scripts.push({
+          src: dom.attribs.src,
+        });
+      } else if (dom.name === 'link' && dom.attribs && dom.attribs.href) {
+        links.push({
+          src: dom.attribs.href,
+        });
+      }
+
+      if (dom.children) {
+        dom.children.forEach(getPreload);
+      }
+    }
+    getPreload(htmlparser2.parseDocument(pageManifest.document));
+    pageManifest.resource_prefetch = [...scripts, ...links];
+
 
     // Always need path for page item.
     pageManifest.path = `${getPageUrl(page, options)}${queryParams ? `?${queryParams}` : ''}`;
