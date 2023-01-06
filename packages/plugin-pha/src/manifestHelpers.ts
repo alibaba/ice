@@ -167,14 +167,23 @@ async function getPageManifest(page: string | Page, options: ParseOptions): Prom
     }
 
     let scripts = [];
-    let links = [];
+    let stylesheets = [];
     function getPreload(dom) {
-      if (dom.name === 'script' && dom.attribs && dom.attribs.src) {
+      if (
+        dom.name === 'script' &&
+        dom.attribs &&
+        dom.attribs.src
+      ) {
         scripts.push({
           src: dom.attribs.src,
         });
-      } else if (dom.name === 'link' && dom.attribs && dom.attribs.href) {
-        links.push({
+      } else if (
+        dom.name === 'link' &&
+        dom.attribs &&
+        dom.attribs.href &&
+        dom.attribs.rel === 'stylesheet'
+      ) {
+        stylesheets.push({
           src: dom.attribs.href,
         });
       }
@@ -184,7 +193,7 @@ async function getPageManifest(page: string | Page, options: ParseOptions): Prom
       }
     }
     getPreload(htmlparser2.parseDocument(pageManifest.document));
-    pageManifest.resource_prefetch = [...scripts, ...links];
+    pageManifest.resource_prefetch = [...scripts, ...stylesheets];
 
 
     // Always need path for page item.
