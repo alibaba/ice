@@ -8,7 +8,8 @@
     ".": {
       "import": "./esm/index.js",
       "default": "./esm/index.js"
-    }
+    },
+    "./*": "./*"
   },
   "main": "./esm/index.js",
   "types": "./esm/index.d.ts",
@@ -25,6 +26,7 @@
     "css": "^2.2.1",
     "lodash.merge": "^4.6.2",
     "rax-compat": "^0.1.0",
+    "style-unit": "^3.0.5",
     "stylesheet-loader": "^0.9.1"
   },
   "devDependencies": {

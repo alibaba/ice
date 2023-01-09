@@ -1255,6 +1255,7 @@ importers:
       css: ^2.2.1
       lodash.merge: ^4.6.2
       rax-compat: ^0.1.0
+      style-unit: ^3.0.5
       stylesheet-loader: ^0.9.1
       webpack: ^5.73.0
     dependencies:
@@ -1266,6 +1267,7 @@ importers:
       css: 2.2.4
       lodash.merge: 4.6.2
       rax-compat: link:../rax-compat
+      style-unit: 3.0.5
       stylesheet-loader: 0.9.1
     devDependencies:
       '@ice/app': link:../ice
