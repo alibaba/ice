@@ -93,10 +93,8 @@ const plugin: Plugin = () => ({
           }),
         );
         const debounceCompile = debounce(() => {
+          serverCompilerPlugin?.buildResult?.rebuild();
           console.log('Document updated, try to reload page for latest html content.');
-          if (serverCompilerPlugin) {
-            serverCompilerPlugin.compileTask();
-          }
         }, 200);
         watch.addEvent([
           /src\/document(\/index)?(.js|.jsx|.tsx)/,

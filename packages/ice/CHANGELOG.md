@@ -3,6 +3,7 @@
 ## v3.0.6
 
 - [fix] remove code when dead code is `ObjectProperties`
+- [fix] rebuild server entry when document changed
 
 ## v3.0.5
 
