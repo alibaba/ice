@@ -414,6 +414,11 @@ export function getMultipleManifest(manifest: PHAManifest): Record<string, PHAMa
       copiedManifest.data_prefetch = copiedManifest.pages[0].data_prefetch;
       delete copiedManifest.pages[0].data_prefetch;
     }
+    // take out the page preload and assign it to the root node
+    if (copiedManifest?.pages![0]?.resource_prefetch) {
+      copiedManifest.resource_prefetch = copiedManifest.pages[0].resource_prefetch;
+      delete copiedManifest.pages[0].resource_prefetch;
+    }
     multipleManifest[pageKey] = copiedManifest;
   });
   return multipleManifest;
