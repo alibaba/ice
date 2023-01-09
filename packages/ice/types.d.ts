@@ -156,4 +156,7 @@ interface ImportMeta {
 
   // The renderer for ice.js
   renderer: 'client' | 'server';
+
+  // ice.js defined env variables
+  env: Record<string, string>;
 }

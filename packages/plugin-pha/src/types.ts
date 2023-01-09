@@ -170,6 +170,7 @@ export type Manifest = Partial<{
   maxAge: number;
   appWorker: AppWorker;
   routes: Page[];
+  enableExpiredManifest: boolean;
 }> & WindowConfig & Record<string, any>;
 
 export type PHAManifest = Partial<{
@@ -181,6 +182,7 @@ export type PHAManifest = Partial<{
   icons: Icon[];
   data_prefetch: PHADataPrefetch[];
   app_worker: AppWorker;
+  enable_expired_manifest: boolean;
   tab_bar: PHATabBar;
   pages: PHAPage[];
   query_params_pass_keys: string[];

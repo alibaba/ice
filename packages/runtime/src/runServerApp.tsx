@@ -222,6 +222,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
       console.error('Error: get app data error when SSR.', err);
     }
   }
+
   // HashRouter loads route modules by the CSR.
   if (appConfig?.router?.type === 'hash') {
     return renderDocument({ matches: [], renderOptions });
@@ -229,6 +230,11 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
 
   const matches = matchRoutes(routes, location, finalBasename);
   if (distType === 'javascript' || (Array.isArray(distType) && distType.includes('javascript'))) {
+    return renderDocument({ matches, renderOptions });
+  }
+
+  if (distType === 'javascript' || (Array.isArray(distType) && distType.includes('javascript'))
+  ) {
     return renderDocument({ matches, renderOptions });
   }
 

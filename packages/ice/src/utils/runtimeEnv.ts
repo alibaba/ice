@@ -12,6 +12,8 @@ interface EnvOptions {
   disableRouter: boolean;
 }
 
+const expandedEnvs = {};
+
 /**
  * Set env params in .env file and built-in env params to process.env.
  */
@@ -32,11 +34,12 @@ export async function setEnv(
   dotenvFiles.forEach(dotenvFile => {
     const filepath = path.join(rootDir, dotenvFile);
     if (fs.existsSync(filepath)) {
-      dotenvExpand(
+      const expandOutput = dotenvExpand(
         dotenv.config({
           path: filepath,
         }),
       );
+      Object.assign(expandedEnvs, expandOutput.parsed);
     }
   });
 
@@ -65,4 +68,8 @@ export const updateRuntimeEnv = (appConfig: AppConfig, options: EnvOptions) => {
 
 export function getCoreEnvKeys() {
   return ['ICE_CORE_MODE', 'ICE_CORE_ROUTER', 'ICE_CORE_ERROR_BOUNDARY', 'ICE_CORE_INITIAL_DATA', 'ICE_CORE_DEV_PORT'];
+}
+
+export function getExpandedEnvs(): Record<string, string> {
+  return expandedEnvs;
 }

@@ -18,6 +18,7 @@ import prepareURLs from '../utils/prepareURLs.js';
 import createRenderMiddleware from '../middlewares/ssr/renderMiddleware.js';
 import createMockMiddleware from '../middlewares/mock/createMiddleware.js';
 import getRouterBasename from '../utils/getRouterBasename.js';
+import { getExpandedEnvs } from '../utils/runtimeEnv.js';
 import { logger } from '../utils/logger.js';
 
 const { merge } = lodash;
@@ -56,6 +57,7 @@ const start = async (
     webpack,
     runtimeTmpDir: RUNTIME_TMP_DIR,
     userConfigHash,
+    getExpandedEnvs,
     runtimeDefineVars: {
       [IMPORT_META_TARGET]: JSON.stringify(target),
       [IMPORT_META_RENDERER]: JSON.stringify('client'),

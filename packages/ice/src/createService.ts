@@ -92,6 +92,14 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   const serverCompileTask = new ServerCompileTask();
 
+  const { target = WEB } = commandArgs;
+  const plugins = [];
+
+  // Add default web plugin.
+  if (target === WEB) {
+    plugins.push(pluginWeb());
+  }
+
   // Register framework level API.
   generatorAPI.addExport({
     specifier: ['Link', 'Outlet', 'useParams', 'useSearchParams', 'useLocation', 'useNavigate'],
@@ -120,14 +128,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     ],
     source: '@ice/runtime',
   });
-
-  const { target = WEB } = commandArgs;
-  const plugins = [];
-
-  // Add default web plugin.
-  if (target === WEB) {
-    plugins.push(pluginWeb());
-  }
 
   const ctx = new Context<Config, ExtendsPluginAPI>({
     rootDir,

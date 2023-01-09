@@ -15,7 +15,10 @@ const transformImport = async (source: string, coreJsPath: string) => {
     return !importString.includes('core-js') && !importString.includes('@swc/helpers');
   });
   imports.forEach((targetImport) => {
-    if (!targetImport.n) { return; }
+    if (!targetImport.n) {
+      // If visiting `import.meta.*`, `targetImport.n` will be undefined, that should be ignored.
+      return;
+    }
     if (targetImport.n.startsWith('core-js/modules/')) {
       const replaceModule = targetImport.n.replace('core-js/',
         formatPath.endsWith('/') ? formatPath : `${formatPath}/`);
