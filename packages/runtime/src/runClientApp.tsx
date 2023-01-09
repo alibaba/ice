@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useEffect, useState } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { createHashHistory, createBrowserHistory, createMemoryHistory } from 'history';
-import type { HashHistory, BrowserHistory, Action, Location, InitialEntry, MemoryHistory } from 'history';
+import type { HashHistory, BrowserHistory, Action, Location, MemoryHistory } from 'history';
 import type {
   AppContext, WindowContext, AppExport, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
   RouteWrapperConfig, RuntimeModules, RouteMatch, RouteModules, AppConfig, AssetsManifest,
@@ -12,7 +12,7 @@ import Runtime from './runtime.js';
 import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
 import { AppDataProvider, getAppData } from './AppData.js';
-import { loadRouteModules, loadRoutesData, getRoutesConfig, filterMatchesToLoad } from './routes.js';
+import { loadRouteModules, loadRoutesData, getRoutesConfig, filterMatchesToLoad, getRoutesPath } from './routes.js';
 import { updateRoutesConfig } from './routesConfig.js';
 import getRequestContext from './requestContext.js';
 import getAppConfig from './appConfig.js';
@@ -59,7 +59,12 @@ export default async function runClientApp(options: RunClientAppOptions) {
 
   const requestContext = getRequestContext(window.location);
   const appConfig = getAppConfig(app);
-  const history = createHistory(appConfig, { memoryRouter, routePath });
+  const historyOptions = {
+    memoryRouter,
+    initialEntry: routePath || (typeof window !== 'undefined' && (window as any).__ICE_INITIAL_ENTRY__),
+    routes,
+  };
+  const history = createHistory(appConfig, historyOptions);
   // Set history for import it from ice.
   setHistory(history);
 
@@ -313,23 +318,35 @@ export async function loadNextPage(
   };
 }
 
+interface HistoryOptions {
+  memoryRouter: boolean;
+  initialEntry?: string;
+  routes?: RouteItem[];
+}
+
 function createHistory(
   appConfig: AppConfig,
-  { memoryRouter, routePath }: { memoryRouter: boolean; routePath: string },
+  { memoryRouter, initialEntry, routes }: HistoryOptions,
 ): History {
+  const routerType = memoryRouter ? 'memory' : appConfig?.router?.type;
   const createHistory = process.env.ICE_CORE_ROUTER === 'true'
     ? createRouterHistory(appConfig?.router?.type, memoryRouter)
     : createHistorySingle;
-  const createHistoryOptions: Parameters<typeof createHistory>[0] = { window };
+  let createHistoryOptions: Parameters<typeof createHistory>[0] = { window };
 
-  if (memoryRouter || appConfig?.router?.type === 'memory') {
-    let initialEntries: InitialEntry[] = [];
-    if (memoryRouter) {
-      initialEntries = [routePath];
-    } else if (appConfig?.router?.type === 'memory') {
-      initialEntries = appConfig?.router?.initialEntries || [window.location.pathname];
+  if (routerType === 'memory') {
+    const memoryOptions: Parameters<typeof createMemoryHistory>[0] = {};
+    memoryOptions.initialEntries = appConfig?.router?.initialEntries || getRoutesPath(routes);
+    if (initialEntry) {
+      const initialIndex = memoryOptions.initialEntries.findIndex((entry) =>
+        typeof entry === 'string' && entry === initialEntry);
+      if (initialIndex >= 0) {
+        memoryOptions.initialIndex = initialIndex;
+      } else {
+        console.error(`path: ${initialEntry} do not match any initialEntries ${memoryOptions.initialEntries}`);
+      }
     }
-    (createHistoryOptions as Parameters<typeof createMemoryHistory>[0]).initialEntries = initialEntries;
+    createHistoryOptions = memoryOptions;
   }
 
   const history = createHistory(createHistoryOptions);

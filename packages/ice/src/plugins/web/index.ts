@@ -1,4 +1,5 @@
 import * as path from 'path';
+import fse from 'fs-extra';
 import chalk from 'chalk';
 import type { RenderMode } from '@ice/runtime';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
@@ -13,6 +14,8 @@ import openBrowser from '../../utils/openBrowser.js';
 import getServerCompilerPlugin from '../../utils/getServerCompilerPlugin.js';
 import type ServerCompilerPlugin from '../../webpack/ServerCompilerPlugin.js';
 import { logger } from '../../utils/logger.js';
+import getRoutePaths from '../../utils/getRoutePaths.js';
+import getRouterManifest from '../../utils/getRouterManifest.js';
 
 const { debounce } = lodash;
 
@@ -116,7 +119,7 @@ const plugin: Plugin = () => ({
         renderMode = 'SSG';
       }
       serverEntryRef.current = serverOutfile;
-
+      const routeType = appConfig?.router?.type;
       await generateHTML({
         rootDir,
         outputDir,
@@ -126,6 +129,22 @@ const plugin: Plugin = () => ({
         renderMode,
         routeType: appConfig?.router?.type,
       });
+
+      if (routeType === 'memory' && userConfig?.routes?.injectInitialEntry) {
+        // Read the latest routes info.
+        const routes = getRouterManifest(rootDir);
+        const routePaths = getRoutePaths(routes);
+        routePaths.forEach((routePath) => {
+          // Inject `initialPath` when router type is memory.
+          const routeAssetPath = path.join(outputDir, 'js',
+            `p_${routePath === '/' ? 'index' : routePath.replace(/^\//, '').replace(/\//g, '-')}.js`);
+          if (fse.existsSync(routeAssetPath)) {
+            fse.writeFileSync(routeAssetPath, `window.__ICE_INITIAL_ENTRY__='${routePath}';${fse.readFileSync(routeAssetPath, 'utf-8')}`);
+          } else {
+            logger.warn(`Can not find ${routeAssetPath} when inject initial path.`);
+          }
+        });
+      }
     });
 
     onHook('after.start.compile', async ({ isSuccessful, isFirstCompile, urls, devUrlInfo }) => {
