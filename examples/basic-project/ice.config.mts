@@ -8,6 +8,9 @@ export default defineConfig(() => ({
   syntaxFeatures: {
     exportDefaultFrom: true,
   },
+  alias: {
+    '@comp': './src/components',
+  },
   define: {
     HAHA: JSON.stringify(true),
     'process.env.HAHA': JSON.stringify(true),

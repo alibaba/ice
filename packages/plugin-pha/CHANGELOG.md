@@ -1,8 +1,17 @@
 # Changelog
 
+## 1.1.1
+
+- [feat] support enableExpiredManifest
+
+## 1.1.0
+
+- [feat] support static dataloader set to manifest
+
 ## 1.0.3
 
 - [fix] fix lanUrlForTerminal when dev start
+- [feat] optimize log
 
 ## 1.0.2
 

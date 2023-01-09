@@ -45,7 +45,7 @@ function getCompilerPlugins(config: Config, compiler: Compiler) {
     fastRefresh,
     cacheDir,
     polyfill,
-    env,
+    enableEnv,
   } = config;
   const compilerPlugins = [];
 
@@ -67,7 +67,7 @@ function getCompilerPlugins(config: Config, compiler: Compiler) {
       compileExcludes,
       swcOptions,
       polyfill,
-      env,
+      enableEnv,
     }));
   }
 

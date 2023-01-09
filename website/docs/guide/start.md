@@ -95,11 +95,11 @@ $ npm install
 ```json title=package.json
   "scripts": {
     "start": "ice start",
-    "start:wechat": "ice start --platform wechat-miniprogram",
-    "start:ali": "ice start --platform ali-miniapp",
+    "start:wechat": "ice start --target wechat-miniprogram",
+    "start:ali": "ice start --target ali-miniapp",
     "build": "ice build",
-    "build:wechat": "ice build --platform wechat-miniprogram",
-    "build:ali": "ice start --platform ali-miniapp"
+    "build:wechat": "ice build --target wechat-miniprogram",
+    "build:ali": "ice start --target ali-miniapp"
   }
 ```
 

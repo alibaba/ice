@@ -2,20 +2,18 @@ import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 import { Context } from 'build-scripts';
-import consola from 'consola';
 import type { CommandArgs, CommandName } from 'build-scripts';
 import type { Config } from '@ice/webpack-config/esm/types';
 import type { AppConfig } from '@ice/runtime/esm/types';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import fg from 'fast-glob';
-import type { DeclarationData } from './types/generator.js';
-import type { PluginData, ExtendsPluginAPI } from './types/plugin.js';
+import type { DeclarationData, PluginData, ExtendsPluginAPI } from './types';
 import Generator from './service/runtimeGenerator.js';
 import { createServerCompiler } from './service/serverCompiler.js';
 import createWatch from './service/watchSource.js';
 import start from './commands/start.js';
 import build from './commands/build.js';
-import webPlugin from './plugins/web/index.js';
+import pluginWeb from './plugins/web/index.js';
 import test from './commands/test.js';
 import mergeTaskConfig from './utils/mergeTaskConfig.js';
 import getWatchEvents from './getWatchEvents.js';
@@ -31,6 +29,7 @@ import { getAppExportConfig, getRouteExportConfig } from './service/config.js';
 import renderExportsTemplate from './utils/renderExportsTemplate.js';
 import { getFileExports } from './service/analyze.js';
 import { getFileHash } from './utils/hash.js';
+import { logger } from './utils/logger.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -61,6 +60,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     command,
   });
 
+  let entryCode = 'render();';
+
   const generatorAPI = {
     addExport: (declarationData: DeclarationData) => {
       generator.addDeclaration('framework', declarationData);
@@ -79,6 +80,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     },
     addRenderFile: generator.addRenderFile,
     addRenderTemplate: generator.addTemplateFiles,
+    addEntryCode: (callback: (originalCode: string) => string) => {
+      entryCode = callback(entryCode);
+    },
     modifyRenderData: generator.modifyRenderData,
     addDataLoaderImport: (declarationData: DeclarationData) => {
       generator.addDeclaration('dataLoaderImport', declarationData);
@@ -88,13 +92,20 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   const serverCompileTask = new ServerCompileTask();
 
-  const { platform = WEB } = commandArgs;
+  const { target = WEB } = commandArgs;
+  const plugins = [];
+
+  // Add default web plugin.
+  if (target === WEB) {
+    plugins.push(pluginWeb());
+  }
+
   const ctx = new Context<Config, ExtendsPluginAPI>({
     rootDir,
     command,
     commandArgs,
     configFile,
-    plugins: platform === WEB ? [webPlugin()] : [],
+    plugins,
     extendsPluginAPI: {
       generator: generatorAPI,
       watch: {
@@ -114,11 +125,11 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   await ctx.resolveUserConfig();
 
   // get plugins include built-in plugins and custom plugins
-  const plugins = await ctx.resolvePlugins() as PluginData[];
-  const runtimeModules = getRuntimeModules(plugins);
+  const resolvedPlugins = await ctx.resolvePlugins() as PluginData[];
+  const runtimeModules = getRuntimeModules(resolvedPlugins);
 
   const { getAppConfig, init: initAppConfigCompiler } = getAppExportConfig(rootDir);
-  const { getRoutesConfig, init: initRouteConfigCompiler } = getRouteExportConfig(rootDir);
+  const { getRoutesConfig, getDataloaderConfig, init: initRouteConfigCompiler } = getRouteExportConfig(rootDir);
 
   // register config
   ['userConfig', 'cliOption'].forEach((configType) => {
@@ -151,7 +162,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const disableRouter = userConfig?.optimization?.router && routesInfo.routesCount <= 1;
   let taskAlias = {};
   if (disableRouter) {
-    consola.info('[ice]', 'optimization.router is enabled and only have one route, ice build will remove react-router and history which is unnecessary.');
+    logger.info('`optimization.router` is enabled and only have one route, ice build will remove react-router and history which is unnecessary.');
     taskAlias['@ice/runtime/router'] = path.join(require.resolve('@ice/runtime'), '../single-router.js');
   }
   // merge task config with built-in config
@@ -166,7 +177,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   // add render data
   generator.setRenderData({
     ...routesInfo,
-    platform,
+    target,
     iceRuntimePath,
     hasExportAppData,
     runtimeModules,
@@ -177,6 +188,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     importCoreJs: polyfill === 'entry',
     // Enable react-router for web as default.
     enableRoutes: true,
+    entryCode,
   });
   dataCache.set('routes', JSON.stringify(routesInfo));
   dataCache.set('hasExportAppData', hasExportAppData ? 'true' : '');
@@ -213,7 +225,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   // render template before webpack compile
   const renderStart = new Date().getTime();
   generator.render();
-  consola.debug('template render cost:', new Date().getTime() - renderStart);
+  logger.debug('template render cost:', new Date().getTime() - renderStart);
   // create serverCompiler with task config
   const serverCompiler = createServerCompiler({
     rootDir,
@@ -235,14 +247,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     }),
   );
 
-  let appConfig: AppConfig;
-  try {
-    // should after generator, otherwise it will compile error
-    appConfig = (await getAppConfig()).default;
-  } catch (err) {
-    consola.warn('Failed to get app config:', err.message);
-    consola.debug(err);
-  }
+  const appConfig: AppConfig = (await getAppConfig()).default;
 
   updateRuntimeEnv(appConfig, { disableRouter });
 
@@ -258,6 +263,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             taskConfigs,
             serverCompiler,
             getRoutesConfig,
+            getDataloaderConfig,
             getAppConfig,
             appConfig,
             devPath: (routePaths[0] || '').replace(/^[/\\]/, ''),
@@ -267,6 +273,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         } else if (command === 'build') {
           return await build(ctx, {
             getRoutesConfig,
+            getDataloaderConfig,
             getAppConfig,
             appConfig,
             taskConfigs,
@@ -276,7 +283,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             userConfig,
           });
         } else if (command === 'test') {
-          return await test(ctx, {
+          return test(ctx, {
             taskConfigs,
             spinner: buildSpinner,
           });

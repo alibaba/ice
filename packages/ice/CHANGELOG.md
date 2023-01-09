@@ -1,8 +1,30 @@
 # Changelog
 
+## v3.0.6
+
+- [fix] remove code when dead code is `ObjectProperties`
+- [fix] rebuild server entry when document changed
+
+## v3.0.5
+
+- [fix] bump @swc/helpers version (0.4.12-> 0.4.14) for module cannot resolve of `@swc/helpers/src/_object_destructuring_empty.mjs`
+
+## v3.0.4
+
+- [feat] support incremental compile for server bundle
+- [feat] refactor server bundle alias
+- [feat] support log debug info with different namespaces
+- [fix] support HMR when modules is used by dataLoader
+- [fix] error occur when configure `dataLoader: false`
+- [fix] don't compile data-loader to lower ES version
+
 ## v3.0.3
 
+- [feat] support `generator.addEntryCode` for add code in entry file
 - [fix] remove dataLoaderFetcher api for init of dataLoader
+- [fix] incorrect dev url when enable hash router
+- [fix] no log when parse mock files failed
+- [feat] optimize log
 
 ## v3.0.2
 

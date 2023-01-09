@@ -2,7 +2,6 @@ import { createRequire } from 'module';
 import fse from 'fs-extra';
 import type { ExpressRequestHandler, Middleware } from 'webpack-dev-server';
 import type { ServerContext, RenderMode } from '@ice/runtime';
-import consola from 'consola';
 // @ts-expect-error FIXME: esm type error
 import matchRoutes from '@ice/runtime/matchRoutes';
 import type { TaskConfig } from 'build-scripts';
@@ -12,6 +11,7 @@ import getRouterBasename from '../../utils/getRouterBasename.js';
 import dynamicImport from '../../utils/dynamicImport.js';
 import warnOnHashRouterEnabled from '../../utils/warnOnHashRouterEnabled.js';
 import type { UserConfig } from '../../types/userConfig.js';
+import { logger } from '../../utils/logger.js';
 
 const require = createRequire(import.meta.url);
 
@@ -48,7 +48,7 @@ export default function createRenderMiddleware(options: Options): Middleware {
       // Wait for the server compilation to finish
       const { serverEntry, error } = await serverCompileTask.get();
       if (error) {
-        consola.error('Server compile error in render middleware.');
+        logger.error('Server compile error in render middleware.');
         return;
       }
       let serverModule;
@@ -57,7 +57,7 @@ export default function createRenderMiddleware(options: Options): Middleware {
         serverModule = await dynamicImport(serverEntry, true);
       } catch (err) {
         // make error clearly, notice typeof err === 'string'
-        consola.error(`import ${serverEntry} error: ${err}`);
+        logger.error(`import ${serverEntry} error: ${err}`);
         return;
       }
       const requestContext: ServerContext = {

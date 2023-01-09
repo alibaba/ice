@@ -1,6 +1,6 @@
 {
   "name": "@ice/bundles",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "author": "ICE",
   "description": "Basic dependencies for ice.",
@@ -24,6 +24,7 @@
     "core-js": "3.26.0",
     "caniuse-lite": "^1.0.30001431",
     "chokidar": "3.5.3",
+    "esbuild": "^0.16.5",
     "events": "3.3.0",
     "jest-worker": "27.5.1",
     "less": "4.1.2",
@@ -45,6 +46,7 @@
     "css-minimizer-webpack-plugin": "3.4.1",
     "cssnano": "^5.1.7",
     "es-module-lexer": "0.10.5",
+    "esbuild-register": "3.4.1",
     "eslint": "^8.14.0",
     "eslint-webpack-plugin": "3.1.1",
     "fork-ts-checker-webpack-plugin": "7.2.6",

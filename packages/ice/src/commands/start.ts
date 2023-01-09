@@ -6,19 +6,20 @@ import type { Config } from '@ice/webpack-config/esm/types';
 import type { AppConfig, RenderMode } from '@ice/runtime';
 import type ora from '@ice/bundles/compiled/ora/index.js';
 
-import consola from 'consola';
 import WebpackDevServer from '@ice/bundles/compiled/webpack-dev-server/lib/Server.js';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import { getWebpackConfig } from '@ice/webpack-config';
-import type { ExtendsPluginAPI, ServerCompiler, GetAppConfig, GetRoutesConfig } from '../types';
-import { ROUTER_MANIFEST, RUNTIME_TMP_DIR, WEB } from '../constant.js';
+import type { ExtendsPluginAPI, ServerCompiler, GetAppConfig, GetRoutesConfig, GetDataloaderConfig } from '../types';
+import { ROUTER_MANIFEST, RUNTIME_TMP_DIR, WEB, IMPORT_META_TARGET, IMPORT_META_RENDERER } from '../constant.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import prepareURLs from '../utils/prepareURLs.js';
 import createRenderMiddleware from '../middlewares/ssr/renderMiddleware.js';
 import createMockMiddleware from '../middlewares/mock/createMiddleware.js';
 import getRouterBasename from '../utils/getRouterBasename.js';
+import { getExpandedEnvs } from '../utils/runtimeEnv.js';
+import { logger } from '../utils/logger.js';
 
 const { merge } = lodash;
 
@@ -32,6 +33,7 @@ const start = async (
     spinner: ora.Ora;
     getAppConfig: GetAppConfig;
     getRoutesConfig: GetRoutesConfig;
+    getDataloaderConfig: GetDataloaderConfig;
     userConfigHash: string;
   },
 ) => {
@@ -43,10 +45,11 @@ const start = async (
     spinner,
     getAppConfig,
     getRoutesConfig,
+    getDataloaderConfig,
     userConfigHash,
   } = options;
   const { commandArgs, rootDir } = context;
-  const { platform = WEB } = commandArgs;
+  const { target = WEB } = commandArgs;
   const webpackConfigs = taskConfigs.map(({ config }) => getWebpackConfig({
     config,
     rootDir,
@@ -54,15 +57,21 @@ const start = async (
     webpack,
     runtimeTmpDir: RUNTIME_TMP_DIR,
     userConfigHash,
+    getExpandedEnvs,
+    runtimeDefineVars: {
+      [IMPORT_META_TARGET]: JSON.stringify(target),
+      [IMPORT_META_RENDERER]: JSON.stringify('client'),
+    },
   }));
 
   const hooksAPI = {
     serverCompiler,
     getAppConfig,
     getRoutesConfig,
+    getDataloaderConfig,
   };
 
-  const useDevServer = platform === WEB;
+  const useDevServer = target === WEB;
 
   if (useDevServer) {
     return (await startDevServer({
@@ -94,6 +103,7 @@ interface StartDevServerOptions {
     serverCompiler: ServerCompiler;
     getAppConfig: GetAppConfig;
     getRoutesConfig: GetRoutesConfig;
+    getDataloaderConfig: GetDataloaderConfig;
   };
   appConfig: AppConfig;
   devPath: string;
@@ -145,23 +155,24 @@ async function startDevServer({
         serverRenderMiddleware,
       );
 
-    if (commandArgs.mock) {
-      const mockMiddleware = createMockMiddleware({ rootDir, exclude: userConfig?.mock?.exclude });
-      middlewares.splice(insertIndex, 0, mockMiddleware);
-    }
-    return customMiddlewares ? customMiddlewares(middlewares, devServer) : middlewares;
-  },
+      if (commandArgs.mock) {
+        const mockMiddleware = createMockMiddleware({ rootDir, exclude: userConfig?.mock?.exclude });
+        middlewares.splice(insertIndex, 0, mockMiddleware);
+      }
+      return customMiddlewares ? customMiddlewares(middlewares, devServer) : middlewares;
+    },
   };
   // merge devServerConfig with webpackConfig.devServer
   devServerConfig = merge(webpackConfigs[0].devServer, devServerConfig);
   const protocol = devServerConfig.https ? 'https' : 'http';
   let urlPathname = getRouterBasename(webTaskConfig, appConfig) || '/';
-
+  const enabledHashRouter = appConfig.router?.type === 'hash';
   const urls = prepareURLs(
     protocol,
     devServerConfig.host,
     devServerConfig.port as number,
     urlPathname.endsWith('/') ? urlPathname : `${urlPathname}/`,
+    enabledHashRouter,
   );
   const compiler = await webpackCompiler({
     context,
@@ -220,7 +231,7 @@ async function invokeCompilerWatch({
     }
 
     if (messages.errors.length) {
-      consola.error('webpack compile error');
+      logger.error('Webpack compile error');
       throw new Error(messages.errors.join('\n\n'));
     }
   });

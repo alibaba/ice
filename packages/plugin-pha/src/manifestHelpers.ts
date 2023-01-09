@@ -24,6 +24,7 @@ export interface ParseOptions {
   template?: boolean;
   urlSuffix?: string;
   ssr?: boolean;
+  dataloaderConfig?: object | Function | Array<object | Function>;
 }
 
 interface TabConfig {
@@ -96,13 +97,23 @@ function getPageUrl(routeId: string, options: ParseOptions) {
   return `${urlPrefix}${splitCharacter}${routeId}${urlSuffix}`;
 }
 
+function getRouteManifest(routeManifest: string) {
+  try {
+    const routes = fs.readFileSync(routeManifest, 'utf-8');
+    return JSON.parse(routes);
+  } catch (e) {
+    console.warn(`[plugin-pha warn] ${JSON.stringify(e)}`);
+    return [];
+  }
+}
+
 async function getPageConfig(
   routeId: string,
   routeManifest: string,
   routesConfig: Record<string, any>,
 ): Promise<MixedPage> {
-  const routes = fs.readFileSync(routeManifest, 'utf-8');
-  const matches = matchRoutes(JSON.parse(routes), routeId.startsWith('/') ? routeId : `/${routeId}`);
+  const routes = getRouteManifest(routeManifest);
+  const matches = matchRoutes(routes, routeId.startsWith('/') ? routeId : `/${routeId}`);
   let routeConfig: MixedPage = {};
   if (matches) {
     // Merge route config when return muitiple route.
@@ -247,10 +258,21 @@ export function rewriteAppWorker(manifest: Manifest): Manifest {
     appWorker,
   };
 }
-
+export function getRouteIdByPage(routeManifest: string, page: Page) {
+  const routes = getRouteManifest(routeManifest);
+  const routeId = typeof page === 'string' ? page : page?.name;
+  const locationArg = routeId?.startsWith('/') ? routeId : `/${routeId}`;
+  const matches = matchRoutes(routes, locationArg);
+  return (matches || []).map((match) => {
+    return match?.route?.id;
+  });
+}
 export async function parseManifest(manifest: Manifest, options: ParseOptions): Promise<PHAManifest> {
-  const { publicPath } = options;
-
+  const {
+    publicPath,
+    dataloaderConfig,
+    routeManifest,
+  } = options;
   const { appWorker, tabBar, routes } = manifest;
 
   if (appWorker?.url && !appWorker.url.startsWith('http')) {
@@ -274,10 +296,52 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
 
   if (routes && routes.length > 0) {
     manifest.pages = await Promise.all(routes.map(async (page) => {
+      const pageIds = getRouteIdByPage(routeManifest, page);
       const pageManifest = await getPageManifest(page, options);
+      // Set static dataloader to data_prefetch of page.
+      pageIds.forEach((pageId) => {
+        if (typeof page === 'string' && dataloaderConfig && dataloaderConfig[pageId]) {
+          const staticDataLoaders = [];
+          if (Array.isArray(dataloaderConfig[pageId])) {
+            dataloaderConfig[pageId].forEach(item => {
+              if (typeof item === 'object') {
+                staticDataLoaders.push(item);
+              }
+            });
+          } else if (typeof dataloaderConfig[pageId] === 'object') {
+            // Single prefetch loader config.
+            staticDataLoaders.push(dataloaderConfig[pageId]);
+          }
+          pageManifest.data_prefetch = [...(pageManifest.data_prefetch || []), ...staticDataLoaders];
+        }
+      });
+
       if (pageManifest.frames && pageManifest.frames.length > 0) {
         pageManifest.frames = await Promise.all(pageManifest.frames.map((frame) => getPageManifest(frame, options)));
+        // Set static dataloader to data_prefetch of frames.
+        pageManifest.frames.forEach(frame => {
+          const title = frame.title || '';
+          const titleIds = getRouteIdByPage(routeManifest, title);
+          titleIds.forEach((titleId) => {
+            if (dataloaderConfig && dataloaderConfig[titleId]) {
+              const staticDataLoaders = [];
+              if (Array.isArray(dataloaderConfig[title])) {
+                dataloaderConfig[title].forEach(item => {
+                  if (typeof item === 'object') {
+                    staticDataLoaders.push(item);
+                  }
+                });
+              } else if (typeof dataloaderConfig[title] === 'object') {
+                // Single prefetch loader config.
+                staticDataLoaders.push(dataloaderConfig[title]);
+              }
+
+              frame.data_prefetch = [...(frame.data_prefetch || []), ...staticDataLoaders];
+            }
+          });
+        });
       }
+
       if (pageManifest?.pageHeader?.source) {
         if (!pageManifest.pageHeader.url) {
           pageManifest.pageHeader = {

@@ -21,8 +21,7 @@ export async function loadRouteModule(route: RouteModule, routeModulesCache: Rou
     routeModulesCache[id] = routeModule;
     return routeModule;
   } catch (error) {
-    console.error(`Failed to load route module: ${id}.`);
-    console.debug(error);
+    console.error(`Failed to load route module: ${id}.\n${error}`);
   }
 }
 
@@ -37,6 +36,7 @@ export async function loadRouteModules(routes: RouteModule[], originRouteModules
 
 export interface LoadRoutesDataOptions {
   renderMode?: RenderMode;
+  ssg?: boolean;
 }
 
 /**
@@ -59,7 +59,7 @@ export async function loadRoutesData(
       const { id } = match.route;
 
       if (globalLoader) {
-        routesData[id] = await globalLoader.getData(id);
+        routesData[id] = await globalLoader.getData(id, options);
         return;
       }
 
