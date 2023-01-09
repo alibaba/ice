@@ -70,7 +70,7 @@ const InputCompat = forwardRef((props: any, inputRef: any) => {
 export function compatInstanceCreation(type: FunctionComponent | string, props: any, ...children: ReactNode[]): {
   type: FunctionComponent | string;
   props: any;
-  children: ReactNode[];
+  children?: ReactNode[];
 } {
   // Get a shallow copy of props, to avoid mutating the original object.
   let rest = Object.assign({}, props);
@@ -105,8 +105,8 @@ export function compatInstanceCreation(type: FunctionComponent | string, props: 
       props: {
         onAppear,
         onDisappear,
+        children: _createElement(type, rest, ...children),
       },
-      children: [_createElement(type, rest, ...children)],
     };
   } else {
     return {

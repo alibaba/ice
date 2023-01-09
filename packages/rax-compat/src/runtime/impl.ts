@@ -13,7 +13,14 @@ export function jsxs(type: any, props: object, key: string, source: object, self
 
 export function jsx(type: any, props: object, key: string, source: object, self: any) {
   const ref = hasValidRef(props) ? props['ref'] : null;
-  return ReactElement(type, key, ref, self, source, ReactCurrentOwner.current, props);
+  if (!hasOwnProperty.call(props, 'key') && key !== undefined) {
+    props['key'] = key;
+  }
+  const {
+    type: compatType,
+    props: compatProps,
+  } = compatInstanceCreation(type, props);
+  return ReactElement(compatType, key, ref, self, source, ReactCurrentOwner.current, compatProps);
 }
 
 function ReactElement(type, key, ref, self, source, owner, props) {
