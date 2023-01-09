@@ -1,6 +1,6 @@
 {
   "name": "@ice/runtime",
-  "version": "1.0.5-beta.0",
+  "version": "1.0.4",
   "description": "",
   "type": "module",
   "types": "./esm/index.d.ts",

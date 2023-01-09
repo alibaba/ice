@@ -233,11 +233,6 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     return renderDocument({ matches, renderOptions });
   }
 
-  if (distType === 'javascript' || (Array.isArray(distType) && distType.includes('javascript'))
-  ) {
-    return renderDocument({ matches, renderOptions });
-  }
-
   const routePath = getCurrentRoutePath(matches);
   if (documentOnly) {
     return renderDocument({ matches, routePath, renderOptions });
