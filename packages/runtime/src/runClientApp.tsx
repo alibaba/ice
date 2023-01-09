@@ -61,7 +61,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
   const appConfig = getAppConfig(app);
   const historyOptions = {
     memoryRouter,
-    initialEntry: routePath || (typeof window !== 'undefined' && (window as any).__ICE_INITIAL_ENTRY__),
+    initialEntry: routePath,
     routes,
   };
   const history = createHistory(appConfig, historyOptions);

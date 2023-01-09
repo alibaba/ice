@@ -139,7 +139,9 @@ const plugin: Plugin = () => ({
           const routeAssetPath = path.join(outputDir, 'js',
             `p_${routePath === '/' ? 'index' : routePath.replace(/^\//, '').replace(/\//g, '-')}.js`);
           if (fse.existsSync(routeAssetPath)) {
-            fse.writeFileSync(routeAssetPath, `window.__ICE_INITIAL_ENTRY__='${routePath}';${fse.readFileSync(routeAssetPath, 'utf-8')}`);
+            fse.writeFileSync(routeAssetPath,
+              `window.__ICE_APP_CONTEXT__=Object.assign(window.__ICE_APP_CONTEXT__||{}, routePath: '${routePath}');${
+              fse.readFileSync(routeAssetPath, 'utf-8')}`);
           } else {
             logger.warn(`Can not find ${routeAssetPath} when inject initial path.`);
           }
