@@ -1,9 +1,12 @@
 import * as path from 'path';
+import { fileURLToPath } from 'url';
 import consola from 'consola';
 import chalk from 'chalk';
 import type { Plugin, GetAppConfig, GetRoutesConfig, GetDataloaderConfig } from '@ice/app/esm/types';
-import generateManifest from './generateManifest.js';
+import generateManifest, { getAppWorkerPath } from './generateManifest.js';
 import createPHAMiddleware from './phaMiddleware.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export type Compiler = (options: {
   entry: string;
@@ -53,6 +56,14 @@ const plugin: Plugin<PluginOptions> = (options) => ({
       getAppConfig = restAPI.getAppConfig;
       getRoutesConfig = restAPI.getRoutesConfig;
       getDataloaderConfig = restAPI.getDataloaderConfig;
+
+      const appWorkerPath = await getAppWorkerPath({
+        rootDir,
+        getAppConfig,
+      });
+      generator.addRenderFile(path.join(__dirname, '../template/appWorker.ejs'), 'appWorker.ts', {
+        appWorkerPath,
+      });
 
       // Need absolute path for pha dev.
       publicPath = command === 'start' ? getDevPath(urls.lanUrlForTerminal || urls.localUrlForTerminal) : (taskConfig.publicPath || '/');

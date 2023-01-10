@@ -32,6 +32,15 @@ export async function getAppWorkerContent(
   return fs.readFileSync(appWorkerFile, 'utf-8');
 }
 
+export async function getAppWorkerPath({
+  getAppConfig,
+  rootDir,
+}) {
+  const appConfig = getAppConfig(['phaManifest']);
+  let manifest = appConfig.phaManifest;
+  return getAppWorkerUrl(manifest, path.join(rootDir, 'src'));
+}
+
 export default async function generateManifest({
   rootDir,
   outputDir,
