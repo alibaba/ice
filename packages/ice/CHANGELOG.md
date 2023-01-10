@@ -4,6 +4,7 @@
 
 - [fix] remove code when dead code is `ObjectProperties`
 - [fix] rebuild server entry when document changed
+- [fix] server compiler options when bundle server entry
 
 ## v3.0.5
 
