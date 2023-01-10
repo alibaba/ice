@@ -67,7 +67,7 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
     onGetConfig((config) => {
       // Reset jsc.transform.react.runtime to classic.
       config.swcOptions = merge(config.swcOptions || {}, {
-        compilationConfig: (source: string, id: string) => {
+        compilationConfig: (source: string) => {
           const isRaxComponent = /from\s['"]rax['"]/.test(source);
           if (isRaxComponent) {
             return {

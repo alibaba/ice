@@ -1,4 +1,4 @@
-export default function HybridReactComponent(props) {
+export default function HybridReactComponent() {
   return (
     <div style={{
       width: '400rpx',
