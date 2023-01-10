@@ -11,7 +11,7 @@ import type { RenderMode } from '@ice/runtime';
 import type { ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI, GetDataloaderConfig } from '../types/plugin.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
-import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
+import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR, SERVER_OUTPUT_DIR, WEB } from '../constant.js';
 import emptyDir from '../utils/emptyDir.js';
 import type { UserConfig } from '../types/userConfig.js';
 import warnOnHashRouterEnabled from '../utils/warnOnHashRouterEnabled.js';
@@ -45,7 +45,7 @@ const build = async (
     userConfig,
   } = options;
   const { applyHook, commandArgs, rootDir } = context;
-  const { target } = commandArgs;
+  const { target = WEB } = commandArgs;
 
   if (appConfig?.router?.type === 'hash') {
     warnOnHashRouterEnabled(userConfig);
