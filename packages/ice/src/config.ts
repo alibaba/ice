@@ -122,7 +122,7 @@ const userConfig = [
   {
     name: 'ssr',
     validation: 'boolean',
-    defaultValue: true,
+    defaultValue: false,
   },
   {
     name: 'server',
