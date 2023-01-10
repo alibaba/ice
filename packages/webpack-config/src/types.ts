@@ -39,7 +39,6 @@ type Experimental = Configuration['experiments'];
 interface SwcOptions {
   removeExportExprs?: string[];
   compilationConfig?: SwcCompilationConfig;
-  keepPlatform?: 'node' | 'web' | 'weex' | 'miniapp' | 'wechat-miniprogram' | 'bytedance-microapp' | 'baidu-smartprogram' | 'kuaishou-miniprogram';
   keepExports?: string[];
   getRoutePaths?: Function;
 }

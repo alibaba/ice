@@ -119,7 +119,6 @@ const getMiniappTask = ({
     enableCopyPlugin: isPublicDirExist, // Only when public dir exists should copy-webpack-plugin be enabled
     swcOptions: {
       // compatible with former design that miniapp represents ali miniapp
-      keepPlatform: platform === 'ali-miniapp' ? 'miniapp' : platform,
       removeExportExprs: ['getServerData', 'getStaticData'],
       getRoutePaths: () => {
         const routes = dataCache.get('routes');

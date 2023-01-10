@@ -5,7 +5,7 @@ import bytedance from './bytedance/index.js';
 import baidu from './baidu/index.js';
 import ali from './ali/index.js';
 
-// TODO:缺少快手小程序
+// TODO: Add KUAISHOU_MINIPROGRAM.
 export default function getMiniappPlatformConfig(platform: string): PlatformConfig {
   switch (platform) {
     case WECHAT_MINIPROGRAM:
