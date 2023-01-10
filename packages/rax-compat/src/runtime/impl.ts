@@ -6,20 +6,20 @@ const ReactSharedInternals = React['__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE
 const { ReactCurrentOwner } = ReactSharedInternals;
 const REACT_ELEMENT_TYPE = Symbol.for('react.element');
 const { hasOwnProperty } = Object.prototype;
+const __DEV__ = process.env.NODE_ENV !== 'production';
 
 export function jsxs(type: any, props: object, key: string, source: object, self: any) {
   return jsx(type, props, key, source, self);
 }
 
 export function jsx(type: any, props: object, key: string, source: object, self: any) {
-  const ref = hasValidRef(props) ? props['ref'] : null;
-  if (!hasOwnProperty.call(props, 'key') && key !== undefined) {
-    props['key'] = key;
-  }
+  const hasValidKey = !hasOwnProperty.call(props, 'key') && key !== undefined;
+  const propsWithKey = Object.assign({}, props, hasValidKey ? { key } : null);
   const {
     type: compatType,
     props: compatProps,
-  } = compatInstanceCreation(type, props);
+  } = compatInstanceCreation(type, propsWithKey);
+  const ref = hasValidRef(compatProps) ? compatProps.ref : null;
   return ReactElement(compatType, key, ref, self, source, ReactCurrentOwner.current, compatProps);
 }
 
@@ -36,7 +36,7 @@ function ReactElement(type, key, ref, self, source, owner, props) {
     _owner: owner,
   };
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (__DEV__) {
     // @ts-ignore
     const store = element._store = {};
     Object.defineProperty(store, 'validated', {
