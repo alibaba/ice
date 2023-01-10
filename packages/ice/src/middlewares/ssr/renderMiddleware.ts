@@ -1,5 +1,4 @@
 import { createRequire } from 'module';
-import fse from 'fs-extra';
 import type { ExpressRequestHandler, Middleware } from 'webpack-dev-server';
 import type { ServerContext, RenderMode } from '@ice/runtime';
 // @ts-expect-error FIXME: esm type error
