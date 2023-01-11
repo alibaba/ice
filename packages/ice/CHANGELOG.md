@@ -3,6 +3,7 @@
 ## v3.0.6
 
 - [feat] add suspense to exports
+- [fix] should not replace global env for ssr
 - [fix] remove code when dead code is `ObjectProperties`
 - [fix] rebuild server entry when document changed
 - [fix] set ssr default value to `false`
