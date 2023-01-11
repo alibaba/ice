@@ -142,13 +142,9 @@ const cache = new Map<string, CachedResult>();
  */
 function loadInitialDataInClient(loaders: Loaders) {
   const context = (window as any).__ICE_APP_CONTEXT__ || {};
-
-  const {
-    matchedIds = [],
-    routesData = {},
-    renderMode,
-    downgrade,
-  } = context;
+  const matchedIds = context.matchedIds || [];
+  const routesData = context.routesData || {};
+  const { renderMode } = context;
 
   const ids = ['_app'].concat(matchedIds);
 
@@ -163,11 +159,6 @@ function loadInitialDataInClient(loaders: Loaders) {
       if (renderMode === 'SSR') {
         return;
       }
-    }
-
-    // If ssr is success, should not call data loader again.
-    if (renderMode == 'SSR' && !downgrade) {
-      return;
     }
 
     const dataLoader = loaders[id];
