@@ -4,6 +4,8 @@
 
 - [fix] format id for win32 compatible
 - [fix] md4 -> md5 while md4 algorithm is not available anymore in NodeJS 17+ 
+- [chore] do not show webpack config on debug mode
+- [refactor] rename param `env` to `enableEnv`
 
 ## 1.0.3
 

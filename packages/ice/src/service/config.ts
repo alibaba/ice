@@ -1,6 +1,5 @@
 import * as path from 'path';
 import fs from 'fs-extra';
-import consola from 'consola';
 import type { ServerCompiler } from '../types/plugin.js';
 import removeTopLevelCode from '../esbuild/removeTopLevelCode.js';
 import { getCache, setCache } from '../utils/persistentCache.js';
@@ -8,6 +7,7 @@ import { getFileHash } from '../utils/hash.js';
 import dynamicImport from '../utils/dynamicImport.js';
 import formatPath from '../utils/formatPath.js';
 import { RUNTIME_TMP_DIR, CACHE_DIR } from '../constant.js';
+import { createLogger } from '../utils/logger.js';
 
 type GetOutfile = (entry: string, exportNames: string[]) => string;
 
@@ -37,19 +37,19 @@ class Config {
       (() => formatPath(path.join(rootDir, 'node_modules', `${path.basename(entry)}.mjs`)));
   }
 
-  public setCompiler(esbuildCompiler: ServerCompiler): void {
+  public setCompiler(serverCompiler: ServerCompiler): void {
     this.compiler = async (keepExports) => {
       const { entry, transformInclude } = this.compileConfig;
       const outfile = this.getOutfile(entry, keepExports);
       this.status = 'PENDING';
-      const { error } = await esbuildCompiler({
+      const { error } = await serverCompiler({
         entryPoints: [entry],
         format: 'esm',
         outfile,
         plugins: [removeTopLevelCode(keepExports, transformInclude)],
         sourcemap: false,
         logLevel: 'silent', // The main server compiler process will log it.
-      });
+      }, {});
       if (!error) {
         this.status = 'RESOLVED';
         return outfile;
@@ -110,6 +110,8 @@ type AppExportConfig = {
 let appExportConfig: null | AppExportConfig;
 
 export const getAppExportConfig = (rootDir: string) => {
+  const logger = createLogger('app-config');
+
   if (appExportConfig) {
     return appExportConfig;
   }
@@ -138,7 +140,12 @@ export const getAppExportConfig = (rootDir: string) => {
   });
 
   const getAppConfig = async (exportNames?: string[]) => {
-    return (await config.getConfig(exportNames || ['default', 'defineAppConfig'])) || {};
+    try {
+      return (await config.getConfig(exportNames || ['default', 'defineAppConfig'])) || {};
+    } catch (error) {
+      logger.warn('Failed to get app config.', `\n${error.message}`);
+      logger.debug(error.stack);
+    }
   };
 
   appExportConfig = {
@@ -146,8 +153,8 @@ export const getAppExportConfig = (rootDir: string) => {
       try {
         config.setCompiler(serverCompiler);
       } catch (error) {
-        consola.error('Get app export config error.');
-        consola.debug(error.stack);
+        logger.error('Failed to compile app config.', `\n${error.message}`);
+        logger.debug(error.stack);
       }
     },
     getAppConfig,
@@ -168,6 +175,9 @@ type RouteExportConfig = {
 let routeExportConfig: null | RouteExportConfig;
 
 export const getRouteExportConfig = (rootDir: string) => {
+  const dataLoaderConfigLogger = createLogger('data-loader-config');
+  const routeConfigLogger = createLogger('route-config');
+
   if (routeExportConfig) {
     return routeExportConfig;
   }
@@ -252,10 +262,15 @@ export const getRouteExportConfig = (rootDir: string) => {
       routeConfig.clearTasks();
       try {
         routeConfig.setCompiler(serverCompiler);
+      } catch (error) {
+        routeConfigLogger.error('Failed to get route config.', `\n${error.message}`);
+        routeConfigLogger.debug(error.stack);
+      }
+      try {
         dataloaderConfig.setCompiler(serverCompiler);
       } catch (error) {
-        consola.error('Get route export config error.');
-        consola.debug(error.stack);
+        dataLoaderConfigLogger.error('Failed to get dataLoader config.', `\n${error.message}`);
+        dataLoaderConfigLogger.debug(error.stack);
       }
     },
     getRoutesConfig,

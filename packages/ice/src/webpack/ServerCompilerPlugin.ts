@@ -13,8 +13,8 @@ export default class ServerCompilerPlugin {
   private ensureRoutesConfig: () => Promise<void>;
   private isCompiling: boolean;
   private task: ReturnType<ServerCompiler>;
-  private buildResult: ServerBuildResult;
   private compilerOptions: Parameters<ServerCompiler>[1];
+  public buildResult: ServerBuildResult;
 
   public constructor(
     serverCompiler: ServerCompiler,
@@ -44,10 +44,7 @@ export default class ServerCompilerPlugin {
       }
 
       if (!this.task) {
-        this.task = this.serverCompiler({
-          ...buildOptions,
-          incremental: true,
-        }, this.compilerOptions);
+        this.task = this.serverCompiler(buildOptions, this.compilerOptions);
       }
       this.task.then((buildResult) => {
         this.buildResult = buildResult;
@@ -63,7 +60,7 @@ export default class ServerCompilerPlugin {
       this.isCompiling = false;
       await this.compileTask(compilation);
 
-      const compilerTask = this.buildResult ? this.buildResult.rebuild().then((result) => {
+      const compilerTask = this.buildResult?.rebuild ? this.buildResult.rebuild().then((result) => {
         return {
           // Pass original buildResult, becaues it's returned serverEntry.
           ...this.buildResult,

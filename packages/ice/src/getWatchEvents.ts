@@ -1,5 +1,4 @@
 import * as path from 'path';
-import consola from 'consola';
 import type { Context } from 'build-scripts';
 import type { Config } from '@ice/webpack-config/esm/types';
 import type { WatchEvent } from './types/plugin.js';
@@ -8,6 +7,9 @@ import type Generator from './service/runtimeGenerator';
 import getGlobalStyleGlobPattern from './utils/getGlobalStyleGlobPattern.js';
 import renderExportsTemplate from './utils/renderExportsTemplate.js';
 import { getFileExports } from './service/analyze.js';
+import { createLogger } from './utils/logger.js';
+
+const logger = createLogger('watch-event');
 
 interface Options {
   targetDir: string;
@@ -28,7 +30,7 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
         const stringifiedData = JSON.stringify(routesRenderData);
         if (cache.get('routes') !== stringifiedData) {
           cache.set('routes', stringifiedData);
-          consola.debug('[event]', `routes data regenerated: ${stringifiedData}`);
+          logger.debug(`routes data regenerated: ${stringifiedData}`);
           if (eventName !== 'change') {
             // Specify the route files to re-render.
             generator.renderFile(
@@ -60,7 +62,7 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
     getGlobalStyleGlobPattern(),
     (event: string, filePath: string) => {
       if (event === 'unlink') {
-        consola.log('[event]', `style '${filePath}': ${event}`);
+        logger.log(`style '${filePath}': ${event}`);
         generator.renderFile(
           path.join(templateDir, 'index.ts.ejs'),
           path.join(rootDir, targetDir, 'index.ts'),
@@ -68,7 +70,7 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
         );
       }
       if (event === 'add') {
-        consola.log('[event]', `style '${filePath}': ${event}`);
+        logger.log(`style '${filePath}': ${event}`);
         generator.renderFile(
           path.join(templateDir, 'index.ts.ejs'),
           path.join(rootDir, targetDir, 'index.ts'),
@@ -82,7 +84,7 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
     new RegExp((typeof configFile === 'string' ? [configFile] : configFile).join('|')),
     (event: string, filePath: string) => {
       if (event === 'change') {
-        consola.warn(`Found a change in ${path.basename(filePath)}. Restart the dev server to see the changes in effect.`);
+        logger.warn(`Found a change in ${path.basename(filePath)}. Restart the dev server to see the changes in effect.`);
       }
     },
   ];

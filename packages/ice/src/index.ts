@@ -11,3 +11,5 @@ export type {
 };
 export { defineConfig };
 export * from './test/index.js';
+
+export * from './utils/logger.js';

@@ -1,5 +1,4 @@
 import * as path from 'path';
-import consola from 'consola';
 import chalk from 'chalk';
 import type { RenderMode } from '@ice/runtime';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
@@ -7,12 +6,13 @@ import type { Plugin } from '../../types/plugin.js';
 import ReCompilePlugin from '../../webpack/ReCompilePlugin.js';
 import DataLoaderPlugin from '../../webpack/DataLoaderPlugin.js';
 import { getRouteExportConfig } from '../../service/config.js';
-import { WEB, SERVER_OUTPUT_DIR } from '../../constant.js';
+import { WEB, SERVER_OUTPUT_DIR, IMPORT_META_TARGET, IMPORT_META_RENDERER } from '../../constant.js';
 import getWebTask from '../../tasks/web/index.js';
 import generateHTML from '../../utils/generateHTML.js';
 import openBrowser from '../../utils/openBrowser.js';
 import getServerCompilerPlugin from '../../utils/getServerCompilerPlugin.js';
 import type ServerCompilerPlugin from '../../webpack/ServerCompilerPlugin.js';
+import { logger } from '../../utils/logger.js';
 
 const { debounce } = lodash;
 
@@ -69,6 +69,11 @@ const plugin: Plugin = () => ({
         serverCompileTask: command === 'start' ? serverCompileTask : null,
         userConfig,
         ensureRoutesConfig,
+        runtimeDefineVars: {
+          [IMPORT_META_TARGET]: JSON.stringify('web'),
+          [IMPORT_META_RENDERER]: JSON.stringify('server'),
+        },
+        incremental: command === 'start',
       });
       webpackConfigs[0].plugins.push(
         // Add webpack plugin of data-loader in web task
@@ -90,10 +95,8 @@ const plugin: Plugin = () => ({
           }),
         );
         const debounceCompile = debounce(() => {
+          serverCompilerPlugin?.buildResult?.rebuild();
           console.log('Document updated, try to reload page for latest html content.');
-          if (serverCompilerPlugin) {
-            serverCompilerPlugin.compileTask();
-          }
         }, 200);
         watch.addEvent([
           /src\/document(\/index)?(.js|.jsx|.tsx)/,
@@ -138,7 +141,7 @@ const plugin: Plugin = () => ({
     - Local  : ${chalk.underline.white(`${urls.localUrlForBrowser}${devPath}`)}
     - Network: ${chalk.underline.white(`${urls.lanUrlForTerminal}${devPath}`)}`;
         }
-        consola.log(`${logoutMessage}\n`);
+        logger.log(`${logoutMessage}\n`);
 
         if (open) {
           openBrowser(`${urls.localUrlForBrowser}${devPath}`);

@@ -1,11 +1,11 @@
 import * as fs from 'fs';
-import consola from 'consola';
 import type { Plugin } from 'esbuild';
 import { parse, type ParserOptions } from '@babel/parser';
 import babelTraverse from '@babel/traverse';
 import babelGenerate from '@babel/generator';
 import removeTopLevelCode from '../utils/babelPluginRemoveCode.js';
 import formatPath from '../utils/formatPath.js';
+import { logger } from '../utils/logger.js';
 
 // @ts-ignore @babel/traverse is not a valid export in esm
 const traverse = babelTraverse.default || babelTraverse;
@@ -45,7 +45,7 @@ const removeCodePlugin = (keepExports: string[], transformInclude: (id: string) 
             loader: isTS ? 'tsx' : 'jsx',
           };
         } catch (error) {
-          consola.debug('Remove top level code error.', error.stack);
+          logger.debug('Remove top level code error.', `\nFile id: ${id}`, `\n${error.stack}`);
         }
       });
     },

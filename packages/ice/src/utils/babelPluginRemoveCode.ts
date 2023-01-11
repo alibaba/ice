@@ -23,9 +23,12 @@ const removeUnreferencedCode = (nodePath: NodePath<t.Program>) => {
                 binding.path.remove();
               }
             } else if (binding.path.node.id.type === 'ObjectPattern') {
-              binding.path.node.id.properties = binding.path.node.id.properties.filter((property) =>
-                ((property as t.ObjectProperty)?.value !== binding.identifier &&
-                  (property as t.RestElement)?.argument !== binding.identifier));
+              binding.path.node.id.properties = binding.path.node.id.properties.filter((property) => {
+                const { value, key } = property as t.ObjectProperty;
+                const argument = (property as t.RestElement)?.argument;
+                return value !== binding.identifier && argument !== binding.identifier &&
+                  (key?.type !== 'Identifier' || (key as t.Identifier)?.name !== binding.identifier.name);
+              });
               if (binding.path.node.id.properties.length === 0) {
                 binding.path.remove();
               }
