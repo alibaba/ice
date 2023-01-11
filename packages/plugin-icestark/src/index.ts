@@ -22,9 +22,16 @@ const plugin: Plugin<PluginOptions> = ({ type, library }) => ({
       return config;
     });
     if (type === 'child') {
+      // Modify basename when render as a child app.
+      generator.modifyRenderData((data) => {
+        return {
+          ...data,
+          basename: `(typeof window !== 'undefined' && window.ICESTARK?.basename || ${data.basename})`,
+        };
+      });
       generator.addEntryCode(() => {
         return `
-if (!window.ICESTARK) {
+if (!window.ICESTARK?.root) {
   render();
 }
 let root;
