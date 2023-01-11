@@ -28,16 +28,6 @@ export function defineStaticDataLoader(dataLoaderConfig: DataLoaderConfig): Data
   return dataLoaderConfig;
 }
 
-export function getGlobalDataLoader() {
-  const hasGlobalLoader = typeof window !== 'undefined' && (window as any).__ICE_DATA_LOADER__;
-
-  if (hasGlobalLoader) {
-    return (window as any).__ICE_DATA_LOADER__;
-  }
-
-  return null;
-}
-
 /**
  * Custom fetcher for load static data loader config.
  * Set globally to avoid passing this fetcher too deep.
