@@ -20,7 +20,7 @@ import { AppDataProvider, getAppData } from './AppData.js';
 import getAppConfig from './appConfig.js';
 import { DocumentContextProvider } from './Document.js';
 import { loadRouteModules, loadRoutesData, getRoutesConfig } from './routes.js';
-import { piperToString, renderToNodeStream } from './server/streamRender.js';
+import { pipeToString, renderToNodeStream } from './server/streamRender.js';
 import { createStaticNavigator } from './server/navigator.js';
 import type { NodeWritablePiper } from './server/streamRender.js';
 import getRequestContext from './requestContext.js';
@@ -72,7 +72,7 @@ export async function renderToHTML(requestContext: ServerContext, renderOptions:
   const { pipe, fallback } = value;
 
   try {
-    const html = await piperToString(pipe);
+    const html = await pipeToString(pipe);
 
     return {
       value: html,
@@ -82,7 +82,7 @@ export async function renderToHTML(requestContext: ServerContext, renderOptions:
     if (renderOptions.disableFallback) {
       throw error;
     }
-    console.error('PiperToString error, downgrade to CSR.', error);
+    console.error('PipeToString error, downgrade to CSR.', error);
     // downgrade to CSR.
     const result = fallback();
     return result;
@@ -114,13 +114,13 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
         }
 
         // downgrade to CSR.
-        console.error('PiperToResponse onShellError, downgrade to CSR.', err);
+        console.error('PipeToResponse onShellError, downgrade to CSR.', err);
         const result = await fallback();
         sendResult(res, result);
       },
       onError: async (err) => {
         // onError triggered after shell ready, should not downgrade to csr.
-        console.error('PiperToResponse error.', err);
+        console.error('PipeToResponse error.', err);
       },
     });
   }

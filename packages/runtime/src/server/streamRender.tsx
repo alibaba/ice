@@ -29,7 +29,7 @@ export function renderToNodeStream(
   };
 }
 
-export function piperToString(input): Promise<string> {
+export function pipeToString(input): Promise<string> {
   return new Promise((resolve, reject) => {
     const bufferedChunks: any[] = [];
 
