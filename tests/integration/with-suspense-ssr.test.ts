@@ -27,27 +27,27 @@ describe(`start ${example}`, () => {
   });
 
   test('open /server-data-error', async () => {
-    const page = await browser.page(`http://127.0.0.1:${serverPort}`, '/server-data-error', false);
+    const page = await browser.page(`http://127.0.0.1:${serverPort}`, '/with-data-error', false);
     expect((await page.$$text('.comment')).length).toEqual(3);
   });
 
   test('open /server-data-error without hydrate', async () => {
-    const page = await browser.page(`http://127.0.0.1:${serverPort}`, '/server-data-error', true);
+    const page = await browser.page(`http://127.0.0.1:${serverPort}`, '/with-data-error', true);
     expect((await page.$$text('.comment')).length).toEqual(0);
   });
 
   test('open /server-render-error', async () => {
-    const page = await browser.page(`http://127.0.0.1:${serverPort}`, '/server-render-error', false);
+    const page = await browser.page(`http://127.0.0.1:${serverPort}`, '/with-render-error', false);
     expect((await page.$$text('.comment')).length).toEqual(3);
   });
 
   test('open /server-render-error without hydrate', async () => {
-    const page = await browser.page(`http://127.0.0.1:${serverPort}`, '/server-render-error', true);
+    const page = await browser.page(`http://127.0.0.1:${serverPort}`, '/with-render-error', true);
     expect((await page.$$text('.comment')).length).toEqual(0);
   });
 
   test('open /fallback', async () => {
-    const page = await browser.page(`http://127.0.0.1:${serverPort}`, '/fallback', false);
+    const page = await browser.page(`http://127.0.0.1:${serverPort}`, '/with-fallback', false);
     expect(await page.$$text('#fallback')).toStrictEqual(['Something went wrong.']);
   });
 

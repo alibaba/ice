@@ -1,40 +1,107 @@
 import * as React from 'react';
 import type { ReactNode } from 'react';
-import { DataProvider, useData } from './RouteContext.js';
-import { getGlobalDataLoader } from './dataLoader.js';
-import type { RouteComponent } from './types.js';
 
 const LOADER = '__ICE_SUSPENSE_LOADER__';
 const isClient = typeof window !== 'undefined' && 'onload' in window;
 
+interface SuspenseState {
+  id: string;
+  data?: any;
+  done: boolean;
+  error?: Error;
+  promise?: Promise<any>;
+  update: Function;
+}
+
+const SuspenseContext = React.createContext<SuspenseState | undefined>(undefined);
+
+export function useSuspenseData(request?: any) {
+  const suspenseState = React.useContext(SuspenseContext);
+
+  const { data, done, promise, update, error, id } = suspenseState;
+
+  if (isClient && (window[LOADER] as Map<string, any>) && window[LOADER].has(id)) {
+    return window[LOADER].get(id);
+  }
+
+  if (done) {
+    return data;
+  }
+
+  if (error) {
+    throw error;
+  }
+
+  if (promise) {
+    throw promise;
+  }
+
+  if (!request) {
+    return null;
+  }
+
+  if (!promise) {
+    const promise = request();
+
+    promise.then((response) => {
+      update({
+        done: true,
+        data: response,
+        promise: null,
+      });
+    }).catch(e => {
+      update({
+        done: true,
+        error: e,
+        promise: null,
+      });
+    });
+
+    update({
+      promise,
+    });
+
+    throw promise;
+  }
+
+  return null;
+}
+
 interface SuspenseProps {
   id: string;
-  module: RouteComponent;
+  loading?: ReactNode;
+  fallback?: ReactNode;
+  children: ReactNode;
 }
 
 export function Suspense(props: SuspenseProps) {
-  const { module, id } = props;
+  const { loading, fallback, id } = props;
 
-  const { serverDataLoader, dataLoader, Loading, Fallback } = module;
-
-  const Children = module.default;
-
-  const data = createDataLoader(serverDataLoader, dataLoader, id);
+  const suspenseState = {
+    id: id,
+    data: null,
+    done: false,
+    promise: null,
+    error: null,
+    update: (value) => {
+      Object.assign(suspenseState, value);
+    },
+  };
 
   return (
-    <DataProvider value={data}>
-      <React.Suspense fallback={Loading ? <Loading /> : null}>
-        <ErrorBoundary fallback={Fallback ? <Fallback /> : null}>
+    <SuspenseContext.Provider value={suspenseState}>
+      <React.Suspense fallback={loading || null}>
+        <ErrorBoundary fallback={fallback || null}>
+          {props.children}
           <Data id={id} />
-          <Children />
         </ErrorBoundary>
       </React.Suspense>
-    </DataProvider>
+    </SuspenseContext.Provider>
   );
 }
 
 function Data(props) {
-  const data = useData();
+  const data = useSuspenseData();
 
   return (
     <script dangerouslySetInnerHTML={{ __html: `if (!window.${LOADER}) { window.${LOADER} = new Map();} window.${LOADER}.set('${props.id}', ${JSON.stringify(data)})` }} />
@@ -67,50 +134,4 @@ class ErrorBoundary extends React.Component<EProps, EState> {
 
     return this.props.children;
   }
-}
-
-function createDataLoader(serverDataLoader, dataLoader, id) {
-  let done = false;
-  let promise: Promise<any> | null = null;
-  let data = null;
-  let error = null;
-
-  return {
-    read() {
-      if (isClient && (window[LOADER] as Map<string, any>) && window[LOADER].has(id)) {
-        return window[LOADER].get(id);
-      }
-
-      // react will catch this error and retry when hydrate.
-      if (error) {
-        throw error;
-      }
-
-      if (done) {
-        return data;
-      }
-
-      // read data during pending.
-      if (promise) {
-        throw promise;
-      }
-
-      // generate loader promise and throw to suspense.
-      promise = serverDataLoader?.() || dataLoader?.() || getGlobalDataLoader?.()?.getData(id);
-
-      if (promise) {
-        promise.then((response) => {
-          done = true;
-          data = response;
-          promise = null;
-        }).catch(e => {
-          done = true;
-          error = e;
-          promise = null;
-        });
-      }
-
-      throw promise;
-    },
-  };
 }

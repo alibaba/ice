@@ -6,12 +6,6 @@ DataContext.displayName = 'Data';
 
 function useData<T = any>(): T {
   const value = React.useContext(DataContext);
-
-  // useData in suspense components
-  if (value && typeof value.read === 'function') {
-    return value.read();
-  }
-
   return value;
 }
 const DataProvider = DataContext.Provider;

@@ -98,10 +98,12 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
       const swcPlugins = [];
       // handle app.tsx and page entries only
       if (removeExportExprs) {
-        swcPlugins.push([
-          swcPluginRemoveExport,
-          removeExportExprs,
-        ]);
+        if (isRouteEntry(id) || isAppEntry(id)) {
+          swcPlugins.push([
+            swcPluginRemoveExport,
+            removeExportExprs,
+          ]);
+        }
       }
 
       if (keepExports) {

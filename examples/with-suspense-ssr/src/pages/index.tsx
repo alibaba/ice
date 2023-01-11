@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { Suspense, Link } from 'ice';
 import styles from './index.module.css';
-import * as Comments from '@/components/Comments';
-import * as Footer from '@/components/Footer';
+import Comments from '@/components/Comments';
+import Footer from '@/components/Footer';
 
 export default function Home() {
   console.log('Render: Index');
@@ -11,9 +10,8 @@ export default function Home() {
     <div>
       <h2>Home Page</h2>
       <Counter />
-      <Suspense module={Comments} id="comments" />
-      <Suspense module={Footer} id="footer" />
-      <Link to="/blog">link to blog</Link>
+      <Comments />
+      <Footer />
     </div>
   );
 }

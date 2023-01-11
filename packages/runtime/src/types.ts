@@ -118,9 +118,6 @@ export interface RouteComponent {
   dataLoader?: DataLoaderConfig;
   pageConfig?: PageConfig;
   [key: string]: any;
-  Loading?: ComponentType<any>;
-  Fallback?: ComponentType<any>;
-  suspense?: boolean;
 }
 
 export interface RouteItem {

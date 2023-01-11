@@ -44,6 +44,7 @@ const plugin: Plugin = () => ({
         'history',
         'KeepAliveOutlet',
         'Suspense',
+        'useSuspenseData',
         'useMounted',
         'ClientOnly',
         'defineDataLoader',

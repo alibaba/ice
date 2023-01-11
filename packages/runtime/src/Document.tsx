@@ -138,7 +138,6 @@ interface DataProps {
 export function Data(props: DataProps) {
   const { routesData, documentOnly, matches, routesConfig, downgrade, renderMode } = useAppContext();
   const appData = useAppData();
-
   const {
     ScriptElement = 'script',
   } = props;
@@ -169,7 +168,6 @@ export function Data(props: DataProps) {
 export function Main(props: React.HTMLAttributes<HTMLDivElement>) {
   const { main } = useDocumentContext();
   const { appConfig } = useAppContext();
-
   return (
     <div id={appConfig.app.rootId} {...props}>
       {main}

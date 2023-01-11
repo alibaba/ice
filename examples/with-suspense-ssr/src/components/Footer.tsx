@@ -1,7 +1,15 @@
-import { useData } from 'ice';
+import { useSuspenseData, Suspense } from 'ice';
 
-export default function Footer() {
-  const data = useData();
+export default function SuspenseFooter() {
+  return (
+    <Suspense id="footer" loading={<Loading />}>
+      <Footer />
+    </Suspense>
+  );
+}
+
+function Footer() {
+  const data = useSuspenseData(getData);
 
   console.log('Render: Footer');
 
@@ -12,7 +20,7 @@ export default function Footer() {
   );
 }
 
-export function Loading() {
+function Loading() {
   return (
     <div>loading...</div>
   );
@@ -22,18 +30,12 @@ const fakeData = {
   title: 'Thanks for reading!',
 };
 
-export const serverDataLoader = () => {
-  console.log('Call serverDataLoader for: Footer');
+async function getData() {
+  console.log('load footer');
 
-  return new Promise<any>((resolve) => {
-    setTimeout(() => resolve(fakeData), 2000);
+  await new Promise<any>((resolve) => {
+    setTimeout(() => resolve(null), 5000);
   });
-};
 
-export const dataLoader = () => {
-  console.log('Call clientDataLoader for: Footer');
-
-  return new Promise<any>((resolve) => {
-    setTimeout(() => resolve(fakeData), 2000);
-  });
-};
+  return fakeData;
+}

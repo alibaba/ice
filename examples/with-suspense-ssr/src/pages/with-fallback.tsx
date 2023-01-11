@@ -1,10 +1,17 @@
-import { useSuspenseData, Suspense } from 'ice';
+import { Suspense, useSuspenseData } from 'ice';
+import Footer from '@/components/Footer';
 
-export default function SuspenseComments() {
+export default function Home() {
+  console.log('Render: Index');
+
   return (
-    <Suspense id="comments" loading={<Loading />}>
-      <Comments />
-    </Suspense>
+    <div>
+      <h2>Home Page</h2>
+      <Suspense id="comments" loading={<Loading />} fallback={<Fallback />}>
+        <Comments />
+      </Suspense>
+      <Footer />
+    </div>
   );
 }
 
@@ -12,6 +19,8 @@ function Comments() {
   const comments = useSuspenseData(getCommentsData);
 
   console.log('Render: Comments');
+
+  throw new Error('Comments Render Error');
 
   return (
     <div>
@@ -44,4 +53,10 @@ async function getCommentsData() {
   });
 
   return fakeData;
+}
+
+function Fallback() {
+  return (
+    <h1 id="fallback">Something went wrong.</h1>
+  );
 }

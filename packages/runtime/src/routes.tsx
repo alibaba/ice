@@ -58,18 +58,13 @@ export async function loadRoutesData(
     matches.map(async (match) => {
       const { id } = match.route;
 
-      const routeModule = routeModules[id];
-      const { dataLoader, serverDataLoader, staticDataLoader, suspense } = routeModule ?? {};
-
-      // Call data loader by Suspense Component.
-      if (suspense) {
-        return;
-      }
-
       if (globalLoader) {
         routesData[id] = await globalLoader.getData(id);
         return;
       }
+
+      const routeModule = routeModules[id];
+      const { dataLoader, serverDataLoader, staticDataLoader } = routeModule ?? {};
 
       let loader;
 
@@ -156,7 +151,7 @@ export function createRouteElements(
 export function RouteComponent({ id }: { id: string }) {
   // get current route component from latest routeModules
   const { routeModules } = useAppContext();
-  const { default: Component, suspense } = routeModules[id] || {};
+  const { default: Component } = routeModules[id] || {};
   if (process.env.NODE_ENV === 'development') {
     if (!Component) {
       throw new Error(
@@ -164,12 +159,6 @@ export function RouteComponent({ id }: { id: string }) {
         'If you were trying to navigate or submit to a resource route, use `<a>` instead of `<Link>` or `<Form reloadDocument>`.',
       );
     }
-  }
-
-  if (suspense) {
-    return (
-      <Suspense module={routeModules[id]} id={id} />
-    );
   }
 
   return <Component />;
