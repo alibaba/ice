@@ -40,7 +40,7 @@ async function getCommentsData() {
   console.log('load comments');
 
   await new Promise<any>((resolve) => {
-    setTimeout(() => resolve(null), 5000);
+    setTimeout(() => resolve(null), 3000);
   });
 
   return fakeData;

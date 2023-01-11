@@ -34,7 +34,7 @@ async function getData() {
   console.log('load footer');
 
   await new Promise<any>((resolve) => {
-    setTimeout(() => resolve(null), 5000);
+    setTimeout(() => resolve(null), 2000);
   });
 
   return fakeData;
