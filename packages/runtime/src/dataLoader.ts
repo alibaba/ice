@@ -147,7 +147,6 @@ function loadInitialDataInClient(loaders: Loaders) {
   const { renderMode } = context;
 
   const ids = ['_app'].concat(matchedIds);
-
   ids.forEach(id => {
     const dataFromSSR = routesData[id];
     if (dataFromSSR) {
