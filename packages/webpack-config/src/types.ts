@@ -186,4 +186,8 @@ export interface Config {
   getAppConfig?: (exportNamse?: string[]) => Promise<any>;
 
   getRoutesConfig?: (specifyRoutId?: string) => Promise<any>;
+
+  useDevServer?: boolean;
+
+  useDataLoader?: boolean;
 }

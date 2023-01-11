@@ -26,6 +26,7 @@ interface IgnorePattern {
 }
 
 type DistType = 'javascript' | 'html';
+
 interface Fetcher {
   packageName: string;
   method?: string;

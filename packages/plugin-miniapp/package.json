@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-miniapp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ice.js plugin for miniapp.",
   "license": "MIT",
   "type": "module",

@@ -11,7 +11,7 @@ import webpack from '@ice/bundles/compiled/webpack/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import { getWebpackConfig } from '@ice/webpack-config';
 import type { ExtendsPluginAPI, ServerCompiler, GetAppConfig, GetRoutesConfig, GetDataloaderConfig } from '../types';
-import { ROUTER_MANIFEST, RUNTIME_TMP_DIR, WEB, IMPORT_META_TARGET, IMPORT_META_RENDERER } from '../constant.js';
+import { IMPORT_META_RENDERER, IMPORT_META_TARGET, ROUTER_MANIFEST, RUNTIME_TMP_DIR, WEB } from '../constant.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import prepareURLs from '../utils/prepareURLs.js';
@@ -71,8 +71,7 @@ const start = async (
     getDataloaderConfig,
   };
 
-  const useDevServer = target === WEB;
-
+  const useDevServer = taskConfigs.reduce((prev, curr) => prev || curr.config.useDevServer, false);
   if (useDevServer) {
     return (await startDevServer({
       context,

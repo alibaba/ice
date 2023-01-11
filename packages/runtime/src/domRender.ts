@@ -28,7 +28,6 @@ export default function __ICE__CREATE_ELEMENT(options: CreateElementOptions, con
     children.forEach((child) => {
       __ICE__CREATE_ELEMENT(child, node);
     });
-
     container.appendChild(node);
   }
 

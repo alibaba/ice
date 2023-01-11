@@ -229,20 +229,17 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
   }
 
   const matches = matchRoutes(routes, location, finalBasename);
-
-
-  if (distType === 'javascript' || (Array.isArray(distType) && distType.includes('javascript'))
-  ) {
+  if (distType === 'javascript' || (Array.isArray(distType) && distType.includes('javascript'))) {
     return renderDocument({ matches, renderOptions });
   }
 
   const routePath = getCurrentRoutePath(matches);
-
   if (documentOnly) {
     return renderDocument({ matches, routePath, renderOptions });
   } else if (!matches.length) {
     return render404();
   }
+
   try {
     const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
     const routesData = await loadRoutesData(matches, requestContext, routeModules, { renderMode });

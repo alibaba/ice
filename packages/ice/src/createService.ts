@@ -100,6 +100,35 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     plugins.push(pluginWeb());
   }
 
+  // Register framework level API.
+  generatorAPI.addExport({
+    specifier: ['Link', 'Outlet', 'useParams', 'useSearchParams', 'useLocation', 'useNavigate'],
+    source: '@ice/runtime/router',
+  });
+
+  generatorAPI.addExport({
+    specifier: [
+      'defineAppConfig',
+      'useAppData',
+      'useData',
+      'useConfig',
+      'Meta',
+      'Title',
+      'Links',
+      'Scripts',
+      'Data',
+      'Main',
+      'history',
+      'KeepAliveOutlet',
+      'useMounted',
+      'ClientOnly',
+      'defineDataLoader',
+      'defineServerDataLoader',
+      'defineStaticDataLoader',
+    ],
+    source: '@ice/runtime',
+  });
+
   const ctx = new Context<Config, ExtendsPluginAPI>({
     rootDir,
     command,
