@@ -42,7 +42,7 @@ export function mount(props) {
   root = render({ runtimeOptions: props });
 }
 export function unmount(props) {
-  root.unmount();
+  root?.then((res) => res.unmount());
   if (app?.icestark?.unmount) {
     app?.icestark?.unmount(props);
   }
