@@ -2,7 +2,7 @@
 
 ## 1.1.1
 
-- [feat] support enableExpiredManifest
+- [feat] support configure `enableExpiredManifest`
 
 ## 1.1.0
 
