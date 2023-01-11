@@ -7,7 +7,7 @@ import type webpack from 'webpack';
 import type { Urls, ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI, GetDataloaderConfig } from '../types/plugin.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import type ServerCompilerPlugin from '../webpack/ServerCompilerPlugin';
-import { IMPORT_META_RENDERER, IMPORT_META_TARGET } from '../constant.js';
+import { IMPORT_META_RENDERER, IMPORT_META_TARGET, WEB } from '../constant.js';
 import getServerCompilerPlugin from '../utils/getServerCompilerPlugin.js';
 import DataLoaderPlugin from '../webpack/DataLoaderPlugin.js';
 import ReCompilePlugin from '../webpack/ReCompilePlugin.js';
@@ -40,7 +40,8 @@ async function webpackCompiler(options: {
     context,
   } = options;
   const { rootDir, applyHook, commandArgs, command, userConfig, getAllPlugin } = context;
-  const { target } = commandArgs;
+  // `commandArgs` doesn't guarantee target exists.
+  const { target = WEB } = commandArgs;
   const { serverCompiler } = hooksAPI;
   const { serverCompileTask, dataCache, watch } = context.extendsPluginAPI;
 
