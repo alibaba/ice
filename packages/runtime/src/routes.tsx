@@ -4,7 +4,6 @@ import type { RouteItem, RouteModules, RouteWrapperConfig, RouteMatch, RequestCo
 import RouteWrapper from './RouteWrapper.js';
 import { useAppContext } from './AppContext.js';
 import { callDataLoader } from './dataLoader.js';
-import { Suspense } from './Suspense.js';
 
 type RouteModule = Pick<RouteItem, 'id' | 'load'>;
 
@@ -161,7 +160,6 @@ export function RouteComponent({ id }: { id: string }) {
       );
     }
   }
-
   return <Component />;
 }
 
