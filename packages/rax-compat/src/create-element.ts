@@ -151,7 +151,7 @@ export function createElement<P extends {
       .forEach((child) => childrenToRender.push(child));
     delete compatProps.children;
   }
-  return _createElement(compatType, compatProps, ...toArray(compatChildren));
+  return _createElement(compatType, compatProps, ...childrenToRender);
 }
 
 function toArray(item: any): any[] {
