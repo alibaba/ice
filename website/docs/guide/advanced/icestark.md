@@ -140,6 +140,18 @@ export default function FrameworkLayout({ children }) {
 }
 ```
 
+完成 layout 的开发后，配置在入口 `src/app.ts` 中：
+
+
+```ts title="src/app.ts"
+import { defineFrameworkConfig } from '@ice/plugin-icestark/esm/types';
+import FrameworkLayout from '@/components/FrameworkLayout';
+
+export const icestark = defineFrameworkConfig(() => ({
+  layout: FrameworkLayout,
+}));
+```
+
 ### appRouter
 
 可传入 icestark 运行时的钩子函数和可选配置。主要有：
@@ -159,5 +171,7 @@ export default function FrameworkLayout({ children }) {
 在微应用挂载前，将执行该函数。
 
 #### unmout
+
+- 类型：`Function`
 
 在微应用卸载后，将执行该函数。
