@@ -48,6 +48,7 @@ export type ServerCompiler = (
     };
     redirectImports?: Config['redirectImports'];
     removeOutputs?: boolean;
+    runtimeDefineVars?: Record<string, string>;
     enableEnv?: boolean;
   }
 ) => Promise<ServerBuildResult>;

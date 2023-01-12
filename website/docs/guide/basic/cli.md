@@ -32,7 +32,7 @@ $ npm start -- --https
 Usage: ice-cli start [options]
 
 Options:
-  --platform <platform>  指定编译的 platform
+  --target <target>      指定编译的 target
   --mode <mode>          指定 mode
   --config <config>      指定配置文件路径
   -h, --host <host>      指定开发服务器主机名
@@ -53,7 +53,7 @@ Options:
 Usage: ice-cli build [options]
 
 Options:
-  --platform <platform>  指定编译的 platform
+  --target <target>      指定编译的 target
   --mode <mode>          指定 mode
   --analyzer             开启构建分析
   --config <config>      指定配置文件路径
@@ -85,7 +85,7 @@ $ ice help build
 Usage: ice-cli build [options]
 
 Options:
-  --platform <platform>  set platform
+  --target <target>      set target
   --mode <mode>          set mode
   --analyzer             visualize size of output files
   --config <config>      use custom config

@@ -1,8 +1,14 @@
 # Changelog
 
+## 1.1.1
+
+- [feat] support resource_prefetch to preload resource
+- [feat] support enableExpiredManifest
+- [feat] support configure `enableExpiredManifest`
+
 ## 1.1.0
 
-- [feat] support static dataloader set to manifest.
+- [feat] support static dataloader set to manifest
 
 ## 1.0.3
 

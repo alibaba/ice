@@ -1,5 +1,4 @@
 import { createRequire } from 'module';
-import fse from 'fs-extra';
 import type { ExpressRequestHandler, Middleware } from 'webpack-dev-server';
 import type { ServerContext, RenderMode } from '@ice/runtime';
 // @ts-expect-error FIXME: esm type error
@@ -12,12 +11,13 @@ import dynamicImport from '../../utils/dynamicImport.js';
 import warnOnHashRouterEnabled from '../../utils/warnOnHashRouterEnabled.js';
 import type { UserConfig } from '../../types/userConfig.js';
 import { logger } from '../../utils/logger.js';
+import getRouterManifest from '../../utils/getRouterManifest.js';
 
 const require = createRequire(import.meta.url);
 
 interface Options {
   serverCompileTask: ExtendsPluginAPI['serverCompileTask'];
-  routeManifestPath: string;
+  rootDir: string;
   getAppConfig: () => Promise<any>;
   userConfig: UserConfig;
   documentOnly?: boolean;
@@ -30,13 +30,13 @@ export default function createRenderMiddleware(options: Options): Middleware {
     documentOnly,
     renderMode,
     serverCompileTask,
-    routeManifestPath,
+    rootDir,
     getAppConfig,
     taskConfig,
     userConfig,
   } = options;
   const middleware: ExpressRequestHandler = async function (req, res, next) {
-    const routes = JSON.parse(fse.readFileSync(routeManifestPath, 'utf-8'));
+    const routes = getRouterManifest(rootDir);
     const appConfig = (await getAppConfig()).default;
     if (appConfig?.router?.type === 'hash') {
       warnOnHashRouterEnabled(userConfig);

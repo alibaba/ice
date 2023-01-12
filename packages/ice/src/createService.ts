@@ -7,14 +7,13 @@ import type { Config } from '@ice/webpack-config/esm/types';
 import type { AppConfig } from '@ice/runtime/esm/types';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import fg from 'fast-glob';
-import type { DeclarationData } from './types/generator.js';
-import type { PluginData, ExtendsPluginAPI } from './types/plugin.js';
+import type { DeclarationData, PluginData, ExtendsPluginAPI } from './types';
 import Generator from './service/runtimeGenerator.js';
 import { createServerCompiler } from './service/serverCompiler.js';
 import createWatch from './service/watchSource.js';
 import start from './commands/start.js';
 import build from './commands/build.js';
-import webPlugin from './plugins/web/index.js';
+import pluginWeb from './plugins/web/index.js';
 import test from './commands/test.js';
 import mergeTaskConfig from './utils/mergeTaskConfig.js';
 import getWatchEvents from './getWatchEvents.js';
@@ -93,13 +92,20 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   const serverCompileTask = new ServerCompileTask();
 
-  const { platform = WEB } = commandArgs;
+  const { target = WEB } = commandArgs;
+  const plugins = [];
+
+  // Add default web plugin.
+  if (target === WEB) {
+    plugins.push(pluginWeb());
+  }
+
   const ctx = new Context<Config, ExtendsPluginAPI>({
     rootDir,
     command,
     commandArgs,
     configFile,
-    plugins: platform === WEB ? [webPlugin()] : [],
+    plugins,
     extendsPluginAPI: {
       generator: generatorAPI,
       watch: {
@@ -119,8 +125,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   await ctx.resolveUserConfig();
 
   // get plugins include built-in plugins and custom plugins
-  const plugins = await ctx.resolvePlugins() as PluginData[];
-  const runtimeModules = getRuntimeModules(plugins);
+  const resolvedPlugins = await ctx.resolvePlugins() as PluginData[];
+  const runtimeModules = getRuntimeModules(resolvedPlugins);
 
   const { getAppConfig, init: initAppConfigCompiler } = getAppExportConfig(rootDir);
   const { getRoutesConfig, getDataloaderConfig, init: initRouteConfigCompiler } = getRouteExportConfig(rootDir);
@@ -171,12 +177,13 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   // add render data
   generator.setRenderData({
     ...routesInfo,
-    platform,
+    target,
     iceRuntimePath,
     hasExportAppData,
     runtimeModules,
     coreEnvKeys,
-    basename: platformTaskConfig.config.basename || '/',
+    // Stringify basename because `config` basename in task config only support type string.
+    basename: JSON.stringify(platformTaskConfig.config.basename || '/'),
     memoryRouter: platformTaskConfig.config.memoryRouter,
     hydrate: !csr,
     importCoreJs: polyfill === 'entry',
@@ -277,7 +284,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             userConfig,
           });
         } else if (command === 'test') {
-          return await test(ctx, {
+          return test(ctx, {
             taskConfigs,
             spinner: buildSpinner,
           });

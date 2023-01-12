@@ -22,6 +22,9 @@ const alias = {
   'rax-find-dom-node': require.resolve('rax-compat/find-dom-node'),
   'rax-is-valid-element': require.resolve('rax-compat/is-valid-element'),
   'rax-unmount-component-at-node': require.resolve('rax-compat/unmount-component-at-node'),
+
+  'rax-compat/runtime/jsx-dev-runtime': require.resolve('rax-compat/runtime/jsx-dev-runtime'),
+  'rax-compat/runtime/jsx-runtime': require.resolve('rax-compat/runtime/jsx-runtime'),
 };
 
 const ruleSetStylesheet = {
@@ -64,16 +67,19 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
     onGetConfig((config) => {
       // Reset jsc.transform.react.runtime to classic.
       config.swcOptions = merge(config.swcOptions || {}, {
-        compilationConfig: {
-          jsc: {
-            transform: {
-              react: {
-                runtime: 'classic',
-                pragma: 'createElement',
-                pragmaFrag: 'Fragment',
+        compilationConfig: (source: string) => {
+          const isRaxComponent = /from\s['"]rax['"]/.test(source);
+          if (isRaxComponent) {
+            return {
+              jsc: {
+                transform: {
+                  react: {
+                    importSource: 'rax-compat/runtime',
+                  },
+                },
               },
-            },
-          },
+            };
+          }
         },
       });
 

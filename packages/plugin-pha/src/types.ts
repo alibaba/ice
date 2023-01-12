@@ -40,6 +40,13 @@ type PHADataPrefetch = Partial<Omit<DataPrefetchConfig, 'prefetchType' | 'extHea
   [key: string]: any;
 }>;
 
+type ResourcePrefetch = Array<{
+  src: string;
+  mime_type?: string;
+  headers?: string;
+  query_params?: string;
+}>;
+
 interface TabItem {
   name?: string;
   pagePath?: string;
@@ -141,6 +148,7 @@ type TabHeader = Partial<{
 export type PHAPage = Partial<{
   key: string;
   document: string;
+  resource_prefetch: ResourcePrefetch;
   path: string;
   background_color: string;
   enable_pull_refresh: boolean;
@@ -170,6 +178,7 @@ export type Manifest = Partial<{
   maxAge: number;
   appWorker: AppWorker;
   routes: Page[];
+  enableExpiredManifest: boolean;
 }> & WindowConfig & Record<string, any>;
 
 export type PHAManifest = Partial<{
@@ -181,6 +190,7 @@ export type PHAManifest = Partial<{
   icons: Icon[];
   data_prefetch: PHADataPrefetch[];
   app_worker: AppWorker;
+  enable_expired_manifest: boolean;
   tab_bar: PHATabBar;
   pages: PHAPage[];
   query_params_pass_keys: string[];
@@ -190,4 +200,5 @@ export type PHAManifest = Partial<{
   expires: string;
   max_age: number;
   package_resources: Record<string, string>;
+  resource_prefetch: ResourcePrefetch;
 }>;
