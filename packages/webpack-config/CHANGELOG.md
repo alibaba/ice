@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.5
+
+- [fix] bump version of `@ice/bundles`(0.1.2 -> 0.1.3)
+- [feat] define runtime value of `import.meta.*`
+
 ## 1.0.4
 
 - [fix] format id for win32 compatible

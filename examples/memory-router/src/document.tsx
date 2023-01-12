@@ -1,4 +1,3 @@
-/* @jsx createElement */
 import { Meta, Title, Links, Main, Scripts } from 'ice';
 
 function Document() {
@@ -7,7 +6,7 @@ function Document() {
       <head>
         <meta charSet="utf-8" />
         <meta name="description" content="ICE Demo" />
-        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Title />
         <Links />
