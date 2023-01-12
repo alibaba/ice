@@ -302,20 +302,15 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
       pageIds.forEach((pageId) => {
         if (typeof page === 'string' && dataloaderConfig && dataloaderConfig[pageId]) {
           const staticDataLoaders = [];
-          const dynamicDataLoaders = [];
           if (Array.isArray(dataloaderConfig[pageId])) {
             dataloaderConfig[pageId].forEach(item => {
               if (typeof item === 'object') {
                 staticDataLoaders.push(item);
-              } else if (typeof item === 'function') {
-                dynamicDataLoaders.push(item);
               }
             });
           } else if (typeof dataloaderConfig[pageId] === 'object') {
             // Single prefetch loader config.
             staticDataLoaders.push(dataloaderConfig[pageId]);
-          } else if (typeof dataloaderConfig[pageId] === 'function') {
-            dynamicDataLoaders.push(dataloaderConfig[pageId]);
           }
           pageManifest.data_prefetch = [...(pageManifest.data_prefetch || []), ...staticDataLoaders];
         }
