@@ -2,7 +2,7 @@ import { useSuspenseData, Suspense } from 'ice';
 
 export default function SuspenseComments() {
   return (
-    <Suspense id="comments" loading={<Loading />}>
+    <Suspense id="comments" fallback={<Loading />}>
       <Comments />
     </Suspense>
   );

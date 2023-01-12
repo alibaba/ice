@@ -2,7 +2,7 @@ import { useSuspenseData, Suspense } from 'ice';
 
 export default function SuspenseFooter() {
   return (
-    <Suspense id="footer" loading={<Loading />}>
+    <Suspense id="footer" fallback={<Loading />}>
       <Footer />
     </Suspense>
   );

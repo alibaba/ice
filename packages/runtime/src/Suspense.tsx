@@ -69,13 +69,12 @@ export function useSuspenseData(request?: any) {
 
 interface SuspenseProps {
   id: string;
-  loading?: ReactNode;
   fallback?: ReactNode;
   children: ReactNode;
 }
 
 export function Suspense(props: SuspenseProps) {
-  const { loading, fallback, id } = props;
+  const { fallback, id } = props;
 
   const suspenseState = {
     id: id,
@@ -90,11 +89,9 @@ export function Suspense(props: SuspenseProps) {
 
   return (
     <SuspenseContext.Provider value={suspenseState}>
-      <React.Suspense fallback={loading || null}>
-        <ErrorBoundary fallback={fallback || null}>
-          {props.children}
-          <Data id={id} />
-        </ErrorBoundary>
+      <React.Suspense fallback={fallback || null}>
+        {props.children}
+        <Data id={id} />
       </React.Suspense>
     </SuspenseContext.Provider>
   );
@@ -106,32 +103,4 @@ function Data(props) {
   return (
     <script dangerouslySetInnerHTML={{ __html: `if (!window.${LOADER}) { window.${LOADER} = new Map();} window.${LOADER}.set('${props.id}', ${JSON.stringify(data)})` }} />
   );
-}
-
-type EProps = {
-  children: ReactNode[];
-  fallback?: ReactNode;
-};
-
-type EState = {
-  hasError: boolean;
-};
-
-// ErrorBoundary will only work in client side.
-class ErrorBoundary extends React.Component<EProps, EState> {
-  state: EState = {
-    hasError: false,
-  };
-
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return this.props.fallback;
-    }
-
-    return this.props.children;
-  }
 }

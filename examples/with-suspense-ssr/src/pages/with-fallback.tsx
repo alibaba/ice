@@ -1,4 +1,6 @@
+import { Component } from 'react';
 import { Suspense, useSuspenseData } from 'ice';
+import type { ReactNode } from 'react';
 import Footer from '@/components/Footer';
 
 export default function Home() {
@@ -7,8 +9,10 @@ export default function Home() {
   return (
     <div>
       <h2>Home Page</h2>
-      <Suspense id="comments" loading={<Loading />} fallback={<Fallback />}>
-        <Comments />
+      <Suspense id="comments" fallback={<Loading />}>
+        <ErrorBoundary>
+          <Comments />
+        </ErrorBoundary>
       </Suspense>
       <Footer />
     </div>
@@ -55,8 +59,29 @@ async function getCommentsData() {
   return fakeData;
 }
 
-function Fallback() {
-  return (
-    <h1 id="fallback">Something went wrong.</h1>
-  );
+type EProps = {
+  children: ReactNode;
+};
+
+type EState = {
+  hasError: boolean;
+};
+
+// ErrorBoundary will only work in client side.
+class ErrorBoundary extends Component<EProps, EState> {
+  state: EState = {
+    hasError: false,
+  };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <h1 id="fallback">Something went wrong.</h1>;
+    }
+
+    return this.props.children;
+  }
 }
