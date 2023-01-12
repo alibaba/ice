@@ -7,6 +7,20 @@ import { callDataLoader } from './dataLoader.js';
 
 type RouteModule = Pick<RouteItem, 'id' | 'load'>;
 
+export function getRoutesPath(routes: RouteItem[], parentPath = ''): string[] {
+  let paths = [];
+
+  routes.forEach((route) => {
+    const pathId = `${parentPath}/${route.path || ''}`;
+    if (route.children) {
+      paths.push(...getRoutesPath(route.children, pathId));
+    } else {
+      paths.push(pathId);
+    }
+  });
+  return paths.map(str => str.replace('//', '/'));
+}
+
 export async function loadRouteModule(route: RouteModule, routeModulesCache: RouteModules) {
   const { id, load } = route;
   if (

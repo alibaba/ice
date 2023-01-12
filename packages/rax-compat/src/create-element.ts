@@ -12,7 +12,7 @@ import VisibilityChange from '@ice/appear';
 import { isFunction, isObject, isNumber } from './type';
 import transformProps from './props';
 
-
+const hasOwn = Object.prototype.hasOwnProperty;
 // https://github.com/alibaba/rax/blob/master/packages/driver-dom/src/index.js
 // opacity -> opa
 // fontWeight -> ntw
@@ -68,26 +68,13 @@ const InputCompat = forwardRef((props: any, inputRef: any) => {
   });
 });
 
-/**
- * Compat createElement for rax export.
- * Reference: https://github.com/alibaba/rax/blob/master/packages/rax/src/createElement.js#L13
- * @param type
- * @param props
- * @param children
- * @returns Element
- */
-export function createElement<P extends {
-  ref: RefObject<any>;
-  children: any;
-  style?: object;
-  onAppear?: Function;
-  onDisappear?: Function;
-}>(
-  type: FunctionComponent<P> | string,
-  props?: Attributes & P | null,
-  ...children: ReactNode[]): ReactElement {
+export function compatInstanceCreation(type: FunctionComponent | string, props: any, ...children: ReactNode[]): {
+  type: FunctionComponent | string;
+  props: any;
+  children?: ReactNode | ReactNode[];
+} {
   // Get a shallow copy of props, to avoid mutating the original object.
-  let rest: Attributes & P = Object.assign({}, props);
+  let rest = Object.assign({}, props);
   const { onAppear, onDisappear } = rest;
 
   // Delete props that are not allowed in react.
@@ -114,16 +101,67 @@ export function createElement<P extends {
 
   // Compat for visibility events.
   if (isFunction(onAppear) || isFunction(onDisappear)) {
-    return _createElement(
-      VisibilityChange,
-      {
+    return {
+      type: VisibilityChange,
+      props: {
         onAppear,
         onDisappear,
         children: _createElement(type, rest, ...children),
       },
-    );
+    };
   } else {
-    return _createElement(type, rest, ...children);
+    return {
+      type,
+      props: rest,
+      children,
+    };
+  }
+}
+
+/**
+ * Compat createElement for rax export.
+ * Reference: https://github.com/alibaba/rax/blob/master/packages/rax/src/createElement.js#L13
+ * @param type
+ * @param props
+ * @param children
+ * @returns Element
+ */
+export function createElement<P extends {
+  ref: RefObject<any>;
+  children: any;
+  style?: object;
+  onAppear?: Function;
+  onDisappear?: Function;
+}>(
+  type: FunctionComponent<P> | string,
+  props?: Attributes & P | null,
+  ...children: ReactNode[]): ReactElement {
+  const {
+    type: compatType,
+    props: compatProps,
+    children: compatChildren,
+  } = compatInstanceCreation(type, props, ...children);
+
+  // `props.children` is not equal with children in `createElement(type, props, ...children)`
+  // Since the former one will validate array key as dynamic children, the latter doesn't,
+  // treat as static children.
+  const childrenToRender = toArray(compatChildren);
+  if (hasOwn.call(compatProps, 'children')) {
+    toArray(compatProps.children)
+      .forEach((child) => childrenToRender.push(child));
+    delete compatProps.children;
+  }
+  return _createElement(compatType, compatProps, ...childrenToRender);
+}
+
+function toArray(item: any): any[] {
+  // foo == null is a simple way to judge falsy value like undefined and null.
+  if (item == null) {
+    return [];
+  } else if (Array.isArray(item)) {
+    return item;
+  } else {
+    return [item];
   }
 }
 

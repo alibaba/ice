@@ -1,10 +1,10 @@
 import * as path from 'path';
 import fse from 'fs-extra';
 import type { ServerContext, RenderMode, AppConfig } from '@ice/runtime';
-import { ROUTER_MANIFEST } from '../constant.js';
 import getRoutePaths from './getRoutePaths.js';
 import dynamicImport from './dynamicImport.js';
 import { logger } from './logger.js';
+import getRouterManifest from './getRouterManifest.js';
 
 interface Options {
   rootDir: string;
@@ -34,8 +34,7 @@ export default async function generateHTML(options: Options) {
   }
 
   // Read the latest routes info.
-  const routeManifest = path.join(rootDir, ROUTER_MANIFEST);
-  const routes = JSON.parse(fse.readFileSync(routeManifest, 'utf8'));
+  const routes = getRouterManifest(rootDir);
   // When enable hash-router, only generate one html(index.html).
   const paths = routeType === 'hash' ? ['/'] : getRoutePaths(routes);
   for (let i = 0, n = paths.length; i < n; i++) {
