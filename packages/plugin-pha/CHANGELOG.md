@@ -1,11 +1,8 @@
 # Changelog
 
-## 1.1.2
-
-- [feat] support resource_prefetch to preload resource
-
 ## 1.1.1
 
+- [feat] support resource_prefetch to preload resource
 - [feat] support enableExpiredManifest
 
 ## 1.1.0
