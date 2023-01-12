@@ -15,6 +15,7 @@ import {
   loadRouteModules,
   loadRoutesData,
   getRoutesConfig,
+  getRoutesPath,
 } from '../src/routes.js';
 
 describe('routes', () => {
@@ -343,5 +344,55 @@ describe('routes', () => {
         },
       },
     ]);
+  });
+
+  it('get routes flatten path', () => {
+    const routes = [
+      {
+        path: 'error',
+        id: 'home',
+      },
+      {
+        id: 'index',
+      },
+    ];
+    // @ts-ignore
+    const result = getRoutesPath(routes);
+    expect(result).toEqual(['/error', '/']);
+  });
+
+  it('get flatten path of nested routes', () => {
+    const routes = [
+      {
+        id: 'layout',
+        children: [
+          {
+            id: 'home',
+            path: 'home',
+          },
+          {
+            id: 'layout',
+            path: 'dashboard',
+            children: [
+              {
+                id: 'about',
+                path: 'about',
+              },
+              {
+                id: 'blog',
+                path: 'blog',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'index',
+        componentName: 'index',
+      },
+    ];
+    // @ts-ignore
+    const result = getRoutesPath(routes);
+    expect(result).toEqual(['/home', '/dashboard/about', '/dashboard/blog', '/']);
   });
 });

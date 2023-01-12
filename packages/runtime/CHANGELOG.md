@@ -3,10 +3,8 @@
 ## v1.1.0
 
 - [feat] suspense ssr
-
-## v1.0.5
-
 - [feat] support template parse for dataLoader
+- [feat] enhance memory router
 
 ## v1.0.4
 
