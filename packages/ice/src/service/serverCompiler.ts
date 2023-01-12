@@ -79,12 +79,22 @@ export function createServerCompiler(options: Options) {
     let depsMetadata: DepsMetaData;
     let swcOptions = merge({}, {
       // Only get the `compilationConfig` from task config.
-      compilationConfig: {
-        ...(task.config?.swcOptions?.compilationConfig || {}),
-        // Force inline when use swc as a transformer.
-        sourceMaps: sourceMap && 'inline',
-      },
+      compilationConfig: getCompilationConfig(),
     }, swc);
+    function getCompilationConfig() {
+      const customCompilationConfig = task.config?.swcOptions?.compilationConfig || {};
+      const getConfig = typeof customCompilationConfig === 'function'
+        ? customCompilationConfig
+        : () => customCompilationConfig;
+
+      return (source, id) => {
+        return {
+          ...getConfig(source, id),
+          // Force inline when use swc as a transformer.
+          sourceMaps: sourceMap && 'inline',
+        };
+      };
+    }
     const enableSyntaxFeatures = syntaxFeatures && Object.keys(syntaxFeatures).some(key => syntaxFeatures[key]);
     const transformPlugins = getCompilerPlugins({
       ...task.config,
