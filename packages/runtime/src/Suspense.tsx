@@ -13,9 +13,11 @@ interface SuspenseState {
   update: Function;
 }
 
+type Request = () => Promise<any>;
+
 const SuspenseContext = React.createContext<SuspenseState | undefined>(undefined);
 
-export function useSuspenseData(request?: any) {
+export function useSuspenseData(request?: Request) {
   const suspenseState = React.useContext(SuspenseContext);
 
   const { data, done, promise, update, error, id } = suspenseState;
