@@ -77,7 +77,7 @@ function updateMeta(meta: RouteConfig['meta']): void {
     'meta[name=ice-meta-count]',
   ) as HTMLMetaElement;
 
-  const headCount = Number(metaCountEl.content);
+  const headCount = metaCountEl ? Number(metaCountEl.content) : 0;
   const oldTags: Element[] = [];
 
   for (
