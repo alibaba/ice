@@ -18,8 +18,8 @@ import warnOnHashRouterEnabled from '../utils/warnOnHashRouterEnabled.js';
 import generateEntry from '../utils/generateEntry.js';
 import { logger } from '../utils/logger.js';
 import { getExpandedEnvs } from '../utils/runtimeEnv.js';
-import getRouterManifest from '../utils/getRouterManifest';
-import getRoutePaths from '../utils/getRoutePaths';
+import getRouterManifest from '../utils/getRouterManifest.js';
+import getRoutePaths from '../utils/getRoutePaths.js';
 
 const build = async (
   context: Context<Config, ExtendsPluginAPI>,
