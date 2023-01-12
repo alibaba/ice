@@ -22,9 +22,16 @@ const plugin: Plugin<PluginOptions> = ({ type, library }) => ({
       return config;
     });
     if (type === 'child') {
+      // Modify basename when render as a child app.
+      generator.modifyRenderData((data) => {
+        return {
+          ...data,
+          basename: `(typeof window !== 'undefined' && window.ICESTARK?.basename || ${data.basename})`,
+        };
+      });
       generator.addEntryCode(() => {
         return `
-if (!window.ICESTARK) {
+if (!window.ICESTARK?.root) {
   render();
 }
 let root;
@@ -35,7 +42,7 @@ export function mount(props) {
   root = render({ runtimeOptions: props });
 }
 export function unmount(props) {
-  root.unmount();
+  root?.then((res) => res.unmount());
   if (app?.icestark?.unmount) {
     app?.icestark?.unmount(props);
   }

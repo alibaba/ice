@@ -19,7 +19,7 @@ const runtimeModules = { commons, statics };
 
 const getRouterBasename = () => {
   const appConfig = runtime.getAppConfig(app);
-  return appConfig?.router?.basename ?? '<%- basename %>' ?? '';
+  return appConfig?.router?.basename ?? <%- basename %> ?? '';
 }
 
 const setRuntimeEnv = (renderMode) => {
