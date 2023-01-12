@@ -20,6 +20,7 @@ export function useSuspenseData(request?: any) {
 
   const { data, done, promise, update, error, id } = suspenseState;
 
+  // use data from server side directly when hydrate.
   if (isClient && (window[LOADER] as Map<string, any>) && window[LOADER].has(id)) {
     return window[LOADER].get(id);
   }
@@ -32,39 +33,38 @@ export function useSuspenseData(request?: any) {
     throw error;
   }
 
+  // request is pending.
   if (promise) {
     throw promise;
   }
 
+  // when called by Data, request is null.
   if (!request) {
     return null;
   }
 
-  if (!promise) {
-    const promise = request();
+  // send request and throw promise
+  const thenable = request();
 
-    promise.then((response) => {
-      update({
-        done: true,
-        data: response,
-        promise: null,
-      });
-    }).catch(e => {
-      update({
-        done: true,
-        error: e,
-        promise: null,
-      });
-    });
-
+  thenable.then((response) => {
     update({
-      promise,
+      done: true,
+      data: response,
+      promise: null,
     });
+  }).catch(e => {
+    update({
+      done: true,
+      error: e,
+      promise: null,
+    });
+  });
 
-    throw promise;
-  }
+  update({
+    promise: thenable,
+  });
 
-  return null;
+  throw thenable;
 }
 
 interface SuspenseProps {
