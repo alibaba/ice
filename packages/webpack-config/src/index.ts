@@ -15,6 +15,7 @@ import type { Config, ModifyWebpackConfig } from './types.js';
 import configAssets from './config/assets.js';
 import configCss from './config/css.js';
 import AssetsManifestPlugin from './webpackPlugins/AssetsManifestPlugin.js';
+import EnvReplacementPlugin from './webpackPlugins/EnvReplacementPlugin.js';
 import getCompilerPlugins from './getCompilerPlugins.js';
 import getSplitChunksConfig, { FRAMEWORK_BUNDLES } from './config/splitChunks.js';
 import compilationPlugin from './unPlugins/compilation.js';
@@ -69,30 +70,6 @@ function getAliasWithRoot(rootDir: string, alias?: Record<string, string | boole
     aliasWithRoot[key] = (aliasValue && typeof aliasValue === 'string' && aliasValue.startsWith('.')) ? path.join(rootDir, aliasValue) : aliasValue;
   });
   return aliasWithRoot;
-}
-
-/**
- * Used for env replacement, each resolved module has its own query to make tree shaking works.
- */
-function envReplacementPlugin() {
-  const envLibs = ['universal-env', '@uni/env'];
-  let unique = 0;
-  return {
-    apply(compiler) {
-      compiler.hooks.normalModuleFactory.tap('EnvReplacementNormalModuleFactoryPlugin', (normalModuleFactory) => {
-        normalModuleFactory.hooks.beforeResolve.tap('EnvReplacementResolvePlugin', (resolveData) => {
-          const { request } = resolveData;
-          if (envLibs.includes(request)) {
-            unique++;
-            const query = `?u=${unique}`;
-            resolveData.request += query;
-            resolveData.query = query;
-            resolveData.cacheable = false;
-          }
-        });
-      });
-    },
-  };
 }
 
 const RUNTIME_PREFIX = /^ICE_/i;
@@ -345,7 +322,8 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     plugins: [
       ...plugins,
       ...compilerWebpackPlugins,
-      envReplacementPlugin(),
+      // @ts-ignore
+      new EnvReplacementPlugin(),
       dev && fastRefresh && new ReactRefreshWebpackPlugin({
         exclude: [/node_modules/, /bundles[\\\\/]compiled/],
         // use webpack-dev-server overlay instead
