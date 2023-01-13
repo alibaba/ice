@@ -14,13 +14,8 @@ jobs:
         os: [ubuntu-latest, windows-latest]
       fail-fast: false
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Set branch name
-        run: echo >>$GITHUB_ENV BRANCH_NAME=${GITHUB_REF#refs/heads/}
-      - name: Echo branch name
-        run: echo ${BRANCH_NAME}
+      - name: Checkout Branch
+        uses: actions/checkout@v3
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
