@@ -253,7 +253,7 @@ export default createModel({
 ```ts title="src/app.ts"
 import { defineStoreConfig } from '@ice/plugin-store/esm/types';
 
-export const store = defineStoreConfig(async () => {
+export const storeConfig = defineStoreConfig(async () => {
   // 模拟请求后端数据
   // const data = (await fetch('your-url')).json();
   return {
