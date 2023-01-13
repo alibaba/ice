@@ -16,14 +16,16 @@
     "prebundle": "cd packages/bundles && pnpm build",
     "clean": "rimraf packages/*/esm",
     "dependency:check": "tsx ./scripts/dependencyCheck.ts",
-    "version": "tsx ./scripts/tagVersion.ts",
     "version:check": "tsx ./scripts/versionCheck.ts",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
     "publish": "tsx ./scripts/publishPackage.ts",
     "publish:beta": "PUBLISH_TYPE=beta tsx ./scripts/publishPackageWithDistTag.ts",
     "publish:release": "PUBLISH_TYPE=release VERSION_PREFIX=rc tsx ./scripts/publishPackageWithDistTag.ts",
     "cov": "vitest run --coverage",
-    "test": "vitest"
+    "test": "vitest",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "changeset publish"
   },
   "devDependencies": {
     "@applint/spec": "^1.2.3",
