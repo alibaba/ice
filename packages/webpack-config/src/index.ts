@@ -71,6 +71,29 @@ function getAliasWithRoot(rootDir: string, alias?: Record<string, string | boole
   return aliasWithRoot;
 }
 
+/**
+ * Used for env replacement, each resolved module has its own query to make tree shaking works.
+ */
+function envReplacementPlugin() {
+  const envLibs = ['universal-env', '@uni/env'];
+  let unique = 0;
+  return {
+    apply(compiler) {
+      compiler.hooks.normalModuleFactory.tap('EnvReplacementNormalModuleFactoryPlugin', (normalModuleFactory) => {
+        normalModuleFactory.hooks.beforeResolve.tap('EnvReplacementResolvePlugin', (resolveData) => {
+          const { request } = resolveData;
+          if (envLibs.includes(request)) {
+            unique++;
+            const query = `?u=${unique}`;
+            resolveData.request += query;
+            resolveData.query = query;
+            resolveData.cacheable = false;
+          }
+        });
+      });
+    },
+  };
+}
 
 const RUNTIME_PREFIX = /^ICE_/i;
 
@@ -192,6 +215,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
       // https://github.com/vercel/next.js/issues/7178#issuecomment-493048965
       comparisons: false,
       inline: 2,
+      passes: 4,
     },
     mangle: {
       safari10: true,
@@ -202,6 +226,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
       // Fixes usage of Emoji and certain Regex
       ascii_only: true,
     },
+    module: true,
   }, minimizerOptions);
   const compilation = compilationPlugin({
     cacheDir,
@@ -234,6 +259,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     },
     context: rootDir,
     module: {
+      unsafeCache: false,
       parser: {
         javascript: {
           importExportsPresence: 'warn',
@@ -273,7 +299,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     },
     watchOptions: {
       // add a delay before rebuilding once routes changed
-      // webpack can not found routes component after it is been deleted
+      // webpack can not be found routes component after it has been deleted
       aggregateTimeout: 200,
       ignored: watchIgnoredRegexp,
     },
@@ -319,6 +345,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     plugins: [
       ...plugins,
       ...compilerWebpackPlugins,
+      envReplacementPlugin(),
       dev && fastRefresh && new ReactRefreshWebpackPlugin({
         exclude: [/node_modules/, /bundles[\\\\/]compiled/],
         // use webpack-dev-server overlay instead
