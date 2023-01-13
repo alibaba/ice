@@ -211,7 +211,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     hasExportAppData,
     runtimeModules,
     coreEnvKeys,
-    basename: platformTaskConfig.config.basename || '/',
+    // Stringify basename because `config` basename in task config only support type string.
+    basename: JSON.stringify(platformTaskConfig.config.basename || '/'),
     memoryRouter: platformTaskConfig.config.memoryRouter,
     hydrate: !csr,
     importCoreJs: polyfill === 'entry',

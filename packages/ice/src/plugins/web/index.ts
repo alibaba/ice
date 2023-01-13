@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import type { Plugin } from '../../types';
+import type { Plugin } from '../../types/plugin.js';
 import { WEB } from '../../constant.js';
 import openBrowser from '../../utils/openBrowser.js';
 import { logger } from '../../utils/logger.js';

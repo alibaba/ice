@@ -245,6 +245,23 @@ importers:
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
 
+  examples/memory-router:
+    specifiers:
+      '@ice/app': workspace:*
+      '@ice/runtime': workspace:*
+      '@types/react': ^18.0.0
+      '@types/react-dom': ^18.0.0
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    dependencies:
+      '@ice/app': link:../../packages/ice
+      '@ice/runtime': link:../../packages/runtime
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    devDependencies:
+      '@types/react': 18.0.21
+      '@types/react-dom': 18.0.6
+
   examples/miniapp-project:
     specifiers:
       '@ice/app': workspace:*
@@ -745,7 +762,7 @@ importers:
 
   packages/bundles:
     specifiers:
-      '@ice/swc-plugin-keep-export': 0.1.3
+      '@ice/swc-plugin-keep-export': 0.1.4
       '@ice/swc-plugin-remove-export': 0.1.2
       '@pmmmwh/react-refresh-webpack-plugin': 0.5.7
       '@swc/core': 1.3.19
@@ -825,7 +842,7 @@ importers:
       webpack-dev-server: 4.10.0
       ws: ^8.4.2
     dependencies:
-      '@ice/swc-plugin-keep-export': 0.1.3
+      '@ice/swc-plugin-keep-export': 0.1.4
       '@ice/swc-plugin-remove-export': 0.1.2
       '@swc/core': 1.3.19
       ansi-html-community: 0.0.8
@@ -934,7 +951,7 @@ importers:
       '@ice/bundles': 0.1.4
       '@ice/route-manifest': 1.0.0
       '@ice/runtime': ^1.0.0
-      '@ice/webpack-config': 1.0.4
+      '@ice/webpack-config': 1.0.5
       '@swc/helpers': 0.4.14
       '@types/babel__generator': ^7.6.4
       '@types/babel__traverse': ^7.17.1
@@ -1226,6 +1243,7 @@ importers:
       chalk: ^4.0.0
       consola: ^2.15.3
       esbuild: ^0.16.5
+      htmlparser2: ^8.0.1
       humps: ^2.0.1
       lodash.clonedeep: ^4.5.0
       webpack: ^5.73.0
@@ -1234,6 +1252,7 @@ importers:
       '@remix-run/router': 1.0.3
       chalk: 4.1.2
       consola: 2.15.3
+      htmlparser2: 8.0.1
       humps: 2.0.1
       lodash.clonedeep: 4.5.0
     devDependencies:
@@ -1253,6 +1272,7 @@ importers:
       css: ^2.2.1
       lodash.merge: ^4.6.2
       rax-compat: ^0.1.0
+      style-unit: ^3.0.5
       stylesheet-loader: ^0.9.1
       webpack: ^5.73.0
     dependencies:
@@ -1264,6 +1284,7 @@ importers:
       css: 2.2.4
       lodash.merge: 4.6.2
       rax-compat: link:../rax-compat
+      style-unit: 3.0.5
       stylesheet-loader: 0.9.1
     devDependencies:
       '@ice/app': link:../ice
@@ -4689,8 +4710,8 @@ packages:
       - react-native
     dev: false
 
-  /@ice/swc-plugin-keep-export/0.1.3:
-    resolution: {integrity: sha512-KYlF/fE7LoVjWalGIPOateg3kmEQfTi3wxtGqzviIROu6GqDwd7jdYrzkR36E0N9KW40sqhAMM4dxNux+28+Lg==}
+  /@ice/swc-plugin-keep-export/0.1.4:
+    resolution: {integrity: sha512-fOc09KALmL2zJK1xNGTEt/C27mXL7NVn/v1eRjjuM4uer+qmWIxYXIa9dpfTX5ZUn8zXhrKH8lGdczoKHCzyQQ==}
     dev: false
 
   /@ice/swc-plugin-remove-export/0.1.2:
@@ -8468,8 +8489,8 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
-      JSONStream: 1.3.5
       is-text-path: 1.0.1
+      JSONStream: 1.3.5
       lodash: 4.17.21
       meow: 8.1.2
       split2: 3.2.2
@@ -17009,12 +17030,6 @@ packages:
   /react-dev-utils/12.0.1_qw7fmzhoapcndkteb5rsc33stq:
     resolution: {integrity: sha512-84Ivxmr17KjUupyqzFode6xKhjwuEJDROWKJy/BthkL7Wn6NJ8h4WE6k/exAv6ImS+0oZLRRW5j/aINMHyeGeQ==}
     engines: {node: '>=14'}
-    peerDependencies:
-      typescript: '>=2.7'
-      webpack: '>=4'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
     dependencies:
       '@babel/code-frame': 7.18.6
       address: 1.2.1
@@ -17045,7 +17060,9 @@ packages:
     transitivePeerDependencies:
       - eslint
       - supports-color
+      - typescript
       - vue-template-compiler
+      - webpack
 
   /react-dom/17.0.2_react@17.0.2:
     resolution: {integrity: sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==}

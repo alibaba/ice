@@ -91,7 +91,9 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
 
       merge(programmaticOptions, commonOptions);
 
-      if (compilationConfig) {
+      if (typeof compilationConfig === 'function') {
+        merge(programmaticOptions, compilationConfig(source, fileId));
+      } else if (compilationConfig) {
         merge(programmaticOptions, compilationConfig);
       }
 

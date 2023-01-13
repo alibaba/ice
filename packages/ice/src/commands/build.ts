@@ -18,6 +18,8 @@ import warnOnHashRouterEnabled from '../utils/warnOnHashRouterEnabled.js';
 import generateEntry from '../utils/generateEntry.js';
 import { logger } from '../utils/logger.js';
 import { getExpandedEnvs } from '../utils/runtimeEnv.js';
+import getRouterManifest from '../utils/getRouterManifest.js';
+import getRoutePaths from '../utils/getRoutePaths.js';
 
 const build = async (
   context: Context<Config, ExtendsPluginAPI>,
@@ -135,6 +137,7 @@ const build = async (
   }
   const serverOutfile = path.join(outputDir, SERVER_OUTPUT_DIR, `index${userConfig?.server?.format === 'esm' ? '.mjs' : '.cjs'}`);
   serverEntryRef.current = serverOutfile;
+  const routeType = appConfig?.router?.type;
   const {
     outputPaths = [],
   } = await generateEntry({
@@ -149,6 +152,24 @@ const build = async (
   });
   // This depends on orders.
   output.paths = [...outputPaths];
+
+  if (routeType === 'memory' && userConfig?.routes?.injectInitialEntry) {
+    // Read the latest routes info.
+    const routes = getRouterManifest(rootDir);
+    const routePaths = getRoutePaths(routes);
+    routePaths.forEach((routePath) => {
+      // Inject `initialPath` when router type is memory.
+      const routeAssetPath = path.join(outputDir, 'js',
+        `p_${routePath === '/' ? 'index' : routePath.replace(/^\//, '').replace(/\//g, '-')}.js`);
+      if (fse.existsSync(routeAssetPath)) {
+        fse.writeFileSync(routeAssetPath,
+          `window.__ICE_APP_CONTEXT__=Object.assign(window.__ICE_APP_CONTEXT__||{}, {routePath: '${routePath}'});${
+            fse.readFileSync(routeAssetPath, 'utf-8')}`);
+      } else {
+        logger.warn(`Can not find ${routeAssetPath} when inject initial path.`);
+      }
+    });
+  }
 
   await applyHook('after.build.compile', {
     stats,

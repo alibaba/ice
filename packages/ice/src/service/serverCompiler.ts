@@ -79,12 +79,22 @@ export function createServerCompiler(options: Options) {
     let depsMetadata: DepsMetaData;
     let swcOptions = merge({}, {
       // Only get the `compilationConfig` from task config.
-      compilationConfig: {
-        ...(task.config?.swcOptions?.compilationConfig || {}),
-        // Force inline when use swc as a transformer.
-        sourceMaps: sourceMap && 'inline',
-      },
+      compilationConfig: getCompilationConfig(),
     }, swc);
+    function getCompilationConfig() {
+      const customCompilationConfig = task.config?.swcOptions?.compilationConfig || {};
+      const getConfig = typeof customCompilationConfig === 'function'
+        ? customCompilationConfig
+        : () => customCompilationConfig;
+
+      return (source, id) => {
+        return {
+          ...getConfig(source, id),
+          // Force inline when use swc as a transformer.
+          sourceMaps: sourceMap && 'inline',
+        };
+      };
+    }
     const enableSyntaxFeatures = syntaxFeatures && Object.keys(syntaxFeatures).some(key => syntaxFeatures[key]);
     const transformPlugins = getCompilerPlugins({
       ...task.config,
@@ -154,6 +164,12 @@ export function createServerCompiler(options: Options) {
       define,
       absWorkingDir: rootDir,
       external: Object.keys(externals),
+      banner: customBuildOptions.platform === 'node' && server?.format !== 'cjs'
+        ? {
+            // See https://github.com/evanw/esbuild/issues/1921#issuecomment-1152991694
+            js: 'import { createRequire } from \'module\';const require = createRequire(import.meta.url);',
+          }
+        : undefined,
       plugins: [
         ...(customBuildOptions.plugins || []),
         emptyCSSPlugin(),

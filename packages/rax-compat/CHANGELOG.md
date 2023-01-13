@@ -1,5 +1,9 @@
 # Changelog
 
-## v0.1.2
+## 0.1.6
 
-- Fix: support event transform.
+- [feat] provide jsx-runtime for JSX transform automatic.
+
+## 0.1.2
+
+- [fix] support event transform.

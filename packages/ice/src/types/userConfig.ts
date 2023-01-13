@@ -51,6 +51,7 @@ export interface UserConfig {
   routes?: {
     ignoreFiles?: string[];
     defineRoutes?: (defineRoute: DefineRouteFunction) => void;
+    injectInitialEntry?: boolean;
   };
   plugins?: PluginList<Config, OverwritePluginAPI>;
   dropLogLevel?: 'trace' | 'debug' | 'log' | 'info' | 'warn' | 'error';

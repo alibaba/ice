@@ -40,7 +40,7 @@
     "@ice/bundles": "0.1.4",
     "@ice/route-manifest": "1.0.0",
     "@ice/runtime": "^1.0.0",
-    "@ice/webpack-config": "1.0.4",
+    "@ice/webpack-config": "1.0.5",
     "@swc/helpers": "0.4.14",
     "@types/express": "^4.17.14",
     "address": "^1.1.2",
