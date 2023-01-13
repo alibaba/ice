@@ -5,6 +5,7 @@ import humps from 'humps';
 import consola from 'consola';
 import cloneDeep from 'lodash.clonedeep';
 import { matchRoutes } from '@remix-run/router';
+import * as htmlparser2 from 'htmlparser2';
 import { decamelizeKeys, camelizeKeys, validPageConfigKeys } from './constants.js';
 import type { Page, PHAPage, PageHeader, PageConfig, Manifest, PHAManifest } from './types';
 
@@ -160,9 +161,40 @@ async function getPageManifest(page: string | Page, options: ParseOptions): Prom
       key: page,
       ...rest,
     };
+    const html = await renderPageDocument(page, serverEntry);
     if (template && !Array.isArray(pageConfig.frames)) {
-      pageManifest.document = await renderPageDocument(page, serverEntry);
+      pageManifest.document = html;
     }
+
+    let scripts = [];
+    let stylesheets = [];
+    function getPreload(dom) {
+      if (
+        dom.name === 'script' &&
+        dom.attribs &&
+        dom.attribs.src
+      ) {
+        scripts.push({
+          src: dom.attribs.src,
+        });
+      } else if (
+        dom.name === 'link' &&
+        dom.attribs &&
+        dom.attribs.href &&
+        dom.attribs.rel === 'stylesheet'
+      ) {
+        stylesheets.push({
+          src: dom.attribs.href,
+        });
+      }
+
+      if (dom.children) {
+        dom.children.forEach(getPreload);
+      }
+    }
+    getPreload(htmlparser2.parseDocument(pageManifest.document));
+    pageManifest.resource_prefetch = [...scripts, ...stylesheets];
+
 
     // Always need path for page item.
     pageManifest.path = `${getPageUrl(page, options)}${queryParams ? `?${queryParams}` : ''}`;
@@ -381,6 +413,11 @@ export function getMultipleManifest(manifest: PHAManifest): Record<string, PHAMa
     if (copiedManifest?.pages![0]?.data_prefetch) {
       copiedManifest.data_prefetch = copiedManifest.pages[0].data_prefetch;
       delete copiedManifest.pages[0].data_prefetch;
+    }
+    // take out the page preload and assign it to the root node
+    if (copiedManifest?.pages![0]?.resource_prefetch) {
+      copiedManifest.resource_prefetch = copiedManifest.pages[0].resource_prefetch;
+      delete copiedManifest.pages[0].resource_prefetch;
     }
     multipleManifest[pageKey] = copiedManifest;
   });

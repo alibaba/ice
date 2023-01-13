@@ -5,7 +5,6 @@ on:
       - 'website/**'
     branches:
       - master
-      - release-next
   workflow_dispatch:
 
 # 任务
@@ -41,7 +40,7 @@ jobs:
       # 部署到 GitHub Pages
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.0
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/release-next'
+        if: github.ref == 'refs/heads/master'
         with:
           BRANCH: gh-pages
           FOLDER: website/build
