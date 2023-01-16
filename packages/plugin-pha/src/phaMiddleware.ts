@@ -29,10 +29,8 @@ const createPHAMiddleware = ({
     // @ts-ignore
     const requestPath = path.basename(req._parsedUrl.pathname);
     const requestManifest = requestPath.endsWith('manifest.json');
-    console.log('requestAppWorker=', requestManifest);
 
     const requestAppWorker = req.url === '/app-worker.js';
-    console.log('requestAppWorker=', requestAppWorker);
     if (requestManifest || requestAppWorker) {
       // Get serverEntry from middleware of server-compile.
       const { error, serverEntry } = await compileTask();
