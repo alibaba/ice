@@ -1206,6 +1206,7 @@ importers:
     specifiers:
       '@ice/app': ^3.0.0
       '@remix-run/router': ^1.0.3
+      build-scripts: ^2.0.1-0
       chalk: ^4.0.0
       consola: ^2.15.3
       esbuild: ^0.16.5
@@ -1215,6 +1216,7 @@ importers:
       webpack-dev-server: ^4.9.2
     dependencies:
       '@remix-run/router': 1.0.3
+      build-scripts: 2.0.1-0
       chalk: 4.1.2
       consola: 2.15.3
       humps: 2.0.1
@@ -19930,7 +19932,7 @@ packages:
       mime-types: 2.1.35
       range-parser: 1.2.1
       schema-utils: 4.0.0
-      webpack: 5.75.0_ncbsfugu56ddhgadp34k4kpsue
+      webpack: 5.75.0_esbuild@0.16.10
 
   /webpack-dev-server/4.10.0_webpack@5.75.0:
     resolution: {integrity: sha512-7dezwAs+k6yXVFZ+MaL8VnE+APobiO3zvpp3rBHe/HmWQ+avwh0Q3d0xxacOiBybZZ3syTZw9HXzpa3YNbAZDQ==}
