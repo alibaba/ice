@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Suspense, useSuspenseData } from 'ice';
+import { withSuspense, useSuspenseData } from 'ice';
 import type { ReactNode } from 'react';
 import Footer from '@/components/Footer';
 
@@ -9,15 +9,17 @@ export default function Home() {
   return (
     <div>
       <h2>Home Page</h2>
-      <Suspense id="comments" fallback={<Loading />}>
-        <ErrorBoundary>
-          <Comments />
-        </ErrorBoundary>
-      </Suspense>
+      <SuspenseComments id="comments" fallback={<Loading />} />
       <Footer />
     </div>
   );
 }
+
+const SuspenseComments = withSuspense(() => (
+  <ErrorBoundary>
+    <Comments />
+  </ErrorBoundary>
+));
 
 function Comments() {
   const comments = useSuspenseData(getCommentsData);

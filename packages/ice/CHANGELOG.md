@@ -2,7 +2,7 @@
 
 ## v3.0.6
 
-- [feat] add suspense to exports
+- [feat] export suspense api
 - [feat] support `import.meta.target`, `import.meta.renderer` and `import.meta.env`
 - [feat] support config `routes.injectInitialEntry` for memory router
 - [fix] should not replace global env for ssr

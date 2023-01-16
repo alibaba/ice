@@ -1,12 +1,4 @@
-import { useSuspenseData, Suspense } from 'ice';
-
-export default function SuspenseFooter() {
-  return (
-    <Suspense id="footer" fallback={<Loading />}>
-      <Footer />
-    </Suspense>
-  );
-}
+import { useSuspenseData, withSuspense } from 'ice';
 
 function Footer() {
   const data = useSuspenseData(getData);
@@ -20,11 +12,7 @@ function Footer() {
   );
 }
 
-function Loading() {
-  return (
-    <div>loading...</div>
-  );
-}
+export default withSuspense(Footer);
 
 const fakeData = {
   title: 'Thanks for reading!',

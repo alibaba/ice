@@ -1,15 +1,7 @@
-import { useSuspenseData, Suspense } from 'ice';
-
-export default function SuspenseComments() {
-  return (
-    <Suspense id="comments" fallback={<Loading />}>
-      <Comments />
-    </Suspense>
-  );
-}
+import { useSuspenseData, withSuspense } from 'ice';
 
 function Comments() {
-  const comments = useSuspenseData(getCommentsData);
+  const comments = useSuspenseData(getData);
 
   console.log('Render: Comments');
 
@@ -24,11 +16,7 @@ function Comments() {
   );
 }
 
-function Loading() {
-  return (
-    <div>loading...</div>
-  );
-}
+export default withSuspense(Comments);
 
 const fakeData = [
   "Wait, it doesn't wait for React to load?",
@@ -36,7 +24,7 @@ const fakeData = [
   'I like marshmallows',
 ];
 
-async function getCommentsData() {
+async function getData() {
   console.log('load comments');
 
   await new Promise<any>((resolve) => {

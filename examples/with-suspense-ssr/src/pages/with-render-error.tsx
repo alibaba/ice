@@ -1,4 +1,4 @@
-import { Suspense, useSuspenseData } from 'ice';
+import { withSuspense, useSuspenseData } from 'ice';
 import Footer from '@/components/Footer';
 
 export default function Home() {
@@ -7,13 +7,13 @@ export default function Home() {
   return (
     <div>
       <h2>Home Page</h2>
-      <Suspense id="comments" fallback={<Loading />}>
-        <Comments />
-      </Suspense>
+      <SuspenseComments id="comments" fallback={<Loading />} />
       <Footer />
     </div>
   );
 }
+
+const SuspenseComments = withSuspense(Comments);
 
 function Comments() {
   const comments = useSuspenseData(getCommentsData);

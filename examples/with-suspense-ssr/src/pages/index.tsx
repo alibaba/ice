@@ -10,8 +10,8 @@ export default function Home() {
     <div>
       <h2>Home Page</h2>
       <Counter />
-      <Comments />
-      <Footer />
+      <Comments id="comments" fallback={<div>loading...</div>} />
+      <Footer id="comments" fallback={<div>loading...</div>} />
     </div>
   );
 }

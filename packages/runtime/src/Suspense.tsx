@@ -72,31 +72,33 @@ export function useSuspenseData(request?: Request) {
 interface SuspenseProps {
   id: string;
   fallback?: ReactNode;
-  children: ReactNode;
+  [key: string]: any;
 }
 
-export function Suspense(props: SuspenseProps) {
-  const { fallback, id } = props;
+export function withSuspense(Component) {
+  return (props: SuspenseProps) => {
+    const { fallback, id, ...componentProps } = props;
 
-  const suspenseState = {
-    id: id,
-    data: null,
-    done: false,
-    promise: null,
-    error: null,
-    update: (value) => {
-      Object.assign(suspenseState, value);
-    },
-  };
+    const suspenseState = {
+      id: id,
+      data: null,
+      done: false,
+      promise: null,
+      error: null,
+      update: (value) => {
+        Object.assign(suspenseState, value);
+      },
+    };
 
-  return (
-    <SuspenseContext.Provider value={suspenseState}>
+    return (
       <React.Suspense fallback={fallback || null}>
-        {props.children}
-        <Data id={id} />
+        <SuspenseContext.Provider value={suspenseState}>
+          <Component {...componentProps} />
+          <Data id={id} />
+        </SuspenseContext.Provider>
       </React.Suspense>
-    </SuspenseContext.Provider>
-  );
+    );
+  };
 }
 
 function Data(props) {
