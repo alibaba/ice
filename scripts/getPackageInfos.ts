@@ -56,8 +56,11 @@ export async function getPackageInfos(distTag = ''): Promise<IPackageInfo[]> {
       // Process package info.
       if (existsSync(packageInfoPath)) {
         const packageInfo = JSON.parse(readFileSync(packageInfoPath, 'utf8'));
-        const packageName = packageInfo.name;
-        const publishVersion = semver.valid(semver.coerce(packageInfo.version));
+        const { name: packageName, version } = packageInfo;
+        const publishVersion = semver.valid(semver.coerce(version));
+        if (publishVersion === null) {
+          throw new Error(`Package ${packageName} version ${version} is invalid. Please check it.`);
+        }
         console.log(`- ${packageName}`);
 
         try {
