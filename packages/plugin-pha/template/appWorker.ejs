@@ -1,8 +1,11 @@
 import dataloaderConfig from './dataloader-config';
 <% if(appWorkerPath) {-%>import '<%- appWorkerPath %>';<% } -%>
 
-addEventListener('beforepageload', (pageInfos) => {
-  const config = dataloaderConfig[pageInfos.key];
+addEventListener('beforepageload', (pageInfos = {}) => {
+  const {
+    key,
+  } = pageInfos.detail || {};
+  const config = dataloaderConfig[key];
   if (config) {
     if (typeof config === 'function') {
       config();
