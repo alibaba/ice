@@ -1,7 +1,9 @@
 import * as path from 'path';
 import type { ServerResponse } from 'http';
+import * as fs from 'fs';
 import type { ExpressRequestHandler } from 'webpack-dev-server';
 import consola from 'consola';
+import type { PluginData } from '@ice/app/esm/types';
 import { parseManifest, rewriteAppWorker, getAppWorkerUrl, getMultipleManifest, type ParseOptions } from './manifestHelpers.js';
 import { getAppWorkerContent, type Options } from './generateManifest.js';
 import type { Manifest } from './types.js';
@@ -17,6 +19,7 @@ const createPHAMiddleware = ({
   outputDir,
   compileTask,
   parseOptions,
+  getAllPlugin,
   getAppConfig,
   getRoutesConfig,
   getDataloaderConfig,
@@ -26,8 +29,10 @@ const createPHAMiddleware = ({
     // @ts-ignore
     const requestPath = path.basename(req._parsedUrl.pathname);
     const requestManifest = requestPath.endsWith('manifest.json');
+    console.log('requestAppWorker=', requestManifest);
 
     const requestAppWorker = req.url === '/app-worker.js';
+    console.log('requestAppWorker=', requestAppWorker);
     if (requestManifest || requestAppWorker) {
       // Get serverEntry from middleware of server-compile.
       const { error, serverEntry } = await compileTask();
@@ -42,11 +47,36 @@ const createPHAMiddleware = ({
         // over rewrite appWorker.url to app-worker.js
         manifest = rewriteAppWorker(manifest);
         if (requestAppWorker) {
+          const entry = path.join(rootDir, './.ice/appWorker.ts');
+          const plugins = getAllPlugin(['keepExports']) as PluginData[];
+          let keepExports = ['dataLoader'];
+          plugins.forEach(plugin => {
+            if (plugin.keepExports) {
+              keepExports = keepExports.concat(plugin.keepExports);
+            }
+          });
           sendResponse(
             res,
             await getAppWorkerContent(compiler, {
-              entry: appWorkerPath,
+              entry: fs.existsSync(entry) ? entry : appWorkerPath,
               outfile: path.join(outputDir, 'app-worker.js'),
+            }, {
+              swc: {
+                keepExports,
+                keepPlatform: 'web',
+                getRoutePaths: () => {
+                  return ['src/pages'];
+                },
+              },
+              preBundle: false,
+              externalDependencies: false,
+              transformEnv: false,
+              enableEnv: true,
+              // Redirect import defineDataLoader from @ice/runtime to avoid build plugin side effect code.
+              redirectImports: [{
+                specifier: ['defineDataLoader'],
+                source: '@ice/runtime',
+              }],
             }),
             'text/javascript',
           );
