@@ -8,13 +8,13 @@ import createPHAMiddleware from './phaMiddleware.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export type Compiler = (options: {
+export type Compiler = (buildOptions: {
   entry: string;
   outfile: string;
   minify?: boolean;
   timestamp?: boolean;
   removeCode?: boolean;
-}) => Promise<string>;
+}, options: any) => Promise<string>;
 
 interface PluginOptions {
   template: boolean;
@@ -26,7 +26,7 @@ function getDevPath(url: string): string {
 
 const plugin: Plugin<PluginOptions> = (options) => ({
   name: '@ice/plugin-pha',
-  setup: ({ onGetConfig, onHook, context, serverCompileTask, generator }) => {
+  setup: ({ onGetConfig, onHook, context, serverCompileTask, generator, getAllPlugin }) => {
     const { template = true } = options || {};
     const { command, rootDir } = context;
 
@@ -71,14 +71,14 @@ const plugin: Plugin<PluginOptions> = (options) => ({
       // process.env.DEPLOY_PATH is defined by cloud environment such as DEF plugin.
       urlPrefix = command === 'start' ? urls.lanUrlForTerminal : process.env.DEPLOY_PATH;
 
-      compiler = async (options) => {
-        const { entry, outfile, minify = false } = options;
+      compiler = async (buildOptions, options) => {
+        const { entry, outfile, minify = false } = buildOptions;
         await serverCompiler({
           entryPoints: [entry],
           format: 'esm',
           outfile,
           minify,
-        });
+        }, options);
         return `${outfile}`;
       };
     });
@@ -88,6 +88,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
         rootDir,
         outputDir,
         compiler,
+        getAllPlugin,
         getAppConfig,
         getRoutesConfig,
         getDataloaderConfig,
