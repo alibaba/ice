@@ -115,6 +115,7 @@ export function Scripts(props: ScriptsProps) {
 
   return (
     <>
+      <div hidden dangerouslySetInnerHTML={{ __html: '<!--__BEFORE_SCRIPT__-->' }} />
       <Data ScriptElement={ScriptElement} />
       {
         routeScripts.map(routeScriptProps => {

@@ -1,5 +1,8 @@
 # @ice/runtime
 
+## v1.0.6
+- [feat] add document placeholder for def
+
 ## v1.0.5
 
 - [feat] support template parse for dataLoader
