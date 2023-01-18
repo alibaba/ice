@@ -75,11 +75,11 @@ async function webpackCompiler(options: {
       if (messages.errors.length > 1) {
         messages.errors.length = 1;
       }
-      logger.error('Compiled with errors.');
+      logger.error('Client compiled with errors.');
       console.error(messages.errors.join('\n'));
       return;
     } else if (messages.warnings.length) {
-      logger.warn('Compiled with warnings.');
+      logger.warn('Client compiled with warnings.');
       logger.warn(messages.warnings.join('\n'));
     }
     if (command === 'start') {
