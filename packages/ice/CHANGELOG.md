@@ -1,5 +1,10 @@
 # Changelog
 
+## v3.0.7
+
+- [fix] process exit when build with errors on dev
+- [feat] optimize log info
+
 ## v3.0.6
 
 - [feat] support `import.meta.target`, `import.meta.renderer` and `import.meta.env`
