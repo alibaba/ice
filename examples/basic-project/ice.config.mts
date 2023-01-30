@@ -3,6 +3,9 @@ import SpeedMeasurePlugin from 'speed-measure-webpack-plugin';
 import customPlugin from './plugin';
 
 export default defineConfig(() => ({
+  output: {
+    distType: ['javascript'],
+  },
   ssr: true,
   publicPath: '/',
   polyfill: 'entry',

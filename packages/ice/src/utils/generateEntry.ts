@@ -1,7 +1,8 @@
 import * as path from 'path';
 import fse from 'fs-extra';
 import consola from 'consola';
-import type { ServerContext, RenderMode, AppConfig, DistType } from '@ice/runtime';
+import type { ServerContext, RenderMode, AppConfig } from '@ice/runtime';
+import type { UserConfig } from '../types/userConfig.js';
 import getRoutePaths from './getRoutePaths.js';
 import dynamicImport from './dynamicImport.js';
 import { logger } from './logger.js';
@@ -14,7 +15,7 @@ interface Options {
   documentOnly: boolean;
   routeType: AppConfig['router']['type'];
   renderMode?: RenderMode;
-  distType: DistType;
+  distType: UserConfig['output']['distType'];
 }
 
 interface EntryResult {
@@ -132,7 +133,7 @@ async function renderEntry(
     routePath: string;
     serverEntry: any;
     documentOnly: boolean;
-    distType?: DistType;
+    distType?: UserConfig['output']['distType'];
     renderMode?: RenderMode;
   },
 ) {
@@ -143,14 +144,18 @@ async function renderEntry(
   };
   const {
     value,
-    jsOutput,
-  } = await serverEntry.renderToEntry(serverContext, {
+  } = await serverEntry.renderToHTML(serverContext, {
     renderMode,
     documentOnly,
     routePath,
     serverOnlyBasename: '/',
-    distType,
   });
+
+  let jsOutput;
+  if (distType.includes('javascript')) {
+    jsOutput = await serverEntry.renderHTMLToJS(value);
+  }
+
   return {
     htmlOutput: value,
     jsOutput,

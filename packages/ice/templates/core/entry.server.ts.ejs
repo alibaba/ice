@@ -37,14 +37,13 @@ interface RenderOptions {
   serverOnlyBasename?: string;
   routePath?: string;
   disableFallback?: boolean;
-  distType: Array<'html' | 'javascript'>
 }
 
-export async function renderToEntry(requestContext, options: RenderOptions = {}) {
-  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback, distType } = options;
+export async function renderToHTML(requestContext, options: RenderOptions = {}) {
+  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback } = options;
   setRuntimeEnv(renderMode);
 
-  return await runtime.renderToEntry(requestContext, {
+  return await runtime.renderToHTML(requestContext, {
     app,
     assetsManifest,
     routes,
@@ -62,12 +61,11 @@ export async function renderToEntry(requestContext, options: RenderOptions = {})
       <%- runtimeOptions.exports %>
     },
 <% } -%>
-    distType,
   });
 }
 
 export async function renderToResponse(requestContext, options: RenderOptions = {}) {
-  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, disableFallback, distType } = options;
+  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, disableFallback } = options;
   setRuntimeEnv(options);
 
   runtime.renderToResponse(requestContext, {
@@ -82,7 +80,6 @@ export async function renderToResponse(requestContext, options: RenderOptions = 
     renderMode,
     disableFallback,
     routesConfig,
-    distType,
 <% if (runtimeOptions.exports) { -%>
     runtimeOptions: {
       <%- runtimeOptions.exports %>
@@ -90,3 +87,7 @@ export async function renderToResponse(requestContext, options: RenderOptions = 
 <% } -%>
   });
 }
+
+<% if (jsOutput) { -%>
+export const renderHTMLToJS = runtime.renderHTMLToJS;
+<% } -%>
