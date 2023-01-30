@@ -38,8 +38,7 @@ interface ConfigurationCtx<T = typeof webpack> extends Config {
 type Experimental = Configuration['experiments'];
 interface SwcOptions {
   removeExportExprs?: string[];
-  compilationConfig?: SwcCompilationConfig;
-  keepPlatform?: 'node' | 'web' | 'weex' | 'miniapp' | 'wechat-miniprogram' | 'bytedance-microapp' | 'baidu-smartprogram' | 'kuaishou-miniprogram';
+  compilationConfig?: SwcCompilationConfig | ((source: string, id: string) => SwcCompilationConfig);
   keepExports?: string[];
   getRoutePaths?: Function;
 }
@@ -186,4 +185,8 @@ export interface Config {
   getAppConfig?: (exportNamse?: string[]) => Promise<any>;
 
   getRoutesConfig?: (specifyRoutId?: string) => Promise<any>;
+
+  useDevServer?: boolean;
+
+  useDataLoader?: boolean;
 }

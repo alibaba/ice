@@ -14,8 +14,6 @@ export const BUILDIN_ESM_DEPS = [
 export const BUILDIN_CJS_DEPS = [
   'react',
   'react-dom',
-  '@uni/env',
-  'universal-env',
 ];
 
 export const WEB = 'web';

@@ -1,33 +1,40 @@
+import type { ComponentProps, JSXElementConstructor } from 'react';
 import { registrationNameToReactEvent } from './events';
 import possibleStandardNames from './possible-standard-names';
 
-function transformProps(props: Object): Object {
-  const resProps: Object = {};
+// String#indexOf is usually faster than any other methods.
+// https://www.measurethat.net/Benchmarks/Show/12312/0/js-regex-vs-startswith-vs-indexof-vs-endswith-vs-charat
+function isEventLikeProp(key: string) {
+  return key.indexOf('on') === 0;
+}
+
+function transformProps(props: ComponentProps<JSXElementConstructor<any>>): Object {
+  const transformedProps: Record<string, any> = {};
   Object.keys(props).forEach((propKey: string) => {
-    let resKey: string = propKey;
-    let resValue: string = props[propKey];
-    const lowerCasedPropkey: string = propKey.toLowerCase();
+    let key: string = propKey;
+    let val = props[propKey];
+    const lowerCasedPropKey: string = propKey.toLowerCase();
     // Transform the event so that it works properly in React.
-    // ontouchstart can work in rax, but react will check event in event plugin.
+    // ontouchstart can work in rax, but react.js will check event in event plugin.
     // Rax compat should transform event which can work in rax runtime.
     // React support onDoubleClick but dblclick event is web Standards events.
     // etc...
-    if (lowerCasedPropkey.startsWith('on')) {
-      if (registrationNameToReactEvent.has(lowerCasedPropkey)) {
-        const reactEvent: string = registrationNameToReactEvent.get(lowerCasedPropkey);
+    if (isEventLikeProp(lowerCasedPropKey)) {
+      if (registrationNameToReactEvent.has(lowerCasedPropKey)) {
+        const reactEvent: string = registrationNameToReactEvent.get(lowerCasedPropKey);
         if (reactEvent !== propKey) {
-          resKey = reactEvent;
+          key = reactEvent;
         }
       }
-    } else if (Object.prototype.hasOwnProperty.call(possibleStandardNames, lowerCasedPropkey)) {
+    } else if (Object.prototype.hasOwnProperty.call(possibleStandardNames, lowerCasedPropKey)) {
       // Transform the event so that it works properly in React.
-      resKey = possibleStandardNames[lowerCasedPropkey];
+      key = possibleStandardNames[lowerCasedPropKey];
     }
 
-    resProps[resKey] = resValue;
+    transformedProps[key] = val;
   });
 
-  return resProps;
+  return transformedProps;
 }
 
 export default transformProps;

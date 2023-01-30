@@ -7,15 +7,19 @@ import type { StatsError, Stats } from 'webpack';
 import type { Config } from '@ice/webpack-config/esm/types';
 import type ora from '@ice/bundles/compiled/ora/index.js';
 import type { AppConfig } from '@ice/runtime/esm/types';
+import type { RenderMode } from '@ice/runtime';
 import type { ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI, GetDataloaderConfig } from '../types/plugin.js';
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
-import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
+import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR, SERVER_OUTPUT_DIR, WEB } from '../constant.js';
 import emptyDir from '../utils/emptyDir.js';
 import type { UserConfig } from '../types/userConfig.js';
 import warnOnHashRouterEnabled from '../utils/warnOnHashRouterEnabled.js';
+import generateEntry from '../utils/generateEntry.js';
 import { logger } from '../utils/logger.js';
 import { getExpandedEnvs } from '../utils/runtimeEnv.js';
+import getRouterManifest from '../utils/getRouterManifest.js';
+import getRoutePaths from '../utils/getRoutePaths.js';
 
 const build = async (
   context: Context<Config, ExtendsPluginAPI>,
@@ -43,7 +47,7 @@ const build = async (
     userConfig,
   } = options;
   const { applyHook, commandArgs, rootDir } = context;
-  const { target } = commandArgs;
+  const { target = WEB } = commandArgs;
 
   if (appConfig?.router?.type === 'hash') {
     warnOnHashRouterEnabled(userConfig);
@@ -80,6 +84,9 @@ const build = async (
   });
 
   const serverEntryRef = { current: null };
+  const output = {
+    paths: [],
+  };
 
   type CompileResults = {
     stats: Stats;
@@ -118,6 +125,52 @@ const build = async (
     });
   });
 
+  const {
+    ssg,
+    output: {
+      distType,
+    },
+  } = userConfig;
+  let renderMode: RenderMode;
+  if (ssg) {
+    renderMode = 'SSG';
+  }
+  const serverOutfile = path.join(outputDir, SERVER_OUTPUT_DIR, `index${userConfig?.server?.format === 'esm' ? '.mjs' : '.cjs'}`);
+  serverEntryRef.current = serverOutfile;
+  const routeType = appConfig?.router?.type;
+  const {
+    outputPaths = [],
+  } = await generateEntry({
+    rootDir,
+    outputDir,
+    entry: serverOutfile,
+    // only ssg need to generate the whole page html when build time.
+    documentOnly: !ssg,
+    renderMode,
+    routeType: appConfig?.router?.type,
+    distType,
+  });
+  // This depends on orders.
+  output.paths = [...outputPaths];
+
+  if (routeType === 'memory' && userConfig?.routes?.injectInitialEntry) {
+    // Read the latest routes info.
+    const routes = getRouterManifest(rootDir);
+    const routePaths = getRoutePaths(routes);
+    routePaths.forEach((routePath) => {
+      // Inject `initialPath` when router type is memory.
+      const routeAssetPath = path.join(outputDir, 'js',
+        `p_${routePath === '/' ? 'index' : routePath.replace(/^\//, '').replace(/\//g, '-')}.js`);
+      if (fse.existsSync(routeAssetPath)) {
+        fse.writeFileSync(routeAssetPath,
+          `window.__ICE_APP_CONTEXT__=Object.assign(window.__ICE_APP_CONTEXT__||{}, {routePath: '${routePath}'});${
+            fse.readFileSync(routeAssetPath, 'utf-8')}`);
+      } else {
+        logger.warn(`Can not find ${routeAssetPath} when inject initial path.`);
+      }
+    });
+  }
+
   await applyHook('after.build.compile', {
     stats,
     isSuccessful,
@@ -126,6 +179,7 @@ const build = async (
     webpackConfigs,
     serverCompiler,
     serverEntryRef,
+    output,
     getAppConfig,
     getRoutesConfig,
     getDataloaderConfig,

@@ -1,7 +1,12 @@
 import type { ServerResponse } from 'http';
+import * as path from 'path';
+import { fileURLToPath } from 'url';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { Action, parsePath } from 'history';
+import * as htmlparser2 from 'htmlparser2';
+import ejs from 'ejs';
+import fse from 'fs-extra';
 import type { Location } from 'history';
 import type {
   AppContext, RouteItem, ServerContext,
@@ -12,6 +17,7 @@ import type {
   DocumentComponent,
   RuntimeModules,
   AppData,
+  DistType,
 } from './types.js';
 import Runtime from './runtime.js';
 import App from './App.js';
@@ -27,6 +33,14 @@ import getRequestContext from './requestContext.js';
 import matchRoutes from './matchRoutes.js';
 import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
 import DefaultAppRouter from './AppRouter.js';
+import __createElement from './domRender.js';
+
+let dirname;
+if (typeof __dirname === 'string') {
+  dirname = __dirname;
+} else {
+  dirname = path.dirname(fileURLToPath(import.meta.url));
+}
 
 interface RenderOptions {
   app: AppExport;
@@ -46,6 +60,7 @@ interface RenderOptions {
     [key: string]: PageConfig;
   };
   runtimeOptions?: Record<string, any>;
+  distType?: Array<'html' | 'javascript'> | 'html' | 'javascript';
 }
 
 interface Piper {
@@ -55,12 +70,27 @@ interface Piper {
 interface RenderResult {
   statusCode?: number;
   value?: string | Piper;
+  jsOutput?: string;
 }
 
 /**
  * Render and return the result as html string.
  */
-export async function renderToHTML(requestContext: ServerContext, renderOptions: RenderOptions): Promise<RenderResult> {
+export async function renderToHTML(
+  requestContext: ServerContext,
+  renderOptions: RenderOptions,
+): Promise<RenderResult> {
+  renderOptions.distType = 'html';
+  return renderToEntry(requestContext, renderOptions);
+}
+
+/**
+ * Render and return the result as entry string.
+ */
+export async function renderToEntry(
+  requestContext: ServerContext,
+  renderOptions: RenderOptions,
+): Promise<RenderResult> {
   const result = await doRender(requestContext, renderOptions);
 
   const { value } = result;
@@ -72,10 +102,10 @@ export async function renderToHTML(requestContext: ServerContext, renderOptions:
   const { pipe, fallback } = value;
 
   try {
-    const html = await pipeToString(pipe);
+    const entryStr = await pipeToString(pipe);
 
     return {
-      value: html,
+      value: entryStr,
       statusCode: 200,
     };
   } catch (error) {
@@ -94,12 +124,13 @@ export async function renderToHTML(requestContext: ServerContext, renderOptions:
  */
 export async function renderToResponse(requestContext: ServerContext, renderOptions: RenderOptions) {
   const { res } = requestContext;
+  const { distType } = renderOptions;
   const result = await doRender(requestContext, renderOptions);
 
   const { value } = result;
 
   if (typeof value === 'string') {
-    sendResult(res, result);
+    sendResult(res, result, distType);
   } else {
     const { pipe, fallback } = value;
 
@@ -116,7 +147,7 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
         // downgrade to CSR.
         console.error('PipeToResponse onShellError, downgrade to CSR.', err);
         const result = await fallback();
-        sendResult(res, result);
+        sendResult(res, result, distType);
       },
       onError: async (err) => {
         // onError triggered after shell ready, should not downgrade to csr.
@@ -129,10 +160,15 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
 /**
  * Send string result to ServerResponse.
  */
-async function sendResult(res: ServerResponse, result: RenderResult) {
+async function sendResult(res: ServerResponse, result: RenderResult, distType: DistType) {
   res.statusCode = result.statusCode;
-  res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  res.end(result.value);
+  if (distType && distType.includes('javascript') || distType === 'javascript') {
+    res.setHeader('Content-Type', 'text/js; charset=utf-8');
+    res.end(result.jsOutput);
+  } else {
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.end(result.value);
+  }
 }
 
 async function doRender(serverContext: ServerContext, renderOptions: RenderOptions): Promise<RenderResult> {
@@ -148,6 +184,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     runtimeModules,
     renderMode,
     runtimeOptions,
+    distType,
   } = renderOptions;
   const finalBasename = serverOnlyBasename || basename;
   const location = getLocation(req.url);
@@ -182,21 +219,24 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
       console.error('Error: get app data error when SSR.', err);
     }
   }
+
   // HashRouter loads route modules by the CSR.
   if (appConfig?.router?.type === 'hash') {
     return renderDocument({ matches: [], renderOptions });
   }
 
   const matches = matchRoutes(routes, location, finalBasename);
-
+  if (distType === 'javascript' || (Array.isArray(distType) && distType.includes('javascript'))) {
+    return renderDocument({ matches, renderOptions });
+  }
 
   const routePath = getCurrentRoutePath(matches);
-
   if (documentOnly) {
     return renderDocument({ matches, routePath, renderOptions });
   } else if (!matches.length) {
     return render404();
   }
+
   try {
     const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
     const routesData = await loadRoutesData(matches, requestContext, routeModules, { renderMode });
@@ -205,6 +245,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     if (runtimeModules.commons) {
       await Promise.all(runtimeModules.commons.map(m => runtime.loadModule(m)).filter(Boolean));
     }
+
     return await renderServerEntry({
       runtime,
       matches,
@@ -296,12 +337,81 @@ interface RenderDocumentOptions {
   renderOptions: RenderOptions;
   routePath?: string;
   downgrade?: boolean;
+  distType?: Array<'html' | 'javascript'>;
 }
+
+function renderDocumentToJs(html) {
+  let jsOutput = '';
+  const dom = htmlparser2.parseDocument(html);
+
+  let headElement;
+  let bodyElement;
+  function findElement(node) {
+    if (headElement && bodyElement) return;
+
+    if (node.name === 'head') {
+      headElement = node;
+    } else if (node.name === 'body') {
+      bodyElement = node;
+    }
+
+    const {
+      children = [],
+    } = node;
+    children.forEach(findElement);
+  }
+  findElement(dom);
+
+  const extraScript = [];
+  function parse(node) {
+    const {
+      name,
+      attribs,
+      data,
+      children,
+    } = node;
+    let resChildren = [];
+
+    if (children) {
+      if (name === 'script' && children[0] && children[0].data) {
+        extraScript.push(`(function(){${children[0].data}})();`);
+      } else {
+        resChildren = node.children.map(parse);
+      }
+    }
+
+    return {
+      tagName: name,
+      attributes: attribs,
+      children: resChildren,
+      text: data,
+    };
+  }
+
+  const head = parse(headElement);
+  const body = parse(bodyElement);
+
+  const templateContent = fse.readFileSync(path.join(dirname, '../templates/js-entry.js.ejs'), 'utf-8');
+  jsOutput = ejs.render(templateContent, {
+    createElement: __createElement,
+    head,
+    body,
+    extraScript,
+  });
+
+  return jsOutput;
+}
+
 /**
  * Render Document for CSR.
  */
 function renderDocument(options: RenderDocumentOptions): RenderResult {
-  const { matches, renderOptions, routePath, downgrade }: RenderDocumentOptions = options;
+  const {
+    matches,
+    renderOptions,
+    routePath,
+    downgrade,
+  }: RenderDocumentOptions = options;
 
   const {
     routes,
@@ -310,6 +420,7 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
     Document,
     basename,
     routesConfig = {},
+    distType = ['html'],
   } = renderOptions;
 
   const routesData = null;
@@ -342,7 +453,8 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
     main: null,
   };
 
-  const html = ReactDOMServer.renderToString(
+
+  const htmlStr = ReactDOMServer.renderToString(
     <AppContextProvider value={appContext}>
       <DocumentContextProvider value={documentContext}>
         <Document pagePath={routePath} />
@@ -350,8 +462,14 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
     </AppContextProvider>,
   );
 
+  let jsOutput = '';
+  if (distType.includes('javascript') || distType === 'javascript') {
+    jsOutput = renderDocumentToJs(htmlStr);
+  }
+
   return {
-    value: `<!DOCTYPE html>${html}`,
+    value: `<!DOCTYPE html>${htmlStr}`,
+    jsOutput,
     statusCode: 200,
   };
 }

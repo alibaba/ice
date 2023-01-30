@@ -62,7 +62,7 @@ export default class ServerCompilerPlugin {
 
       const compilerTask = this.buildResult?.rebuild ? this.buildResult.rebuild().then((result) => {
         return {
-          // Pass original buildResult, becaues it's returned serverEntry.
+          // Pass original buildResult, because it's returned serverEntry.
           ...this.buildResult,
           result,
         };

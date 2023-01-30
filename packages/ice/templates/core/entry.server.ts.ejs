@@ -19,7 +19,7 @@ const runtimeModules = { commons, statics };
 
 const getRouterBasename = () => {
   const appConfig = runtime.getAppConfig(app);
-  return appConfig?.router?.basename ?? '<%- basename %>' ?? '';
+  return appConfig?.router?.basename ?? <%- basename %> ?? '';
 }
 
 const setRuntimeEnv = (renderMode) => {
@@ -37,13 +37,14 @@ interface RenderOptions {
   serverOnlyBasename?: string;
   routePath?: string;
   disableFallback?: boolean;
+  distType: Array<'html' | 'javascript'>
 }
 
-export async function renderToHTML(requestContext, options: RenderOptions = {}) {
-  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback } = options;
+export async function renderToEntry(requestContext, options: RenderOptions = {}) {
+  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback, distType } = options;
   setRuntimeEnv(renderMode);
 
-  return await runtime.renderToHTML(requestContext, {
+  return await runtime.renderToEntry(requestContext, {
     app,
     assetsManifest,
     routes,
@@ -61,11 +62,12 @@ export async function renderToHTML(requestContext, options: RenderOptions = {}) 
       <%- runtimeOptions.exports %>
     },
 <% } -%>
+    distType,
   });
 }
 
 export async function renderToResponse(requestContext, options: RenderOptions = {}) {
-  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, disableFallback } = options;
+  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, disableFallback, distType } = options;
   setRuntimeEnv(options);
 
   runtime.renderToResponse(requestContext, {
@@ -80,6 +82,7 @@ export async function renderToResponse(requestContext, options: RenderOptions = 
     renderMode,
     disableFallback,
     routesConfig,
+    distType,
 <% if (runtimeOptions.exports) { -%>
     runtimeOptions: {
       <%- runtimeOptions.exports %>
