@@ -1,5 +1,5 @@
 import path from 'path';
-import { swc, swcPluginRemoveExport, swcPluginKeepExport, swcPluginKeepPlatform, coreJsPath } from '@ice/bundles';
+import { swc, swcPluginRemoveExport, swcPluginKeepExport, coreJsPath } from '@ice/bundles';
 import type { SwcConfig, ReactConfig } from '@ice/bundles';
 import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
@@ -37,7 +37,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
     enableEnv,
   } = options;
 
-  const { removeExportExprs, compilationConfig, keepPlatform, keepExports, getRoutePaths } = swcOptions;
+  const { removeExportExprs, compilationConfig, keepExports, getRoutePaths } = swcOptions;
 
   const compileRegex = compileIncludes.map((includeRule) => {
     return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);
@@ -129,13 +129,6 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
             keepList,
           ]);
         }
-      }
-
-      if (keepPlatform) {
-        swcPlugins.push([
-          swcPluginKeepPlatform,
-          keepPlatform,
-        ]);
       }
 
       if (swcPlugins.length > 0) {
