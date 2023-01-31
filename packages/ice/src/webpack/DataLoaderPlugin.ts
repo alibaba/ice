@@ -53,7 +53,6 @@ export default class DataLoaderPlugin {
         if (fse.existsSync(filePath)) {
           const { outputFiles, error } = await this.serverCompiler(
             {
-              // Code will be transformed by @swc/core reset target to esnext make modern js syntax do not transformed.
               target,
               entryPoints: [filePath],
               write: false,
