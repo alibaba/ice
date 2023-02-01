@@ -64,22 +64,11 @@ export default function createRenderMiddleware(options: Options): Middleware {
         req,
         res,
       };
-      const distType = req.path.endsWith('.js') ? 'javascript' : 'html';
 
-      if (distType === 'javascript') {
-        const { value } = await serverModule.renderToHTML(requestContext, {
-          renderMode,
-          documentOnly,
-        });
-        const jsOutput = await serverModule.renderHTMLToJS(value);
-        res.setHeader('Content-Type', 'text/js; charset=utf-8');
-        res.end(jsOutput);
-      } else {
-        serverModule.renderToResponse(requestContext, {
-          renderMode,
-          documentOnly,
-        });
-      }
+      serverModule.renderToResponse(requestContext, {
+        renderMode,
+        documentOnly,
+      });
     } else {
       next();
     }

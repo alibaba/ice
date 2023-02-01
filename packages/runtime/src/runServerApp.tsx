@@ -27,6 +27,7 @@ import getRequestContext from './requestContext.js';
 import matchRoutes from './matchRoutes.js';
 import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
 import DefaultAppRouter from './AppRouter.js';
+import { renderHTMLToJS } from './renderHTMLToJS.js';
 
 interface RenderOptions {
   app: AppExport;
@@ -46,6 +47,7 @@ interface RenderOptions {
     [key: string]: PageConfig;
   };
   runtimeOptions?: Record<string, any>;
+  distType?: Array<'html' | 'javascript'> | 'html' | 'javascript';
 }
 
 interface Piper {
@@ -55,6 +57,29 @@ interface Piper {
 interface RenderResult {
   statusCode?: number;
   value?: string | Piper;
+}
+
+/**
+ * Render and send the result with both entry bundle and html.
+ */
+export async function renderToEntry(
+  requestContext: ServerContext,
+  renderOptions: RenderOptions,
+) {
+  const result = await renderToHTML(requestContext, renderOptions);
+  const { value } = result;
+
+  let jsOutput;
+
+  const { distType } = renderOptions;
+  if (value && distType && distType.includes('javascript') || distType === 'javascript') {
+    jsOutput = await renderHTMLToJS(value);
+  }
+
+  return {
+    ...result,
+    jsOutput,
+  };
 }
 
 /**
