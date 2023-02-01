@@ -62,6 +62,7 @@ Changes not staged for commit:
   (use "git restore <file>..." to discard changes in working directory)
         modified:   packages/a/CHANGELOG.md
         modified:   packages/a/package.json
+        modified:   pnpm-workspace.yaml
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
