@@ -1,10 +1,11 @@
-import http from 'http';
-import url from 'url';
-import path from 'path';
-import fse from 'fs-extra';
-import puppeteer from 'puppeteer';
+import * as http from 'http';
+import * as url from 'url';
+import * as path from 'path';
+import * as fse from 'fs-extra';
+import * as puppeteer from 'puppeteer';
+import type { Page as PuppeteerPage } from 'puppeteer';
 
-export interface Page extends puppeteer.Page {
+export interface Page extends PuppeteerPage {
   html: () => Promise<string>;
   $text: (selector: string, trim?: boolean) => Promise<string | null>;
   $$text: (selector: string, trim?: boolean) => Promise<(string | null)[]>;
@@ -97,7 +98,7 @@ export default class Browser {
     const page = (await this.browser.newPage()) as Page;
 
     if (disableJS) {
-      page.setJavaScriptEnabled(false);
+      await page.setJavaScriptEnabled(false);
     }
 
     await page.goto(`${this.baseUrl}${path}`);
@@ -112,10 +113,8 @@ export default class Browser {
       page.$$eval(selector, (els, trim) => els.map((el) => {
         return trim ? (el.textContent || '').replace(/^\s+|\s+$/g, '') : el.textContent;
       }), trim);
-
     page.$attr = (selector, attr) =>
       page.$eval(selector, (el, attr) => el.getAttribute(attr as string), attr);
-
     page.$$attr = (selector, attr) =>
       page.$$eval(
         selector,

@@ -1,4 +1,6 @@
+// @ts-ignore
 import { jsx as _jsx, jsxs as _jsxs, Fragment } from 'react/jsx-runtime';
+// @ts-ignore
 import { convertUnit } from 'style-unit';
 
 const STYLE = 'style';
