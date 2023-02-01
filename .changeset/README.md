@@ -6,3 +6,78 @@ find the full documentation for it [in our repository](https://github.com/change
 
 We have a quick list of common questions to get you started engaging with this project in
 [our documentation](https://github.com/changesets/changesets/blob/main/docs/common-questions.md)
+
+## Add A Changeset
+
+After you have completed a feature or fixed a bug, you need to do three things:
+
+- Select which packages should be released
+- Bump released packages version
+- Write Changelog for the released packages
+
+- Run the command line script `npm run changeset`
+- Select the packages you want to include in the changeset using `↑` and `↓` to navigate to packages, and `space` to select a package. Hit enter when all desired packages are selected.
+- You will be prompted to select a bump type for each selected package. Select an appropriate bump type for the changes made. See here for information on semver versioning
+- Your final prompt will be to provide a message to go alongside the changeset. This will be written into the changelog when the next release occurs.
+
+After that, you should commit changes to the remote repository.
+
+```bash
+$ git status
+On branch test-3
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .changeset/curvy-jobs-fly.md
+
+$ git commit -am "chore: add changeset"
+
+$ git push
+```
+
+For more detail, please see [this documentation](https://github.com/changesets/changesets/blob/main/docs/adding-a-changeset.md).
+
+## Publish Beta Version
+
+> NOTE: You must add a changeset first before publishing beta version.
+
+Run the following commands to publish the beta version
+
+```bash
+# Enter the prerelese mode and generate the pre.json.
+$ npm run release:beta
+# Update to the beta version.
+$ npm run changeset:version
+# Publish the beta version to the npm.
+$ npm run changeset:publish
+# Exit the prerelese mode.
+$ npm run release:exit
+```
+
+Then, we need to commit changes to the remote repository.
+
+```bash
+$ git status
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   packages/a/CHANGELOG.md
+        modified:   packages/a/package.json
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .changeset/pre.json
+
+$ git commit -am "chore: beta version"
+
+$ git push
+```
+
+For more detail, please see this [documentation](https://github.com/changesets/changesets/blob/main/docs/prereleases.md).
+
+## Publish Latest Version
+
+GitHub bot will automatically create a PR to update the latest versions for the released package.
+
+<img width="701" alt="image" src="https://user-images.githubusercontent.com/44047106/215980879-965da73d-317e-4576-81ee-118e11bcc2d4.png">
+
+What we need to do is merge the PR to the `release*` branch.
