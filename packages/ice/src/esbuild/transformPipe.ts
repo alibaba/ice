@@ -2,7 +2,6 @@ import fs from 'fs';
 import * as path from 'path';
 import type { Plugin, PluginBuild, Loader } from 'esbuild';
 import type { UnpluginOptions, UnpluginContext } from 'unplugin';
-import { logger } from '../utils/logger.js';
 
 interface PluginOptions {
   plugins?: UnpluginOptions[];
@@ -109,15 +108,13 @@ const transformPipe = (options: PluginOptions = {}): Plugin => {
           let sourceCode = contents;
           let sourceMap = null;
 
-          if (plugin.load) {
-            if (!loadInclude || loadInclude?.(id)) {
-              const result = await plugin.load.call(pluginContext, id);
-              if (typeof result === 'string') {
-                sourceCode = result;
-              } else if (typeof result === 'object' && result !== null) {
-                sourceCode = result.code;
-                sourceMap = result.map;
-              }
+          if (plugin.load && (!loadInclude || loadInclude?.(id))) {
+            const result = await plugin.load.call(pluginContext, id);
+            if (typeof result === 'string') {
+              sourceCode = result;
+            } else if (typeof result === 'object' && result !== null) {
+              sourceCode = result.code;
+              sourceMap = result.map;
             }
           }
 
