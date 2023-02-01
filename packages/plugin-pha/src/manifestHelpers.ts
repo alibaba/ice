@@ -142,7 +142,7 @@ async function renderPageDocument(routeId: string, serverEntry: string): Promise
     },
   };
   const serverModule = await import(serverEntry);
-  const { value } = await serverModule.renderToHTML(serverContext, {
+  const { value } = await serverModule.renderToEntry(serverContext, {
     documentOnly: true,
     serverOnlyBasename: '/',
     renderMode: 'SSG',

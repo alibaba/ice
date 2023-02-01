@@ -91,6 +91,9 @@ interface AfterCommandCompileOptions {
   getRoutesConfig: GetRoutesConfig;
   serverCompiler: ServerCompiler;
   webpackConfigs: Configuration | Configuration[];
+  output: {
+    paths: Array<string>;
+  };
 }
 
 interface DevServerInfo {
