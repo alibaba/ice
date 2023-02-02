@@ -181,7 +181,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   // get userConfig after setup because of userConfig maybe modified by plugins
   const { userConfig } = ctx;
-  const { routes: routesConfig, server, syntaxFeatures, polyfill } = userConfig;
+  const { routes: routesConfig, server, syntaxFeatures, polyfill, output: { distType } } = userConfig;
   const userConfigHash = await getFileHash(path.join(rootDir, fg.sync(configFile, { cwd: rootDir })[0]));
 
   const coreEnvKeys = getCoreEnvKeys();
@@ -221,6 +221,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     // Enable react-router for web as default.
     enableRoutes: true,
     entryCode,
+    jsOutput: distType.includes('javascript'),
     dataLoader: userConfig.dataLoader,
   });
   dataCache.set('routes', JSON.stringify(routesInfo));

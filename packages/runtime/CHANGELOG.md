@@ -3,6 +3,7 @@
 ## v1.1.0
 
 - [feat] suspense ssr
+- [feat] support render js bundle as entry 
 - [fix] compatible with empty meta element
 
 ## v1.0.5

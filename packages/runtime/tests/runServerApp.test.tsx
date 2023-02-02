@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import { expect, it, describe } from 'vitest';
-import { renderToEntry, renderToResponse } from '../src/runServerApp';
+import { renderToHTML, renderToResponse } from '../src/runServerApp';
 import { Meta, Title, Links, Main, Scripts } from '../src/Document';
 
 describe('run server app', () => {
@@ -52,7 +52,7 @@ describe('run server app', () => {
   );
 
   it('render to html', async () => {
-    const html = await renderToEntry({
+    const html = await renderToHTML({
       // @ts-ignore
       req: {
         url: '/home',
@@ -72,7 +72,7 @@ describe('run server app', () => {
   });
 
   it('render to html basename', async () => {
-    const html = await renderToEntry({
+    const html = await renderToHTML({
       // @ts-ignore
       req: {
         url: '/home',
@@ -91,7 +91,7 @@ describe('run server app', () => {
   });
 
   it('render to html serverOnlyBasename', async () => {
-    const html = await renderToEntry({
+    const html = await renderToHTML({
       // @ts-ignore
       req: {
         url: '/home',
@@ -111,7 +111,7 @@ describe('run server app', () => {
   });
 
   it('render to 404 html', async () => {
-    const html = await renderToEntry({
+    const html = await renderToHTML({
       // @ts-ignore
       req: {
         url: '/about',
@@ -128,7 +128,7 @@ describe('run server app', () => {
   });
 
   it('router hash', async () => {
-    const html = await renderToEntry({
+    const html = await renderToHTML({
       // @ts-ignore
       req: {
         url: '/home',
@@ -153,7 +153,7 @@ describe('run server app', () => {
   });
 
   it('fallback to csr', async () => {
-    const html = await renderToEntry({
+    const html = await renderToHTML({
       // @ts-ignore
       req: {
         url: '/home',

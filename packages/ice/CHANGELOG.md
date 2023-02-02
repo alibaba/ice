@@ -4,6 +4,7 @@
 
 - [feat] export suspense api
 - [feat] refactor ability of keep target code
+- [feat] support render js bundle as entry 
 - [fix] support cli options of target, platform not is deprecated
 - [fix] build data loader with correct browser list
 - [fix] process exit when build with errors on dev
