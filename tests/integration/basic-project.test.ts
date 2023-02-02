@@ -59,7 +59,7 @@ describe(`build ${example}`, () => {
     browser = res.browser;
 
     const files = fs.readdirSync(path.join(__dirname, `../../examples/${example}/build/js`), 'utf-8');
-    expect(files.length).toBe(10);
+    expect(files.length).toBe(11);
   });
 
   test('render route config when downgrade to CSR.', async () => {
