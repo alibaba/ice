@@ -53,7 +53,7 @@
     "jsdom": "^20.0.0",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
-    "puppeteer": "^13.7.0",
+    "puppeteer": "^19.6.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rimraf": "^3.0.2",

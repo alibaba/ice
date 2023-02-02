@@ -7,6 +7,7 @@ import { startFixture, setupStartBrowser } from '../utils/start';
 import type { Page } from '../utils/browser';
 import type Browser from '../utils/browser';
 
+// @ts-ignore
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const example = 'basic-project';

@@ -1,4 +1,4 @@
-import path from 'path';
+import * as path from 'path';
 import type { Server } from 'http';
 import { fileURLToPath } from 'url';
 import getPort from 'get-port';
@@ -6,6 +6,7 @@ import createService from '../../packages/ice/src/createService';
 import type { Page } from './browser';
 import Browser from './browser';
 
+// @ts-ignore
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 interface SetupBrowser {
