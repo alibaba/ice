@@ -1,7 +1,7 @@
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import consola from 'consola';
-import chalk, { Options } from 'chalk';
+import chalk from 'chalk';
 import type { Plugin, GetAppConfig, GetRoutesConfig, GetDataloaderConfig, ServerCompiler } from '@ice/app/esm/types';
 import generateManifest, { getAppWorkerPath } from './generateManifest.js';
 import createPHAMiddleware from './phaMiddleware.js';
