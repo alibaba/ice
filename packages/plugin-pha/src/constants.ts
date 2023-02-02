@@ -1,3 +1,6 @@
+import type { PluginData } from '@ice/app/esm/types';
+import type { Context } from 'build-scripts';
+
 // Keys of appConfig  need transform to manifest.
 export const decamelizeKeys = [
   'title',
@@ -77,3 +80,36 @@ export const validPageConfigKeys = [
   'queryParamsPassKeys',
   'queryParamsPassIgnoreKeys',
 ];
+
+export const getCompilerConfig = (options: {
+  getAllPlugin: Context['getAllPlugin'];
+}) => {
+  const {
+    getAllPlugin,
+  } = options;
+  const plugins = getAllPlugin(['keepExports']) as PluginData[];
+
+  let keepExports = ['dataLoader'];
+  plugins.forEach(plugin => {
+    if (plugin.keepExports) {
+      keepExports = keepExports.concat(plugin.keepExports);
+    }
+  });
+  return {
+    swc: {
+      keepExports,
+      keepPlatform: 'web',
+      getRoutePaths: () => {
+        return ['src/pages'];
+      },
+    },
+    preBundle: false,
+    externalDependencies: false,
+    transformEnv: false,
+    // Redirect import defineDataLoader from @ice/runtime to avoid build plugin side effect code.
+    redirectImports: [{
+      specifier: ['defineDataLoader'],
+      source: '@ice/runtime',
+    }],
+  };
+};

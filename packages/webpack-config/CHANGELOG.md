@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.5
+
+- [fix] isAppEntry shouldn't include app-work.ts
+
 ## 1.0.4
 
 - [fix] format id for win32 compatible

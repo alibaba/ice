@@ -74,6 +74,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
       compiler = async (buildOptions, options) => {
         const { entry, outfile, minify = false } = buildOptions;
         await serverCompiler({
+          target: 'es2015',
           entryPoints: [entry],
           format: 'esm',
           outfile,

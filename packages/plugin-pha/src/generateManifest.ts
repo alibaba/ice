@@ -1,8 +1,9 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import type { GetAppConfig, GetDataloaderConfig, GetRoutesConfig, ServerCompiler, PluginData } from '@ice/app/esm/types';
+import type { GetAppConfig, GetDataloaderConfig, GetRoutesConfig, ServerCompiler } from '@ice/app/esm/types';
 import type { Context } from 'build-scripts';
 import { parseManifest, rewriteAppWorker, getAppWorkerUrl, getMultipleManifest, type ParseOptions } from './manifestHelpers.js';
+import { getCompilerConfig } from './constants';
 import type { Compiler } from './index.js';
 
 export interface Options {
@@ -60,36 +61,12 @@ export default async function generateManifest({
   if (appWorkerPath) {
     manifest = rewriteAppWorker(manifest);
     const entry = path.join(rootDir, './.ice/appWorker.ts');
-    const plugins = getAllPlugin(['keepExports']) as PluginData[];
 
-    let keepExports = ['dataLoader'];
-    plugins.forEach(plugin => {
-      if (plugin.keepExports) {
-        keepExports = keepExports.concat(plugin.keepExports);
-      }
-    });
     await getAppWorkerContent(compiler, {
       entry: fs.existsSync(entry) ? entry : appWorkerPath,
       outfile: path.join(outputDir, 'app-worker.js'),
       minify: true,
-    }, {
-      swc: {
-        keepExports,
-        keepPlatform: 'web',
-        getRoutePaths: () => {
-          return ['src/pages'];
-        },
-      },
-      preBundle: false,
-      externalDependencies: false,
-      transformEnv: false,
-      enableEnv: true,
-      // Redirect import defineDataLoader from @ice/runtime to avoid build plugin side effect code.
-      redirectImports: [{
-        specifier: ['defineDataLoader'],
-        source: '@ice/runtime',
-      }],
-    });
+    }, getCompilerConfig({ getAllPlugin }));
   }
 
   const phaManifest = await parseManifest(manifest, {
