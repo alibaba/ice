@@ -49,7 +49,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
     // TODO: get route manifest by API.
     const routeManifest = path.join(rootDir, '.ice', 'route-manifest.json');
     // Get server compiler by hooks
-    onHook(`before.${command as 'start' | 'build'}.run`, async ({ serverCompiler, taskConfigs, urls, ...restAPI }) => {
+    onHook(`before.${command as 'start' | 'build'}.run`, async ({ serverCompiler, taskConfigs, urls = {}, ...restAPI }) => {
       const taskConfig = taskConfigs.find(({ name }) => name === 'web').config;
       outputDir = path.isAbsolute(taskConfig.outputDir)
         ? taskConfig.outputDir : path.join(rootDir, taskConfig.outputDir);

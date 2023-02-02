@@ -38,6 +38,13 @@ const userConfig = [
     },
   },
   {
+    name: 'output',
+    validation: 'object',
+    defaultValue: {
+      distType: ['html'],
+    },
+  },
+  {
     name: 'define',
     validation: 'object',
     setConfig: (config: Config, define: UserConfig['define']) => {
@@ -122,7 +129,7 @@ const userConfig = [
   {
     name: 'ssr',
     validation: 'boolean',
-    defaultValue: true,
+    defaultValue: false,
   },
   {
     name: 'server',
@@ -358,7 +365,7 @@ const userConfig = [
 
 const cliOption = [
   {
-    name: 'platform',
+    name: 'target',
     commands: ['start', 'build'],
   },
   {

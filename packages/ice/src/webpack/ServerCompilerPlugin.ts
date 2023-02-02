@@ -13,8 +13,8 @@ export default class ServerCompilerPlugin {
   private ensureRoutesConfig: () => Promise<void>;
   private isCompiling: boolean;
   private task: ReturnType<ServerCompiler>;
-  private buildResult: ServerBuildResult;
   private compilerOptions: Parameters<ServerCompiler>[1];
+  public buildResult: ServerBuildResult;
 
   public constructor(
     serverCompiler: ServerCompiler,
@@ -62,7 +62,7 @@ export default class ServerCompilerPlugin {
 
       const compilerTask = this.buildResult?.rebuild ? this.buildResult.rebuild().then((result) => {
         return {
-          // Pass original buildResult, becaues it's returned serverEntry.
+          // Pass original buildResult, because it's returned serverEntry.
           ...this.buildResult,
           result,
         };

@@ -1,8 +1,13 @@
 # @ice/runtime
 
+## v1.0.6
+
+- [fix] compatible with empty meta element
+
 ## v1.0.5
 
 - [feat] support template parse for dataLoader
+- [feat] enhance memory router
 
 ## v1.0.4
 

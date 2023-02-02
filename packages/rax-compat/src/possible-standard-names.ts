@@ -1,5 +1,5 @@
 // Select part from https://github.com/facebook/react/blob/main/packages/react-dom/src/shared/possibleStandardNames.js#L11
-const possibleStandardNames = {
+const possibleStandardNames: Record<string, string> = {
   autofocus: 'autoFocus',
   autoplay: 'autoPlay',
   classname: 'className',

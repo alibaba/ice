@@ -25,12 +25,17 @@ interface IgnorePattern {
   contextRegExp?: RegExp;
 }
 
+type DistType = 'javascript' | 'html';
+
 interface Fetcher {
   packageName: string;
   method?: string;
 }
 
 export interface UserConfig {
+  output?: {
+    distType: Array<DistType>;
+  };
   alias?: Record<string, string | false>;
   define?: Record<string, string | boolean>;
   devPublicPath?: string;
@@ -46,6 +51,7 @@ export interface UserConfig {
   routes?: {
     ignoreFiles?: string[];
     defineRoutes?: (defineRoute: DefineRouteFunction) => void;
+    injectInitialEntry?: boolean;
   };
   plugins?: PluginList<Config, OverwritePluginAPI>;
   dropLogLevel?: 'trace' | 'debug' | 'log' | 'info' | 'warn' | 'error';

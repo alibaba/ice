@@ -22,23 +22,32 @@ const plugin: Plugin<PluginOptions> = ({ type, library }) => ({
       return config;
     });
     if (type === 'child') {
+      // Modify basename when render as a child app.
+      generator.modifyRenderData((data) => {
+        return {
+          ...data,
+          basename: `(typeof window !== 'undefined' && window.ICESTARK?.basename || ${data.basename})`,
+        };
+      });
       generator.addEntryCode(() => {
         return `
-if (!window.ICESTARK) {
+if (!window.ICESTARK?.root) {
   render();
 }
 let root;
-export function mount(props) {
-  if (app?.icestark?.mount) {
-    app?.icestark?.mount(props);
-  }
+
+// For qiankun lifecycle validation.
+export async function bootstrap(props) {
+  await app?.icestark?.bootstrap?.(props);
+}
+
+export async function mount(props) {
+  await app?.icestark?.mount?.(props);
   root = render({ runtimeOptions: props });
 }
-export function unmount(props) {
-  root.unmount();
-  if (app?.icestark?.unmount) {
-    app?.icestark?.unmount(props);
-  }
+export async function unmount(props) {
+  root?.then((res) => res.unmount());
+  await app?.icestark?.unmount?.(props);
 }`;
 });
     } else {

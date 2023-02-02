@@ -3,6 +3,7 @@ import View from 'rax-view';
 import Text from 'rax-text';
 import Logo from '@/components/Logo';
 import Title from '@/components/Title';
+import HybridReactComponent from '@/components/HybridReactComponent';
 import './index.css';
 
 export default function Home() {
@@ -25,6 +26,7 @@ export default function Home() {
       <Title />
       <Text className="homeInfo">More information about Rax</Text>
       <Text className="homeInfo">Visit https://rax.js.org</Text>
+      <HybridReactComponent />
     </View>
   );
 }

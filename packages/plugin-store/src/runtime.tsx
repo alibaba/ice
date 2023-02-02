@@ -30,7 +30,7 @@ const runtime: RuntimePlugin = async ({ appContext, addWrapper, addProvider, use
   const StoreProviderWrapper: RouteWrapper = ({ children, routeId }) => {
     const { routeModules } = useAppContext();
     const routeModule = routeModules[routeId];
-    if (routeModule[PAGE_STORE_PROVIDER]) {
+    if (routeModule?.[PAGE_STORE_PROVIDER]) {
       const Provider = routeModule[PAGE_STORE_PROVIDER];
       const initialStates = routeModule[PAGE_STORE_INITIAL_STATES];
       if (initialStates) {
