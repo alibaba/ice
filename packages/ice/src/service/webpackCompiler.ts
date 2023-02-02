@@ -109,7 +109,7 @@ async function webpackCompiler(options: {
 
     // Add webpack plugin of data-loader.
     if (useDataLoader) {
-      webpackConfig.plugins.push(new DataLoaderPlugin({ serverCompiler, rootDir, dataCache, getAllPlugin }));
+      webpackConfig.plugins.push(new DataLoaderPlugin({ serverCompiler, target, rootDir, dataCache, getAllPlugin }));
     }
   }
 
