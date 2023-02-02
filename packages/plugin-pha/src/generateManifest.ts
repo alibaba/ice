@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import type { GetAppConfig, GetDataloaderConfig, GetRoutesConfig, ServerCompiler } from '@ice/app/esm/types';
 import type { Context } from 'build-scripts';
 import { parseManifest, rewriteAppWorker, getAppWorkerUrl, getMultipleManifest, type ParseOptions } from './manifestHelpers.js';
-import { getCompilerConfig } from './constants';
+import { getCompilerConfig } from './constants.js';
 import type { Compiler } from './index.js';
 
 export interface Options {

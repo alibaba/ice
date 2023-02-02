@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as fs from 'fs';
 import { fileURLToPath } from 'url';
 import consola from 'consola';
 import chalk from 'chalk';
@@ -61,8 +62,10 @@ const plugin: Plugin<PluginOptions> = (options) => ({
         rootDir,
         getAppConfig,
       });
+
       generator.addRenderFile(path.join(__dirname, '../template/appWorker.ejs'), 'appWorker.ts', {
         appWorkerPath,
+        hasDataloaderConfig: fs.existsSync(path.join(rootDir, '.ice', 'dataloader-config.ts')),
       });
 
       // Need absolute path for pha dev.
