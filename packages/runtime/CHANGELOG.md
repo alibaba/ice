@@ -4,9 +4,6 @@
 
 - [feat] suspense ssr
 - [feat] support render js bundle as entry 
-
-## v1.0.6
-
 - [fix] compatible with empty meta element
 
 ## v1.0.5
