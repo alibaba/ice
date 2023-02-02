@@ -122,6 +122,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       'KeepAliveOutlet',
       'useMounted',
       'ClientOnly',
+      'withSuspense',
+      'useSuspenseData',
       'defineDataLoader',
       'defineServerDataLoader',
       'defineStaticDataLoader',

@@ -8,8 +8,10 @@
 
 ## v3.0.6
 
+- [feat] export suspense api
 - [feat] support `import.meta.target`, `import.meta.renderer` and `import.meta.env`
 - [feat] support config `routes.injectInitialEntry` for memory router
+- [fix] should not replace global env for ssr
 - [fix] cli option `--platform` change to `--target`
 - [fix] remove code when dead code is `ObjectProperties`
 - [fix] rebuild server entry when document changed
