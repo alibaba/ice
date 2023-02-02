@@ -967,8 +967,8 @@ importers:
       '@babel/types': 7.18.10
       '@ice/bundles': link:../bundles
       '@ice/route-manifest': link:../route-manifest
-      '@ice/runtime': link:../runtime
-      '@ice/webpack-config': link:../webpack-config
+      '@ice/runtime': 1.0.5_react@18.2.0
+      '@ice/webpack-config': 1.0.4
       '@swc/helpers': 0.4.14
       '@types/express': 4.17.14
       address: 1.2.1
@@ -1038,7 +1038,7 @@ importers:
       '@ice/bundles': ^0.1.0
       webpack: ^5.73.0
     dependencies:
-      '@ice/bundles': link:../bundles
+      '@ice/bundles': 0.1.3
     devDependencies:
       webpack: 5.75.0
 
@@ -1067,7 +1067,7 @@ importers:
       react: ^18.1.0
       react-dom: ^18.1.0
     dependencies:
-      '@ice/runtime': link:../runtime
+      '@ice/runtime': 1.0.5_biqbaboplfbrettd7655fr4n2y
       '@ice/shared': link:../shared
       miniapp-history: 0.1.7
     devDependencies:
@@ -1094,7 +1094,7 @@ importers:
       regenerator-runtime: ^0.13.9
     devDependencies:
       '@ice/app': link:../ice
-      '@ice/runtime': link:../runtime
+      '@ice/runtime': 1.0.5
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
       regenerator-runtime: 0.13.9
@@ -1132,7 +1132,7 @@ importers:
       '@ice/stark-app': 1.5.0
     devDependencies:
       '@ice/app': link:../ice
-      '@ice/runtime': link:../runtime
+      '@ice/runtime': 1.0.5
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
 
@@ -1180,7 +1180,7 @@ importers:
       sax: ^1.2.4
       webpack: ^5.73.0
     dependencies:
-      '@ice/bundles': link:../bundles
+      '@ice/bundles': 0.1.3
       '@ice/miniapp-loader': link:../miniapp-loader
       '@ice/miniapp-react-dom': link:../miniapp-react-dom
       '@ice/miniapp-runtime': link:../miniapp-runtime
@@ -1216,13 +1216,13 @@ importers:
       webpack-dev-server: ^4.9.2
     dependencies:
       '@remix-run/router': 1.0.3
-      build-scripts: 2.0.1-0
       chalk: 4.1.2
       consola: 2.15.3
       humps: 2.0.1
       lodash.clonedeep: 4.5.0
     devDependencies:
       '@ice/app': link:../ice
+      build-scripts: 2.0.1-0
       esbuild: 0.16.10
       webpack: 5.75.0_esbuild@0.16.10
       webpack-dev-server: 4.11.1_webpack@5.75.0
@@ -1243,12 +1243,12 @@ importers:
     dependencies:
       '@babel/core': 7.19.3
       '@babel/plugin-proposal-export-default-from': 7.18.10_@babel+core@7.19.3
-      '@ice/bundles': link:../bundles
+      '@ice/bundles': 0.1.3
       babel-plugin-transform-jsx-stylesheet: 1.0.6
       consola: 2.15.3
       css: 2.2.4
       lodash.merge: 4.6.2
-      rax-compat: link:../rax-compat
+      rax-compat: 0.1.6
       stylesheet-loader: 0.9.1
     devDependencies:
       '@ice/app': link:../ice
@@ -1268,7 +1268,7 @@ importers:
       axios: 0.27.2
     devDependencies:
       '@ice/app': link:../ice
-      '@ice/runtime': link:../runtime
+      '@ice/runtime': 1.0.5
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
       regenerator-runtime: 0.13.9
@@ -1292,7 +1292,7 @@ importers:
       micromatch: 4.0.5
     devDependencies:
       '@ice/app': link:../ice
-      '@ice/runtime': link:../runtime
+      '@ice/runtime': 1.0.5_biqbaboplfbrettd7655fr4n2y
       '@types/micromatch': 4.0.2
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
@@ -4586,6 +4586,79 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
+  /@ice/appear/0.1.4:
+    resolution: {integrity: sha512-U7Tbf1j2+QDCiKm9nU0YGvi9KCEHjNa6M1CLwWts17gYlXPfpFnbfVsk1qo8v2+t+Uo9w9d+lIx3f89USfHVcg==}
+    peerDependencies:
+      react: ^18
+      react-dom: ^18
+    dev: false
+
+  /@ice/bundles/0.1.2:
+    resolution: {integrity: sha512-WtXlXRB25KYvX74VY18tZ3UkGPySmcz2bt79+KsRy779OFp7f3scBPIN6/rM1jAatbFCwXVWVciXUWmJu779LA==}
+    dependencies:
+      '@ice/swc-plugin-keep-export': 0.1.3
+      '@ice/swc-plugin-keep-platform': 0.1.2
+      '@ice/swc-plugin-remove-export': 0.1.2
+      '@swc/core': 1.3.19
+      ansi-html-community: 0.0.8
+      caniuse-lite: 1.0.30001431
+      chokidar: 3.5.3
+      core-js: 3.26.0
+      core-js-pure: 3.25.3
+      error-stack-parser: 2.1.4
+      esbuild: 0.16.10
+      events: 3.3.0
+      html-entities: 2.3.3
+      jest-worker: 27.5.1
+      less: 4.1.2
+      postcss: 8.4.12
+      react-refresh: 0.14.0
+      sass: 1.50.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@ice/bundles/0.1.3:
+    resolution: {integrity: sha512-dWPJgifPlHl/yKka/EDFnM5syFv5MlSQxlP1wRUaKv+u0eGi1Urmd1mZhApJWX0NpW/rxpdLMTIuJKoldr9/Ng==}
+    dependencies:
+      '@ice/swc-plugin-keep-export': 0.1.4
+      '@ice/swc-plugin-keep-platform': 0.1.2
+      '@ice/swc-plugin-remove-export': 0.1.2
+      '@swc/core': 1.3.19
+      ansi-html-community: 0.0.8
+      caniuse-lite: 1.0.30001431
+      chokidar: 3.5.3
+      core-js: 3.26.0
+      core-js-pure: 3.25.3
+      error-stack-parser: 2.1.4
+      esbuild: 0.16.10
+      events: 3.3.0
+      html-entities: 2.3.3
+      jest-worker: 27.5.1
+      less: 4.1.2
+      postcss: 8.4.12
+      react-refresh: 0.14.0
+      sass: 1.50.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@ice/jsx-runtime/0.1.0:
+    resolution: {integrity: sha512-g+OpAoQ3RNg1vwTKKiPUVh8ZzKM2YCmLdgaoOT+gU1Vft4F5rGEB1Fya8zrHAWxErwsC5dwmDEfL3fPY9GCIOw==}
+    peerDependencies:
+      react: ^16 || ^17 || ^18
+    dependencies:
+      style-unit: 3.0.5
+    dev: true
+
+  /@ice/jsx-runtime/0.1.0_react@18.2.0:
+    resolution: {integrity: sha512-g+OpAoQ3RNg1vwTKKiPUVh8ZzKM2YCmLdgaoOT+gU1Vft4F5rGEB1Fya8zrHAWxErwsC5dwmDEfL3fPY9GCIOw==}
+    peerDependencies:
+      react: ^16 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
+      style-unit: 3.0.5
+
   /@ice/pkg-plugin-component/1.0.0:
     resolution: {integrity: sha512-Mff6Em1RwY2NOZgciQyy2NXL65u9ebHV2Jqb5746vUVEh0l7Xpokb+3djV1pKcgED4wU8pSuSQ6jj+hXd9Ht1Q==}
     dependencies:
@@ -4630,6 +4703,40 @@ packages:
       - ts-node
     dev: true
 
+  /@ice/runtime/1.0.5:
+    resolution: {integrity: sha512-8mTjzjNk4Xn017D8iOfkJGFje/z851xcAI1jP6sXyAwjMyusYFffFkIApPRIsNTqolROKGX5w2KzLzpUD7ZeSA==}
+    peerDependencies:
+      react: ^18.1.0
+      react-dom: ^18.1.0
+    dependencies:
+      '@ice/jsx-runtime': 0.1.0
+      history: 5.3.0
+      react-router-dom: 6.4.1
+    dev: true
+
+  /@ice/runtime/1.0.5_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-8mTjzjNk4Xn017D8iOfkJGFje/z851xcAI1jP6sXyAwjMyusYFffFkIApPRIsNTqolROKGX5w2KzLzpUD7ZeSA==}
+    peerDependencies:
+      react: ^18.1.0
+      react-dom: ^18.1.0
+    dependencies:
+      '@ice/jsx-runtime': 0.1.0_react@18.2.0
+      history: 5.3.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-router-dom: 6.4.1_biqbaboplfbrettd7655fr4n2y
+
+  /@ice/runtime/1.0.5_react@18.2.0:
+    resolution: {integrity: sha512-8mTjzjNk4Xn017D8iOfkJGFje/z851xcAI1jP6sXyAwjMyusYFffFkIApPRIsNTqolROKGX5w2KzLzpUD7ZeSA==}
+    peerDependencies:
+      react: ^18.1.0
+      react-dom: ^18.1.0
+    dependencies:
+      '@ice/jsx-runtime': 0.1.0_react@18.2.0
+      history: 5.3.0
+      react: 18.2.0
+      react-router-dom: 6.4.1_react@18.2.0
+
   /@ice/sandbox/1.1.4:
     resolution: {integrity: sha512-MEVF0Ze3McKDutnFiUAhUoc+WwOFxITVBgSSHmbGpKtWbXJX9kUVlx3VsEVJvdqU3O1kiBNx6zE1sFMjKPRTIQ==}
     dev: false
@@ -4670,12 +4777,28 @@ packages:
     resolution: {integrity: sha512-KYlF/fE7LoVjWalGIPOateg3kmEQfTi3wxtGqzviIROu6GqDwd7jdYrzkR36E0N9KW40sqhAMM4dxNux+28+Lg==}
     dev: false
 
+  /@ice/swc-plugin-keep-export/0.1.4:
+    resolution: {integrity: sha512-fOc09KALmL2zJK1xNGTEt/C27mXL7NVn/v1eRjjuM4uer+qmWIxYXIa9dpfTX5ZUn8zXhrKH8lGdczoKHCzyQQ==}
+    dev: false
+
   /@ice/swc-plugin-keep-platform/0.1.2:
     resolution: {integrity: sha512-B6nXb9mB7J5V8iSmCPku4c/EGArIsK8rS4pzMfjHwneewfU0n4DMjz2BsGaCCYrTz2SXdQxW44TKQ3JrovLMtA==}
     dev: false
 
   /@ice/swc-plugin-remove-export/0.1.2:
     resolution: {integrity: sha512-HPeYj+z1ylaD5fJkSqyJ+eXbrHiCdy/t/t56uyf20aqsAyx12EiHVnfV4blW31DSWhFt/veAUXYzbaJ8b9KLOQ==}
+    dev: false
+
+  /@ice/webpack-config/1.0.4:
+    resolution: {integrity: sha512-N05XG+WMdneyBung3FnFChSmvwZcmsvyitlmaJl1ylWj/1lCyda97nursGdg5EQh0ccPTjuZQRgDe7aE2UsqNA==}
+    dependencies:
+      '@ice/bundles': 0.1.2
+      '@rollup/pluginutils': 4.2.1
+      consola: 2.15.3
+      fast-glob: 3.2.12
+      process: 0.11.10
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /@iceworks/generate-project/1.4.6:
@@ -6658,7 +6781,6 @@ packages:
 
   /@uni/env/1.1.0:
     resolution: {integrity: sha512-2GVgUzxIaO2vGElXEuc45+I7L6Jbw8inLDDFuC0K4htjKtPmYywKSE6oDhvmdAXb4GCOH8hmxECYtAh1rjsgoQ==}
-    dev: false
 
   /@use-gesture/core/10.2.17:
     resolution: {integrity: sha512-62hCybe4x6oGZ1/JA9gSYIdghV1FqxCdvYWt9SqCEAAikwT1OmVl2Q/Uu8CP636L57D+DfXtw6PWM+fdhr4oJQ==}
@@ -7855,7 +7977,6 @@ packages:
       npmlog: 4.1.2
       picocolors: 1.0.0
       semver: 7.3.7
-    dev: false
 
   /builtin-modules/3.3.0:
     resolution: {integrity: sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw==}
@@ -16382,6 +16503,18 @@ packages:
       rax-is-valid-element: 1.0.0
     dev: false
 
+  /rax-compat/0.1.6:
+    resolution: {integrity: sha512-otFcyi9r8aJrRdTd11eF668ank/ReBrXJzncaLn4oo1ufe7LavyCmNl14x1v2xBebiXj+FQjGmgEqvduftavLA==}
+    peerDependencies:
+      react: ^18
+      react-dom: ^18
+    dependencies:
+      '@ice/appear': 0.1.4
+      '@swc/helpers': 0.4.14
+      create-react-class: 15.7.0
+      style-unit: 3.0.5
+    dev: false
+
   /rax-create-factory/1.0.0_rax@1.2.2:
     resolution: {integrity: sha512-blBaVrurj/BOWelJhQWiuc0Kk8Ons1jsNsX78omaPBLkSOL7OkyJ3NC/0iKXHu425yWrGB6e5vho/qabROC7VQ==}
     engines: {npm: '>=3.0.0'}
@@ -17164,6 +17297,17 @@ packages:
       tiny-invariant: 1.3.0
       tiny-warning: 1.0.3
 
+  /react-router-dom/6.4.1:
+    resolution: {integrity: sha512-MY7NJCrGNVJtGp8ODMOBHu20UaIkmwD2V3YsAOUQoCXFk7Ppdwf55RdcGyrSj+ycSL9Uiwrb3gTLYSnzcRoXww==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+    dependencies:
+      '@remix-run/router': 1.0.1
+      react-router: 6.4.1
+    dev: true
+
   /react-router-dom/6.4.1_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-MY7NJCrGNVJtGp8ODMOBHu20UaIkmwD2V3YsAOUQoCXFk7Ppdwf55RdcGyrSj+ycSL9Uiwrb3gTLYSnzcRoXww==}
     engines: {node: '>=14'}
@@ -17174,6 +17318,17 @@ packages:
       '@remix-run/router': 1.0.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      react-router: 6.4.1_react@18.2.0
+
+  /react-router-dom/6.4.1_react@18.2.0:
+    resolution: {integrity: sha512-MY7NJCrGNVJtGp8ODMOBHu20UaIkmwD2V3YsAOUQoCXFk7Ppdwf55RdcGyrSj+ycSL9Uiwrb3gTLYSnzcRoXww==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+    dependencies:
+      '@remix-run/router': 1.0.1
+      react: 18.2.0
       react-router: 6.4.1_react@18.2.0
     dev: false
 
@@ -17193,6 +17348,15 @@ packages:
       react-is: 16.13.1
       tiny-invariant: 1.3.0
       tiny-warning: 1.0.3
+
+  /react-router/6.4.1:
+    resolution: {integrity: sha512-OJASKp5AykDWFewgWUim1vlLr7yfD4vO/h+bSgcP/ix8Md+LMHuAjovA74MQfsfhQJGGN1nHRhwS5qQQbbBt3A==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      react: '>=16.8'
+    dependencies:
+      '@remix-run/router': 1.0.1
+    dev: true
 
   /react-router/6.4.1_react@18.2.0:
     resolution: {integrity: sha512-OJASKp5AykDWFewgWUim1vlLr7yfD4vO/h+bSgcP/ix8Md+LMHuAjovA74MQfsfhQJGGN1nHRhwS5qQQbbBt3A==}
@@ -18465,7 +18629,6 @@ packages:
     dependencies:
       '@babel/runtime': 7.19.0
       universal-env: 3.3.3
-    dev: false
 
   /stylehacks/5.1.0_postcss@8.4.12:
     resolution: {integrity: sha512-SzLmvHQTrIWfSgljkQCw2++C9+Ne91d/6Sp92I8c5uHTcy/PgeHamwITIbBW9wnFTY/3ZfSXR9HIL6Ikqmcu6Q==}
@@ -19347,7 +19510,6 @@ packages:
     engines: {npm: '>=3.0.0'}
     dependencies:
       '@uni/env': 1.1.0
-    dev: false
 
   /universalify/0.1.2:
     resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==}
@@ -19932,7 +20094,7 @@ packages:
       mime-types: 2.1.35
       range-parser: 1.2.1
       schema-utils: 4.0.0
-      webpack: 5.75.0_esbuild@0.16.10
+      webpack: 5.75.0_ncbsfugu56ddhgadp34k4kpsue
 
   /webpack-dev-server/4.10.0_webpack@5.75.0:
     resolution: {integrity: sha512-7dezwAs+k6yXVFZ+MaL8VnE+APobiO3zvpp3rBHe/HmWQ+avwh0Q3d0xxacOiBybZZ3syTZw9HXzpa3YNbAZDQ==}
