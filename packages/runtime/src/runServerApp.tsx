@@ -26,7 +26,7 @@ import { AppDataProvider, getAppData } from './AppData.js';
 import getAppConfig from './appConfig.js';
 import { DocumentContextProvider } from './Document.js';
 import { loadRouteModules, loadRoutesData, getRoutesConfig } from './routes.js';
-import { piperToString, renderToNodeStream } from './server/streamRender.js';
+import { pipeToString, renderToNodeStream } from './server/streamRender.js';
 import { createStaticNavigator } from './server/navigator.js';
 import type { NodeWritablePiper } from './server/streamRender.js';
 import getRequestContext from './requestContext.js';
@@ -102,7 +102,7 @@ export async function renderToEntry(
   const { pipe, fallback } = value;
 
   try {
-    const entryStr = await piperToString(pipe);
+    const entryStr = await pipeToString(pipe);
 
     return {
       value: entryStr,
@@ -112,7 +112,7 @@ export async function renderToEntry(
     if (renderOptions.disableFallback) {
       throw error;
     }
-    console.error('PiperToString error, downgrade to CSR.', error);
+    console.error('PipeToString error, downgrade to CSR.', error);
     // downgrade to CSR.
     const result = fallback();
     return result;
@@ -137,17 +137,23 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
-    try {
-      await pipeToResponse(res, pipe);
-    } catch (error) {
-      if (renderOptions.disableFallback) {
-        throw error;
-      }
-      console.error('PiperToResponse error, downgrade to CSR.', error);
-      // downgrade to CSR.
-      const result = await fallback();
-      sendResult(res, result, distType);
-    }
+    // Send stream result to ServerResponse.
+    pipe(res, {
+      onShellError: async (err) => {
+        if (renderOptions.disableFallback) {
+          throw err;
+        }
+
+        // downgrade to CSR.
+        console.error('PipeToResponse onShellError, downgrade to CSR.', err);
+        const result = await fallback();
+        sendResult(res, result, distType);
+      },
+      onError: async (err) => {
+        // onError triggered after shell ready, should not downgrade to csr.
+        console.error('PipeToResponse error.', err);
+      },
+    });
   }
 }
 
@@ -163,15 +169,6 @@ async function sendResult(res: ServerResponse, result: RenderResult, distType: D
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.end(result.value);
   }
-}
-
-/**
- * Send stream result to ServerResponse.
- */
-function pipeToResponse(res: ServerResponse, pipe: NodeWritablePiper) {
-  return new Promise((resolve, reject) => {
-    pipe(res, (err) => (err ? reject(err) : resolve(null)));
-  });
 }
 
 async function doRender(serverContext: ServerContext, renderOptions: RenderOptions): Promise<RenderResult> {
@@ -321,7 +318,7 @@ async function renderServerEntry(
     </AppDataProvider>
   );
 
-  const pipe = renderToNodeStream(element, false);
+  const pipe = renderToNodeStream(element);
 
   const fallback = () => {
     return renderDocument({ matches, routePath, renderOptions, downgrade: true });

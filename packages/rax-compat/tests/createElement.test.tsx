@@ -77,7 +77,7 @@ describe('createElement', () => {
       },
     ));
 
-    const node = wrapper.queryByTestId('valueTest');
+    const node = wrapper.queryByTestId('valueTest') as HTMLInputElement;
     expect(node.value).toBe(str);
   });
 

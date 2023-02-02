@@ -56,6 +56,8 @@ export const RUNTIME_EXPORTS = [
       'KeepAliveOutlet',
       'useMounted',
       'ClientOnly',
+      'withSuspense',
+      'useSuspenseData',
       'defineDataLoader',
       'defineServerDataLoader',
       'defineStaticDataLoader',

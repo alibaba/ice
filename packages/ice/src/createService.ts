@@ -195,6 +195,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     // Enable react-router for web as default.
     enableRoutes: true,
     entryCode,
+    dataLoader: userConfig.dataLoader,
   });
   dataCache.set('routes', JSON.stringify(routesInfo));
   dataCache.set('hasExportAppData', hasExportAppData ? 'true' : '');
