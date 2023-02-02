@@ -4,7 +4,7 @@ import type { Compiler } from 'webpack';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type { Context } from 'build-scripts';
 import type { ServerCompiler, PluginData } from '../types/plugin.js';
-import { RUNTIME_TMP_DIR } from '../constant.js';
+import { RUNTIME_TMP_DIR, RUNTIME_EXPORTS } from '../constant.js';
 import { getRoutePathsFromCache } from '../utils/getRoutePaths.js';
 import { getSupportedBrowsers } from '../utils/getSupportedBrowsers.js';
 
@@ -68,11 +68,8 @@ export default class DataLoaderPlugin {
               preBundle: false,
               externalDependencies: false,
               transformEnv: false,
-              // Redirect import defineDataLoader from @ice/runtime to avoid build plugin side effect code.
-              redirectImports: [{
-                specifier: ['defineDataLoader'],
-                source: '@ice/runtime',
-              }],
+              // Redirect imports to @ice/runtime to avoid build plugin side effect code.
+              redirectImports: RUNTIME_EXPORTS,
             },
           );
           if (!error) {

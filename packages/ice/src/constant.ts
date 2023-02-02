@@ -34,3 +34,32 @@ export const TARGETS = [
   WEEX,
   ...MINIAPP_TARGETS,
 ];
+
+export const RUNTIME_EXPORTS = [
+  {
+    specifier: ['Link', 'Outlet', 'useParams', 'useSearchParams', 'useLocation', 'useNavigate'],
+    source: '@ice/runtime/router',
+  },
+  {
+    specifier: [
+      'defineAppConfig',
+      'useAppData',
+      'useData',
+      'useConfig',
+      'Meta',
+      'Title',
+      'Links',
+      'Scripts',
+      'Data',
+      'Main',
+      'history',
+      'KeepAliveOutlet',
+      'useMounted',
+      'ClientOnly',
+      'defineDataLoader',
+      'defineServerDataLoader',
+      'defineStaticDataLoader',
+    ],
+    source: '@ice/runtime',
+  },
+];
