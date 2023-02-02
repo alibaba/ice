@@ -47,7 +47,7 @@ interface RenderOptions {
     [key: string]: PageConfig;
   };
   runtimeOptions?: Record<string, any>;
-  distType?: Array<'html' | 'javascript'> | 'html' | 'javascript';
+  distType?: Array<'html' | 'javascript'>;
 }
 
 interface Piper {
@@ -72,7 +72,7 @@ export async function renderToEntry(
   let jsOutput;
 
   const { distType } = renderOptions;
-  if (value && distType && distType.includes('javascript') || distType === 'javascript') {
+  if (value && distType && distType.includes('javascript')) {
     jsOutput = await renderHTMLToJS(value);
   }
 
