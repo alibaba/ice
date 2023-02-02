@@ -37,14 +37,38 @@ interface RenderOptions {
   serverOnlyBasename?: string;
   routePath?: string;
   disableFallback?: boolean;
-  distType: Array<'html' | 'javascript'>
 }
 
+export async function renderToHTML(requestContext, options: RenderOptions = {}) {
+  const { renderMode = 'SSR' } = options;
+  setRuntimeEnv(renderMode);
+  
+  const mergedOptions = mergeOptions(options);
+  return await runtime.renderToHTML(requestContext, mergedOptions);
+}
+
+export async function renderToResponse(requestContext, options: RenderOptions = {}) {
+  const { renderMode = 'SSR' } = options;
+  setRuntimeEnv(renderMode);
+  
+  const mergedOptions = mergeOptions(options);
+  runtime.renderToResponse(requestContext, mergedOptions);
+}
+
+<% if (jsOutput) { -%>
 export async function renderToEntry(requestContext, options: RenderOptions = {}) {
-  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback, distType } = options;
+  const { renderMode = 'SSR' } = options;
   setRuntimeEnv(renderMode);
 
-  return await runtime.renderToEntry(requestContext, {
+  const mergedOptions = mergeOptions(options);
+  return await runtime.renderToEntry(requestContext, mergedOptions);
+}
+<% } -%>
+
+function mergeOptions(options) {
+  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback } = options;
+
+  return {
     app,
     assetsManifest,
     routes,
@@ -62,31 +86,5 @@ export async function renderToEntry(requestContext, options: RenderOptions = {})
       <%- runtimeOptions.exports %>
     },
 <% } -%>
-    distType,
-  });
-}
-
-export async function renderToResponse(requestContext, options: RenderOptions = {}) {
-  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, disableFallback, distType } = options;
-  setRuntimeEnv(options);
-
-  runtime.renderToResponse(requestContext, {
-    app,
-    assetsManifest,
-    routes,
-    runtimeModules,
-    Document,
-    serverOnlyBasename,
-    basename: basename || getRouterBasename(),
-    documentOnly,
-    renderMode,
-    disableFallback,
-    routesConfig,
-    distType,
-<% if (runtimeOptions.exports) { -%>
-    runtimeOptions: {
-      <%- runtimeOptions.exports %>
-    },
-<% } -%>
-  });
+  };
 }

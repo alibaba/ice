@@ -34,7 +34,7 @@ interface Fetcher {
 
 export interface UserConfig {
   output?: {
-    distType: Array<DistType>;
+    distType: Array<DistType> | DistType;
   };
   alias?: Record<string, string | false>;
   define?: Record<string, string | boolean>;

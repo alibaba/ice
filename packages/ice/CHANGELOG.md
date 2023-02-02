@@ -5,6 +5,7 @@
 - [fix] build data loader with correct browser list
 - [fix] process exit when build with errors on dev
 - [feat] optimize log info
+- [feat] support render js bundle as entry 
 
 ## v3.0.6
 
