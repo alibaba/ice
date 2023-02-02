@@ -3,6 +3,7 @@
 ## v1.1.0
 
 - [feat] suspense ssr
+- [feat] support render js bundle as entry 
 
 ## v1.0.6
 
