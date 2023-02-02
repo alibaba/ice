@@ -45,10 +45,10 @@ export default class ServerCompilerPlugin {
 
       if (!this.task) {
         this.task = this.serverCompiler(buildOptions, this.compilerOptions);
-        this.task.then((buildResult) => {
-          this.buildResult = buildResult;
-        });
       }
+      this.task.then((buildResult) => {
+        this.buildResult = buildResult;
+      });
     }
   };
 
@@ -59,18 +59,14 @@ export default class ServerCompilerPlugin {
     compiler.hooks.emit.tapPromise(pluginName, async (compilation: Compilation) => {
       this.isCompiling = false;
       await this.compileTask(compilation);
-      let compilerTask;
-      if (this.buildResult?.rebuild) {
-        compilerTask = this.buildResult.rebuild().then((result) => {
-          return {
-            // Pass original buildResult, becaues it's returned serverEntry.
-            ...this.buildResult,
-            result,
-          };
-        });
-      } else {
-        compilerTask = this.task;
-      }
+
+      const compilerTask = this.buildResult?.rebuild ? this.buildResult.rebuild().then((result) => {
+        return {
+          // Pass original buildResult, becaues it's returned serverEntry.
+          ...this.buildResult,
+          result,
+        };
+      }) : this.task;
       if (this.serverCompileTask) {
         this.serverCompileTask.set(compilerTask);
       } else {
