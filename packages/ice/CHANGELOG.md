@@ -3,6 +3,7 @@
 ## v3.1.0
 
 - [fix] build data loader with correct browser list
+- [feat] redirect runtime imports for data loader
 
 ## v3.0.6
 
