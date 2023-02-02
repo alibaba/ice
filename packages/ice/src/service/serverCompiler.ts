@@ -231,7 +231,7 @@ export function createServerCompiler(options: Options) {
       };
     } catch (error) {
       logger.error(
-        'Server compile error.',
+        'Server compiled with errors.',
         `\nEntryPoints: ${JSON.stringify(buildOptions.entryPoints)}`,
         `\n${error.message}`,
       );
