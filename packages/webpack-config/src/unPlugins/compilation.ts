@@ -54,7 +54,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
   }
 
   function isAppEntry(id) {
-    return /(.*)src\/app/.test(id);
+    return /(.*)src\/app.(ts|tsx|js|jsx)/.test(id);
   }
 
   const extensionRegex = /\.(jsx?|tsx?|mjs)$/;

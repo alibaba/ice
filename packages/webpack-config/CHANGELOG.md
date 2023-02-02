@@ -6,6 +6,7 @@
 
 ## 1.0.5
 
+- [fix] isAppEntry shouldn't include app-worker.ts
 - [fix] bump version of `@ice/bundles`(0.1.2 -> 0.1.3)
 - [feat] define runtime value of `import.meta.*`
 

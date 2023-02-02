@@ -1242,6 +1242,7 @@ importers:
     specifiers:
       '@ice/app': ^3.0.0
       '@remix-run/router': ^1.0.3
+      build-scripts: ^2.0.1-0
       chalk: ^4.0.0
       consola: ^2.15.3
       esbuild: ^0.16.5
@@ -1259,6 +1260,7 @@ importers:
       lodash.clonedeep: 4.5.0
     devDependencies:
       '@ice/app': link:../ice
+      build-scripts: 2.0.1-0
       esbuild: 0.16.10
       webpack: 5.75.0_esbuild@0.16.10
       webpack-dev-server: 4.11.1_webpack@5.75.0
@@ -7915,7 +7917,6 @@ packages:
       npmlog: 4.1.2
       picocolors: 1.0.0
       semver: 7.3.7
-    dev: false
 
   /builtin-modules/3.3.0:
     resolution: {integrity: sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw==}
