@@ -46,10 +46,10 @@ class ModuleCacheMap extends Map<string, ModuleCache> {
   }
 
   update(id: string, mod: Partial<ModuleCache>) {
-    if (!super.has(id)) {
-      super.set(id, mod);
-    } else {
+    if (super.has(id)) {
       Object.assign(super.get(id), mod);
+    } else {
+      super.set(id, mod);
     }
     return this;
   }
@@ -58,7 +58,6 @@ class ModuleCacheMap extends Map<string, ModuleCache> {
     return super.delete(id);
   }
 }
-
 
 class NodeRunner {
   rootDir: string;
@@ -71,10 +70,23 @@ class NodeRunner {
 
   async run(id: string) {
     const filePath = path.join(this.rootDir, id);
+    return await this.cachedRequest(filePath, []);
   }
 
   async cachedRequest(id: string, callstack: string[]) {
+    const mod = this.moduleCache.get(id);
+    if (callstack.includes(id) && mod.exports) return mod.exports;
 
+    if (mod.promise) return mod.promise;
+
+    const promise = this.request(id, callstack);
+    Object.assign(mod, { promise, evaluated: false });
+
+    try {
+      return await promise;
+    } finally {
+      mod.evaluated = true;
+    }
   }
 
   async resolveUrl(id: string, importee?: string) {
@@ -82,8 +94,10 @@ class NodeRunner {
     // put info about new import as soon as possible, so we can start tracking it
     this.moduleCache.set(resolveKey, { resolving: true });
     try {
-      if (isNodeBuiltin(id) || !this.options.resolveId) {
+      if (isNodeBuiltin(id)) {
         return id;
+      } else if (!this.options.resolveId) {
+        return path.resolve(path.dirname(importee!), id);
       } else {
         return await this.options.resolveId(id, importee);
       }
@@ -113,7 +127,6 @@ class NodeRunner {
     const mod = this.moduleCache.get(id);
     const callstack = [..._callstack, id];
     let { code: transformed, externalize } = await this.options.load(id);
-
     const request = async (dep: string) => {
       const requestId = await this.resolveUrl(dep, id);
       return this.dependencyRequest(requestId, callstack);
@@ -169,12 +182,12 @@ class NodeRunner {
     };
 
     const context = {
-      // esm transformed by ice
-      __ssr_import__: request,
-      __ssr_dynamic_import__: request,
-      __ssr_exports__: exports,
-      __ssr_exportAll__: (obj: any) => exportAll(exports, obj),
-      __ssr_import_meta__: meta,
+      // esm transformed by ice, https://github.com/ice-lab/swc-plugins/pull/9
+      __ice_import__: request,
+      __ice_dynamic_import__: request,
+      __ice_exports__: exports,
+      __ice_exportAll__: (obj: any) => exportAll(exports, obj),
+      __ice_import_meta__: meta,
 
       // cjs compact
       require: createRequire(href),
@@ -184,7 +197,7 @@ class NodeRunner {
       __dirname: path.dirname(__filename),
     };
 
-    if (transformed[0] === '#') transformed = transformed.replace(/^\#\!.*/, s => ' '.repeat(s.length));
+    if (transformed[0] === '#') transformed = transformed.replace(/^#!.*/, s => ' '.repeat(s.length));
 
     // add 'use strict' since ESM enables it by default
     const codeDefinition = `'use strict';async (${Object.keys(context).join(',')})=>{{`;
@@ -281,7 +294,4 @@ function exportAll(exports: any, sourceModule: any) {
   }
 }
 
-function slash(str: string) {
-  return str.replace(/\\/g, '/');
-}
-
+export default NodeRunner;
