@@ -2,20 +2,20 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { fileURLToPath } from 'url';
 import consola from 'consola';
-import chalk from 'chalk';
-import type { Plugin, GetAppConfig, GetRoutesConfig, GetDataloaderConfig } from '@ice/app/esm/types';
+import chalk, { Options } from 'chalk';
+import type { Plugin, GetAppConfig, GetRoutesConfig, GetDataloaderConfig, ServerCompiler } from '@ice/app/esm/types';
 import generateManifest, { getAppWorkerPath } from './generateManifest.js';
 import createPHAMiddleware from './phaMiddleware.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export type Compiler = (buildOptions: {
+export type Compiler = (options: {
   entry: string;
   outfile: string;
   minify?: boolean;
   timestamp?: boolean;
   removeCode?: boolean;
-}, options: any) => Promise<string>;
+}, buildOptions: Parameters<ServerCompiler>[1]) => Promise<string>;
 
 interface PluginOptions {
   template: boolean;
@@ -74,15 +74,15 @@ const plugin: Plugin<PluginOptions> = (options) => ({
       // process.env.DEPLOY_PATH is defined by cloud environment such as DEF plugin.
       urlPrefix = command === 'start' ? urls.lanUrlForTerminal : process.env.DEPLOY_PATH;
 
-      compiler = async (buildOptions, options) => {
-        const { entry, outfile, minify = false } = buildOptions;
+      compiler = async (options, buildOptions) => {
+        const { entry, outfile, minify = false } = options;
         await serverCompiler({
           target: 'es2015',
           entryPoints: [entry],
           format: 'esm',
           outfile,
           minify,
-        }, options);
+        }, buildOptions);
         return `${outfile}`;
       };
     });
