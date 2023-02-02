@@ -98,7 +98,6 @@ export const getCompilerConfig = (options: {
   return {
     swc: {
       keepExports,
-      keepPlatform: 'web',
       getRoutePaths: () => {
         return ['src/pages'];
       },
