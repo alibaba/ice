@@ -1,5 +1,7 @@
 <% if(appWorkerPath) {-%>import '<%- appWorkerPath %>';<% } -%>
-<% if(hasDataloaderConfig) {-%>import dataloaderConfig from './dataloader-config';<% } -%>
+<% if(!!loaders && !!dataLoader) {-%>
+import dataloaderConfig from './dataloader-config';
+
 addEventListener('beforepageload', (pageInfos = {}) => {
   const {
     key,
@@ -17,3 +19,4 @@ addEventListener('beforepageload', (pageInfos = {}) => {
     }
   }
 });
+<% } -%>
