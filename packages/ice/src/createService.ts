@@ -122,6 +122,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       'KeepAliveOutlet',
       'useMounted',
       'ClientOnly',
+      'withSuspense',
+      'useSuspenseData',
       'defineDataLoader',
       'defineServerDataLoader',
       'defineStaticDataLoader',
@@ -220,6 +222,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     enableRoutes: true,
     entryCode,
     jsOutput: distType.includes('javascript'),
+    dataLoader: userConfig.dataLoader,
   });
   dataCache.set('routes', JSON.stringify(routesInfo));
   dataCache.set('hasExportAppData', hasExportAppData ? 'true' : '');

@@ -1,9 +1,12 @@
 import * as path from 'path';
+import { fileURLToPath } from 'url';
 import consola from 'consola';
 import chalk from 'chalk';
-import type { Plugin, GetAppConfig, GetRoutesConfig, GetDataloaderConfig } from '@ice/app/esm/types';
-import generateManifest from './generateManifest.js';
+import type { Plugin, GetAppConfig, GetRoutesConfig, GetDataloaderConfig, ServerCompiler } from '@ice/app/esm/types';
+import generateManifest, { getAppWorkerPath } from './generateManifest.js';
 import createPHAMiddleware from './phaMiddleware.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export type Compiler = (options: {
   entry: string;
@@ -11,7 +14,7 @@ export type Compiler = (options: {
   minify?: boolean;
   timestamp?: boolean;
   removeCode?: boolean;
-}) => Promise<string>;
+}, buildOptions: Parameters<ServerCompiler>[1]) => Promise<string>;
 
 interface PluginOptions {
   template: boolean;
@@ -23,7 +26,7 @@ function getDevPath(url: string): string {
 
 const plugin: Plugin<PluginOptions> = (options) => ({
   name: '@ice/plugin-pha',
-  setup: ({ onGetConfig, onHook, context, serverCompileTask, generator }) => {
+  setup: ({ onGetConfig, onHook, context, serverCompileTask, generator, getAllPlugin }) => {
     const { template = true } = options || {};
     const { command, rootDir } = context;
 
@@ -54,20 +57,30 @@ const plugin: Plugin<PluginOptions> = (options) => ({
       getRoutesConfig = restAPI.getRoutesConfig;
       getDataloaderConfig = restAPI.getDataloaderConfig;
 
+      const appWorkerPath = await getAppWorkerPath({
+        rootDir,
+        getAppConfig,
+      });
+
+      generator.addRenderFile(path.join(__dirname, '../template/appWorker.ejs'), 'appWorker.ts', {
+        appWorkerPath,
+      });
+
       // Need absolute path for pha dev.
       publicPath = command === 'start' ? getDevPath(urls.lanUrlForTerminal || urls.localUrlForTerminal) : (taskConfig.publicPath || '/');
 
       // process.env.DEPLOY_PATH is defined by cloud environment such as DEF plugin.
       urlPrefix = command === 'start' ? urls.lanUrlForTerminal : process.env.DEPLOY_PATH;
 
-      compiler = async (options) => {
+      compiler = async (options, buildOptions) => {
         const { entry, outfile, minify = false } = options;
         await serverCompiler({
+          target: 'es2015',
           entryPoints: [entry],
           format: 'esm',
           outfile,
           minify,
-        });
+        }, buildOptions);
         return `${outfile}`;
       };
     });
@@ -77,6 +90,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
         rootDir,
         outputDir,
         compiler,
+        getAllPlugin,
         getAppConfig,
         getRoutesConfig,
         getDataloaderConfig,
@@ -128,6 +142,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
           outputDir,
           getAppConfig,
           getRoutesConfig,
+          getAllPlugin,
           getDataloaderConfig,
           compileTask: () => serverCompileTask.get(),
           parseOptions: {

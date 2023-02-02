@@ -42,13 +42,17 @@ export default class ServerCompilerPlugin {
         this.compilerOptions.compilationInfo.assetsManifest =
           JSON.parse(compilation.assets['assets-manifest.json'].source().toString());
       }
-
+      // For first time, we create a new task.
+      // The next time, we use incremental build so do not create task again.
       if (!this.task) {
         this.task = this.serverCompiler(buildOptions, this.compilerOptions);
+        this.task.then((buildResult) => {
+          this.buildResult = buildResult;
+          if (this.buildResult.error) {
+            this.task = null;
+          }
+        });
       }
-      this.task.then((buildResult) => {
-        this.buildResult = buildResult;
-      });
     }
   };
 
@@ -60,13 +64,19 @@ export default class ServerCompilerPlugin {
       this.isCompiling = false;
       await this.compileTask(compilation);
 
-      const compilerTask = this.buildResult?.rebuild ? this.buildResult.rebuild().then((result) => {
-        return {
-          // Pass original buildResult, because it's returned serverEntry.
-          ...this.buildResult,
-          result,
-        };
-      }) : this.task;
+      const compilerTask = this.buildResult?.rebuild
+        ? this.buildResult.rebuild()
+          .then((result) => {
+            return {
+              // Pass original buildResult, because it's returned serverEntry.
+              ...this.buildResult,
+              result,
+            };
+          })
+          .catch(({ errors }) => {
+            return { error: errors };
+          })
+        : this.task;
       if (this.serverCompileTask) {
         this.serverCompileTask.set(compilerTask);
       } else {
