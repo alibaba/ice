@@ -6,7 +6,7 @@ import type { Context } from 'build-scripts';
 import type { ServerCompiler, PluginData } from '../types/plugin.js';
 import { RUNTIME_TMP_DIR } from '../constant.js';
 import { getRoutePathsFromCache } from '../utils/getRoutePaths.js';
-import { getSupportedBrowsers } from '../utils/getSupportedBrowsers.js';
+import { getSupportedBrowsers, filterBrowserForEsBuild } from '../utils/getSupportedBrowsers.js';
 
 const pluginName = 'DataLoaderPlugin';
 const { RawSource } = webpack.sources;
@@ -41,7 +41,8 @@ export default class DataLoaderPlugin {
     });
 
     const browsersList = getSupportedBrowsers(this.rootDir);
-    const target = browsersList.length ? browsersList.map(b => b.replace(' ', '')) : 'es2015';
+    const supportedBrowsers = filterBrowserForEsBuild(browsersList);
+    const target = supportedBrowsers.length ? supportedBrowsers : 'es2015';
 
     compiler.hooks.thisCompilation.tap(pluginName, (compilation) => {
       compilation.hooks.processAssets.tapAsync({

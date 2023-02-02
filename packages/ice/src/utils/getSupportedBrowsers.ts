@@ -1,8 +1,6 @@
 import browserslist from 'browserslist';
 
-export function getSupportedBrowsers(
-  dir: string,
-): string[] | undefined {
+export function getSupportedBrowsers(dir: string): string[] | undefined {
   let browsers: any;
   try {
     const browsersListConfig = browserslist.loadConfig({
@@ -20,4 +18,30 @@ export function getSupportedBrowsers(
   }
 
   return [];
+}
+
+const BROWSER_SUPPORTED_BY_ESBUILD = [
+  'chrome',
+  'deno',
+  'edge',
+  'firefox',
+  'hermes',
+  'ie',
+  'ios',
+  'node',
+  'opera',
+  'rhino',
+  'safari',
+];
+
+export function filterBrowserForEsBuild(browserList) {
+  const result = browserList.filter(item => {
+    if (item.indexOf('es') === 0) {
+      return true;
+    }
+
+    return BROWSER_SUPPORTED_BY_ESBUILD.includes(item.split(' ')[0]);
+  });
+
+  return result.map(item => item.replace(' ', ''));
 }
