@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.1.0
+
+- [fix] build data loader with correct browser list
+
 ## v3.0.6
 
 - [feat] support `import.meta.target`, `import.meta.renderer` and `import.meta.env`
