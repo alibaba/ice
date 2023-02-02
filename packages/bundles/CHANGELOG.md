@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4
+
+- [fix] remove dependency of `@ice/swc-plugin-keep-platform`
+
 ## 0.1.3
 
 - [fix] Bump version of `@ice/swc-plugin-keep-export`(0.1.3 -> 0.1.4), https://github.com/ice-lab/swc-plugins/pull/8

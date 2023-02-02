@@ -3,9 +3,6 @@
 ## v1.1.0
 
 - [feat] suspense ssr
-
-## v1.0.6
-
 - [fix] compatible with empty meta element
 
 ## v1.0.5
