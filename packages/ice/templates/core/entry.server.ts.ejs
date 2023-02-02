@@ -3,7 +3,7 @@ import * as runtime from '@ice/runtime/server';
 <% if(hydrate) {-%>import { commons, statics } from './runtimeModules';<% } -%>
 import * as app from '@/app';
 import Document from '@/document';
-import type { RenderMode } from '@ice/runtime';
+import type { RenderMode, DistType } from '@ice/runtime';
 // @ts-ignore
 import assetsManifest from 'virtual:assets-manifest.json';
 import routes from './routes';
@@ -37,6 +37,7 @@ interface RenderOptions {
   serverOnlyBasename?: string;
   routePath?: string;
   disableFallback?: boolean;
+  distType?: DistType;
 }
 
 export async function renderToHTML(requestContext, options: RenderOptions = {}) {
@@ -66,7 +67,7 @@ export async function renderToEntry(requestContext, options: RenderOptions = {})
 <% } -%>
 
 function mergeOptions(options) {
-  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback } = options;
+  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback, distType } = options;
 
   return {
     app,
@@ -81,6 +82,7 @@ function mergeOptions(options) {
     routePath,
     disableFallback,
     routesConfig,
+    distType,
 <% if (runtimeOptions.exports) { -%>
     runtimeOptions: {
       <%- runtimeOptions.exports %>
