@@ -2,8 +2,13 @@ import * as http from 'http';
 import * as url from 'url';
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import * as puppeteer from 'puppeteer';
-import type { Page as PuppeteerPage } from 'puppeteer';
+import type {
+  Page as PuppeteerPage,
+  Browser as PuppeteerBrowser,
+  WaitForOptions,
+  HTTPResponse,
+} from 'puppeteer';
+import puppeteer from 'puppeteer';
 
 export interface Page extends PuppeteerPage {
   html: () => Promise<string>;
@@ -11,7 +16,10 @@ export interface Page extends PuppeteerPage {
   $$text: (selector: string, trim?: boolean) => Promise<(string | null)[]>;
   $attr: (selector: string, attr: string) => Promise<string | null>;
   $$attr: (selector: string, attr: string) => Promise<(string | null)[]>;
-  push: (url: string, options?: puppeteer.WaitForOptions & { referer?: string }) => Promise<puppeteer.HTTPResponse>;
+  push: (url: string, options?: WaitForOptions & {
+    referer?: string;
+    referrerPolicy?: string;
+  }) => Promise<HTTPResponse | null>;
 }
 
 interface BrowserOptions {
@@ -22,7 +30,7 @@ interface BrowserOptions {
 
 export default class Browser {
   private server: http.Server;
-  private browser: puppeteer.Browser;
+  private browser: PuppeteerBrowser;
   private baseUrl: string;
 
   constructor(options: BrowserOptions) {
