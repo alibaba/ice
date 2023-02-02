@@ -6,7 +6,6 @@ import type { Context } from 'build-scripts';
 import type { ServerCompiler, PluginData } from '../types/plugin.js';
 import { RUNTIME_TMP_DIR } from '../constant.js';
 import { getRoutePathsFromCache } from '../utils/getRoutePaths.js';
-import { getSupportedBrowsers } from '../utils/getSupportedBrowsers.js';
 
 const pluginName = 'DataLoaderPlugin';
 const { RawSource } = webpack.sources;
@@ -40,9 +39,6 @@ export default class DataLoaderPlugin {
       }
     });
 
-    const browsersList = getSupportedBrowsers(this.rootDir);
-    const target = browsersList.length ? browsersList.map(b => b.replace(' ', '')) : 'es2015';
-
     compiler.hooks.thisCompilation.tap(pluginName, (compilation) => {
       compilation.hooks.processAssets.tapAsync({
         name: pluginName,
@@ -53,7 +49,7 @@ export default class DataLoaderPlugin {
         if (fse.existsSync(filePath)) {
           const { outputFiles, error } = await this.serverCompiler(
             {
-              target,
+              target: 'es6', // should not set to esnext, https://github.com/alibaba/ice/issues/5830
               entryPoints: [filePath],
               write: false,
               logLevel: 'silent', // The main server compile process will log it.
@@ -68,6 +64,7 @@ export default class DataLoaderPlugin {
               preBundle: false,
               externalDependencies: false,
               transformEnv: false,
+              enableEnv: true,
               // Redirect import defineDataLoader from @ice/runtime to avoid build plugin side effect code.
               redirectImports: [{
                 specifier: ['defineDataLoader'],
