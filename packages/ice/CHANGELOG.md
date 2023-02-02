@@ -1,7 +1,8 @@
 # Changelog
 
-## v3.0.7
+## v3.1.0
 
+- [fix] build data loader with correct browser list
 - [fix] process exit when build with errors on dev
 - [feat] optimize log info
 
