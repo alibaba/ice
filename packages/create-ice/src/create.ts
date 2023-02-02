@@ -64,7 +64,11 @@ async function selectTemplate(): Promise<string> {
     },
     {
       npmName: '@ice/antd-pro-scaffold',
-      description: 'Web Pro Scaffold',
+      description: 'Antd Pro Scaffold',
+    },
+    {
+      npmName: '@ice/fusion-pro-scaffold',
+      description: 'Fusion Pro Scaffold',
     },
     {
       npmName: '@ice/miniapp-scaffold',
