@@ -25,8 +25,10 @@ export interface LifecycleOptions {
 }
 
 export interface ChildConfig {
-  mount?: (options?: LifecycleOptions) => void;
-  unmount?: (options?: LifecycleOptions) => void;
+  mount?: (options?: LifecycleOptions) => Promise<void> | void;
+  unmount?: (options?: LifecycleOptions) => Promise<void> | void;
+  // Just for qiankun lifecycle, not used in icestark.
+  bootstrap?: (options?: any) => Promise<void> | void;
 }
 
 export function defineFrameworkConfig(config: FrameworkConfig | (() => FrameworkConfig)) {
