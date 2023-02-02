@@ -143,7 +143,7 @@ async function renderEntry(
   };
 
   // renderToEntry exported when disType includes javascript .
-  const render = distType.includes('javascript') ? serverEntry.renderToEntry : serverEntry.renderToHTML;
+  const render = (distType && distType.includes('javascript') || distType === 'javascript') ? serverEntry.renderToEntry : serverEntry.renderToHTML;
 
   const {
     value,
