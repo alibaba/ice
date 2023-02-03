@@ -1,6 +1,6 @@
 {
   "name": "@ice/jsx-runtime",
-  "version": "0.1.1",
+  "version": "0.1.1-beta.1",
   "description": "JSX runtime for ice.",
   "files": [
     "esm",
@@ -14,8 +14,8 @@
   "types": "./esm/index.d.ts",
   "exports": {
     ".": "./esm/index.js",
-    "./jsx-dev-runtime": "./jsx-dev-runtime.js",
-    "./jsx-runtime": "./jsx-runtime.js"
+    "./jsx-dev-runtime": "./esm/dev.js",
+    "./jsx-runtime": "./esm/prod.js"
   },
   "sideEffects": [
     "dist/*",
