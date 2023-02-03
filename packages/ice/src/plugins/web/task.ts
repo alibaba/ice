@@ -16,6 +16,7 @@ const getWebTask = ({ rootDir, command, dataCache, userConfig }): Config => {
     removeExportExprs.push('dataLoader');
   }
 
+  const envReplacement = path.join(rootDir, RUNTIME_TMP_DIR, 'env.ts');
   return {
     mode: command === 'start' ? 'development' : 'production',
     sourceMap: command === 'start' ? 'cheap-module-source-map' : false,
@@ -28,14 +29,13 @@ const getWebTask = ({ rootDir, command, dataCache, userConfig }): Config => {
       // Get absolute path of `regenerator-runtime`, `@swc/helpers`
       // so it's unnecessary to add it to project dependencies.
       'regenerator-runtime': require.resolve('regenerator-runtime'),
-      '@swc/helpers': path.dirname(
-        require.resolve('@swc/helpers/package.json'),
-      ),
+      '@swc/helpers': path.dirname(require.resolve('@swc/helpers/package.json')),
+      'universal-env': envReplacement,
+      '@uni/env': envReplacement,
     },
     swcOptions: {
       // The dataLoader is built by data-loader
       removeExportExprs,
-      keepPlatform: 'web',
       getRoutePaths: () => {
         return getRoutePathsFromCache(dataCache);
       },
@@ -44,6 +44,8 @@ const getWebTask = ({ rootDir, command, dataCache, userConfig }): Config => {
     fastRefresh: command === 'start',
     logging: process.env.WEBPACK_LOGGING || defaultLogging,
     minify: command === 'build',
+    useDevServer: true,
+    useDataLoader: true,
   };
 };
 

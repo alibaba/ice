@@ -9,7 +9,6 @@ import esbuild from 'esbuild';
 const require = createRequire(import.meta.url);
 const swcPluginRemoveExport = require.resolve('@ice/swc-plugin-remove-export');
 const swcPluginKeepExport = require.resolve('@ice/swc-plugin-keep-export');
-const swcPluginKeepPlatform = require.resolve('@ice/swc-plugin-keep-platform');
 const coreJsPath = dirname(require.resolve('core-js/package.json'));
 export {
   postcss,
@@ -19,7 +18,6 @@ export {
   swc,
   swcPluginRemoveExport,
   swcPluginKeepExport,
-  swcPluginKeepPlatform,
 
   coreJsPath,
 

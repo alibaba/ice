@@ -1,5 +1,11 @@
 # @ice/runtime
 
+## v1.1.0
+
+- [feat] suspense ssr
+- [feat] support render js bundle as entry 
+- [fix] compatible with empty meta element
+
 ## v1.0.5
 
 - [feat] support template parse for dataLoader
