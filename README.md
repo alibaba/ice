@@ -46,7 +46,7 @@ Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
 
 Contributors can contact us to join the Contributor Group.
 
- <href="https://github.com/alibaba/ice/graphs/contributors"><img src="https://alibaba.github.io/ice/ice.png" /></a>
+ <a href="https://github.com/alibaba/ice/graphs/contributors"><img src="https://alibaba.github.io/ice/ice.png" /></a>
 
 ## Community
 
