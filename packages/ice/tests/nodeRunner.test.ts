@@ -28,7 +28,7 @@ describe('node runner', () => {
     const result = await nodeRunner.run('entry.js');
     expect(result.default).toBe(1);
   });
-  it('basic', async () => {
+  it('cjs', async () => {
     const rootDir = path.join(__dirname, './fixtures/nodeRunner/cjs/');
     const nodeRunner = new NodeRunner({
       rootDir,

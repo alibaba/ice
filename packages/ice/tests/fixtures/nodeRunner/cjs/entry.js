@@ -1,3 +1,2 @@
-const { a } = require('./a.js');
-
-module.exports = a;
+const imported = require('./a.js');
+module.exports = imported.a;
