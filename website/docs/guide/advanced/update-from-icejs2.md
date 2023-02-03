@@ -309,7 +309,7 @@ const appConfing = {};
 为了获得良好类型提示，推荐写法为：
 
 ```ts
-import { defineAppConfig } from 'ice';
+import { defineAppConfig } from '@ice/app';
 
 export default defineAppConfig(() => ({
   app: {
