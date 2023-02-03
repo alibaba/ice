@@ -21,8 +21,7 @@
     "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-fusion"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "access": "public"
   },
   "scripts": {
     "watch": "tsc -w",

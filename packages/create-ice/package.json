@@ -41,7 +41,6 @@
     "@types/inquirer": "^9.0.3"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "access": "public"
   }
 }

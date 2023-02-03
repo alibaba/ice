@@ -18,7 +18,6 @@
   "homepage": "https://v3.ice.work",
   "sideEffects": false,
   "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "access": "public"
   }
 }

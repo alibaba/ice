@@ -21,7 +21,6 @@
     "react-dom": "^18"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "access": "public"
   }
 }
