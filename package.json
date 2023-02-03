@@ -22,8 +22,7 @@
     "changeset": "changeset",
     "version": "changeset version && pnpm install --frozen-lockfile false",
     "release": "changeset publish",
-    "release:beta": "changeset pre enter beta",
-    "release:exit": "changeset pre exit"
+    "release:beta": "changeset pre enter beta && pnpm run version && pnpm run release && changeset pre exit"
   },
   "devDependencies": {
     "@applint/spec": "^1.2.3",

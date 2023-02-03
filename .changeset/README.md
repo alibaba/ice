@@ -20,7 +20,7 @@ After you have completed a feature or fixed a bug, you need to do three things:
 - You will be prompted to select a bump type for each selected package. Select an appropriate bump type for the changes made. See here for information on semver versioning
 - Your final prompt will be to provide a message to go alongside the changeset. This will be written into the changelog when the next release occurs.
 
-After that, you should commit changes to the remote repository.
+After that, you should commit changes to the remote repository. For example:
 
 ```bash
 $ git status
@@ -40,20 +40,13 @@ For more detail, please see [this documentation](https://github.com/changesets/c
 
 > NOTE: You must add a changeset first before publishing beta version.
 
-Run the following commands to publish the beta version
+Run the following command to publish the beta version
 
 ```bash
-# Enter the prerelese mode and generate the pre.json.
 $ npm run release:beta
-# Update to the beta version.
-$ npm run changeset:version
-# Publish the beta version to the npm.
-$ npm run changeset:publish
-# Exit the prerelese mode.
-$ npm run release:exit
 ```
 
-Then, we need to commit changes to the remote repository.
+Then, we need to commit changes to the remote repository. For example:
 
 ```bash
 $ git status
