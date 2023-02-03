@@ -22,8 +22,7 @@
     "@ice/style-import": "^1.0.0"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "access": "public"
   },
   "files": [
     "esm",

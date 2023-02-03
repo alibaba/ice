@@ -51,7 +51,6 @@
     "babel-runtime-jsx-plus": "^0.1.5"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "access": "public"
   }
 }
