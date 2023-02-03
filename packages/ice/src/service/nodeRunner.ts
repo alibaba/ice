@@ -45,15 +45,6 @@ class ModuleCacheMap extends Map<string, ModuleCache> {
     return super.get(id)!;
   }
 
-  update(id: string, mod: Partial<ModuleCache>) {
-    if (super.has(id)) {
-      Object.assign(super.get(id), mod);
-    } else {
-      super.set(id, mod);
-    }
-    return this;
-  }
-
   delete(id: string): boolean {
     return super.delete(id);
   }
@@ -76,9 +67,7 @@ class NodeRunner {
   async cachedRequest(id: string, callstack: string[]) {
     const mod = this.moduleCache.get(id);
     if (callstack.includes(id) && mod.exports) return mod.exports;
-
     if (mod.promise) return mod.promise;
-
     const promise = this.request(id, callstack);
     Object.assign(mod, { promise, evaluated: false });
 
@@ -186,7 +175,7 @@ class NodeRunner {
       __ice_import__: request,
       __ice_dynamic_import__: request,
       __ice_exports__: exports,
-      __ice_exportAll__: (obj: any) => exportAll(exports, obj),
+      __ice_export_all__: (obj: any) => exportAll(exports, obj),
       __ice_import_meta__: meta,
 
       // cjs compact
@@ -198,7 +187,6 @@ class NodeRunner {
     };
 
     if (transformed[0] === '#') transformed = transformed.replace(/^#!.*/, s => ' '.repeat(s.length));
-
     // add 'use strict' since ESM enables it by default
     const codeDefinition = `'use strict';async (${Object.keys(context).join(',')})=>{{`;
     const code = `${codeDefinition}${transformed}\n}}`;
