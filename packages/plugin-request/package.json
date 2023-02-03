@@ -69,5 +69,9 @@
   "scripts": {
     "watch": "tsc -w",
     "build": "tsc"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

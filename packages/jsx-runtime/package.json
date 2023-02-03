@@ -47,5 +47,9 @@
   "peerDependencies": {
     "react": "^16 || ^17 || ^18"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }
