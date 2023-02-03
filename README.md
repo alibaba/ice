@@ -6,6 +6,7 @@
   <a href="/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license" /></a>
   <a href="https://github.com/alibaba/ice/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome" /></a>
   <a href="https://gitter.im/alibaba/ice"><img src="https://badges.gitter.im/alibaba/ice.svg" alt="Gitter" /></a>
+  <a href="https://opensource.alibaba.com/contribution_leaderboard/details?projectValue=ice"><img src="https://img.shields.io/badge/ICE-Check%20Your%20Contribution-orange" alt="Leaderboard" /></a>
 </p>
 
 A universal framework based on React.js, [📚 Docs](https://ice.work/).
