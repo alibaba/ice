@@ -15,6 +15,7 @@ import type { Config, ModifyWebpackConfig } from './types.js';
 import configAssets from './config/assets.js';
 import configCss from './config/css.js';
 import AssetsManifestPlugin from './webpackPlugins/AssetsManifestPlugin.js';
+import EnvReplacementPlugin from './webpackPlugins/EnvReplacementPlugin.js';
 import getCompilerPlugins from './getCompilerPlugins.js';
 import getSplitChunksConfig, { FRAMEWORK_BUNDLES } from './config/splitChunks.js';
 import compilationPlugin from './unPlugins/compilation.js';
@@ -70,7 +71,6 @@ function getAliasWithRoot(rootDir: string, alias?: Record<string, string | boole
   });
   return aliasWithRoot;
 }
-
 
 const RUNTIME_PREFIX = /^ICE_/i;
 
@@ -192,6 +192,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
       // https://github.com/vercel/next.js/issues/7178#issuecomment-493048965
       comparisons: false,
       inline: 2,
+      passes: 4,
     },
     mangle: {
       safari10: true,
@@ -202,6 +203,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
       // Fixes usage of Emoji and certain Regex
       ascii_only: true,
     },
+    module: true,
   }, minimizerOptions);
   const compilation = compilationPlugin({
     cacheDir,
@@ -234,6 +236,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     },
     context: rootDir,
     module: {
+      unsafeCache: false,
       parser: {
         javascript: {
           importExportsPresence: 'warn',
@@ -273,7 +276,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     },
     watchOptions: {
       // add a delay before rebuilding once routes changed
-      // webpack can not found routes component after it is been deleted
+      // webpack can not be found routes component after it has been deleted
       aggregateTimeout: 200,
       ignored: watchIgnoredRegexp,
     },
@@ -319,6 +322,8 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     plugins: [
       ...plugins,
       ...compilerWebpackPlugins,
+      // @ts-ignore
+      new EnvReplacementPlugin(),
       dev && fastRefresh && new ReactRefreshWebpackPlugin({
         exclude: [/node_modules/, /bundles[\\\\/]compiled/],
         // use webpack-dev-server overlay instead
