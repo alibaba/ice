@@ -1,5 +1,6 @@
 {
   "name": "icestark-framework",
+  "private": true,
   "version": "1.0.0",
   "scripts": {
     "start": "ice start",

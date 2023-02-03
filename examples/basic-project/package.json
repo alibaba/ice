@@ -1,6 +1,7 @@
 {
   "name": "basic-project",
   "version": "1.0.0",
+  "private": true,
   "scripts": {
     "start": "ice start",
     "build": "ice build",
