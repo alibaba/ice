@@ -12,14 +12,14 @@ describe('node runner', () => {
     return id.startsWith('./') ? path.resolve(path.dirname(importee!), id) : id;
   };
   const basicLoad = async (id) => {
-    if (!id.endsWith('.js')) {
-      return {
-        externalize: id,
-      };
-    } else {
+    if (id.endsWith('.js')) {
       const code = fs.readFileSync(id, 'utf-8');
       return {
         code,
+      };
+    } else {
+      return {
+        externalize: id,
       };
     }
   };
