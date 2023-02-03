@@ -6,5 +6,12 @@
     "outDir": "esm",
     "jsx": "react"
   },
+<<<<<<< HEAD
   "include": ["src"]
+=======
+  "exclude": [
+    "template/*",
+    "tests/*"
+  ]
+>>>>>>> release-next
 }
