@@ -1,1 +1,1 @@
-export * from '@ice/jsx-runtime/prod';
+export * from '@ice/jsx-runtime/jsx-runtime';
