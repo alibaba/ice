@@ -29,11 +29,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
 
-      - name: Install Dependencies
-        run: pnpm install
-
-      - name: Build Packages
-        run: pnpm run build
+      - name: Setup
+        run: pnpm run setup
 
       - name: Publish to npm
         id: changesets
