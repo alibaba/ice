@@ -1,5 +1,16 @@
 # Changelog
 
+## v3.1.0
+
+- [feat] export suspense api
+- [feat] refactor ability of keep target code
+- [feat] support render js bundle as entry 
+- [fix] support cli options of target, platform not is deprecated
+- [fix] build data loader with correct browser list
+- [fix] process exit when build with errors on dev
+- [fix] optimize log info
+- [fix] should not replace global env for ssr
+
 ## v3.0.6
 
 - [feat] support `import.meta.target`, `import.meta.renderer` and `import.meta.env`

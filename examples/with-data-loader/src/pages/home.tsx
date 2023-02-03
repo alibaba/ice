@@ -24,6 +24,6 @@ export function pageConfig() {
 export const dataLoader = defineDataLoader(async () => {
   const result = await fetch('https://api.github.com/repos/ice-lab/ice-next');
   const data = await result.json();
-
+  console.log('target, renderer:', import.meta.target, import.meta.renderer);
   return data;
 });

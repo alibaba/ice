@@ -12,6 +12,8 @@ describe('defineJestConfig', () => {
     '^webpack/hot',
     '^regenerator-runtime',
     '^@swc/helpers/(.*)',
+    '^universal-env',
+    '^@uni/env',
   ];
   beforeAll(() => {
     const spy = vi.spyOn(process, 'cwd');

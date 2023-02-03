@@ -2,7 +2,6 @@ import fs from 'fs';
 import * as path from 'path';
 import type { Plugin, PluginBuild, Loader } from 'esbuild';
 import type { UnpluginOptions, UnpluginContext } from 'unplugin';
-import { logger } from '../utils/logger.js';
 
 interface PluginOptions {
   plugins?: UnpluginOptions[];
@@ -102,57 +101,52 @@ const transformPipe = (options: PluginOptions = {}): Plugin => {
         // it is required to forward `resolveDir` for esbuild to find dependencies.
         const resolveDir = path.dirname(args.path);
         const loader = guessLoader(id);
-        try {
-          const transformedResult = await plugins.reduce(async (prevData, plugin) => {
-            const { contents } = await prevData;
-            const { transform, transformInclude, loadInclude } = plugin;
-            let sourceCode = contents;
-            let sourceMap = null;
 
-            if (plugin.load) {
-              if (!loadInclude || loadInclude?.(id)) {
-                const result = await plugin.load.call(pluginContext, id);
-                if (typeof result === 'string') {
-                  sourceCode = result;
-                } else if (typeof result === 'object' && result !== null) {
-                  sourceCode = result.code;
-                  sourceMap = result.map;
-                }
-              }
-            }
+        const transformedResult = await plugins.reduce(async (prevData, plugin) => {
+          const { contents } = await prevData;
+          const { transform, transformInclude, loadInclude } = plugin;
+          let sourceCode = contents;
+          let sourceMap = null;
 
-            if (!transformInclude || transformInclude?.(id)) {
-              if (!sourceCode) {
-                // Caution: 'utf8' assumes the input file is not in binary.
-                // If you want your plugin handle binary files, make sure to execute `plugin.load()` first.
-                sourceCode = await fs.promises.readFile(args.path, 'utf8');
-              }
-              if (transform) {
-                const result = await transform.call(pluginContext, sourceCode, id);
-                if (typeof result === 'string') {
-                  sourceCode = result;
-                } else if (typeof result === 'object' && result !== null) {
-                  sourceCode = result.code;
-                  sourceMap = result.map;
-                }
-              }
-              if (sourceMap) {
-                if (!sourceMap.sourcesContent || sourceMap.sourcesContent.length === 0) {
-                  sourceMap.sourcesContent = [sourceCode];
-                }
-                sourceMap = fixSourceMap(sourceMap);
-                sourceCode += `\n//# sourceMappingURL=${sourceMap.toUrl()}`;
-              }
-              return { contents: sourceCode, resolveDir, loader };
+          if (plugin.load && (!loadInclude || loadInclude?.(id))) {
+            const result = await plugin.load.call(pluginContext, id);
+            if (typeof result === 'string') {
+              sourceCode = result;
+            } else if (typeof result === 'object' && result !== null) {
+              sourceCode = result.code;
+              sourceMap = result.map;
             }
-            return { contents, resolveDir, loader };
-          }, Promise.resolve({ contents: null, resolveDir, loader }));
-          // Make sure contents is not null when return.
-          if (transformedResult.contents) {
-            return transformedResult;
           }
-        } catch (error) {
-          logger.debug('Error occurs in esbuild-transform-pipe.', error.stack);
+
+          if (!transformInclude || transformInclude?.(id)) {
+            if (!sourceCode) {
+              // Caution: 'utf8' assumes the input file is not in binary.
+              // If you want your plugin handle binary files, make sure to execute `plugin.load()` first.
+              sourceCode = await fs.promises.readFile(args.path, 'utf8');
+            }
+            if (transform) {
+              const result = await transform.call(pluginContext, sourceCode, id);
+              if (typeof result === 'string') {
+                sourceCode = result;
+              } else if (typeof result === 'object' && result !== null) {
+                sourceCode = result.code;
+                sourceMap = result.map;
+              }
+            }
+            if (sourceMap) {
+              if (!sourceMap.sourcesContent || sourceMap.sourcesContent.length === 0) {
+                sourceMap.sourcesContent = [sourceCode];
+              }
+              sourceMap = fixSourceMap(sourceMap);
+              sourceCode += `\n//# sourceMappingURL=${sourceMap.toUrl()}`;
+            }
+            return { contents: sourceCode, resolveDir, loader };
+          }
+          return { contents, resolveDir, loader };
+        }, Promise.resolve({ contents: null, resolveDir, loader }));
+        // Make sure contents is not null when return.
+        if (transformedResult.contents) {
+          return transformedResult;
         }
       });
     },
