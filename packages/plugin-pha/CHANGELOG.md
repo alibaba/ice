@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.3
+
+- [fix] print log once
+
 ## 1.1.1
 
 - [feat] support resource_prefetch to preload resource
