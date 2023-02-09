@@ -15,7 +15,7 @@ After you have completed a feature or fixed a bug, you need to do three things:
 - Bump released packages version
 - Write Changelog for the released packages
 
-You can run follow these steps:
+You can follow these steps:
 - Run the command line script `npm run changeset`
 - Select the packages you want to include in the changeset using `↑` and `↓` to navigate to packages, and `space` to select a package. Hit enter when all desired packages are selected.
 - You will be prompted to select a bump type for each selected package. Select an appropriate bump type for the changes made. See here for information on semver versioning
