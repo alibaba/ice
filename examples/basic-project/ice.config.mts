@@ -16,12 +16,12 @@ export default defineConfig(() => ({
     HAHA: JSON.stringify(true),
     'process.env.HAHA': JSON.stringify(true),
   },
-  transform: (code, id) => {
+  /* transform: (code, id) => {
     if (id.includes('src/pages') && id.endsWith('.js')) {
       return code;
     }
     return null;
-  },
+  }, */
   webpack: (webpackConfig) => {
     if (process.env.NODE_ENV !== 'test') {
       webpackConfig.plugins?.push(new SpeedMeasurePlugin());
@@ -30,7 +30,7 @@ export default defineConfig(() => ({
   },
   dropLogLevel: process.env.ICE_ENV === 'common' ? 'warn' : 'error',
   plugins: [
-    customPlugin(),
+    // customPlugin(),
   ],
   eslint: true,
 }));

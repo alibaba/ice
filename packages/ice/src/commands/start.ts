@@ -20,6 +20,8 @@ import createMockMiddleware from '../middlewares/mock/createMiddleware.js';
 import getRouterBasename from '../utils/getRouterBasename.js';
 import { getExpandedEnvs } from '../utils/runtimeEnv.js';
 import { logger } from '../utils/logger.js';
+import type ServerRunner from '../serverRunner.js';
+import ServerCompileTask from '../utils/ServerCompileTask.js';
 
 const { merge } = lodash;
 
@@ -35,6 +37,7 @@ const start = async (
     getRoutesConfig: GetRoutesConfig;
     getDataloaderConfig: GetDataloaderConfig;
     userConfigHash: string;
+    serverRunner: ServerRunner;
   },
 ) => {
   const {
@@ -47,6 +50,7 @@ const start = async (
     getRoutesConfig,
     getDataloaderConfig,
     userConfigHash,
+    serverRunner,
   } = options;
   const { commandArgs, rootDir } = context;
   const { target = WEB } = commandArgs;
@@ -69,6 +73,7 @@ const start = async (
     getAppConfig,
     getRoutesConfig,
     getDataloaderConfig,
+    serverRunner,
   };
 
   const useDevServer = taskConfigs.reduce((prev, curr) => prev || curr.config.useDevServer, false);
@@ -103,6 +108,7 @@ interface StartDevServerOptions {
     getAppConfig: GetAppConfig;
     getRoutesConfig: GetRoutesConfig;
     getDataloaderConfig: GetDataloaderConfig;
+    serverRunner?: ServerRunner;
   };
   appConfig: AppConfig;
   devPath: string;
@@ -119,9 +125,10 @@ async function startDevServer({
   const { commandArgs, userConfig, rootDir, applyHook, extendsPluginAPI: { serverCompileTask } } = context;
   const { port, host, https = false } = commandArgs;
   const { ssg, ssr } = userConfig;
-  const { getAppConfig } = hooksAPI;
+  const { getAppConfig, serverRunner } = hooksAPI;
   const webTaskConfig = taskConfigs.find(({ name }) => name === WEB);
   const customMiddlewares = webpackConfigs[0].devServer?.setupMiddlewares;
+  const serverTask = new ServerCompileTask<Promise<void>>();
   let devServerConfig: DevServerConfiguration = {
     port,
     host,
@@ -145,6 +152,8 @@ async function startDevServer({
         getAppConfig,
         taskConfig: webTaskConfig,
         userConfig,
+        serverTask,
+        serverRunner,
       });
       // @ts-ignore
       const insertIndex = middlewares.findIndex(({ name }) => name === 'serve-index');
@@ -180,6 +189,7 @@ async function startDevServer({
     hooksAPI,
     spinner,
     devPath,
+    serverTask,
   });
   const devServer = new WebpackDevServer(devServerConfig, compiler);
   devServer.startCallback(() => {

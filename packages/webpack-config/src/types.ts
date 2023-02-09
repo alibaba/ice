@@ -41,6 +41,7 @@ interface SwcOptions {
   compilationConfig?: SwcCompilationConfig | ((source: string, id: string) => SwcCompilationConfig);
   keepExports?: string[];
   getRoutePaths?: Function;
+  nodeTransform?: boolean;
 }
 
 interface ImportDeclaration {

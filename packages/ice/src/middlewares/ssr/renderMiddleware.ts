@@ -1,3 +1,4 @@
+import path from 'path';
 import { createRequire } from 'module';
 import type { ExpressRequestHandler, Middleware } from 'webpack-dev-server';
 import type { ServerContext, RenderMode } from '@ice/runtime';
@@ -12,6 +13,8 @@ import warnOnHashRouterEnabled from '../../utils/warnOnHashRouterEnabled.js';
 import type { UserConfig } from '../../types/userConfig.js';
 import { logger } from '../../utils/logger.js';
 import getRouterManifest from '../../utils/getRouterManifest.js';
+import type ServerCompileTask from '../../utils/ServerCompileTask.js';
+import type ServerRunner from '../../serverRunner.js';
 
 const require = createRequire(import.meta.url);
 
@@ -23,6 +26,8 @@ interface Options {
   documentOnly?: boolean;
   renderMode?: RenderMode;
   taskConfig?: TaskConfig<Config>;
+  serverTask?: ServerCompileTask<Promise<void>>;
+  serverRunner?: ServerRunner;
 }
 
 export default function createRenderMiddleware(options: Options): Middleware {
@@ -34,6 +39,8 @@ export default function createRenderMiddleware(options: Options): Middleware {
     getAppConfig,
     taskConfig,
     userConfig,
+    serverTask,
+    serverRunner,
   } = options;
   const middleware: ExpressRequestHandler = async function (req, res, next) {
     const routes = getRouterManifest(rootDir);
@@ -46,7 +53,7 @@ export default function createRenderMiddleware(options: Options): Middleware {
     // When documentOnly is true, it means that the app is CSR and it should return the html.
     if (matches.length || documentOnly) {
       // Wait for the server compilation to finish
-      const { serverEntry, error } = await serverCompileTask.get();
+      /* const { serverEntry, error } = await serverCompileTask.get();
       if (error) {
         logger.error('Server compile error in render middleware.');
         return;
@@ -59,7 +66,13 @@ export default function createRenderMiddleware(options: Options): Middleware {
         // make error clearly, notice typeof err === 'string'
         logger.error(`import ${serverEntry} error: ${err}`);
         return;
-      }
+      } */
+
+      await serverTask?.get();
+      const serverModule = await serverRunner.runFile(path.join(rootDir, '.ice/entry.server.ts'));
+      console.log('server result ===>', serverModule);
+
+
       const requestContext: ServerContext = {
         req,
         res,

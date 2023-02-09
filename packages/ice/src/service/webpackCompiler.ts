@@ -11,7 +11,10 @@ import { IMPORT_META_RENDERER, IMPORT_META_TARGET, WEB } from '../constant.js';
 import getServerCompilerPlugin from '../utils/getServerCompilerPlugin.js';
 import DataLoaderPlugin from '../webpack/DataLoaderPlugin.js';
 import ReCompilePlugin from '../webpack/ReCompilePlugin.js';
+import ServerRunnerPlugin from '../webpack/ServerRunnerPlugin.js';
+import type ServerRunner from '../serverRunner.js';
 import { logger } from '../utils/logger.js';
+import type ServerCompileTask from '../utils/ServerCompileTask.js';
 import { getRouteExportConfig } from './config.js';
 
 const { debounce } = lodash;
@@ -28,7 +31,9 @@ async function webpackCompiler(options: {
     getAppConfig: GetAppConfig;
     getRoutesConfig: GetRoutesConfig;
     getDataloaderConfig: GetDataloaderConfig;
+    serverRunner?: ServerRunner;
   };
+  serverTask?: ServerCompileTask<Promise<void>>;
 }) {
   const {
     taskConfigs,
@@ -38,6 +43,7 @@ async function webpackCompiler(options: {
     spinner,
     devPath,
     context,
+    serverTask,
   } = options;
   const { rootDir, applyHook, commandArgs, command, userConfig, getAllPlugin } = context;
   // `commandArgs` doesn't guarantee target exists.
@@ -63,6 +69,15 @@ async function webpackCompiler(options: {
     // Add webpack [ServerCompilerPlugin]
     if (useDevServer) {
       const outputDir = webpackConfig.output.path;
+
+      if (command === 'start') {
+        // Add server runner plugin
+        webpackConfig.plugins.push(new ServerRunnerPlugin(
+          hooksAPI.serverRunner,
+          ensureRoutesConfig,
+          serverTask,
+        ));
+      }
       serverCompilerPlugin = getServerCompilerPlugin(serverCompiler, {
         rootDir,
         serverEntry: server?.entry,

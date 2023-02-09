@@ -125,7 +125,7 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
   };
 }
 
-function resolvePackageEntry(depId: string, pkgPath: string, alias: TaskConfig<Config>['config']['alias']) {
+export function resolvePackageEntry(depId: string, pkgPath: string, alias: TaskConfig<Config>['config']['alias']) {
   const pkgJSON = fse.readJSONSync(pkgPath);
   const pkgDir = path.dirname(pkgPath);
   const aliasKey = Object.keys(alias).find(key => depId === key || depId.startsWith(`${depId}/`));

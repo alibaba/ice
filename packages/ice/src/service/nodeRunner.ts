@@ -8,15 +8,22 @@ import { isNodeBuiltin } from 'mlly';
 export interface ModuleResult {
   code?: string;
   externalize?: string;
-  // TODO: add sourcemap type.
   map?: any;
 }
+
+export type ResolveId = {
+  id: string;
+  namespace?: string;
+} | string | null;
 
 export interface NodeRunnerOptions {
   rootDir: string;
   moduleCache?: ModuleCacheMap;
-  load: (id: string) => Promise<ModuleResult>;
-  resolveId?: (id: string, importer?: string) => Promise<string | null>;
+  load: (args: {
+    path: string;
+    namespace?: string;
+  }) => Promise<ModuleResult> | ModuleResult;
+  resolveId?: (id: string, importer?: string) => Promise<ResolveId> | ResolveId;
   interopDefault?: boolean;
 }
 
@@ -60,15 +67,15 @@ class NodeRunner {
   }
 
   async run(id: string) {
-    const filePath = path.join(this.rootDir, id);
+    const filePath = path.isAbsolute(id) ? id : path.join(this.rootDir, id);
     return await this.cachedRequest(filePath, []);
   }
 
-  async cachedRequest(id: string, callstack: string[]) {
+  async cachedRequest(id: string, callstack: string[], namespace?: string) {
     const mod = this.moduleCache.get(id);
     if (callstack.includes(id) && mod.exports) return mod.exports;
     if (mod.promise) return mod.promise;
-    const promise = this.request(id, callstack);
+    const promise = this.requestModule(id, callstack, namespace);
     Object.assign(mod, { promise, evaluated: false });
 
     try {
@@ -82,20 +89,27 @@ class NodeRunner {
     const resolveKey = `resolve:${id}`;
     // put info about new import as soon as possible, so we can start tracking it
     this.moduleCache.set(resolveKey, { resolving: true });
+    let requestId = '';
     try {
       if (isNodeBuiltin(id)) {
-        return id;
+        requestId = id;
       } else if (!this.options.resolveId) {
-        return path.resolve(path.dirname(importee!), id);
+        requestId = path.resolve(path.dirname(importee!), id);
       } else {
-        return await this.options.resolveId(id, importee);
+        const res = await this.options.resolveId(id, importee);
+        if (typeof res === 'string') {
+          requestId = res;
+        } else {
+          return res;
+        }
       }
+      return { id: requestId };
     } finally {
       this.moduleCache.delete(resolveKey);
     }
   }
 
-  async dependencyRequest(id: string, callstack: string[]) {
+  async dependencyRequest(id: string, callstack: string[], namespace = '') {
     const getStack = () => {
       return `stack:\n${[...callstack, id].reverse().map(p => `- ${p}`).join('\n')}`;
     };
@@ -106,19 +120,22 @@ class NodeRunner {
         if (depExports) return depExports;
         throw new Error(`[vite-node] Failed to resolve circular dependency, ${getStack()}`);
       }
-      return await this.cachedRequest(id, callstack);
+      return await this.cachedRequest(id, callstack, namespace);
     } catch (e) {
       console.error(e);
     }
   }
 
-  async request(id: string, _callstack: string[] = []) {
+  async requestModule(id: string, _callstack: string[] = [], namespace = '') {
     const mod = this.moduleCache.get(id);
     const callstack = [..._callstack, id];
-    let { code: transformed, externalize } = await this.options.load(id);
+    let { code: transformed, externalize } = await this.options.load({
+      path: id,
+      namespace,
+    });
     const request = async (dep: string) => {
-      const requestId = await this.resolveUrl(dep, id);
-      return this.dependencyRequest(requestId, callstack);
+      const { id: requestId, namespace } = await this.resolveUrl(dep, id);
+      return this.dependencyRequest(requestId, callstack, namespace);
     };
 
     if (externalize) {
@@ -175,7 +192,7 @@ class NodeRunner {
       __ice_import__: request,
       __ice_dynamic_import__: request,
       __ice_exports__: exports,
-      __ice_export_all__: (obj: any) => exportAll(exports, obj),
+      __ice_exports_all__: (obj: any) => exportAll(exports, obj),
       __ice_import_meta__: meta,
 
       // cjs compact

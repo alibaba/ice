@@ -11,7 +11,7 @@ describe('node runner', () => {
   const basicResolve = async (id, importee) => {
     return id.startsWith('./') ? path.resolve(path.dirname(importee!), id) : id;
   };
-  const basicLoad = async (id) => {
+  const basicLoad = async ({ path: id }) => {
     if (id.endsWith('.js')) {
       const code = fs.readFileSync(id, 'utf-8');
       return {

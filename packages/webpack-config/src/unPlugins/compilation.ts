@@ -1,5 +1,5 @@
 import path from 'path';
-import { swc, swcPluginRemoveExport, swcPluginKeepExport, coreJsPath } from '@ice/bundles';
+import { swc, swcPluginRemoveExport, swcPluginKeepExport, swcPluginNodeTransform, coreJsPath } from '@ice/bundles';
 import type { SwcConfig, ReactConfig } from '@ice/bundles';
 import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
@@ -37,13 +37,13 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
     enableEnv,
   } = options;
 
-  const { removeExportExprs, compilationConfig, keepExports, getRoutePaths } = swcOptions;
+  const { removeExportExprs, compilationConfig, keepExports, getRoutePaths, nodeTransform } = swcOptions;
 
   const compileRegex = compileIncludes.map((includeRule) => {
     return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);
   });
 
-  function isRouteEntry(id) {
+  function isRouteEntry(id: string) {
     const routes = getRoutePaths();
 
     const matched = routes.find(route => {
@@ -53,7 +53,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
     return !!matched;
   }
 
-  function isAppEntry(id) {
+  function isAppEntry(id: string) {
     return /(.*)src\/app.(ts|tsx|js|jsx)/.test(id);
   }
 
@@ -98,6 +98,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
       }
 
       const swcPlugins = [];
+
       // handle app.tsx and page entries only
       if (removeExportExprs) {
         if (isRouteEntry(id) || isAppEntry(id)) {
@@ -131,6 +132,9 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
         }
       }
 
+      if (nodeTransform) {
+        swcPlugins.push([swcPluginNodeTransform, {}]);
+      }
       if (swcPlugins.length > 0) {
         merge(programmaticOptions, {
           jsc: {
