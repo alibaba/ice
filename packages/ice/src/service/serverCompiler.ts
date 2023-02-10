@@ -105,21 +105,6 @@ export function createServerCompiler(options: Options) {
       redirectImports,
     }, 'esbuild');
 
-    if (preBundle) {
-      depsMetadata = await createDepsMetadata({
-        task,
-        alias,
-        ignores,
-        rootDir,
-        // Pass transformPlugins only if syntaxFeatures is enabled
-        plugins: enableSyntaxFeatures ? [
-          transformPipePlugin({
-            plugins: transformPlugins,
-          }),
-        ] : [],
-      });
-    }
-
     // get runtime variable for server build
     Object.keys(process.env).forEach((key) => {
       // Do not transform env when bundle client side code.
@@ -138,6 +123,23 @@ export function createServerCompiler(options: Options) {
     // Add user defined envs.
     for (const [key, value] of Object.entries(expandedEnvs)) {
       define[`import.meta.env.${key}`] = JSON.stringify(value);
+    }
+
+    if (preBundle) {
+      depsMetadata = await createDepsMetadata({
+        task,
+        alias,
+        ignores,
+        rootDir,
+        define,
+        external: Object.keys(externals),
+        // Pass transformPlugins only if syntaxFeatures is enabled
+        plugins: enableSyntaxFeatures ? [
+          transformPipePlugin({
+            plugins: transformPlugins,
+          }),
+        ] : [],
+      });
     }
 
     const format = customBuildOptions?.format || 'esm';
@@ -246,11 +248,15 @@ interface CreateDepsMetadataOptions {
   plugins: esbuild.Plugin[];
   alias: Record<string, string>;
   ignores: string[];
+  define: esbuild.BuildOptions['define'];
+  external: esbuild.BuildOptions['external'];
 }
 /**
  *  Create dependencies metadata only when server entry is bundled to esm.
  */
-async function createDepsMetadata({ rootDir, task, plugins, alias, ignores }: CreateDepsMetadataOptions) {
+async function createDepsMetadata(
+  { rootDir, task, plugins, alias, ignores, define, external }: CreateDepsMetadataOptions,
+) {
   const serverEntry = getServerEntry(rootDir, task.config?.server?.entry);
   const deps = await scanImports([serverEntry], {
     rootDir,
@@ -279,6 +285,8 @@ async function createDepsMetadata({ rootDir, task, plugins, alias, ignores }: Cr
     alias,
     ignores,
     plugins,
+    define,
+    external,
   });
 
   return ret.metadata;
