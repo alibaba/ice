@@ -33,7 +33,6 @@ async function webpackCompiler(options: {
     getDataloaderConfig: GetDataloaderConfig;
     serverRunner?: ServerRunner;
   };
-  serverTask?: ServerCompileTask<Promise<void>>;
 }) {
   const {
     taskConfigs,
@@ -43,7 +42,6 @@ async function webpackCompiler(options: {
     spinner,
     devPath,
     context,
-    serverTask,
   } = options;
   const { rootDir, applyHook, commandArgs, command, userConfig, getAllPlugin } = context;
   // `commandArgs` doesn't guarantee target exists.

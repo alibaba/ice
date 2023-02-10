@@ -11,6 +11,7 @@ export default defineConfig(() => ({
   },
   server: {
     onDemand: true,
+    format: 'esm',
   },
   alias: {
     '@comp': './src/components',
