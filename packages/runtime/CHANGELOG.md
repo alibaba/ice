@@ -1,5 +1,9 @@
 # @ice/runtime
 
+## v1.1.1
+
+- [chore] update usage of @ice/jsx-runtime
+
 ## v1.1.0
 
 - [feat] suspense ssr
