@@ -75,6 +75,7 @@ export function createServerCompiler(options: Options) {
     runtimeDefineVars = {},
     enableEnv = false,
     transformEnv = true,
+    isServer = true,
   } = {}) => {
     let depsMetadata: DepsMetaData;
     let swcOptions = merge({}, {
@@ -103,7 +104,7 @@ export function createServerCompiler(options: Options) {
       polyfill: false,
       swcOptions,
       redirectImports,
-    }, 'esbuild');
+    }, 'esbuild', { isServer });
 
     if (preBundle) {
       depsMetadata = await createDepsMetadata({
