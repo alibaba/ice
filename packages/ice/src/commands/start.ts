@@ -123,9 +123,10 @@ async function startDevServer({
   const webTaskConfig = taskConfigs.find(({ name }) => name === WEB);
   const customMiddlewares = webpackConfigs[0].devServer?.setupMiddlewares;
   let devServerConfig: DevServerConfiguration = {
-    port,
-    host,
-    https,
+    // Value priority: webpackConfig > process.env.PORT > commandArgs.
+    port: webpackConfigs[0].devServer?.port || process.env.PORT || port,
+    host: webpackConfigs[0].devServer?.host || process.env.HOST || host,
+    https: webpackConfigs[0].devServer?.https || https,
     setupMiddlewares: (middlewares, devServer) => {
       let renderMode: RenderMode;
       // If ssr is set to true, use ssr for preview.

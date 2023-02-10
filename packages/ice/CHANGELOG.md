@@ -2,7 +2,8 @@
 
 ## v3.1.1
 
-- [fix] The imported dataloaderFetcher name is error
+- [fix] the imported dataloaderFetcher name is error
+- [fix] value priority of host, port and https
 
 ## v3.1.0
 
