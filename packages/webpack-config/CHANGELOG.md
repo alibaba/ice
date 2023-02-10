@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.7
+
+- [fix] optimize webpack config (enable unsafeCache)
+
 ## 1.0.6
 
 - [fix] dynamic import works in app.tsx
