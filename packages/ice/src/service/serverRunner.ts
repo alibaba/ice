@@ -8,17 +8,17 @@ import MagicString from '@ice/bundles/compiled/magic-string/index.js';
 import type { TaskConfig } from 'build-scripts';
 import type { Config } from '@ice/webpack-config/esm/types';
 import type { PluginBuild, OnResolveOptions, Plugin, OnLoadResult, OnResolveResult } from 'esbuild';
-import NodeRunner from './service/nodeRunner.js';
-import emptyCSSPlugin from './esbuild/emptyCSS.js';
-import ignorePlugin from './esbuild/ignore.js';
-import cssModulesPlugin from './esbuild/cssModules.js';
-import createAssetsPlugin from './esbuild/assets.js';
-import externalPlugin from './esbuild/external.js';
-import escapeLocalIdent from './utils/escapeLocalIdent.js';
-import transformPipePlugin from './esbuild/transformPipe.js';
-import { resolveId as resolveWithAlias } from './service/analyze.js';
-import type { CompilerOptions } from './types/plugin.js';
-import type { UserConfig } from './types/userConfig.js';
+import emptyCSSPlugin from '../esbuild/emptyCSS.js';
+import ignorePlugin from '../esbuild/ignore.js';
+import cssModulesPlugin from '../esbuild/cssModules.js';
+import createAssetsPlugin from '../esbuild/assets.js';
+import externalPlugin from '../esbuild/external.js';
+import escapeLocalIdent from '../utils/escapeLocalIdent.js';
+import transformPipePlugin from '../esbuild/transformPipe.js';
+import type { CompilerOptions } from '../types/plugin.js';
+import type { UserConfig } from '../types/userConfig.js';
+import { resolveId as resolveWithAlias } from './analyze.js';
+import NodeRunner from './nodeRunner.js';
 
 const require = createRequire(import.meta.url);
 

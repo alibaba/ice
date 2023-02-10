@@ -1,28 +1,22 @@
 import type { Compiler, Compilation } from 'webpack';
-import type ServerRunner from '../serverRunner.js';
-import type ServerCompileTask from '../utils/ServerCompileTask.js';
+import type ServerRunner from '../service/serverRunner.js';
 
 const pluginName = 'ServerRunnerPlugin';
 
-type ServerTask = ServerCompileTask<Promise<void>>;
-
 /**
- * After compilation, compile the server entry.
+ * Get assets manifest from serevr runner.
  */
 export default class ServerRunnerPlugin {
   private ensureRoutesConfig: () => Promise<void>;
   private isCompiling: boolean;
   private serverRunner: ServerRunner;
-  private serverTask: ServerTask;
 
   public constructor(
     serverRunner: ServerRunner,
     ensureRoutesConfig: () => Promise<void>,
-    serverTask: ServerTask,
   ) {
     this.serverRunner = serverRunner;
     this.ensureRoutesConfig = ensureRoutesConfig;
-    this.serverTask = serverTask;
   }
 
   public compileTask = async (compilation?: Compilation) => {
@@ -41,10 +35,9 @@ export default class ServerRunnerPlugin {
     compiler.hooks.watchRun.tap(pluginName, () => {
       this.isCompiling = true;
     });
-    compiler.hooks.emit.tap(pluginName, (compilation: Compilation) => {
+    compiler.hooks.emit.tapPromise(pluginName, async (compilation: Compilation) => {
       this.isCompiling = false;
-      const task = this.compileTask(compilation);
-      this.serverTask.set(task);
+      return this.compileTask(compilation);
     });
   }
 }

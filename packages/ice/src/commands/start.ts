@@ -16,11 +16,12 @@ import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import prepareURLs from '../utils/prepareURLs.js';
 import createRenderMiddleware from '../middlewares/ssr/renderMiddleware.js';
+import createOnDemandMiddleware from '../middlewares/ssr/renderOnDemand.js';
 import createMockMiddleware from '../middlewares/mock/createMiddleware.js';
 import getRouterBasename from '../utils/getRouterBasename.js';
 import { getExpandedEnvs } from '../utils/runtimeEnv.js';
 import { logger } from '../utils/logger.js';
-import type ServerRunner from '../serverRunner.js';
+import type ServerRunner from '../service/serverRunner.js';
 import ServerCompileTask from '../utils/ServerCompileTask.js';
 
 const { merge } = lodash;
@@ -37,7 +38,7 @@ const start = async (
     getRoutesConfig: GetRoutesConfig;
     getDataloaderConfig: GetDataloaderConfig;
     userConfigHash: string;
-    serverRunner: ServerRunner;
+    serverRunner?: ServerRunner;
   },
 ) => {
   const {
@@ -70,10 +71,10 @@ const start = async (
 
   const hooksAPI = {
     serverCompiler,
+    serverRunner,
     getAppConfig,
     getRoutesConfig,
     getDataloaderConfig,
-    serverRunner,
   };
 
   const useDevServer = taskConfigs.reduce((prev, curr) => prev || curr.config.useDevServer, false);
@@ -128,7 +129,6 @@ async function startDevServer({
   const { getAppConfig, serverRunner } = hooksAPI;
   const webTaskConfig = taskConfigs.find(({ name }) => name === WEB);
   const customMiddlewares = webpackConfigs[0].devServer?.setupMiddlewares;
-  const serverTask = new ServerCompileTask<Promise<void>>();
   let devServerConfig: DevServerConfiguration = {
     port,
     host,
@@ -143,18 +143,23 @@ async function startDevServer({
       }
       // both ssr and ssg, should render the whole page in dev mode.
       const documentOnly = !ssr && !ssg;
-
-      const serverRenderMiddleware = createRenderMiddleware({
-        serverCompileTask,
+      const middlewareOptions = {
         rootDir,
         documentOnly,
         renderMode,
         getAppConfig,
         taskConfig: webTaskConfig,
         userConfig,
-        serverTask,
-        serverRunner,
-      });
+      };
+      const serverRenderMiddleware = serverRunner
+        ? createOnDemandMiddleware({
+          ...middlewareOptions,
+          serverRunner,
+        })
+        : createRenderMiddleware({
+          ...middlewareOptions,
+          serverCompileTask,
+        });
       // @ts-ignore
       const insertIndex = middlewares.findIndex(({ name }) => name === 'serve-index');
       middlewares.splice(
@@ -189,7 +194,6 @@ async function startDevServer({
     hooksAPI,
     spinner,
     devPath,
-    serverTask,
   });
   const devServer = new WebpackDevServer(devServerConfig, compiler);
   devServer.startCallback(() => {

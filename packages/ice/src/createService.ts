@@ -30,7 +30,7 @@ import renderExportsTemplate from './utils/renderExportsTemplate.js';
 import { getFileExports } from './service/analyze.js';
 import { getFileHash } from './utils/hash.js';
 import { logger } from './utils/logger.js';
-import ServerRunner from './serverRunner.js';
+import ServerRunner from './service/serverRunner.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -262,7 +262,15 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   generator.render();
   logger.debug('template render cost:', new Date().getTime() - renderStart);
   // Create server runner
-  const serverRunner = new ServerRunner();
+  let serverRunner: ServerRunner;
+  if (server.onDemand) {
+    serverRunner = new ServerRunner();
+    serverRunner.init({
+      rootDir,
+      task: platformTaskConfig,
+      server,
+    });
+  }
   // create serverCompiler with task config
   const serverCompiler = createServerCompiler({
     rootDir,
@@ -273,12 +281,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   });
   initAppConfigCompiler(serverCompiler);
   initRouteConfigCompiler(serverCompiler);
-
-  serverRunner.init({
-    rootDir,
-    task: platformTaskConfig,
-    server,
-  });
 
   addWatchEvent(
     ...getWatchEvents({
