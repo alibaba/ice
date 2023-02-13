@@ -236,7 +236,6 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     },
     context: rootDir,
     module: {
-      unsafeCache: false,
       parser: {
         javascript: {
           importExportsPresence: 'warn',

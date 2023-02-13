@@ -49,5 +49,8 @@
     "babel-plugin-transform-jsx-memo": "^0.1.4",
     "babel-plugin-transform-jsx-slot": "^0.1.2",
     "babel-runtime-jsx-plus": "^0.1.5"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
