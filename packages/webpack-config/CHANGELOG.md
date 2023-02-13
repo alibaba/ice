@@ -2,6 +2,7 @@
 
 ## 1.0.7
 
+- [fix] support transform options for API `getCompilerPlugins`
 - [fix] optimize webpack config (enable unsafeCache)
 
 ## 1.0.6
