@@ -40,7 +40,7 @@
     "@ice/bundles": "0.1.4",
     "@ice/route-manifest": "1.0.0",
     "@ice/runtime": "^1.0.0",
-    "@ice/webpack-config": "1.0.6",
+    "@ice/webpack-config": "1.0.7",
     "@swc/helpers": "0.4.14",
     "@types/express": "^4.17.14",
     "address": "^1.1.2",
@@ -89,5 +89,8 @@
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
