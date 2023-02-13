@@ -247,7 +247,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     generatorAPI.addDataLoaderImport(method ? {
       source: packageName,
       alias: {
-        [method]: 'fetcher',
+        [method]: 'dataLoaderFetcher',
       },
       specifier: [method],
     } : {

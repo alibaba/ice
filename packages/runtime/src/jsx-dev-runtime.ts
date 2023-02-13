@@ -1,1 +1,1 @@
-export * from '@ice/jsx-runtime/dev';
+export * from '@ice/jsx-runtime/jsx-dev-runtime';
