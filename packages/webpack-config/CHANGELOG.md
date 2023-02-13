@@ -3,6 +3,7 @@
 ## 1.0.7
 
 - [fix] optimize webpack config (enable unsafeCache)
+- [fix] exclude rule of compilation and load compile target
 
 ## 1.0.6
 
