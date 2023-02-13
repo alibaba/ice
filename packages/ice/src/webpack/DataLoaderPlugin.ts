@@ -78,6 +78,7 @@ export default class DataLoaderPlugin {
                 specifier: ['defineDataLoader'],
                 source: '@ice/runtime',
               }],
+              isServer: false,
             },
           );
           if (!error) {

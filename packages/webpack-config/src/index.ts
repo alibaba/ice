@@ -184,7 +184,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     },
   } : {};
   // get compile plugins
-  const compilerWebpackPlugins = getCompilerPlugins(rootDir, config, 'webpack');
+  const compilerWebpackPlugins = getCompilerPlugins(rootDir, config, 'webpack', { isServer: false });
 
   const terserOptions: any = merge({
     compress: {
