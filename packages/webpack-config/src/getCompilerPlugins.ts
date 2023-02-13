@@ -86,7 +86,9 @@ function getCompilerPlugins(config: Config, compiler: Compiler, transformOptions
 
   return compiler === 'webpack'
     // Plugins will be transformed as webpack loader, the execute order of webpack loader is reversed.
-    ? compilerPlugins.reverse().map(plugin => createUnplugin(() => getPluginTransform(plugin, transformOptions)).webpack())
+    ? compilerPlugins
+        .reverse()
+        .map((plugin) => createUnplugin(() => getPluginTransform(plugin, transformOptions)).webpack())
     : compilerPlugins.map(plugin => getPluginTransform(plugin, transformOptions));
 }
 
