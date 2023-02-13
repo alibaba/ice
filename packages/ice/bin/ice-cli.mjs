@@ -3,7 +3,6 @@ import path from 'path';
 import chalk from 'chalk';
 import semver from 'semver';
 import fse from 'fs-extra';
-import detectPort from 'detect-port';
 import { fileURLToPath } from 'url';
 import { program, Option } from 'commander';
 // hijack webpack before import other modules
@@ -46,7 +45,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .option('--target <target>', 'same as --target', WEB)
     .option('--mode <mode>', 'set mode', 'development')
     .option('--config <config>', 'custom config path')
-    .option('-h, --host <host>', 'dev server host', '0.0.0.0')
+    .option('-h, --host <host>', 'dev server host')
     .option('-p, --port <port>', 'dev server port')
     .option('--no-open', "don't open browser on startup")
     .option('--no-mock', "don't start mock service")
@@ -57,8 +56,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .action(async ({ rootDir, ...commandArgs }) => {
       renamePlatformToTarget(commandArgs);
       process.env.NODE_ENV = 'development';
-      const DEFAULT_PORT = 3000;
-      commandArgs.port = typeof commandArgs.port === 'undefined' ? await detectPort(DEFAULT_PORT) : commandArgs.port;
       const service = await createService({ rootDir, command: 'start', commandArgs });
       service.run();
     });
