@@ -1,6 +1,6 @@
 {
   "name": "@ice/app",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "provide scripts and configuration used by web framework ice",
   "type": "module",
   "main": "./esm/index.js",
@@ -89,5 +89,8 @@
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

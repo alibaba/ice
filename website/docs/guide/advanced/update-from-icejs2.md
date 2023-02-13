@@ -275,7 +275,7 @@ export default defineConfig(() => ({
 
 ```js title="ice.config.mts"
 import { defineConfig } from '@ice/app';
-import { modifyLoader } from '@ice/webpack-modify';
+import { transformSync } from '@babel/core';
 
 export default defineConfig(() => ({
   // Set your configs here.

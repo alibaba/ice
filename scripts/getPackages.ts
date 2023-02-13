@@ -4,8 +4,8 @@ import fse from 'fs-extra';
 import glob from 'glob';
 
 export default async function getPackages() {
-  const packageNames = [];
-  const packageDirs = [];
+  const packageNames: string[] = [];
+  const packageDirs: string[] = [];
   const rootPkgPath = path.join(process.cwd(), 'package.json');
   const rootPkgContent = fse.readJSONSync(rootPkgPath);
 

@@ -39,5 +39,8 @@
   "license": "MIT",
   "devDependencies": {
     "@types/inquirer": "^9.0.3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

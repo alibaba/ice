@@ -1,13 +1,12 @@
 {
   "name": "@ice/jsx-runtime",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "JSX runtime for ice.",
   "files": [
     "esm",
-    "cjs",
-    "es2017",
     "dist",
-    "build"
+    "jsx-dev-runtime.js",
+    "jsx-runtime.js"
   ],
   "type": "module",
   "main": "./esm/index.js",
@@ -15,8 +14,8 @@
   "types": "./esm/index.d.ts",
   "exports": {
     ".": "./esm/index.js",
-    "./dev": "./esm/dev.js",
-    "./prod": "./esm/prod.js"
+    "./jsx-dev-runtime": "./esm/dev.js",
+    "./jsx-runtime": "./esm/prod.js"
   },
   "sideEffects": [
     "dist/*",
@@ -47,5 +46,8 @@
   "peerDependencies": {
     "react": "^16 || ^17 || ^18"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
 }
