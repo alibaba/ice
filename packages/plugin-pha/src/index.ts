@@ -104,30 +104,34 @@ const plugin: Plugin<PluginOptions> = (options) => ({
       });
     });
 
-    onHook('after.start.compile', async ({ urls }) => {
-      // Log out pha dev urls.
-      const lanUrl = urls.lanUrlForTerminal;
-      const appConfig = await getAppConfig(['phaManifest']);
-      const { phaManifest } = appConfig || {};
-      const phaDevUrls = [];
-      if (phaManifest?.tabBar) {
-        phaDevUrls.push(`${lanUrl}manifest.json?pha=true`);
-      } else if (phaManifest?.routes?.length > 0) {
-        phaManifest.routes.forEach((route) => {
-          if (typeof route === 'string') {
-            phaDevUrls.push(`${lanUrl}${route}-manifest.json?pha=true`);
-          } else if (typeof route?.frames![0] === 'string') {
-            phaDevUrls.push(`${lanUrl}${route.frames[0]}-manifest.json?pha=true`);
-          }
+    onHook('after.start.compile', async ({ isSuccessful, isFirstCompile, urls }) => {
+      // Only print logout message once when build is successful.
+      // See also @ice/app -> plugins/web.ts
+      if (isSuccessful && isFirstCompile) {
+        // Log out pha dev urls.
+        const lanUrl = urls.lanUrlForTerminal;
+        const appConfig = await getAppConfig(['phaManifest']);
+        const { phaManifest } = appConfig || {};
+        const phaDevUrls = [];
+        if (phaManifest?.tabBar) {
+          phaDevUrls.push(`${lanUrl}manifest.json?pha=true`);
+        } else if (phaManifest?.routes?.length > 0) {
+          phaManifest.routes.forEach((route) => {
+            if (typeof route === 'string') {
+              phaDevUrls.push(`${lanUrl}${route}-manifest.json?pha=true`);
+            } else if (typeof route?.frames![0] === 'string') {
+              phaDevUrls.push(`${lanUrl}${route.frames[0]}-manifest.json?pha=true`);
+            }
+          });
+        }
+        let logoutMessage = '\n';
+        logoutMessage += chalk.green(' Serve PHA Manifest at:\n');
+        phaDevUrls.forEach((url) => {
+          logoutMessage += `\n   ${chalk.underline.white(url)}`;
         });
-      }
-      let logoutMessage = '\n';
-      logoutMessage += chalk.green(' Serve PHA Manifest at:\n');
-      phaDevUrls.forEach((url) => {
-        logoutMessage += `\n   ${chalk.underline.white(url)}`;
-      });
-      if (phaDevUrls.length > 0) {
-        consola.log(`${logoutMessage}\n`);
+        if (phaDevUrls.length > 0) {
+          consola.log(`${logoutMessage}\n`);
+        }
       }
     });
 
