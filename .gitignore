@@ -27,6 +27,7 @@ coverage
 .happypack
 .vscode
 .tmp
+.cache
 *.swp
 *.dia~
 *.temp.json
