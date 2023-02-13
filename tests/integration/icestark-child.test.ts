@@ -9,7 +9,7 @@ describe(`build ${example}`, () => {
     await buildFixture(example);
     const { page } = await setupBrowser({ example, disableJS: false });
     // Test umd output.
-    await page.waitForFunction('!!window.icestarkchild === true');
+    await page.waitForFunction('!!window["@examples/icestarkchild"] === true');
   });
 });
 
@@ -18,6 +18,6 @@ describe(`start ${example}`, () => {
     const { devServer, port } = await startFixture(example);
     const { page } = await setupStartBrowser({ server: devServer, port });
     // Test umd output.
-    await page.waitForFunction('!!window.icestarkchild === true');
+    await page.waitForFunction('!!window["@examples/icestarkchild"] === true');
   });
 });
