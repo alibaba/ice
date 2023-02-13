@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.1.1-beta.0
+## 3.1.1-beta.2
 
 ### Patch Changes
 
