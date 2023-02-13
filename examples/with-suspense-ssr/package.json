@@ -1,5 +1,5 @@
 {
-  "name": "with-suspense-ssr",
+  "name": "@examples/with-suspense-ssr",
   "version": "1.0.0",
   "scripts": {
     "start": "ice start",

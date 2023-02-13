@@ -1,9 +1,5 @@
 # Changelog
 
-## v3.1.1
-
-- [fix] The imported dataloaderFetcher name is error
-
 ## v3.1.0
 
 - [feat] export suspense api

@@ -1,9 +1,5 @@
 # Changelog
 
-## 1.1.3
-
-- [fix] print log once
-
 ## 1.1.2
 
 - [fix] should't parse template in SSR/SSG
