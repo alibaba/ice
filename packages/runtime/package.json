@@ -50,5 +50,8 @@
   "peerDependencies": {
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
