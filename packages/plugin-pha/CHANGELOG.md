@@ -1,10 +1,8 @@
 # Changelog
 
-## 1.1.3-beta.0
+## 1.1.3
 
-### Patch Changes
-
-- 790a95a7: [fix] print log once
+- [fix] print log once
 
 ## 1.1.2
 
