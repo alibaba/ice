@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.7-beta.0
+
+### Patch Changes
+
+- 790a95a7: [fix] optimize webpack config (enable unsafeCache)
+
 ## 1.0.6
 
 - [fix] dynamic import works in app.tsx
@@ -14,7 +20,7 @@
 ## 1.0.4
 
 - [fix] format id for win32 compatible
-- [fix] md4 -> md5 while md4 algorithm is not available anymore in NodeJS 17+ 
+- [fix] md4 -> md5 while md4 algorithm is not available anymore in NodeJS 17+
 - [chore] do not show webpack config on debug mode
 - [refactor] rename param `env` to `enableEnv`
 
