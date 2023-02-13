@@ -8,17 +8,18 @@ import redirectImportPlugin from './unPlugins/redirectImport.js';
 import compileExcludes from './compileExcludes.js';
 
 type Compiler = 'webpack' | 'esbuild';
+interface TransformOptions {
+  isServer: boolean;
+}
 
 const { createUnplugin } = unplugin;
-function getPluginTransform(plugin: UnpluginOptions, type: 'esbuild' | 'webpack') {
+function getPluginTransform(plugin: UnpluginOptions, transformOptions: TransformOptions) {
   const { transform } = plugin;
   if (transform) {
     return {
       ...plugin,
       transform(code: string, id: string) {
-        return transform.call(this, code, id, {
-          isServer: type === 'esbuild',
-        });
+        return transform.call(this, code, id, transformOptions);
       },
     } as UnpluginOptions;
   }
@@ -31,9 +32,9 @@ function transformInclude(id: string) {
   return !!id.match(/\.(js|jsx|ts|tsx|mjs|mts|css|less|scss)$/);
 }
 
-function getCompilerPlugins(config: Config, compiler: 'webpack'): Configuration['plugins'];
-function getCompilerPlugins(config: Config, compiler: 'esbuild'): BuildOptions['plugins'];
-function getCompilerPlugins(config: Config, compiler: Compiler) {
+function getCompilerPlugins(config: Config, compiler: 'webpack', transformOptions: TransformOptions): Configuration['plugins'];
+function getCompilerPlugins(config: Config, compiler: 'esbuild', transformOptions: TransformOptions): BuildOptions['plugins'];
+function getCompilerPlugins(config: Config, compiler: Compiler, transformOptions: TransformOptions) {
   const {
     sourceMap,
     transformPlugins = [],
@@ -85,8 +86,10 @@ function getCompilerPlugins(config: Config, compiler: Compiler) {
 
   return compiler === 'webpack'
     // Plugins will be transformed as webpack loader, the execute order of webpack loader is reversed.
-    ? compilerPlugins.reverse().map(plugin => createUnplugin(() => getPluginTransform(plugin, 'webpack')).webpack())
-    : compilerPlugins.map(plugin => getPluginTransform(plugin, 'esbuild'));
+    ? compilerPlugins
+        .reverse()
+        .map((plugin) => createUnplugin(() => getPluginTransform(plugin, transformOptions)).webpack())
+    : compilerPlugins.map(plugin => getPluginTransform(plugin, transformOptions));
 }
 
 export default getCompilerPlugins;

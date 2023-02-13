@@ -1,5 +1,6 @@
 {
   "name": "with-pha",
+  "private": true,
   "version": "1.0.0",
   "scripts": {
     "start": "ice start",

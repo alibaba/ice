@@ -2,8 +2,9 @@
 
 ## v3.1.1
 
-- [fix] the imported dataloaderFetcher name is error
 - [fix] value priority of host, port and https
+- [fix] The imported dataloaderFetcher name is error
+- [fix] the value of `isServer` is false when compile data-loader
 
 ## v3.1.0
 
