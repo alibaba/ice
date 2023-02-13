@@ -10,7 +10,7 @@ const SKIP_COMPILE = [
 ];
 
 const compileExcludes = [
-  new RegExp(SKIP_COMPILE.map((dep) => `node_modules/?.+${dep}/`).join('|')),
+  new RegExp(SKIP_COMPILE.map((dep) => `node_modules/[-@\w\.]*${dep}/`).join('|')),
   /bundles\/compiled/,
 ];
 

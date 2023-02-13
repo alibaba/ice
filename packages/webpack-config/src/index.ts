@@ -3,6 +3,8 @@ import { createRequire } from 'module';
 import fg from 'fast-glob';
 import ReactRefreshWebpackPlugin from '@ice/bundles/compiled/@pmmmwh/react-refresh-webpack-plugin/lib/index.js';
 import bundleAnalyzer from '@ice/bundles/compiled/webpack-bundle-analyzer/index.js';
+import browserslist from 'browserslist';
+import consola from 'consola';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import CssMinimizerPlugin from '@ice/bundles/compiled/css-minimizer-webpack-plugin/index.js';
 import TerserPlugin from '@ice/bundles/compiled/terser-webpack-plugin/index.js';
@@ -182,7 +184,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     },
   } : {};
   // get compile plugins
-  const compilerWebpackPlugins = getCompilerPlugins(config, 'webpack');
+  const compilerWebpackPlugins = getCompilerPlugins(rootDir, config, 'webpack');
 
   const terserOptions: any = merge({
     compress: {
@@ -206,6 +208,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     module: true,
   }, minimizerOptions);
   const compilation = compilationPlugin({
+    rootDir,
     cacheDir,
     sourceMap,
     fastRefresh,
