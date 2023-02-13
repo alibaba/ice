@@ -123,9 +123,9 @@ async function startDevServer({
   const webTaskConfig = taskConfigs.find(({ name }) => name === WEB);
   const customMiddlewares = webpackConfigs[0].devServer?.setupMiddlewares;
   let devServerConfig: DevServerConfiguration = {
-    // Value priority: webpackConfig > process.env.PORT > commandArgs.
-    port: webpackConfigs[0].devServer?.port || process.env.PORT || port,
-    host: webpackConfigs[0].devServer?.host || process.env.HOST || host,
+    // Value priority: process.env.PORT > webpackConfig > commandArgs.
+    port: process.env.PORT || webpackConfigs[0].devServer?.port || port,
+    host: process.env.HOST || webpackConfigs[0].devServer?.host || host,
     https: webpackConfigs[0].devServer?.https || https,
     setupMiddlewares: (middlewares, devServer) => {
       let renderMode: RenderMode;
