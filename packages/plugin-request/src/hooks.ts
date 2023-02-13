@@ -1,13 +1,13 @@
 import { useRequest as useAhooksRequest } from 'ahooks';
 import type { Options, Result, Service, Plugin } from 'ahooks/lib/useRequest/src/types';
 import type { AxiosRequestConfig } from 'axios';
-import request from './request.js';
+import { request } from './request.js';
 
 interface RequestResult<R, P extends any[]> extends Result<R, P> {
   request: (...args: P) => Promise<R>;
 }
 
-function useRequest<TData, TParams extends any[]>(
+export function useRequest<TData, TParams extends any[]>(
   service: AxiosRequestConfig | Service<TData, TParams>,
   options?: Options<TData, TParams>,
   plugins?: Plugin<TData, TParams>[]) {
@@ -34,8 +34,6 @@ function useRequest<TData, TParams extends any[]>(
     request: req.run,
   } as RequestResult<TData, TParams>;
 }
-
-export default useRequest;
 
 function isFunction(fn: any): fn is Function {
   return typeof fn === 'function';

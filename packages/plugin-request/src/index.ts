@@ -13,18 +13,18 @@ const plugin: Plugin<PluginRequestOptions | void> = () => ({
     // Add useRequest export for 'ice'.
     //   import { useRequest } from 'ice';
     generator.addExport({
-      specifier: 'useRequest',
+      specifier: ['useRequest'],
       source: '@ice/plugin-request/hooks',
       type: false,
     });
     //   import { request } from 'ice';
     generator.addExport({
-      specifier: 'request',
+      specifier: ['request'],
       source: '@ice/plugin-request/request',
       type: false,
     });
   },
-  runtime: `${PLUGIN_NAME}/esm/runtime`,
+  runtime: `${PLUGIN_NAME}/runtime`,
   staticRuntime: true,
   keepExports: ['requestConfig'],
 });
