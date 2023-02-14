@@ -39,16 +39,9 @@ interface Options {
 
 const { merge, difference } = lodash;
 
-export function createServerCompiler(options: Options) {
-  const { task, rootDir, command, server, syntaxFeatures } = options;
-  const externals = task.config?.externals || {};
-  const define = task.config?.define || {};
-  const sourceMap = task.config?.sourceMap;
-  const dev = command === 'start';
-
+export const filterAlias = (taskAlias: TaskConfig<Config>['config']['alias']) => {
   // Filter empty alias.
-  const ignores = [];
-  const taskAlias = task.config?.alias || {};
+  const ignores: string[] = [];
   const alias: Record<string, string> = {};
   Object.keys(taskAlias).forEach((aliasKey) => {
     const value = taskAlias[aliasKey];
@@ -58,7 +51,18 @@ export function createServerCompiler(options: Options) {
       ignores.push(aliasKey);
     }
   });
+  return { alias, ignores };
+};
 
+export function createServerCompiler(options: Options) {
+  const { task, rootDir, command, server, syntaxFeatures } = options;
+  const externals = task.config?.externals || {};
+  const define = task.config?.define || {};
+  const sourceMap = task.config?.sourceMap;
+  const dev = command === 'start';
+
+  // Filter empty alias.
+  const { ignores, alias } = filterAlias(task.config?.alias || {});
   const defineVars = {};
   // auto stringify define value
   Object.keys(define).forEach((key) => {

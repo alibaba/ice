@@ -2,7 +2,7 @@ import path from 'path';
 import { createHash } from 'crypto';
 import fse from 'fs-extra';
 import { esbuild } from '@ice/bundles';
-import type { Plugin } from 'esbuild';
+import type { Plugin, BuildOptions } from 'esbuild';
 import { resolve as resolveExports } from 'resolve.exports';
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
 import type { Config } from '@ice/webpack-config/esm/types';
@@ -87,30 +87,12 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
   }
 
   try {
-    await esbuild.build({
-      absWorkingDir: process.cwd(),
+    await bundleDeps({
       entryPoints: flatIdDeps,
-      bundle: true,
-      logLevel: 'error',
       outdir: depsCacheDir,
-      format: 'cjs',
-      platform: 'node',
-      loader: { '.js': 'jsx' },
-      ignoreAnnotations: true,
+      plugins,
+      ignores,
       alias,
-      plugins: [
-        emptyCSSPlugin(),
-        externalPlugin({ ignores, format: 'cjs', externalDependencies: false }),
-        cssModulesPlugin({
-          extract: false,
-          generateLocalIdentName: function (name: string, filename: string) {
-            // Compatible with webpack css-loader.
-            return escapeLocalIdent(getCSSModuleLocalIdent(filename, name));
-          },
-        }),
-        ...plugins,
-      ],
-      external: [...BUILDIN_CJS_DEPS, ...BUILDIN_ESM_DEPS],
     });
   } catch (error) {
     logger.error('Failed to bundle dependencies.');
@@ -123,6 +105,42 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
   return {
     metadata,
   };
+}
+
+export async function bundleDeps(options:
+  {
+    entryPoints: BuildOptions['entryPoints'];
+    outdir: BuildOptions['outdir'];
+    alias: BuildOptions['alias'];
+    ignores: string[];
+    plugins: Plugin[];
+  }) {
+  const { entryPoints, outdir, alias, ignores, plugins } = options;
+  return await esbuild.build({
+    absWorkingDir: process.cwd(),
+    entryPoints,
+    bundle: true,
+    logLevel: 'error',
+    outdir,
+    format: 'cjs',
+    platform: 'node',
+    loader: { '.js': 'jsx' },
+    ignoreAnnotations: true,
+    alias,
+    plugins: [
+      emptyCSSPlugin(),
+      externalPlugin({ ignores, format: 'cjs', externalDependencies: false }),
+      cssModulesPlugin({
+        extract: false,
+        generateLocalIdentName: function (name: string, filename: string) {
+          // Compatible with webpack css-loader.
+          return escapeLocalIdent(getCSSModuleLocalIdent(filename, name));
+        },
+      }),
+      ...plugins,
+    ],
+    external: [...BUILDIN_CJS_DEPS, ...BUILDIN_ESM_DEPS],
+  });
 }
 
 export function resolvePackageEntry(depId: string, pkgPath: string, alias: TaskConfig<Config>['config']['alias']) {

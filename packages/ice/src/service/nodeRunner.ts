@@ -40,7 +40,7 @@ interface ModuleCache {
   importers?: Set<string>;
 }
 
-class ModuleCacheMap extends Map<string, ModuleCache> {
+export class ModuleCacheMap extends Map<string, ModuleCache> {
   set(id: string, mod: ModuleCache) {
     return super.set(id, mod);
   }

@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { createRequire } from 'module';
+import { Context } from 'build-scripts';
 import fse from 'fs-extra';
 import fg from 'fast-glob';
 import { getCompilerPlugins, getCSSModuleLocalIdent } from '@ice/webpack-config';
@@ -18,9 +18,9 @@ import transformPipePlugin from '../esbuild/transformPipe.js';
 import type { CompilerOptions } from '../types/plugin.js';
 import type { UserConfig } from '../types/userConfig.js';
 import { resolveId as resolveWithAlias } from './analyze.js';
-import NodeRunner from './nodeRunner.js';
-
-const require = createRequire(import.meta.url);
+import NodeRunner, { ModuleCacheMap } from './nodeRunner.js';
+import { RuntimeMeta } from './onDemandPreBundle.js';
+import { filterAlias } from './serverCompiler.js';
 
 interface InitOptions {
   rootDir: string;
@@ -54,7 +54,7 @@ function getPluginLifecycle(plugin: Plugin, hookKey: 'onResolve' | 'onLoad') {
 const { init, parse } = moduleLexer;
 async function transformJsxRuntime(source: string) {
   await init;
-  const [imports, exports] = parse(source);
+  const [imports] = parse(source);
   let s: MagicString | undefined;
   const str = () => s || (s = new MagicString(source));
 
@@ -62,7 +62,8 @@ async function transformJsxRuntime(source: string) {
     if (!imp.n) {
       return;
     }
-
+    // JSX runtime is added after swc plugins
+    // use es-module-lexer to replace the import statement.
     if (imp.n === '@ice/runtime/jsx-dev-runtime') {
       str().overwrite(
         imp.ss,
@@ -100,12 +101,18 @@ class ServerRunner {
           },
         },
       },
-    }, 'esbuild');
+    }, 'esbuild', { isServer: true });
+    const { alias, ignores } = filterAlias(task.config.alias || {});
+    const runtimeMeta = new RuntimeMeta({
+      rootDir,
+      alias,
+      ignores,
+    });
 
     const esbuildPlugins = [
       emptyCSSPlugin(),
       externalPlugin({
-        ignores: [],
+        ignores,
         externalDependencies: true,
         format: 'esm',
         externals: server.externals,
@@ -250,7 +257,10 @@ class ServerRunner {
             }
           }
           if (!code && !path.isAbsolute(id)) {
-            return { externalize: require.resolve(id) };
+            // If id is runtime dependency, bundle it and return externalized id.
+            const bundlePath = await runtimeMeta.bundle(id);
+            console.log('bundlePath ===>', bundlePath);
+            return { externalize: bundlePath };
           }
 
           if (id.includes('')) return {
@@ -267,6 +277,10 @@ class ServerRunner {
 
   async runFile(filePath: string) {
     return await this.nodeRunner.run(filePath);
+  }
+
+  fileChanged(filePath: string) {
+    this.nodeRunner.moduleCache.delete(filePath);
   }
 }
 

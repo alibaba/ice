@@ -270,6 +270,14 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       task: platformTaskConfig,
       server,
     });
+    addWatchEvent([
+      /src\/?[\w*-:.$]+$/,
+      async (eventName: string, filePath: string) => {
+        if (eventName === 'change' || eventName === 'add') {
+          serverRunner.fileChanged(filePath);
+        }
+      }],
+    );
   }
   // create serverCompiler with task config
   const serverCompiler = createServerCompiler({
