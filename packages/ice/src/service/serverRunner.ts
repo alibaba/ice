@@ -258,7 +258,6 @@ class ServerRunner {
           if (!code && !path.isAbsolute(id)) {
             // If id is runtime dependency, bundle it and return externalized id.
             const bundlePath = await runtimeMeta.bundle(id);
-            console.log('bundlePath ===>', bundlePath);
             return { externalize: bundlePath };
           }
 
