@@ -10,7 +10,6 @@ import warnOnHashRouterEnabled from '../../utils/warnOnHashRouterEnabled.js';
 import type { UserConfig } from '../../types/userConfig.js';
 import { logger } from '../../utils/logger.js';
 import getRouterManifest from '../../utils/getRouterManifest.js';
-import type ServerCompileTask from '../../utils/ServerCompileTask.js';
 import type ServerRunner from '../../service/serverRunner.js';
 
 interface Options {

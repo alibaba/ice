@@ -1,5 +1,4 @@
 import * as path from 'path';
-import { Context } from 'build-scripts';
 import fse from 'fs-extra';
 import fg from 'fast-glob';
 import { getCompilerPlugins, getCSSModuleLocalIdent } from '@ice/webpack-config';
@@ -18,7 +17,7 @@ import transformPipePlugin from '../esbuild/transformPipe.js';
 import type { CompilerOptions } from '../types/plugin.js';
 import type { UserConfig } from '../types/userConfig.js';
 import { resolveId as resolveWithAlias } from './analyze.js';
-import NodeRunner, { ModuleCacheMap } from './nodeRunner.js';
+import NodeRunner from './nodeRunner.js';
 import { RuntimeMeta } from './onDemandPreBundle.js';
 import { filterAlias } from './serverCompiler.js';
 

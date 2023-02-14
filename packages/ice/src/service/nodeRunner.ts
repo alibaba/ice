@@ -93,15 +93,15 @@ class NodeRunner {
     try {
       if (isNodeBuiltin(id)) {
         requestId = id;
-      } else if (!this.options.resolveId) {
-        requestId = path.resolve(path.dirname(importee!), id);
-      } else {
+      } else if (this.options.resolveId) {
         const res = await this.options.resolveId(id, importee);
         if (typeof res === 'string') {
           requestId = res;
         } else {
           return res;
         }
+      } else {
+        requestId = path.resolve(path.dirname(importee!), id);
       }
       return { id: requestId };
     } finally {
