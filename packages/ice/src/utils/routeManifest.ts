@@ -16,7 +16,6 @@ export default class RouteManifest {
   }
 
   setRoutes(routes: NestedRouteManifest[]) {
-    console.log('routes ==>', routes);
     this.routeManifest = routes;
   }
 
