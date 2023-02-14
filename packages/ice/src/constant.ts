@@ -1,7 +1,6 @@
 import * as path from 'path';
 
 export const RUNTIME_TMP_DIR = '.ice';
-export const ROUTER_MANIFEST = path.join(RUNTIME_TMP_DIR, 'route-manifest.json');
 export const SERVER_ENTRY = path.join(RUNTIME_TMP_DIR, 'entry.server.ts');
 export const DATA_LOADER_ENTRY = path.join(RUNTIME_TMP_DIR, 'data-loader.ts');
 export const SERVER_OUTPUT_DIR = 'server';

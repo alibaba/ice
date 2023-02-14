@@ -4,6 +4,7 @@
 
 - [fix] The imported dataloaderFetcher name is error
 - [fix] the value of `isServer` is false when compile data-loader
+- [feat] new plugin API `getRouteManifest` and `getFlattenRoutes`
 
 ## v3.1.0
 
