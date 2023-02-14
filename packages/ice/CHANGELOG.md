@@ -1,5 +1,10 @@
 # Changelog
 
+## v3.1.1
+
+- [fix] The imported dataloaderFetcher name is error
+- [fix] the value of `isServer` is false when compile data-loader
+
 ## v3.1.0
 
 - [feat] export suspense api

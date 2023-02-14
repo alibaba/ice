@@ -49,6 +49,7 @@ export interface CompilerOptions {
   removeOutputs?: boolean;
   runtimeDefineVars?: Record<string, string>;
   enableEnv?: boolean;
+  isServer?: boolean;
 }
 
 export type ServerCompiler = (
