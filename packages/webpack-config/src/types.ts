@@ -189,4 +189,6 @@ export interface Config {
   useDevServer?: boolean;
 
   useDataLoader?: boolean;
+
+  documentImport?: string;
 }

@@ -100,37 +100,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     plugins.push(pluginWeb());
   }
 
-  // Register framework level API.
-  generatorAPI.addExport({
-    specifier: ['Link', 'Outlet', 'useParams', 'useSearchParams', 'useLocation', 'useNavigate'],
-    source: '@ice/runtime/router',
-  });
-
-  generatorAPI.addExport({
-    specifier: [
-      'defineAppConfig',
-      'useAppData',
-      'useData',
-      'useConfig',
-      'Meta',
-      'Title',
-      'Links',
-      'Scripts',
-      'Data',
-      'Main',
-      'history',
-      'KeepAliveOutlet',
-      'useMounted',
-      'ClientOnly',
-      'withSuspense',
-      'useSuspenseData',
-      'defineDataLoader',
-      'defineServerDataLoader',
-      'defineStaticDataLoader',
-    ],
-    source: '@ice/runtime',
-  });
-
   const ctx = new Context<Config, ExtendsPluginAPI>({
     rootDir,
     command,
@@ -178,6 +147,60 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     ctx.registerConfig(configType, configData);
   });
   let taskConfigs = await ctx.setup();
+  let documentImport;
+  taskConfigs.forEach(item => {
+    if (item.config.documentImport) {
+      documentImport = item.config.documentImport;
+    }
+  });
+
+  // Register framework level API.
+  generatorAPI.addExport({
+    specifier: ['Link', 'Outlet', 'useParams', 'useSearchParams', 'useLocation', 'useNavigate'],
+    source: '@ice/runtime/router',
+  });
+
+  generatorAPI.addExport({
+    specifier: [
+      'defineAppConfig',
+      'useAppData',
+      'useData',
+      'useConfig',
+      'history',
+      'KeepAliveOutlet',
+      'useMounted',
+      'ClientOnly',
+      'withSuspense',
+      'useSuspenseData',
+      'defineDataLoader',
+      'defineServerDataLoader',
+      'defineStaticDataLoader',
+      ...(documentImport ? [
+      ] : [
+        'Meta',
+        'Title',
+        'Links',
+        'Scripts',
+        'Data',
+        'Main',
+      ]),
+    ],
+    source: '@ice/runtime',
+  });
+
+  if (documentImport) {
+    generatorAPI.addExport({
+      specifier: [
+        'Meta',
+        'Title',
+        'Links',
+        'Scripts',
+        'Data',
+        'Main',
+      ],
+      source: documentImport,
+    });
+  }
 
   // get userConfig after setup because of userConfig maybe modified by plugins
   const { userConfig } = ctx;
