@@ -147,12 +147,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     ctx.registerConfig(configType, configData);
   });
   let taskConfigs = await ctx.setup();
-  let documentImport;
-  taskConfigs.forEach(item => {
-    if (item.config.documentImport) {
-      documentImport = item.config.documentImport;
-    }
-  });
 
   // Register framework level API.
   generatorAPI.addExport({
@@ -175,32 +169,22 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       'defineDataLoader',
       'defineServerDataLoader',
       'defineStaticDataLoader',
-      ...(documentImport ? [
-      ] : [
-        'Meta',
-        'Title',
-        'Links',
-        'Scripts',
-        'Data',
-        'Main',
-      ]),
     ],
     source: '@ice/runtime',
   });
 
-  if (documentImport) {
-    generatorAPI.addExport({
-      specifier: [
-        'Meta',
-        'Title',
-        'Links',
-        'Scripts',
-        'Data',
-        'Main',
-      ],
-      source: documentImport,
-    });
-  }
+  generatorAPI.addExport({
+    specifier: [
+      'Meta',
+      'Title',
+      'Links',
+      'Scripts',
+      'Data',
+      'Main',
+    ],
+    source: '@ice/runtime',
+    target: 'web',
+  });
 
   // get userConfig after setup because of userConfig maybe modified by plugins
   const { userConfig } = ctx;
