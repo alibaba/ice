@@ -275,7 +275,7 @@ class ServerRunner extends Runner {
   }
 
   fileChanged(filePath: string) {
-    this.nodeRunner.moduleCache.delete(filePath);
+    this.moduleCache.delete(filePath);
   }
 }
 
