@@ -10,7 +10,7 @@ import warnOnHashRouterEnabled from '../../utils/warnOnHashRouterEnabled.js';
 import type { UserConfig } from '../../types/userConfig.js';
 import { logger } from '../../utils/logger.js';
 import getRouterManifest from '../../utils/getRouterManifest.js';
-import type ServerRunner from '../../service/serverRunner.js';
+import type ServerRunner from '../../service/ServerRunner.js';
 
 interface Options {
   rootDir: string;
@@ -44,7 +44,7 @@ export default function createRenderMiddleware(options: Options): Middleware {
     if (matches.length || documentOnly) {
       let serverModule;
       try {
-        serverModule = await serverRunner.runFile(path.join(rootDir, '.ice/entry.server.ts'));
+        serverModule = await serverRunner.run(path.join(rootDir, '.ice/entry.server.ts'));
       } catch (err) {
         logger.error(`server entry error: ${err}`);
         return;

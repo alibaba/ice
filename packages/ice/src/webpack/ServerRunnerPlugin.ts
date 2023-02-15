@@ -1,5 +1,5 @@
 import type { Compiler, Compilation } from 'webpack';
-import type ServerRunner from '../service/serverRunner.js';
+import type ServerRunner from '../service/ServerRunner.js';
 
 const pluginName = 'ServerRunnerPlugin';
 

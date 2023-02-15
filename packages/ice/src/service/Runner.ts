@@ -16,7 +16,7 @@ export type ResolveId = {
   namespace?: string;
 } | string | null;
 
-export interface NodeRunnerOptions {
+export interface RunnerOptions {
   rootDir: string;
   moduleCache?: ModuleCacheMap;
   load: (args: {
@@ -57,11 +57,11 @@ export class ModuleCacheMap extends Map<string, ModuleCache> {
   }
 }
 
-class NodeRunner {
+class Runner {
   rootDir: string;
   moduleCache: ModuleCacheMap;
 
-  constructor(public options: NodeRunnerOptions) {
+  constructor(public options: RunnerOptions) {
     this.rootDir = options.rootDir;
     this.moduleCache = options.moduleCache || new ModuleCacheMap();
   }
@@ -205,12 +205,12 @@ class NodeRunner {
 
     if (transformed[0] === '#') transformed = transformed.replace(/^#!.*/, s => ' '.repeat(s.length));
     // add 'use strict' since ESM enables it by default
-    const codeDefinition = `'use strict';async (${Object.keys(context).join(',')})=>{{`;
+    const codeDefinition = `'use strict';async (${Object.keys(context).join(',')})=>{{\n`;
     const code = `${codeDefinition}${transformed}\n}}`;
     const fn = vm.runInThisContext(code, {
       filename: __filename,
-      lineOffset: 0,
-      columnOffset: -codeDefinition.length,
+      lineOffset: -1,
+      columnOffset: 0,
     });
 
     await fn(...Object.values(context));
@@ -299,4 +299,4 @@ function exportAll(exports: any, sourceModule: any) {
   }
 }
 
-export default NodeRunner;
+export default Runner;

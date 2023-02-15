@@ -21,7 +21,7 @@ import createMockMiddleware from '../middlewares/mock/createMiddleware.js';
 import getRouterBasename from '../utils/getRouterBasename.js';
 import { getExpandedEnvs } from '../utils/runtimeEnv.js';
 import { logger } from '../utils/logger.js';
-import type ServerRunner from '../service/serverRunner.js';
+import type ServerRunner from '../service/ServerRunner.js';
 
 const { merge } = lodash;
 

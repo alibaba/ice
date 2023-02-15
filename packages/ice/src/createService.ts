@@ -30,7 +30,7 @@ import renderExportsTemplate from './utils/renderExportsTemplate.js';
 import { getFileExports } from './service/analyze.js';
 import { getFileHash } from './utils/hash.js';
 import { logger } from './utils/logger.js';
-import ServerRunner from './service/serverRunner.js';
+import ServerRunner from './service/ServerRunner.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -264,8 +264,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   // Create server runner
   let serverRunner: ServerRunner;
   if (server.onDemand) {
-    serverRunner = new ServerRunner();
-    serverRunner.init({
+    serverRunner = new ServerRunner({
       rootDir,
       task: platformTaskConfig,
       server,

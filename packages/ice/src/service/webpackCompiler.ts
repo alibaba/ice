@@ -13,7 +13,7 @@ import DataLoaderPlugin from '../webpack/DataLoaderPlugin.js';
 import ReCompilePlugin from '../webpack/ReCompilePlugin.js';
 import ServerRunnerPlugin from '../webpack/ServerRunnerPlugin.js';
 import { logger } from '../utils/logger.js';
-import type ServerRunner from './serverRunner.js';
+import type ServerRunner from './ServerRunner.js';
 import { getRouteExportConfig } from './config.js';
 
 const { debounce } = lodash;
