@@ -124,8 +124,14 @@ async function startDevServer({
   const customMiddlewares = webpackConfigs[0].devServer?.setupMiddlewares;
   // Get the value of the host and port from the command line, environment variables, and webpack config.
   // Value priority: process.env.PORT > commandArgs > webpackConfig > DEFAULT.
-  const host = process.env.HOST || commandArgs.host || webpackConfigs[0].devServer?.host || DEFAULT_HOST;
-  const port = process.env.PORT || commandArgs.port || webpackConfigs[0].devServer?.port || await detectPort(DEFAULT_PORT);
+  const host = process.env.HOST
+    || commandArgs.host
+    || webpackConfigs[0].devServer?.host
+    || DEFAULT_HOST;
+  const port = process.env.PORT
+    || commandArgs.port
+    || webpackConfigs[0].devServer?.port
+    || await detectPort(DEFAULT_PORT);
 
   let devServerConfig: DevServerConfiguration = {
     port,
