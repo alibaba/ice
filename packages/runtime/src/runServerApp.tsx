@@ -134,22 +134,29 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
-    // Send stream result to ServerResponse.
-    pipe(res, {
-      onShellError: async (err) => {
-        if (renderOptions.disableFallback) {
-          throw err;
-        }
+    return new Promise<void>((resolve, reject) => {
+      // Send stream result to ServerResponse.
+      pipe(res, {
+        onShellError: async (err) => {
+          if (renderOptions.disableFallback) {
+            throw err;
+          }
 
-        // downgrade to CSR.
-        console.error('PipeToResponse onShellError, downgrade to CSR.', err);
-        const result = await fallback();
-        sendResult(res, result);
-      },
-      onError: async (err) => {
-        // onError triggered after shell ready, should not downgrade to csr.
-        console.error('PipeToResponse error.', err);
-      },
+          // downgrade to CSR.
+          console.error('PipeToResponse onShellError, downgrade to CSR.', err);
+          const result = await fallback();
+          sendResult(res, result);
+          resolve();
+        },
+        onError: async (err) => {
+          // onError triggered after shell ready, should not downgrade to csr.
+          console.error('PipeToResponse error.', err);
+          reject(err);
+        },
+        onAllReady: () => {
+          resolve();
+        },
+      });
     });
   }
 }
