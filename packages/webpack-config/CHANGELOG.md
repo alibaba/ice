@@ -1,12 +1,18 @@
 # Changelog
 
+## 1.0.7
+
+- [fix] support transform options for API `getCompilerPlugins`
+- [fix] optimize webpack config (enable unsafeCache)
+
 ## 1.0.6
 
 - [fix] dynamic import works in app.tsx
+- [fix] isAppEntry shouldn't include app-worker.ts
+- [fix] add `EnvReplacementPlugin` for keep platform code
 
 ## 1.0.5
 
-- [fix] isAppEntry shouldn't include app-worker.ts
 - [fix] bump version of `@ice/bundles`(0.1.2 -> 0.1.3)
 - [feat] define runtime value of `import.meta.*`
 

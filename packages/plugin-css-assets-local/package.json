@@ -30,5 +30,8 @@
   "scripts": {
     "watch": "tsc -w",
     "build": "tsc"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

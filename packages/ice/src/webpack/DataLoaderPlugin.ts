@@ -4,9 +4,8 @@ import type { Compiler } from 'webpack';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type { Context } from 'build-scripts';
 import type { ServerCompiler, PluginData } from '../types/plugin.js';
-import { RUNTIME_TMP_DIR, RUNTIME_EXPORTS } from '../constant.js';
+import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR, RUNTIME_EXPORTS } from '../constant.js';
 import { getRoutePathsFromCache } from '../utils/getRoutePaths.js';
-import { getSupportedBrowsers } from '../utils/getSupportedBrowsers.js';
 
 const pluginName = 'DataLoaderPlugin';
 const { RawSource } = webpack.sources;
@@ -14,20 +13,23 @@ const { RawSource } = webpack.sources;
 export default class DataLoaderPlugin {
   private serverCompiler: ServerCompiler;
   private rootDir: string;
+  private target: string;
   private dataCache: Map<string, string>;
   private getAllPlugin: Context['getAllPlugin'];
 
   public constructor(options: {
     serverCompiler: ServerCompiler;
     rootDir: string;
+    target: string;
     dataCache: Map<string, string>;
     getAllPlugin?: Context['getAllPlugin'];
   }) {
-    const { serverCompiler, rootDir, dataCache, getAllPlugin } = options;
+    const { serverCompiler, rootDir, dataCache, getAllPlugin, target } = options;
     this.serverCompiler = serverCompiler;
     this.rootDir = rootDir;
     this.dataCache = dataCache;
     this.getAllPlugin = getAllPlugin;
+    this.target = target;
   }
 
   public apply(compiler: Compiler) {
@@ -40,9 +42,6 @@ export default class DataLoaderPlugin {
       }
     });
 
-    const browsersList = getSupportedBrowsers(this.rootDir);
-    const target = browsersList.length ? browsersList.map(b => b.replace(' ', '')) : 'es2015';
-
     compiler.hooks.thisCompilation.tap(pluginName, (compilation) => {
       compilation.hooks.processAssets.tapAsync({
         name: pluginName,
@@ -53,7 +52,7 @@ export default class DataLoaderPlugin {
         if (fse.existsSync(filePath)) {
           const { outputFiles, error } = await this.serverCompiler(
             {
-              target,
+              target: 'es6', // should not set to esnext, https://github.com/alibaba/ice/issues/5830
               entryPoints: [filePath],
               write: false,
               logLevel: 'silent', // The main server compile process will log it.
@@ -65,11 +64,18 @@ export default class DataLoaderPlugin {
                   return getRoutePathsFromCache(this.dataCache);
                 },
               },
+              runtimeDefineVars: {
+                [IMPORT_META_TARGET]: JSON.stringify(this.target),
+                // `data-loader.js` runs in the browser.
+                [IMPORT_META_RENDERER]: JSON.stringify('client'),
+              },
               preBundle: false,
               externalDependencies: false,
               transformEnv: false,
+              enableEnv: true,
               // Redirect imports to @ice/runtime to avoid build plugin side effect code.
               redirectImports: RUNTIME_EXPORTS,
+              isServer: false,
             },
           );
           if (!error) {

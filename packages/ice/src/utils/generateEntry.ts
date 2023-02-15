@@ -2,6 +2,7 @@ import * as path from 'path';
 import fse from 'fs-extra';
 import consola from 'consola';
 import type { ServerContext, RenderMode, AppConfig, DistType } from '@ice/runtime';
+import type { UserConfig } from '../types/userConfig.js';
 import getRoutePaths from './getRoutePaths.js';
 import dynamicImport from './dynamicImport.js';
 import { logger } from './logger.js';
@@ -14,7 +15,7 @@ interface Options {
   documentOnly: boolean;
   routeType: AppConfig['router']['type'];
   renderMode?: RenderMode;
-  distType: DistType;
+  distType: UserConfig['output']['distType'];
 }
 
 interface EntryResult {
@@ -29,8 +30,9 @@ export default async function generateEntry(options: Options): Promise<EntryResu
     documentOnly,
     renderMode,
     routeType,
-    distType,
   } = options;
+
+  const distType = typeof options.distType === 'string' ? [options.distType] : options.distType;
 
   let serverEntry;
   try {
@@ -141,16 +143,21 @@ async function renderEntry(
       url: routePath,
     } as any,
   };
+
+  // renderToEntry exported when disType includes javascript .
+  const render = distType.includes('javascript') ? serverEntry.renderToEntry : serverEntry.renderToHTML;
+
   const {
     value,
     jsOutput,
-  } = await serverEntry.renderToEntry(serverContext, {
+  } = await render(serverContext, {
     renderMode,
     documentOnly,
     routePath,
     serverOnlyBasename: '/',
     distType,
   });
+
   return {
     htmlOutput: value,
     jsOutput,

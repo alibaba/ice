@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.3
+
+- [fix] print log once
+- [feat] support configure for resource_prefetch
+
+## 1.1.2
+
+- [fix] should't parse template in SSR/SSG
+- [feat] support dynamic data loader for pha worker
+
 ## 1.1.1
 
 - [feat] support resource_prefetch to preload resource

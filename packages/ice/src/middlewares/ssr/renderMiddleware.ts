@@ -64,11 +64,10 @@ export default function createRenderMiddleware(options: Options): Middleware {
         req,
         res,
       };
-      const distType = req.path.endsWith('.js') ? 'javascript' : 'html';
+
       serverModule.renderToResponse(requestContext, {
         renderMode,
         documentOnly,
-        distType,
       });
     } else {
       next();
