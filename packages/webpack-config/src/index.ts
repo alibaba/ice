@@ -182,7 +182,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     },
   } : {};
   // get compile plugins
-  const compilerWebpackPlugins = getCompilerPlugins(config, 'webpack', { isServer: false });
+  const compilerWebpackPlugins = getCompilerPlugins(rootDir, config, 'webpack', { isServer: false });
 
   const terserOptions: any = merge({
     compress: {
@@ -206,6 +206,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     module: true,
   }, minimizerOptions);
   const compilation = compilationPlugin({
+    rootDir,
     cacheDir,
     sourceMap,
     fastRefresh,

@@ -10,8 +10,8 @@ const SKIP_COMPILE = [
 ];
 
 const compileExcludes = [
-  new RegExp(SKIP_COMPILE.map((dep) => `node_modules/?.+${dep}/`).join('|')),
-  /bundles\/compiled/,
+  new RegExp(SKIP_COMPILE.map((dep) => `node_modules/[\\w-@\\.]*${dep}/`).join('|')),
+  /@ice\/bundles\/compiled/,
 ];
 
 export default compileExcludes;

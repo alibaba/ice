@@ -1429,6 +1429,7 @@ importers:
     specifiers:
       '@ice/bundles': 0.1.4
       '@rollup/pluginutils': ^4.2.0
+      browserslist: ^4.19.3
       consola: ^2.15.3
       esbuild: ^0.16.5
       fast-glob: ^3.2.11
@@ -1439,6 +1440,7 @@ importers:
     dependencies:
       '@ice/bundles': link:../bundles
       '@rollup/pluginutils': 4.2.1
+      browserslist: 4.21.5
       consola: 2.15.3
       fast-glob: 3.2.12
       process: 0.11.10
