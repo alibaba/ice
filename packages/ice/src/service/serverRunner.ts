@@ -94,8 +94,8 @@ class ServerRunner {
       swcOptions: {
         nodeTransform: true,
         compilationConfig: {
-          sourceMaps: false,
           jsc: {
+            target: 'es2015',
             externalHelpers: false,
           },
         },
