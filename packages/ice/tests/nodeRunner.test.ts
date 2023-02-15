@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 import { expect, it, describe } from 'vitest';
 
-import NodeRunner from '../src/service/nodeRunner';
+import Runner from '../src/service/Runner';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -26,7 +26,7 @@ describe('node runner', () => {
 
   it('basic', async () => {
     const rootDir = path.join(__dirname, './fixtures/nodeRunner/basic/');
-    const nodeRunner = new NodeRunner({
+    const nodeRunner = new Runner({
       rootDir,
       resolveId: basicResolve,
       load: basicLoad,
@@ -36,7 +36,7 @@ describe('node runner', () => {
   });
   it('cjs', async () => {
     const rootDir = path.join(__dirname, './fixtures/nodeRunner/cjs/');
-    const nodeRunner = new NodeRunner({
+    const nodeRunner = new Runner({
       rootDir,
       resolveId: basicResolve,
       load: basicLoad,
@@ -47,7 +47,7 @@ describe('node runner', () => {
   });
   it('circular', async () => {
     const rootDir = path.join(__dirname, './fixtures/nodeRunner/circular/');
-    const nodeRunner = new NodeRunner({
+    const nodeRunner = new Runner({
       rootDir,
       load: basicLoad,
     });
@@ -59,7 +59,7 @@ describe('node runner', () => {
   });
   it('export all', async () => {
     const rootDir = path.join(__dirname, './fixtures/nodeRunner/export-all/');
-    const nodeRunner = new NodeRunner({
+    const nodeRunner = new Runner({
       rootDir,
       resolveId: basicResolve,
       load: basicLoad,
@@ -72,7 +72,7 @@ describe('node runner', () => {
   });
   it('externalize', async () => {
     const rootDir = path.join(__dirname, './fixtures/nodeRunner/externalize/');
-    const nodeRunner = new NodeRunner({
+    const nodeRunner = new Runner({
       rootDir,
       resolveId: basicResolve,
       load: basicLoad,
