@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1.1-beta.8
+
+### Patch Changes
+
+- 14b11542: fix: prebundle esm module error
+
 ## 3.1.1-beta.7
 
 ### Patch Changes

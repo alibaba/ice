@@ -31,7 +31,7 @@
     "@ice/appear": "0.1.4",
     "@ice/bundles": "0.1.4",
     "create-ice": "1.8.2",
-    "@ice/app": "3.1.1-beta.6",
+    "@ice/app": "3.1.1-beta.7",
     "@ice/jsx-runtime": "0.2.0",
     "@ice/miniapp-html-styles": "1.0.0",
     "@ice/miniapp-loader": "1.0.0",
@@ -45,7 +45,7 @@
     "@ice/plugin-jsx-plus": "1.0.0",
     "@ice/plugin-miniapp": "1.0.1",
     "@ice/plugin-moment-locales": "1.0.0",
-    "@ice/plugin-pha": "1.1.3-beta.6",
+    "@ice/plugin-pha": "1.1.3-beta.7",
     "@ice/plugin-rax-compat": "0.1.3",
     "@ice/plugin-request": "1.0.0",
     "@ice/plugin-store": "1.0.2",
@@ -54,13 +54,14 @@
     "@ice/runtime": "1.1.1",
     "@ice/shared": "1.0.0",
     "@ice/style-import": "1.0.0",
-    "@ice/webpack-config": "1.0.7-beta.6",
+    "@ice/webpack-config": "1.0.7-beta.7",
     "@ice/webpack-modify": "1.0.0",
     "ice-website-v3": "0.0.0"
   },
   "changesets": [
     "chatty-balloons-argue",
     "flat-poets-dream",
+    "forty-zoos-talk",
     "lemon-owls-beg",
     "wild-chairs-mix"
   ]
