@@ -27,12 +27,12 @@ export function useSuspenseData(request?: Request) {
     return window[LOADER].get(id);
   }
 
-  if (done) {
-    return data;
-  }
-
   if (error) {
     throw error;
+  }
+
+  if (done) {
+    return data;
   }
 
   // request is pending.
