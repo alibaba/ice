@@ -2,6 +2,7 @@
 
 ## 1.1.3
 
+- [fix] template should work for tabBar
 - [fix] print log once
 - [feat] support configure for resource_prefetch
 
