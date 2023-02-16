@@ -12,7 +12,7 @@ function initAppLifeCycles() {
       const currentPathName = history ? history.location.pathname : router.current.pathname;
       // The app switches from foreground to background
       if (currentPathName === router.current.pathname) {
-        router.current.visibilityState = !router.current.visibilityState;
+        router.current.visibilityState = document.visibilityState === 'visible';
         if (router.current.visibilityState) {
           // Emit app show
           emit(SHOW);
