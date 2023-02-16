@@ -2,6 +2,7 @@
 
 ## v3.1.1
 
+- [fix] pass external and define info for preBundle
 - [fix] value priority of host, port and https
 - [feat] redirect runtime imports for data loader
 - [fix] the lanUrlForConfig should set when set host
