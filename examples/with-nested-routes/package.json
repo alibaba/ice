@@ -1,5 +1,5 @@
 {
-  "name": "with-nested-routes",
+  "name": "@examples/with-nested-routes",
   "private": true,
   "version": "1.0.0",
   "scripts": {

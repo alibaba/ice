@@ -1,10 +1,18 @@
 # Changelog
 
-## 1.1.3
+## 1.1.3-beta.7
 
-- [feat] preload should be false default
-- [fix] print log once
-- [feat] support configure for resource_prefetch
+### Patch Changes
+
+- d5f1a25b: chore: bump beta version
+
+## 1.1.3-beta.0
+
+### Patch Changes
+
+- ad3436af: [fix] preload should be false default
+  - [fix] print log once
+  - [feat] support configure for resource_prefetch
 
 ## 1.1.2
 
