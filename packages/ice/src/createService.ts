@@ -20,7 +20,7 @@ import { setEnv, updateRuntimeEnv, getCoreEnvKeys } from './utils/runtimeEnv.js'
 import getRuntimeModules from './utils/getRuntimeModules.js';
 import { generateRoutesInfo } from './routes.js';
 import * as config from './config.js';
-import { RUNTIME_TMP_DIR, WEB } from './constant.js';
+import { RUNTIME_TMP_DIR, WEB, RUNTIME_EXPORTS } from './constant.js';
 import createSpinner from './utils/createSpinner.js';
 import getRoutePaths from './utils/getRoutePaths.js';
 import ServerCompileTask from './utils/ServerCompileTask.js';
@@ -100,34 +100,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   }
 
   // Register framework level API.
-  generatorAPI.addExport({
-    specifier: ['Link', 'Outlet', 'useParams', 'useSearchParams', 'useLocation', 'useNavigate'],
-    source: '@ice/runtime/router',
-  });
-
-  generatorAPI.addExport({
-    specifier: [
-      'defineAppConfig',
-      'useAppData',
-      'useData',
-      'useConfig',
-      'Meta',
-      'Title',
-      'Links',
-      'Scripts',
-      'Data',
-      'Main',
-      'history',
-      'KeepAliveOutlet',
-      'useMounted',
-      'ClientOnly',
-      'withSuspense',
-      'useSuspenseData',
-      'defineDataLoader',
-      'defineServerDataLoader',
-      'defineStaticDataLoader',
-    ],
-    source: '@ice/runtime',
+  RUNTIME_EXPORTS.forEach(exports => {
+    generatorAPI.addExport(exports);
   });
 
   const ctx = new Context<Config, ExtendsPluginAPI>({

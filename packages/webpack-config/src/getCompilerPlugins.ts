@@ -32,9 +32,9 @@ function transformInclude(id: string) {
   return !!id.match(/\.(js|jsx|ts|tsx|mjs|mts|css|less|scss)$/);
 }
 
-function getCompilerPlugins(config: Config, compiler: 'webpack', transformOptions: TransformOptions): Configuration['plugins'];
-function getCompilerPlugins(config: Config, compiler: 'esbuild', transformOptions: TransformOptions): BuildOptions['plugins'];
-function getCompilerPlugins(config: Config, compiler: Compiler, transformOptions: TransformOptions) {
+function getCompilerPlugins(rootDir: string, config: Config, compiler: 'webpack', transformOptions: TransformOptions): Configuration['plugins'];
+function getCompilerPlugins(rootDir: string, config: Config, compiler: 'esbuild', transformOptions: TransformOptions): BuildOptions['plugins'];
+function getCompilerPlugins(rootDir: string, config: Config, compiler: Compiler, transformOptions: TransformOptions) {
   const {
     sourceMap,
     transformPlugins = [],
@@ -60,6 +60,7 @@ function getCompilerPlugins(config: Config, compiler: Compiler, transformOptions
   // Reason: https://github.com/unjs/unplugin/issues/154
   if (swcOptions && compiler !== 'webpack') {
     compilerPlugins.push(compilationPlugin({
+      rootDir,
       cacheDir,
       sourceMap,
       fastRefresh,
