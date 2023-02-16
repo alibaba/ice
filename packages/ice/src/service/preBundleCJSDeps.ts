@@ -41,13 +41,15 @@ interface PreBundleDepsOptions {
   alias: Record<string, string>;
   ignores?: string[];
   plugins?: Plugin[];
+  define?: esbuild.BuildOptions['define'];
+  external?: esbuild.BuildOptions['external'];
 }
 
 /**
  * Pre bundle dependencies from esm to cjs.
  */
 export default async function preBundleCJSDeps(options: PreBundleDepsOptions): Promise<PreBundleDepsResult> {
-  const { depsInfo, cacheDir, taskConfig, plugins = [], alias, ignores } = options;
+  const { depsInfo, cacheDir, taskConfig, plugins = [], alias, ignores, define, external = [] } = options;
   const metadata = createDepsMetadata(depsInfo, taskConfig);
 
   if (!Object.keys(depsInfo)) {
@@ -98,6 +100,7 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
       loader: { '.js': 'jsx' },
       ignoreAnnotations: true,
       alias,
+      define,
       plugins: [
         emptyCSSPlugin(),
         externalPlugin({ ignores, format: 'cjs', externalDependencies: false }),
@@ -110,7 +113,7 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
         }),
         ...plugins,
       ],
-      external: [...BUILDIN_CJS_DEPS, ...BUILDIN_ESM_DEPS],
+      external: [...BUILDIN_CJS_DEPS, ...BUILDIN_ESM_DEPS, ...external],
     });
   } catch (error) {
     logger.error('Failed to bundle dependencies.');

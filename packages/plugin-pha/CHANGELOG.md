@@ -2,6 +2,7 @@
 
 ## 1.1.3
 
+- [feat] preload should be false default
 - [fix] print log once
 - [feat] support configure for resource_prefetch
 
