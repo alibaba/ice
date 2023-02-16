@@ -18,8 +18,7 @@ import warnOnHashRouterEnabled from '../utils/warnOnHashRouterEnabled.js';
 import generateEntry from '../utils/generateEntry.js';
 import { logger } from '../utils/logger.js';
 import { getExpandedEnvs } from '../utils/runtimeEnv.js';
-import getRouterManifest from '../utils/getRouterManifest.js';
-import getRoutePaths from '../utils/getRoutePaths.js';
+import type RouteManifest from '../utils/routeManifest.js';
 
 const build = async (
   context: Context<Config, ExtendsPluginAPI>,
@@ -33,6 +32,7 @@ const build = async (
     getDataloaderConfig: GetDataloaderConfig;
     userConfigHash: string;
     userConfig: UserConfig;
+    routeManifest: RouteManifest;
   },
 ) => {
   const {
@@ -45,6 +45,7 @@ const build = async (
     getDataloaderConfig,
     userConfigHash,
     userConfig,
+    routeManifest,
   } = options;
   const { applyHook, commandArgs, rootDir } = context;
   const { target = WEB } = commandArgs;
@@ -149,14 +150,14 @@ const build = async (
     renderMode,
     routeType: appConfig?.router?.type,
     distType,
+    routeManifest,
   });
   // This depends on orders.
   output.paths = [...outputPaths];
 
   if (routeType === 'memory' && userConfig?.routes?.injectInitialEntry) {
     // Read the latest routes info.
-    const routes = getRouterManifest(rootDir);
-    const routePaths = getRoutePaths(routes);
+    const routePaths = routeManifest.getFlattenRoute();
     routePaths.forEach((routePath) => {
       // Inject `initialPath` when router type is memory.
       const routeAssetPath = path.join(outputDir, 'js',

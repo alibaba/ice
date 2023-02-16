@@ -6,6 +6,7 @@
 - [fix] the lanUrlForConfig should set when set host
 - [fix] the imported dataloaderFetcher name is error
 - [fix] the value of `isServer` is false when compile data-loader
+- [feat] new plugin API `getRouteManifest` and `getFlattenRoutes`
 
 ## v3.1.0
 

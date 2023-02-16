@@ -20,12 +20,14 @@ import createMockMiddleware from '../middlewares/mock/createMiddleware.js';
 import getRouterBasename from '../utils/getRouterBasename.js';
 import { getExpandedEnvs } from '../utils/runtimeEnv.js';
 import { logger } from '../utils/logger.js';
+import type RouteManifest from '../utils/routeManifest.js';
 
 const { merge } = lodash;
 
 const start = async (
   context: Context<Config, ExtendsPluginAPI>,
   options: {
+    routeManifest: RouteManifest;
     taskConfigs: TaskConfig<Config>[];
     serverCompiler: ServerCompiler;
     appConfig: AppConfig;
@@ -47,6 +49,7 @@ const start = async (
     getRoutesConfig,
     getDataloaderConfig,
     userConfigHash,
+    routeManifest,
   } = options;
   const { commandArgs, rootDir } = context;
   const { target = WEB } = commandArgs;
@@ -81,6 +84,7 @@ const start = async (
       hooksAPI,
       appConfig,
       devPath,
+      routeManifest,
     }));
   } else {
     return (await invokeCompilerWatch({
@@ -106,6 +110,7 @@ interface StartDevServerOptions {
   };
   appConfig: AppConfig;
   devPath: string;
+  routeManifest: RouteManifest;
 }
 async function startDevServer({
   context,
@@ -115,6 +120,7 @@ async function startDevServer({
   hooksAPI,
   appConfig,
   devPath,
+  routeManifest,
 }: StartDevServerOptions): Promise<{ compiler: Compiler; devServer: WebpackDevServer }> {
   const { commandArgs, userConfig, rootDir, applyHook, extendsPluginAPI: { serverCompileTask } } = context;
   const { port, host, https = false } = commandArgs;
@@ -139,12 +145,12 @@ async function startDevServer({
 
       const serverRenderMiddleware = createRenderMiddleware({
         serverCompileTask,
-        rootDir,
         documentOnly,
         renderMode,
         getAppConfig,
         taskConfig: webTaskConfig,
         userConfig,
+        routeManifest,
       });
       // @ts-ignore
       const insertIndex = middlewares.findIndex(({ name }) => name === 'serve-index');
