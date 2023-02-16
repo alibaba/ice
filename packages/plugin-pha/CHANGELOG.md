@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.3-beta.0
+
+### Patch Changes
+
+- ad3436af: [fix] preload should be false default
+  - [fix] print log once
+  - [feat] support configure for resource_prefetch
+
 ## 1.1.2
 
 - [fix] should't parse template in SSR/SSG

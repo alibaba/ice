@@ -1,10 +1,24 @@
 # Changelog
 
+## 3.1.1-beta.0
+
+### Patch Changes
+
+- ad3436af: [fix] pass external and define info for preBundle
+  - [fix] value priority of host, port and https
+  - [feat] redirect runtime imports for data loader
+  - [fix] the lanUrlForConfig should set when set host
+  - [fix] the imported dataloaderFetcher name is error
+  - [fix] the value of `isServer` is false when compile data-loader
+  - [feat] new plugin API `getRouteManifest` and `getFlattenRoutes`
+- Updated dependencies [ad3436af]
+  - @ice/webpack-config@1.0.7-beta.0
+
 ## v3.1.0
 
 - [feat] export suspense api
 - [feat] refactor ability of keep target code
-- [feat] support render js bundle as entry 
+- [feat] support render js bundle as entry
 - [fix] support cli options of target, platform not is deprecated
 - [fix] build data loader with correct browser list
 - [fix] process exit when build with errors on dev

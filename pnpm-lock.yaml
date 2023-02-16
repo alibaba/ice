@@ -966,7 +966,7 @@ importers:
       '@ice/bundles': 0.1.4
       '@ice/route-manifest': 1.0.0
       '@ice/runtime': ^1.0.0
-      '@ice/webpack-config': 1.0.6
+      '@ice/webpack-config': 1.0.7-beta.0
       '@swc/helpers': 0.4.14
       '@types/babel__generator': ^7.6.4
       '@types/babel__traverse': ^7.17.1
@@ -1017,7 +1017,7 @@ importers:
       '@ice/bundles': link:../bundles
       '@ice/route-manifest': link:../route-manifest
       '@ice/runtime': link:../runtime
-      '@ice/webpack-config': link:../webpack-config
+      '@ice/webpack-config': 1.0.7-beta.0
       '@swc/helpers': 0.4.14
       '@types/express': 4.17.14
       address: 1.2.1
@@ -1127,7 +1127,7 @@ importers:
 
   packages/plugin-antd:
     specifiers:
-      '@ice/app': ^3.0.0
+      '@ice/app': ^3.1.1-beta.6
       '@ice/style-import': ^1.0.0
     dependencies:
       '@ice/style-import': link:../style-import
@@ -1136,7 +1136,7 @@ importers:
 
   packages/plugin-auth:
     specifiers:
-      '@ice/app': ^3.0.0
+      '@ice/app': ^3.1.1-beta.6
       '@ice/runtime': ^1.0.0
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
@@ -1150,7 +1150,7 @@ importers:
 
   packages/plugin-css-assets-local:
     specifiers:
-      '@ice/app': ^3.0.0
+      '@ice/app': ^3.1.1-beta.6
       consola: ^2.15.3
       extract-css-assets-webpack-plugin: ^0.2.10
     dependencies:
@@ -1161,7 +1161,7 @@ importers:
 
   packages/plugin-fusion:
     specifiers:
-      '@ice/app': ^3.0.0
+      '@ice/app': ^3.1.1-beta.6
       '@ice/style-import': ^1.0.0
     dependencies:
       '@ice/style-import': link:../style-import
@@ -1170,7 +1170,7 @@ importers:
 
   packages/plugin-icestark:
     specifiers:
-      '@ice/app': ^3.0.0
+      '@ice/app': ^3.1.1-beta.6
       '@ice/runtime': ^1.0.0
       '@ice/stark': ^2.7.4
       '@ice/stark-app': ^1.2.0
@@ -1188,7 +1188,7 @@ importers:
   packages/plugin-jsx-plus:
     specifiers:
       '@babel/core': ^7.19.1
-      '@ice/app': ^3.0.0
+      '@ice/app': ^3.1.1-beta.6
       '@types/react': ^18.0.20
       '@types/react-dom': ^18.0.6
       babel-plugin-transform-jsx-class: ^0.1.3
@@ -1214,7 +1214,7 @@ importers:
 
   packages/plugin-miniapp:
     specifiers:
-      '@ice/app': ^3.0.0
+      '@ice/app': ^3.1.1-beta.6
       '@ice/bundles': ^0.1.0
       '@ice/miniapp-loader': ^1.0.0
       '@ice/miniapp-react-dom': ^1.0.0
@@ -1247,13 +1247,13 @@ importers:
 
   packages/plugin-moment-locales:
     specifiers:
-      '@ice/app': ^3.0.0
+      '@ice/app': ^3.1.1-beta.6
     devDependencies:
       '@ice/app': link:../ice
 
   packages/plugin-pha:
     specifiers:
-      '@ice/app': ^3.0.0
+      '@ice/app': ^3.1.1-beta.6
       '@remix-run/router': ^1.0.3
       build-scripts: ^2.1.0
       chalk: ^4.0.0
@@ -1282,7 +1282,7 @@ importers:
     specifiers:
       '@babel/core': ^7.0.0
       '@babel/plugin-proposal-export-default-from': ^7.18.9
-      '@ice/app': ^3.0.0
+      '@ice/app': ^3.1.1-beta.6
       '@ice/bundles': ^0.1.0
       babel-plugin-transform-jsx-stylesheet: 1.0.6
       consola: ^2.15.3
@@ -1309,7 +1309,7 @@ importers:
 
   packages/plugin-request:
     specifiers:
-      '@ice/app': ^3.0.0
+      '@ice/app': ^3.1.1-beta.6
       '@ice/runtime': ^1.0.0
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
@@ -1328,7 +1328,7 @@ importers:
 
   packages/plugin-store:
     specifiers:
-      '@ice/app': ^3.0.0
+      '@ice/app': ^3.1.1-beta.6
       '@ice/runtime': ^1.0.0
       '@ice/store': ^2.0.3
       '@types/micromatch': ^4.0.2
@@ -1452,7 +1452,7 @@ importers:
 
   packages/webpack-modify:
     specifiers:
-      '@ice/webpack-config': ^1.0.0
+      '@ice/webpack-config': ^1.0.7-beta.0
       consola: ^2.15.3
       webpack: ^5.73.0
     dependencies:
@@ -3350,7 +3350,7 @@ packages:
     resolution: {integrity: sha512-j2vJGnkopRzH+ykJ8h68wrHnEUmtK//E723jjixiAl/PPf6FhqY/vYRcMVlNydRKQjQsTsYEjpx+DZMIvnGk/g==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      core-js-pure: 3.25.3
+      core-js-pure: 3.27.2
       regenerator-runtime: 0.13.9
     dev: true
 
@@ -5178,6 +5178,30 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
+  /@ice/bundles/0.1.4:
+    resolution: {integrity: sha512-SHDuVamOoh/Q/Y5WdRz5/S1og6CtUKbSSuNgLldUqD1Uox1WNNVsW7XVunXAMXkaSHpgD9Sim+/+zvZe5t5K+g==}
+    dependencies:
+      '@ice/swc-plugin-keep-export': 0.1.4
+      '@ice/swc-plugin-remove-export': 0.1.2
+      '@swc/core': 1.3.19
+      ansi-html-community: 0.0.8
+      caniuse-lite: 1.0.30001450
+      chokidar: 3.5.3
+      core-js: 3.26.0
+      core-js-pure: 3.27.2
+      error-stack-parser: 2.1.4
+      esbuild: 0.16.10
+      events: 3.3.0
+      html-entities: 2.3.3
+      jest-worker: 27.5.1
+      less: 4.1.2
+      postcss: 8.4.12
+      react-refresh: 0.14.0
+      sass: 1.50.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /@ice/pkg-plugin-component/1.0.0:
     resolution: {integrity: sha512-Mff6Em1RwY2NOZgciQyy2NXL65u9ebHV2Jqb5746vUVEh0l7Xpokb+3djV1pKcgED4wU8pSuSQ6jj+hXd9Ht1Q==}
     dependencies:
@@ -5264,6 +5288,18 @@ packages:
 
   /@ice/swc-plugin-remove-export/0.1.2:
     resolution: {integrity: sha512-HPeYj+z1ylaD5fJkSqyJ+eXbrHiCdy/t/t56uyf20aqsAyx12EiHVnfV4blW31DSWhFt/veAUXYzbaJ8b9KLOQ==}
+    dev: false
+
+  /@ice/webpack-config/1.0.7-beta.0:
+    resolution: {integrity: sha512-228llP6dXiMHxz5dd0gvEp7dlfSkdrvO7xbt2kHRiYbgEdx1twietNECjOdn4Y43+cLxOvvfLA7SGo21FGv6Zg==}
+    dependencies:
+      '@ice/bundles': 0.1.4
+      '@rollup/pluginutils': 4.2.1
+      consola: 2.15.3
+      fast-glob: 3.2.12
+      process: 0.11.10
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /@iceworks/generate-project/1.4.6:
@@ -5572,7 +5608,7 @@ packages:
       istanbul-reports: 3.1.5
       jest-message-util: 29.0.3
       jest-util: 29.0.3
-      jest-worker: 29.3.1
+      jest-worker: 29.4.1
       slash: 3.0.0
       string-length: 4.0.2
       strip-ansi: 6.0.1
@@ -9412,8 +9448,8 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
-      is-text-path: 1.0.1
       JSONStream: 1.3.5
+      is-text-path: 1.0.1
       lodash: 4.17.21
       meow: 8.1.2
       split2: 3.2.2
@@ -13919,7 +13955,7 @@ packages:
       '@jest/types': 29.3.1
       chalk: 4.1.2
       jest-get-type: 29.0.0
-      jest-util: 29.3.1
+      jest-util: 29.4.1
       pretty-format: 29.0.3
     dev: true
 
@@ -14007,7 +14043,7 @@ packages:
       graceful-fs: 4.2.10
       jest-regex-util: 29.0.0
       jest-util: 29.3.1
-      jest-worker: 29.3.1
+      jest-worker: 29.4.1
       micromatch: 4.0.5
       walker: 1.0.8
     optionalDependencies:
@@ -14231,7 +14267,7 @@ packages:
       jest-runtime: 29.0.3
       jest-util: 29.3.1
       jest-watcher: 29.0.3
-      jest-worker: 29.3.1
+      jest-worker: 29.4.1
       p-limit: 3.1.0
       source-map-support: 0.5.13
     transitivePeerDependencies:
@@ -14477,21 +14513,11 @@ packages:
       supports-color: 8.1.1
     dev: true
 
-  /jest-worker/29.3.1:
-    resolution: {integrity: sha512-lY4AnnmsEWeiXirAIA0c9SDPbuCBq8IYuDVL8PMm0MZ2PEs2yPvRA/J64QBXuZp7CYKrDM/rmNrc9/i3KJQncw==}
-    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-    dependencies:
-      '@types/node': 18.7.23
-      jest-util: 29.3.1
-      merge-stream: 2.0.0
-      supports-color: 8.1.1
-    dev: true
-
   /jest-worker/29.4.1:
     resolution: {integrity: sha512-O9doU/S1EBe+yp/mstQ0VpPwpv0Clgn68TkNwGxL6/usX/KUW9Arnn4ag8C3jc6qHcXznhsT5Na1liYzAsuAbQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@types/node': 18.11.18
+      '@types/node': 18.7.23
       jest-util: 29.4.1
       merge-stream: 2.0.0
       supports-color: 8.1.1
@@ -18570,6 +18596,12 @@ packages:
   /react-dev-utils/12.0.1_hhrrucqyg4eysmfpujvov2ym5u:
     resolution: {integrity: sha512-84Ivxmr17KjUupyqzFode6xKhjwuEJDROWKJy/BthkL7Wn6NJ8h4WE6k/exAv6ImS+0oZLRRW5j/aINMHyeGeQ==}
     engines: {node: '>=14'}
+    peerDependencies:
+      typescript: '>=2.7'
+      webpack: '>=4'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
     dependencies:
       '@babel/code-frame': 7.18.6
       address: 1.2.2
@@ -18600,9 +18632,7 @@ packages:
     transitivePeerDependencies:
       - eslint
       - supports-color
-      - typescript
       - vue-template-compiler
-      - webpack
 
   /react-dom/17.0.2_react@17.0.2:
     resolution: {integrity: sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==}
@@ -21398,7 +21428,7 @@ packages:
         optional: true
     dependencies:
       esbuild: 0.15.18
-      postcss: 8.4.18
+      postcss: 8.4.21
       resolve: 1.22.1
       rollup: 2.78.1
     optionalDependencies:
