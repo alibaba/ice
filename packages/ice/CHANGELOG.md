@@ -2,7 +2,9 @@
 
 ## v3.1.1
 
-- [fix] The imported dataloaderFetcher name is error
+- [feat] redirect runtime imports for data loader
+- [fix] the lanUrlForConfig should set when set host
+- [fix] the imported dataloaderFetcher name is error
 - [fix] the value of `isServer` is false when compile data-loader
 
 ## v3.1.0

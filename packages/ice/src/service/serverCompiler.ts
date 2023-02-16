@@ -97,7 +97,7 @@ export function createServerCompiler(options: Options) {
       };
     }
     const enableSyntaxFeatures = syntaxFeatures && Object.keys(syntaxFeatures).some(key => syntaxFeatures[key]);
-    const transformPlugins = getCompilerPlugins({
+    const transformPlugins = getCompilerPlugins(rootDir, {
       ...task.config,
       fastRefresh: false,
       enableEnv,

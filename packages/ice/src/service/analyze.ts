@@ -256,6 +256,12 @@ export async function getFileExports(options: FileOptions): Promise<CachedRouteE
     } catch (error) {
       logger.error(`Failed to get route ${filePath} exports.`, `\n${error.message}`);
       logger.debug(error.stack);
+      cached = {
+        exports: [],
+        hash: fileHash,
+      };
+      // rewrite cache
+      setCache(rootDir, filePath, cached);
     }
   }
   return cached.exports;
