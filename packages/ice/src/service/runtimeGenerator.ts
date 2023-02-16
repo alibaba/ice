@@ -65,7 +65,7 @@ export function generateDeclaration(exportList: DeclarationData[]) {
         importDeclarations.push(`import type { ${arrTypes.join(', ')}} from '${source}';`);
         exportDeclarations.push(...arrTypes.map(item => `${item}${symbol}`));
       }
-console.log('exportDeclarations=', exportDeclarations);
+
       specifiers.forEach((specifierStr, index) => {
         if (!variables.has(specifierStr)) {
           variables.set(specifierStr, arrTypes[index] || 'any');
