@@ -3,6 +3,7 @@ export interface DeclarationData {
   source: string;
   type?: boolean;
   alias?: Record<string, string>;
+  target?: string;
 }
 
 export type RenderData = Record<string, unknown>;
