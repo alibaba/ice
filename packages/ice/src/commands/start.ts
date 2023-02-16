@@ -117,7 +117,6 @@ async function startDevServer({
   devPath,
 }: StartDevServerOptions): Promise<{ compiler: Compiler; devServer: WebpackDevServer }> {
   const { commandArgs, userConfig, rootDir, applyHook, extendsPluginAPI: { serverCompileTask } } = context;
-  const { https = false } = commandArgs;
   const { ssg, ssr } = userConfig;
   const { getAppConfig } = hooksAPI;
   const webTaskConfig = taskConfigs.find(({ name }) => name === WEB);
@@ -133,10 +132,10 @@ async function startDevServer({
     webpackConfigs[0].devServer?.port ||
     await detectPort(DEFAULT_PORT);
 
+
   let devServerConfig: DevServerConfiguration = {
     port,
     host,
-    https: webpackConfigs[0].devServer?.https || https,
     setupMiddlewares: (middlewares, devServer) => {
       let renderMode: RenderMode;
       // If ssr is set to true, use ssr for preview.
