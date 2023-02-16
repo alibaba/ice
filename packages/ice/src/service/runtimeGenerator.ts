@@ -124,8 +124,8 @@ export function checkExportData(
 
 export function removeDeclarations(exportList: DeclarationData[], removeSource: string | string[]) {
   const removeSourceNames = Array.isArray(removeSource) ? removeSource : [removeSource];
-  return exportList.filter(({ source, target }) => {
-    const needRemove = removeSourceNames.includes(source) && !!target;
+  return exportList.filter(({ source }) => {
+    const needRemove = removeSourceNames.includes(source);
     return !needRemove;
   });
 }
@@ -179,10 +179,6 @@ export default class Generator {
   public addDeclaration: AddDeclaration = (registerKey, exportData) => {
     const exportList = this.contentRegistration[registerKey] || [];
     checkExportData(exportList, exportData, registerKey);
-    // remove export before add
-    this.removeDeclaration(
-      registerKey,
-      Array.isArray(exportData) ? exportData.map((data) => data.source) : exportData.source);
     this.addContent(registerKey, exportData);
   };
 
