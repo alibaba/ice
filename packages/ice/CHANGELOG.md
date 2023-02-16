@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.1.1-beta.7
+
+### Patch Changes
+
+- d5f1a25b: chore: bump beta version
+- Updated dependencies [d5f1a25b]
+  - @ice/webpack-config@1.0.7-beta.7
+
 ## 3.1.1-beta.0
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.7-beta.7
+
+### Patch Changes
+
+- d5f1a25b: chore: bump beta version
+
 ## 1.0.7-beta.0
 
 ### Patch Changes
