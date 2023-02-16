@@ -3,6 +3,7 @@
 ## v3.1.1
 
 - [fix] The imported dataloaderFetcher name is error
+- [fix] pass external and define info for preBundle
 
 ## v3.1.0
 

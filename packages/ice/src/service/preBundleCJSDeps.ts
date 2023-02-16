@@ -41,15 +41,15 @@ interface PreBundleDepsOptions {
   alias: Record<string, string>;
   ignores?: string[];
   plugins?: Plugin[];
-  define: esbuild.BuildOptions['define'];
-  external: esbuild.BuildOptions['external'];
+  define?: esbuild.BuildOptions['define'];
+  external?: esbuild.BuildOptions['external'];
 }
 
 /**
  * Pre bundle dependencies from esm to cjs.
  */
 export default async function preBundleCJSDeps(options: PreBundleDepsOptions): Promise<PreBundleDepsResult> {
-  const { depsInfo, cacheDir, taskConfig, plugins = [], alias, ignores, define, external } = options;
+  const { depsInfo, cacheDir, taskConfig, plugins = [], alias, ignores, define, external = [] } = options;
   const metadata = createDepsMetadata(depsInfo, taskConfig);
 
   if (!Object.keys(depsInfo)) {
