@@ -4,6 +4,7 @@ export interface DeclarationData {
   type?: boolean;
   alias?: Record<string, string>;
   target?: string;
+  types: string | string[];
 }
 
 export type RenderData = Record<string, unknown>;

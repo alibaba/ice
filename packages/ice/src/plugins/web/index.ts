@@ -19,6 +19,14 @@ const plugin: Plugin = () => ({
         'Data',
         'Main',
       ],
+      types: [
+        'MetaType',
+        'TitleType',
+        'LinksType',
+        'ScriptsType',
+        'DataType',
+        'MainType',
+      ],
       source: '@ice/runtime',
       target: 'web',
     });

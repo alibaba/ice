@@ -41,13 +41,14 @@ export function generateDeclaration(exportList: DeclarationData[]) {
   const importDeclarations: Array<string> = [];
   const exportDeclarations: Array<string> = [];
   const exportNames: Array<string> = [];
-  const variables: Array<string> = [];
+  const variables: Map<string, string> = new Map();
 
   let moduleId = 0;
   exportList.forEach(data => {
-    const { specifier, source, alias, type, target } = data;
+    const { specifier, source, alias, type, target, types = [] } = data;
     const isDefaultImport = !Array.isArray(specifier);
-    const specifiers = isDefaultImport ? [specifier] : specifier;
+    const specifiers = (isDefaultImport && !Array.isArray(specifier)) ? [specifier] : specifier;
+    const arrTypes: Array<string> = Array.isArray(types) ? types : [types];
     const symbol = type ? ';' : ',';
 
     if (target) {
@@ -60,9 +61,14 @@ export function generateDeclaration(exportList: DeclarationData[]) {
 
       importDeclarations.push(`import ${isDefaultImport ? moduleName : `* as ${moduleName}`} from '${source}';`);
 
-      specifiers.forEach((specifierStr) => {
-        if (!variables.includes(specifierStr)) {
-          variables.push(specifierStr);
+      if (arrTypes.length) {
+        importDeclarations.push(`import type { ${arrTypes.join(', ')}} from '${source}';`);
+        exportDeclarations.push(...arrTypes.map(item => `${item}${symbol}`));
+      }
+console.log('exportDeclarations=', exportDeclarations);
+      specifiers.forEach((specifierStr, index) => {
+        if (!variables.has(specifierStr)) {
+          variables.set(specifierStr, arrTypes[index] || 'any');
         }
       });
     } else {
@@ -82,7 +88,7 @@ export function generateDeclaration(exportList: DeclarationData[]) {
   return {
     targetImportStr: targetImportDeclarations.join('\n'),
     importStr: importDeclarations.join('\n'),
-    targetExportStr: variables.join(',\n  '),
+    targetExportStr: Array.from(variables.keys()).join(',\n  '),
     /**
      * Add two whitespace character in order to get the formatted code. For example:
      *  export {
@@ -92,7 +98,7 @@ export function generateDeclaration(exportList: DeclarationData[]) {
      */
     exportStr: exportDeclarations.join('\n  '),
     exportNames,
-    variablesStr: variables.map(variable => `let ${variable};`).join('\n'),
+    variablesStr: Array.from(variables.entries()).map(item => `let ${item[0]}: ${item[1]};`).join('\n'),
   };
 }
 
