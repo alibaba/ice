@@ -43,15 +43,16 @@ export function generateDeclaration(exportList: DeclarationData[]) {
   const exportNames: Array<string> = [];
   const variables: Array<string> = [];
 
-  exportList.forEach((data, index) => {
+  let moduleId = 0;
+  exportList.forEach(data => {
     const { specifier, source, alias, type, target } = data;
     const isDefaultImport = !Array.isArray(specifier);
     const specifiers = isDefaultImport ? [specifier] : specifier;
     const symbol = type ? ';' : ',';
 
     if (target) {
-      const moduleId = `Module${index}`;
-      const moduleName = `${target}${moduleId}`;
+      moduleId++;
+      const moduleName = `${target}Module${moduleId}`;
       targetImportDeclarations.push(`if (import.meta.target === '${target}') {
   ${specifiers.map(item => `${item} = ${moduleName}.${item};`).join('\n  ')}
 }
