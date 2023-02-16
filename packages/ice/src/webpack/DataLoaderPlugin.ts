@@ -4,7 +4,7 @@ import type { Compiler } from 'webpack';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type { Context } from 'build-scripts';
 import type { ServerCompiler, PluginData } from '../types/plugin.js';
-import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR } from '../constant.js';
+import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR, RUNTIME_EXPORTS } from '../constant.js';
 import { getRoutePathsFromCache } from '../utils/getRoutePaths.js';
 
 const pluginName = 'DataLoaderPlugin';
@@ -73,11 +73,8 @@ export default class DataLoaderPlugin {
               externalDependencies: false,
               transformEnv: false,
               enableEnv: true,
-              // Redirect import defineDataLoader from @ice/runtime to avoid build plugin side effect code.
-              redirectImports: [{
-                specifier: ['defineDataLoader'],
-                source: '@ice/runtime',
-              }],
+              // Redirect imports to @ice/runtime to avoid build plugin side effect code.
+              redirectImports: RUNTIME_EXPORTS,
               isServer: false,
             },
           );
