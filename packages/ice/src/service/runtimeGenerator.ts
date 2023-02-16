@@ -37,37 +37,37 @@ interface Options {
 }
 
 export function generateDeclaration(exportList: DeclarationData[]) {
-  const dynamicImportDeclarations: Array<string> = [];
+  const targetImportDeclarations: Array<string> = [];
   const importDeclarations: Array<string> = [];
   const exportDeclarations: Array<string> = [];
   const exportNames: Array<string> = [];
   const variables: Array<string> = [];
 
-  exportList.forEach(data => {
+  exportList.forEach((data, index) => {
     const { specifier, source, alias, type, target } = data;
     const isDefaultImport = !Array.isArray(specifier);
     const specifiers = isDefaultImport ? [specifier] : specifier;
     const symbol = type ? ';' : ',';
 
     if (target) {
-      dynamicImportDeclarations.push(`
+      const moduleId = `Module${index}`;
+      const moduleName = `${target}${moduleId}`;
+      targetImportDeclarations.push(`
         if (import.meta.target === '${target}') {
-          import('${source}').then(module => {
-            ${specifiers.map(item => `${item} = module.${item};`).join('\n')} ;
-          });
+          ${specifiers.map(item => `${item} = ${moduleName}.${item};`).join('\n')} ;
         }
       `);
-    } else {
-      importDeclarations.push(`import ${type ? 'type ' : ''}${isDefaultImport ? specifier : `{ ${specifiers.map(specifierStr => ((alias && alias[specifierStr]) ? `${specifierStr} as ${alias[specifierStr]}` : specifierStr)).join(', ')} }`} from '${source}';`);
-    }
 
-    if (target) {
+      importDeclarations.push(`import ${isDefaultImport ? moduleName : `* as ${moduleName}`} from '${source}';`);
+
       specifiers.forEach((specifierStr) => {
         if (!variables.includes(specifierStr)) {
           variables.push(specifierStr);
         }
       });
     } else {
+      importDeclarations.push(`import ${type ? 'type ' : ''}${isDefaultImport ? specifier : `{ ${specifiers.map(specifierStr => ((alias && alias[specifierStr]) ? `${specifierStr} as ${alias[specifierStr]}` : specifierStr)).join(', ')} }`} from '${source}';`);
+
       specifiers.forEach((specifierStr) => {
         if (alias && alias[specifierStr]) {
           exportDeclarations.push(`${alias[specifierStr]}: ${specifierStr}${symbol}`);
@@ -80,7 +80,7 @@ export function generateDeclaration(exportList: DeclarationData[]) {
   });
 
   return {
-    dynamicImportStr: dynamicImportDeclarations.join('\n'),
+    targetImportStr: targetImportDeclarations.join('\n'),
     importStr: importDeclarations.join('\n'),
     dynamicExportStr: variables.join(',\n'),
     /**
@@ -214,17 +214,17 @@ export default class Generator {
       exportStr,
       exportNames,
       dynamicExportStr,
-      dynamicImportStr,
+      targetImportStr,
       variablesStr,
     } = generateDeclaration(exportList);
-    const [importStrKey, exportStrKey, dynamicImportStrKey, dynamicExportStrKey] = dataKeys;
+    const [importStrKey, exportStrKey, targetImportStrKey, targetExportStrKey] = dataKeys;
     return {
       [importStrKey]: importStr,
       [exportStrKey]: exportStr,
       exportNames,
       variablesStr,
-      [dynamicImportStrKey]: dynamicImportStr,
-      [dynamicExportStrKey]: dynamicExportStr,
+      [targetImportStrKey]: targetImportStr,
+      [targetExportStrKey]: dynamicExportStr,
     };
   };
 
@@ -233,7 +233,7 @@ export default class Generator {
     const globalStyles = fg.sync([getGlobalStyleGlobPattern()], { cwd: this.rootDir });
     let exportsData = {};
     this.contentTypes.forEach(item => {
-      const data = this.getDeclarations(item, ['imports', 'exports', 'dynamicImport', 'dynamicExports']);
+      const data = this.getDeclarations(item, ['imports', 'exports', 'targetImport', 'targetExports']);
       exportsData = Object.assign({}, exportsData, {
         [`${item}`]: data,
       });
