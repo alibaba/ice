@@ -15,7 +15,6 @@ import start from './commands/start.js';
 import build from './commands/build.js';
 import pluginWeb from './plugins/web/index.js';
 import test from './commands/test.js';
-import mergeTaskConfig from './utils/mergeTaskConfig.js';
 import getWatchEvents from './getWatchEvents.js';
 import { setEnv, updateRuntimeEnv, getCoreEnvKeys } from './utils/runtimeEnv.js';
 import getRuntimeModules from './utils/getRuntimeModules.js';
@@ -173,10 +172,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     logger.info('`optimization.router` is enabled and only have one route, ice build will remove react-router and history which is unnecessary.');
     taskAlias['@ice/runtime/router'] = path.join(require.resolve('@ice/runtime'), '../single-router.js');
   }
-  // merge task config with built-in config
-  taskConfigs = mergeTaskConfig(taskConfigs, {
-    port: commandArgs.port,
-  });
 
   // Get first task config as default platform config.
   const platformTaskConfig = taskConfigs[0];

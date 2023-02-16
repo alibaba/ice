@@ -2,6 +2,7 @@
 
 ## v3.1.1
 
+- [fix] value priority of host, port and https
 - [feat] redirect runtime imports for data loader
 - [fix] the lanUrlForConfig should set when set host
 - [fix] the imported dataloaderFetcher name is error

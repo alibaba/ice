@@ -1,5 +1,8 @@
 import * as path from 'path';
 
+export const DEFAULT_PORT = 3000;
+export const DEFAULT_HOST = '0.0.0.0';
+
 export const RUNTIME_TMP_DIR = '.ice';
 export const SERVER_ENTRY = path.join(RUNTIME_TMP_DIR, 'entry.server.ts');
 export const DATA_LOADER_ENTRY = path.join(RUNTIME_TMP_DIR, 'data-loader.ts');
