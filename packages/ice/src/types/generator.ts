@@ -3,6 +3,11 @@ export interface DeclarationData {
   source: string;
   type?: boolean;
   alias?: Record<string, string>;
+}
+
+export interface TargetDeclarationData {
+  specifier: string | string[];
+  source: string;
   target?: string;
   types?: string | string[];
 }

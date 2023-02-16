@@ -7,7 +7,7 @@ import type { Config } from '@ice/webpack-config/esm/types';
 import type { AppConfig } from '@ice/runtime/esm/types';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import fg from 'fast-glob';
-import type { DeclarationData, PluginData, ExtendsPluginAPI } from './types';
+import type { DeclarationData, PluginData, ExtendsPluginAPI, TargetDeclarationData } from './types';
 import Generator from './service/runtimeGenerator.js';
 import { createServerCompiler } from './service/serverCompiler.js';
 import createWatch from './service/watchSource.js';
@@ -64,6 +64,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const generatorAPI = {
     addExport: (declarationData: DeclarationData) => {
       generator.addDeclaration('framework', declarationData);
+    },
+    addTargetExport: (targetDeclarationData: TargetDeclarationData) => {
+      generator.addDeclaration('framework', targetDeclarationData);
     },
     addExportTypes: (declarationData: DeclarationData) => {
       generator.addDeclaration('frameworkTypes', declarationData);

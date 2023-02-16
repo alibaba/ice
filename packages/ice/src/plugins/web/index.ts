@@ -10,7 +10,7 @@ const plugin: Plugin = () => ({
   setup: ({ registerTask, onHook, context, dataCache, generator }) => {
     const { rootDir, commandArgs, command, userConfig } = context;
 
-    generator.addExport({
+    generator.addTargetExport({
       specifier: [
         'Meta',
         'Title',
