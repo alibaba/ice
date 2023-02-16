@@ -7,7 +7,7 @@ import esModuleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
 import type { ImportSpecifier } from '@ice/bundles/compiled/es-module-lexer/index.js';
 import type { Node } from 'estree';
 import type { UnpluginOptions } from 'unplugin';
-import type { DepsMetaData } from '../service/preBundleCJSDeps.js';
+import type { PreBundleDepsMetaData } from '../service/preBundleDeps.js';
 import formatPath from '../utils/formatPath.js';
 
 const { init, parse } = esModuleLexer;
@@ -15,9 +15,11 @@ const { parse: parseJS } = acorn;
 
 type ImportNameSpecifier = { importedName: string; localName: string };
 
-// Redirect original dependency to the pre-bundle dependency(cjs) which is handled by preBundleCJSDeps function.
-const transformImportPlugin = (metadata: DepsMetaData, serverDir: string): UnpluginOptions => {
-  const { deps } = metadata;
+/**
+ * Redirect original dependency path to the prebundle dependency path.
+ */
+const transformImportPlugin = (preBundleDepsMetadata: PreBundleDepsMetaData, serverDir: string): UnpluginOptions => {
+  const { deps } = preBundleDepsMetadata;
   const redirectDepIds = [];
   return {
     name: 'transform-import',
@@ -35,11 +37,13 @@ const transformImportPlugin = (metadata: DepsMetaData, serverDir: string): Unplu
     async transform(source: string, id: string) {
       await init;
       let imports: readonly ImportSpecifier[] = [];
+      // es-module-lexer do not support parse jsx syntax, so we first transform the source by esbuild.
       const transformed = await transformWithESBuild(
         source,
         id,
       );
       source = transformed.code;
+
       imports = parse(transformed.code)[0];
       const str = new MagicString(source);
       for (let index = 0; index < imports.length; index++) {
@@ -47,31 +51,15 @@ const transformImportPlugin = (metadata: DepsMetaData, serverDir: string): Unplu
           // depId start and end
           s: start,
           e: end,
-          ss: expStart,
-          se: expEnd,
           n: specifier,
         } = imports[index];
         if (!(specifier in deps)) {
           continue;
         }
-
-        const importExp = source.slice(expStart, expEnd);
+        // Overwrite the prebundle dependency path.
         const filePath = formatPath(path.relative(formatPath(serverDir), formatPath(deps[specifier].file)));
         redirectDepIds.push(filePath);
-        const rewritten = transformCjsImport(
-          importExp,
-          filePath,
-          specifier,
-          index,
-        );
-        if (rewritten) {
-          str.overwrite(expStart, expEnd, rewritten, {
-            contentOnly: true,
-          });
-        } else {
-          // export * from '...'
-          str.overwrite(start, end, filePath, { contentOnly: true });
-        }
+        str.overwrite(start, end, filePath, { contentOnly: true });
       }
       return str.toString();
     },

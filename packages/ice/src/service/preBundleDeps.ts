@@ -25,16 +25,17 @@ interface DepInfo {
   src: string;
 }
 
-export interface DepsMetaData {
+export interface PreBundleDepsMetaData {
   hash: string;
   deps: Record<string, DepInfo>;
 }
 
 interface PreBundleDepsResult {
-  metadata?: DepsMetaData;
+  metadata?: PreBundleDepsMetaData;
 }
 
 interface PreBundleDepsOptions {
+  rootDir: string;
   depsInfo: Record<string, DepScanData>;
   cacheDir: string;
   taskConfig: Config;
@@ -46,10 +47,16 @@ interface PreBundleDepsOptions {
 }
 
 /**
- * Pre bundle dependencies from esm to cjs.
+ * Only when the server bundle format type is esm,
+ * we will pre bundle dependencies which maybe have import css file directly.
+ *
+ * Why? CSS file can not be resolve in ESM(server render will run in ESM), so we will external the css file.
  */
-export default async function preBundleCJSDeps(options: PreBundleDepsOptions): Promise<PreBundleDepsResult> {
-  const { depsInfo, cacheDir, taskConfig, plugins = [], alias, ignores, define, external = [] } = options;
+export default async function preBundleDeps(
+  depsInfo: Record<string, DepScanData>,
+  options: PreBundleDepsOptions,
+): Promise<PreBundleDepsResult> {
+  const { rootDir, cacheDir, taskConfig, plugins = [], alias, ignores, define, external = [] } = options;
   const metadata = createDepsMetadata(depsInfo, taskConfig);
 
   if (!Object.keys(depsInfo)) {
@@ -61,7 +68,7 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
   const depsCacheDir = getDepsCacheDir(cacheDir);
   const metadataJSONPath = getDepsMetaDataJSONPath(cacheDir);
   if (fse.pathExistsSync(metadataJSONPath)) {
-    const prevMetadata = await fse.readJSON(metadataJSONPath) as DepsMetaData;
+    const prevMetadata = await fse.readJSON(metadataJSONPath) as PreBundleDepsMetaData;
     if (metadata.hash === prevMetadata.hash) {
       // don't need to pre bundle the deps again if the deps info is not updated
       return {
@@ -80,7 +87,7 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
     const flatId = flattenId(depId);
     flatIdDeps[flatId] = packageEntry;
 
-    const file = path.join(depsCacheDir, `${flatId}.js`);
+    const file = path.join(depsCacheDir, `${flatId}.mjs`);
     // add meta info to metadata.deps
     metadata.deps[depId] = {
       file,
@@ -90,17 +97,24 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
 
   try {
     await esbuild.build({
-      absWorkingDir: process.cwd(),
+      absWorkingDir: rootDir,
       entryPoints: flatIdDeps,
       bundle: true,
       logLevel: 'error',
       outdir: depsCacheDir,
-      format: 'cjs',
+      format: 'esm',
       platform: 'node',
       loader: { '.js': 'jsx' },
       ignoreAnnotations: true,
       alias,
       define,
+      metafile: true,
+      outExtension: {
+        '.js': '.mjs',
+      },
+      banner: {
+        js: "import { createRequire } from 'module';const require = createRequire(import.meta.url);",
+      },
       plugins: [
         emptyCSSPlugin(),
         externalPlugin({ ignores, format: 'cjs', externalDependencies: false }),
@@ -115,17 +129,17 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
       ],
       external: [...BUILDIN_CJS_DEPS, ...BUILDIN_ESM_DEPS, ...external],
     });
+
+    await fse.writeJSON(metadataJSONPath, metadata, { spaces: 2 });
+
+    return {
+      metadata,
+    };
   } catch (error) {
     logger.error('Failed to bundle dependencies.');
     logger.debug(error);
     return {};
   }
-
-  await fse.writeJSON(metadataJSONPath, metadata, { spaces: 2 });
-
-  return {
-    metadata,
-  };
 }
 
 function resolvePackageEntry(depId: string, pkgPath: string, alias: TaskConfig<Config>['config']['alias']) {
@@ -146,7 +160,7 @@ function resolvePackageEntry(depId: string, pkgPath: string, alias: TaskConfig<C
 }
 
 
-function createDepsMetadata(depsInfo: Record<string, DepScanData>, taskConfig: Config): DepsMetaData {
+function createDepsMetadata(depsInfo: Record<string, DepScanData>, taskConfig: Config): PreBundleDepsMetaData {
   const hash = getDepHash(depsInfo, taskConfig);
   return {
     hash,
