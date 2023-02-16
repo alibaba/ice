@@ -14,7 +14,9 @@ function definePageConfig(pageConfig: () => PageConfig): () => PageConfig {
 export {
   definePageConfig,
   <% if (framework.exports) { -%><%- framework.exports %><% } -%>
+
   <% if (framework.targetExports) { -%><%- framework.targetExports %><% } -%>
+  
 };
 
 export * from './types';

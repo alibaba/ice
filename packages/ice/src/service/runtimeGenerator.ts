@@ -52,10 +52,9 @@ export function generateDeclaration(exportList: DeclarationData[]) {
     if (target) {
       const moduleId = `Module${index}`;
       const moduleName = `${target}${moduleId}`;
-      targetImportDeclarations.push(`
-        if (import.meta.target === '${target}') {
-          ${specifiers.map(item => `${item} = ${moduleName}.${item};`).join('\n')} ;
-        }
+      targetImportDeclarations.push(`if (import.meta.target === '${target}') {
+  ${specifiers.map(item => `${item} = ${moduleName}.${item};`).join('\n  ')}
+}
       `);
 
       importDeclarations.push(`import ${isDefaultImport ? moduleName : `* as ${moduleName}`} from '${source}';`);
@@ -82,7 +81,7 @@ export function generateDeclaration(exportList: DeclarationData[]) {
   return {
     targetImportStr: targetImportDeclarations.join('\n'),
     importStr: importDeclarations.join('\n'),
-    dynamicExportStr: variables.join(',\n'),
+    targetExportStr: variables.join(',\n  '),
     /**
      * Add two whitespace character in order to get the formatted code. For example:
      *  export {
@@ -209,7 +208,7 @@ export default class Generator {
       importStr,
       exportStr,
       exportNames,
-      dynamicExportStr,
+      targetExportStr,
       targetImportStr,
       variablesStr,
     } = generateDeclaration(exportList);
@@ -220,7 +219,7 @@ export default class Generator {
       exportNames,
       variablesStr,
       [targetImportStrKey]: targetImportStr,
-      [targetExportStrKey]: dynamicExportStr,
+      [targetExportStrKey]: targetExportStr,
     };
   };
 
