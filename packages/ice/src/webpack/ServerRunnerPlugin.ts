@@ -1,8 +1,6 @@
 import type { Compiler, Compilation } from 'webpack';
 import type ServerRunner from '../service/ServerRunner.js';
 
-const pluginName = 'ServerRunnerPlugin';
-
 /**
  * Get assets manifest from serevr runner.
  */
@@ -32,10 +30,10 @@ export default class ServerRunnerPlugin {
   };
 
   public apply(compiler: Compiler) {
-    compiler.hooks.watchRun.tap(pluginName, () => {
+    compiler.hooks.watchRun.tap(this.constructor.name, () => {
       this.isCompiling = true;
     });
-    compiler.hooks.emit.tapPromise(pluginName, async (compilation: Compilation) => {
+    compiler.hooks.emit.tapPromise(this.constructor.name, async (compilation: Compilation) => {
       this.isCompiling = false;
       return this.compileTask(compilation);
     });

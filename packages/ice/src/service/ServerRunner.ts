@@ -80,14 +80,13 @@ async function transformJsxRuntime(source: string) {
 class ServerRunner extends Runner {
   rootDir: string;
   private compilationInfo: CompilerOptions['compilationInfo'];
-  private nodeRunner: Runner;
 
   constructor({
     task,
     server,
     rootDir,
   }: InitOptions) {
-    const transformPlugins = getCompilerPlugins({
+    const transformPlugins = getCompilerPlugins(rootDir, {
       ...task.config,
       fastRefresh: false,
       enableEnv: false,
