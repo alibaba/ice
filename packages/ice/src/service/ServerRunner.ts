@@ -95,7 +95,8 @@ class ServerRunner extends Runner {
         nodeTransform: true,
         compilationConfig: {
           jsc: {
-            target: 'es2015',
+            // https://node.green/#ES2020
+            target: 'es2020',
             externalHelpers: false,
           },
         },
