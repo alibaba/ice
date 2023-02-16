@@ -75,6 +75,7 @@ export function createServerCompiler(options: Options) {
     runtimeDefineVars = {},
     enableEnv = false,
     transformEnv = true,
+    isServer = true,
   } = {}) => {
     let depsMetadata: DepsMetaData;
     let swcOptions = merge({}, {
@@ -96,14 +97,14 @@ export function createServerCompiler(options: Options) {
       };
     }
     const enableSyntaxFeatures = syntaxFeatures && Object.keys(syntaxFeatures).some(key => syntaxFeatures[key]);
-    const transformPlugins = getCompilerPlugins({
+    const transformPlugins = getCompilerPlugins(rootDir, {
       ...task.config,
       fastRefresh: false,
       enableEnv,
       polyfill: false,
       swcOptions,
       redirectImports,
-    }, 'esbuild');
+    }, 'esbuild', { isServer });
 
     // get runtime variable for server build
     Object.keys(process.env).forEach((key) => {

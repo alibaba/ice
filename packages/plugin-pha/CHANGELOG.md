@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.3
+
+- [fix] print log once
+- [feat] support configure for resource_prefetch
+
 ## 1.1.2
 
 - [fix] should't parse template in SSR/SSG

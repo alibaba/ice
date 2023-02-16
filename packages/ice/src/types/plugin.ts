@@ -50,6 +50,7 @@ export type ServerCompiler = (
     removeOutputs?: boolean;
     runtimeDefineVars?: Record<string, string>;
     enableEnv?: boolean;
+    isServer?: boolean;
   }
 ) => Promise<ServerBuildResult>;
 export type WatchEvent = [
