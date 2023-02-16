@@ -4,6 +4,9 @@ import '<%= globalStyle %>'
 import type { PageConfig } from './types';
 <%- framework.imports %>
 
+<%- framework.variablesStr %>
+<%- framework.targetImport %>
+
 function definePageConfig(pageConfig: () => PageConfig): () => PageConfig {
   return pageConfig;
 }
@@ -11,6 +14,9 @@ function definePageConfig(pageConfig: () => PageConfig): () => PageConfig {
 export {
   definePageConfig,
   <% if (framework.exports) { -%><%- framework.exports %><% } -%>
+
+  <% if (framework.targetExports) { -%><%- framework.targetExports %><% } -%>
+  
 };
 
 export * from './types';

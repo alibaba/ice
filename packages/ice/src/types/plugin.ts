@@ -50,6 +50,7 @@ export type ServerCompiler = (
     removeOutputs?: boolean;
     runtimeDefineVars?: Record<string, string>;
     enableEnv?: boolean;
+    isServer?: boolean;
   }
 ) => Promise<ServerBuildResult>;
 export type WatchEvent = [
@@ -137,6 +138,8 @@ export interface ExtendsPluginAPI {
     addEvent?: (watchEvent: WatchEvent) => void;
     removeEvent?: (name: string) => void;
   };
+  getRouteManifest: () => Routes;
+  getFlattenRoutes: () => string[];
   serverCompileTask: {
     set: (task: ReturnType<ServerCompiler>) => void;
     get: () => ReturnType<ServerCompiler>;

@@ -75,6 +75,7 @@ export function createServerCompiler(options: Options) {
     runtimeDefineVars = {},
     enableEnv = false,
     transformEnv = true,
+    isServer = true,
   } = {}) => {
     let depsMetadata: DepsMetaData;
     let swcOptions = merge({}, {
@@ -96,29 +97,14 @@ export function createServerCompiler(options: Options) {
       };
     }
     const enableSyntaxFeatures = syntaxFeatures && Object.keys(syntaxFeatures).some(key => syntaxFeatures[key]);
-    const transformPlugins = getCompilerPlugins({
+    const transformPlugins = getCompilerPlugins(rootDir, {
       ...task.config,
       fastRefresh: false,
       enableEnv,
       polyfill: false,
       swcOptions,
       redirectImports,
-    }, 'esbuild');
-
-    if (preBundle) {
-      depsMetadata = await createDepsMetadata({
-        task,
-        alias,
-        ignores,
-        rootDir,
-        // Pass transformPlugins only if syntaxFeatures is enabled
-        plugins: enableSyntaxFeatures ? [
-          transformPipePlugin({
-            plugins: transformPlugins,
-          }),
-        ] : [],
-      });
-    }
+    }, 'esbuild', { isServer });
 
     // get runtime variable for server build
     Object.keys(process.env).forEach((key) => {
@@ -138,6 +124,23 @@ export function createServerCompiler(options: Options) {
     // Add user defined envs.
     for (const [key, value] of Object.entries(expandedEnvs)) {
       define[`import.meta.env.${key}`] = JSON.stringify(value);
+    }
+
+    if (preBundle) {
+      depsMetadata = await createDepsMetadata({
+        task,
+        alias,
+        ignores,
+        rootDir,
+        define,
+        external: Object.keys(externals),
+        // Pass transformPlugins only if syntaxFeatures is enabled
+        plugins: enableSyntaxFeatures ? [
+          transformPipePlugin({
+            plugins: transformPlugins,
+          }),
+        ] : [],
+      });
     }
 
     const format = customBuildOptions?.format || 'esm';
@@ -246,11 +249,15 @@ interface CreateDepsMetadataOptions {
   plugins: esbuild.Plugin[];
   alias: Record<string, string>;
   ignores: string[];
+  define: esbuild.BuildOptions['define'];
+  external: esbuild.BuildOptions['external'];
 }
 /**
  *  Create dependencies metadata only when server entry is bundled to esm.
  */
-async function createDepsMetadata({ rootDir, task, plugins, alias, ignores }: CreateDepsMetadataOptions) {
+async function createDepsMetadata(
+  { rootDir, task, plugins, alias, ignores, define, external }: CreateDepsMetadataOptions,
+) {
   const serverEntry = getServerEntry(rootDir, task.config?.server?.entry);
   const deps = await scanImports([serverEntry], {
     rootDir,
@@ -279,6 +286,8 @@ async function createDepsMetadata({ rootDir, task, plugins, alias, ignores }: Cr
     alias,
     ignores,
     plugins,
+    define,
+    external,
   });
 
   return ret.metadata;

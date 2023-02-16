@@ -37,26 +37,52 @@ interface Options {
 }
 
 export function generateDeclaration(exportList: DeclarationData[]) {
-  const importDeclarations = [];
-  let exportDeclarations = [];
-  let exportNames: string[] = [];
+  const targetImportDeclarations: Array<string> = [];
+  const importDeclarations: Array<string> = [];
+  const exportDeclarations: Array<string> = [];
+  const exportNames: Array<string> = [];
+  const variables: Array<string> = [];
+
+  let moduleId = 0;
   exportList.forEach(data => {
-    const { specifier, source, alias, type } = data;
+    const { specifier, source, alias, type, target } = data;
     const isDefaultImport = !Array.isArray(specifier);
     const specifiers = isDefaultImport ? [specifier] : specifier;
     const symbol = type ? ';' : ',';
-    importDeclarations.push(`import ${type ? 'type ' : ''}${isDefaultImport ? specifier : `{ ${specifiers.map(specifierStr => ((alias && alias[specifierStr]) ? `${specifierStr} as ${alias[specifierStr]}` : specifierStr)).join(', ')} }`} from '${source}';`);
-    specifiers.forEach((specifierStr) => {
-      if (alias && alias[specifierStr]) {
-        exportDeclarations.push(`${alias[specifierStr]}: ${specifierStr}${symbol}`);
-      } else {
-        exportDeclarations.push(`${specifierStr}${symbol}`);
-      }
-      exportNames.push(specifierStr);
-    });
+
+    if (target) {
+      moduleId++;
+      const moduleName = `${target}Module${moduleId}`;
+      targetImportDeclarations.push(`if (import.meta.target === '${target}') {
+  ${specifiers.map(item => `${item} = ${moduleName}.${item};`).join('\n  ')}
+}
+      `);
+
+      importDeclarations.push(`import ${isDefaultImport ? moduleName : `* as ${moduleName}`} from '${source}';`);
+
+      specifiers.forEach((specifierStr) => {
+        if (!variables.includes(specifierStr)) {
+          variables.push(specifierStr);
+        }
+      });
+    } else {
+      importDeclarations.push(`import ${type ? 'type ' : ''}${isDefaultImport ? specifier : `{ ${specifiers.map(specifierStr => ((alias && alias[specifierStr]) ? `${specifierStr} as ${alias[specifierStr]}` : specifierStr)).join(', ')} }`} from '${source}';`);
+
+      specifiers.forEach((specifierStr) => {
+        if (alias && alias[specifierStr]) {
+          exportDeclarations.push(`${alias[specifierStr]}: ${specifierStr}${symbol}`);
+        } else {
+          exportDeclarations.push(`${specifierStr}${symbol}`);
+        }
+        exportNames.push(specifierStr);
+      });
+    }
   });
+
   return {
+    targetImportStr: targetImportDeclarations.join('\n'),
     importStr: importDeclarations.join('\n'),
+    targetExportStr: variables.join(',\n  '),
     /**
      * Add two whitespace character in order to get the formatted code. For example:
      *  export {
@@ -66,6 +92,7 @@ export function generateDeclaration(exportList: DeclarationData[]) {
      */
     exportStr: exportDeclarations.join('\n  '),
     exportNames,
+    variablesStr: variables.map(variable => `let ${variable};`).join('\n'),
   };
 }
 
@@ -78,11 +105,14 @@ export function checkExportData(
     const exportNames = (Array.isArray(data.specifier) ? data.specifier : [data.specifier]).map((specifierStr) => {
       return data?.alias?.[specifierStr] || specifierStr;
     });
-    currentList.forEach(({ specifier, alias }) => {
+    currentList.forEach(({ specifier, alias, target }) => {
+      if (target) return;
+
       // check exportName and specifier
       const currentExportNames = (Array.isArray(specifier) ? specifier : [specifier]).map((specifierStr) => {
         return alias?.[specifierStr] || specifierStr;
       });
+
       if (currentExportNames.some((name) => exportNames.includes(name))) {
         logger.error('specifier:', specifier, 'alias:', alias);
         logger.error('duplicate with', data);
@@ -149,10 +179,6 @@ export default class Generator {
   public addDeclaration: AddDeclaration = (registerKey, exportData) => {
     const exportList = this.contentRegistration[registerKey] || [];
     checkExportData(exportList, exportData, registerKey);
-    // remove export before add
-    this.removeDeclaration(
-      registerKey,
-      Array.isArray(exportData) ? exportData.map((data) => data.source) : exportData.source);
     this.addContent(registerKey, exportData);
   };
 
@@ -179,12 +205,22 @@ export default class Generator {
 
   private getDeclarations: GetDeclarations = (registerKey, dataKeys) => {
     const exportList = this.contentRegistration[registerKey] || [];
-    const { importStr, exportStr, exportNames } = generateDeclaration(exportList);
-    const [importStrKey, exportStrKey] = dataKeys;
+    const {
+      importStr,
+      exportStr,
+      exportNames,
+      targetExportStr,
+      targetImportStr,
+      variablesStr,
+    } = generateDeclaration(exportList);
+    const [importStrKey, exportStrKey, targetImportStrKey, targetExportStrKey] = dataKeys;
     return {
       [importStrKey]: importStr,
       [exportStrKey]: exportStr,
       exportNames,
+      variablesStr,
+      [targetImportStrKey]: targetImportStr,
+      [targetExportStrKey]: targetExportStr,
     };
   };
 
@@ -193,7 +229,7 @@ export default class Generator {
     const globalStyles = fg.sync([getGlobalStyleGlobPattern()], { cwd: this.rootDir });
     let exportsData = {};
     this.contentTypes.forEach(item => {
-      const data = this.getDeclarations(item, ['imports', 'exports']);
+      const data = this.getDeclarations(item, ['imports', 'exports', 'targetImport', 'targetExports']);
       exportsData = Object.assign({}, exportsData, {
         [`${item}`]: data,
       });

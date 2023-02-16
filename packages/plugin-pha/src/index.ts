@@ -18,6 +18,7 @@ export type Compiler = (options: {
 
 interface PluginOptions {
   template: boolean;
+  preload: boolean;
 }
 
 function getDevPath(url: string): string {
@@ -27,7 +28,7 @@ function getDevPath(url: string): string {
 const plugin: Plugin<PluginOptions> = (options) => ({
   name: '@ice/plugin-pha',
   setup: ({ onGetConfig, onHook, context, serverCompileTask, generator, getAllPlugin }) => {
-    const { template = true } = options || {};
+    const { template = true, preload = true } = options || {};
     const { command, rootDir } = context;
 
     // Get variable blows from task config.
@@ -99,6 +100,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
           urlPrefix,
           serverEntry: serverEntryRef.current,
           template,
+          preload,
           routeManifest,
         },
       });
@@ -153,6 +155,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
             publicPath,
             urlPrefix,
             template,
+            preload,
             routeManifest,
           },
         });

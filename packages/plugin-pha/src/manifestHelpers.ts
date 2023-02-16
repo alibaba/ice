@@ -23,6 +23,7 @@ export interface ParseOptions {
   routesConfig?: Record<string, any>;
   serverEntry: string;
   template?: boolean;
+  preload?: boolean;
   urlSuffix?: string;
   ssr?: boolean;
   dataloaderConfig?: object | Function | Array<object | Function>;
@@ -151,7 +152,7 @@ async function renderPageDocument(routeId: string, serverEntry: string): Promise
 }
 
 async function getPageManifest(page: string | Page, options: ParseOptions): Promise<MixedPage> {
-  const { template, serverEntry, routesConfig, routeManifest } = options;
+  const { template, preload, serverEntry, routesConfig, routeManifest } = options;
   // Page will be type string when it is a source frame.
   if (typeof page === 'string') {
     // Get html content by render document.
@@ -166,35 +167,36 @@ async function getPageManifest(page: string | Page, options: ParseOptions): Prom
       pageManifest.document = html;
     }
 
-    let scripts = [];
-    let stylesheets = [];
-    function getPreload(dom) {
-      if (
-        dom.name === 'script' &&
-        dom.attribs &&
-        dom.attribs.src
-      ) {
-        scripts.push({
-          src: dom.attribs.src,
-        });
-      } else if (
-        dom.name === 'link' &&
-        dom.attribs &&
-        dom.attribs.href &&
-        dom.attribs.rel === 'stylesheet'
-      ) {
-        stylesheets.push({
-          src: dom.attribs.href,
-        });
-      }
+    if (preload) {
+      let scripts = [];
+      let stylesheets = [];
+      function getPreload(dom) {
+        if (
+          dom.name === 'script' &&
+          dom.attribs &&
+          dom.attribs.src
+        ) {
+          scripts.push({
+            src: dom.attribs.src,
+          });
+        } else if (
+          dom.name === 'link' &&
+          dom.attribs &&
+          dom.attribs.href &&
+          dom.attribs.rel === 'stylesheet'
+        ) {
+          stylesheets.push({
+            src: dom.attribs.href,
+          });
+        }
 
-      if (dom.children) {
-        dom.children.forEach(getPreload);
+        if (dom.children) {
+          dom.children.forEach(getPreload);
+        }
       }
+      getPreload(htmlparser2.parseDocument(pageManifest.document));
+      pageManifest.resource_prefetch = [...scripts, ...stylesheets];
     }
-    getPreload(htmlparser2.parseDocument(pageManifest.document));
-    pageManifest.resource_prefetch = [...scripts, ...stylesheets];
-
 
     // Always need path for page item.
     pageManifest.path = `${getPageUrl(page, options)}${queryParams ? `?${queryParams}` : ''}`;
