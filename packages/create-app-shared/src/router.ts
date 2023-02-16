@@ -1,6 +1,6 @@
 const current = {
   pathname: '/',
-  visibilityState: document.visibiltyState === 'visible',
+  visibilityState: document.visibilityState === 'visible',
 };
 
 const router = {
