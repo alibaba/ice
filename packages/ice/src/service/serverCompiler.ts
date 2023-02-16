@@ -281,7 +281,6 @@ async function createPreBundleDepsMetadata(
   const cacheDir = path.join(rootDir, CACHE_DIR);
   const ret = await preBundleDeps(preBundleDepsInfo, {
     rootDir,
-    depsInfo: preBundleDepsInfo,
     cacheDir,
     taskConfig: task.config,
     alias,

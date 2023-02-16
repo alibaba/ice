@@ -3,7 +3,7 @@ import { createHash } from 'crypto';
 import fse from 'fs-extra';
 import { esbuild } from '@ice/bundles';
 import type { Plugin } from 'esbuild';
-import { resolve as resolveExports } from 'resolve.exports';
+import { resolve as resolveExports, legacy as resolveLegacy } from 'resolve.exports';
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
 import type { Config } from '@ice/webpack-config/esm/types';
 import type { TaskConfig } from 'build-scripts';
@@ -36,7 +36,6 @@ interface PreBundleDepsResult {
 
 interface PreBundleDepsOptions {
   rootDir: string;
-  depsInfo: Record<string, DepScanData>;
   cacheDir: string;
   taskConfig: Config;
   alias: Record<string, string>;
@@ -83,7 +82,7 @@ export default async function preBundleDeps(
 
   await moduleLexer.init;
   for (const depId in depsInfo) {
-    const packageEntry = resolvePackageEntry(depId, depsInfo[depId].pkgPath, alias);
+    const packageEntry = resolvePackageESEntry(depId, depsInfo[depId].pkgPath, alias);
     const flatId = flattenId(depId);
     flatIdDeps[flatId] = packageEntry;
 
@@ -117,7 +116,7 @@ export default async function preBundleDeps(
       },
       plugins: [
         emptyCSSPlugin(),
-        externalPlugin({ ignores, format: 'cjs', externalDependencies: false }),
+        externalPlugin({ ignores, format: 'esm', externalDependencies: false }),
         cssModulesPlugin({
           extract: false,
           generateLocalIdentName: function (name: string, filename: string) {
@@ -142,7 +141,7 @@ export default async function preBundleDeps(
   }
 }
 
-function resolvePackageEntry(depId: string, pkgPath: string, alias: TaskConfig<Config>['config']['alias']) {
+function resolvePackageESEntry(depId: string, pkgPath: string, alias: TaskConfig<Config>['config']['alias']) {
   const pkgJSON = fse.readJSONSync(pkgPath);
   const pkgDir = path.dirname(pkgPath);
   const aliasKey = Object.keys(alias).find(key => depId === key || depId.startsWith(`${depId}/`));
@@ -150,11 +149,8 @@ function resolvePackageEntry(depId: string, pkgPath: string, alias: TaskConfig<C
   // rax -> .
   // rax/element -> ./element
   const entry = aliasKey ? depId.replace(new RegExp(`^${aliasKey}`), '.') : depId;
-  // resolve exports cjs field
-  let resolvedEntryPoint = resolveExports(pkgJSON, entry, { require: true }) || '';
-  if (!resolvedEntryPoint) {
-    resolvedEntryPoint = pkgJSON['main'] || 'index.js';
-  }
+  // resolve "exports.import" field or "module" field
+  const resolvedEntryPoint = (resolveExports(pkgJSON, entry) || resolveLegacy(pkgJSON) || 'index.js') as string;
   const entryPointPath = path.join(pkgDir, resolvedEntryPoint);
   return entryPointPath;
 }
