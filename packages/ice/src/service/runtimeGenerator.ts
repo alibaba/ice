@@ -37,6 +37,14 @@ interface Options {
   templates?: (string | TemplateOptions)[];
 }
 
+function isDeclarationData(data: TargetDeclarationData | DeclarationData): data is DeclarationData {
+  return data.declarationType === 'normal';
+}
+
+function isTargetDeclarationData(data: TargetDeclarationData | DeclarationData): data is TargetDeclarationData {
+  return data.declarationType === 'target';
+}
+
 export function generateDeclaration(exportList: Array<TargetDeclarationData | DeclarationData>) {
   const targetImportDeclarations: Array<string> = [];
   const importDeclarations: Array<string> = [];
@@ -47,7 +55,7 @@ export function generateDeclaration(exportList: Array<TargetDeclarationData | De
   let moduleId = 0;
   exportList.forEach(data => {
     // Deal with target.
-    if ('target' in data && 'types' in data) {
+    if (isTargetDeclarationData(data)) {
       const { specifier, source, target, types = [] } = data;
       const isDefaultImport = !Array.isArray(specifier);
       const specifiers = isDefaultImport ? [specifier] : specifier;
@@ -72,7 +80,7 @@ export function generateDeclaration(exportList: Array<TargetDeclarationData | De
           variables.set(specifierStr, arrTypes[index] || 'any');
         }
       });
-    } else if ('alias' in data && 'type' in data) {
+    } else if (isDeclarationData(data)) {
       const { specifier, source, alias, type } = data;
       const isDefaultImport = !Array.isArray(specifier);
       const specifiers = isDefaultImport ? [specifier] : specifier;
@@ -122,7 +130,7 @@ export function checkExportData(
       }
     });
     currentList.forEach((item) => {
-      if ('target' in item) return;
+      if (isDeclarationData(item)) return;
 
       if ('alias' in item) {
         const { specifier, alias } = item;
