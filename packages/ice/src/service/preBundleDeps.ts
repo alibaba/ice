@@ -49,7 +49,7 @@ interface PreBundleDepsOptions {
  * Only when the server bundle format type is esm,
  * we will pre bundle dependencies which maybe have import css file directly.
  *
- * Why? CSS file can not be resolve in ESM(server render will run in ESM), so we will external the css file.
+ * CSS files can not be resolve in ESM(server render will run in ESM), so we will external item.
  */
 export default async function preBundleDeps(
   depsInfo: Record<string, DepScanData>,
