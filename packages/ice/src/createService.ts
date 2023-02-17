@@ -7,7 +7,8 @@ import type { Config } from '@ice/webpack-config/esm/types';
 import type { AppConfig } from '@ice/runtime/esm/types';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import fg from 'fast-glob';
-import type { DeclarationData, PluginData, ExtendsPluginAPI } from './types';
+import type { DeclarationData, PluginData, ExtendsPluginAPI, TargetDeclarationData } from './types';
+import { DeclarationType } from './types/index.js';
 import Generator from './service/runtimeGenerator.js';
 import { createServerCompiler } from './service/serverCompiler.js';
 import createWatch from './service/watchSource.js';
@@ -62,20 +63,38 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   let entryCode = 'render();';
 
   const generatorAPI = {
-    addExport: (declarationData: DeclarationData) => {
-      generator.addDeclaration('framework', declarationData);
+    addExport: (declarationData: Omit<DeclarationData, 'declarationType'>) => {
+      generator.addDeclaration('framework', {
+        ...declarationData,
+        declarationType: DeclarationType.NORMAL,
+      });
     },
-    addExportTypes: (declarationData: DeclarationData) => {
-      generator.addDeclaration('frameworkTypes', declarationData);
+    addTargetExport: (declarationData: Omit<TargetDeclarationData, 'declarationType'>) => {
+      generator.addDeclaration('framework', {
+        ...declarationData,
+        declarationType: DeclarationType.TARGET,
+      });
     },
-    addRuntimeOptions: (declarationData: DeclarationData) => {
-      generator.addDeclaration('runtimeOptions', declarationData);
+    addExportTypes: (declarationData: Omit<DeclarationData, 'declarationType'>) => {
+      generator.addDeclaration('frameworkTypes', {
+        ...declarationData,
+        declarationType: DeclarationType.NORMAL,
+      });
+    },
+    addRuntimeOptions: (declarationData: Omit<DeclarationData, 'declarationType'>) => {
+      generator.addDeclaration('runtimeOptions', {
+        ...declarationData,
+        declarationType: DeclarationType.NORMAL,
+      });
     },
     removeRuntimeOptions: (removeSource: string | string[]) => {
       generator.removeDeclaration('runtimeOptions', removeSource);
     },
-    addRouteTypes: (declarationData: DeclarationData) => {
-      generator.addDeclaration('routeConfigTypes', declarationData);
+    addRouteTypes: (declarationData: Omit<DeclarationData, 'declarationType'>) => {
+      generator.addDeclaration('routeConfigTypes', {
+        ...declarationData,
+        declarationType: DeclarationType.NORMAL,
+      });
     },
     addRenderFile: generator.addRenderFile,
     addRenderTemplate: generator.addTemplateFiles,
