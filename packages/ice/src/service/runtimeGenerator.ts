@@ -72,7 +72,6 @@ export function generateDeclaration(exportList: Array<TargetDeclarationData | De
 
       if (arrTypes.length) {
         importDeclarations.push(`import type { ${arrTypes.join(', ')}} from '${source}';`);
-        exportDeclarations.push(...arrTypes.map(item => `${item},`));
       }
 
       specifiers.forEach((specifierStr, index) => {
