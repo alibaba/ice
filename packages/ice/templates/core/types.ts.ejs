@@ -1,4 +1,4 @@
-import type { AppConfig, GetAppData, RouteConfig as DefaultRouteConfig } from '@ice/runtime';
+import type { AppConfig, RouteConfig as DefaultRouteConfig } from '@ice/runtime';
 <%- routeConfigTypes.imports -%>
 
 <% if (routeConfigTypes.imports) {-%>
@@ -7,9 +7,12 @@ type ExtendsRouteConfig = <% if (routeConfigTypes.imports) { %><%- routeConfigTy
 type ExtendsRouteConfig = {};
 <% } -%>
 type PageConfig = DefaultRouteConfig<ExtendsRouteConfig>;
+type PageConfigDefinitionContext<DataType = any> = {
+  data?: DataType;
+};
+type PageConfigDefinition = (context: PageConfigDefinitionContext) => PageConfig;
 
 export type {
   AppConfig,
-  GetAppData,
   PageConfig,
 };
