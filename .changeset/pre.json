@@ -31,7 +31,7 @@
     "@ice/appear": "0.1.4",
     "@ice/bundles": "0.1.4",
     "create-ice": "1.8.2",
-    "@ice/app": "3.1.1-beta.7",
+    "@ice/app": "3.1.1-beta.8",
     "@ice/jsx-runtime": "0.2.0",
     "@ice/miniapp-html-styles": "1.0.0",
     "@ice/miniapp-loader": "1.0.0",
@@ -60,9 +60,11 @@
   },
   "changesets": [
     "chatty-balloons-argue",
+    "famous-peas-visit",
     "flat-poets-dream",
     "forty-zoos-talk",
     "lemon-owls-beg",
+    "plenty-pans-flow",
     "wild-chairs-mix"
   ]
 }
