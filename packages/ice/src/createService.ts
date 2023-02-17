@@ -63,28 +63,38 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   let entryCode = 'render();';
 
   const generatorAPI = {
-    addExport: (declarationData: DeclarationData) => {
-      declarationData.declarationType = DeclarationType.NORMAL;
-      generator.addDeclaration('framework', declarationData);
+    addExport: (declarationData: Omit<DeclarationData, 'declarationType'>) => {
+      generator.addDeclaration('framework', {
+        ...declarationData,
+        declarationType: DeclarationType.NORMAL,
+      });
     },
-    addTargetExport: (targetDeclarationData: TargetDeclarationData) => {
-      targetDeclarationData.declarationType = DeclarationType.TARGET;
-      generator.addDeclaration('framework', targetDeclarationData);
+    addTargetExport: (declarationData: Omit<DeclarationData, 'declarationType'>) => {
+      generator.addDeclaration('framework', {
+        ...declarationData,
+        declarationType: DeclarationType.TARGET,
+      });
     },
-    addExportTypes: (declarationData: DeclarationData) => {
-      declarationData.declarationType = DeclarationType.NORMAL;
-      generator.addDeclaration('frameworkTypes', declarationData);
+    addExportTypes: (declarationData: Omit<DeclarationData, 'declarationType'>) => {
+      generator.addDeclaration('frameworkTypes', {
+        ...declarationData,
+        declarationType: DeclarationType.NORMAL,
+      });
     },
-    addRuntimeOptions: (declarationData: DeclarationData) => {
-      declarationData.declarationType = DeclarationType.NORMAL;
-      generator.addDeclaration('runtimeOptions', declarationData);
+    addRuntimeOptions: (declarationData: Omit<DeclarationData, 'declarationType'>) => {
+      generator.addDeclaration('runtimeOptions', {
+        ...declarationData,
+        declarationType: DeclarationType.NORMAL,
+      });
     },
     removeRuntimeOptions: (removeSource: string | string[]) => {
       generator.removeDeclaration('runtimeOptions', removeSource);
     },
-    addRouteTypes: (declarationData: DeclarationData) => {
-      declarationData.declarationType = DeclarationType.NORMAL;
-      generator.addDeclaration('routeConfigTypes', declarationData);
+    addRouteTypes: (declarationData: Omit<DeclarationData, 'declarationType'>) => {
+      generator.addDeclaration('routeConfigTypes', {
+        ...declarationData,
+        declarationType: DeclarationType.NORMAL,
+      });
     },
     addRenderFile: generator.addRenderFile,
     addRenderTemplate: generator.addTemplateFiles,

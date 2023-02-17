@@ -14,7 +14,7 @@ export interface DeclarationData {
 export interface TargetDeclarationData {
   specifier: string | string[];
   source: string;
-  target?: string;
+  target: string;
   types?: string | string[];
   declarationType?: DeclarationType;
 }
