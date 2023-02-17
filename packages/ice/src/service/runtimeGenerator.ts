@@ -123,16 +123,16 @@ export function checkExportData(
 ) {
   (Array.isArray(exportData) ? exportData : [exportData]).forEach((data) => {
     const exportNames = (Array.isArray(data.specifier) ? data.specifier : [data.specifier]).map((specifierStr) => {
-      if ('alias' in data) {
+      if (isDeclarationData(data)) {
         return data?.alias?.[specifierStr] || specifierStr;
       } else {
         return specifierStr;
       }
     });
     currentList.forEach((item) => {
-      if (isDeclarationData(item)) return;
+      if (isTargetDeclarationData(item)) return;
 
-      if ('alias' in item) {
+      if (isDeclarationData(item)) {
         const { specifier, alias } = item;
 
         // check exportName and specifier
