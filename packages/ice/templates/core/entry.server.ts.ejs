@@ -38,6 +38,7 @@ interface RenderOptions {
   routePath?: string;
   disableFallback?: boolean;
   distType?: DistType;
+  assetsManifest?: any;
 }
 
 export async function renderToHTML(requestContext, options: RenderOptions = {}) {
@@ -53,7 +54,7 @@ export async function renderToResponse(requestContext, options: RenderOptions = 
   setRuntimeEnv(renderMode);
   
   const mergedOptions = mergeOptions(options);
-  runtime.renderToResponse(requestContext, mergedOptions);
+  return runtime.renderToResponse(requestContext, mergedOptions);
 }
 
 <% if (jsOutput) { -%>
@@ -71,7 +72,7 @@ function mergeOptions(options) {
 
   return {
     app,
-    assetsManifest,
+    assetsManifest: options.assetsManifest || assetsManifest,
     routes,
     runtimeModules,
     Document,
