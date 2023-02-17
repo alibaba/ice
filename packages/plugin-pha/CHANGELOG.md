@@ -13,6 +13,8 @@
 - ad3436af: [fix] preload should be false default
   - [fix] print log once
   - [feat] support configure for resource_prefetch
+  - [fix] template should work for tabBar
+
 
 ## 1.1.2
 

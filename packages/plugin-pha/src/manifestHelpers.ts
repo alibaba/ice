@@ -232,7 +232,7 @@ async function getTabConfig(tabManifest: Manifest['tabBar'] | PageHeader, genera
     url: '',
   };
   const tabRouteId = parseRouteId(tabManifest!.source);
-  if (generateDocument && options.serverEntry) {
+  if (options.template && generateDocument && options.serverEntry) {
     tabConfig.html = await renderPageDocument(tabRouteId, options.serverEntry);
   }
 
