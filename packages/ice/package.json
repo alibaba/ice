@@ -1,12 +1,13 @@
 {
   "name": "@ice/app",
-  "version": "3.1.2-alpha.3",
+  "version": "3.1.2-alpha.4",
   "description": "provide scripts and configuration used by web framework ice",
   "type": "module",
   "main": "./esm/index.js",
   "exports": {
     ".": "./esm/index.js",
-    "./types": "./esm/types/index.js"
+    "./types": "./esm/types/index.js",
+    "./analyze": "./esm/service/analyze.js"
   },
   "bin": {
     "ice": "./bin/ice-cli.mjs"
