@@ -32,12 +32,16 @@ function importIcon(iconPath: string, cssPrefix: string) {
   return {
     name: 'transform-import-icon',
     enforce: 'pre',
+    transformInclude(id: string) {
+      // Only transform source code.
+      return id.match(/\.(js|jsx|ts|tsx)$/) && !id.match(/node_modules/);
+    },
     async transform(code: string, id: string, options: { isServer: boolean }) {
       const { isServer } = options;
       // Only import icon scss in client
       if (!isServer) {
         // Icon just import once.
-        if (!entryFile && !id.match(/node_modules/) && id.match(/[js|jsx|ts|tsx]$/)) {
+        if (!entryFile) {
           entryFile = id;
         }
         if (id === entryFile) {
