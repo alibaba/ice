@@ -785,7 +785,6 @@ importers:
       '@types/less': ^3.0.3
       '@types/lodash': ^4.14.181
       '@types/webpack-bundle-analyzer': ^4.4.1
-      acorn: 8.8.0
       ansi-html-community: ^0.0.8
       bonjour-service: ^1.0.13
       cacache: 16.0.7
@@ -880,7 +879,6 @@ importers:
       '@types/less': 3.0.3
       '@types/lodash': 4.14.185
       '@types/webpack-bundle-analyzer': 4.4.2_ncbsfugu56ddhgadp34k4kpsue
-      acorn: 8.8.0
       bonjour-service: 1.0.14
       cacache: 16.0.7
       colorette: 2.0.19
@@ -972,7 +970,6 @@ importers:
       '@types/babel__traverse': ^7.17.1
       '@types/cross-spawn': ^6.0.2
       '@types/ejs': ^3.1.0
-      '@types/estree': ^0.0.51
       '@types/express': ^4.17.14
       '@types/less': ^3.0.3
       '@types/micromatch': ^4.0.2
@@ -1047,7 +1044,6 @@ importers:
       '@types/babel__traverse': 7.18.2
       '@types/cross-spawn': 6.0.2
       '@types/ejs': 3.1.1
-      '@types/estree': 0.0.51
       '@types/less': 3.0.3
       '@types/micromatch': 4.0.2
       '@types/multer': 1.4.7

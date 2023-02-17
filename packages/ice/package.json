@@ -71,7 +71,6 @@
     "@types/babel__traverse": "^7.17.1",
     "@types/cross-spawn": "^6.0.2",
     "@types/ejs": "^3.1.0",
-    "@types/estree": "^0.0.51",
     "@types/less": "^3.0.3",
     "@types/micromatch": "^4.0.2",
     "@types/multer": "^1.4.7",
