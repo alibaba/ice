@@ -18,7 +18,6 @@ it('prebundle cjs deps', async () => {
     rootDir,
     taskConfig: { mode: 'production' },
   });
-  debugger;
   expect(fse.pathExistsSync(path.join(cacheDir, 'deps', 'react.mjs'))).toBeTruthy();
   expect(fse.pathExistsSync(path.join(cacheDir, 'deps', '@ice_runtime_client.mjs'))).toBeTruthy();
   expect(fse.pathExistsSync(path.join(cacheDir, 'deps', '@ice_runtime.mjs'))).toBeTruthy();
