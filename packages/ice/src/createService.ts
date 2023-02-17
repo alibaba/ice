@@ -72,15 +72,18 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       generator.addDeclaration('framework', targetDeclarationData);
     },
     addExportTypes: (declarationData: DeclarationData) => {
+      declarationData.declarationType = DeclarationType.NORMAL;
       generator.addDeclaration('frameworkTypes', declarationData);
     },
     addRuntimeOptions: (declarationData: DeclarationData) => {
+      declarationData.declarationType = DeclarationType.NORMAL;
       generator.addDeclaration('runtimeOptions', declarationData);
     },
     removeRuntimeOptions: (removeSource: string | string[]) => {
       generator.removeDeclaration('runtimeOptions', removeSource);
     },
     addRouteTypes: (declarationData: DeclarationData) => {
+      declarationData.declarationType = DeclarationType.NORMAL;
       generator.addDeclaration('routeConfigTypes', declarationData);
     },
     addRenderFile: generator.addRenderFile,

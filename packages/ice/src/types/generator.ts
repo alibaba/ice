@@ -8,7 +8,7 @@ export interface DeclarationData {
   source: string;
   type?: boolean;
   alias?: Record<string, string>;
-  declarationType: DeclarationType;
+  declarationType?: DeclarationType;
 }
 
 export interface TargetDeclarationData {
@@ -16,7 +16,7 @@ export interface TargetDeclarationData {
   source: string;
   target?: string;
   types?: string | string[];
-  declarationType: DeclarationType;
+  declarationType?: DeclarationType;
 }
 
 export type RenderData = Record<string, unknown>;
