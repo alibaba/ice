@@ -69,7 +69,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         declarationType: DeclarationType.NORMAL,
       });
     },
-    addTargetExport: (declarationData: Omit<DeclarationData, 'declarationType'>) => {
+    addTargetExport: (declarationData: Omit<TargetDeclarationData, 'declarationType'>) => {
       generator.addDeclaration('framework', {
         ...declarationData,
         declarationType: DeclarationType.TARGET,
