@@ -24,7 +24,9 @@ interface MetaProps extends React.HTMLAttributes<HTMLMetaElement>{
   MetaElement?: React.ComponentType<React.HTMLAttributes<HTMLMetaElement>>;
 }
 
-export function Meta(props: MetaProps) {
+export type MetaType = (props: MetaProps) => JSX.Element;
+
+export const Meta: MetaType = (props: MetaProps) => {
   const { matches, routesConfig } = useAppContext();
   const meta = getMeta(matches, routesConfig);
   const {
@@ -37,13 +39,15 @@ export function Meta(props: MetaProps) {
       <MetaElement {...props} name="ice-meta-count" content={meta.length.toString()} />
     </>
   );
-}
+};
 
 interface TitleProps extends React.HTMLAttributes<HTMLTitleElement>{
   TitleElement?: React.ComponentType<React.HTMLAttributes<HTMLTitleElement>>;
 }
 
-export function Title(props: TitleProps) {
+export type TitleType = (props: TitleProps) => JSX.Element;
+
+export const Title: TitleType = (props: TitleProps) => {
   const { matches, routesConfig } = useAppContext();
   const title = getTitle(matches, routesConfig);
   const {
@@ -54,13 +58,15 @@ export function Title(props: TitleProps) {
   return (
     <TitleElement {...rest}>{title}</TitleElement>
   );
-}
+};
 
 interface LinksProps extends React.LinkHTMLAttributes<HTMLLinkElement>{
   LinkElement?: React.ComponentType<React.LinkHTMLAttributes<HTMLLinkElement>>;
 }
 
-export function Links(props: LinksProps) {
+export type LinksType = (props: LinksProps) => JSX.Element;
+
+export const Links: LinksType = (props: LinksProps) => {
   const { routesConfig, matches, assetsManifest } = useAppContext();
   const {
     LinkElement = 'link',
@@ -82,13 +88,15 @@ export function Links(props: LinksProps) {
       {styles.map(style => <LinkElement key={style} {...rest} rel="stylesheet" type="text/css" href={style} />)}
     </>
   );
-}
+};
 
 interface ScriptsProps extends React.ScriptHTMLAttributes<HTMLScriptElement>{
   ScriptElement?: React.ComponentType<React.ScriptHTMLAttributes<HTMLScriptElement>> | string;
 }
 
-export function Scripts(props: ScriptsProps) {
+export type ScriptsType = (props: ScriptsProps) => JSX.Element;
+
+export const Scripts: ScriptsType = (props: ScriptsProps) => {
   const { routesConfig, matches, assetsManifest } = useAppContext();
   const {
     ScriptElement = 'script',
@@ -128,14 +136,16 @@ export function Scripts(props: ScriptsProps) {
       }
     </>
   );
-}
+};
 
 interface DataProps {
   ScriptElement?: React.ComponentType<React.ScriptHTMLAttributes<HTMLScriptElement>> | string;
 }
 
+export type DataType = (props: DataProps) => JSX.Element;
+
 // use app context separately
-export function Data(props: DataProps) {
+export const Data: DataType = (props: DataProps) => {
   const { routesData, documentOnly, matches, routesConfig, downgrade, renderMode } = useAppContext();
   const appData = useAppData();
   const {
@@ -163,9 +173,11 @@ export function Data(props: DataProps) {
       dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=Object.assign(${JSON.stringify(windowContext)}, window.__ICE_APP_CONTEXT__ || {});` }}
     />
   );
-}
+};
 
-export function Main(props: React.HTMLAttributes<HTMLDivElement>) {
+export type MainType = (props: React.HTMLAttributes<HTMLDivElement>) => JSX.Element;
+
+export const Main: MainType = (props: React.HTMLAttributes<HTMLDivElement>) => {
   const { main } = useDocumentContext();
   const { appConfig } = useAppContext();
   return (
@@ -173,7 +185,7 @@ export function Main(props: React.HTMLAttributes<HTMLDivElement>) {
       {main}
     </div>
   );
-}
+};
 
 /**
  * merge assets info for matched route

@@ -129,7 +129,7 @@ export default plugin;
 <TabItem value="runtime.tsx" label="src/runtime.tsx">
 
 ```tsx
-import type { RuntimePlugin } from '@ice/app/esm/types';
+import type { RuntimePlugin } from '@ice/runtime/esm/types';
 
 const runtime: RuntimePlugin = async ({ appContext }) => {
   console.log(appContext);
@@ -482,7 +482,7 @@ export default plugin;
 框架运行时指向的文件地址为一个 JS 模块，源码阶段推荐用 TS 进行开发：
 
 ```ts
-import type { RuntimePlugin } from '@ice/app/esm/types';
+import type { RuntimePlugin } from '@ice/runtime/esm/types';
 
 const runtime: RuntimePlugin = () => {};
 export default runtime;

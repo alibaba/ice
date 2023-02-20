@@ -2,7 +2,10 @@
 
 ## 1.1.3
 
-- [feat] preload should be false default
+### Patch Changes
+
+- [fix] dev manifest should work when manifest has not tabBar
+- [fix] preload should be false default
 - [fix] print log once
 - [feat] support configure for resource_prefetch
 

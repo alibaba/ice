@@ -785,7 +785,6 @@ importers:
       '@types/less': ^3.0.3
       '@types/lodash': ^4.14.181
       '@types/webpack-bundle-analyzer': ^4.4.1
-      acorn: 8.8.0
       ansi-html-community: ^0.0.8
       bonjour-service: ^1.0.13
       cacache: 16.0.7
@@ -880,7 +879,6 @@ importers:
       '@types/less': 3.0.3
       '@types/lodash': 4.14.185
       '@types/webpack-bundle-analyzer': 4.4.2_ncbsfugu56ddhgadp34k4kpsue
-      acorn: 8.8.0
       bonjour-service: 1.0.14
       cacache: 16.0.7
       colorette: 2.0.19
@@ -965,14 +963,13 @@ importers:
       '@babel/types': 7.18.10
       '@ice/bundles': 0.1.4
       '@ice/route-manifest': 1.0.0
-      '@ice/runtime': ^1.0.0
+      '@ice/runtime': ^1.1.2
       '@ice/webpack-config': 1.0.7
       '@swc/helpers': 0.4.14
       '@types/babel__generator': ^7.6.4
       '@types/babel__traverse': ^7.17.1
       '@types/cross-spawn': ^6.0.2
       '@types/ejs': ^3.1.0
-      '@types/estree': ^0.0.51
       '@types/express': ^4.17.14
       '@types/less': ^3.0.3
       '@types/micromatch': ^4.0.2
@@ -1047,7 +1044,6 @@ importers:
       '@types/babel__traverse': 7.18.2
       '@types/cross-spawn': 6.0.2
       '@types/ejs': 3.1.1
-      '@types/estree': 0.0.51
       '@types/less': 3.0.3
       '@types/micromatch': 4.0.2
       '@types/multer': 1.4.7
@@ -1093,7 +1089,7 @@ importers:
 
   packages/miniapp-react-dom:
     specifiers:
-      '@ice/miniapp-runtime': ^1.0.0
+      '@ice/miniapp-runtime': ^1.0.2
       '@ice/shared': ^1.0.0
       react: ^18.0.0
       react-reconciler: 0.27.0
@@ -1108,7 +1104,7 @@ importers:
 
   packages/miniapp-runtime:
     specifiers:
-      '@ice/runtime': ^1.0.0
+      '@ice/runtime': ^1.1.2
       '@ice/shared': ^1.0.0
       '@types/react': ^18.0.0
       history: ^5.3.0
@@ -1136,8 +1132,8 @@ importers:
 
   packages/plugin-auth:
     specifiers:
-      '@ice/app': ^3.0.0
-      '@ice/runtime': ^1.0.0
+      '@ice/app': ^3.1.1-beta.9
+      '@ice/runtime': ^1.1.2-beta.0
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
       regenerator-runtime: ^0.13.9
@@ -1170,8 +1166,8 @@ importers:
 
   packages/plugin-icestark:
     specifiers:
-      '@ice/app': ^3.0.0
-      '@ice/runtime': ^1.0.0
+      '@ice/app': ^3.1.1-beta.9
+      '@ice/runtime': ^1.1.2-beta.0
       '@ice/stark': ^2.7.4
       '@ice/stark-app': ^1.2.0
       '@types/react': ^18.0.0
@@ -1214,11 +1210,11 @@ importers:
 
   packages/plugin-miniapp:
     specifiers:
-      '@ice/app': ^3.0.0
+      '@ice/app': ^3.1.1
       '@ice/bundles': ^0.1.0
       '@ice/miniapp-loader': ^1.0.0
-      '@ice/miniapp-react-dom': ^1.0.0
-      '@ice/miniapp-runtime': ^1.0.0
+      '@ice/miniapp-react-dom': ^1.0.1
+      '@ice/miniapp-runtime': ^1.0.2
       '@ice/shared': ^1.0.0
       acorn-walk: ^8.2.0
       chalk: ^4.0.0
@@ -1253,7 +1249,7 @@ importers:
 
   packages/plugin-pha:
     specifiers:
-      '@ice/app': ^3.0.0
+      '@ice/app': ^3.1.1
       '@remix-run/router': ^1.0.3
       build-scripts: ^2.1.0
       chalk: ^4.0.0
@@ -1309,8 +1305,8 @@ importers:
 
   packages/plugin-request:
     specifiers:
-      '@ice/app': ^3.0.0
-      '@ice/runtime': ^1.0.0
+      '@ice/app': ^3.1.1-beta.9
+      '@ice/runtime': ^1.1.2-beta.0
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
       ahooks: ^3.0.0
@@ -1328,8 +1324,8 @@ importers:
 
   packages/plugin-store:
     specifiers:
-      '@ice/app': ^3.0.0
-      '@ice/runtime': ^1.0.0
+      '@ice/app': ^3.1.1-beta.9
+      '@ice/runtime': ^1.1.2-beta.0
       '@ice/store': ^2.0.3
       '@types/micromatch': ^4.0.2
       '@types/react': ^18.0.0
@@ -2121,7 +2117,7 @@ packages:
     resolution: {integrity: sha512-iNpIgTgyAvDQpDj76POqg+YEt8fPxx3yaNBg3S30dxNKm2SWfYhD0TGrK/Eu9wHpUW63VQU894TsTg+GLbUa1g==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/types': 7.19.3
+      '@babel/types': 7.20.7
 
   /@babel/helper-simple-access/7.20.2:
     resolution: {integrity: sha512-+0woI/WPq59IrqDYbVGfshjT5Dmk/nnbdpcF8SnMhhXObpTq2KNBdLFRFrkVdbDOyUmHBCxzm5FHV1rACIkIbA==}
@@ -3350,8 +3346,8 @@ packages:
     resolution: {integrity: sha512-j2vJGnkopRzH+ykJ8h68wrHnEUmtK//E723jjixiAl/PPf6FhqY/vYRcMVlNydRKQjQsTsYEjpx+DZMIvnGk/g==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      core-js-pure: 3.25.3
-      regenerator-runtime: 0.13.9
+      core-js-pure: 3.27.2
+      regenerator-runtime: 0.13.11
     dev: true
 
   /@babel/runtime-corejs3/7.20.13:
@@ -5471,7 +5467,7 @@ packages:
     dependencies:
       '@jest/fake-timers': 28.1.3
       '@jest/types': 28.1.3
-      '@types/node': 18.7.23
+      '@types/node': 18.11.18
       jest-mock: 28.1.3
     dev: true
 
@@ -5525,7 +5521,7 @@ packages:
     dependencies:
       '@jest/types': 28.1.3
       '@sinonjs/fake-timers': 9.1.2
-      '@types/node': 18.7.23
+      '@types/node': 18.11.18
       jest-message-util: 28.1.3
       jest-mock: 28.1.3
       jest-util: 28.1.3
@@ -5632,7 +5628,7 @@ packages:
       istanbul-reports: 3.1.5
       jest-message-util: 29.0.3
       jest-util: 29.0.3
-      jest-worker: 29.3.1
+      jest-worker: 29.4.1
       slash: 3.0.0
       string-length: 4.0.2
       strip-ansi: 6.0.1
@@ -5797,7 +5793,7 @@ packages:
       '@jest/schemas': 29.0.0
       '@types/istanbul-lib-coverage': 2.0.4
       '@types/istanbul-reports': 3.0.1
-      '@types/node': 18.7.23
+      '@types/node': 18.11.18
       '@types/yargs': 17.0.13
       chalk: 4.1.2
     dev: true
@@ -6926,8 +6922,8 @@ packages:
   /@types/babel__core/7.1.19:
     resolution: {integrity: sha512-WEOTgRsbYkvA/KCsDwVEGkd7WAr1e3g31VHQ8zy5gul/V1qKullU/BU5I68X5v7V3GnB9eotmom4v5a5gjxorw==}
     dependencies:
-      '@babel/parser': 7.19.3
-      '@babel/types': 7.19.3
+      '@babel/parser': 7.20.15
+      '@babel/types': 7.20.7
       '@types/babel__generator': 7.6.4
       '@types/babel__template': 7.4.1
       '@types/babel__traverse': 7.18.2
@@ -6942,8 +6938,8 @@ packages:
   /@types/babel__template/7.4.1:
     resolution: {integrity: sha512-azBFKemX6kMg5Io+/rdGT0dkGreboUVR0Cdm3fz9QJWpaQGJRQXl7C+6hOTCZcMll7KFyEQpgbYI2lHdsS4U7g==}
     dependencies:
-      '@babel/parser': 7.19.3
-      '@babel/types': 7.19.3
+      '@babel/parser': 7.20.15
+      '@babel/types': 7.20.7
     dev: true
 
   /@types/babel__traverse/7.18.2:
@@ -7098,7 +7094,7 @@ packages:
   /@types/graceful-fs/4.1.5:
     resolution: {integrity: sha512-anKkLmZZ+xm4p8JWBf4hElkM4XR+EZeA2M9BAkkTldmcyDY4mbdIJnRghDJH3Ov5ooY7/UAoENtmdMSkaAd7Cw==}
     dependencies:
-      '@types/node': 18.7.23
+      '@types/node': 18.11.18
     dev: true
 
   /@types/hast/2.3.4:
@@ -7350,7 +7346,7 @@ packages:
   /@types/sax/1.2.4:
     resolution: {integrity: sha512-pSAff4IAxJjfAXUG6tFkO7dsSbTmf8CtUpfhhZ5VhkRpC4628tJhh3+V6H1E+/Gs9piSzYKT5yzHO5M4GG9jkw==}
     dependencies:
-      '@types/node': 17.0.45
+      '@types/node': 18.11.18
     dev: false
 
   /@types/scheduler/0.16.2:
@@ -7447,7 +7443,7 @@ packages:
     resolution: {integrity: sha512-Cn6WYCm0tXv8p6k+A8PvbDG763EDpBoTzHdA+Q/MF6H3sapGjCm9NzoaJncJS9tUKSuCoDs9XHxYYsQDgxR6kw==}
     requiresBuild: true
     dependencies:
-      '@types/node': 18.7.23
+      '@types/node': 18.11.18
     dev: true
     optional: true
 
@@ -7470,7 +7466,7 @@ packages:
       eslint: 8.24.0
       ignore: 5.2.0
       regexpp: 3.2.0
-      semver: 7.3.7
+      semver: 7.3.8
       tsutils: 3.21.0_typescript@4.8.4
       typescript: 4.8.4
     transitivePeerDependencies:
@@ -7544,7 +7540,7 @@ packages:
       debug: 4.3.4
       globby: 11.1.0
       is-glob: 4.0.3
-      semver: 7.3.7
+      semver: 7.3.8
       tsutils: 3.21.0_typescript@4.8.4
       typescript: 4.8.4
     transitivePeerDependencies:
@@ -8466,7 +8462,7 @@ packages:
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
     dependencies:
       '@babel/template': 7.18.10
-      '@babel/types': 7.19.3
+      '@babel/types': 7.20.7
       '@types/babel__core': 7.1.19
       '@types/babel__traverse': 7.18.2
     dev: true
@@ -8476,7 +8472,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@babel/template': 7.18.10
-      '@babel/types': 7.19.3
+      '@babel/types': 7.20.7
       '@types/babel__core': 7.1.19
       '@types/babel__traverse': 7.18.2
     dev: true
@@ -9469,8 +9465,8 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
-      is-text-path: 1.0.1
       JSONStream: 1.3.5
+      is-text-path: 1.0.1
       lodash: 4.17.21
       meow: 8.1.2
       split2: 3.2.2
@@ -11439,7 +11435,7 @@ packages:
       natural-compare: 1.4.0
       nth-check: 2.1.1
       postcss-selector-parser: 6.0.10
-      semver: 7.3.7
+      semver: 7.3.8
       vue-eslint-parser: 8.3.0_eslint@8.24.0
     transitivePeerDependencies:
       - supports-color
@@ -13600,7 +13596,7 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       '@babel/core': 7.19.3
-      '@babel/parser': 7.19.3
+      '@babel/parser': 7.20.15
       '@istanbuljs/schema': 0.1.3
       istanbul-lib-coverage: 3.2.0
       semver: 6.3.0
@@ -13670,7 +13666,7 @@ packages:
       '@jest/expect': 28.1.3
       '@jest/test-result': 28.1.3
       '@jest/types': 28.1.3
-      '@types/node': 18.7.23
+      '@types/node': 18.11.18
       chalk: 4.1.2
       co: 4.6.0
       dedent: 0.7.0
@@ -13697,7 +13693,7 @@ packages:
       '@jest/expect': 29.0.3
       '@jest/test-result': 29.0.3
       '@jest/types': 29.0.3
-      '@types/node': 18.7.23
+      '@types/node': 18.11.18
       chalk: 4.1.2
       co: 4.6.0
       dedent: 0.7.0
@@ -13978,7 +13974,7 @@ packages:
       '@jest/types': 29.3.1
       chalk: 4.1.2
       jest-get-type: 29.0.0
-      jest-util: 29.3.1
+      jest-util: 29.4.1
       pretty-format: 29.0.3
     dev: true
 
@@ -14008,7 +14004,7 @@ packages:
       '@jest/environment': 28.1.3
       '@jest/fake-timers': 28.1.3
       '@jest/types': 28.1.3
-      '@types/node': 18.7.23
+      '@types/node': 18.11.18
       jest-mock: 28.1.3
       jest-util: 28.1.3
     dev: true
@@ -14020,7 +14016,7 @@ packages:
       '@jest/environment': 29.0.3
       '@jest/fake-timers': 29.0.3
       '@jest/types': 29.0.3
-      '@types/node': 18.7.23
+      '@types/node': 18.11.18
       jest-mock: 29.0.3
       jest-util: 29.3.1
     dev: true
@@ -14066,7 +14062,7 @@ packages:
       graceful-fs: 4.2.10
       jest-regex-util: 29.0.0
       jest-util: 29.3.1
-      jest-worker: 29.3.1
+      jest-worker: 29.4.1
       micromatch: 4.0.5
       walker: 1.0.8
     optionalDependencies:
@@ -14144,7 +14140,7 @@ packages:
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
     dependencies:
       '@jest/types': 28.1.3
-      '@types/node': 18.7.23
+      '@types/node': 18.11.18
     dev: true
 
   /jest-mock/29.0.3:
@@ -14290,7 +14286,7 @@ packages:
       jest-runtime: 29.0.3
       jest-util: 29.3.1
       jest-watcher: 29.0.3
-      jest-worker: 29.3.1
+      jest-worker: 29.4.1
       p-limit: 3.1.0
       source-map-support: 0.5.13
     transitivePeerDependencies:
@@ -14362,10 +14358,10 @@ packages:
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
     dependencies:
       '@babel/core': 7.19.3
-      '@babel/generator': 7.19.3
+      '@babel/generator': 7.20.14
       '@babel/plugin-syntax-typescript': 7.18.6_@babel+core@7.19.3
-      '@babel/traverse': 7.19.3
-      '@babel/types': 7.19.3
+      '@babel/traverse': 7.20.13
+      '@babel/types': 7.20.7
       '@jest/expect-utils': 28.1.3
       '@jest/transform': 28.1.3
       '@jest/types': 28.1.3
@@ -14383,7 +14379,7 @@ packages:
       jest-util: 28.1.3
       natural-compare: 1.4.0
       pretty-format: 28.1.3
-      semver: 7.3.7
+      semver: 7.3.8
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -14393,11 +14389,11 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@babel/core': 7.19.3
-      '@babel/generator': 7.19.3
+      '@babel/generator': 7.20.14
       '@babel/plugin-syntax-jsx': 7.18.6_@babel+core@7.19.3
       '@babel/plugin-syntax-typescript': 7.18.6_@babel+core@7.19.3
-      '@babel/traverse': 7.19.3
-      '@babel/types': 7.19.3
+      '@babel/traverse': 7.20.13
+      '@babel/types': 7.20.7
       '@jest/expect-utils': 29.0.3
       '@jest/transform': 29.0.3
       '@jest/types': 29.0.3
@@ -14415,7 +14411,7 @@ packages:
       jest-util: 29.3.1
       natural-compare: 1.4.0
       pretty-format: 29.0.3
-      semver: 7.3.7
+      semver: 7.3.8
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -14449,7 +14445,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/types': 29.3.1
-      '@types/node': 18.7.23
+      '@types/node': 18.11.18
       chalk: 4.1.2
       ci-info: 3.4.0
       graceful-fs: 4.2.10
@@ -14531,17 +14527,7 @@ packages:
     resolution: {integrity: sha512-CqRA220YV/6jCo8VWvAt1KKx6eek1VIHMPeLEbpcfSfkEeWyBNppynM/o6q+Wmw+sOhos2ml34wZbSX3G13//g==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
     dependencies:
-      '@types/node': 18.7.23
-      merge-stream: 2.0.0
-      supports-color: 8.1.1
-    dev: true
-
-  /jest-worker/29.3.1:
-    resolution: {integrity: sha512-lY4AnnmsEWeiXirAIA0c9SDPbuCBq8IYuDVL8PMm0MZ2PEs2yPvRA/J64QBXuZp7CYKrDM/rmNrc9/i3KJQncw==}
-    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-    dependencies:
-      '@types/node': 18.7.23
-      jest-util: 29.3.1
+      '@types/node': 18.11.18
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: true
@@ -15629,7 +15615,7 @@ packages:
     dependencies:
       hosted-git-info: 4.1.0
       is-core-module: 2.10.0
-      semver: 7.3.7
+      semver: 7.3.8
       validate-npm-package-license: 3.0.4
     dev: true
 
@@ -18634,6 +18620,12 @@ packages:
   /react-dev-utils/12.0.1_hhrrucqyg4eysmfpujvov2ym5u:
     resolution: {integrity: sha512-84Ivxmr17KjUupyqzFode6xKhjwuEJDROWKJy/BthkL7Wn6NJ8h4WE6k/exAv6ImS+0oZLRRW5j/aINMHyeGeQ==}
     engines: {node: '>=14'}
+    peerDependencies:
+      typescript: '>=2.7'
+      webpack: '>=4'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
     dependencies:
       '@babel/code-frame': 7.18.6
       address: 1.2.2
@@ -18664,9 +18656,7 @@ packages:
     transitivePeerDependencies:
       - eslint
       - supports-color
-      - typescript
       - vue-template-compiler
-      - webpack
 
   /react-dom/17.0.2_react@17.0.2:
     resolution: {integrity: sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==}
@@ -21498,7 +21488,7 @@ packages:
         optional: true
     dependencies:
       esbuild: 0.15.18
-      postcss: 8.4.18
+      postcss: 8.4.21
       resolve: 1.22.1
       rollup: 2.78.1
     optionalDependencies:
@@ -21633,7 +21623,7 @@ packages:
       espree: 9.4.0
       esquery: 1.4.0
       lodash: 4.17.21
-      semver: 7.3.7
+      semver: 7.3.8
     transitivePeerDependencies:
       - supports-color
     dev: true

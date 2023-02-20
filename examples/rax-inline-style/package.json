@@ -1,5 +1,5 @@
 {
-  "name": "rax-project",
+  "name": "@examples/rax-project",
   "private": true,
   "version": "1.0.0",
   "scripts": {

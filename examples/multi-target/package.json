@@ -1,5 +1,5 @@
 {
-  "name": "multi-entry",
+  "name": "@examples/multi-entry",
   "private": true,
   "version": "1.0.0",
   "scripts": {

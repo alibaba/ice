@@ -24,8 +24,8 @@ import formatPath from '../utils/formatPath.js';
 import { createLogger } from '../utils/logger.js';
 import { getExpandedEnvs } from '../utils/runtimeEnv.js';
 import { scanImports } from './analyze.js';
-import type { DepsMetaData } from './preBundleCJSDeps.js';
-import preBundleCJSDeps from './preBundleCJSDeps.js';
+import type { PreBundleDepsMetaData } from './preBundleDeps.js';
+import preBundleDeps from './preBundleDeps.js';
 
 const logger = createLogger('server-compiler');
 
@@ -77,7 +77,7 @@ export function createServerCompiler(options: Options) {
     transformEnv = true,
     isServer = true,
   } = {}) => {
-    let depsMetadata: DepsMetaData;
+    let preBundleDepsMetadata: PreBundleDepsMetaData;
     let swcOptions = merge({}, {
       // Only get the `compilationConfig` from task config.
       compilationConfig: getCompilationConfig(),
@@ -127,7 +127,7 @@ export function createServerCompiler(options: Options) {
     }
 
     if (preBundle) {
-      depsMetadata = await createDepsMetadata({
+      preBundleDepsMetadata = await createPreBundleDepsMetadata({
         task,
         alias,
         ignores,
@@ -189,8 +189,8 @@ export function createServerCompiler(options: Options) {
           plugins: [
             ...transformPlugins,
             // Plugin transformImportPlugin need after transformPlugins in case of it has onLoad lifecycle.
-            dev && preBundle && depsMetadata && transformImportPlugin(
-              depsMetadata,
+            dev && preBundle && preBundleDepsMetadata && transformImportPlugin(
+              preBundleDepsMetadata,
               path.join(rootDir, task.config.outputDir, SERVER_OUTPUT_DIR),
             ),
           ].filter(Boolean),
@@ -255,7 +255,7 @@ interface CreateDepsMetadataOptions {
 /**
  *  Create dependencies metadata only when server entry is bundled to esm.
  */
-async function createDepsMetadata(
+async function createPreBundleDepsMetadata(
   { rootDir, task, plugins, alias, ignores, define, external }: CreateDepsMetadataOptions,
 ) {
   const serverEntry = getServerEntry(rootDir, task.config?.server?.entry);
@@ -279,8 +279,8 @@ async function createDepsMetadata(
   // For examples: react, react-dom, @ice/runtime
   const preBundleDepsInfo = filterPreBundleDeps(deps);
   const cacheDir = path.join(rootDir, CACHE_DIR);
-  const ret = await preBundleCJSDeps({
-    depsInfo: preBundleDepsInfo,
+  const ret = await preBundleDeps(preBundleDepsInfo, {
+    rootDir,
     cacheDir,
     taskConfig: task.config,
     alias,
