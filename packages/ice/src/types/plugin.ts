@@ -5,9 +5,10 @@ import type { esbuild } from '@ice/bundles';
 import type { NestedRouteManifest } from '@ice/route-manifest';
 import type { Config } from '@ice/webpack-config/esm/types';
 import type { AppConfig, AssetsManifest } from '@ice/runtime/esm/types';
-import type { DeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport, Render } from './generator.js';
+import type { DeclarationData, TargetDeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport, Render } from './generator.js';
 
 type AddExport = (exportData: DeclarationData) => void;
+type AddTargetExport = (exportData: TargetDeclarationData) => void;
 type AddEntryCode = (callback: (code: string) => string) => void;
 type RemoveExport = (removeSource: string | string[]) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
@@ -50,6 +51,7 @@ export type ServerCompiler = (
     removeOutputs?: boolean;
     runtimeDefineVars?: Record<string, string>;
     enableEnv?: boolean;
+    isServer?: boolean;
   }
 ) => Promise<ServerBuildResult>;
 export type WatchEvent = [
@@ -122,6 +124,7 @@ export interface ExtendsPluginAPI {
   };
   generator: {
     addExport: AddExport;
+    addTargetExport: AddTargetExport;
     addExportTypes: AddExport;
     addRuntimeOptions: AddExport;
     removeRuntimeOptions: RemoveExport;
@@ -137,6 +140,8 @@ export interface ExtendsPluginAPI {
     addEvent?: (watchEvent: WatchEvent) => void;
     removeEvent?: (name: string) => void;
   };
+  getRouteManifest: () => Routes;
+  getFlattenRoutes: () => string[];
   serverCompileTask: {
     set: (task: ReturnType<ServerCompiler>) => void;
     get: () => ReturnType<ServerCompiler>;

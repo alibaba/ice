@@ -1,5 +1,5 @@
 {
-  "name": "with-store",
+  "name": "@examples/with-store",
   "private": true,
   "version": "1.0.0",
   "scripts": {

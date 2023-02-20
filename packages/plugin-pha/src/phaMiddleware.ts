@@ -72,7 +72,7 @@ const createPHAMiddleware = ({
           sendResponse(res, JSON.stringify(multipleManifest[manifestKey]), 'application/json');
           return;
         }
-      } else if (requestPath === '/manifest.json') {
+      } else if (requestPath === 'manifest.json') {
         sendResponse(res, JSON.stringify(phaManifest), 'application/json');
         return;
       }

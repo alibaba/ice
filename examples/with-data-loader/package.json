@@ -1,5 +1,6 @@
 {
-  "name": "with-data-loader",
+  "name": "@examples/with-data-loader",
+  "private": true,
   "version": "1.0.0",
   "scripts": {
     "start": "ice start",

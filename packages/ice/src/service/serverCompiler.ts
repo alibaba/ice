@@ -24,8 +24,8 @@ import formatPath from '../utils/formatPath.js';
 import { createLogger } from '../utils/logger.js';
 import { getExpandedEnvs } from '../utils/runtimeEnv.js';
 import { scanImports } from './analyze.js';
-import type { DepsMetaData } from './preBundleCJSDeps.js';
-import preBundleCJSDeps from './preBundleCJSDeps.js';
+import type { PreBundleDepsMetaData } from './preBundleDeps.js';
+import preBundleDeps from './preBundleDeps.js';
 
 const logger = createLogger('server-compiler');
 
@@ -75,8 +75,9 @@ export function createServerCompiler(options: Options) {
     runtimeDefineVars = {},
     enableEnv = false,
     transformEnv = true,
+    isServer = true,
   } = {}) => {
-    let depsMetadata: DepsMetaData;
+    let preBundleDepsMetadata: PreBundleDepsMetaData;
     let swcOptions = merge({}, {
       // Only get the `compilationConfig` from task config.
       compilationConfig: getCompilationConfig(),
@@ -96,29 +97,14 @@ export function createServerCompiler(options: Options) {
       };
     }
     const enableSyntaxFeatures = syntaxFeatures && Object.keys(syntaxFeatures).some(key => syntaxFeatures[key]);
-    const transformPlugins = getCompilerPlugins({
+    const transformPlugins = getCompilerPlugins(rootDir, {
       ...task.config,
       fastRefresh: false,
       enableEnv,
       polyfill: false,
       swcOptions,
       redirectImports,
-    }, 'esbuild');
-
-    if (preBundle) {
-      depsMetadata = await createDepsMetadata({
-        task,
-        alias,
-        ignores,
-        rootDir,
-        // Pass transformPlugins only if syntaxFeatures is enabled
-        plugins: enableSyntaxFeatures ? [
-          transformPipePlugin({
-            plugins: transformPlugins,
-          }),
-        ] : [],
-      });
-    }
+    }, 'esbuild', { isServer });
 
     // get runtime variable for server build
     Object.keys(process.env).forEach((key) => {
@@ -138,6 +124,23 @@ export function createServerCompiler(options: Options) {
     // Add user defined envs.
     for (const [key, value] of Object.entries(expandedEnvs)) {
       define[`import.meta.env.${key}`] = JSON.stringify(value);
+    }
+
+    if (preBundle) {
+      preBundleDepsMetadata = await createPreBundleDepsMetadata({
+        task,
+        alias,
+        ignores,
+        rootDir,
+        define,
+        external: Object.keys(externals),
+        // Pass transformPlugins only if syntaxFeatures is enabled
+        plugins: enableSyntaxFeatures ? [
+          transformPipePlugin({
+            plugins: transformPlugins,
+          }),
+        ] : [],
+      });
     }
 
     const format = customBuildOptions?.format || 'esm';
@@ -186,8 +189,8 @@ export function createServerCompiler(options: Options) {
           plugins: [
             ...transformPlugins,
             // Plugin transformImportPlugin need after transformPlugins in case of it has onLoad lifecycle.
-            dev && preBundle && depsMetadata && transformImportPlugin(
-              depsMetadata,
+            dev && preBundle && preBundleDepsMetadata && transformImportPlugin(
+              preBundleDepsMetadata,
               path.join(rootDir, task.config.outputDir, SERVER_OUTPUT_DIR),
             ),
           ].filter(Boolean),
@@ -246,11 +249,15 @@ interface CreateDepsMetadataOptions {
   plugins: esbuild.Plugin[];
   alias: Record<string, string>;
   ignores: string[];
+  define: esbuild.BuildOptions['define'];
+  external: esbuild.BuildOptions['external'];
 }
 /**
  *  Create dependencies metadata only when server entry is bundled to esm.
  */
-async function createDepsMetadata({ rootDir, task, plugins, alias, ignores }: CreateDepsMetadataOptions) {
+async function createPreBundleDepsMetadata(
+  { rootDir, task, plugins, alias, ignores, define, external }: CreateDepsMetadataOptions,
+) {
   const serverEntry = getServerEntry(rootDir, task.config?.server?.entry);
   const deps = await scanImports([serverEntry], {
     rootDir,
@@ -272,13 +279,15 @@ async function createDepsMetadata({ rootDir, task, plugins, alias, ignores }: Cr
   // For examples: react, react-dom, @ice/runtime
   const preBundleDepsInfo = filterPreBundleDeps(deps);
   const cacheDir = path.join(rootDir, CACHE_DIR);
-  const ret = await preBundleCJSDeps({
-    depsInfo: preBundleDepsInfo,
+  const ret = await preBundleDeps(preBundleDepsInfo, {
+    rootDir,
     cacheDir,
     taskConfig: task.config,
     alias,
     ignores,
     plugins,
+    define,
+    external,
   });
 
   return ret.metadata;

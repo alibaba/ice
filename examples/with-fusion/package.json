@@ -1,5 +1,6 @@
 {
-  "name": "with-fusion",
+  "name": "@examples/with-fusion",
+  "private": true,
   "version": "1.0.0",
   "scripts": {
     "start": "ice start",
