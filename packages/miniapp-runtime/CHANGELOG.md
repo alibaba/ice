@@ -1,11 +1,11 @@
 # Changelog
 
-## 1.0.2-beta.0
+## 1.0.2
 
 ### Patch Changes
 
-- Updated dependencies [7e38619b]
-  - @ice/runtime@1.1.2-beta.0
+- Updated dependencies [8eee4f0d]
+  - @ice/runtime@1.1.2
 
 ## v1.0.1
 

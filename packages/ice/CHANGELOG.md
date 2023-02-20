@@ -1,40 +1,22 @@
 # Changelog
 
-## 3.1.1-beta.9
+## 3.1.1
 
 ### Patch Changes
 
-- 7e38619b: feat: add generator.addTargetExport API
-- Updated dependencies [7e38619b]
-  - @ice/runtime@1.1.2-beta.0
-
-## 3.1.1-beta.8
-
-### Patch Changes
-
-- 14b11542: fix: prebundle esm module error
-
-## 3.1.1-beta.7
-
-### Patch Changes
-
-- d5f1a25b: chore: bump beta version
-- Updated dependencies [d5f1a25b]
-  - @ice/webpack-config@1.0.7-beta.7
-
-## 3.1.1-beta.0
-
-### Patch Changes
-
-- ad3436af: [fix] pass external and define info for preBundle
-  - [fix] value priority of host, port and https
-  - [feat] redirect runtime imports for data loader
-  - [fix] the lanUrlForConfig should set when set host
-  - [fix] the imported dataloaderFetcher name is error
-  - [fix] the value of `isServer` is false when compile data-loader
-  - [feat] new plugin API `getRouteManifest` and `getFlattenRoutes`
-- Updated dependencies [ad3436af]
-  - @ice/webpack-config@1.0.7-beta.0
+- [fix] pass external and define info for preBundle
+- [fix] value priority of host, port and https
+- [feat] redirect runtime imports for data loader
+- [fix] the lanUrlForConfig should set when set host
+- [fix] the imported dataloaderFetcher name is error
+- [fix] the value of `isServer` is false when compile data-loader
+- [feat] new plugin API `getRouteManifest` and `getFlattenRoutes`
+- [fix] dev manifest should work when manifest has not tabBar
+- [fix] prebundle esm module error
+- [feat] add generator.addTargetExport API
+- Updated dependencies
+  - @ice/runtime@1.1.2
+  - @ice/webpack-config@1.0.7
 
 ## v3.1.0
 

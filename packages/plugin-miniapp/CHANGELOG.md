@@ -1,11 +1,11 @@
 # Changelog
 
-## 1.0.2-beta.0
+## 1.0.2
 
 ### Patch Changes
 
-- @ice/miniapp-runtime@1.0.2-beta.0
-- @ice/miniapp-react-dom@1.0.1-beta.0
+- @ice/miniapp-react-dom@1.0.1
+- @ice/miniapp-runtime@1.0.2
 
 ## 1.0.1
 

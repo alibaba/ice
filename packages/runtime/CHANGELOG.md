@@ -1,5 +1,11 @@
 # @ice/runtime
 
+## 1.1.2
+
+### Patch Changes
+
+- 8eee4f0d: feat: export types
+
 ## 1.1.2-beta.0
 
 ### Patch Changes
