@@ -55,7 +55,7 @@ export default async function preBundleDeps(
   depsInfo: Record<string, DepScanData>,
   options: PreBundleDepsOptions,
 ): Promise<PreBundleDepsResult> {
-  const { rootDir, cacheDir, taskConfig, plugins = [], alias, ignores, define, external = [] } = options;
+  const { cacheDir, taskConfig, plugins = [], alias, ignores, define, external = [] } = options;
   const metadata = createDepsMetadata(depsInfo, taskConfig);
 
   if (!Object.keys(depsInfo)) {
