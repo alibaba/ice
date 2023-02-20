@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.1.1-beta.9
+
+### Patch Changes
+
+- 7e38619b: feat: add generator.addTargetExport API
+- Updated dependencies [7e38619b]
+  - @ice/runtime@1.1.2-beta.0
+
+## 3.1.1-beta.8
+
+### Patch Changes
+
+- 14b11542: fix: prebundle esm module error
+
 ## 3.1.1-beta.7
 
 ### Patch Changes
