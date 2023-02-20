@@ -33,12 +33,16 @@ export class RuntimeMeta {
   private plugins: Plugin[];
   private metaData: PreBundleDepsMetaData;
   private cachePath: string;
+  private external: string[];
+  private define: Record<string, string>;
 
   constructor(options: Omit<PreBundleOptions, 'pkgName' | 'resolveId'>) {
     this.rootDir = options.rootDir;
     this.alias = options.alias;
     this.ignores = options.ignores;
     this.plugins = options.plugins;
+    this.external = options.external;
+    this.define = options.define;
     this.cachePath = path.join(getDepsCacheDir(path.join(this.rootDir, CACHE_DIR)), 'metadata.json');
   }
 
@@ -89,6 +93,8 @@ export class RuntimeMeta {
         alias: this.alias,
         ignores: this.ignores,
         plugins: this.plugins,
+        external: this.external,
+        define: this.define,
         pkgName: pkgName,
         resolveId,
       });
@@ -119,6 +125,6 @@ export default async function preBundleDeps(options: PreBundleOptions): Promise<
     return {};
   }
   return {
-    bundlePath: path.join(depsCacheDir, `${pkgName}.js`),
+    bundlePath: path.join(depsCacheDir, `${pkgName}.mjs`),
   };
 }

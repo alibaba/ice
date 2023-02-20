@@ -19,6 +19,7 @@ export type ResolveId = {
 export interface RunnerOptions {
   rootDir: string;
   moduleCache?: ModuleCacheMap;
+  meta?: Record<string, string>;
   load: (args: {
     path: string;
     namespace?: string;
@@ -60,9 +61,11 @@ export class ModuleCacheMap extends Map<string, ModuleCache> {
 class Runner {
   rootDir: string;
   moduleCache: ModuleCacheMap;
+  importMeta: Record<string, string>;
 
   constructor(public options: RunnerOptions) {
     this.rootDir = options.rootDir;
+    this.importMeta = options.meta || {};
     this.moduleCache = options.moduleCache || new ModuleCacheMap();
   }
 
@@ -145,7 +148,8 @@ class Runner {
     }
 
     const { href } = pathToFileURL(id);
-    const meta = { url: href };
+    const meta = { url: href, ...this.importMeta };
+    console.log('meta ==>', meta);
     const exports = Object.create(null);
 
     // this prosxy is triggered only on exports.{name} and module.exports access
