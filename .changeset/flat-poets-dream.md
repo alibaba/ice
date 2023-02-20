@@ -5,3 +5,4 @@
 ---
 
 chore: bump beta version
+fix: dev manifest should work when manifest has not tabBar
