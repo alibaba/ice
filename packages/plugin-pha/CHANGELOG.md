@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.3
+
+### Patch Changes
+
+- c893a64a: chore: bump beta version
+  fix: dev manifest should work when manifest has not tabBar
+- c893a64a: [fix] preload should be false default
+  - [fix] print log once
+  - [feat] support configure for resource_prefetch
+
 ## 1.1.3-beta.7
 
 ### Patch Changes
@@ -14,7 +24,6 @@
   - [fix] print log once
   - [feat] support configure for resource_prefetch
   - [fix] template should work for tabBar
-
 
 ## 1.1.2
 

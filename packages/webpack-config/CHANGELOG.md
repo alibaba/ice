@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.7
+
+### Patch Changes
+
+- c893a64a: chore: bump beta version
+  fix: dev manifest should work when manifest has not tabBar
+- c893a64a: [fix] support transform options for API `getCompilerPlugins`
+  - [fix] optimize webpack config (enable unsafeCache)
+  - [fix] exclude rule of compilation and load compile target
+
 ## 1.0.7-beta.7
 
 ### Patch Changes

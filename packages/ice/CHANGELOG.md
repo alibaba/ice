@@ -1,5 +1,26 @@
 # Changelog
 
+## 3.1.1
+
+### Patch Changes
+
+- c893a64a: [fix] pass external and define info for preBundle
+  - [fix] value priority of host, port and https
+  - [feat] redirect runtime imports for data loader
+  - [fix] the lanUrlForConfig should set when set host
+  - [fix] the imported dataloaderFetcher name is error
+  - [fix] the value of `isServer` is false when compile data-loader
+  - [feat] new plugin API `getRouteManifest` and `getFlattenRoutes`
+- c893a64a: chore: bump beta version
+  fix: dev manifest should work when manifest has not tabBar
+- 8eee4f0d: fix: prebundle esm module error
+- 8eee4f0d: feat: add generator.addTargetExport API
+- Updated dependencies [8eee4f0d]
+- Updated dependencies [c893a64a]
+- Updated dependencies [c893a64a]
+  - @ice/runtime@1.1.2
+  - @ice/webpack-config@1.0.7
+
 ## 3.1.1-beta.9
 
 ### Patch Changes
