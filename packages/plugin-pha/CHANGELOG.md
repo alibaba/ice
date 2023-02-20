@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- fix: dev manifest should work when manifest has not tabBar
+- [fix] dev manifest should work when manifest has not tabBar
 - [fix] preload should be false default
 - [fix] print log once
 - [feat] support configure for resource_prefetch
