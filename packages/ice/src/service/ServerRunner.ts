@@ -20,7 +20,7 @@ import { logger } from '../utils/logger.js';
 import { resolveId as resolveWithAlias } from './analyze.js';
 import Runner from './Runner.js';
 import { RuntimeMeta } from './onDemandPreBundle.js';
-import { filterAlias } from './serverCompiler.js';
+import { filterAlias, getRuntimeDefination } from './serverCompiler.js';
 
 interface InitOptions {
   rootDir: string;
@@ -79,6 +79,7 @@ async function transformJsxRuntime(source: string) {
 
 class ServerRunner extends Runner {
   rootDir: string;
+  server: UserConfig['server'];
   private compilationInfo: CompilerOptions['compilationInfo'];
 
   constructor({
@@ -107,6 +108,8 @@ class ServerRunner extends Runner {
       rootDir,
       alias,
       ignores,
+      external: server.externals || [],
+      define: getRuntimeDefination(task.config.define || {}),
     });
 
     const esbuildPlugins = [

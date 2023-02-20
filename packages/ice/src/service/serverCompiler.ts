@@ -24,8 +24,8 @@ import formatPath from '../utils/formatPath.js';
 import { createLogger } from '../utils/logger.js';
 import { getExpandedEnvs } from '../utils/runtimeEnv.js';
 import { scanImports } from './analyze.js';
-import type { DepsMetaData } from './preBundleCJSDeps.js';
-import preBundleCJSDeps from './preBundleCJSDeps.js';
+import type { PreBundleDepsMetaData } from './preBundleDeps.js';
+import preBundleDeps from './preBundleDeps.js';
 
 const logger = createLogger('server-compiler');
 
@@ -54,20 +54,49 @@ export const filterAlias = (taskAlias: TaskConfig<Config>['config']['alias']) =>
   return { alias, ignores };
 };
 
+export const getRuntimeDefination = (
+  defineVars: Record<string, string | boolean> = {},
+  runtimeVars: Record<string, string> = {},
+  transformEnv = true,
+) => {
+  const stringifiedDefine = {};
+  const runtimeDefineVars = {
+    ...runtimeVars,
+  };
+  // auto stringify define value
+  Object.keys(defineVars).forEach((key) => {
+    stringifiedDefine[key] = JSON.stringify(define[key]);
+  });
+  // get runtime variable for server build
+  Object.keys(process.env).forEach((key) => {
+    // Do not transform env when bundle client side code.
+    if (/^ICE_CORE_/i.test(key) && transformEnv) {
+      // in server.entry
+      runtimeDefineVars[`__process.env.${key}__`] = JSON.stringify(process.env[key]);
+    } else if (/^ICE_/i.test(key)) {
+      runtimeDefineVars[`process.env.${key}`] = JSON.stringify(process.env[key]);
+    }
+  });
+  const define = {
+    ...stringifiedDefine,
+    ...runtimeDefineVars,
+  };
+  const expandedEnvs = getExpandedEnvs();
+  // Add user defined envs.
+  for (const [key, value] of Object.entries(expandedEnvs)) {
+    define[`import.meta.env.${key}`] = JSON.stringify(value);
+  }
+  return define;
+};
+
 export function createServerCompiler(options: Options) {
   const { task, rootDir, command, server, syntaxFeatures } = options;
   const externals = task.config?.externals || {};
-  const define = task.config?.define || {};
   const sourceMap = task.config?.sourceMap;
   const dev = command === 'start';
 
   // Filter empty alias.
   const { ignores, alias } = filterAlias(task.config?.alias || {});
-  const defineVars = {};
-  // auto stringify define value
-  Object.keys(define).forEach((key) => {
-    defineVars[key] = JSON.stringify(define[key]);
-  });
 
   const serverCompiler: ServerCompiler = async (customBuildOptions, {
     preBundle,
@@ -81,7 +110,7 @@ export function createServerCompiler(options: Options) {
     transformEnv = true,
     isServer = true,
   } = {}) => {
-    let depsMetadata: DepsMetaData;
+    let preBundleDepsMetadata: PreBundleDepsMetaData;
     let swcOptions = merge({}, {
       // Only get the `compilationConfig` from task config.
       compilationConfig: getCompilationConfig(),
@@ -92,7 +121,7 @@ export function createServerCompiler(options: Options) {
         ? customCompilationConfig
         : () => customCompilationConfig;
 
-      return (source, id) => {
+      return (source: string, id: string) => {
         return {
           ...getConfig(source, id),
           // Force inline when use swc as a transformer.
@@ -109,13 +138,16 @@ export function createServerCompiler(options: Options) {
       swcOptions,
       redirectImports,
     }, 'esbuild', { isServer });
+    const define = getRuntimeDefination(task.config?.define || {}, runtimeDefineVars, transformEnv);
 
     if (preBundle) {
-      depsMetadata = await createDepsMetadata({
+      preBundleDepsMetadata = await createPreBundleDepsMetadata({
         task,
         alias,
         ignores,
         rootDir,
+        define,
+        external: Object.keys(externals),
         // Pass transformPlugins only if syntaxFeatures is enabled
         plugins: enableSyntaxFeatures ? [
           transformPipePlugin({
@@ -123,26 +155,6 @@ export function createServerCompiler(options: Options) {
           }),
         ] : [],
       });
-    }
-
-    // get runtime variable for server build
-    Object.keys(process.env).forEach((key) => {
-      // Do not transform env when bundle client side code.
-      if (/^ICE_CORE_/i.test(key) && transformEnv) {
-        // in server.entry
-        runtimeDefineVars[`__process.env.${key}__`] = JSON.stringify(process.env[key]);
-      } else if (/^ICE_/i.test(key)) {
-        runtimeDefineVars[`process.env.${key}`] = JSON.stringify(process.env[key]);
-      }
-    });
-    const define = {
-      ...defineVars,
-      ...runtimeDefineVars,
-    };
-    const expandedEnvs = getExpandedEnvs();
-    // Add user defined envs.
-    for (const [key, value] of Object.entries(expandedEnvs)) {
-      define[`import.meta.env.${key}`] = JSON.stringify(value);
     }
 
     const format = customBuildOptions?.format || 'esm';
@@ -191,8 +203,8 @@ export function createServerCompiler(options: Options) {
           plugins: [
             ...transformPlugins,
             // Plugin transformImportPlugin need after transformPlugins in case of it has onLoad lifecycle.
-            dev && preBundle && depsMetadata && transformImportPlugin(
-              depsMetadata,
+            dev && preBundle && preBundleDepsMetadata && transformImportPlugin(
+              preBundleDepsMetadata,
               path.join(rootDir, task.config.outputDir, SERVER_OUTPUT_DIR),
             ),
           ].filter(Boolean),
@@ -251,11 +263,15 @@ interface CreateDepsMetadataOptions {
   plugins: esbuild.Plugin[];
   alias: Record<string, string>;
   ignores: string[];
+  define: esbuild.BuildOptions['define'];
+  external: esbuild.BuildOptions['external'];
 }
 /**
  *  Create dependencies metadata only when server entry is bundled to esm.
  */
-async function createDepsMetadata({ rootDir, task, plugins, alias, ignores }: CreateDepsMetadataOptions) {
+async function createPreBundleDepsMetadata(
+  { rootDir, task, plugins, alias, ignores, define, external }: CreateDepsMetadataOptions,
+) {
   const serverEntry = getServerEntry(rootDir, task.config?.server?.entry);
   const deps = await scanImports([serverEntry], {
     rootDir,
@@ -277,13 +293,15 @@ async function createDepsMetadata({ rootDir, task, plugins, alias, ignores }: Cr
   // For examples: react, react-dom, @ice/runtime
   const preBundleDepsInfo = filterPreBundleDeps(deps);
   const cacheDir = path.join(rootDir, CACHE_DIR);
-  const ret = await preBundleCJSDeps({
-    depsInfo: preBundleDepsInfo,
+  const ret = await preBundleDeps(preBundleDepsInfo, {
+    rootDir,
     cacheDir,
     taskConfig: task.config,
     alias,
     ignores,
     plugins,
+    define,
+    external,
   });
 
   return ret.metadata;

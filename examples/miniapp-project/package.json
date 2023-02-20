@@ -1,5 +1,5 @@
 {
-  "name": "miniapp-project",
+  "name": "@examples/miniapp-project",
   "private": true,
   "version": "1.0.0",
   "scripts": {

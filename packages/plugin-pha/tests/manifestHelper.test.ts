@@ -396,11 +396,44 @@ describe('parse manifest', async () => {
       },
     };
 
-    const manifest = await parseManifest(phaManifest, options);
+    const manifest = await parseManifest(phaManifest, {
+      ...options,
+      template: true,
+    });
 
     expect(manifest.pages![0]?.tab_header?.url).toBe('https://url-prefix.com/header');
     expect(manifest.pages![0]?.tab_header?.html).toBe('<html><body>/header-document</body></html>');
     expect(manifest?.tab_bar?.url).toBe('https://url-prefix.com/CustomTabBar');
+  });
+
+  it('should not set html to tabBar when template is false', async () => {
+    const phaManifest = {
+      routes: [
+        {
+          pageHeader: {
+            source: 'pages/header',
+          },
+          frames: [
+            {
+              name: 'frame1',
+              url: 'https://m.taobao.com',
+            },
+          ],
+        },
+      ],
+      tabBar: {
+        custom: true,
+        source: 'pages/CustomTabBar',
+        items: ['home', 'frame1'],
+      },
+    };
+
+    const manifest = await parseManifest(phaManifest, {
+      ...options,
+      template: false,
+    });
+
+    expect(manifest.pages![0]?.tab_header?.html).toBeUndefined();
   });
 
   it('error source without pages', async () => {

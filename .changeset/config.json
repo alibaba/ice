@@ -5,7 +5,10 @@
   "fixed": [],
   "linked": [],
   "access": "restricted",
-  "baseBranch": "main",
+  "baseBranch": "master",
   "updateInternalDependencies": "patch",
-  "ignore": []
+  "ignore": [
+    "@examples/*",
+    "ice-website-v3"
+  ]
 }

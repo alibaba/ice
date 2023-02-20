@@ -1,5 +1,5 @@
 {
-  "name": "disable-data-loader",
+  "name": "@examples/disable-data-loader",
   "version": "1.0.0",
   "private": true,
   "scripts": {

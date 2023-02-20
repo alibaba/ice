@@ -8,6 +8,7 @@ import getGlobalStyleGlobPattern from './utils/getGlobalStyleGlobPattern.js';
 import renderExportsTemplate from './utils/renderExportsTemplate.js';
 import { getFileExports } from './service/analyze.js';
 import { createLogger } from './utils/logger.js';
+import type RouteManifest from './utils/routeManifest.js';
 
 const logger = createLogger('watch-event');
 
@@ -17,10 +18,11 @@ interface Options {
   generator: Generator;
   cache: Map<string, string>;
   ctx: Context<Config>;
+  routeManifest: RouteManifest;
 }
 
 const getWatchEvents = (options: Options): WatchEvent[] => {
-  const { generator, targetDir, templateDir, cache, ctx } = options;
+  const { generator, targetDir, templateDir, cache, ctx, routeManifest } = options;
   const { userConfig: { routes: routesConfig, dataLoader }, configFile, rootDir } = ctx;
   const watchRoutes: WatchEvent = [
     /src\/pages\/?[\w*-:.$]+$/,
@@ -38,11 +40,13 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
               path.join(rootDir, targetDir, 'routes.ts'),
               routesRenderData,
             );
+            // Keep generate route manifest for avoid breaking change.
             generator.renderFile(
               path.join(templateDir, 'route-manifest.json.ejs'),
               path.join(rootDir, targetDir, 'route-manifest.json'),
               routesRenderData,
             );
+            routeManifest.setRoutes(routesRenderData.routes);
           }
           renderExportsTemplate({
             ...routesRenderData,

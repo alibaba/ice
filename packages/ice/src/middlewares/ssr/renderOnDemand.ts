@@ -9,11 +9,11 @@ import getRouterBasename from '../../utils/getRouterBasename.js';
 import warnOnHashRouterEnabled from '../../utils/warnOnHashRouterEnabled.js';
 import type { UserConfig } from '../../types/userConfig.js';
 import { logger } from '../../utils/logger.js';
-import getRouterManifest from '../../utils/getRouterManifest.js';
 import type ServerRunner from '../../service/ServerRunner.js';
+import type RouteManifest from '../../utils/routeManifest.js';
 
 interface Options {
-  rootDir: string;
+  routeManifest: RouteManifest;
   getAppConfig: () => Promise<any>;
   userConfig: UserConfig;
   documentOnly?: boolean;
@@ -26,14 +26,14 @@ export default function createRenderMiddleware(options: Options): Middleware {
   const {
     documentOnly,
     renderMode,
-    rootDir,
     getAppConfig,
     taskConfig,
     userConfig,
     serverRunner,
+    routeManifest,
   } = options;
   const middleware: ExpressRequestHandler = async function (req, res, next) {
-    const routes = getRouterManifest(rootDir);
+    const routes = routeManifest.getNestedRoute();
     const appConfig = (await getAppConfig()).default;
     if (appConfig?.router?.type === 'hash') {
       warnOnHashRouterEnabled(userConfig);
@@ -44,7 +44,7 @@ export default function createRenderMiddleware(options: Options): Middleware {
     if (matches.length || documentOnly) {
       let serverModule;
       try {
-        serverModule = await serverRunner.run(path.join(rootDir, '.ice/entry.server.ts'));
+        serverModule = await serverRunner.run('.ice/entry.server.ts');
       } catch (err) {
         logger.error(`server entry error: ${err}`);
         return;

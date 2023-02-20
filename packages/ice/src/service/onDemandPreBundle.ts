@@ -5,8 +5,8 @@ import findUp from 'find-up';
 import type { Plugin } from 'esbuild';
 import { logger } from '../utils/logger.js';
 import { CACHE_DIR } from '../constant.js';
-import { bundleDeps, resolvePackageEntry, getDepsCacheDir } from './preBundleCJSDeps.js';
-import type { DepsMetaData } from './preBundleCJSDeps.js';
+import { bundleDeps, resolvePackageESEntry, getDepsCacheDir } from './preBundleDeps.js';
+import type { PreBundleDepsMetaData } from './preBundleDeps.js';
 import { resolveId } from './analyze.js';
 
 const require = createRequire(import.meta.url);
@@ -22,6 +22,8 @@ interface PreBundleOptions {
   resolveId: string;
   ignores: string[];
   plugins?: Plugin[];
+  external?: string[];
+  define?: Record<string, string>;
 }
 
 export class RuntimeMeta {
@@ -29,7 +31,7 @@ export class RuntimeMeta {
   private alias: Record<string, string>;
   private ignores: string[];
   private plugins: Plugin[];
-  private metaData: DepsMetaData;
+  private metaData: PreBundleDepsMetaData;
   private cachePath: string;
 
   constructor(options: Omit<PreBundleOptions, 'pkgName' | 'resolveId'>) {
@@ -42,7 +44,7 @@ export class RuntimeMeta {
 
   async getDepsCache() {
     if (fse.pathExistsSync(this.cachePath)) {
-      this.metaData = await fse.readJSON(this.cachePath) as DepsMetaData;
+      this.metaData = await fse.readJSON(this.cachePath) as PreBundleDepsMetaData;
     } else {
       this.metaData = {
         deps: {},
@@ -68,7 +70,7 @@ export class RuntimeMeta {
       // If the package is aliased, we need to bundle the aliased package.
       try {
         const pkgPath = findUp.sync('package.json', { cwd: resolvePath });
-        resolved = resolvePackageEntry(pkgName, pkgPath, this.alias);
+        resolved = resolvePackageESEntry(pkgName, pkgPath, this.alias);
       } catch (err) {
         logger.error(`cant resolve package of path: ${resolved}`, err);
       }
@@ -99,7 +101,7 @@ export class RuntimeMeta {
 }
 
 export default async function preBundleDeps(options: PreBundleOptions): Promise<PreBundleResult> {
-  const { rootDir, pkgName, alias, ignores, plugins, resolveId } = options;
+  const { rootDir, pkgName, alias, ignores, plugins, resolveId, external, define } = options;
   const depsCacheDir = getDepsCacheDir(path.join(rootDir, CACHE_DIR));
   try {
     await bundleDeps({
@@ -108,6 +110,8 @@ export default async function preBundleDeps(options: PreBundleOptions): Promise<
       alias,
       ignores,
       plugins: plugins || [],
+      external,
+      define,
     });
   } catch (err) {
     logger.error('Failed to bundle dependencies.');

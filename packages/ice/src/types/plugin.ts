@@ -6,9 +6,10 @@ import type { NestedRouteManifest } from '@ice/route-manifest';
 import type { Config } from '@ice/webpack-config/esm/types';
 import type { AppConfig, AssetsManifest } from '@ice/runtime/esm/types';
 import type ServerCompileTask from '../utils/ServerCompileTask.js';
-import type { DeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport, Render } from './generator.js';
+import type { DeclarationData, TargetDeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport, Render } from './generator.js';
 
 type AddExport = (exportData: DeclarationData) => void;
+type AddTargetExport = (exportData: TargetDeclarationData) => void;
 type AddEntryCode = (callback: (code: string) => string) => void;
 type RemoveExport = (removeSource: string | string[]) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
@@ -126,6 +127,7 @@ export interface ExtendsPluginAPI {
   };
   generator: {
     addExport: AddExport;
+    addTargetExport: AddTargetExport;
     addExportTypes: AddExport;
     addRuntimeOptions: AddExport;
     removeRuntimeOptions: RemoveExport;
@@ -142,6 +144,8 @@ export interface ExtendsPluginAPI {
     removeEvent?: (name: string) => void;
   };
   serverCompileTask: ServerCompileTask;
+  getRouteManifest: () => Routes;
+  getFlattenRoutes: () => string[];
   dataCache: Map<string, string>;
 }
 
