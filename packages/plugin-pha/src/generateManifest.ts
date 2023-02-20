@@ -39,7 +39,7 @@ export async function getAppWorkerPath({
   getAppConfig,
   rootDir,
 }) {
-  const appConfig = getAppConfig(['phaManifest']);
+  const appConfig = await getAppConfig(['phaManifest']);
   let manifest = appConfig.phaManifest;
   return getAppWorkerUrl(manifest, path.join(rootDir, 'src'));
 }
