@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.4
+
+- [fix] app-worker is not compiled when set a custom name
+
 ## 1.1.3
 
 ### Patch Changes
