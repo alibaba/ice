@@ -12,7 +12,7 @@ const babelPlugins = [
   'babel-plugin-transform-jsx-condition',
   'babel-plugin-transform-jsx-memo',
   'babel-plugin-transform-jsx-slot',
-  ['babel-plugin-transform-jsx-fragment', { moduleName: 'react' }],
+  ['babel-plugin-transform-jsx-fragment', { moduleName: 'react', ignoreModuleCheck: true }],
   'babel-plugin-transform-jsx-class',
 ];
 
