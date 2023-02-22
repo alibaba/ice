@@ -352,6 +352,19 @@ const userConfig = [
     },
   },
   {
+    name: 'codeSplitting',
+    validation: 'boolean|string',
+    defaultValue: true,
+    setConfig: (config: Config, codeSplitting: UserConfig['codeSplitting']) => {
+      // When codeSplitting is set to false / router, do not config splitChunks.
+      if (codeSplitting === false || codeSplitting === 'router') {
+        config.splitChunks = false;
+      } else {
+        config.splitChunks = codeSplitting;
+      }
+    },
+  },
+  {
     name: 'crossOriginLoading',
     validation: 'boolean|string',
     defaultValue: false,

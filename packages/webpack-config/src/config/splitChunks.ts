@@ -28,7 +28,24 @@ const isModuleCSS = (module: { type: string }): boolean => {
     module.type === 'css/extract-css-chunks'
   );
 };
-const getSplitChunksConfig = (rootDir: string): webpack.Configuration['optimization']['splitChunks'] => {
+
+type SplitChunksConfig = webpack.Configuration['optimization']['splitChunks'];
+
+// Split all node_modules into a single vendors chunk.
+export const getVendorStrategy = (): SplitChunksConfig => {
+  return {
+    cacheGroups: {
+      vendors: {
+        test: /[\\/]node_modules[\\/]/,
+        priority: 10,
+        name: 'vendors',
+        chunks: 'async',
+      },
+    },
+  };
+};
+
+export const getChunksStrategy = (rootDir: string): SplitChunksConfig => {
   const frameworkPaths: string[] = [];
   const visitedFramework = new Set<string>();
 
@@ -96,6 +113,16 @@ const getSplitChunksConfig = (rootDir: string): webpack.Configuration['optimizat
     maxInitialRequests: 25,
     minSize: 20000,
   };
+};
+
+const getSplitChunksConfig = (rootDir: string, strategy: string | boolean): SplitChunksConfig => {
+  if (strategy === false) {
+    return { minChunks: Infinity, cacheGroups: { default: false } };
+  } else if (strategy === 'vendors') {
+    return getVendorStrategy();
+  }
+  // Default to chunks strategy.
+  return getChunksStrategy(rootDir);
 };
 
 export default getSplitChunksConfig;

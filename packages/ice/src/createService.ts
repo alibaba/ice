@@ -19,7 +19,7 @@ import test from './commands/test.js';
 import getWatchEvents from './getWatchEvents.js';
 import { setEnv, updateRuntimeEnv, getCoreEnvKeys } from './utils/runtimeEnv.js';
 import getRuntimeModules from './utils/getRuntimeModules.js';
-import { generateRoutesInfo } from './routes.js';
+import { generateRoutesInfo, getRoutesDefination } from './routes.js';
 import * as config from './config.js';
 import { RUNTIME_TMP_DIR, WEB, RUNTIME_EXPORTS } from './constant.js';
 import createSpinner from './utils/createSpinner.js';
@@ -196,6 +196,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const platformTaskConfig = taskConfigs[0];
 
   const iceRuntimePath = '@ice/runtime';
+  // Only when code splitting use the default strategy or set to `router`, the router will be lazy loaded.
+  const lazy = [true, 'router'].includes(userConfig.codeSplitting);
+  const { routeImports, routeDefination } = getRoutesDefination(routesInfo.routes, lazy);
   // add render data
   generator.setRenderData({
     ...routesInfo,
@@ -214,6 +217,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     entryCode,
     jsOutput: distType.includes('javascript'),
     dataLoader: userConfig.dataLoader,
+    routeImports,
+    routeDefination,
   });
   dataCache.set('routes', JSON.stringify(routesInfo));
   dataCache.set('hasExportAppData', hasExportAppData ? 'true' : '');
@@ -269,6 +274,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       templateDir: coreTemplate,
       cache: dataCache,
       routeManifest,
+      lazyRoutes: lazy,
       ctx,
     }),
   );
