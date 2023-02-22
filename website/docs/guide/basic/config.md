@@ -490,21 +490,21 @@ export default defineConfig(() => ({
 ### splitChunks @deprecated
 
 :::caution
-不再建议使用，能力由 codeSpiliting 替代。
+不再建议使用，能力由 codeSplitting 替代。
 小程序端不支持该配置。
 :::
 
 默认会根据模块体积自动拆分 chunks，有可能会出现多个 bundle。如果不希望打包产物出现过多 bundle ，可设置成 `false`。
 
-### codeSpiliting
+### codeSplitting
 
-- 类型：`boolean | 'vendor' | 'router'`
+- 类型：`boolean | 'vendors' | 'page'`
 - 默认值：`true`
 
-框架内置了三种分包策略分别为 `chunks`（默认策略，无需额外设置），`router` 和 `vendor`。
+框架内置了三种分包策略分别为 `chunks`（默认策略，无需额外设置），`page` 和 `vendors`。
 
-- `vendor` 策略：将异步 chunks 里的三方依赖统一打入到 vendor.js 中，避免重复，在依赖不变的情况下有效利用缓存。缺陷是如果项目过大会导致单文件尺寸过大。
-- `router` 策略：所有路由级别组件按需加载，效果同 `splitChunks: false`。
+- `vendors` 策略：将异步 chunks 里的三方依赖统一打入到 vendor.js 中，避免重复，在依赖不变的情况下有效利用缓存。缺陷是如果项目过大会导致单文件尺寸过大。
+- `page` 策略：所有路由级别组件按需加载，效果同 `splitChunks: false`。
 - `chunks` 策略：在路由级别组件按需加载的基础上，根据模块体积大小自动拆分 chunks，为框架默认推荐策略。
 
 如果存在特殊场景期望关闭分包能力，可以设置成 `false`。

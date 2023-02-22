@@ -197,7 +197,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   const iceRuntimePath = '@ice/runtime';
   // Only when code splitting use the default strategy or set to `router`, the router will be lazy loaded.
-  const lazy = [true, 'router'].includes(userConfig.codeSplitting);
+  const lazy = [true, 'page'].includes(userConfig.codeSplitting);
   const { routeImports, routeDefination } = getRoutesDefination(routesInfo.routes, lazy);
   // add render data
   generator.setRenderData({

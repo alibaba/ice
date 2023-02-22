@@ -357,7 +357,7 @@ const userConfig = [
     defaultValue: true,
     setConfig: (config: Config, codeSplitting: UserConfig['codeSplitting']) => {
       // When codeSplitting is set to false / router, do not config splitChunks.
-      if (codeSplitting === false || codeSplitting === 'router') {
+      if (codeSplitting === false || codeSplitting === 'page') {
         config.splitChunks = false;
       } else {
         config.splitChunks = codeSplitting;

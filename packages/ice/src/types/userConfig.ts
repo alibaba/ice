@@ -78,7 +78,7 @@ export interface UserConfig {
    * Please use `codeSplitting` instead
    */
   splitChunks?: boolean;
-  codeSplitting?: 'router' | 'vendor' | boolean;
+  codeSplitting?: 'page' | 'vendors' | boolean;
   dataLoader?: {
     fetcher?: Fetcher;
   } | Boolean;
