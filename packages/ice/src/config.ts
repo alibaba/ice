@@ -355,12 +355,15 @@ const userConfig = [
     name: 'codeSplitting',
     validation: 'boolean|string',
     defaultValue: true,
-    setConfig: (config: Config, codeSplitting: UserConfig['codeSplitting']) => {
-      // When codeSplitting is set to false / router, do not config splitChunks.
-      if (codeSplitting === false || codeSplitting === 'page') {
-        config.splitChunks = false;
-      } else {
-        config.splitChunks = codeSplitting;
+    setConfig: (config: Config, codeSplitting: UserConfig['codeSplitting'], context: UserConfigContext) => {
+      const { originalUserConfig } = context;
+      if (!('splitChunks' in originalUserConfig)) {
+        // When codeSplitting is set to false / router, do not config splitChunks.
+        if (codeSplitting === false || codeSplitting === 'page') {
+          config.splitChunks = false;
+        } else {
+          config.splitChunks = codeSplitting;
+        }
       }
     },
   },
