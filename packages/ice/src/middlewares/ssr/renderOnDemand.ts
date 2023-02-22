@@ -21,7 +21,7 @@ interface Options {
   serverRunner?: ServerRunner;
 }
 
-export default function createRenderMiddleware(options: Options): Middleware {
+export default function createOnDemandRenderMiddleware(options: Options): Middleware {
   const {
     documentOnly,
     renderMode,

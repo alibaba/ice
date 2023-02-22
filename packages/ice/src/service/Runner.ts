@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 import vm from 'vm';
 import { isNodeBuiltin } from 'mlly';
+import consola from 'consola';
 
 export interface ModuleResult {
   code?: string;
@@ -121,11 +122,11 @@ class Runner {
       if (callstack.includes(id)) {
         const depExports = this.moduleCache.get(id)?.exports;
         if (depExports) return depExports;
-        throw new Error(`[vite-node] Failed to resolve circular dependency, ${getStack()}`);
+        throw new Error(`[runner] Failed to resolve circular dependency, ${getStack()}`);
       }
       return await this.cachedRequest(id, callstack, namespace);
     } catch (e) {
-      console.error(e);
+      consola.error(e);
     }
   }
 
@@ -149,7 +150,6 @@ class Runner {
 
     const { href } = pathToFileURL(id);
     const meta = { url: href, ...this.importMeta };
-    console.log('meta ==>', meta);
     const exports = Object.create(null);
 
     // this prosxy is triggered only on exports.{name} and module.exports access
