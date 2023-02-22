@@ -21,8 +21,8 @@ export async function importStyle(code: string, options: TransformOptions): Prom
   let imports: readonly ImportSpecifier[] = [];
   try {
     imports = parse(code)[0];
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.log(error);
     return null;
   }
 
@@ -41,9 +41,9 @@ export async function importStyle(code: string, options: TransformOptions): Prom
         let exports: ExportSpecifier[] = [];
         try {
           exports = parse(exportSource)[1];
-        } catch (e) {
-          console.log(`error occur when analyze code: ${importStr}`);
-          console.log(e);
+        } catch (error) {
+          console.log(`Error occurred when analyzing code: ${importStr}`);
+          console.log(error);
           return;
         }
         exports.forEach(({ n }) => {

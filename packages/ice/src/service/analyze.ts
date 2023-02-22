@@ -133,10 +133,9 @@ export async function analyzeImports(files: string[], options: Options) {
           }
         })();
       }));
-    } catch (err) {
-      logger.error('[ERROR]', `optimize runtime failed when analyze ${filePath}`);
-      logger.debug(err);
-      throw err;
+    } catch (error) {
+      logger.error(`Optimize runtime failed when analyze ${filePath}`);
+      throw error;
     }
   }
 
@@ -150,8 +149,8 @@ export async function analyzeImports(files: string[], options: Options) {
       }));
     }
     return importSet;
-  } catch (err) {
-    logger.debug(err);
+  } catch (error) {
+    logger.debug(error);
     return false;
   }
 }
@@ -198,8 +197,8 @@ export async function scanImports(entries: string[], options?: ScanOptions) {
     );
     logger.debug(`Scan completed in ${(performance.now() - start).toFixed(2)}ms:`, deps);
   } catch (error) {
-    logger.error('Failed to scan module imports.', `\n${error.message}`);
-    logger.debug(error.stack);
+    logger.error('Failed to scan module imports.');
+    logger.debug(error);
   }
   return orderedDependencies(deps);
 }
@@ -221,12 +220,7 @@ type CachedRouteExports = { hash: string; exports: string[] };
 export async function getFileExports(options: FileOptions): Promise<CachedRouteExports['exports']> {
   const { rootDir, file } = options;
   const filePath = path.join(rootDir, file);
-  let cached: CachedRouteExports | null = null;
-  try {
-    cached = await getCache(rootDir, filePath);
-  } catch (err) {
-    // ignore cache error
-  }
+  const cached: CachedRouteExports | null = await getCache(rootDir, filePath);
   const fileHash = await getFileHash(filePath);
   if (!cached || cached.hash !== fileHash) {
     try {
@@ -244,24 +238,22 @@ export async function getFileExports(options: FileOptions): Promise<CachedRouteE
       for (let key in result.metafile.outputs) {
         let output = result.metafile.outputs[key];
         if (output.entryPoint) {
-          cached = {
+          // write cached
+          setCache(rootDir, filePath, {
             exports: output.exports,
             hash: fileHash,
-          };
-          // write cached
-          setCache(rootDir, filePath, cached);
+          });
           break;
         }
       }
     } catch (error) {
-      logger.error(`Failed to get route ${filePath} exports.`, `\n${error.message}`);
-      logger.debug(error.stack);
-      cached = {
+      logger.error(`Failed to get route ${filePath} exports.`);
+      logger.debug(error);
+      // rewrite cache
+      setCache(rootDir, filePath, {
         exports: [],
         hash: fileHash,
-      };
-      // rewrite cache
-      setCache(rootDir, filePath, cached);
+      });
     }
   }
   return cached.exports;

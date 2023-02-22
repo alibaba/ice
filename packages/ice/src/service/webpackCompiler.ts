@@ -118,7 +118,7 @@ async function webpackCompiler(options: {
   const firstWebpackConfig = webpackConfigs[0];
   firstWebpackConfig.plugins.push((compiler: webpack.Compiler) => {
     compiler.hooks.beforeCompile.tap('spinner', () => {
-      spinner.text = 'compiling...\n';
+      spinner.text = 'Compiling...\n';
     });
     compiler.hooks.afterEmit.tap('spinner', () => {
       spinner.stop();
@@ -128,9 +128,9 @@ async function webpackCompiler(options: {
   try {
     // @ts-ignore
     compiler = webpackBundler(webpackConfigs);
-  } catch (err) {
-    logger.error('Webpack compile error.');
-    logger.error(err.message || err);
+  } catch (error) {
+    logger.error('Webpack compile with errors.');
+    logger.error(error);
   }
 
   let isFirstCompile = true;

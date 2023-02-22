@@ -206,7 +206,8 @@ async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
   try {
     loadInitialDataInClient(dataloaderConfig);
   } catch (error) {
-    console.error('Load initial data error: ', error);
+    console.error('Load initial data error: ');
+    console.error(error);
   }
 
   (window as any).__ICE_DATA_LOADER__ = {

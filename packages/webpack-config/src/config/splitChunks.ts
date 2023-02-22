@@ -48,8 +48,8 @@ const getSplitChunksConfig = (rootDir: string): webpack.Configuration['optimizat
       for (const name of Object.keys(dependencies)) {
         addPackagePath(name, packageDir);
       }
-    } catch (_) {
-      // Do not error on resolve framework package
+    } catch (ignored) {
+      // Don't dispatch errors on resolving framework packages.
     }
   }
 
@@ -69,10 +69,10 @@ const getSplitChunksConfig = (rootDir: string): webpack.Configuration['optimizat
         priority: 40,
         enforce: true,
       },
-      // Fork from https://github.com/vercel/next.js/blob/1b2636763c39433dcc52756d158b4a444abc85cb/packages/next/build/webpack-config.ts#L1463-L1494
+      // Forked from https://github.com/vercel/next.js/blob/1b2636763c39433dcc52756d158b4a444abc85cb/packages/next/build/webpack-config.ts#L1463-L1494
       lib: {
         test(module: TestModule) {
-          return module.size() > 160000 && /node_modules[/\\]/.test(module.nameForCondition() || '');
+          return /node_modules[/\\]/.test(module.nameForCondition() || '') && module.size() > 160000;
         },
         name(module: NameModule) {
           const hash = crypto.createHash('sha1');

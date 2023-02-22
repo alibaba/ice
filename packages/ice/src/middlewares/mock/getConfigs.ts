@@ -47,7 +47,8 @@ export default function getConfigs(rootDir: string, exclude: string[] = []): Moc
     try {
       mockModule = require(mockFile);
     } catch (error) {
-      logger.error(`Failed to parse mock file ${mockFile}.\n${error.message}`);
+      logger.error(`Failed to parse mock file ${mockFile}`);
+      logger.error(error);
       return;
     }
     const config = mockModule.default || mockModule || {};

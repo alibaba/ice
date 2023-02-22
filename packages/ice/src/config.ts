@@ -272,8 +272,9 @@ const userConfig = [
           if (mainVersion < 7) {
             dependencyError = true;
           }
-        } catch (e) {
-          dependencyError = false;
+        } catch (ignored) {
+          // Ignoring error, but will warn later.
+          dependencyError = true;
         }
         const dependenciesMsg = 'Please check dependencies of eslint(> 7.0.0)';
 

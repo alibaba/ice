@@ -39,8 +39,9 @@ export default async function generateEntry(options: Options): Promise<EntryResu
   try {
     serverEntry = await dynamicImport(entry);
   } catch (err) {
-    // make error clearly, notice typeof err === 'string'
-    throw new Error(`import ${entry} error: ${err}`);
+    // Tip the procedure of error stack.
+    console.error(`Error occurred while importing ${entry}`);
+    throw err;
   }
 
   // When enable hash-router, only generate one html(index.html).

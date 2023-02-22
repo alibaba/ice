@@ -120,7 +120,7 @@ export async function packDependency(options: Options): Promise<void> {
     if (declaration) {
       if (pkgJson.types) {
         dtsName = 'index.d.ts';
-        console.log(chalk.green(`bundle dts file for ${pkgName || file}`));
+        console.log(chalk.green(`Bundling typescript definition file for ${pkgName || file}`));
         dts.bundle({
           name: pkgJson.name,
           outputAsModuleFolder: true,
@@ -138,19 +138,19 @@ export async function packDependency(options: Options): Promise<void> {
           dtsName = typeJson.types.endsWith('.d.ts') ? typeJson.types : `${typeJson.types}.d.ts`;
           // copy dts to package root
           const files = glob.sync('**/*.d.ts', { cwd: typesRoot, nodir: true });
-          console.log(chalk.green(`copy dts file for ${pkgName || file}`));
+          console.log(chalk.green(`Coping typescript definition file for ${pkgName || file}`));
           for (const file of files) {
             const from = path.join(typesRoot, file);
             const to = path.join(targetPath, file);
             await fs.mkdirp(path.dirname(to));
             await fs.copyFile(from, to);
           }
-        } catch (err) {
-          console.log(chalk.yellow(`can not find dts file of ${pkgName}`));
+        } catch (error) {
+          console.log(chalk.yellow(`Can't find typescript definition file of ${pkgName}`));
         }
       }
     }
-    console.log(chalk.green(`create package.json for ${pkgName || file}`));
+    console.log(chalk.green(`Create package.json for ${pkgName || file}`));
     fs.writeJSONSync(path.join(targetPath, 'package.json'), {
       name: pkgJson.name,
       main: 'index.js',

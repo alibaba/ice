@@ -297,9 +297,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             spinner: buildSpinner,
           });
         }
-      } catch (err) {
+      } catch (error) {
         buildSpinner.stop();
-        throw err;
+        throw error;
       }
     },
   };

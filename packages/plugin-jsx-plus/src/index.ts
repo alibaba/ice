@@ -1,5 +1,6 @@
 import path from 'path';
 import { createRequire } from 'module';
+import { logger } from '@ice/app';
 import type { Plugin } from '@ice/app/esm/types';
 import { transformSync } from '@babel/core';
 
@@ -113,7 +114,8 @@ const plugin: Plugin<JSXPlusOptions> = (options: JSXPlusOptions = {}) => ({
           const { code, map } = transformSync(source, options);
           return { code, map };
         } catch (compileError) {
-          console.error(compileError);
+          logger.error('[plugin-jsx-plus]', `Transform with error of file: ${id}`);
+          logger.error(compileError);
           return { code: source, map: null };
         }
       }

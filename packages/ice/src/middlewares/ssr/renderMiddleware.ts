@@ -55,9 +55,10 @@ export default function createRenderMiddleware(options: Options): Middleware {
       try {
         delete require.cache[serverEntry];
         serverModule = await dynamicImport(serverEntry, true);
-      } catch (err) {
-        // make error clearly, notice typeof err === 'string'
-        logger.error(`import ${serverEntry} error: ${err}`);
+      } catch (error) {
+        // Do not intercept the error, let the next middleware handle it.
+        logger.error(`Error occurred while importing ${serverEntry}`);
+        logger.error(error);
         return;
       }
       const requestContext: ServerContext = {
