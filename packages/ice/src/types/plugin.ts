@@ -5,6 +5,7 @@ import type { esbuild } from '@ice/bundles';
 import type { NestedRouteManifest } from '@ice/route-manifest';
 import type { Config } from '@ice/webpack-config/esm/types';
 import type { AppConfig, AssetsManifest } from '@ice/runtime/esm/types';
+import type ServerCompileTask from '../utils/ServerCompileTask.js';
 import type { DeclarationData, TargetDeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport, Render } from './generator.js';
 
 type AddExport = (exportData: DeclarationData) => void;
@@ -37,22 +38,24 @@ type ServerCompilerBuildOptions = Pick<
 
 export type ServerBuildResult = Partial<esbuild.BuildResult & { serverEntry: string; error: any }>;
 
+export interface CompilerOptions {
+  swc?: Config['swcOptions'];
+  preBundle?: boolean;
+  externalDependencies?: boolean;
+  transformEnv?: boolean;
+  compilationInfo?: {
+    assetsManifest?: AssetsManifest;
+  };
+  redirectImports?: Config['redirectImports'];
+  removeOutputs?: boolean;
+  runtimeDefineVars?: Record<string, string>;
+  enableEnv?: boolean;
+  isServer?: boolean;
+}
+
 export type ServerCompiler = (
   buildOptions: ServerCompilerBuildOptions,
-  options?: {
-    swc?: Config['swcOptions'];
-    preBundle?: boolean;
-    externalDependencies?: boolean;
-    transformEnv?: boolean;
-    compilationInfo?: {
-      assetsManifest?: AssetsManifest;
-    };
-    redirectImports?: Config['redirectImports'];
-    removeOutputs?: boolean;
-    runtimeDefineVars?: Record<string, string>;
-    enableEnv?: boolean;
-    isServer?: boolean;
-  }
+  options?: CompilerOptions,
 ) => Promise<ServerBuildResult>;
 export type WatchEvent = [
   pattern: RegExp | string,
@@ -140,12 +143,9 @@ export interface ExtendsPluginAPI {
     addEvent?: (watchEvent: WatchEvent) => void;
     removeEvent?: (name: string) => void;
   };
+  serverCompileTask: ServerCompileTask;
   getRouteManifest: () => Routes;
   getFlattenRoutes: () => string[];
-  serverCompileTask: {
-    set: (task: ReturnType<ServerCompiler>) => void;
-    get: () => ReturnType<ServerCompiler>;
-  };
   dataCache: Map<string, string>;
 }
 

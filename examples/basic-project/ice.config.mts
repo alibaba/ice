@@ -9,6 +9,10 @@ export default defineConfig(() => ({
   syntaxFeatures: {
     exportDefaultFrom: true,
   },
+  server: {
+    onDemand: true,
+    format: 'esm',
+  },
   alias: {
     '@comp': './src/components',
   },

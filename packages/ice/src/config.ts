@@ -135,6 +135,7 @@ const userConfig = [
     name: 'server',
     validation: 'object',
     defaultValue: {
+      onDemand: false,
       format: 'esm',
       bundle: false,
     },

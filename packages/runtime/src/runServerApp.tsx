@@ -217,7 +217,6 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
   }
 
   const matches = matchRoutes(routes, location, finalBasename);
-
   const routePath = getCurrentRoutePath(matches);
   if (documentOnly) {
     return renderDocument({ matches, routePath, renderOptions });
