@@ -79,16 +79,19 @@ export function withSuspense(Component) {
   return (props: SuspenseProps) => {
     const { fallback, id, ...componentProps } = props;
 
-    const suspenseState = {
+    const [suspenseState, updateSuspenseData] = React.useState({
       id: id,
       data: null,
       done: false,
       promise: null,
       error: null,
-      update: (value) => {
-        Object.assign(suspenseState, value);
-      },
-    };
+      update,
+    });
+
+    function update(value) {
+        const newState = Object.assign(suspenseState, value);
+        updateSuspenseData(newState);
+    }
 
     return (
       <React.Suspense fallback={fallback || null}>
