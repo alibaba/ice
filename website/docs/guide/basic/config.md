@@ -498,7 +498,7 @@ export default defineConfig(() => ({
 
 ### codeSplitting
 
-- 类型：`boolean | 'vendors' | 'page'`
+- 类型：`boolean | 'vendors' | 'page' | 'chunks'`
 - 默认值：`true`
 
 框架内置了三种分包策略分别为 `chunks`（默认策略，无需额外设置），`page` 和 `vendors`。
