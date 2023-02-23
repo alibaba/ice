@@ -88,7 +88,7 @@ export function parseRoute(routeItem: RouteItem, parentId?: string, parentPath?:
   const { path: routePath, component, children } = routeItem;
   const id = createRouteId(component);
   let index;
-  const currentPath = path.join(parentPath || '/', routePath);
+  const currentPath = path.join(parentPath || '/', routePath).split(path.sep).join('/');
   const isRootPath = currentPath === '/';
   if (!children && isRootPath) {
     index = true;
