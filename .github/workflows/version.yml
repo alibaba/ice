@@ -38,6 +38,7 @@ jobs:
           version: pnpm run version
           commit: 'chore: update versions'
           title: 'chore: update versions'
+          setupGitUser: 'ClarkXia'
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
