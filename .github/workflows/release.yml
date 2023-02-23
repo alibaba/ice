@@ -43,5 +43,5 @@ jobs:
           createGithubReleases: false
           setupGitUser: 'ClarkXia'
         env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
