@@ -14,6 +14,7 @@ const { decamelize } = humps;
 interface TransformOptions {
   isRoot?: boolean;
   parentKey?: string;
+  isPrefetchData?: boolean;
 }
 
 export interface ParseOptions {
@@ -37,8 +38,18 @@ interface TabConfig {
 
 type MixedPage = PHAPage & PageConfig;
 
+function getIsPrefetchData(originIsPrefetchData: boolean, currentKey: string, currentParentKey: string) {
+  return originIsPrefetchData || (
+    currentKey === 'data' &&
+    (
+      currentParentKey === 'data_prefetch' ||
+      currentParentKey === 'dataPrefetch'
+    )
+  );
+}
+
 export function transformManifestKeys(manifest: Manifest, options?: TransformOptions): PHAManifest {
-  const { parentKey, isRoot } = options;
+  const { parentKey, isRoot, isPrefetchData } = options;
   const data = {};
 
   for (let key in manifest) {
@@ -54,7 +65,7 @@ export function transformManifestKeys(manifest: Manifest, options?: TransformOpt
     }
 
     let transformKey = key;
-    if (!camelizeKeys.includes(key)) {
+    if (!camelizeKeys.includes(key) && !isPrefetchData) {
       transformKey = decamelize(key);
     }
 
@@ -77,7 +88,14 @@ export function transformManifestKeys(manifest: Manifest, options?: TransformOpt
               item.prefetchKey = 'mtop';
             }
           }
-          return transformManifestKeys(item, { isRoot: false, parentKey: key });
+          return transformManifestKeys(
+            item,
+            {
+              isRoot: false,
+              parentKey: key,
+              isPrefetchData: getIsPrefetchData(isPrefetchData, key, parentKey),
+            },
+          );
         }
         return item;
       });
@@ -85,7 +103,13 @@ export function transformManifestKeys(manifest: Manifest, options?: TransformOpt
       // Keys of requestHeaders should not be transformed.
       data[transformKey] = value;
     } else if (typeof value === 'object' && !(parentKey === 'dataPrefetch' && (key === 'header' || key === 'data'))) {
-      data[transformKey] = transformManifestKeys(value, { isRoot: false, parentKey: key });
+      data[transformKey] = transformManifestKeys(
+        value,
+        {
+          isRoot: false,
+          parentKey: key,
+          isPrefetchData: getIsPrefetchData(isPrefetchData, key, parentKey),
+        });
     } else {
       data[transformKey] = value;
     }
@@ -391,7 +415,7 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
     // Delete manifest routes after transform.
     delete manifest.routes;
   }
-  return transformManifestKeys(manifest, { isRoot: true });
+  return transformManifestKeys(manifest, { isRoot: true, isPrefetchData: false });
 }
 
 export function getMultipleManifest(manifest: PHAManifest): Record<string, PHAManifest> {
