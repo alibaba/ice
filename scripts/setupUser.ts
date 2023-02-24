@@ -4,12 +4,12 @@ const setupUser = async () => {
   await exec('git', [
     'config',
     'user.name',
-    '"github-actions[bot]"',
+    '"ClarkXia"',
   ]);
   await exec('git', [
     'config',
     'user.email',
-    '"github-actions[bot]@users.noreply.github.com"',
+    '"xiawenwu41@gmail.com"',
   ]);
 };
 
