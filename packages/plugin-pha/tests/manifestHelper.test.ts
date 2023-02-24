@@ -542,7 +542,7 @@ describe('parse manifest', async () => {
     expect(manifest.pages![2].data_prefetch).toBeUndefined();
   });
 
-  it.only('prefetch of dataloader should not be decamelized', async () => {
+  it('prefetch of dataloader should not be decamelized', async () => {
     const phaManifest = {
       title: 'test',
       routes: [
