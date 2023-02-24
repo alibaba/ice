@@ -7,7 +7,7 @@ import cloneDeep from 'lodash.clonedeep';
 import { matchRoutes } from '@remix-run/router';
 import * as htmlparser2 from 'htmlparser2';
 import { decamelizeKeys, camelizeKeys, validPageConfigKeys } from './constants.js';
-import type { Page, PageHeader, PageConfig, Manifest, PHAManifest, Frame, PHAFrame } from './types';
+import type { Page, PageHeader, PageConfig, Manifest, PHAManifest, Frame } from './types';
 
 const { decamelize } = humps;
 
