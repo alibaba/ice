@@ -94,7 +94,9 @@ export function parseRoute(routeItem: RouteItem, parentId?: string, parentPath?:
     index = true;
   }
   const route: ConfigRoute = {
-    path: routePath,
+    // An absolute child route path must start with the combined path of all its parent routes
+    // Replace the first slash with an empty string to compatible with the route definintion, e.g. /foo
+    path: parentId ? routePath.replace(/^\//, '') : routePath,
     index,
     id,
     parentId,
