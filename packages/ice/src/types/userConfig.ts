@@ -74,7 +74,12 @@ export interface UserConfig {
   experimental?: Config['experimental'];
   transform?: UnpluginOptions['transform'];
   syntaxFeatures?: SyntaxFeatures;
+  /**
+   * @deprecated
+   * Please use `codeSplitting` instead
+   */
   splitChunks?: boolean;
+  codeSplitting?: 'page' | 'vendors' | boolean;
   dataLoader?: {
     fetcher?: Fetcher;
   } | Boolean;

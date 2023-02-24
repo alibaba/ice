@@ -353,6 +353,24 @@ const userConfig = [
     },
   },
   {
+    name: 'codeSplitting',
+    validation: 'boolean|string',
+    defaultValue: true,
+    setConfig: (config: Config, codeSplitting: UserConfig['codeSplitting'], context: UserConfigContext) => {
+      const { originalUserConfig } = context;
+      if ('splitChunks' in originalUserConfig) {
+        logger.warn('splitChunks is deprecated, please use codeSplitting instead.https://ice.work/docs/guide/basic/config#codesplitting');
+      } else {
+        // When codeSplitting is set to false / router, do not config splitChunks.
+        if (codeSplitting === false || codeSplitting === 'page') {
+          config.splitChunks = false;
+        } else {
+          config.splitChunks = codeSplitting;
+        }
+      }
+    },
+  },
+  {
     name: 'crossOriginLoading',
     validation: 'boolean|string',
     defaultValue: false,
