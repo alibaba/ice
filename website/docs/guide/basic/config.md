@@ -482,6 +482,15 @@ export default defineConfig(() => ({
 }));
 ```
 
+:::caution
+同一个路由组件只能分配一条路由规则，即同时执行以下语句时，仅生效后执行的逻辑。
+
+```ts
+route('/about-me', 'about.tsx');
+route('/about-you', 'about.tsx');
+```
+:::
+
 ### sourceMap
 
 - 类型：`boolean | string`
