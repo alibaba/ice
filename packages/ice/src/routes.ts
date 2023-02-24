@@ -84,7 +84,8 @@ export function getRoutesDefination(nestRouteManifest: NestedRouteManifest[], la
   }, '');
 
   return {
-    routeImports, routeDefination,
+    routeImports,
+    routeDefination,
   };
 }
 
