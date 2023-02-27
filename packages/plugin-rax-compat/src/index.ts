@@ -70,17 +70,18 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
         compilationConfig: (source: string) => {
           const isRaxComponent = /from\s['"]rax['"]/.test(source);
           const hasJSXComment = source.indexOf('@jsx createElement') !== -1;
-          if (hasJSXComment) {
-            return {
-              jsc: {
-                transform: {
-                  react: {
-                    runtime: 'classic',
+          if (isRaxComponent) {
+            if (hasJSXComment) {
+              return {
+                jsc: {
+                  transform: {
+                    react: {
+                      runtime: 'classic',
+                    },
                   },
                 },
-              },
-            };
-          } else if (isRaxComponent) {
+              };
+            }
             return {
               jsc: {
                 transform: {
