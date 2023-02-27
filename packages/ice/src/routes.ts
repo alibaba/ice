@@ -10,7 +10,7 @@ export async function generateRoutesInfo(rootDir: string, routesConfig: UserConf
     rootDir,
     routesConfig.ignoreFiles,
     routesConfig.defineRoutes,
-    routesConfig.config
+    routesConfig.config,
   );
 
   const analyzeTasks = Object.keys(routeManifest).map(async (key) => {
