@@ -1,4 +1,4 @@
-import type { Plugin } from '@ice/app/esm/types';
+import type { Plugin } from '@ice/app/types';
 import type { Request, Interceptors, InterceptorRequest, InterceptorResponse } from './types';
 
 // @ts-ignore
@@ -24,7 +24,7 @@ const plugin: Plugin<PluginRequestOptions | void> = () => ({
       type: false,
     });
   },
-  runtime: `${PLUGIN_NAME}/esm/runtime`,
+  runtime: `${PLUGIN_NAME}/runtime`,
   staticRuntime: true,
   keepExports: ['requestConfig'],
 });

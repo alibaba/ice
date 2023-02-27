@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "ice start",
+    "start": "ice start --new test --c xxx",
     "build": "ice build",
     "build:splitChunks": "ice build --config splitChunks.config.mts"
   },

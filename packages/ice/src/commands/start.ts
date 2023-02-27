@@ -3,7 +3,7 @@ import detectPort from 'detect-port';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import type { Context, TaskConfig } from 'build-scripts';
 import type { StatsError, Compiler, Configuration } from 'webpack';
-import type { Config } from '@ice/webpack-config/esm/types';
+import type { Config } from '@ice/webpack-config/types';
 import type { AppConfig, RenderMode } from '@ice/runtime';
 import type ora from '@ice/bundles/compiled/ora/index.js';
 import WebpackDevServer from '@ice/bundles/compiled/webpack-dev-server/lib/Server.js';

@@ -4,7 +4,7 @@ import type { ServerContext, RenderMode } from '@ice/runtime';
 // @ts-expect-error FIXME: esm type error
 import matchRoutes from '@ice/runtime/matchRoutes';
 import type { TaskConfig } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/esm/types';
+import type { Config } from '@ice/webpack-config/types';
 import type { ExtendsPluginAPI } from '../../types/plugin.js';
 import getRouterBasename from '../../utils/getRouterBasename.js';
 import dynamicImport from '../../utils/dynamicImport.js';

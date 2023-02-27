@@ -5,7 +5,7 @@ import { getCompilerPlugins, getCSSModuleLocalIdent } from '@ice/webpack-config'
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
 import MagicString from '@ice/bundles/compiled/magic-string/index.js';
 import type { TaskConfig } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/esm/types';
+import type { Config } from '@ice/webpack-config/types';
 import type { PluginBuild, OnResolveOptions, Plugin, OnLoadResult, OnResolveResult } from 'esbuild';
 import emptyCSSPlugin from '../esbuild/emptyCSS.js';
 import ignorePlugin from '../esbuild/ignore.js';

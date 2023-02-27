@@ -3,7 +3,7 @@ import type { ServerContext, RenderMode } from '@ice/runtime';
 // @ts-expect-error FIXME: esm type error
 import matchRoutes from '@ice/runtime/matchRoutes';
 import type { TaskConfig } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/esm/types';
+import type { Config } from '@ice/webpack-config/types';
 import getRouterBasename from '../../utils/getRouterBasename.js';
 import warnOnHashRouterEnabled from '../../utils/warnOnHashRouterEnabled.js';
 import type { UserConfig } from '../../types/userConfig.js';
