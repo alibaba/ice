@@ -17,8 +17,8 @@ export type Compiler = (options: {
 }, buildOptions: Parameters<ServerCompiler>[1]) => Promise<string>;
 
 interface PluginOptions {
-  template: boolean;
-  preload: boolean;
+  template?: boolean;
+  preload?: boolean;
 }
 
 function getDevPath(url: string): string {
