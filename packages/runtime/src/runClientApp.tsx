@@ -79,6 +79,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     basename,
     routePath,
     renderMode,
+    requestContext,
   };
 
   const runtime = new Runtime(appContext, runtimeOptions);

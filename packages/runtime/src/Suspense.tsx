@@ -1,5 +1,7 @@
 import * as React from 'react';
 import type { ReactNode } from 'react';
+import { useAppContext } from './AppContext.js';
+import type { RequestContext } from './types.js';
 
 const LOADER = '__ICE_SUSPENSE_LOADER__';
 const isClient = typeof window !== 'undefined' && 'onload' in window;
@@ -13,11 +15,13 @@ interface SuspenseState {
   update: Function;
 }
 
-type Request = () => Promise<any>;
+type Request = (ctx: RequestContext) => Promise<any>;
 
 const SuspenseContext = React.createContext<SuspenseState | undefined>(undefined);
 
 export function useSuspenseData(request?: Request) {
+  const appContext = useAppContext();
+  const { requestContext } = appContext;
   const suspenseState = React.useContext(SuspenseContext);
 
   const { data, done, promise, update, error, id } = suspenseState;
@@ -46,7 +50,7 @@ export function useSuspenseData(request?: Request) {
   }
 
   // send request and throw promise
-  const thenable = request();
+  const thenable = request(requestContext);
 
   thenable.then((response) => {
     update({

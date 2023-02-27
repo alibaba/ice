@@ -139,7 +139,7 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
       pipe(res, {
         onShellError: async (err) => {
           if (renderOptions.disableFallback) {
-            throw err;
+            reject(err);
           }
 
           // downgrade to CSR.
@@ -149,9 +149,9 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
           resolve();
         },
         onError: async (err) => {
-          // onError triggered after shell ready, should not downgrade to csr.
+          // onError triggered after shell ready, should not downgrade to csr
+          // and should not be throw to break the render process
           console.error('PipeToResponse error.', err);
-          reject(err);
         },
         onAllReady: () => {
           resolve();
@@ -202,6 +202,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     assetsManifest,
     basename: finalBasename,
     matches: [],
+    requestContext,
   };
   const runtime = new Runtime(appContext, runtimeOptions);
   runtime.setAppRouter(DefaultAppRouter);

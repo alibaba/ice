@@ -43,7 +43,7 @@ const fakeData = [
   'I like marshmallows',
 ];
 
-async function getCommentsData() {
+async function getCommentsData(ctx) {
   console.log('load comments');
 
   if (process.env.ICE_CORE_SSR === 'true') {
@@ -51,6 +51,7 @@ async function getCommentsData() {
       setTimeout(() => reject('get data error'), 100);
     });
   } else {
+    console.log('client ctx', ctx);
     await new Promise<any>((resolve) => {
       setTimeout(() => resolve(null), 100);
     });
