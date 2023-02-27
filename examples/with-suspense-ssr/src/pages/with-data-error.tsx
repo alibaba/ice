@@ -8,7 +8,7 @@ export default function Home() {
     <div>
       <h2>Home Page</h2>
       <SuspenseComments id="comments" fallback={<Loading />} />
-      <Footer />
+      <Footer id="footer" />
     </div>
   );
 }
