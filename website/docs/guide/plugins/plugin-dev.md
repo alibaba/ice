@@ -17,7 +17,7 @@ ice.js 提供了插件机制，在提供丰富的框架能力的基础上也可�
 ice.js 插件本质是一个 JS 模块，官方推荐以 TS 进行开发以获得良好的类型提示：
 
 ```ts
-import type { Plugin } from '@ice/app/types';
+import type { Plugin } from '@ice/app/typings';
 
 interface PluginOptions {
   id: string;
@@ -40,7 +40,7 @@ export default plugin;
 假设在项目根目录下有一个自定义插件 `my-plugin`：
 
 ```ts title="my-plugin.ts"
-import type { Plugin } from '@ice/app/types';
+import type { Plugin } from '@ice/app/typings';
 
 const plugin: Plugin = () => ({
   name: 'my-plugin',
@@ -112,7 +112,7 @@ export default defineConfig(() => ({
 <TabItem value="index.ts" label="src/index.ts">
 
 ```ts
-import type { Plugin } from '@ice/app/types';
+import type { Plugin } from '@ice/app/typings';
 
 const plugin: Plugin = () => ({
   name: '@ice/my-plugin',
@@ -470,7 +470,7 @@ export default () => ({
 插件运行时可以定制框架的运行时能力：
 
 ```ts
-import type { Plugin } from '@ice/app/types';
+import type { Plugin } from '@ice/app/typings';
 const plugin: Plugin = () => ({
   name: 'plugin-name'
   runtime: '/absolute/path/to/runtime',

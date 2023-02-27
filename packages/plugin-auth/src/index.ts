@@ -1,4 +1,4 @@
-import type { Plugin } from '@ice/app/types';
+import type { Plugin } from '@ice/app/typings';
 
 const PLUGIN_NAME = '@ice/plugin-auth';
 

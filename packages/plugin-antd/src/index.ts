@@ -1,5 +1,5 @@
 import { createRequire } from 'module';
-import type { Plugin } from '@ice/app/types';
+import type { Plugin } from '@ice/app/typings';
 import styleImportPlugin from '@ice/style-import';
 
 interface PluginOptions {

@@ -17,7 +17,7 @@
     "!esm/**/*.map",
     "templates",
     "openChrome.applescript",
-    "types.d.ts"
+    "*.d.ts"
   ],
   "engines": {
     "node": ">=14.19.0",

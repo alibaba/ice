@@ -9,7 +9,8 @@
   "type": "module",
   "files": [
     "esm",
-    "!esm/**/*.map"
+    "!esm/**/*.map",
+    "*.d.ts"
   ],
   "exports": {
     ".": {

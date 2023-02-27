@@ -1,4 +1,4 @@
-import type { Plugin } from '@ice/app/types';
+import type { Plugin } from '@ice/app/typings';
 // @ts-expect-error cjs module error
 import ExtractCssAssetsWebpackPlugin from 'extract-css-assets-webpack-plugin';
 import consola from 'consola';
