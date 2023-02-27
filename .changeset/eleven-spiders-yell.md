@@ -1,5 +1,5 @@
 ---
-'@ice/plugin-pha': major
+'@ice/plugin-pha': patch
 ---
 
 fix: support plugin-pha interface optional
