@@ -26,30 +26,32 @@ export function useSuspenseData(request?: Request) {
 
   const { data, done, promise, update, error, id } = suspenseState;
 
-  // use data from server side directly when hydrate.
+  // 1. Use data from server side directly when hydrate.
   if (isClient && (window[LOADER] as Map<string, any>) && window[LOADER].has(id)) {
     return window[LOADER].get(id);
   }
 
+  // 2. Check data request error, if error throw it to react.
   if (error) {
     throw error;
   }
 
+  // 3. If request is done, return data.
   if (done) {
     return data;
   }
 
-  // request is pending.
+  // 4. If request is pending, throw the promise to react.
   if (promise) {
     throw promise;
   }
 
-  // when called by Data, request is null.
+  // 5. If no request, return null.
   if (!request) {
     return null;
   }
 
-  // send request and throw promise
+  // 6. Create a promise for the request and throw it to react.
   const thenable = request(requestContext);
 
   thenable.then((response) => {
