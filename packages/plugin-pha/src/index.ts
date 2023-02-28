@@ -2,7 +2,7 @@ import * as path from 'path';
 import { fileURLToPath } from 'url';
 import consola from 'consola';
 import chalk from 'chalk';
-import type { Plugin, GetAppConfig, GetRoutesConfig, GetDataloaderConfig, ServerCompiler } from '@ice/app/typings';
+import type { Plugin, GetAppConfig, GetRoutesConfig, GetDataloaderConfig, ServerCompiler } from '@ice/app/types';
 import generateManifest, { getAppWorkerPath } from './generateManifest.js';
 import createPHAMiddleware from './phaMiddleware.js';
 

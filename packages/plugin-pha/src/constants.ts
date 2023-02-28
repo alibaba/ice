@@ -1,4 +1,4 @@
-import type { PluginData } from '@ice/app/typings';
+import type { PluginData } from '@ice/app/types';
 import type { Context } from 'build-scripts';
 
 // Keys of appConfig  need transform to manifest.

@@ -1,4 +1,4 @@
-import type { Plugin } from '@ice/app/typings';
+import type { Plugin } from '@ice/app/types';
 
 interface PluginOptions {
   locales: string | string[];
