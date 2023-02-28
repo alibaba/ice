@@ -40,3 +40,4 @@ jobs:
         with:
           BRANCH: gh-pages
           FOLDER: website/build
+          clean-exclude: ice.png
