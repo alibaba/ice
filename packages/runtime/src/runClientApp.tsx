@@ -55,6 +55,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     downgrade,
     documentOnly,
     renderMode,
+    serverData,
   } = windowContext;
 
   const requestContext = getRequestContext(window.location);
@@ -80,6 +81,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routePath,
     renderMode,
     requestContext,
+    serverData,
   };
 
   const runtime = new Runtime(appContext, runtimeOptions);

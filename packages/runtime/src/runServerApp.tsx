@@ -48,6 +48,7 @@ interface RenderOptions {
   };
   runtimeOptions?: Record<string, any>;
   distType?: Array<'html' | 'javascript'>;
+  serverData?: any;
 }
 
 interface Piper {
@@ -183,6 +184,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     runtimeModules,
     renderMode,
     runtimeOptions,
+    serverData,
   } = renderOptions;
   const finalBasename = serverOnlyBasename || basename;
   const location = getLocation(req.url);
@@ -203,6 +205,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     basename: finalBasename,
     matches: [],
     requestContext,
+    serverData,
   };
   const runtime = new Runtime(appContext, runtimeOptions);
   runtime.setAppRouter(DefaultAppRouter);
@@ -353,6 +356,7 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
     Document,
     basename,
     routesConfig = {},
+    serverData,
   } = renderOptions;
 
   const routesData = null;
@@ -379,12 +383,12 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
     routePath,
     basename,
     downgrade,
+    serverData,
   };
 
   const documentContext = {
     main: null,
   };
-
 
   const htmlStr = ReactDOMServer.renderToString(
     <AppContextProvider value={appContext}>

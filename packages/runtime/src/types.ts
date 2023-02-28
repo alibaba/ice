@@ -75,6 +75,7 @@ export interface RoutesData {
 export interface AppContext {
   appConfig: AppConfig;
   appData: any;
+  serverData?: any;
   assetsManifest?: AssetsManifest;
   routesData?: RoutesData;
   routesConfig?: RoutesConfig;
@@ -93,7 +94,7 @@ export interface AppContext {
 
 export type WindowContext = Pick<
   AppContext,
-  'appData' | 'routesData' | 'routesConfig' | 'routePath' | 'downgrade' | 'matchedIds' | 'documentOnly' | 'renderMode'
+  'appData' | 'routesData' | 'routesConfig' | 'routePath' | 'downgrade' | 'matchedIds' | 'documentOnly' | 'renderMode' | 'serverData'
 >;
 
 export type Renderer = (

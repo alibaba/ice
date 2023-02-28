@@ -39,6 +39,7 @@ interface RenderOptions {
   disableFallback?: boolean;
   distType?: DistType;
   assetsManifest?: any;
+  serverData?: any;
 }
 
 export async function renderToHTML(requestContext, options: RenderOptions = {}) {
@@ -68,7 +69,7 @@ export async function renderToEntry(requestContext, options: RenderOptions = {})
 <% } -%>
 
 function mergeOptions(options) {
-  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback, distType } = options;
+  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback, distType, serverData } = options;
 
   return {
     app,
@@ -84,6 +85,7 @@ function mergeOptions(options) {
     disableFallback,
     routesConfig,
     distType,
+    serverData,
 <% if (runtimeOptions.exports) { -%>
     runtimeOptions: {
       <%- runtimeOptions.exports %>
