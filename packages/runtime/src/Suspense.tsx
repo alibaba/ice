@@ -95,8 +95,10 @@ export function withSuspense(Component) {
     });
 
     function update(value) {
-        const newState = Object.assign(suspenseState, value);
-        updateSuspenseData(newState);
+      // For SSR, setState is not working, so here we need to update the state manually.
+      const newState = Object.assign(suspenseState, value);
+      // For CSR.
+      updateSuspenseData(newState);
     }
 
     return (
