@@ -6,7 +6,12 @@ import { getFileExports } from './service/analyze.js';
 import formatPath from './utils/formatPath.js';
 
 export async function generateRoutesInfo(rootDir: string, routesConfig: UserConfig['routes'] = {}) {
-  const routeManifest = generateRouteManifest(rootDir, routesConfig.ignoreFiles, routesConfig.defineRoutes);
+  const routeManifest = generateRouteManifest(
+    rootDir,
+    routesConfig.ignoreFiles,
+    routesConfig.defineRoutes,
+    routesConfig.config,
+  );
 
   const analyzeTasks = Object.keys(routeManifest).map(async (key) => {
     const routeItem = routeManifest[key];

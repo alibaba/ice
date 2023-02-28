@@ -2,7 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import minimatch from 'minimatch';
-import { createRouteId, defineRoutes, normalizeSlashes } from './routes.js';
+import { createComponentName, createRouteId, defineRoutes, normalizeSlashes } from './routes.js';
 import type { RouteManifest, DefineRouteFunction, NestedRouteManifest, ConfigRoute } from './routes.js';
 
 export type {
@@ -11,6 +11,12 @@ export type {
   DefineRouteFunction,
   ConfigRoute,
 };
+
+export interface RouteItem {
+  path: string;
+  component: string;
+  children?: RouteItem[];
+}
 
 const validRouteChar = ['-', '\\w', '/', ':', '*'];
 
@@ -28,10 +34,12 @@ export function isRouteModuleFile(filename: string): boolean {
   return routeModuleExts.includes(path.extname(filename));
 }
 
+
 export function generateRouteManifest(
   rootDir: string,
   ignoreFiles: string[] = [],
   defineExtraRoutes?: (defineRoute: DefineRouteFunction) => void,
+  routeConfig?: RouteItem[],
 ) {
   const srcDir = path.join(rootDir, 'src');
   const routeManifest: RouteManifest = {};
@@ -61,7 +69,48 @@ export function generateRouteManifest(
       };
     }
   }
+
+  // Add routes by routes config.
+  if (routeConfig) {
+    routeConfig.forEach((routeItem) => {
+      const routes = parseRoute(routeItem);
+      routes.forEach((route) => {
+        routeManifest[route.id] = route;
+      });
+    });
+  }
+
   return routeManifest;
+}
+
+export function parseRoute(routeItem: RouteItem, parentId?: string, parentPath?: string) {
+  const routes = [];
+  const { path: routePath, component, children } = routeItem;
+  const id = createRouteId(component);
+  let index;
+  const currentPath = path.join(parentPath || '/', routePath).split(path.sep).join('/');
+  const isRootPath = currentPath === '/';
+  if (!children && isRootPath) {
+    index = true;
+  }
+  const route: ConfigRoute = {
+    // An absolute child route path must start with the combined path of all its parent routes
+    // Replace the first slash with an empty string to compatible with the route definintion, e.g. /foo
+    path: parentId && routePath !== '/' ? routePath.replace(/^\//, '') : routePath,
+    index,
+    id,
+    parentId,
+    file: component,
+    componentName: createComponentName(id),
+    layout: !!children,
+  };
+  routes.push(route);
+  if (children) {
+    children.forEach((childRoute) => {
+      routes.push(...parseRoute(childRoute, id, currentPath));
+    });
+  }
+  return routes;
 }
 
 export function formatNestedRouteManifest(routeManifest: RouteManifest, parentId?: string): NestedRouteManifest[] {
@@ -133,7 +182,7 @@ function defineConventionalRoutes(
       if (uniqueRouteId) {
         if (uniqueRoutes.has(uniqueRouteId)) {
           throw new Error(
-            `Path ${JSON.stringify(fullPath)} defined by route ${JSON.stringify(routeFilePath)} 
+            `Path ${JSON.stringify(fullPath)} defined by route ${JSON.stringify(routeFilePath)}
             conflicts with route ${JSON.stringify(uniqueRoutes.get(uniqueRouteId))}`,
           );
         } else {

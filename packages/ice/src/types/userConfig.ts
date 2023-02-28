@@ -1,4 +1,4 @@
-import type { DefineRouteFunction } from '@ice/route-manifest';
+import type { DefineRouteFunction, RouteItem } from '@ice/route-manifest';
 import type { PluginList } from 'build-scripts';
 import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import type { ProcessOptions } from '@ice/bundles';
@@ -51,6 +51,7 @@ export interface UserConfig {
   routes?: {
     ignoreFiles?: string[];
     defineRoutes?: (defineRoute: DefineRouteFunction) => void;
+    config?: RouteItem[];
     injectInitialEntry?: boolean;
   };
   plugins?: PluginList<Config, OverwritePluginAPI>;
