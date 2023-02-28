@@ -35,7 +35,8 @@
   "types": "./esm/index.d.ts",
   "files": [
     "esm",
-    "!esm/**/*.map"
+    "!esm/**/*.map",
+    "*.d.ts"
   ],
   "dependencies": {
     "@ice/store": "^2.0.3",

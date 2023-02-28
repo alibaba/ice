@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as mrmime from 'mrmime';
 import fs from 'fs-extra';
 import type { PluginBuild } from 'esbuild';
-import type { AssetsManifest } from '@ice/runtime/esm/types';
+import type { AssetsManifest } from '@ice/runtime/types';
 
 export const ASSET_TYPES = [
   // images

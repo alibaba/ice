@@ -9,7 +9,8 @@
   "type": "module",
   "files": [
     "esm",
-    "!esm/**/*.map"
+    "!esm/**/*.map",
+    "*.d.ts"
   ],
   "exports": {
     ".": {
@@ -26,6 +27,11 @@
       "types": "./esm/runtime/framework.d.ts",
       "import": "./esm/runtime/framework.js",
       "default": "./esm/runtime/framework.js"
+    },
+    "./types": {
+      "types": "./esm/types.d.ts",
+      "import": "./esm/types.js",
+      "default": "./esm/types.js"
     },
     "./esm/types": {
       "types": "./esm/types.d.ts",

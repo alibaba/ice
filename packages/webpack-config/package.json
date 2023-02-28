@@ -12,7 +12,8 @@
   },
   "files": [
     "esm",
-    "!esm/**/*.map"
+    "!esm/**/*.map",
+    "*.d.ts"
   ],
   "dependencies": {
     "@ice/bundles": "0.1.4",

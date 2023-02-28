@@ -45,7 +45,8 @@
   "types": "./esm/index.d.ts",
   "files": [
     "esm",
-    "!esm/**/*.map"
+    "!esm/**/*.map",
+    "*.d.ts"
   ],
   "dependencies": {
     "ahooks": "^3.0.0",

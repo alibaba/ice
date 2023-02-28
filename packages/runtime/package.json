@@ -20,7 +20,8 @@
   "files": [
     "esm",
     "!esm/**/*.map",
-    "templates"
+    "templates",
+    "*.d.ts"
   ],
   "author": "ICE",
   "license": "MIT",

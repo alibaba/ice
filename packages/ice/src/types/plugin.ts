@@ -3,8 +3,8 @@ import type { _Plugin, CommandArgs, TaskConfig } from 'build-scripts';
 import type { Configuration, Stats, WebpackOptionsNormalized } from '@ice/bundles/compiled/webpack';
 import type { esbuild } from '@ice/bundles';
 import type { NestedRouteManifest } from '@ice/route-manifest';
-import type { Config } from '@ice/webpack-config/esm/types';
-import type { AppConfig, AssetsManifest } from '@ice/runtime/esm/types';
+import type { Config } from '@ice/webpack-config/types';
+import type { AppConfig, AssetsManifest } from '@ice/runtime/types';
 import type ServerCompileTask from '../utils/ServerCompileTask.js';
 import type { DeclarationData, TargetDeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport, Render } from './generator.js';
 

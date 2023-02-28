@@ -9,7 +9,8 @@
   "files": [
     "esm",
     "!esm/**/*.map",
-    "template"
+    "template",
+    "*.d.ts"
   ],
   "scripts": {
     "watch": "tsc -w",

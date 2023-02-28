@@ -90,10 +90,11 @@ export function generateDeclaration(exportList: Array<TargetDeclarationData | De
       specifiers.forEach((specifierStr) => {
         if (alias && alias[specifierStr]) {
           exportDeclarations.push(`${alias[specifierStr]}: ${specifierStr}${symbol}`);
+          exportNames.push(alias[specifierStr]);
         } else {
           exportDeclarations.push(`${specifierStr}${symbol}`);
+          exportNames.push(specifierStr);
         }
-        exportNames.push(specifierStr);
       });
     }
   });

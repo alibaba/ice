@@ -1,6 +1,6 @@
 import * as path from 'path';
 import type { Context } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/esm/types';
+import type { Config } from '@ice/webpack-config/types';
 import type { WatchEvent } from './types/plugin.js';
 import { generateRoutesInfo, getRoutesDefination } from './routes.js';
 import type Generator from './service/runtimeGenerator';
