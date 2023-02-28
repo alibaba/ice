@@ -58,19 +58,19 @@ interface RequestConfig<D> extends AxiosRequestConfig<D> {
   withFullResponse?: boolean;
 }
 
-export interface RequestProps<T = any, D = any> {
-  get: (url: string, config?: RequestConfig<D>) => Promise<T>;
-  delete: (url: string, config?: RequestConfig<D>) => Promise<T>;
-  head: (url: string, config?: RequestConfig<D>) => Promise<T>;
-  options: (url: string, config?: RequestConfig<D>) => Promise<T>;
-  post: (url: string, data?: D, config?: RequestConfig<D>) => Promise<T>;
-  put: (url: string, data?: D, config?: RequestConfig<D>) => Promise<T>;
-  patch: (url: string, data?: D, config?: RequestConfig<D>) => Promise<T>;
+export interface RequestProps {
+  get: <T = any, D = any>(url: string, config?: RequestConfig<D>) => Promise<T>;
+  delete: <T = any, D = any>(url: string, config?: RequestConfig<D>) => Promise<T>;
+  head: <T = any, D = any>(url: string, config?: RequestConfig<D>) => Promise<T>;
+  options: <T = any, D = any>(url: string, config?: RequestConfig<D>) => Promise<T>;
+  post: <T = any, D = any>(url: string, data?: D, config?: RequestConfig<D>) => Promise<T>;
+  put: <T = any, D = any>(url: string, data?: D, config?: RequestConfig<D>) => Promise<T>;
+  patch: <T = any, D = any>(url: string, data?: D, config?: RequestConfig<D>) => Promise<T>;
 }
 
-interface Request<T, D> extends RequestProps<T, D> {
-  (options: RequestConfig<D>): Promise<T>;
-  (url: string, config?: RequestConfig<D>): Promise<T>;
+interface Request extends RequestProps {
+  <T = any, D = any>(options: RequestConfig<D>): Promise<T>;
+  <T = any, D = any>(url: string, config?: RequestConfig<D>): Promise<T>;
   Cancel: CancelStatic;
   CancelToken: CancelTokenStatic;
   isCancel: (value: any) => boolean;
@@ -80,7 +80,7 @@ interface Request<T, D> extends RequestProps<T, D> {
  * Request, return response.data | response
  * @param options Reference: https://github.com/axios/axios#request-config
  */
-const request = async function <T, D>(options: RequestConfig<D>): Promise<T> {
+const request = async function <T = any, D = any>(options: RequestConfig<D>): Promise<T> {
   try {
     const instanceName = options.instanceName ? options.instanceName : 'default';
     const axiosInstance = createAxiosInstance()[instanceName];
@@ -96,7 +96,7 @@ const request = async function <T, D>(options: RequestConfig<D>): Promise<T> {
     console.error(error);
     throw error;
   }
-};
+} as Request;
 
 // Provide aliases for supported request methods
 ['delete', 'get', 'head', 'options'].forEach((method) => {
