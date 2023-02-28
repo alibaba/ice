@@ -144,7 +144,8 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
           }
 
           // downgrade to CSR.
-          console.error('PipeToResponse onShellError, downgrade to CSR.', err);
+          console.error('PipeToResponse onShellError, downgrade to CSR.');
+          console.error(err);
           const result = await fallback();
           sendResult(res, result);
           resolve();
@@ -152,7 +153,8 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
         onError: async (err) => {
           // onError triggered after shell ready, should not downgrade to csr
           // and should not be throw to break the render process
-          console.error('PipeToResponse error.', err);
+          console.error('PipeToResponse error.');
+          console.error(err);
         },
         onAllReady: () => {
           resolve();
