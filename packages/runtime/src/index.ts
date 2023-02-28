@@ -18,7 +18,6 @@ import type {
   DistType,
   DataLoaderConfig,
   RouteWrapperConfig,
-  AssetsManifest,
 } from './types.js';
 import Runtime from './runtime.js';
 import App from './App.js';
@@ -116,5 +115,4 @@ export type {
   ScriptsType,
   DataType,
   MainType,
-  AssetsManifest,
 };
