@@ -341,21 +341,22 @@ const {
 
 ```ts
 import { useRequest } from 'ice';
-// 用法 1：传入字符串
-const { data, error, loading } = useRequest('/api/repo');
-
-// 用法 2：传入配置对象
-const { data, error, loading } = useRequest({
+// 用法 1：传入 Axios 配置对象
+const { data, error, loading, request } = useRequest({
   url: '/api/repo',
   method: 'get',
 });
 
-// 用法 3：传入 service 函数
-const { data, error, loading, request } = useRequest((id) => ({
+request();
+
+// 用法 2：传入 service 函数
+const { data, error, loading, request } = useRequest((id) => Promise.resolve({
   url: '/api/repo',
   method: 'get',
   data: { id },
-});
+}));
+
+request();
 ```
 
 更多使用方式详见 [ahooks/useRequest](https://ahooks.js.org/zh-CN/hooks/use-request/index)

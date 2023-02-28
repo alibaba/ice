@@ -17,12 +17,11 @@ export function useRequest<TData, TParams extends any[]>(
   } else {
     const options = service as AxiosRequestConfig;
     s = async (...extraOptions: TParams) => {
-      const response = await request({ ...options, ...extraOptions });
-      return response.data as TData;
+      return request({ ...options, ...extraOptions });
     };
   }
   const req = useAhooksRequest(s, {
-    // Note：
+    // Note:
     // ahooks/useRequest manual default to true.
     // ICE3/useRequest Default to manual request.
     manual: true,
