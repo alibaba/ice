@@ -1,6 +1,6 @@
 {
   "name": "@ice/runtime",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Runtime module for ice.js",
   "type": "module",
   "types": "./esm/index.d.ts",
@@ -20,7 +20,8 @@
   "files": [
     "esm",
     "!esm/**/*.map",
-    "templates"
+    "templates",
+    "*.d.ts"
   ],
   "author": "ICE",
   "license": "MIT",
@@ -50,5 +51,8 @@
   "peerDependencies": {
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

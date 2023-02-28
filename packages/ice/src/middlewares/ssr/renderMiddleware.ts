@@ -4,25 +4,25 @@ import type { ServerContext, RenderMode } from '@ice/runtime';
 // @ts-expect-error FIXME: esm type error
 import matchRoutes from '@ice/runtime/matchRoutes';
 import type { TaskConfig } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/esm/types';
+import type { Config } from '@ice/webpack-config/types';
 import type { ExtendsPluginAPI } from '../../types/plugin.js';
 import getRouterBasename from '../../utils/getRouterBasename.js';
 import dynamicImport from '../../utils/dynamicImport.js';
 import warnOnHashRouterEnabled from '../../utils/warnOnHashRouterEnabled.js';
 import type { UserConfig } from '../../types/userConfig.js';
 import { logger } from '../../utils/logger.js';
-import getRouterManifest from '../../utils/getRouterManifest.js';
+import type RouteManifest from '../../utils/routeManifest.js';
 
 const require = createRequire(import.meta.url);
 
 interface Options {
   serverCompileTask: ExtendsPluginAPI['serverCompileTask'];
-  rootDir: string;
   getAppConfig: () => Promise<any>;
   userConfig: UserConfig;
   documentOnly?: boolean;
   renderMode?: RenderMode;
   taskConfig?: TaskConfig<Config>;
+  routeManifest: RouteManifest;
 }
 
 export default function createRenderMiddleware(options: Options): Middleware {
@@ -30,13 +30,13 @@ export default function createRenderMiddleware(options: Options): Middleware {
     documentOnly,
     renderMode,
     serverCompileTask,
-    rootDir,
     getAppConfig,
     taskConfig,
     userConfig,
+    routeManifest,
   } = options;
   const middleware: ExpressRequestHandler = async function (req, res, next) {
-    const routes = getRouterManifest(rootDir);
+    const routes = routeManifest.getNestedRoute();
     const appConfig = (await getAppConfig()).default;
     if (appConfig?.router?.type === 'hash') {
       warnOnHashRouterEnabled(userConfig);

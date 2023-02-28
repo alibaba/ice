@@ -7,8 +7,29 @@ import getWebTask from './task.js';
 
 const plugin: Plugin = () => ({
   name: 'plugin-web',
-  setup: ({ registerTask, onHook, context, dataCache }) => {
+  setup: ({ registerTask, onHook, context, dataCache, generator }) => {
     const { rootDir, commandArgs, command, userConfig } = context;
+
+    generator.addTargetExport({
+      specifier: [
+        'Meta',
+        'Title',
+        'Links',
+        'Scripts',
+        'Data',
+        'Main',
+      ],
+      types: [
+        'MetaType',
+        'TitleType',
+        'LinksType',
+        'ScriptsType',
+        'DataType',
+        'MainType',
+      ],
+      source: '@ice/runtime',
+      target: 'web',
+    });
 
     registerTask(WEB, getWebTask({ rootDir, command, dataCache, userConfig }));
 

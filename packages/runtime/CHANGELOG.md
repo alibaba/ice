@@ -1,5 +1,17 @@
 # @ice/runtime
 
+## 1.1.2
+
+### Patch Changes
+
+- 8eee4f0d: feat: export types
+
+## 1.1.2-beta.0
+
+### Patch Changes
+
+- 7e38619b: feat: export types
+
 ## v1.1.1
 
 - [chore] update usage of @ice/jsx-runtime
@@ -7,7 +19,7 @@
 ## v1.1.0
 
 - [feat] suspense ssr
-- [feat] support render js bundle as entry 
+- [feat] support render js bundle as entry
 - [fix] compatible with empty meta element
 
 ## v1.0.5

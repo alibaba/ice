@@ -1,5 +1,6 @@
 {
-  "name": "with-keep-alive",
+  "name": "@examples/with-keep-alive",
+  "private": true,
   "version": "1.0.0",
   "scripts": {
     "start": "ice start",

@@ -1,5 +1,5 @@
 import { defineAppConfig } from 'ice';
-import { defineFrameworkConfig } from '@ice/plugin-icestark/esm/types';
+import { defineFrameworkConfig } from '@ice/plugin-icestark/types';
 import FrameworkLayout from '@/components/FrameworkLayout';
 
 export const icestark = defineFrameworkConfig(() => ({

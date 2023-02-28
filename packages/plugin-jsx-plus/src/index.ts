@@ -1,6 +1,6 @@
 import path from 'path';
 import { createRequire } from 'module';
-import type { Plugin } from '@ice/app/esm/types';
+import type { Plugin } from '@ice/app/types';
 import { transformSync } from '@babel/core';
 
 const require = createRequire(import.meta.url);
@@ -12,7 +12,7 @@ const babelPlugins = [
   'babel-plugin-transform-jsx-condition',
   'babel-plugin-transform-jsx-memo',
   'babel-plugin-transform-jsx-slot',
-  ['babel-plugin-transform-jsx-fragment', { moduleName: 'react' }],
+  ['babel-plugin-transform-jsx-fragment', { moduleName: 'react', ignoreModuleCheck: true }],
   'babel-plugin-transform-jsx-class',
 ];
 

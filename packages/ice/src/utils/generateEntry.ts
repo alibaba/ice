@@ -3,10 +3,9 @@ import fse from 'fs-extra';
 import consola from 'consola';
 import type { ServerContext, RenderMode, AppConfig, DistType } from '@ice/runtime';
 import type { UserConfig } from '../types/userConfig.js';
-import getRoutePaths from './getRoutePaths.js';
 import dynamicImport from './dynamicImport.js';
 import { logger } from './logger.js';
-import getRouterManifest from './getRouterManifest.js';
+import type RouteManifest from './routeManifest.js';
 
 interface Options {
   rootDir: string;
@@ -16,6 +15,7 @@ interface Options {
   routeType: AppConfig['router']['type'];
   renderMode?: RenderMode;
   distType: UserConfig['output']['distType'];
+  routeManifest: RouteManifest;
 }
 
 interface EntryResult {
@@ -30,6 +30,7 @@ export default async function generateEntry(options: Options): Promise<EntryResu
     documentOnly,
     renderMode,
     routeType,
+    routeManifest,
   } = options;
 
   const distType = typeof options.distType === 'string' ? [options.distType] : options.distType;
@@ -42,10 +43,8 @@ export default async function generateEntry(options: Options): Promise<EntryResu
     throw new Error(`import ${entry} error: ${err}`);
   }
 
-  // Read the latest routes info.
-  const routes = getRouterManifest(rootDir);
   // When enable hash-router, only generate one html(index.html).
-  const paths = routeType === 'hash' ? ['/'] : getRoutePaths(routes);
+  const paths = routeType === 'hash' ? ['/'] : routeManifest.getFlattenRoute();
   const outputPaths = [];
   for (let i = 0, n = paths.length; i < n; i++) {
     const routePath = paths[i];

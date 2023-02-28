@@ -2,7 +2,7 @@ import * as path from 'path';
 import { fileURLToPath } from 'url';
 import consola from 'consola';
 import chalk from 'chalk';
-import type { Plugin, GetAppConfig, GetRoutesConfig, GetDataloaderConfig, ServerCompiler } from '@ice/app/esm/types';
+import type { Plugin, GetAppConfig, GetRoutesConfig, GetDataloaderConfig, ServerCompiler } from '@ice/app/types';
 import generateManifest, { getAppWorkerPath } from './generateManifest.js';
 import createPHAMiddleware from './phaMiddleware.js';
 
@@ -17,7 +17,8 @@ export type Compiler = (options: {
 }, buildOptions: Parameters<ServerCompiler>[1]) => Promise<string>;
 
 interface PluginOptions {
-  template: boolean;
+  template?: boolean;
+  preload?: boolean;
 }
 
 function getDevPath(url: string): string {
@@ -27,7 +28,7 @@ function getDevPath(url: string): string {
 const plugin: Plugin<PluginOptions> = (options) => ({
   name: '@ice/plugin-pha',
   setup: ({ onGetConfig, onHook, context, serverCompileTask, generator, getAllPlugin }) => {
-    const { template = true } = options || {};
+    const { template = true, preload = false } = options || {};
     const { command, rootDir } = context;
 
     // Get variable blows from task config.
@@ -41,8 +42,9 @@ const plugin: Plugin<PluginOptions> = (options) => ({
 
     generator.addRouteTypes({
       specifier: ['PageConfig'],
+      alias: { PageConfig: 'PHAPageConfig' },
       type: true,
-      source: '@ice/plugin-pha/esm/types',
+      source: '@ice/plugin-pha/types',
     });
 
     // TODO: get route manifest by API.
@@ -99,35 +101,40 @@ const plugin: Plugin<PluginOptions> = (options) => ({
           urlPrefix,
           serverEntry: serverEntryRef.current,
           template,
+          preload,
           routeManifest,
         },
       });
     });
 
-    onHook('after.start.compile', async ({ urls }) => {
-      // Log out pha dev urls.
-      const lanUrl = urls.lanUrlForTerminal;
-      const appConfig = await getAppConfig(['phaManifest']);
-      const { phaManifest } = appConfig || {};
-      const phaDevUrls = [];
-      if (phaManifest?.tabBar) {
-        phaDevUrls.push(`${lanUrl}manifest.json?pha=true`);
-      } else if (phaManifest?.routes?.length > 0) {
-        phaManifest.routes.forEach((route) => {
-          if (typeof route === 'string') {
-            phaDevUrls.push(`${lanUrl}${route}-manifest.json?pha=true`);
-          } else if (typeof route?.frames![0] === 'string') {
-            phaDevUrls.push(`${lanUrl}${route.frames[0]}-manifest.json?pha=true`);
-          }
+    onHook('after.start.compile', async ({ isSuccessful, isFirstCompile, urls }) => {
+      // Only print logout message once when build is successful.
+      // See also @ice/app -> plugins/web.ts
+      if (isSuccessful && isFirstCompile) {
+        // Log out pha dev urls.
+        const lanUrl = urls.lanUrlForTerminal;
+        const appConfig = await getAppConfig(['phaManifest']);
+        const { phaManifest } = appConfig || {};
+        const phaDevUrls = [];
+        if (phaManifest?.tabBar) {
+          phaDevUrls.push(`${lanUrl}manifest.json?pha=true`);
+        } else if (phaManifest?.routes?.length > 0) {
+          phaManifest.routes.forEach((route) => {
+            if (typeof route === 'string') {
+              phaDevUrls.push(`${lanUrl}${route}-manifest.json?pha=true`);
+            } else if (typeof route?.frames![0] === 'string') {
+              phaDevUrls.push(`${lanUrl}${route.frames[0]}-manifest.json?pha=true`);
+            }
+          });
+        }
+        let logoutMessage = '\n';
+        logoutMessage += chalk.green(' Serve PHA Manifest at:\n');
+        phaDevUrls.forEach((url) => {
+          logoutMessage += `\n   ${chalk.underline.white(url)}`;
         });
-      }
-      let logoutMessage = '\n';
-      logoutMessage += chalk.green(' Serve PHA Manifest at:\n');
-      phaDevUrls.forEach((url) => {
-        logoutMessage += `\n   ${chalk.underline.white(url)}`;
-      });
-      if (phaDevUrls.length > 0) {
-        consola.log(`${logoutMessage}\n`);
+        if (phaDevUrls.length > 0) {
+          consola.log(`${logoutMessage}\n`);
+        }
       }
     });
 
@@ -149,6 +156,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
             publicPath,
             urlPrefix,
             template,
+            preload,
             routeManifest,
           },
         });

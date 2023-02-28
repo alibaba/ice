@@ -1,5 +1,6 @@
 {
-  "name": "with-web-worker",
+  "name": "@examples/with-web-worker",
+  "private": true,
   "version": "1.0.0",
   "scripts": {
     "start": "ice start",

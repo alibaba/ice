@@ -1,5 +1,6 @@
 {
-  "name": "memory-router",
+  "name": "@examples/memory-router",
+  "private": true,
   "version": "1.0.0",
   "scripts": {
     "start": "ice start",

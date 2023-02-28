@@ -49,6 +49,8 @@ function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Option
         incremental,
       },
       {
+        // The server bundle will external all the dependencies when the format type is esm,
+        // so we need to prebundle all the dependencies first to avoid errors of importing non-js file in ESM.
         preBundle: format === 'esm' && (ssr || ssg),
         swc: {
           keepExports: (!ssg && !ssr) ? ['pageConfig'] : null,

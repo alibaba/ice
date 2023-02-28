@@ -1,5 +1,7 @@
 import path from 'path';
-import { swc, swcPluginRemoveExport, swcPluginKeepExport, coreJsPath } from '@ice/bundles';
+import { swc, swcPluginRemoveExport, swcPluginKeepExport, swcPluginNodeTransform, coreJsPath } from '@ice/bundles';
+import browserslist from 'browserslist';
+import consola from 'consola';
 import type { SwcConfig, ReactConfig } from '@ice/bundles';
 import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
@@ -11,6 +13,7 @@ const { merge } = lodash;
 type JSXSuffix = 'jsx' | 'tsx';
 
 interface Options {
+  rootDir: string;
   mode: 'development' | 'production' | 'none';
   fastRefresh: boolean;
   compileIncludes?: (string | RegExp)[];
@@ -26,6 +29,7 @@ const formatId = (id: string) => id.split(path.sep).join('/');
 
 const compilationPlugin = (options: Options): UnpluginOptions => {
   const {
+    rootDir,
     sourceMap,
     mode,
     fastRefresh,
@@ -37,13 +41,13 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
     enableEnv,
   } = options;
 
-  const { removeExportExprs, compilationConfig, keepExports, getRoutePaths } = swcOptions;
+  const { removeExportExprs, compilationConfig, keepExports, getRoutePaths, nodeTransform } = swcOptions;
 
   const compileRegex = compileIncludes.map((includeRule) => {
     return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);
   });
 
-  function isRouteEntry(id) {
+  function isRouteEntry(id: string) {
     const routes = getRoutePaths();
 
     const matched = routes.find(route => {
@@ -53,7 +57,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
     return !!matched;
   }
 
-  function isAppEntry(id) {
+  function isAppEntry(id: string) {
     return /(.*)src\/app.(ts|tsx|js|jsx)/.test(id);
   }
 
@@ -78,7 +82,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
         sourceMaps: !!sourceMap,
       };
 
-      const commonOptions = getJsxTransformOptions({ suffix, fastRefresh, polyfill, enableEnv });
+      const commonOptions = getJsxTransformOptions({ rootDir, mode, suffix, fastRefresh, polyfill, enableEnv });
 
       // auto detect development mode
       if (
@@ -98,6 +102,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
       }
 
       const swcPlugins = [];
+
       // handle app.tsx and page entries only
       if (removeExportExprs) {
         if (isRouteEntry(id) || isAppEntry(id)) {
@@ -131,6 +136,9 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
         }
       }
 
+      if (nodeTransform) {
+        swcPlugins.push([swcPluginNodeTransform, {}]);
+      }
       if (swcPlugins.length > 0) {
         merge(programmaticOptions, {
           jsc: {
@@ -170,6 +178,8 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
 };
 
 interface GetJsxTransformOptions {
+  rootDir: string;
+  mode: Options['mode'];
   suffix: JSXSuffix;
   fastRefresh: boolean;
   polyfill: Config['polyfill'];
@@ -181,6 +191,8 @@ function getJsxTransformOptions({
   fastRefresh,
   polyfill,
   enableEnv,
+  mode,
+  rootDir,
 }: GetJsxTransformOptions) {
   const reactTransformConfig: ReactConfig = {
     refresh: fastRefresh,
@@ -211,6 +223,11 @@ function getJsxTransformOptions({
         coreJs: '3.26',
       } : {}),
     };
+    const supportBrowsers = getSupportedBrowsers(rootDir, mode === 'development');
+    if (supportBrowsers) {
+      // Fix issue of https://github.com/swc-project/swc/issues/3365
+      commonOptions.env.targets = supportBrowsers;
+    }
   } else {
     // Set target `es2022` for default transform when env is false.
     commonOptions.jsc.target = 'es2022';
@@ -247,6 +264,22 @@ function getJsxTransformOptions({
     return tsOptions;
   }
   return commonOptions;
+}
+
+function getSupportedBrowsers(
+  dir: string,
+  isDevelopment: boolean,
+): string[] | undefined {
+  let browsers: any;
+  try {
+    browsers = browserslist.loadConfig({
+      path: dir,
+      env: isDevelopment ? 'development' : 'production',
+    });
+  } catch {
+    consola.debug('[browsers]', 'fail to load config of browsers');
+  }
+  return browsers;
 }
 
 export default compilationPlugin;

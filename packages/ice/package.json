@@ -17,7 +17,7 @@
     "!esm/**/*.map",
     "templates",
     "openChrome.applescript",
-    "types.d.ts"
+    "*.d.ts"
   ],
   "engines": {
     "node": ">=14.19.0",
@@ -39,8 +39,8 @@
     "@babel/types": "7.18.10",
     "@ice/bundles": "0.1.4",
     "@ice/route-manifest": "1.0.0",
-    "@ice/runtime": "^1.0.0",
-    "@ice/webpack-config": "1.0.6",
+    "@ice/runtime": "^1.1.2",
+    "@ice/webpack-config": "1.0.7",
     "@swc/helpers": "0.4.14",
     "@types/express": "^4.17.14",
     "address": "^1.1.2",
@@ -54,24 +54,26 @@
     "dotenv": "^16.0.0",
     "dotenv-expand": "^8.0.3",
     "ejs": "^3.1.6",
+    "estree-walker": "^3.0.2",
     "fast-glob": "^3.2.11",
     "find-up": "^5.0.0",
     "fs-extra": "^10.0.0",
     "micromatch": "^4.0.5",
+    "mlly": "^1.1.0",
     "mrmime": "^1.0.0",
     "open": "^8.4.0",
     "path-to-regexp": "^6.2.0",
     "regenerator-runtime": "^0.13.0",
     "resolve.exports": "^1.1.0",
     "semver": "^7.3.5",
-    "temp": "^0.9.4"
+    "temp": "^0.9.4",
+    "yargs-parser": "^21.1.1"
   },
   "devDependencies": {
     "@types/babel__generator": "^7.6.4",
     "@types/babel__traverse": "^7.17.1",
     "@types/cross-spawn": "^6.0.2",
     "@types/ejs": "^3.1.0",
-    "@types/estree": "^0.0.51",
     "@types/less": "^3.0.3",
     "@types/micromatch": "^4.0.2",
     "@types/multer": "^1.4.7",
@@ -89,5 +91,8 @@
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

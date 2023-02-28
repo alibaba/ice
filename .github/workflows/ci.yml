@@ -14,13 +14,8 @@ jobs:
         os: [ubuntu-latest, windows-latest]
       fail-fast: false
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Set branch name
-        run: echo >>$GITHUB_ENV BRANCH_NAME=${GITHUB_REF#refs/heads/}
-      - name: Echo branch name
-        run: echo ${BRANCH_NAME}
+      - name: Checkout Branch
+        uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
@@ -49,8 +44,6 @@ jobs:
       - run: npm run test
         env:
           TEST: true
-      - run: npm run version:check
-        env:
+          CI: true
           ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
           ACCESS_KEY_SECRET: ${{ secrets.ACCESS_KEY_SECRET }}
-          CI: true

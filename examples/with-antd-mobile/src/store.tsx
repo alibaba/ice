@@ -1,4 +1,4 @@
-import type { ComponentWithChildren } from '@ice/runtime/esm/types';
+import type { ComponentWithChildren } from '@ice/runtime/types';
 import { useState } from 'react';
 import constate from 'constate';
 

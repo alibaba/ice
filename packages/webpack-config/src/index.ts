@@ -182,7 +182,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     },
   } : {};
   // get compile plugins
-  const compilerWebpackPlugins = getCompilerPlugins(config, 'webpack');
+  const compilerWebpackPlugins = getCompilerPlugins(rootDir, config, 'webpack', { isServer: false });
 
   const terserOptions: any = merge({
     compress: {
@@ -206,6 +206,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     module: true,
   }, minimizerOptions);
   const compilation = compilationPlugin({
+    rootDir,
     cacheDir,
     sourceMap,
     fastRefresh,
@@ -236,7 +237,6 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     },
     context: rootDir,
     module: {
-      unsafeCache: false,
       parser: {
         javascript: {
           importExportsPresence: 'warn',
@@ -281,9 +281,9 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
       ignored: watchIgnoredRegexp,
     },
     optimization: {
-      splitChunks: splitChunks == false
-        ? { minChunks: Infinity, cacheGroups: { default: false } }
-        : getSplitChunksConfig(rootDir),
+      splitChunks: typeof splitChunks == 'object'
+        ? splitChunks
+        : getSplitChunksConfig(rootDir, splitChunks),
       minimize: !!minify,
       minimizer: [
         new TerserPlugin({

@@ -1,5 +1,5 @@
 import { defineAppConfig, defineDataLoader, Link } from 'ice';
-import { defineAuthConfig } from '@ice/plugin-auth/esm/types';
+import { defineAuthConfig } from '@ice/plugin-auth/types';
 
 export default defineAppConfig(() => ({}));
 

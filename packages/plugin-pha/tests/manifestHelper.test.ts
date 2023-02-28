@@ -396,11 +396,44 @@ describe('parse manifest', async () => {
       },
     };
 
-    const manifest = await parseManifest(phaManifest, options);
+    const manifest = await parseManifest(phaManifest, {
+      ...options,
+      template: true,
+    });
 
     expect(manifest.pages![0]?.tab_header?.url).toBe('https://url-prefix.com/header');
     expect(manifest.pages![0]?.tab_header?.html).toBe('<html><body>/header-document</body></html>');
     expect(manifest?.tab_bar?.url).toBe('https://url-prefix.com/CustomTabBar');
+  });
+
+  it('should not set html to tabBar when template is false', async () => {
+    const phaManifest = {
+      routes: [
+        {
+          pageHeader: {
+            source: 'pages/header',
+          },
+          frames: [
+            {
+              name: 'frame1',
+              url: 'https://m.taobao.com',
+            },
+          ],
+        },
+      ],
+      tabBar: {
+        custom: true,
+        source: 'pages/CustomTabBar',
+        items: ['home', 'frame1'],
+      },
+    };
+
+    const manifest = await parseManifest(phaManifest, {
+      ...options,
+      template: false,
+    });
+
+    expect(manifest.pages![0]?.tab_header?.html).toBeUndefined();
   });
 
   it('error source without pages', async () => {
@@ -505,8 +538,58 @@ describe('parse manifest', async () => {
     });
 
     expect(manifest.pages![0].frames![1].data_prefetch?.length).toBe(1);
-    expect(manifest.pages![1].data_prefetch?.length).toBe(1);
+    expect(manifest.pages![1].data_prefetch?.length).toBe(2);
     expect(manifest.pages![2].data_prefetch).toBeUndefined();
+  });
+
+  it('prefetch of dataloader should not be decamelized', async () => {
+    const phaManifest = {
+      title: 'test',
+      routes: [
+        {
+          pageHeader: {},
+          frames: [
+            'blog',
+            'home',
+            'about',
+          ],
+        },
+        'home',
+        'about',
+      ],
+    };
+
+    const staticDataloader = {
+      key: 'dataLoader222',
+      prefetch_type: 'mtop',
+      api: 'query222',
+      v: '0.0.1',
+      data: {
+        aaa: 111,
+        aaB: 222,
+      },
+      ext_headers: {},
+    };
+
+    const manifest = await parseManifest(phaManifest, {
+      ...options,
+      dataloaderConfig: {
+        home: [
+          () => {
+            return new Promise((resolve) => {
+              setTimeout(() => {
+                resolve({
+                  name: 'About',
+                });
+              }, 1 * 100);
+            });
+          },
+          staticDataloader,
+        ],
+      },
+    });
+
+    expect(manifest.pages![1].data_prefetch![1]?.data.aaB).toBe(222);
   });
 });
 

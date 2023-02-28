@@ -7,7 +7,7 @@ import cloneDeep from 'lodash.clonedeep';
 import { matchRoutes } from '@remix-run/router';
 import * as htmlparser2 from 'htmlparser2';
 import { decamelizeKeys, camelizeKeys, validPageConfigKeys } from './constants.js';
-import type { Page, PHAPage, PageHeader, PageConfig, Manifest, PHAManifest } from './types';
+import type { Page, PageHeader, PageConfig, Manifest, PHAManifest, Frame } from './types';
 
 const { decamelize } = humps;
 
@@ -23,6 +23,7 @@ export interface ParseOptions {
   routesConfig?: Record<string, any>;
   serverEntry: string;
   template?: boolean;
+  preload?: boolean;
   urlSuffix?: string;
   ssr?: boolean;
   dataloaderConfig?: object | Function | Array<object | Function>;
@@ -34,7 +35,20 @@ interface TabConfig {
   html?: string;
 }
 
-type MixedPage = PHAPage & PageConfig;
+type ResourcePrefetchConfig = Array<{
+  src: string;
+  mimeType?: string;
+  headers?: string;
+  queryParams?: string;
+}>;
+
+interface InternalPageConfig {
+  path?: string;
+  document?: string;
+  resourcePrefetch?: ResourcePrefetchConfig;
+}
+
+type MixedPage = InternalPageConfig & PageConfig;
 
 export function transformManifestKeys(manifest: Manifest, options?: TransformOptions): PHAManifest {
   const { parentKey, isRoot } = options;
@@ -56,7 +70,6 @@ export function transformManifestKeys(manifest: Manifest, options?: TransformOpt
     if (!camelizeKeys.includes(key)) {
       transformKey = decamelize(key);
     }
-
     if (typeof value === 'string' || typeof value === 'number') {
       data[transformKey] = value;
     } else if (Array.isArray(value)) {
@@ -151,7 +164,7 @@ async function renderPageDocument(routeId: string, serverEntry: string): Promise
 }
 
 async function getPageManifest(page: string | Page, options: ParseOptions): Promise<MixedPage> {
-  const { template, serverEntry, routesConfig, routeManifest } = options;
+  const { template, preload, serverEntry, routesConfig, routeManifest } = options;
   // Page will be type string when it is a source frame.
   if (typeof page === 'string') {
     // Get html content by render document.
@@ -166,35 +179,36 @@ async function getPageManifest(page: string | Page, options: ParseOptions): Prom
       pageManifest.document = html;
     }
 
-    let scripts = [];
-    let stylesheets = [];
-    function getPreload(dom) {
-      if (
-        dom.name === 'script' &&
-        dom.attribs &&
-        dom.attribs.src
-      ) {
-        scripts.push({
-          src: dom.attribs.src,
-        });
-      } else if (
-        dom.name === 'link' &&
-        dom.attribs &&
-        dom.attribs.href &&
-        dom.attribs.rel === 'stylesheet'
-      ) {
-        stylesheets.push({
-          src: dom.attribs.href,
-        });
-      }
+    if (preload) {
+      let scripts = [];
+      let stylesheets = [];
+      function getPreload(dom) {
+        if (
+          dom.name === 'script' &&
+          dom.attribs &&
+          dom.attribs.src
+        ) {
+          scripts.push({
+            src: dom.attribs.src,
+          });
+        } else if (
+          dom.name === 'link' &&
+          dom.attribs &&
+          dom.attribs.href &&
+          dom.attribs.rel === 'stylesheet'
+        ) {
+          stylesheets.push({
+            src: dom.attribs.href,
+          });
+        }
 
-      if (dom.children) {
-        dom.children.forEach(getPreload);
+        if (dom.children) {
+          dom.children.forEach(getPreload);
+        }
       }
+      getPreload(htmlparser2.parseDocument(pageManifest.document));
+      pageManifest.resourcePrefetch = [...scripts, ...stylesheets];
     }
-    getPreload(htmlparser2.parseDocument(pageManifest.document));
-    pageManifest.resource_prefetch = [...scripts, ...stylesheets];
-
 
     // Always need path for page item.
     pageManifest.path = `${getPageUrl(page, options)}${queryParams ? `?${queryParams}` : ''}`;
@@ -230,7 +244,7 @@ async function getTabConfig(tabManifest: Manifest['tabBar'] | PageHeader, genera
     url: '',
   };
   const tabRouteId = parseRouteId(tabManifest!.source);
-  if (generateDocument && options.serverEntry) {
+  if (options.template && generateDocument && options.serverEntry) {
     tabConfig.html = await renderPageDocument(tabRouteId, options.serverEntry);
   }
 
@@ -344,14 +358,15 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
             // Single prefetch loader config.
             staticDataLoaders.push(dataloaderConfig[pageId]);
           }
-          pageManifest.data_prefetch = [...(pageManifest.data_prefetch || []), ...staticDataLoaders];
+          pageManifest.dataPrefetch = [...(pageManifest.dataPrefetch || []), ...staticDataLoaders];
         }
       });
 
       if (pageManifest.frames && pageManifest.frames.length > 0) {
         pageManifest.frames = await Promise.all(pageManifest.frames.map((frame) => getPageManifest(frame, options)));
-        // Set static dataloader to data_prefetch of frames.
-        pageManifest.frames.forEach(frame => {
+        // Set static dataloader to dataPrefetch of frames.
+        pageManifest.frames.forEach((frame: Frame) => {
+          if (typeof frame === 'string') return;
           const title = frame.title || '';
           const titleIds = getRouteIdByPage(routeManifest, title);
           titleIds.forEach((titleId) => {
@@ -368,7 +383,7 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
                 staticDataLoaders.push(dataloaderConfig[title]);
               }
 
-              frame.data_prefetch = [...(frame.data_prefetch || []), ...staticDataLoaders];
+              frame.dataPrefetch = [...(frame.dataPrefetch || []), ...staticDataLoaders];
             }
           });
         });
@@ -389,6 +404,7 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
     // Delete manifest routes after transform.
     delete manifest.routes;
   }
+
   return transformManifestKeys(manifest, { isRoot: true });
 }
 

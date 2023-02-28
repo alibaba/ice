@@ -2,7 +2,7 @@ import webpackBundler from '@ice/bundles/compiled/webpack/index.js';
 import type ora from '@ice/bundles/compiled/ora/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { TaskConfig, Context } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/esm/types';
+import type { Config } from '@ice/webpack-config/types';
 import type webpack from 'webpack';
 import type { Urls, ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI, GetDataloaderConfig } from '../types/plugin.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
@@ -11,7 +11,9 @@ import { IMPORT_META_RENDERER, IMPORT_META_TARGET, WEB } from '../constant.js';
 import getServerCompilerPlugin from '../utils/getServerCompilerPlugin.js';
 import DataLoaderPlugin from '../webpack/DataLoaderPlugin.js';
 import ReCompilePlugin from '../webpack/ReCompilePlugin.js';
+import ServerRunnerPlugin from '../webpack/ServerRunnerPlugin.js';
 import { logger } from '../utils/logger.js';
+import type ServerRunner from './ServerRunner.js';
 import { getRouteExportConfig } from './config.js';
 
 const { debounce } = lodash;
@@ -28,6 +30,7 @@ async function webpackCompiler(options: {
     getAppConfig: GetAppConfig;
     getRoutesConfig: GetRoutesConfig;
     getDataloaderConfig: GetDataloaderConfig;
+    serverRunner?: ServerRunner;
   };
 }) {
   const {
@@ -42,7 +45,7 @@ async function webpackCompiler(options: {
   const { rootDir, applyHook, commandArgs, command, userConfig, getAllPlugin } = context;
   // `commandArgs` doesn't guarantee target exists.
   const { target = WEB } = commandArgs;
-  const { serverCompiler } = hooksAPI;
+  const { serverCompiler, serverRunner } = hooksAPI;
   const { serverCompileTask, dataCache, watch } = context.extendsPluginAPI;
 
   await applyHook(`before.${command}.run`, {
@@ -63,21 +66,30 @@ async function webpackCompiler(options: {
     // Add webpack [ServerCompilerPlugin]
     if (useDevServer) {
       const outputDir = webpackConfig.output.path;
-      serverCompilerPlugin = getServerCompilerPlugin(serverCompiler, {
-        rootDir,
-        serverEntry: server?.entry,
-        outputDir,
-        dataCache,
-        serverCompileTask: command === 'start' ? serverCompileTask : null,
-        userConfig,
-        ensureRoutesConfig,
-        runtimeDefineVars: {
-          [IMPORT_META_TARGET]: JSON.stringify(target),
-          [IMPORT_META_RENDERER]: JSON.stringify('server'),
-        },
-        incremental: command === 'start',
-      });
-      webpackConfig.plugins.push(serverCompilerPlugin);
+
+      if (command === 'start' && serverRunner) {
+        // Add server runner plugin
+        webpackConfig.plugins.push(new ServerRunnerPlugin(
+          serverRunner,
+          ensureRoutesConfig,
+        ));
+      } else {
+        serverCompilerPlugin = getServerCompilerPlugin(serverCompiler, {
+          rootDir,
+          serverEntry: server?.entry,
+          outputDir,
+          dataCache,
+          serverCompileTask: command === 'start' ? serverCompileTask : null,
+          userConfig,
+          ensureRoutesConfig,
+          runtimeDefineVars: {
+            [IMPORT_META_TARGET]: JSON.stringify(target),
+            [IMPORT_META_RENDERER]: JSON.stringify('server'),
+          },
+          incremental: command === 'start',
+        });
+        webpackConfig.plugins.push(serverCompilerPlugin);
+      }
 
       // Add re-compile plugin
       if (command === 'start') {

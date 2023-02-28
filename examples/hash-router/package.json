@@ -1,5 +1,6 @@
 {
-  "name": "hash-router-demo",
+  "name": "@examples/hash-router-demo",
+  "private": true,
   "version": "1.0.0",
   "scripts": {
     "start": "ice start",

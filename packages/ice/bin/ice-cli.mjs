@@ -3,9 +3,9 @@ import path from 'path';
 import chalk from 'chalk';
 import semver from 'semver';
 import fse from 'fs-extra';
-import detectPort from 'detect-port';
 import { fileURLToPath } from 'url';
 import { program, Option } from 'commander';
+import yargsParser from 'yargs-parser';
 // hijack webpack before import other modules
 import '../esm/requireHook.js';
 import createService from '../esm/createService.js';
@@ -34,7 +34,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .action(async ({ rootDir, ...commandArgs }, ctx) => {
       renamePlatformToTarget(commandArgs);
       process.env.NODE_ENV = 'production';
-      const service = await createService({ rootDir, command: 'build', commandArgs });
+      const service = await createService({ rootDir, command: 'build', commandArgs: {
+        ...parseUnknownOptions(ctx.args),
+        ...commandArgs,
+      } });
       service.run();
     });
 
@@ -46,7 +49,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .option('--target <target>', 'same as --target', WEB)
     .option('--mode <mode>', 'set mode', 'development')
     .option('--config <config>', 'custom config path')
-    .option('-h, --host <host>', 'dev server host', '0.0.0.0')
+    .option('-h, --host <host>', 'dev server host')
     .option('-p, --port <port>', 'dev server port')
     .option('--no-open', "don't open browser on startup")
     .option('--no-mock', "don't start mock service")
@@ -54,12 +57,13 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .option('--analyzer', 'visualize size of output files', false)
     .option('--https [https]', 'enable https', false)
     .option('--force', 'force remove cache directory', false)
-    .action(async ({ rootDir, ...commandArgs }) => {
+    .action(async ({ rootDir, ...commandArgs }, ctx) => {
       renamePlatformToTarget(commandArgs);
       process.env.NODE_ENV = 'development';
-      const DEFAULT_PORT = 3000;
-      commandArgs.port = typeof commandArgs.port === 'undefined' ? await detectPort(DEFAULT_PORT) : commandArgs.port;
-      const service = await createService({ rootDir, command: 'start', commandArgs });
+      const service = await createService({ rootDir, command: 'start', commandArgs: {
+        ...parseUnknownOptions(ctx.args),
+        ...commandArgs
+      } });
       service.run();
     });
 
@@ -79,6 +83,16 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     program.help();
   }
 })();
+
+function parseUnknownOptions(args) {
+  let unKnownOptions = {};
+  if (args.length > 0) {
+    unKnownOptions = yargsParser(args);
+    // Custom options do not support positional arguments.
+    delete unKnownOptions._;
+  }
+  return unKnownOptions;
+}
 
 // Rename `platform` to `target`, for compatibility.
 // For ice.js <3.0.3, using --platform to set build target.

@@ -104,6 +104,8 @@ type Priority = 'high' | 'normal' | 'low';
 type FrameConfig = Partial<{
   url: string;
   priority?: Priority;
+  title?: string;
+  dataPrefetch?: DataPrefetch[];
 }> & WindowConfig;
 
 type WindowConfig = Partial<{

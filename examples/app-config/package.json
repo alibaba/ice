@@ -1,6 +1,7 @@
 {
-  "name": "app-config",
+  "name": "@examples/app-config",
   "version": "1.0.0",
+  "private": true,
   "scripts": {
     "start": "ice start",
     "build": "ice build",
