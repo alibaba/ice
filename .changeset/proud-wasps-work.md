@@ -4,7 +4,7 @@
 ---
 
 feat: support pass server data
-feat: support change assets manifest runtime
+feat: support change public path runtime
 feat: support get request ctx in suspense
 feat: export code analyzer for reuse in other plugin
 fix: suspense error handle

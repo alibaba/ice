@@ -192,7 +192,6 @@ export const Main: MainType = (props: React.HTMLAttributes<HTMLDivElement>) => {
  * merge assets info for matched route
  */
 export function getPageAssets(matches: RouteMatch[], assetsManifest: AssetsManifest): string[] {
-  // TODO：publicPath from runtime
   const { pages, publicPath } = assetsManifest;
 
   let result = [];

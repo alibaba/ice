@@ -38,7 +38,7 @@ interface RenderOptions {
   routePath?: string;
   disableFallback?: boolean;
   distType?: DistType;
-  assetsManifest?: AssetsManifest;
+  publicPath?: string;
   serverData?: any;
 }
 
@@ -69,11 +69,15 @@ export async function renderToEntry(requestContext, options: RenderOptions = {})
 <% } -%>
 
 function mergeOptions(options) {
-  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback, distType, serverData } = options;
+  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback, distType, serverData, publicPath } = options;
+
+  if (publicPath) {
+    assetsManifest.publicPath = publicPath;
+  }
 
   return {
     app,
-    assetsManifest: options.assetsManifest || assetsManifest,
+    assetsManifest,
     routes,
     runtimeModules,
     Document,
