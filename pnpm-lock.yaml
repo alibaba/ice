@@ -1029,6 +1029,7 @@ importers:
       unplugin: ^0.9.0
       webpack: ^5.73.0
       webpack-dev-server: ^4.7.4
+      yargs-parser: ^21.1.1
     dependencies:
       '@babel/generator': 7.18.10
       '@babel/parser': 7.18.10
@@ -1064,6 +1065,7 @@ importers:
       resolve.exports: 1.1.0
       semver: 7.3.7
       temp: 0.9.4
+      yargs-parser: 21.1.1
     devDependencies:
       '@types/babel__generator': 7.6.4
       '@types/babel__traverse': 7.18.2
@@ -22314,7 +22316,6 @@ packages:
   /yargs-parser/21.1.1:
     resolution: {integrity: sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==}
     engines: {node: '>=12'}
-    dev: true
 
   /yargs/15.4.1:
     resolution: {integrity: sha512-aePbxDmcYW++PaqBsJ+HYUFwCdv4LVvdnhBy78E57PIor8/OVvhMrADFFEDh8DHDFRv/O9i3lPhsENjO7QX0+A==}
