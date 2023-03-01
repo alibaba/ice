@@ -1,5 +1,27 @@
 # Changelog
 
+## 3.1.2-beta.0
+
+### Patch Changes
+
+- 56fb406e: fix: support types definition without specify esm folder
+- 7d729697: feat: support pass server data
+  feat: support change public path runtime
+  feat: support get request ctx in suspense
+  feat: export code analyzer for reuse in other plugin
+  fix: suspense error handle
+  fix: duplicate data request in suspense csr
+  fix: support await render to response
+- de520d66: fix: support unknown cli options registered by plugins
+- 071a627d: feat: support code spliting strategy
+- 37c22e31: chore: update templates for unused imports
+- Updated dependencies [c6b70bce]
+- Updated dependencies [56fb406e]
+- Updated dependencies [7d729697]
+- Updated dependencies [071a627d]
+  - @ice/runtime@1.1.3-beta.0
+  - @ice/webpack-config@1.0.8-beta.0
+
 ## 3.1.1
 
 ### Patch Changes

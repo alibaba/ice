@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-auth",
-  "version": "1.0.0",
+  "version": "1.0.1-beta.0",
   "description": "",
   "license": "MIT",
   "type": "module",
@@ -39,8 +39,8 @@
     "*.d.ts"
   ],
   "devDependencies": {
-    "@ice/app": "^3.1.1-beta.9",
-    "@ice/runtime": "^1.1.2-beta.0",
+    "@ice/app": "^3.1.2-beta.0",
+    "@ice/runtime": "^1.1.3-beta.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "regenerator-runtime": "^0.13.9"

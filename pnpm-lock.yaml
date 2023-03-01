@@ -984,8 +984,8 @@ importers:
       '@babel/types': 7.18.10
       '@ice/bundles': 0.1.4
       '@ice/route-manifest': 1.0.0
-      '@ice/runtime': ^1.1.2
-      '@ice/webpack-config': 1.0.7
+      '@ice/runtime': ^1.1.3-beta.0
+      '@ice/webpack-config': 1.0.8-beta.0
       '@swc/helpers': 0.4.14
       '@types/babel__generator': ^7.6.4
       '@types/babel__traverse': ^7.17.1
@@ -1116,7 +1116,7 @@ importers:
 
   packages/miniapp-react-dom:
     specifiers:
-      '@ice/miniapp-runtime': ^1.0.2
+      '@ice/miniapp-runtime': ^1.0.3-beta.0
       '@ice/shared': ^1.0.0
       react: ^18.0.0
       react-reconciler: 0.27.0
@@ -1131,7 +1131,7 @@ importers:
 
   packages/miniapp-runtime:
     specifiers:
-      '@ice/runtime': ^1.1.2
+      '@ice/runtime': ^1.1.3-beta.0
       '@ice/shared': ^1.0.0
       '@types/react': ^18.0.0
       history: ^5.3.0
@@ -1150,7 +1150,7 @@ importers:
 
   packages/plugin-antd:
     specifiers:
-      '@ice/app': ^3.0.0
+      '@ice/app': ^3.1.2-beta.0
       '@ice/style-import': ^1.0.0
     dependencies:
       '@ice/style-import': link:../style-import
@@ -1159,8 +1159,8 @@ importers:
 
   packages/plugin-auth:
     specifiers:
-      '@ice/app': ^3.1.1-beta.9
-      '@ice/runtime': ^1.1.2-beta.0
+      '@ice/app': ^3.1.2-beta.0
+      '@ice/runtime': ^1.1.3-beta.0
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
       regenerator-runtime: ^0.13.9
@@ -1173,7 +1173,7 @@ importers:
 
   packages/plugin-css-assets-local:
     specifiers:
-      '@ice/app': ^3.0.0
+      '@ice/app': ^3.1.2-beta.0
       consola: ^2.15.3
       extract-css-assets-webpack-plugin: ^0.2.10
     dependencies:
@@ -1184,7 +1184,7 @@ importers:
 
   packages/plugin-fusion:
     specifiers:
-      '@ice/app': ^3.0.0
+      '@ice/app': ^3.1.2-beta.0
       '@ice/style-import': ^1.0.0
     dependencies:
       '@ice/style-import': link:../style-import
@@ -1193,8 +1193,8 @@ importers:
 
   packages/plugin-icestark:
     specifiers:
-      '@ice/app': ^3.1.1-beta.9
-      '@ice/runtime': ^1.1.2-beta.0
+      '@ice/app': ^3.1.2-beta.0
+      '@ice/runtime': ^1.1.3-beta.0
       '@ice/stark': ^2.7.4
       '@ice/stark-app': ^1.2.0
       '@types/react': ^18.0.0
@@ -1211,7 +1211,7 @@ importers:
   packages/plugin-jsx-plus:
     specifiers:
       '@babel/core': ^7.19.1
-      '@ice/app': ^3.0.0
+      '@ice/app': ^3.1.2-beta.0
       '@types/react': ^18.0.20
       '@types/react-dom': ^18.0.6
       babel-plugin-transform-jsx-class: ^0.1.3
@@ -1237,11 +1237,11 @@ importers:
 
   packages/plugin-miniapp:
     specifiers:
-      '@ice/app': ^3.1.1
+      '@ice/app': ^3.1.2-beta.0
       '@ice/bundles': ^0.1.0
       '@ice/miniapp-loader': ^1.0.0
-      '@ice/miniapp-react-dom': ^1.0.1
-      '@ice/miniapp-runtime': ^1.0.2
+      '@ice/miniapp-react-dom': ^1.0.2-beta.0
+      '@ice/miniapp-runtime': ^1.0.3-beta.0
       '@ice/shared': ^1.0.0
       acorn-walk: ^8.2.0
       chalk: ^4.0.0
@@ -1270,13 +1270,13 @@ importers:
 
   packages/plugin-moment-locales:
     specifiers:
-      '@ice/app': ^3.0.0
+      '@ice/app': ^3.1.2-beta.0
     devDependencies:
       '@ice/app': link:../ice
 
   packages/plugin-pha:
     specifiers:
-      '@ice/app': ^3.1.1
+      '@ice/app': ^3.1.2-beta.0
       '@remix-run/router': ^1.0.3
       build-scripts: ^2.1.0
       chalk: ^4.0.0
@@ -1305,7 +1305,7 @@ importers:
     specifiers:
       '@babel/core': ^7.0.0
       '@babel/plugin-proposal-export-default-from': ^7.18.9
-      '@ice/app': ^3.0.0
+      '@ice/app': ^3.1.2-beta.0
       '@ice/bundles': ^0.1.0
       babel-plugin-transform-jsx-stylesheet: 1.0.6
       consola: ^2.15.3
@@ -1332,8 +1332,8 @@ importers:
 
   packages/plugin-request:
     specifiers:
-      '@ice/app': ^3.1.1-beta.9
-      '@ice/runtime': ^1.1.2-beta.0
+      '@ice/app': ^3.1.2-beta.0
+      '@ice/runtime': ^1.1.3-beta.0
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
       ahooks: ^3.0.0
@@ -1351,8 +1351,8 @@ importers:
 
   packages/plugin-store:
     specifiers:
-      '@ice/app': ^3.1.1-beta.9
-      '@ice/runtime': ^1.1.2-beta.0
+      '@ice/app': ^3.1.2-beta.0
+      '@ice/runtime': ^1.1.3-beta.0
       '@ice/store': ^2.0.3
       '@types/micromatch': ^4.0.2
       '@types/react': ^18.0.0
@@ -1475,7 +1475,7 @@ importers:
 
   packages/webpack-modify:
     specifiers:
-      '@ice/webpack-config': ^1.0.0
+      '@ice/webpack-config': ^1.0.8-beta.0
       consola: ^2.15.3
       webpack: ^5.73.0
     dependencies:
@@ -6560,7 +6560,6 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@swc/core-darwin-arm64/1.3.3:
@@ -6578,7 +6577,6 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@swc/core-darwin-x64/1.3.3:
@@ -6607,7 +6605,6 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@swc/core-linux-arm-gnueabihf/1.3.3:
@@ -6627,7 +6624,6 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@swc/core-linux-arm64-gnu/1.3.3:
@@ -6645,7 +6641,6 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@swc/core-linux-arm64-musl/1.3.3:
@@ -6663,7 +6658,6 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@swc/core-linux-x64-gnu/1.3.3:
@@ -6681,7 +6675,6 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@swc/core-linux-x64-musl/1.3.3:
@@ -6699,7 +6692,6 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@swc/core-win32-arm64-msvc/1.3.3:
@@ -6719,7 +6711,6 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@swc/core-win32-ia32-msvc/1.3.3:
@@ -6739,7 +6730,6 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
-    dev: false
     optional: true
 
   /@swc/core-win32-x64-msvc/1.3.3:
@@ -6767,7 +6757,6 @@ packages:
       '@swc/core-win32-arm64-msvc': 1.3.19
       '@swc/core-win32-ia32-msvc': 1.3.19
       '@swc/core-win32-x64-msvc': 1.3.19
-    dev: false
 
   /@swc/core/1.3.3:
     resolution: {integrity: sha512-OGx3Qpw+czNSaea1ojP2X2wxrGtYicQxH1QnzX4F3rXGEcSUFIllmrae6iJHW91zS4SNcOocnQoRz1IYnrILYw==}
@@ -9480,7 +9469,6 @@ packages:
     resolution: {integrity: sha512-1j20GZTsvKNkc4BY3NpMOM8tt///wY3FpIzozTOFO2ffuZcV61nojHXVKIy3WM+7ADCy5FVhdZYHYDdgTU0yJw==}
     dependencies:
       is-what: 3.14.1
-    dev: false
 
   /copy-text-to-clipboard/3.0.1:
     resolution: {integrity: sha512-rvVsHrpFcL4F2P8ihsoLdFHmd404+CMg71S756oRSeQgqk51U3kicGdnvfkrxva0xXH92SjGS62B0XIJsbh+9Q==}
@@ -10649,7 +10637,6 @@ packages:
     requiresBuild: true
     dependencies:
       prr: 1.0.1
-    dev: false
     optional: true
 
   /error-ex/1.3.2:
@@ -13008,7 +12995,6 @@ packages:
     engines: {node: '>=0.10.0'}
     hasBin: true
     requiresBuild: true
-    dev: false
     optional: true
 
   /image-size/1.0.2:
@@ -13031,7 +13017,6 @@ packages:
 
   /immutable/4.1.0:
     resolution: {integrity: sha512-oNkuqVTA8jqG1Q6c+UglTOD1xhC1BtjKI7XkCXRkZHrN5m18/XsnUp8Q89GkQO/z+0WjonSvl0FLhDYftp46nQ==}
-    dev: false
 
   /import-cwd/3.0.0:
     resolution: {integrity: sha512-4pnzH16plW+hgvRECbDWpQl3cqtvSofHWh44met7ESfZ8UZOWWddm8hEyDTqREJ9RbYHY8gi8DqmaelApoOGMg==}
@@ -13541,7 +13526,6 @@ packages:
 
   /is-what/3.14.1:
     resolution: {integrity: sha512-sNxgpk9793nzSs7bA6JQJGeIuRBQhAaNGG77kzYQgMkrID+lS6SlK07K5LaptscDlSaIgH+GPFzf+d75FVxozA==}
-    dev: false
 
   /is-whitespace-character/1.0.4:
     resolution: {integrity: sha512-SDweEzfIZM0SJV0EUga669UTKlmL0Pq8Lno0QDQsPnvECB3IM2aP0gdx5TrU0A01MAPfViaZiI2V1QMZLaKK5w==}
@@ -14843,7 +14827,6 @@ packages:
       source-map: 0.6.1
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /leven/3.1.0:
     resolution: {integrity: sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==}
@@ -15164,7 +15147,6 @@ packages:
     dependencies:
       pify: 4.0.1
       semver: 5.7.1
-    dev: false
     optional: true
 
   /make-dir/3.1.0:
@@ -15543,7 +15525,6 @@ packages:
       sax: 1.2.4
     transitivePeerDependencies:
       - supports-color
-    dev: false
     optional: true
 
   /negotiator/0.6.3:
@@ -16020,7 +16001,6 @@ packages:
   /parse-node-version/1.0.1:
     resolution: {integrity: sha512-3YHlOa/JgH6Mnpr05jP9eDG254US9ek25LyIxZlDItp2iJtwyaXQb57lBYLdT3MowkUFYEV2XXNAYIPlESvJlA==}
     engines: {node: '>= 0.10'}
-    dev: false
 
   /parse-numeric-range/1.3.0:
     resolution: {integrity: sha512-twN+njEipszzlMJd4ONUYgSfZPDxgHhT9Ahed5uTigpQn90FggW4SA/AIPq/6a149fTbE9qBEcSwE3FAEp6wQQ==}
@@ -17867,7 +17847,6 @@ packages:
 
   /prr/1.0.1:
     resolution: {integrity: sha512-yPw4Sng1gWghHQWj0B3ZggWUm4qVbPwPFcRG8KyxiU7J2OHFSoEHKS+EZ3fv5l1t9CyCiop6l/ZYeWbrgoQejw==}
-    dev: false
     optional: true
 
   /pseudomap/1.0.2:
@@ -18675,7 +18654,6 @@ packages:
       object-assign: 4.1.1
       react: 17.0.2
       scheduler: 0.20.2
-    dev: false
 
   /react-dom/18.2.0_react@18.2.0:
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
@@ -18789,7 +18767,6 @@ packages:
   /react-refresh/0.14.0:
     resolution: {integrity: sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==}
     engines: {node: '>=0.10.0'}
-    dev: false
 
   /react-router-config/5.1.1_2dl5roaqnyqqppnjni7uetnb3a:
     resolution: {integrity: sha512-DuanZjaD8mQp1ppHjgnnUnyOlqYXZVjnov/JzFhjLEwd3Z4dYjMSnqrEzzGThH47vpCOqPPwJM2FtthLeJ8Pbg==}
@@ -18887,7 +18864,6 @@ packages:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
-    dev: false
 
   /react/18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
@@ -19473,7 +19449,6 @@ packages:
       chokidar: 3.5.3
       immutable: 4.1.0
       source-map-js: 1.0.2
-    dev: false
 
   /sax/1.2.4:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
@@ -19490,7 +19465,6 @@ packages:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
-    dev: false
 
   /scheduler/0.21.0:
     resolution: {integrity: sha512-1r87x5fz9MXqswA2ERLo0EbOAU74DpIUO090gIasYTqlVoJeMcl+Z1Rg7WHz+qtPujhS/hGIt9kxZOYBV3faRQ==}
@@ -20541,7 +20515,6 @@ packages:
       serialize-javascript: 6.0.0
       terser: 5.16.2
       webpack: 5.75.0_esbuild@0.16.10
-    dev: true
 
   /terser-webpack-plugin/5.3.6_peqg53aznxdu6ibj7wrnfxrfiq:
     resolution: {integrity: sha512-kfLFk+PoLUQIbLmB1+PZDMRSZS99Mp+/MHqDNmMA6tOItzRt+Npe3E+fsMs5mfcM0wCtrrdU387UnV+vnSffXQ==}
@@ -20567,7 +20540,6 @@ packages:
       serialize-javascript: 6.0.0
       terser: 5.16.2
       webpack: 5.75.0_ncbsfugu56ddhgadp34k4kpsue
-    dev: true
 
   /terser-webpack-plugin/5.3.6_webpack@5.75.0:
     resolution: {integrity: sha512-kfLFk+PoLUQIbLmB1+PZDMRSZS99Mp+/MHqDNmMA6tOItzRt+Npe3E+fsMs5mfcM0wCtrrdU387UnV+vnSffXQ==}
@@ -21982,7 +21954,6 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
-    dev: true
 
   /webpack/5.75.0_ncbsfugu56ddhgadp34k4kpsue:
     resolution: {integrity: sha512-piaIaoVJlqMsPtX/+3KTTO6jfvrSYgauFVdt8cr9LTHKmcq/AMd4mhzsiP7ZF/PGRNPGA8336jldh9l2Kt2ogQ==}
@@ -22022,7 +21993,6 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
-    dev: true
 
   /webpackbar/5.0.2_webpack@5.75.0:
     resolution: {integrity: sha512-BmFJo7veBDgQzfWXl/wwYXr/VFus0614qZ8i9znqcl9fnEdiVkdbi0TedLQ6xAK92HZHDJ0QmyQ0fmuZPAgCYQ==}

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.8-beta.0
+
+### Patch Changes
+
+- 56fb406e: fix: support types definition without specify esm folder
+- 071a627d: feat: support code spliting strategy
+
 ## 1.0.7
 
 ### Patch Changes
