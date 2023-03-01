@@ -219,6 +219,7 @@ interface FileOptions {
 
 type CachedRouteExports = { hash: string; exports: string[] };
 
+// Exports for other plugin to get exports info.
 export async function getFileExports(options: FileOptions): Promise<CachedRouteExports['exports']> {
   const { rootDir, file } = options;
   const filePath = path.join(rootDir, file);

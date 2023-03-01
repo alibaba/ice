@@ -25,6 +25,9 @@ export function renderToNodeStream(
       onError(error) {
         options?.onError && options?.onError(error);
       },
+      onAllReady() {
+        options?.onAllReady && options?.onAllReady();
+      },
     });
   };
 }

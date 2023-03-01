@@ -6,7 +6,8 @@
   "main": "./esm/index.js",
   "exports": {
     ".": "./esm/index.js",
-    "./types": "./esm/types/index.js"
+    "./types": "./esm/types/index.js",
+    "./analyze": "./esm/service/analyze.js"
   },
   "bin": {
     "ice": "./bin/ice-cli.mjs"
