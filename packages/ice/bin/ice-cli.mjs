@@ -87,7 +87,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 function parseUnknownOptions(args) {
   let unKnownOptions = {};
   if (args.length > 0) {
-    unKnownOptions = yargsParser(args);
+    unKnownOptions = yargsParser(args, {
+      // Transform dashed arguments to camel case.
+      // e.g. --foo-bar => { fooBar: true }.
+      configuration: { 'strip-dashed': true },
+    });
     // Custom options do not support positional arguments.
     delete unKnownOptions._;
   }
