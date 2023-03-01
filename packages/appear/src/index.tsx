@@ -6,6 +6,7 @@ import { observerElement, VisibilityChangeEvent } from './visibility';
 function VisibilityChange(props: any) {
   const {
     onAppear,
+    onFirstAppear,
     onDisappear,
     children,
   } = props;
@@ -34,6 +35,7 @@ function VisibilityChange(props: any) {
 
   useEffect(() => listen(VisibilityChangeEvent.appear, onAppear), [ref, onAppear, listen]);
   useEffect(() => listen(VisibilityChangeEvent.disappear, onDisappear), [ref, onDisappear, listen]);
+  useEffect(() => listen(VisibilityChangeEvent.firstAppear, onFirstAppear), [ref, onFirstAppear, listen]);
 
   return Children.only({ ...children, ref });
 }

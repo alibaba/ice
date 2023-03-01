@@ -6,6 +6,7 @@ import PolyfilledIntersectionObserver from './intersection-observer';
 export enum VisibilityChangeEvent {
   appear = 'appear',
   disappear = 'disappear',
+  firstAppear = 'firstappear',
 }
 
 enum VisibilityChangeDirection {
@@ -76,13 +77,15 @@ function handleIntersect(entries: IntersectionObserverEntry[]) {
 
     // is in view
     if (
-      intersectionRatio > 0.01 &&
-      !isTrue(target.getAttribute('data-appeared')) &&
-      !appearOnce(target as HTMLElement, VisibilityChangeEvent.appear)
+      intersectionRatio > 0.01
     ) {
       target.setAttribute('data-appeared', 'true');
       target.setAttribute('data-has-appeared', 'true');
       target.dispatchEvent(createEvent(VisibilityChangeEvent.appear, {
+        direction: currentY > beforeY ? VisibilityChangeDirection.up : VisibilityChangeDirection.down,
+      }));
+    } else if (intersectionRatio > 0.01 && typeof target.getAttribute('data-appeared') === 'undefined') {
+      target.dispatchEvent(createEvent(VisibilityChangeEvent.firstAppear, {
         direction: currentY > beforeY ? VisibilityChangeDirection.up : VisibilityChangeDirection.down,
       }));
     } else if (
