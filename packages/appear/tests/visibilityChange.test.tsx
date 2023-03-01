@@ -1,34 +1,34 @@
 /**
  * @vitest-environment jsdom
- * @see https://testing-library.com/docs/guide-disappearance
  */
 
 import { it, describe, expect, afterEach } from 'vitest';
-import { getByText, render, waitFor, screen, cleanup } from '@testing-library/react';
+import { render, waitFor, cleanup } from '@testing-library/react';
 import React, { useState } from 'react';
 import VisibilityChange from '../src/index';
 
 describe('visibilytyChange', () => {
   afterEach(cleanup);
   it('appear', () => {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       function App() {
-        return (<VisibilityChange
-          onAppear={() => {
-            resolve(true);
-          }}
-        >
-          <span>content</span>
-        </VisibilityChange>);
+        return (
+          <VisibilityChange
+            onAppear={() => {
+              resolve(true);
+            }}
+          >
+            <span>content</span>
+          </VisibilityChange>
+        );
       }
-
 
       render(<App />);
     });
   });
 
   it('child shold work with ref', () => {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       function App() {
         const ref = React.useRef(null);
         React.useEffect(() => {
@@ -36,12 +36,11 @@ describe('visibilytyChange', () => {
             resolve(true);
           }
         }, [ref]);
-        return (<VisibilityChange
-          onAppear={() => {
-          }}
-        >
-          <span>content</span>
-        </VisibilityChange>);
+        return (
+          <VisibilityChange onAppear={() => {}}>
+            <span>content</span>
+          </VisibilityChange>
+        );
       }
 
       render(<App />);
@@ -55,44 +54,44 @@ describe('visibilytyChange', () => {
     function App() {
       const [count, setCount] = useState(0);
       return (
-        <div id="container" >
+        <div id="container">
           <VisibilityChange
             onAppear={() => {
               ++appearCount;
-            setCount(count + 1);
-          }}
+              setCount(count + 1);
+            }}
             onFirstAppear={() => {
               ++firstAppearCount;
-          }}
+            }}
             onDisappear={() => {
               ++disappearCount;
-          }}
+            }}
           >
             <span id="content">{count}</span>
           </VisibilityChange>
         </div>
       );
     }
-render(<App />);
-const container = document.querySelector<HTMLDivElement>('#container')!;
-const content = document.querySelector<HTMLDivElement>('#content')!;
+    render(<App />);
+    const container = document.querySelector<HTMLDivElement>('#container')!;
+    const content = document.querySelector<HTMLDivElement>('#content')!;
     await waitFor(() => {
- expect(appearCount).toBe(1);
- expect(firstAppearCount).toBe(1);
+      expect(appearCount).toBe(1);
+      expect(firstAppearCount).toBe(1);
 
-expect(content.getAttribute('data-appeared')).toBe('true');
-});
-container.style.display = 'none';
-await waitFor(() => {
- expect(disappearCount).toBe(1);
-});
-container.style.display = 'block';
-await waitFor(() => {
- expect(appearCount).toBe(2);
-});
-container.style.display = 'none';
-await waitFor(() => {
- expect(disappearCount).toBe(2);
-});
+      expect(content.getAttribute('data-appeared')).toBe('true');
+    });
+    container.style.display = 'none';
+    await waitFor(() => {
+      expect(disappearCount).toBe(1);
+    });
+    container.style.display = 'block';
+    await waitFor(() => {
+      expect(appearCount).toBe(2);
+    });
+    container.style.display = 'none';
+    await waitFor(() => {
+      expect(disappearCount).toBe(2);
+    });
   });
 });
