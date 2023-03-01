@@ -79,13 +79,15 @@ function handleIntersect(entries: IntersectionObserverEntry[]) {
     if (
       intersectionRatio > 0.01
     ) {
+      // first appear
+      if (target.getAttribute('data-appeared') == null) {
+        target.dispatchEvent(createEvent(VisibilityChangeEvent.firstAppear, {
+          direction: currentY > beforeY ? VisibilityChangeDirection.up : VisibilityChangeDirection.down,
+        }));
+      }
       target.setAttribute('data-appeared', 'true');
       target.setAttribute('data-has-appeared', 'true');
       target.dispatchEvent(createEvent(VisibilityChangeEvent.appear, {
-        direction: currentY > beforeY ? VisibilityChangeDirection.up : VisibilityChangeDirection.down,
-      }));
-    } else if (intersectionRatio > 0.01 && typeof target.getAttribute('data-appeared') === 'undefined') {
-      target.dispatchEvent(createEvent(VisibilityChangeEvent.firstAppear, {
         direction: currentY > beforeY ? VisibilityChangeDirection.up : VisibilityChangeDirection.down,
       }));
     } else if (
