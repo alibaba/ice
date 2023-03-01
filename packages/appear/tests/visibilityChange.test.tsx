@@ -87,6 +87,7 @@ describe('visibilytyChange', () => {
     });
     container.style.display = 'block';
     await waitFor(() => {
+      expect(firstAppearCount).toBe(1);
       expect(appearCount).toBe(2);
     });
     container.style.display = 'none';
