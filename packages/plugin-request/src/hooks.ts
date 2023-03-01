@@ -8,12 +8,16 @@ interface RequestResult<R, P extends any[]> extends Result<R, P> {
 }
 
 export function useRequest<TData, TParams extends any[]>(
-  service: AxiosRequestConfig | Service<TData, TParams>,
+  service: string | AxiosRequestConfig | Service<TData, TParams>,
   options?: Options<TData, TParams>,
   plugins?: Plugin<TData, TParams>[]) {
   let s: Service<TData, TParams>;
   if (isFunction(service)) {
     s = service as Service<TData, TParams>;
+  } else if (isString(service)) {
+    s = async (...extraOptions: TParams) => {
+      return request({ url: service, ...extraOptions });
+    };
   } else {
     const options = service as AxiosRequestConfig;
     s = async (...extraOptions: TParams) => {
@@ -32,6 +36,10 @@ export function useRequest<TData, TParams extends any[]>(
     // Modify ahooks' useRequest `run` as `request`
     request: req.run,
   } as RequestResult<TData, TParams>;
+}
+
+function isString(str: any): str is string {
+  return typeof str === 'string';
 }
 
 function isFunction(fn: any): fn is Function {

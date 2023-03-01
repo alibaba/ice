@@ -341,7 +341,12 @@ const {
 
 ```ts
 import { useRequest } from 'ice';
-// 用法 1：传入 Axios 配置对象
+// 用法 1：传入请求地址
+const { data, error, loading, request } = useRequest('/api/repo');
+
+request();
+
+// 用法 2：传入 Axios 配置对象
 const { data, error, loading, request } = useRequest({
   url: '/api/repo',
   method: 'get',
@@ -349,7 +354,7 @@ const { data, error, loading, request } = useRequest({
 
 request();
 
-// 用法 2：传入 service 函数
+// 用法 3：传入 service 函数
 const { data, error, loading, request } = useRequest((id) => Promise.resolve({
   url: '/api/repo',
   method: 'get',
