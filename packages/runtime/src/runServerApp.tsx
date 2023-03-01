@@ -70,14 +70,20 @@ export async function renderToEntry(
   const { value } = result;
 
   let jsOutput;
-
-  const { distType } = renderOptions;
-  if (value && distType && distType.includes('javascript')) {
+  const {
+    distType = ['html'],
+  } = renderOptions;
+  if (value && distType.includes('javascript')) {
     jsOutput = await renderHTMLToJS(value);
   }
 
+  let htmlOutput;
+  if (distType.includes('html')) {
+    htmlOutput = result;
+  }
+
   return {
-    ...result,
+    ...htmlOutput,
     jsOutput,
   };
 }
