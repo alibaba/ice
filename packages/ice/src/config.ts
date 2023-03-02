@@ -348,8 +348,12 @@ const userConfig = [
     name: 'splitChunks',
     validation: 'boolean',
     defaultValue: true,
-    setConfig: (config: Config, splitChunks: UserConfig['splitChunks']) => {
-      config.splitChunks = splitChunks;
+    setConfig: (config: Config, splitChunks: UserConfig['splitChunks'], context: UserConfigContext) => {
+      const { originalUserConfig } = context;
+      // Make sure config.splitChunks is not overwritten when codeSplitting is set.
+      if (!('codeSplitting' in originalUserConfig)) {
+        config.splitChunks = splitChunks;
+      }
     },
   },
   {
