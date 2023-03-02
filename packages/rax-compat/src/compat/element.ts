@@ -18,7 +18,10 @@ export function createJSXElementFactory(factory: typeof ElementFactory) {
     delete rest.onDisappear;
 
     // Compat for props.
-    rest = transformProps(rest);
+    // Only the dom needs to be transformed, not the components.
+    if (typeof type === 'string') {
+      rest = transformProps(rest);
+    }
 
     // Compat for style unit.
     if (rest.style) {
