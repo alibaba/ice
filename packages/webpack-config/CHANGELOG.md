@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.8
+
+### Patch Changes
+
+- 56fb406e: fix: support types definition without specify esm folder
+- 071a627d: feat: support code spliting strategy
+- Updated dependencies [1e992472]
+  - @ice/bundles@0.1.5
+
 ## 1.0.7
 
 ### Patch Changes

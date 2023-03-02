@@ -1,5 +1,19 @@
 # @ice/runtime
 
+## 1.1.3
+
+### Patch Changes
+
+- c6b70bce: fix: should not build html when distType has not html
+- 56fb406e: fix: support types definition without specify esm folder
+- 7d729697: feat: support pass server data
+  feat: support change public path runtime
+  feat: support get request ctx in suspense
+  feat: export code analyzer for reuse in other plugin
+  fix: suspense error handle
+  fix: duplicate data request in suspense csr
+  fix: support await render to response
+
 ## 1.1.2
 
 ### Patch Changes
