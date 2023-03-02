@@ -6,6 +6,8 @@ import { it, describe, expect, afterEach } from 'vitest';
 import { render, waitFor, cleanup } from '@testing-library/react';
 import React, { useState } from 'react';
 import VisibilityChange from '../src/index';
+import { useFnTimes } from '../src/hooks';
+const nextTick = () => Promise.resolve();
 
 describe('visibilytyChange', () => {
   afterEach(cleanup);
@@ -52,13 +54,11 @@ describe('visibilytyChange', () => {
     let firstAppearCount = 0;
     let disappearCount = 0;
     function App() {
-      const [count, setCount] = useState(0);
       return (
         <div id="container">
           <VisibilityChange
             onAppear={() => {
               ++appearCount;
-              setCount(count + 1);
             }}
             onFirstAppear={() => {
               ++firstAppearCount;
@@ -67,7 +67,7 @@ describe('visibilytyChange', () => {
               ++disappearCount;
             }}
           >
-            <span id="content">{count}</span>
+            <span id="content" />
           </VisibilityChange>
         </div>
       );
@@ -94,5 +94,42 @@ describe('visibilytyChange', () => {
     await waitFor(() => {
       expect(disappearCount).toBe(2);
     });
+  });
+
+  it('useFnTimes', async () => {
+    const times = 3;
+    function App() {
+      const [count, setCount] = useState(0);
+      const [show, setShow] = useState(true);
+      const handleAppear = useFnTimes(() => {
+        setCount(count + 1);
+      }, times);
+      return (
+        <div
+          id="container"
+          onClick={() => {
+            setShow(!show);
+          }}
+        >
+          {show ? (
+            <VisibilityChange onAppear={handleAppear}>
+              <span data-testid="count">{count}</span>
+            </VisibilityChange>
+          ) : undefined}
+        </div>
+      );
+    }
+    const { getByTestId } = render(<App />);
+    const container = document.querySelector<HTMLDivElement>('#container')!;
+    (async () => {
+      for (let i = 1; i <= times; i++) {
+        await waitFor(() => {
+          expect(getByTestId('count').textContent).toBe(`${i}`);
+        });
+        container.click(); // show: false
+        await nextTick();
+        container.click(); // show: true
+      }
+    })();
   });
 });
