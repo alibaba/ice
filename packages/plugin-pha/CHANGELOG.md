@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.0
+
+### Major Changes
+
+- 6824ad63: fix: fix data of prefetch decamelize (break change)
+- 73ae8bf4: fix: app-worker is not compiled when set a custom name
+- 1c09e79e: fix: support plugin-pha interface optional
+- 56fb406e: fix: support types definition without specify esm folder
+
 ## 1.1.3
 
 ### Patch Changes

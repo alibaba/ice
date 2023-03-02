@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.1.2
+
+### Patch Changes
+
+- 56fb406e: fix: support types definition without specify esm folder
+- 7d729697: feat: export code analyzer for reuse in other plugin
+- de520d66: fix: support unknown cli options registered by plugins
+- 071a627d: feat: support code spliting strategy
+- 37c22e31: chore: update templates for unused imports
+- Updated dependencies [071a627d]
+  - @ice/runtime@1.1.3
+  - @ice/webpack-config@1.0.8
+  - @ice/bundles@0.1.5
+
 ## 3.1.1
 
 ### Patch Changes

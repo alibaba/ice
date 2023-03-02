@@ -251,7 +251,7 @@ export default createModel({
 我们可以在 `src/app.ts` 中设置两个 Model 初始状态：
 
 ```ts title="src/app.ts"
-import { defineStoreConfig } from '@ice/plugin-store/esm/types';
+import { defineStoreConfig } from '@ice/plugin-store/types';
 
 export const storeConfig = defineStoreConfig(async () => {
   // 模拟请求后端数据

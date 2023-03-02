@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { createRequire } from 'module';
-import type { Plugin } from '@ice/app/esm/types';
+import type { Plugin } from '@ice/app/types';
 import type { RuleSetRule } from 'webpack';
 import consola from 'consola';
 import merge from 'lodash.merge';
@@ -70,6 +70,18 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
         compilationConfig: (source: string) => {
           const isRaxComponent = /from\s['"]rax['"]/.test(source);
           if (isRaxComponent) {
+            const hasJSXComment = source.indexOf('@jsx createElement') !== -1;
+            if (hasJSXComment) {
+              return {
+                jsc: {
+                  transform: {
+                    react: {
+                      runtime: 'classic',
+                    },
+                  },
+                },
+              };
+            }
             return {
               jsc: {
                 transform: {

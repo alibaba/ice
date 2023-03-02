@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.5
+
+### Patch Changes
+
+- 1e992472: feat: add swc plugin of node transform
+
 ## 0.1.4
 
 - [fix] remove dependency of `@ice/swc-plugin-keep-platform`

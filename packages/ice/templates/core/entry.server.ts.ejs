@@ -1,6 +1,8 @@
 import './env.server';
 import * as runtime from '@ice/runtime/server';
-<% if(hydrate) {-%>import { commons, statics } from './runtimeModules';<% } -%>
+<% if(hydrate) {-%>
+import { commons, statics } from './runtimeModules';
+<% }-%>
 import * as app from '@/app';
 import Document from '@/document';
 import type { RenderMode, DistType } from '@ice/runtime';
@@ -38,6 +40,8 @@ interface RenderOptions {
   routePath?: string;
   disableFallback?: boolean;
   distType?: DistType;
+  publicPath?: string;
+  serverData?: any;
 }
 
 export async function renderToHTML(requestContext, options: RenderOptions = {}) {
@@ -53,7 +57,7 @@ export async function renderToResponse(requestContext, options: RenderOptions = 
   setRuntimeEnv(renderMode);
   
   const mergedOptions = mergeOptions(options);
-  runtime.renderToResponse(requestContext, mergedOptions);
+  return runtime.renderToResponse(requestContext, mergedOptions);
 }
 
 <% if (jsOutput) { -%>
@@ -67,7 +71,11 @@ export async function renderToEntry(requestContext, options: RenderOptions = {})
 <% } -%>
 
 function mergeOptions(options) {
-  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback, distType } = options;
+  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback, distType, serverData, publicPath } = options;
+
+  if (publicPath) {
+    assetsManifest.publicPath = publicPath;
+  }
 
   return {
     app,
@@ -83,6 +91,7 @@ function mergeOptions(options) {
     disableFallback,
     routesConfig,
     distType,
+    serverData,
 <% if (runtimeOptions.exports) { -%>
     runtimeOptions: {
       <%- runtimeOptions.exports %>

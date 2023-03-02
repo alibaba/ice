@@ -2,7 +2,7 @@ import * as path from 'path';
 import { esbuild } from '@ice/bundles';
 import fse from 'fs-extra';
 import fg from 'fast-glob';
-import type { Config } from '@ice/webpack-config/esm/types';
+import type { Config } from '@ice/webpack-config/types';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { TaskConfig } from 'build-scripts';
 import { getCompilerPlugins, getCSSModuleLocalIdent } from '@ice/webpack-config';
@@ -39,16 +39,9 @@ interface Options {
 
 const { merge, difference } = lodash;
 
-export function createServerCompiler(options: Options) {
-  const { task, rootDir, command, server, syntaxFeatures } = options;
-  const externals = task.config?.externals || {};
-  const define = task.config?.define || {};
-  const sourceMap = task.config?.sourceMap;
-  const dev = command === 'start';
-
+export const filterAlias = (taskAlias: TaskConfig<Config>['config']['alias']) => {
   // Filter empty alias.
-  const ignores = [];
-  const taskAlias = task.config?.alias || {};
+  const ignores: string[] = [];
   const alias: Record<string, string> = {};
   Object.keys(taskAlias).forEach((aliasKey) => {
     const value = taskAlias[aliasKey];
@@ -58,12 +51,52 @@ export function createServerCompiler(options: Options) {
       ignores.push(aliasKey);
     }
   });
+  return { alias, ignores };
+};
 
-  const defineVars = {};
+export const getRuntimeDefination = (
+  defineVars: Record<string, string | boolean> = {},
+  runtimeVars: Record<string, string> = {},
+  transformEnv = true,
+) => {
+  const stringifiedDefine = {};
+  const runtimeDefineVars = {
+    ...runtimeVars,
+  };
   // auto stringify define value
-  Object.keys(define).forEach((key) => {
-    defineVars[key] = JSON.stringify(define[key]);
+  Object.keys(defineVars).forEach((key) => {
+    stringifiedDefine[key] = JSON.stringify(defineVars[key]);
   });
+  // get runtime variable for server build
+  Object.keys(process.env).forEach((key) => {
+    // Do not transform env when bundle client side code.
+    if (/^ICE_CORE_/i.test(key) && transformEnv) {
+      // in server.entry
+      runtimeDefineVars[`__process.env.${key}__`] = JSON.stringify(process.env[key]);
+    } else if (/^ICE_/i.test(key)) {
+      runtimeDefineVars[`process.env.${key}`] = JSON.stringify(process.env[key]);
+    }
+  });
+  const define = {
+    ...stringifiedDefine,
+    ...runtimeDefineVars,
+  };
+  const expandedEnvs = getExpandedEnvs();
+  // Add user defined envs.
+  for (const [key, value] of Object.entries(expandedEnvs)) {
+    define[`import.meta.env.${key}`] = JSON.stringify(value);
+  }
+  return define;
+};
+
+export function createServerCompiler(options: Options) {
+  const { task, rootDir, command, server, syntaxFeatures } = options;
+  const externals = task.config?.externals || {};
+  const sourceMap = task.config?.sourceMap;
+  const dev = command === 'start';
+
+  // Filter empty alias.
+  const { ignores, alias } = filterAlias(task.config?.alias || {});
 
   const serverCompiler: ServerCompiler = async (customBuildOptions, {
     preBundle,
@@ -88,7 +121,7 @@ export function createServerCompiler(options: Options) {
         ? customCompilationConfig
         : () => customCompilationConfig;
 
-      return (source, id) => {
+      return (source: string, id: string) => {
         return {
           ...getConfig(source, id),
           // Force inline when use swc as a transformer.
@@ -105,26 +138,7 @@ export function createServerCompiler(options: Options) {
       swcOptions,
       redirectImports,
     }, 'esbuild', { isServer });
-
-    // get runtime variable for server build
-    Object.keys(process.env).forEach((key) => {
-      // Do not transform env when bundle client side code.
-      if (/^ICE_CORE_/i.test(key) && transformEnv) {
-        // in server.entry
-        runtimeDefineVars[`__process.env.${key}__`] = JSON.stringify(process.env[key]);
-      } else if (/^ICE_/i.test(key)) {
-        runtimeDefineVars[`process.env.${key}`] = JSON.stringify(process.env[key]);
-      }
-    });
-    const define = {
-      ...defineVars,
-      ...runtimeDefineVars,
-    };
-    const expandedEnvs = getExpandedEnvs();
-    // Add user defined envs.
-    for (const [key, value] of Object.entries(expandedEnvs)) {
-      define[`import.meta.env.${key}`] = JSON.stringify(value);
-    }
+    const define = getRuntimeDefination(task.config?.define || {}, runtimeDefineVars, transformEnv);
 
     if (preBundle) {
       preBundleDepsMetadata = await createPreBundleDepsMetadata({

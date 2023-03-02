@@ -5,6 +5,7 @@ import semver from 'semver';
 import fse from 'fs-extra';
 import { fileURLToPath } from 'url';
 import { program, Option } from 'commander';
+import yargsParser from 'yargs-parser';
 // hijack webpack before import other modules
 import '../esm/requireHook.js';
 import createService from '../esm/createService.js';
@@ -33,7 +34,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .action(async ({ rootDir, ...commandArgs }, ctx) => {
       renamePlatformToTarget(commandArgs);
       process.env.NODE_ENV = 'production';
-      const service = await createService({ rootDir, command: 'build', commandArgs });
+      const service = await createService({ rootDir, command: 'build', commandArgs: {
+        ...parseUnknownOptions(ctx.args),
+        ...commandArgs,
+      } });
       service.run();
     });
 
@@ -53,10 +57,13 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .option('--analyzer', 'visualize size of output files', false)
     .option('--https [https]', 'enable https', false)
     .option('--force', 'force remove cache directory', false)
-    .action(async ({ rootDir, ...commandArgs }) => {
+    .action(async ({ rootDir, ...commandArgs }, ctx) => {
       renamePlatformToTarget(commandArgs);
       process.env.NODE_ENV = 'development';
-      const service = await createService({ rootDir, command: 'start', commandArgs });
+      const service = await createService({ rootDir, command: 'start', commandArgs: {
+        ...parseUnknownOptions(ctx.args),
+        ...commandArgs
+      } });
       service.run();
     });
 
@@ -76,6 +83,20 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     program.help();
   }
 })();
+
+function parseUnknownOptions(args) {
+  let unKnownOptions = {};
+  if (args.length > 0) {
+    unKnownOptions = yargsParser(args, {
+      // Transform dashed arguments to camel case.
+      // e.g. --foo-bar => { fooBar: true }.
+      configuration: { 'strip-dashed': true },
+    });
+    // Custom options do not support positional arguments.
+    delete unKnownOptions._;
+  }
+  return unKnownOptions;
+}
 
 // Rename `platform` to `target`, for compatibility.
 // For ice.js <3.0.3, using --platform to set build target.

@@ -3,7 +3,7 @@ import detectPort from 'detect-port';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import type { Context, TaskConfig } from 'build-scripts';
 import type { StatsError, Compiler, Configuration } from 'webpack';
-import type { Config } from '@ice/webpack-config/esm/types';
+import type { Config } from '@ice/webpack-config/types';
 import type { AppConfig, RenderMode } from '@ice/runtime';
 import type ora from '@ice/bundles/compiled/ora/index.js';
 import WebpackDevServer from '@ice/bundles/compiled/webpack-dev-server/lib/Server.js';
@@ -16,10 +16,12 @@ import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import prepareURLs from '../utils/prepareURLs.js';
 import createRenderMiddleware from '../middlewares/ssr/renderMiddleware.js';
+import createOnDemandMiddleware from '../middlewares/ssr/renderOnDemand.js';
 import createMockMiddleware from '../middlewares/mock/createMiddleware.js';
 import getRouterBasename from '../utils/getRouterBasename.js';
 import { getExpandedEnvs } from '../utils/runtimeEnv.js';
 import { logger } from '../utils/logger.js';
+import type ServerRunner from '../service/ServerRunner.js';
 import type RouteManifest from '../utils/routeManifest.js';
 
 const { merge } = lodash;
@@ -37,6 +39,7 @@ const start = async (
     getRoutesConfig: GetRoutesConfig;
     getDataloaderConfig: GetDataloaderConfig;
     userConfigHash: string;
+    serverRunner?: ServerRunner;
   },
 ) => {
   const {
@@ -49,6 +52,7 @@ const start = async (
     getRoutesConfig,
     getDataloaderConfig,
     userConfigHash,
+    serverRunner,
     routeManifest,
   } = options;
   const { commandArgs, rootDir } = context;
@@ -69,6 +73,7 @@ const start = async (
 
   const hooksAPI = {
     serverCompiler,
+    serverRunner,
     getAppConfig,
     getRoutesConfig,
     getDataloaderConfig,
@@ -107,6 +112,7 @@ interface StartDevServerOptions {
     getAppConfig: GetAppConfig;
     getRoutesConfig: GetRoutesConfig;
     getDataloaderConfig: GetDataloaderConfig;
+    serverRunner?: ServerRunner;
   };
   appConfig: AppConfig;
   devPath: string;
@@ -124,7 +130,7 @@ async function startDevServer({
 }: StartDevServerOptions): Promise<{ compiler: Compiler; devServer: WebpackDevServer }> {
   const { commandArgs, userConfig, rootDir, applyHook, extendsPluginAPI: { serverCompileTask } } = context;
   const { ssg, ssr } = userConfig;
-  const { getAppConfig } = hooksAPI;
+  const { getAppConfig, serverRunner } = hooksAPI;
   const webTaskConfig = taskConfigs.find(({ name }) => name === WEB);
   const customMiddlewares = webpackConfigs[0].devServer?.setupMiddlewares;
   // Get the value of the host and port from the command line, environment variables, and webpack config.
@@ -152,16 +158,23 @@ async function startDevServer({
       }
       // both ssr and ssg, should render the whole page in dev mode.
       const documentOnly = !ssr && !ssg;
-
-      const serverRenderMiddleware = createRenderMiddleware({
-        serverCompileTask,
+      const middlewareOptions = {
         documentOnly,
         renderMode,
         getAppConfig,
         taskConfig: webTaskConfig,
         userConfig,
         routeManifest,
-      });
+      };
+      const serverRenderMiddleware = serverRunner
+        ? createOnDemandMiddleware({
+          ...middlewareOptions,
+          serverRunner,
+        })
+        : createRenderMiddleware({
+          ...middlewareOptions,
+          serverCompileTask,
+        });
       // @ts-ignore
       const insertIndex = middlewares.findIndex(({ name }) => name === 'serve-index');
       middlewares.splice(

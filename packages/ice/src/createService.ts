@@ -3,8 +3,8 @@ import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 import { Context } from 'build-scripts';
 import type { CommandArgs, CommandName } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/esm/types';
-import type { AppConfig } from '@ice/runtime/esm/types';
+import type { Config } from '@ice/webpack-config/types';
+import type { AppConfig } from '@ice/runtime/types';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import fg from 'fast-glob';
 import type { DeclarationData, PluginData, ExtendsPluginAPI, TargetDeclarationData } from './types';
@@ -19,7 +19,7 @@ import test from './commands/test.js';
 import getWatchEvents from './getWatchEvents.js';
 import { setEnv, updateRuntimeEnv, getCoreEnvKeys } from './utils/runtimeEnv.js';
 import getRuntimeModules from './utils/getRuntimeModules.js';
-import { generateRoutesInfo } from './routes.js';
+import { generateRoutesInfo, getRoutesDefination } from './routes.js';
 import * as config from './config.js';
 import { RUNTIME_TMP_DIR, WEB, RUNTIME_EXPORTS } from './constant.js';
 import createSpinner from './utils/createSpinner.js';
@@ -29,6 +29,7 @@ import renderExportsTemplate from './utils/renderExportsTemplate.js';
 import { getFileExports } from './service/analyze.js';
 import { getFileHash } from './utils/hash.js';
 import { logger } from './utils/logger.js';
+import ServerRunner from './service/ServerRunner.js';
 import RouteManifest from './utils/routeManifest.js';
 
 const require = createRequire(import.meta.url);
@@ -196,6 +197,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const platformTaskConfig = taskConfigs[0];
 
   const iceRuntimePath = '@ice/runtime';
+  // Only when code splitting use the default strategy or set to `router`, the router will be lazy loaded.
+  const lazy = [true, 'chunks', 'page'].includes(userConfig.codeSplitting);
+  const { routeImports, routeDefination } = getRoutesDefination(routesInfo.routes, lazy);
   // add render data
   generator.setRenderData({
     ...routesInfo,
@@ -214,6 +218,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     entryCode,
     jsOutput: distType.includes('javascript'),
     dataLoader: userConfig.dataLoader,
+    routeImports,
+    routeDefination,
   });
   dataCache.set('routes', JSON.stringify(routesInfo));
   dataCache.set('hasExportAppData', hasExportAppData ? 'true' : '');
@@ -251,6 +257,23 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const renderStart = new Date().getTime();
   generator.render();
   logger.debug('template render cost:', new Date().getTime() - renderStart);
+  // Create server runner
+  let serverRunner: ServerRunner;
+  if (server.onDemand) {
+    serverRunner = new ServerRunner({
+      rootDir,
+      task: platformTaskConfig,
+      server,
+    });
+    addWatchEvent([
+      /src\/?[\w*-:.$]+$/,
+      async (eventName: string, filePath: string) => {
+        if (eventName === 'change' || eventName === 'add') {
+          serverRunner.fileChanged(filePath);
+        }
+      }],
+    );
+  }
   // create serverCompiler with task config
   const serverCompiler = createServerCompiler({
     rootDir,
@@ -269,6 +292,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       templateDir: coreTemplate,
       cache: dataCache,
       routeManifest,
+      lazyRoutes: lazy,
       ctx,
     }),
   );
@@ -292,6 +316,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             getRoutesConfig,
             getDataloaderConfig,
             getAppConfig,
+            serverRunner,
             appConfig,
             devPath: (routePaths[0] || '').replace(/^[/\\]/, ''),
             spinner: buildSpinner,

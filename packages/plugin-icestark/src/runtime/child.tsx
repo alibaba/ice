@@ -1,5 +1,5 @@
 import * as ReactDOM from 'react-dom/client';
-import type { RuntimePlugin } from '@ice/runtime/esm/types';
+import type { RuntimePlugin } from '@ice/runtime/types';
 import type { LifecycleOptions } from '../types';
 
 const runtime: RuntimePlugin<LifecycleOptions> = ({ setRender }, runtimeOptions) => {

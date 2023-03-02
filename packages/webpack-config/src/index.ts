@@ -281,9 +281,9 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
       ignored: watchIgnoredRegexp,
     },
     optimization: {
-      splitChunks: splitChunks == false
-        ? { minChunks: Infinity, cacheGroups: { default: false } }
-        : getSplitChunksConfig(rootDir),
+      splitChunks: typeof splitChunks == 'object'
+        ? splitChunks
+        : getSplitChunksConfig(rootDir, splitChunks),
       minimize: !!minify,
       minimizer: [
         new TerserPlugin({

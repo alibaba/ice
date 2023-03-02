@@ -58,7 +58,7 @@ export default defineConfig(() => ({
 应用入口配置微应用相关信息：
 
 ```ts title="src/app.ts"
-import { defineFrameworkConfig } from '@ice/plugin-icestark/esm/types';
+import { defineFrameworkConfig } from '@ice/plugin-icestark/types';
 import FrameworkLayout from '@/components/FrameworkLayout';
 
 export const icestark = defineFrameworkConfig(() => ({
@@ -98,7 +98,7 @@ export default defineConfig(() => ({
 应用入口可以配置相关生命周期执行行为（可选）：
 
 ```ts title="ice.config.mts"
-import { defineChildConfig } from '@ice/plugin-icestark/esm/types';
+import { defineChildConfig } from '@ice/plugin-icestark/types';
 
 export const icestark = defineChildConfig(() => ({
   mount: () => {
@@ -144,7 +144,7 @@ export default function FrameworkLayout({ children }) {
 
 
 ```ts title="src/app.ts"
-import { defineFrameworkConfig } from '@ice/plugin-icestark/esm/types';
+import { defineFrameworkConfig } from '@ice/plugin-icestark/types';
 import FrameworkLayout from '@/components/FrameworkLayout';
 
 export const icestark = defineFrameworkConfig(() => ({

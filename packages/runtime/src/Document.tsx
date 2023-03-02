@@ -146,7 +146,7 @@ export type DataType = (props: DataProps) => JSX.Element;
 
 // use app context separately
 export const Data: DataType = (props: DataProps) => {
-  const { routesData, documentOnly, matches, routesConfig, downgrade, renderMode } = useAppContext();
+  const { routesData, documentOnly, matches, routesConfig, downgrade, renderMode, serverData } = useAppContext();
   const appData = useAppData();
   const {
     ScriptElement = 'script',
@@ -163,6 +163,7 @@ export const Data: DataType = (props: DataProps) => {
     matchedIds,
     documentOnly,
     renderMode,
+    serverData,
   };
 
   return (
@@ -191,7 +192,6 @@ export const Main: MainType = (props: React.HTMLAttributes<HTMLDivElement>) => {
  * merge assets info for matched route
  */
 export function getPageAssets(matches: RouteMatch[], assetsManifest: AssetsManifest): string[] {
-  // TODO：publicPath from runtime
   const { pages, publicPath } = assetsManifest;
 
   let result = [];

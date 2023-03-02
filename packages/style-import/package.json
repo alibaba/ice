@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "es-module-lexer": "^1.0.2",
-    "magic-string": "^0.26.2"
+    "magic-string": "^0.27.0"
   },
   "publishConfig": {
     "access": "public"

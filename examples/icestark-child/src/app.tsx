@@ -1,5 +1,5 @@
 import { defineAppConfig } from 'ice';
-import { defineChildConfig } from '@ice/plugin-icestark/esm/types';
+import { defineChildConfig } from '@ice/plugin-icestark/types';
 
 export const icestark = defineChildConfig(() => {
   return {

@@ -2,7 +2,7 @@ import * as path from 'path';
 import { fileURLToPath } from 'url';
 import consola from 'consola';
 import chalk from 'chalk';
-import type { Plugin, GetAppConfig, GetRoutesConfig, GetDataloaderConfig, ServerCompiler } from '@ice/app/esm/types';
+import type { Plugin, GetAppConfig, GetRoutesConfig, GetDataloaderConfig, ServerCompiler } from '@ice/app/types';
 import generateManifest, { getAppWorkerPath } from './generateManifest.js';
 import createPHAMiddleware from './phaMiddleware.js';
 
@@ -17,8 +17,8 @@ export type Compiler = (options: {
 }, buildOptions: Parameters<ServerCompiler>[1]) => Promise<string>;
 
 interface PluginOptions {
-  template: boolean;
-  preload: boolean;
+  template?: boolean;
+  preload?: boolean;
 }
 
 function getDevPath(url: string): string {
@@ -42,8 +42,9 @@ const plugin: Plugin<PluginOptions> = (options) => ({
 
     generator.addRouteTypes({
       specifier: ['PageConfig'],
+      alias: { PageConfig: 'PHAPageConfig' },
       type: true,
-      source: '@ice/plugin-pha/esm/types',
+      source: '@ice/plugin-pha/types',
     });
 
     // TODO: get route manifest by API.

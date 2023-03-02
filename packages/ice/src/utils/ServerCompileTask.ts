@@ -3,14 +3,14 @@ import type { ServerCompiler } from '../types/plugin.js';
 /**
  * Get server compile promise task in middlewares or plugins.
  */
-class ServerCompileTask {
-  private task: ReturnType<ServerCompiler>;
+class ServerCompileTask<T = ReturnType<ServerCompiler>> {
+  private task: T;
 
-  set(task: ReturnType<ServerCompiler>) {
+  set(task: T) {
     this.task = task;
   }
 
-  public async get() {
+  public get(): T {
     return this.task;
   }
 }

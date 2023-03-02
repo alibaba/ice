@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import type { GetAppConfig, GetDataloaderConfig, GetRoutesConfig, ServerCompiler } from '@ice/app/esm/types';
+import type { GetAppConfig, GetDataloaderConfig, GetRoutesConfig, ServerCompiler } from '@ice/app/types';
 import type { Context } from 'build-scripts';
 import { parseManifest, rewriteAppWorker, getAppWorkerUrl, getMultipleManifest, type ParseOptions } from './manifestHelpers.js';
 import { getCompilerConfig } from './constants.js';
@@ -39,7 +39,7 @@ export async function getAppWorkerPath({
   getAppConfig,
   rootDir,
 }) {
-  const appConfig = getAppConfig(['phaManifest']);
+  const appConfig = await getAppConfig(['phaManifest']);
   let manifest = appConfig.phaManifest;
   return getAppWorkerUrl(manifest, path.join(rootDir, 'src'));
 }

@@ -2,10 +2,10 @@ import path from 'path';
 import { createHash } from 'crypto';
 import fse from 'fs-extra';
 import { esbuild } from '@ice/bundles';
-import type { Plugin } from 'esbuild';
+import type { Plugin, BuildOptions } from 'esbuild';
 import { resolve as resolveExports, legacy as resolveLegacy } from 'resolve.exports';
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
-import type { Config } from '@ice/webpack-config/esm/types';
+import type { Config } from '@ice/webpack-config/types';
 import type { TaskConfig } from 'build-scripts';
 import { getCSSModuleLocalIdent } from '@ice/webpack-config';
 import flattenId from '../utils/flattenId.js';
@@ -55,7 +55,7 @@ export default async function preBundleDeps(
   depsInfo: Record<string, DepScanData>,
   options: PreBundleDepsOptions,
 ): Promise<PreBundleDepsResult> {
-  const { rootDir, cacheDir, taskConfig, plugins = [], alias, ignores, define, external = [] } = options;
+  const { cacheDir, taskConfig, plugins = [], alias, ignores, define, external = [] } = options;
   const metadata = createDepsMetadata(depsInfo, taskConfig);
 
   if (!Object.keys(depsInfo)) {
@@ -95,38 +95,14 @@ export default async function preBundleDeps(
   }
 
   try {
-    await esbuild.build({
-      absWorkingDir: rootDir,
+    await bundleDeps({
       entryPoints: flatIdDeps,
-      bundle: true,
-      logLevel: 'error',
       outdir: depsCacheDir,
-      format: 'esm',
-      platform: 'node',
-      loader: { '.js': 'jsx' },
-      ignoreAnnotations: true,
+      plugins,
+      ignores,
       alias,
+      external,
       define,
-      metafile: true,
-      outExtension: {
-        '.js': '.mjs',
-      },
-      banner: {
-        js: "import { createRequire } from 'module';const require = createRequire(import.meta.url);",
-      },
-      plugins: [
-        emptyCSSPlugin(),
-        externalPlugin({ ignores, format: 'esm', externalDependencies: false }),
-        cssModulesPlugin({
-          extract: false,
-          generateLocalIdentName: function (name: string, filename: string) {
-            // Compatible with webpack css-loader.
-            return escapeLocalIdent(getCSSModuleLocalIdent(filename, name));
-          },
-        }),
-        ...plugins,
-      ],
-      external: [...BUILDIN_CJS_DEPS, ...BUILDIN_ESM_DEPS, ...external],
     });
 
     await fse.writeJSON(metadataJSONPath, metadata, { spaces: 2 });
@@ -141,7 +117,53 @@ export default async function preBundleDeps(
   }
 }
 
-function resolvePackageESEntry(depId: string, pkgPath: string, alias: TaskConfig<Config>['config']['alias']) {
+export async function bundleDeps(options:
+  {
+    entryPoints: BuildOptions['entryPoints'];
+    outdir: BuildOptions['outdir'];
+    alias: BuildOptions['alias'];
+    ignores: string[];
+    plugins: Plugin[];
+    external: string[];
+    define: BuildOptions['define'];
+  }) {
+  const { entryPoints, outdir, alias, ignores, plugins, external, define } = options;
+  return await esbuild.build({
+    absWorkingDir: process.cwd(),
+    entryPoints,
+    bundle: true,
+    logLevel: 'error',
+    outdir,
+    format: 'esm',
+    platform: 'node',
+    loader: { '.js': 'jsx' },
+    ignoreAnnotations: true,
+    alias,
+    define,
+    metafile: true,
+    outExtension: {
+      '.js': '.mjs',
+    },
+    banner: {
+      js: "import { createRequire } from 'module';const require = createRequire(import.meta.url);",
+    },
+    plugins: [
+      emptyCSSPlugin(),
+      externalPlugin({ ignores, format: 'esm', externalDependencies: false }),
+      cssModulesPlugin({
+        extract: false,
+        generateLocalIdentName: function (name: string, filename: string) {
+          // Compatible with webpack css-loader.
+          return escapeLocalIdent(getCSSModuleLocalIdent(filename, name));
+        },
+      }),
+      ...plugins,
+    ],
+    external: [...BUILDIN_CJS_DEPS, ...BUILDIN_ESM_DEPS, ...external],
+  });
+}
+
+export function resolvePackageESEntry(depId: string, pkgPath: string, alias: TaskConfig<Config>['config']['alias']) {
   const pkgJSON = fse.readJSONSync(pkgPath);
   const pkgDir = path.dirname(pkgPath);
   const aliasKey = Object.keys(alias).find(key => depId === key || depId.startsWith(`${depId}/`));
