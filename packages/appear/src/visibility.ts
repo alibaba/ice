@@ -17,10 +17,12 @@ enum VisibilityChangeDirection {
 // Shared intersectionObserver instance.
 let intersectionObserver: any;
 const IntersectionObserver = (function () {
-  if (typeof window !== 'undefined' &&
+  if (
+    typeof window !== 'undefined' &&
     'IntersectionObserver' in window &&
     'IntersectionObserverEntry' in window &&
-    'intersectionRatio' in window.IntersectionObserverEntry.prototype) {
+    'intersectionRatio' in window.IntersectionObserverEntry.prototype
+  ) {
     // features are natively supported
     return window.IntersectionObserver;
   } else {
@@ -66,30 +68,21 @@ export function observerElement(element: HTMLElement | Node) {
 
 function handleIntersect(entries: IntersectionObserverEntry[]) {
   entries.forEach((entry) => {
-    const {
-      target,
-      boundingClientRect,
-      intersectionRatio,
-    } = entry;
+    const { target, boundingClientRect, intersectionRatio } = entry;
     // No `top` value in polyfill.
     const currentY = boundingClientRect.y || boundingClientRect.top;
     const beforeY = parseInt(target.getAttribute('data-before-current-y'), 10) || currentY;
+    const params = { direction: currentY > beforeY ? VisibilityChangeDirection.up : VisibilityChangeDirection.down };
 
     // is in view
-    if (
-      intersectionRatio > 0.01
-    ) {
+    if (intersectionRatio > 0.01) {
       // first appear
       if (target.getAttribute('data-appeared') == null) {
-        target.dispatchEvent(createEvent(VisibilityChangeEvent.firstAppear, {
-          direction: currentY > beforeY ? VisibilityChangeDirection.up : VisibilityChangeDirection.down,
-        }));
+        target.dispatchEvent(createEvent(VisibilityChangeEvent.firstAppear, params));
       }
       target.setAttribute('data-appeared', 'true');
       target.setAttribute('data-has-appeared', 'true');
-      target.dispatchEvent(createEvent(VisibilityChangeEvent.appear, {
-        direction: currentY > beforeY ? VisibilityChangeDirection.up : VisibilityChangeDirection.down,
-      }));
+      target.dispatchEvent(createEvent(VisibilityChangeEvent.appear, params));
     } else if (
       intersectionRatio === 0 &&
       isTrue(target.getAttribute('data-appeared')) &&
@@ -97,9 +90,7 @@ function handleIntersect(entries: IntersectionObserverEntry[]) {
     ) {
       target.setAttribute('data-appeared', 'false');
       target.setAttribute('data-has-disappeared', 'true');
-      target.dispatchEvent(createEvent(VisibilityChangeEvent.disappear, {
-        direction: currentY > beforeY ? VisibilityChangeDirection.up : VisibilityChangeDirection.down,
-      }));
+      target.dispatchEvent(createEvent(VisibilityChangeEvent.disappear, params));
     }
 
     target.setAttribute('data-before-current-y', String(currentY));
