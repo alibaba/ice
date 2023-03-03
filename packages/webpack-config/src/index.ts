@@ -323,7 +323,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
       ...plugins,
       ...compilerWebpackPlugins,
       // @ts-ignore
-      new EnvReplacementPlugin(),
+      dev && new EnvReplacementPlugin(),
       dev && fastRefresh && new ReactRefreshWebpackPlugin({
         exclude: [/node_modules/, /bundles[\\\\/]compiled/],
         // use webpack-dev-server overlay instead
