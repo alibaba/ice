@@ -28,8 +28,37 @@ export default async function create(dirPath: string, templateName: string, dirn
     if (!go) process.exit(1);
   }
 
-  await downloadAndGenerateProject(dirPath, templateName);
   const isAliInternal = await checkAliInternal();
+  let ejsOptions: Record<string, any> = { appConfig: null };
+  let extraDependencies: Record<string, any> = {};
+  if (isAliInternal) {
+    ejsOptions = {
+      ...ejsOptions,
+      iceConfig: {
+        importDeclarationsStr: 'import def from \'@ali/ice-plugin-def\';\n',
+        options: {
+          pluginItemsStr: 'def(),',
+        },
+        optionsStr: `plugins: [
+          def(),
+        ],`,
+      },
+    };
+    extraDependencies = {
+      devDependencies: {
+        '@ali/ice-plugin-def': '^1.0.0',
+      },
+    };
+  }
+  await downloadAndGenerateProject(
+    dirPath,
+    templateName,
+    {
+      ejsOptions,
+      version: 'beta',
+      extraDependencies,
+    },
+  );
 
   console.log();
   console.log('Initialize project successfully.');
