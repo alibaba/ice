@@ -2,4 +2,5 @@
 '@ice/route-manifest': minor
 ---
 
-featL support `/index` route
+feat: support `/index` route
+feat: support nested urls without nested layouts
