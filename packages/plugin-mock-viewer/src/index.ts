@@ -1,6 +1,6 @@
 import type { Plugin } from '@ice/app/types';
-import type { WebpackMockViewerOptions } from '@ali/webpack-mock-viewer';
-import WebpackMockViewer from '@ali/webpack-mock-viewer';
+import type { WebpackMockViewerOptions } from 'webpack-mock-viewer';
+import WebpackMockViewer from 'webpack-mock-viewer';
 
 
 const mockViewer: Plugin<WebpackMockViewerOptions> = (options?: WebpackMockViewerOptions) => ({

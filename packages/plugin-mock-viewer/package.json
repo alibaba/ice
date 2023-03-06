@@ -10,15 +10,12 @@
     "esm",
     "!esm/**/*.map"
   ],
-  "dependencies": {
-    "@ali/webpack-mock-viewer": "^1.0.4"
-  },
   "devDependencies": {
     "@ice/app": "^3.0.0"
   },
   "repository": {
     "type": "http",
-    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-fusion"
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-mock-viewer"
   },
   "publishConfig": {
     "access": "public"
@@ -26,5 +23,8 @@
   "scripts": {
     "watch": "tsc -w",
     "build": "tsc"
+  },
+  "dependencies": {
+    "webpack-mock-viewer": "^1.0.5"
   }
 }
