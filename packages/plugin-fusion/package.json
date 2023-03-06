@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-fusion",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "plugin for ICE while use fusion component",
   "license": "MIT",
   "type": "module",
