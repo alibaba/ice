@@ -62,7 +62,8 @@ export function getRoutesDefination(nestRouteManifest: NestedRouteManifest[], la
     if (lazy) {
       loadStatement = `import(/* webpackChunkName: "p_${componentName}" */ '${formatPath(componentPath)}')`;
     } else {
-      const camelComponentName = componentName.replace(/-(\w)/g, (_, letter) => letter.toUpperCase());
+      // Consider the case of the component name is `page-$id`.
+      const camelComponentName = componentName.replace(/-(\w|\$)/g, (_, letter) => letter.toUpperCase());
       routeImports.push(`import * as ${camelComponentName} from '${formatPath(componentPath)}';`);
       loadStatement = camelComponentName;
     }
