@@ -64,7 +64,7 @@ export interface UserConfig {
   ssr?: boolean;
   ssg?: boolean;
   server?: {
-    onDemand: boolean;
+    onDemand?: boolean;
     format?: 'esm' | 'cjs';
     bundle?: boolean;
     ignores?: IgnorePattern[];
