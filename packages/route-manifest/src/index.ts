@@ -172,7 +172,7 @@ function defineConventionalRoutes(
         routeId.slice(parentRoutePath.length + (parentRoutePath ? 1 : 0)),
       );
       const routeFilePath = normalizeSlashes(path.join('src', 'pages', files[routeId]));
-      if (RegExp(`[^${validRouteChar.join(',')}]`).test(routePath)) {
+      if (RegExp(`[^${validRouteChar.join(',')}]*`).test(routePath)) {
         throw new Error(`invalid character in '${routeFilePath}'. Only support char: ${validRouteChar.join(', ')}`);
       }
       const isIndexRoute = routeId === 'index' || routeId.endsWith('/index');

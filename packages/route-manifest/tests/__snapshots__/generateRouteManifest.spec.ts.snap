@@ -103,7 +103,7 @@ exports[`generateRouteManifest function > define-extra-routes 1`] = `
 exports[`generateRouteManifest function > doc-delimeters-routes 1`] = `
 {
   "home.news": {
-    "componentName": "home-news",
+    "componentName": "home.news",
     "file": "home.news.tsx",
     "id": "home.news",
     "index": undefined,
