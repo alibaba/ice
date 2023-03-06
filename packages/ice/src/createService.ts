@@ -40,7 +40,7 @@ interface CreateServiceOptions {
 }
 
 async function createService({ rootDir, command, commandArgs }: CreateServiceOptions) {
-  const buildSpinner = createSpinner('loading config...');
+  const buildSpinner = createSpinner('');
   const templateDir = path.join(__dirname, '../templates/');
   const coreTemplate = path.join(templateDir, 'core/');
   const configFile = commandArgs.config || 'ice.config.(mts|mjs|ts|js|cjs|json)';
