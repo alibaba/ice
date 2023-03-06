@@ -195,6 +195,8 @@ function getJsxTransformOptions({
   rootDir,
 }: GetJsxTransformOptions) {
   const reactTransformConfig: ReactConfig = {
+    // Swc won't enable fast refresh when development is false in the latest version.
+    development: mode === 'development',
     refresh: fastRefresh,
     runtime: 'automatic',
     importSource: '@ice/runtime', // The exact import source is '@ice/runtime/jsx-runtime'
