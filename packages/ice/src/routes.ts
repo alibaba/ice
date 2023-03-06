@@ -62,7 +62,11 @@ export function getRoutesDefination(nestRouteManifest: NestedRouteManifest[], la
     if (lazy) {
       loadStatement = `import(/* webpackChunkName: "p_${componentName}" */ '${formatPath(componentPath)}')`;
     } else {
-      const camelComponentName = componentName.replace(/-(\w)/g, (_, letter) => letter.toUpperCase());
+      const camelComponentName = componentName.replace(/-(\[?)(\w*)(\]?)/g, (_, ...letters: string[]) => {
+        return letters[0].startsWith('[')
+          ? letters.slice(0, 3).join('').replace(/[\[\]]/g, '$')
+          : letters[1].charAt(0).toUpperCase() + letters[1].slice(1);
+      });
       routeImports.push(`import * as ${camelComponentName} from '${formatPath(componentPath)}';`);
       loadStatement = camelComponentName;
     }
