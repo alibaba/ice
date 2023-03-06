@@ -1,0 +1,30 @@
+{
+  "name": "@ice/plugin-mock-viewer",
+  "version": "1.0.0",
+  "description": "plugin for ice while manage local mock data",
+  "license": "MIT",
+  "type": "module",
+  "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
+  "files": [
+    "esm",
+    "!esm/**/*.map"
+  ],
+  "dependencies": {
+    "@ali/webpack-mock-viewer": "^1.0.4"
+  },
+  "devDependencies": {
+    "@ice/app": "^3.0.0"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/ice-lab/ice-next/tree/master/packages/plugin-fusion"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "watch": "tsc -w",
+    "build": "tsc"
+  }
+}
