@@ -1,4 +1,5 @@
 import React from 'react';
+import type { RouteObject } from 'react-router-dom';
 import { RouteComponent } from './types.js';
 import type { RouteItem, RouteModules, RouteWrapperConfig, RouteMatch, RequestContext, RoutesConfig, RoutesData, RenderMode } from './types.js';
 import RouteWrapper from './RouteWrapper.js';
@@ -147,7 +148,7 @@ export function createRouteElements(
       </RouteWrapper>
     );
 
-    const route: RouteItem = {
+    const route: RouteObject = {
       path,
       element,
       index,
