@@ -241,7 +241,7 @@ export function createRoutePath(routeId: string): string | undefined {
       }
       continue;
     }
-
+    // We try to get the string in the escape sequence. For example, try to get the `index` string in `[index]`.
     if (isNewEscapeSequence) {
       inEscapeSequence++;
       continue;
