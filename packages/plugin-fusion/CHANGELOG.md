@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.3
+
+### Patch Changes
+
+- 1e6a015d: fix: add icon style when config themePackage
+
 ## 1.0.2
 
 ### Patch Changes
