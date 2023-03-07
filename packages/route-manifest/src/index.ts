@@ -18,7 +18,7 @@ export interface RouteItem {
   children?: RouteItem[];
 }
 
-const validRouteChar = ['-', '\\w', '/', ':', '*', '[', ']'];
+const validRouteChar = ['-', '\\w', '/', ':', '*', '\\[', '\\]', '\\.'];
 
 const routeModuleExts = [
   '.js',
@@ -172,7 +172,7 @@ function defineConventionalRoutes(
         routeId.slice(parentRoutePath.length + (parentRoutePath ? 1 : 0)),
       );
       const routeFilePath = normalizeSlashes(path.join('src', 'pages', files[routeId]));
-      if (RegExp(`[^${validRouteChar.join(',')}]*`).test(routePath)) {
+      if (RegExp(`[^${validRouteChar.join('')}]+`).test(routePath)) {
         throw new Error(`invalid character in '${routeFilePath}'. Only support char: ${validRouteChar.join(', ')}`);
       }
       const isIndexRoute = routeId === 'index' || routeId.endsWith('/index');
@@ -232,15 +232,8 @@ export function createRoutePath(routeId: string): string | undefined {
     const lastChar = i > 0 ? partialRouteId.charAt(i - 1) : undefined;
     const nextChar = i < partialRouteId.length - 1 ? partialRouteId.charAt(i + 1) : undefined;
 
-    function isNewEscapeSequence() {
-      return (
-        !inEscapeSequence && char === escapeStart && lastChar !== escapeStart
-      );
-    }
-
-    function isCloseEscapeSequence() {
-      return inEscapeSequence && char === escapeEnd && nextChar !== escapeEnd;
-    }
+    const isNewEscapeSequence = !inEscapeSequence && char === escapeStart && lastChar !== escapeStart;
+    const isCloseEscapeSequence = inEscapeSequence && char === escapeEnd && nextChar !== escapeEnd;
 
     if (skipSegment) {
       if (char === '/' || char === '.' || char === path.win32.sep) {
@@ -249,12 +242,12 @@ export function createRoutePath(routeId: string): string | undefined {
       continue;
     }
 
-    if (isNewEscapeSequence()) {
+    if (isNewEscapeSequence) {
       inEscapeSequence++;
       continue;
     }
 
-    if (isCloseEscapeSequence()) {
+    if (isCloseEscapeSequence) {
       inEscapeSequence--;
       continue;
     }

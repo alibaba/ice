@@ -51,4 +51,18 @@ describe('generateRouteManifest function', () => {
     );
     expect(routeManifest).toMatchSnapshot();
   });
+
+  test('escape-routes', () => {
+    const routeManifest = generateRouteManifest(
+      path.join(fixturesDir, 'escape-routes'),
+    );
+    expect(routeManifest).toMatchSnapshot();
+  });
+
+  test('nested-routes', () => {
+    const routeManifest = generateRouteManifest(
+      path.join(fixturesDir, 'nested-routes'),
+    );
+    expect(routeManifest).toMatchSnapshot();
+  });
 });
