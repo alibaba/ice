@@ -959,7 +959,7 @@ importers:
 
   packages/create-ice:
     specifiers:
-      '@iceworks/generate-project': ^2.0.0-beta.2
+      '@iceworks/generate-project': ^2.0.0-beta.3
       '@types/inquirer': ^9.0.3
       chalk: ^5.0.0
       commander: ^9.0.0
@@ -967,7 +967,7 @@ importers:
       ice-npm-utils: ^3.0.0
       inquirer: ^9.1.4
     dependencies:
-      '@iceworks/generate-project': 2.0.0-beta.2
+      '@iceworks/generate-project': 2.0.0-beta.3
       chalk: 5.1.2
       commander: 9.4.0
       fs-extra: 10.1.0
@@ -5303,14 +5303,14 @@ packages:
     resolution: {integrity: sha512-HPeYj+z1ylaD5fJkSqyJ+eXbrHiCdy/t/t56uyf20aqsAyx12EiHVnfV4blW31DSWhFt/veAUXYzbaJ8b9KLOQ==}
     dev: false
 
-  /@iceworks/generate-project/2.0.0-beta.2:
-    resolution: {integrity: sha512-QLDhoIi1Xau/XD4Dnvjeb8UOk24kBFAmI9Vhj2qj6/THVlIyxrwbwQxaV9PU/9KhudCPBHUmLU+T2OgL09zU6A==}
-    engines: {node: '>=14.18.0'}
+  /@iceworks/generate-project/2.0.0-beta.3:
+    resolution: {integrity: sha512-5TbhUeK/76rdhsEMBt4io6adm3Oo30JVpU5s02dbIYB4VC8nz9/Hl3GICUcVD9N1PfuKnyCyb7g1U65FbF76nQ==}
+    engines: {node: '>=12.20.0'}
     dependencies:
       '@appworks/constant': 0.1.4
       ejs: 3.1.8
-      fs-extra: 11.1.0
-      glob: 9.2.1
+      fs-extra: 8.1.0
+      glob: 7.2.3
       ice-npm-utils: 3.0.2
       ora: 5.4.1
       prettier: 2.7.1
@@ -12116,15 +12116,6 @@ packages:
       jsonfile: 6.1.0
       universalify: 2.0.0
 
-  /fs-extra/11.1.0:
-    resolution: {integrity: sha512-0rcTq621PD5jM/e0a3EJoGC/1TC5ZBCERW82LQuwfGnCa1V8w7dpYH1yNu+SLb6E5dkeCBzKEyLGlFrnr+dUyw==}
-    engines: {node: '>=14.14'}
-    dependencies:
-      graceful-fs: 4.2.10
-      jsonfile: 6.1.0
-      universalify: 2.0.0
-    dev: false
-
   /fs-extra/7.0.1:
     resolution: {integrity: sha512-YJDaCJZEnBmcbw13fvdAM9AwNOJwOzrE4pqMqBq5nFiEqXUqHwlK4B+3pUw6JNvfSPtX05xFHtYy/1ni01eGCw==}
     engines: {node: '>=6 <7 || >=8'}
@@ -12342,16 +12333,6 @@ packages:
       minimatch: 5.1.0
       once: 1.4.0
     dev: true
-
-  /glob/9.2.1:
-    resolution: {integrity: sha512-Pxxgq3W0HyA3XUvSXcFhRSs+43Jsx0ddxcFrbjxNGkL2Ak5BAUBxLqI5G6ADDeCHLfzzXFhe0b1yYcctGmytMA==}
-    engines: {node: '>=16 || 14 >=14.17'}
-    dependencies:
-      fs.realpath: 1.0.0
-      minimatch: 7.4.2
-      minipass: 4.2.4
-      path-scurry: 1.6.1
-    dev: false
 
   /global-dirs/0.1.1:
     resolution: {integrity: sha512-NknMLn7F2J7aflwFOlGdNIuCDpN3VGoSoB+aap3KABFWbHVn1TCgFC+np23J8W2BiZbjfEw3BFBycSMv1AFblg==}
@@ -15101,11 +15082,6 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /lru-cache/7.18.1:
-    resolution: {integrity: sha512-8/HcIENyQnfUTCDizRu9rrDyG6XG/21M4X7/YEGZeD76ZJilFPAUVb/2zysFf7VVO1LEjCDFyHp8pMMvozIrvg==}
-    engines: {node: '>=12'}
-    dev: false
-
   /lunr-languages/1.10.0:
     resolution: {integrity: sha512-BBjKKcwrieJlzwwc9M5H/MRXGJ2qyOSDx/NXYiwkuKjiLOOoouh0WsDzeqcLoUWcX31y7i8sb8IgsZKObdUCkw==}
     dev: false
@@ -15388,13 +15364,6 @@ packages:
     dependencies:
       brace-expansion: 2.0.1
 
-  /minimatch/7.4.2:
-    resolution: {integrity: sha512-xy4q7wou3vUoC9k1xGTXc+awNdGaGVHtFUaey8tiX4H1QRc04DZ/rmDFwNm2EBsuYEhAZ6SgMmYf3InGY6OauA==}
-    engines: {node: '>=10'}
-    dependencies:
-      brace-expansion: 2.0.1
-    dev: false
-
   /minimist-options/4.1.0:
     resolution: {integrity: sha512-Q4r8ghd80yhO/0j1O3B2BjweX3fiHg9cdOwjJd2J76Q135c+NDxGCqdYKQ1SKBuFfgWbAUzBfvYjPUEeNgqN1A==}
     engines: {node: '>= 6'}
@@ -15440,11 +15409,6 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       yallist: 4.0.0
-
-  /minipass/4.2.4:
-    resolution: {integrity: sha512-lwycX3cBMTvcejsHITUgYj6Gy6A7Nh4Q6h9NP4sTHY1ccJlC7yKzDmiShEHsJ16Jf1nKGDEaiHxiltsJEvk0nQ==}
-    engines: {node: '>=8'}
-    dev: false
 
   /minizlib/2.1.2:
     resolution: {integrity: sha512-bAxsR8BVfj60DWXHE3u30oHzfl4G7khkSuPW+qvpd7jFRHm7dLxOjUk1EHACJ/hxLY8phGJ0YhYHZo7jil7Qdg==}
@@ -16049,14 +16013,6 @@ packages:
 
   /path-parse/1.0.7:
     resolution: {integrity: sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==}
-
-  /path-scurry/1.6.1:
-    resolution: {integrity: sha512-OW+5s+7cw6253Q4E+8qQ/u1fVvcJQCJo/VFD8pje+dbJCF1n5ZRMV2AEHbGp+5Q7jxQIYJxkHopnj6nzdGeZLA==}
-    engines: {node: '>=14'}
-    dependencies:
-      lru-cache: 7.18.1
-      minipass: 4.2.4
-    dev: false
 
   /path-to-regexp/0.1.7:
     resolution: {integrity: sha512-5DFkuoqlv1uYQKxy8omFBeJPQcdoE07Kv2sferDCrAq1ohOU+MSDswDIbnx3YAM60qIOnYa53wBhXW0EbMonrQ==}

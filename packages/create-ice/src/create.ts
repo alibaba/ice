@@ -29,7 +29,10 @@ export default async function create(dirPath: string, templateName: string, dirn
   }
 
   const isAliInternal = await checkAliInternal();
-  let ejsOptions: Record<string, any> = { appConfig: null };
+  let ejsOptions: Record<string, any> = {
+    appConfig: null,
+    esLintConfigOptions: null,
+  };
   let extraDependencies: Record<string, any> = {};
   if (isAliInternal) {
     ejsOptions = {
