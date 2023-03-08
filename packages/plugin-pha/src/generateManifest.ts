@@ -25,6 +25,9 @@ export async function getAppWorkerContent(
     entry: string;
     outfile: string;
     minify?: boolean;
+    runtimeDefineVars?: {
+      [key: string]: string;
+    };
   }, options): Promise<string> {
   const { entry, outfile, minify = false } = buildOptions;
   const appWorkerFile = await compiler({
@@ -78,6 +81,11 @@ export default async function generateManifest({
       entry: fs.existsSync(entry) ? entry : appWorkerPath,
       outfile: path.join(outputDir, 'app-worker.js'),
       minify: true,
+      // Should replace env var.
+      runtimeDefineVars: {
+        'import.meta.target': JSON.stringify('web'),
+        'import.meta.renderer': JSON.stringify('client'),
+      },
     }, getCompilerConfig({ getAllPlugin }));
   }
 
