@@ -3,4 +3,4 @@
 ---
 
 fix: compatible with dynamic routes when disable lazy import
-fix: should replace env vars when build appWork
+feat: export logger for plugin
