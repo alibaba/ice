@@ -44,7 +44,7 @@ const createPHAMiddleware = ({
       let dataloaderConfig;
       try {
         // dataLoader may have side effect code.
-        dataloaderConfig = getDataloaderConfig();
+        dataloaderConfig = await getDataloaderConfig();
       } catch (err) {
         logger.debug('PHA: getDataloaderConfig failed.');
         logger.debug(err);

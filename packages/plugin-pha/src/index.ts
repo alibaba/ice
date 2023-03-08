@@ -106,7 +106,6 @@ const plugin: Plugin<PluginOptions> = (options) => ({
           preload,
           routeManifest,
         },
-        logger,
       });
     });
 

@@ -16,7 +16,7 @@ export interface Options {
   getDataloaderConfig: GetDataloaderConfig;
   compileTask?: () => ReturnType<ServerCompiler>;
   getAllPlugin: Context['getAllPlugin'];
-  logger: CreateLoggerReturnType;
+  logger?: CreateLoggerReturnType;
 }
 
 export async function getAppWorkerContent(
@@ -54,8 +54,19 @@ export default async function generateManifest({
   getRoutesConfig,
   getDataloaderConfig,
   compiler,
+  logger,
 }: Options) {
-  const [appConfig, routesConfig, dataloaderConfig] = await Promise.all([getAppConfig(['phaManifest']), getRoutesConfig(), getDataloaderConfig()]);
+  const [appConfig, routesConfig] = await Promise.all([getAppConfig(['phaManifest']), getRoutesConfig()]);
+
+  let dataloaderConfig;
+  try {
+    // dataLoader may have side effect code.
+    dataloaderConfig = await getDataloaderConfig();
+  } catch (err) {
+    logger.debug('PHA: getDataloaderConfig failed.');
+    logger.debug(err);
+  }
+
   let manifest = appConfig.phaManifest;
   const appWorkerPath = getAppWorkerUrl(manifest, path.join(rootDir, 'src'));
   // TODO: PHA Worker should deal with url which load by script element.
