@@ -110,5 +110,10 @@ export const getCompilerConfig = (options: {
       specifier: ['defineDataLoader'],
       source: '@ice/runtime',
     }],
+    // Replace env var.
+    runtimeDefineVars: {
+      'import.meta.target': JSON.stringify('web'),
+      'import.meta.renderer': JSON.stringify('client'),
+    },
   };
 };
