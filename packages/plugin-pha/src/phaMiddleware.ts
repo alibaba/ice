@@ -24,6 +24,7 @@ const createPHAMiddleware = ({
   getRoutesConfig,
   getDataloaderConfig,
   compiler,
+  logger,
 }: Options): ExpressRequestHandler => {
   const phaMiddleware: ExpressRequestHandler = async (req, res, next) => {
     // @ts-ignore
@@ -38,7 +39,17 @@ const createPHAMiddleware = ({
         consola.error('Server compile error in plugin-pha middleware.');
         return;
       }
-      const [appConfig, routesConfig, dataloaderConfig] = await Promise.all([getAppConfig(['phaManifest']), getRoutesConfig(), getDataloaderConfig()]);
+      const [appConfig, routesConfig] = await Promise.all([getAppConfig(['phaManifest']), getRoutesConfig()]);
+
+      let dataloaderConfig;
+      try {
+        // dataLoader may have side effect code.
+        dataloaderConfig = getDataloaderConfig();
+      } catch (err) {
+        logger.debug('PHA: getDataloaderConfig failed.');
+        logger.debug(err);
+      }
+
       let manifest: Manifest = appConfig.phaManifest;
       const appWorkerPath = getAppWorkerUrl(manifest, path.join(rootDir, 'src'));
       if (appWorkerPath) {

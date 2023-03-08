@@ -53,6 +53,9 @@ export type CreateLoggerReturnType = Pick<Consola, |
   'debug' |
   'trace'
 >;
+
+export type CreateLogger = (namespace?: ICELogNamespace) => CreateLoggerReturnType;
+
 export function createLogger(namespace?: ICELogNamespace): CreateLoggerReturnType {
   if (DEBUG_TAG) {
     consola.level = 4;

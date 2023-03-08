@@ -28,7 +28,7 @@ import { getAppExportConfig, getRouteExportConfig } from './service/config.js';
 import renderExportsTemplate from './utils/renderExportsTemplate.js';
 import { getFileExports } from './service/analyze.js';
 import { getFileHash } from './utils/hash.js';
-import { logger } from './utils/logger.js';
+import { logger, createLogger } from './utils/logger.js';
 import ServerRunner from './service/ServerRunner.js';
 import RouteManifest from './utils/routeManifest.js';
 
@@ -143,6 +143,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       },
       serverCompileTask,
       dataCache,
+      createLogger,
     },
   });
   // Load .env before resolve user config, so we can access env variables defined in .env files.
