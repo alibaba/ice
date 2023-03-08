@@ -2,4 +2,4 @@
 '@ice/app': minor
 ---
 
-feat: export logger for pha
+feat: export logger for plugin
