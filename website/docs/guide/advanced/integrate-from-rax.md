@@ -82,7 +82,7 @@ function App {
 - Attributes：
   在 React 中，原生标签的 props 是存在白名单的，而 Rax 中没有该判断。这差异导致使用非 `data-*` 的自定义属性在 React Runtime 中会被忽略（会有 warning），如果用户通过非标的自定义属性存储在 attributes 中，在 React Runtime 中会无法从真实节点的 ref 中通过 `getAttribute` 获取。如果用了这些非标自定义属性，推荐使用 `data-*` 来标识自定义属性。
 - 事件：
-  React 中有一套[合成事件](https://zh-hans.reactjs.org/docs/events.html)的机制，而 Rax 会将事件通过 EventTarget 提供的 `addEventListener` 方法绑定在对应的 DOM 上。需要确认事件不要使用 `ref` 方式处理，否则在 React 中可能会引发不可预测的异常行为。
+  React 通过[合成事件](https://zh-hans.reactjs.org/docs/events.html)机制对浏览器环境中的事件进行代理，而 Rax 则是通过节点原生的 addEventListener 方法将事件与处理函数绑定在一起。在你清楚地了解 Rax 与 React 的事件实现差异之前，尽量不要使用 ref 访问真实 DOM 节点来处理原生事件，否则可能会出现未预料的行为。
 
 ## rax-app 工程迁移
 
