@@ -104,7 +104,10 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     },
     modifyRenderData: generator.modifyRenderData,
     addDataLoaderImport: (declarationData: DeclarationData) => {
-      generator.addDeclaration('dataLoaderImport', declarationData);
+      generator.addDeclaration('dataLoaderImport', {
+        ...declarationData,
+        declarationType: DeclarationType.NORMAL,
+      });
     },
     render: generator.render,
   };
