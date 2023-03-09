@@ -30,6 +30,11 @@ import { isFunction } from './type';
  * @returns [ value, dispatch ]
  */
 export function useState<S>(initialState: S | (() => S)): ReturnType<typeof _useState> | any {
+  // If the initial state is the result of an expensive computation,
+  // you may provide a function instead for lazy initial state.
+  if (isFunction(initialState)) {
+    initialState = initialState();
+  }
   // The eagerState should be saved for filter shallow-equal value set.
   const stateHook = _useState({
     state: initialState,
