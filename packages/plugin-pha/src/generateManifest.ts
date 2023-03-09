@@ -63,7 +63,7 @@ export default async function generateManifest({
     // dataLoader may have side effect code.
     dataloaderConfig = await getDataloaderConfig();
   } catch (err) {
-    logger.debug('PHA: getDataloaderConfig failed.');
+    logger.debug('GetDataloaderConfig failed.');
     logger.debug(err);
   }
 

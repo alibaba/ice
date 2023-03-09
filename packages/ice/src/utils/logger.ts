@@ -56,7 +56,7 @@ export type CreateLoggerReturnType = Pick<Consola, |
 
 export type CreateLogger = (namespace?: ICELogNamespace) => CreateLoggerReturnType;
 
-export function createLogger(namespace?: ICELogNamespace): CreateLoggerReturnType {
+export const createLogger: CreateLogger = (namespace) => {
   if (DEBUG_TAG) {
     consola.level = 4;
   }
@@ -85,6 +85,6 @@ export function createLogger(namespace?: ICELogNamespace): CreateLoggerReturnTyp
   } else {
     return consola.withTag(namespace);
   }
-}
+};
 
 export const logger = createLogger();
