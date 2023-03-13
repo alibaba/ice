@@ -13,7 +13,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
         config.plugins ??= [];
         const localeArray = typeof locales === 'string' ? [locales] : locales;
         config.plugins.push(new context.webpack.ContextReplacementPlugin(
-          /moment[/\\](dist[/\\])?locale$/,
+          /moment[/\\]locale$/,
           new RegExp(localeArray.join('|')),
         ));
       });
