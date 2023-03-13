@@ -19,6 +19,7 @@ type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
 
 type ServerCompilerBuildOptions = Pick<
   esbuild.BuildOptions,
+  'banner' |
   'write' |
   'target' |
   'minify' |

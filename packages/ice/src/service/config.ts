@@ -46,6 +46,8 @@ class Config {
         entryPoints: [entry],
         format: 'esm',
         platform: 'node',
+        // Don't add banner for config file, it will cause name conflict when bundled by server entry.
+        banner: undefined,
         outfile,
         plugins: [removeTopLevelCode(keepExports, transformInclude)],
         sourcemap: false,
