@@ -1,4 +1,4 @@
-import { useData, defineDataLoader, useAppData, Link } from 'ice';
+import { useData, defineDataLoader, useAppData } from 'ice';
 import styles from './index.module.css';
 
 export default function Home() {
