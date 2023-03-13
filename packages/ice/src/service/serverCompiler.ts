@@ -171,16 +171,16 @@ export function createServerCompiler(options: Options) {
       sourcemap: typeof sourceMap === 'boolean'
         // Transform sourceMap for esbuild.
         ? sourceMap : (sourceMap.includes('inline') ? 'inline' : !!sourceMap),
-      ...customBuildOptions,
-      define,
-      absWorkingDir: rootDir,
-      external: Object.keys(externals),
       banner: customBuildOptions.platform === 'node' && server?.format !== 'cjs'
         ? {
             // See https://github.com/evanw/esbuild/issues/1921#issuecomment-1152991694
             js: 'import { createRequire } from \'module\';const require = createRequire(import.meta.url);',
           }
         : undefined,
+      ...customBuildOptions,
+      absWorkingDir: rootDir,
+      define,
+      external: Object.keys(externals),
       plugins: [
         ...(customBuildOptions.plugins || []),
         emptyCSSPlugin(),
