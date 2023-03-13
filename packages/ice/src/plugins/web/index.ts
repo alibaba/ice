@@ -10,7 +10,7 @@ const plugin: Plugin = () => ({
   setup: ({ registerTask, onHook, context, dataCache, generator }) => {
     const { rootDir, commandArgs, command, userConfig } = context;
 
-    generator.addExport({
+    generator.addTargetExport({
       specifier: [
         'Meta',
         'Title',
@@ -18,6 +18,14 @@ const plugin: Plugin = () => ({
         'Scripts',
         'Data',
         'Main',
+      ],
+      types: [
+        'MetaType',
+        'TitleType',
+        'LinksType',
+        'ScriptsType',
+        'DataType',
+        'MainType',
       ],
       source: '@ice/runtime',
       target: 'web',

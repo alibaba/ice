@@ -32,12 +32,15 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
+      - name: Setup git user
+        run: pnpm run setup-git
+
       - name: Create Release Pull Request
         uses: changesets/action@v1
         with:
           version: pnpm run version
           commit: 'chore: update versions'
           title: 'chore: update versions'
-
+          setupGitUser: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}

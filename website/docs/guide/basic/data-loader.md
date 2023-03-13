@@ -152,7 +152,7 @@ export const dataLoader = defineDataLoader(async (ctx) => {
 如果是应用级的数据加载，可以在应用入口 `src/app.ts` 中定义并导出 `dataLoader` 方法，来注册数据加载逻辑。示例：
 
 ```ts title="src/app.ts"
-import type { defineDataLoader } from 'ice';
+import { defineDataLoader } from 'ice';
 
 // ...
 

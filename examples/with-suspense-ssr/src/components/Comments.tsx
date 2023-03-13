@@ -24,7 +24,8 @@ const fakeData = [
   'I like marshmallows',
 ];
 
-async function getData() {
+async function getData(ctx) {
+  console.log(ctx);
   console.log('load comments');
 
   await new Promise<any>((resolve) => {

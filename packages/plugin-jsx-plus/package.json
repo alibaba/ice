@@ -1,7 +1,7 @@
 {
   "name": "@ice/plugin-jsx-plus",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.2",
+  "description": "JSX Plus support for ice.js",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -28,7 +28,7 @@
     "!esm/**/*.map"
   ],
   "devDependencies": {
-    "@ice/app": "^3.0.0",
+    "@ice/app": "^3.1.2",
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6"
   },

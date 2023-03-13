@@ -2,10 +2,10 @@ import path from 'path';
 import { createHash } from 'crypto';
 import fse from 'fs-extra';
 import { esbuild } from '@ice/bundles';
-import type { Plugin } from 'esbuild';
-import { resolve as resolveExports } from 'resolve.exports';
+import type { Plugin, BuildOptions } from 'esbuild';
+import { resolve as resolveExports, legacy as resolveLegacy } from 'resolve.exports';
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
-import type { Config } from '@ice/webpack-config/esm/types';
+import type { Config } from '@ice/webpack-config/types';
 import type { TaskConfig } from 'build-scripts';
 import { getCSSModuleLocalIdent } from '@ice/webpack-config';
 import flattenId from '../utils/flattenId.js';
@@ -25,17 +25,17 @@ interface DepInfo {
   src: string;
 }
 
-export interface DepsMetaData {
+export interface PreBundleDepsMetaData {
   hash: string;
   deps: Record<string, DepInfo>;
 }
 
 interface PreBundleDepsResult {
-  metadata?: DepsMetaData;
+  metadata?: PreBundleDepsMetaData;
 }
 
 interface PreBundleDepsOptions {
-  depsInfo: Record<string, DepScanData>;
+  rootDir: string;
   cacheDir: string;
   taskConfig: Config;
   alias: Record<string, string>;
@@ -46,10 +46,16 @@ interface PreBundleDepsOptions {
 }
 
 /**
- * Pre bundle dependencies from esm to cjs.
+ * Only when the server bundle format type is esm,
+ * we will pre bundle dependencies which maybe have import css file directly.
+ *
+ * CSS files can not be resolve in ESM(server render will run in ESM), so we will external item.
  */
-export default async function preBundleCJSDeps(options: PreBundleDepsOptions): Promise<PreBundleDepsResult> {
-  const { depsInfo, cacheDir, taskConfig, plugins = [], alias, ignores, define, external = [] } = options;
+export default async function preBundleDeps(
+  depsInfo: Record<string, DepScanData>,
+  options: PreBundleDepsOptions,
+): Promise<PreBundleDepsResult> {
+  const { cacheDir, taskConfig, plugins = [], alias, ignores, define, external = [] } = options;
   const metadata = createDepsMetadata(depsInfo, taskConfig);
 
   if (!Object.keys(depsInfo)) {
@@ -61,7 +67,7 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
   const depsCacheDir = getDepsCacheDir(cacheDir);
   const metadataJSONPath = getDepsMetaDataJSONPath(cacheDir);
   if (fse.pathExistsSync(metadataJSONPath)) {
-    const prevMetadata = await fse.readJSON(metadataJSONPath) as DepsMetaData;
+    const prevMetadata = await fse.readJSON(metadataJSONPath) as PreBundleDepsMetaData;
     if (metadata.hash === prevMetadata.hash) {
       // don't need to pre bundle the deps again if the deps info is not updated
       return {
@@ -76,11 +82,11 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
 
   await moduleLexer.init;
   for (const depId in depsInfo) {
-    const packageEntry = resolvePackageEntry(depId, depsInfo[depId].pkgPath, alias);
+    const packageEntry = resolvePackageESEntry(depId, depsInfo[depId].pkgPath, alias);
     const flatId = flattenId(depId);
     flatIdDeps[flatId] = packageEntry;
 
-    const file = path.join(depsCacheDir, `${flatId}.js`);
+    const file = path.join(depsCacheDir, `${flatId}.mjs`);
     // add meta info to metadata.deps
     metadata.deps[depId] = {
       file,
@@ -89,46 +95,75 @@ export default async function preBundleCJSDeps(options: PreBundleDepsOptions): P
   }
 
   try {
-    await esbuild.build({
-      absWorkingDir: process.cwd(),
+    await bundleDeps({
       entryPoints: flatIdDeps,
-      bundle: true,
-      logLevel: 'error',
       outdir: depsCacheDir,
-      format: 'cjs',
-      platform: 'node',
-      loader: { '.js': 'jsx' },
-      ignoreAnnotations: true,
+      plugins,
+      ignores,
       alias,
+      external,
       define,
-      plugins: [
-        emptyCSSPlugin(),
-        externalPlugin({ ignores, format: 'cjs', externalDependencies: false }),
-        cssModulesPlugin({
-          extract: false,
-          generateLocalIdentName: function (name: string, filename: string) {
-            // Compatible with webpack css-loader.
-            return escapeLocalIdent(getCSSModuleLocalIdent(filename, name));
-          },
-        }),
-        ...plugins,
-      ],
-      external: [...BUILDIN_CJS_DEPS, ...BUILDIN_ESM_DEPS, ...external],
     });
+
+    await fse.writeJSON(metadataJSONPath, metadata, { spaces: 2 });
+
+    return {
+      metadata,
+    };
   } catch (error) {
     logger.error('Failed to bundle dependencies.');
     logger.debug(error);
     return {};
   }
-
-  await fse.writeJSON(metadataJSONPath, metadata, { spaces: 2 });
-
-  return {
-    metadata,
-  };
 }
 
-function resolvePackageEntry(depId: string, pkgPath: string, alias: TaskConfig<Config>['config']['alias']) {
+export async function bundleDeps(options:
+  {
+    entryPoints: BuildOptions['entryPoints'];
+    outdir: BuildOptions['outdir'];
+    alias: BuildOptions['alias'];
+    ignores: string[];
+    plugins: Plugin[];
+    external: string[];
+    define: BuildOptions['define'];
+  }) {
+  const { entryPoints, outdir, alias, ignores, plugins, external, define } = options;
+  return await esbuild.build({
+    absWorkingDir: process.cwd(),
+    entryPoints,
+    bundle: true,
+    logLevel: 'error',
+    outdir,
+    format: 'esm',
+    platform: 'node',
+    loader: { '.js': 'jsx' },
+    ignoreAnnotations: true,
+    alias,
+    define,
+    metafile: true,
+    outExtension: {
+      '.js': '.mjs',
+    },
+    banner: {
+      js: "import { createRequire } from 'module';const require = createRequire(import.meta.url);",
+    },
+    plugins: [
+      emptyCSSPlugin(),
+      externalPlugin({ ignores, format: 'esm', externalDependencies: false }),
+      cssModulesPlugin({
+        extract: false,
+        generateLocalIdentName: function (name: string, filename: string) {
+          // Compatible with webpack css-loader.
+          return escapeLocalIdent(getCSSModuleLocalIdent(filename, name));
+        },
+      }),
+      ...plugins,
+    ],
+    external: [...BUILDIN_CJS_DEPS, ...BUILDIN_ESM_DEPS, ...external],
+  });
+}
+
+export function resolvePackageESEntry(depId: string, pkgPath: string, alias: TaskConfig<Config>['config']['alias']) {
   const pkgJSON = fse.readJSONSync(pkgPath);
   const pkgDir = path.dirname(pkgPath);
   const aliasKey = Object.keys(alias).find(key => depId === key || depId.startsWith(`${depId}/`));
@@ -136,17 +171,14 @@ function resolvePackageEntry(depId: string, pkgPath: string, alias: TaskConfig<C
   // rax -> .
   // rax/element -> ./element
   const entry = aliasKey ? depId.replace(new RegExp(`^${aliasKey}`), '.') : depId;
-  // resolve exports cjs field
-  let resolvedEntryPoint = resolveExports(pkgJSON, entry, { require: true }) || '';
-  if (!resolvedEntryPoint) {
-    resolvedEntryPoint = pkgJSON['main'] || 'index.js';
-  }
+  // resolve "exports.import" field or "module" field
+  const resolvedEntryPoint = (resolveExports(pkgJSON, entry) || resolveLegacy(pkgJSON) || 'index.js') as string;
   const entryPointPath = path.join(pkgDir, resolvedEntryPoint);
   return entryPointPath;
 }
 
 
-function createDepsMetadata(depsInfo: Record<string, DepScanData>, taskConfig: Config): DepsMetaData {
+function createDepsMetadata(depsInfo: Record<string, DepScanData>, taskConfig: Config): PreBundleDepsMetaData {
   const hash = getDepHash(depsInfo, taskConfig);
   return {
     hash,

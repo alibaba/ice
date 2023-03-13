@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-icestark",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Easy use `icestark` in icejs.",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -9,7 +9,8 @@
   "type": "module",
   "files": [
     "esm",
-    "!esm/**/*.map"
+    "!esm/**/*.map",
+    "*.d.ts"
   ],
   "exports": {
     ".": {
@@ -27,6 +28,11 @@
       "import": "./esm/runtime/framework.js",
       "default": "./esm/runtime/framework.js"
     },
+    "./types": {
+      "types": "./esm/types.d.ts",
+      "import": "./esm/types.js",
+      "default": "./esm/types.js"
+    },
     "./esm/types": {
       "types": "./esm/types.d.ts",
       "import": "./esm/types.js",
@@ -38,8 +44,8 @@
     "@ice/stark-app": "^1.2.0"
   },
   "devDependencies": {
-    "@ice/app": "^3.0.0",
-    "@ice/runtime": "^1.0.0",
+    "@ice/app": "^3.1.2",
+    "@ice/runtime": "^1.1.3",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0"
   },

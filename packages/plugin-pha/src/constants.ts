@@ -1,4 +1,4 @@
-import type { PluginData } from '@ice/app/esm/types';
+import type { PluginData } from '@ice/app/types';
 import type { Context } from 'build-scripts';
 
 // Keys of appConfig  need transform to manifest.
@@ -110,5 +110,10 @@ export const getCompilerConfig = (options: {
       specifier: ['defineDataLoader'],
       source: '@ice/runtime',
     }],
+    // Replace env vars.
+    runtimeDefineVars: {
+      'import.meta.target': JSON.stringify('web'),
+      'import.meta.renderer': JSON.stringify('client'),
+    },
   };
 };

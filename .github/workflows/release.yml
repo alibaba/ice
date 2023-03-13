@@ -32,11 +32,19 @@ jobs:
       - name: Setup
         run: pnpm run setup
 
+      - name: Setup git user
+        run: pnpm run setup-git
+
       - name: Publish to npm
         id: changesets
         uses: changesets/action@v1
         with:
+          version: pnpm run version
+          commit: 'chore: update versions'
+          title: 'chore: update versions'
           publish: pnpm release
+          createGithubReleases: false
+          setupGitUser: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

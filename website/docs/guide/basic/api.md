@@ -89,10 +89,11 @@ useSearchParams 用于读取和修改当前 URL 的 query string。
 ```tsx
 import { useSearchParams } from 'ice';
 
-// 路由规则  home?uid=1234
+// 假设当前访问的 url 是 localhost:3000/home?uid=1234
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
-  // searchParams 输出内容为 { uid: '1234'}
+  // 通过 searchParams.get() 获取当前 query 值
+  console.log(searchParams.get('uid')); // 1234
   
   const changeSearch = () => {
     // 通过 setSearchParams 可以修改对应 query string

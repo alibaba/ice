@@ -53,7 +53,7 @@ export default defineConfig(() => ({
 大多数情况下权限管理通常需要从服务端获取权限数据，然后在前端通过权限对比以此控制页面、操作等等权限行为。约定在 `src/app.ts` 中导出 `auth` 对象，该对象包含从服务端异步获取初始化的权限数据，并且约定最终返回格式为 `{ initialAuth: { [key: string]: boolean } }`。
 
 ```ts title="src/app.ts"
-import { defineAuthConfig } from '@ice/plugin-auth/esm/types';
+import { defineAuthConfig } from '@ice/plugin-auth/types';
 
 export const authConfig = defineAuthConfig(async () => {
   // 模拟请求权限数据
@@ -196,7 +196,7 @@ function Foo() {
 支持自定义无权限时的展示组件，默认为 `<>No Auth</>`
 
 ```diff title="src/app.tsx"
-import { defineAuthConfig } from '@ice/plugin-auth/esm/types';
+import { defineAuthConfig } from '@ice/plugin-auth/types';
 
 export const authConfig = defineAuthConfig(async () => {
   return {

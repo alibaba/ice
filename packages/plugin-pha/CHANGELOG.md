@@ -1,20 +1,22 @@
 # Changelog
 
-## 1.1.3-beta.7
+## 2.0.0
+
+### Major Changes
+
+- 6824ad63: fix: fix data of prefetch decamelize (break change)
+- 73ae8bf4: fix: app-worker is not compiled when set a custom name
+- 1c09e79e: fix: support plugin-pha interface optional
+- 56fb406e: fix: support types definition without specify esm folder
+
+## 1.1.3
 
 ### Patch Changes
 
-- d5f1a25b: chore: bump beta version
-
-## 1.1.3-beta.0
-
-### Patch Changes
-
-- ad3436af: [fix] preload should be false default
-  - [fix] print log once
-  - [feat] support configure for resource_prefetch
-  - [fix] template should work for tabBar
-
+- [fix] dev manifest should work when manifest has not tabBar
+- [fix] preload should be false default
+- [fix] print log once
+- [feat] support configure for resource_prefetch
 
 ## 1.1.2
 

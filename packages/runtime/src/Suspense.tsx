@@ -1,5 +1,7 @@
 import * as React from 'react';
 import type { ReactNode } from 'react';
+import { useAppContext } from './AppContext.js';
+import type { RequestContext } from './types.js';
 
 const LOADER = '__ICE_SUSPENSE_LOADER__';
 const isClient = typeof window !== 'undefined' && 'onload' in window;
@@ -13,40 +15,44 @@ interface SuspenseState {
   update: Function;
 }
 
-type Request = () => Promise<any>;
+type Request = (ctx: RequestContext) => Promise<any>;
 
 const SuspenseContext = React.createContext<SuspenseState | undefined>(undefined);
 
 export function useSuspenseData(request?: Request) {
+  const appContext = useAppContext();
+  const { requestContext } = appContext;
   const suspenseState = React.useContext(SuspenseContext);
 
   const { data, done, promise, update, error, id } = suspenseState;
 
-  // use data from server side directly when hydrate.
+  // 1. Use data from server side directly when hydrate.
   if (isClient && (window[LOADER] as Map<string, any>) && window[LOADER].has(id)) {
     return window[LOADER].get(id);
   }
 
-  if (done) {
-    return data;
-  }
-
+  // 2. Check data request error, if error throw it to react.
   if (error) {
     throw error;
   }
 
-  // request is pending.
+  // 3. If request is done, return data.
+  if (done) {
+    return data;
+  }
+
+  // 4. If request is pending, throw the promise to react.
   if (promise) {
     throw promise;
   }
 
-  // when called by Data, request is null.
+  // 5. If no request, return null.
   if (!request) {
     return null;
   }
 
-  // send request and throw promise
-  const thenable = request();
+  // 6. Create a promise for the request and throw it to react.
+  const thenable = request(requestContext);
 
   thenable.then((response) => {
     update({
@@ -79,16 +85,21 @@ export function withSuspense(Component) {
   return (props: SuspenseProps) => {
     const { fallback, id, ...componentProps } = props;
 
-    const suspenseState = {
+    const [suspenseState, updateSuspenseData] = React.useState({
       id: id,
       data: null,
       done: false,
       promise: null,
       error: null,
-      update: (value) => {
-        Object.assign(suspenseState, value);
-      },
-    };
+      update,
+    });
+
+    function update(value) {
+      // For SSR, setState is not working, so here we need to update the state manually.
+      const newState = Object.assign(suspenseState, value);
+      // For CSR.
+      updateSuspenseData(newState);
+    }
 
     return (
       <React.Suspense fallback={fallback || null}>

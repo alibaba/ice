@@ -1,6 +1,5 @@
 import * as path from 'path';
 import fse from 'fs-extra';
-import consola from 'consola';
 import type { ServerContext, RenderMode, AppConfig, DistType } from '@ice/runtime';
 import type { UserConfig } from '../types/userConfig.js';
 import dynamicImport from './dynamicImport.js';
@@ -53,9 +52,9 @@ export default async function generateEntry(options: Options): Promise<EntryResu
       htmlOutput,
       jsOutput,
     } = await renderEntry({ routePath, serverEntry, documentOnly, renderMode, distType });
-
+    const generateOptions = { rootDir, routePath, outputDir };
     if (htmlOutput) {
-      const path = await generateHTMLPath({ rootDir, routePath, outputDir });
+      const path = await generateFilePath({ ...generateOptions, type: 'html' });
       await writeFile(
         path,
         htmlOutput,
@@ -64,7 +63,7 @@ export default async function generateEntry(options: Options): Promise<EntryResu
     }
 
     if (jsOutput) {
-      const path = await generateJSPath({ rootDir, routePath, outputDir });
+      const path = await generateFilePath({ ...generateOptions, type: 'js' });
       await writeFile(
         path,
         jsOutput,
@@ -83,41 +82,27 @@ const writeFile = async (file: string, content: string) => {
   await fse.writeFile(file, content);
 };
 
-async function generateHTMLPath(
-  {
-    rootDir,
-    routePath,
-    outputDir,
-  }: {
-    rootDir: string;
-    routePath: string;
-    outputDir: string;
-  },
-) {
-  // Win32 do not support file name with
-  const fileName = routePath === '/' ? 'index.html' : `${routePath.replace(/\/:/g, '/$')}.html`;
-  if (fse.existsSync(path.join(rootDir, 'public', fileName))) {
-    logger.warn(`${fileName} is overwrite by framework, rename file name if it is necessary.`);
-  }
-
-  return path.join(outputDir, fileName);
+function formatFilePath(routePath: string, type: 'js' | 'html'): string {
+  // Win32 do not support file name start with ':' and '*'.
+  return routePath === '/' ? `index.${type}` : `${routePath.replace(/\/(:|\*)/g, '/$')}.${type}`;
 }
 
-async function generateJSPath(
+async function generateFilePath(
   {
     rootDir,
     routePath,
     outputDir,
+    type,
   }: {
     rootDir: string;
     routePath: string;
     outputDir: string;
+    type: 'js' | 'html';
   },
 ) {
-  // Win32 do not support file name with
-  const fileName = routePath === '/' ? 'index.js' : `${routePath.replace(/\/:/g, '/$')}.js`;
+  const fileName = formatFilePath(routePath, type);
   if (fse.existsSync(path.join(rootDir, 'public', fileName))) {
-    consola.warn(`${fileName} is overwrite by framework, rename file name if it is necessary.`);
+    logger.warn(`${fileName} is overwrite by framework, rename file name if it is necessary.`);
   }
 
   return path.join(outputDir, fileName);

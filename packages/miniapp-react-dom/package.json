@@ -1,6 +1,6 @@
 {
   "name": "@ice/miniapp-react-dom",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "like react-dom, but for miniapps.",
   "type": "module",
   "types": "./esm/index.d.ts",
@@ -23,7 +23,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@ice/miniapp-runtime": "^1.0.0",
+    "@ice/miniapp-runtime": "^1.0.2",
     "@ice/shared": "^1.0.0",
     "react-reconciler": "0.27.0",
     "scheduler": "^0.20.1"

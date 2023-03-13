@@ -96,7 +96,7 @@ const request = async function <T = any, D = any>(options: RequestConfig<D>): Pr
     console.error(error);
     throw error;
   }
-};
+} as Request;
 
 // Provide aliases for supported request methods
 ['delete', 'get', 'head', 'options'].forEach((method) => {
@@ -121,4 +121,4 @@ const request = async function <T = any, D = any>(options: RequestConfig<D>): Pr
 request.CancelToken = axios.CancelToken;
 request.isCancel = axios.isCancel;
 
-export default request as Request;
+export { request };

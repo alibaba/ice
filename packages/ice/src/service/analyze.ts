@@ -15,6 +15,7 @@ import { createLogger } from '../utils/logger.js';
 const logger = createLogger('scan-modules');
 
 type Alias = Record<string, string>;
+type AliasWithEmpty = Record<string, string | false>;
 
 interface Options {
   parallel?: number;
@@ -28,7 +29,7 @@ function addLastSlash(filePath: string) {
   return filePath.endsWith('/') ? filePath : `${filePath}/`;
 }
 
-export function resolveId(id: string, alias: Alias) {
+export function resolveId(id: string, alias: AliasWithEmpty) {
   let aliasedPath = id;
   for (const aliasKey of Object.keys(alias)) {
     const isStrict = aliasKey.endsWith('$');
@@ -217,6 +218,7 @@ interface FileOptions {
 
 type CachedRouteExports = { hash: string; exports: string[] };
 
+// Exports for other plugin to get exports info.
 export async function getFileExports(options: FileOptions): Promise<CachedRouteExports['exports']> {
   const { rootDir, file } = options;
   const filePath = path.join(rootDir, file);

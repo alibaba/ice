@@ -51,8 +51,8 @@ Contributors can contact us to join the Contributor Group.
 
 ## Community
 
-[issues]: https://github.com/alibaba/ice/issues
-[gitter]: https://gitter.im/alibaba/ice
+- [Issues](https://github.com/alibaba/ice/issues)
+- [Gitter](https://gitter.im/alibaba/ice)
 
 ## LICENSE
 

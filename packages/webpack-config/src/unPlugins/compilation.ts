@@ -1,5 +1,5 @@
 import path from 'path';
-import { swc, swcPluginRemoveExport, swcPluginKeepExport, coreJsPath } from '@ice/bundles';
+import { swc, swcPluginRemoveExport, swcPluginKeepExport, swcPluginNodeTransform, coreJsPath } from '@ice/bundles';
 import browserslist from 'browserslist';
 import consola from 'consola';
 import type { SwcConfig, ReactConfig } from '@ice/bundles';
@@ -41,13 +41,13 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
     enableEnv,
   } = options;
 
-  const { removeExportExprs, compilationConfig, keepExports, getRoutePaths } = swcOptions;
+  const { removeExportExprs, compilationConfig, keepExports, getRoutePaths, nodeTransform } = swcOptions;
 
   const compileRegex = compileIncludes.map((includeRule) => {
     return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);
   });
 
-  function isRouteEntry(id) {
+  function isRouteEntry(id: string) {
     const routes = getRoutePaths();
 
     const matched = routes.find(route => {
@@ -57,7 +57,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
     return !!matched;
   }
 
-  function isAppEntry(id) {
+  function isAppEntry(id: string) {
     return /(.*)src\/app.(ts|tsx|js|jsx)/.test(id);
   }
 
@@ -102,6 +102,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
       }
 
       const swcPlugins = [];
+
       // handle app.tsx and page entries only
       if (removeExportExprs) {
         if (isRouteEntry(id) || isAppEntry(id)) {
@@ -135,6 +136,9 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
         }
       }
 
+      if (nodeTransform) {
+        swcPlugins.push([swcPluginNodeTransform, {}]);
+      }
       if (swcPlugins.length > 0) {
         merge(programmaticOptions, {
           jsc: {
@@ -191,6 +195,8 @@ function getJsxTransformOptions({
   rootDir,
 }: GetJsxTransformOptions) {
   const reactTransformConfig: ReactConfig = {
+    // Swc won't enable fast refresh when development is false in the latest version.
+    development: mode === 'development',
     refresh: fastRefresh,
     runtime: 'automatic',
     importSource: '@ice/runtime', // The exact import source is '@ice/runtime/jsx-runtime'

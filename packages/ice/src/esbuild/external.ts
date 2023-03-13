@@ -6,7 +6,7 @@ interface PluginOptions {
   externalDependencies: boolean;
   format: BuildOptions['format'];
   externals?: string[];
-  ignores: string[];
+  ignores?: string[];
 }
 
 const externalPlugin = (options: PluginOptions): Plugin => {

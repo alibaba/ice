@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-fusion",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "plugin for ICE while use fusion component",
   "license": "MIT",
   "type": "module",
@@ -14,7 +14,7 @@
     "@ice/style-import": "^1.0.0"
   },
   "devDependencies": {
-    "@ice/app": "^3.0.0"
+    "@ice/app": "^3.1.2"
   },
   "repository": {
     "type": "http",

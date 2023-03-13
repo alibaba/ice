@@ -34,6 +34,14 @@ import {
   Main,
   Data,
 } from './Document.js';
+import type {
+  MetaType,
+  TitleType,
+  LinksType,
+  ScriptsType,
+  DataType,
+  MainType,
+} from './Document.js';
 import dataLoader, { defineDataLoader, defineServerDataLoader, defineStaticDataLoader } from './dataLoader.js';
 import AppRouter from './AppRouter.js';
 import AppErrorBoundary from './AppErrorBoundary.js';
@@ -101,4 +109,10 @@ export type {
   DistType,
   DataLoaderConfig,
   RunClientAppOptions,
+  MetaType,
+  TitleType,
+  LinksType,
+  ScriptsType,
+  DataType,
+  MainType,
 };

@@ -41,6 +41,7 @@ interface SwcOptions {
   compilationConfig?: SwcCompilationConfig | ((source: string, id: string) => SwcCompilationConfig);
   keepExports?: string[];
   getRoutePaths?: Function;
+  nodeTransform?: boolean;
 }
 
 interface ImportDeclaration {
@@ -147,7 +148,7 @@ export interface Config {
     [key: string]: string;
   };
 
-  splitChunks?: boolean;
+  splitChunks?: boolean | 'vendors' | 'chunks' | webpack.Configuration['optimization']['splitChunks'];
 
   optimization?: Optimization;
 

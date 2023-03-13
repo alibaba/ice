@@ -103,7 +103,7 @@ export default defineAppConfig(() => ({
 
 ```js
 import { defineAppConfig } from 'ice';
-import { defineAuthConfig } from '@ice/plugin-auth/esm/types';
+import { defineAuthConfig } from '@ice/plugin-auth/types';
 
 // 导出 auth 相关的能力，该能力由 @ice/plugin-auth 插件提供
 export const authConfig = defineAuthConfig(() => {

@@ -48,6 +48,7 @@ interface RenderOptions {
   };
   runtimeOptions?: Record<string, any>;
   distType?: Array<'html' | 'javascript'>;
+  serverData?: any;
 }
 
 interface Piper {
@@ -70,14 +71,20 @@ export async function renderToEntry(
   const { value } = result;
 
   let jsOutput;
-
-  const { distType } = renderOptions;
-  if (value && distType && distType.includes('javascript')) {
+  const {
+    distType = ['html'],
+  } = renderOptions;
+  if (value && distType.includes('javascript')) {
     jsOutput = await renderHTMLToJS(value);
   }
 
+  let htmlOutput;
+  if (distType.includes('html')) {
+    htmlOutput = result;
+  }
+
   return {
-    ...result,
+    ...htmlOutput,
     jsOutput,
   };
 }
@@ -134,22 +141,31 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
-    // Send stream result to ServerResponse.
-    pipe(res, {
-      onShellError: async (err) => {
-        if (renderOptions.disableFallback) {
-          throw err;
-        }
+    return new Promise<void>((resolve, reject) => {
+      // Send stream result to ServerResponse.
+      pipe(res, {
+        onShellError: async (err) => {
+          if (renderOptions.disableFallback) {
+            reject(err);
+          }
 
-        // downgrade to CSR.
-        console.error('PipeToResponse onShellError, downgrade to CSR.', err);
-        const result = await fallback();
-        sendResult(res, result);
-      },
-      onError: async (err) => {
-        // onError triggered after shell ready, should not downgrade to csr.
-        console.error('PipeToResponse error.', err);
-      },
+          // downgrade to CSR.
+          console.error('PipeToResponse onShellError, downgrade to CSR.');
+          console.error(err);
+          const result = await fallback();
+          sendResult(res, result);
+          resolve();
+        },
+        onError: async (err) => {
+          // onError triggered after shell ready, should not downgrade to csr
+          // and should not be throw to break the render process
+          console.error('PipeToResponse error.');
+          console.error(err);
+        },
+        onAllReady: () => {
+          resolve();
+        },
+      });
     });
   }
 }
@@ -176,6 +192,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     runtimeModules,
     renderMode,
     runtimeOptions,
+    serverData,
   } = renderOptions;
   const finalBasename = serverOnlyBasename || basename;
   const location = getLocation(req.url);
@@ -195,6 +212,8 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     assetsManifest,
     basename: finalBasename,
     matches: [],
+    requestContext,
+    serverData,
   };
   const runtime = new Runtime(appContext, runtimeOptions);
   runtime.setAppRouter(DefaultAppRouter);
@@ -217,7 +236,6 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
   }
 
   const matches = matchRoutes(routes, location, finalBasename);
-
   const routePath = getCurrentRoutePath(matches);
   if (documentOnly) {
     return renderDocument({ matches, routePath, renderOptions });
@@ -345,6 +363,7 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
     Document,
     basename,
     routesConfig = {},
+    serverData,
   } = renderOptions;
 
   const routesData = null;
@@ -371,12 +390,12 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
     routePath,
     basename,
     downgrade,
+    serverData,
   };
 
   const documentContext = {
     main: null,
   };
-
 
   const htmlStr = ReactDOMServer.renderToString(
     <AppContextProvider value={appContext}>

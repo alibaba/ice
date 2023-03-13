@@ -1,7 +1,7 @@
 ---
 '@ice/webpack-config': patch
-'@ice/plugin-pha': patch
+'@ice/bundles': patch
 '@ice/app': patch
 ---
 
-chore: bump beta version
+fix: enable hmr to avoid reload

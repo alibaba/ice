@@ -71,7 +71,7 @@ function App {
 
 原 Rax DSL 迁移过来并使用兼容模式无需做任何改造，[appear-polyfill](https://www.npmjs.com/package/appear-polyfill) 会嵌入在 `rax-compat` 中自动做这部分处理，用户无需特殊处理以及引入。
 
-对于 React 用户，推荐使用 React 标准的方式。
+对于 React 用户，推荐使用 `<VisibilityChange />` 组件，详见[元素可见](../basic/appear.md)。
 
 ### 样式的处理
 
@@ -85,7 +85,7 @@ function App {
 
 ## rax-app 工程迁移
 
-对于之前使用 rax-app 的用户，ice.js 提供了一款工程自动化迁移工具—— [rax-migrate](https://www.npmjs.com/package/rax-migrate)，它可以辅助平滑迁移大部分工程配置。插件或者 ice.js 不再支持的能力由于构建器不同以及版本差异等需要手动确认以及迁移。
+对于之前使用 rax-app 的用户，ice.js 提供了一款工程自动化迁移工具—— [rax-migrate](https://www.npmjs.com/package/rax-migrate)，它可以辅助平滑迁移大部分工程配置，一些无法自动迁移的功能需要用户手动确认。
 
 ### 安装
 
@@ -100,3 +100,12 @@ $ npm i rax-migrate -g
 ```bash
 rax-migrate transform ./rax-project 
 ```
+
+### 注意
+
+该工具不是全自动迁移工具，部分功能点无法自动迁移，需要用户手动确认以及迁移，包括但不限于：
+
+* webpack 插件
+* 无法完全匹配的工程配置
+* rax-migrate 的 warning 以及 error 输出
+* etc...

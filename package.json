@@ -5,11 +5,12 @@
   "author": "ice-admin@alibaba-inc.com",
   "license": "MIT",
   "homepage": "https://v3.ice.work",
-  "repository": "ice-lab/ice-next",
-  "bugs": "https://github.com/ice-lab/ice-next/issues",
+  "repository": "alibaba/ice",
+  "bugs": "https://github.com/alibaba/ice/issues",
   "scripts": {
     "prepare": "husky install",
     "setup": "rm -rf node_modules packages/*/node_modules && pnpm install && pnpm prebundle && pnpm build",
+    "setup-git": "tsx ./scripts/setupUser.ts",
     "rebuild": "pnpm install && pnpm run build",
     "watch": "pnpm --parallel --filter=./packages/* run watch",
     "build": "pnpm run clean && pnpm -r --filter=./packages/* run build",
@@ -25,6 +26,7 @@
     "release:beta": "changeset pre enter beta && pnpm run version && pnpm run release && changeset pre exit"
   },
   "devDependencies": {
+    "@actions/exec": "^1.1.1",
     "@applint/spec": "^1.2.3",
     "@changesets/cli": "^2.26.0",
     "@commitlint/cli": "^16.3.0",

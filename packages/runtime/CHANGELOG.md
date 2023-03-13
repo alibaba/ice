@@ -1,5 +1,25 @@
 # @ice/runtime
 
+## 1.1.3
+
+### Patch Changes
+
+- c6b70bce: fix: should not build html when distType has not html
+- 56fb406e: fix: support types definition without specify esm folder
+- 7d729697: fix: SSR Suspense
+  - feat: support pass server data
+  - feat: support change public path runtime
+  - feat: support get request ctx in suspense
+  - fix: suspense error handle
+  - fix: duplicate data request in suspense csr
+  - fix: support await render to response
+
+## 1.1.2
+
+### Patch Changes
+
+- 8eee4f0d: feat: export types
+
 ## v1.1.1
 
 - [chore] update usage of @ice/jsx-runtime
@@ -7,7 +27,7 @@
 ## v1.1.0
 
 - [feat] suspense ssr
-- [feat] support render js bundle as entry 
+- [feat] support render js bundle as entry
 - [fix] compatible with empty meta element
 
 ## v1.0.5

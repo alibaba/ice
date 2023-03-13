@@ -102,6 +102,9 @@ function getDefineVars(
   return {
     ...define,
     ...runtimeDefineVars,
+    // Make sure ICE_CORE_SSR and ICE_CORE_SSG is always false in csr mode.
+    'process.env.ICE_CORE_SSR': 'false',
+    'process.env.ICE_CORE_SSG': 'false',
   };
 }
 
@@ -281,9 +284,9 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
       ignored: watchIgnoredRegexp,
     },
     optimization: {
-      splitChunks: splitChunks == false
-        ? { minChunks: Infinity, cacheGroups: { default: false } }
-        : getSplitChunksConfig(rootDir),
+      splitChunks: typeof splitChunks == 'object'
+        ? splitChunks
+        : getSplitChunksConfig(rootDir, splitChunks),
       minimize: !!minify,
       minimizer: [
         new TerserPlugin({
@@ -323,7 +326,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
       ...plugins,
       ...compilerWebpackPlugins,
       // @ts-ignore
-      new EnvReplacementPlugin(),
+      !dev && new EnvReplacementPlugin(),
       dev && fastRefresh && new ReactRefreshWebpackPlugin({
         exclude: [/node_modules/, /bundles[\\\\/]compiled/],
         // use webpack-dev-server overlay instead
@@ -360,6 +363,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
       }),
     ].filter(Boolean),
     devServer: merge({
+      liveReload: false,
       allowedHosts: 'all',
       headers: {
         'Access-Control-Allow-Origin': '*',

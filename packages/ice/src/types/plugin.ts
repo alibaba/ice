@@ -3,11 +3,16 @@ import type { _Plugin, CommandArgs, TaskConfig } from 'build-scripts';
 import type { Configuration, Stats, WebpackOptionsNormalized } from '@ice/bundles/compiled/webpack';
 import type { esbuild } from '@ice/bundles';
 import type { NestedRouteManifest } from '@ice/route-manifest';
-import type { Config } from '@ice/webpack-config/esm/types';
-import type { AppConfig, AssetsManifest } from '@ice/runtime/esm/types';
-import type { DeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport, Render } from './generator.js';
+import type { Config } from '@ice/webpack-config/types';
+import type { AppConfig, AssetsManifest } from '@ice/runtime/types';
+import type ServerCompileTask from '../utils/ServerCompileTask.js';
+import type { CreateLogger } from '../utils/logger.js';
+import type { DeclarationData, TargetDeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport, Render } from './generator.js';
+
+export type { CreateLoggerReturnType } from '../utils/logger.js';
 
 type AddExport = (exportData: DeclarationData) => void;
+type AddTargetExport = (exportData: TargetDeclarationData) => void;
 type AddEntryCode = (callback: (code: string) => string) => void;
 type RemoveExport = (removeSource: string | string[]) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
@@ -36,22 +41,24 @@ type ServerCompilerBuildOptions = Pick<
 
 export type ServerBuildResult = Partial<esbuild.BuildResult & { serverEntry: string; error: any }>;
 
+export interface CompilerOptions {
+  swc?: Config['swcOptions'];
+  preBundle?: boolean;
+  externalDependencies?: boolean;
+  transformEnv?: boolean;
+  compilationInfo?: {
+    assetsManifest?: AssetsManifest;
+  };
+  redirectImports?: Config['redirectImports'];
+  removeOutputs?: boolean;
+  runtimeDefineVars?: Record<string, string>;
+  enableEnv?: boolean;
+  isServer?: boolean;
+}
+
 export type ServerCompiler = (
   buildOptions: ServerCompilerBuildOptions,
-  options?: {
-    swc?: Config['swcOptions'];
-    preBundle?: boolean;
-    externalDependencies?: boolean;
-    transformEnv?: boolean;
-    compilationInfo?: {
-      assetsManifest?: AssetsManifest;
-    };
-    redirectImports?: Config['redirectImports'];
-    removeOutputs?: boolean;
-    runtimeDefineVars?: Record<string, string>;
-    enableEnv?: boolean;
-    isServer?: boolean;
-  }
+  options?: CompilerOptions,
 ) => Promise<ServerBuildResult>;
 export type WatchEvent = [
   pattern: RegExp | string,
@@ -123,6 +130,7 @@ export interface ExtendsPluginAPI {
   };
   generator: {
     addExport: AddExport;
+    addTargetExport: AddTargetExport;
     addExportTypes: AddExport;
     addRuntimeOptions: AddExport;
     removeRuntimeOptions: RemoveExport;
@@ -138,13 +146,11 @@ export interface ExtendsPluginAPI {
     addEvent?: (watchEvent: WatchEvent) => void;
     removeEvent?: (name: string) => void;
   };
+  serverCompileTask: ServerCompileTask;
   getRouteManifest: () => Routes;
   getFlattenRoutes: () => string[];
-  serverCompileTask: {
-    set: (task: ReturnType<ServerCompiler>) => void;
-    get: () => ReturnType<ServerCompiler>;
-  };
   dataCache: Map<string, string>;
+  createLogger: CreateLogger;
 }
 
 export interface OverwritePluginAPI extends ExtendsPluginAPI {

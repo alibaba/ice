@@ -40,3 +40,7 @@ const render = (customOptions = {}) => {
 };
 
 <%- entryCode %>
+
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.accept();
+}

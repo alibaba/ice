@@ -1,7 +1,7 @@
 import { createRequire } from 'module';
 import trustCert from '@ice/bundles/compiled/trusted-cert/index.js';
 import fse from 'fs-extra';
-import type { Config } from '@ice/webpack-config/esm/types';
+import type { Config } from '@ice/webpack-config/types';
 import type { UserConfigContext } from 'build-scripts';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { UserConfig } from './types/userConfig.js';
@@ -135,6 +135,7 @@ const userConfig = [
     name: 'server',
     validation: 'object',
     defaultValue: {
+      onDemand: false,
       format: 'esm',
       bundle: false,
     },
@@ -348,8 +349,30 @@ const userConfig = [
     name: 'splitChunks',
     validation: 'boolean',
     defaultValue: true,
-    setConfig: (config: Config, splitChunks: UserConfig['splitChunks']) => {
-      config.splitChunks = splitChunks;
+    setConfig: (config: Config, splitChunks: UserConfig['splitChunks'], context: UserConfigContext) => {
+      const { originalUserConfig } = context;
+      // Make sure config.splitChunks is not overwritten when codeSplitting is set.
+      if (!('codeSplitting' in originalUserConfig)) {
+        config.splitChunks = splitChunks;
+      }
+    },
+  },
+  {
+    name: 'codeSplitting',
+    validation: 'boolean|string',
+    defaultValue: true,
+    setConfig: (config: Config, codeSplitting: UserConfig['codeSplitting'], context: UserConfigContext) => {
+      const { originalUserConfig } = context;
+      if ('splitChunks' in originalUserConfig) {
+        logger.warn('splitChunks is deprecated, please use codeSplitting instead.https://ice.work/docs/guide/basic/config#codesplitting');
+      } else {
+        // When codeSplitting is set to false / router, do not config splitChunks.
+        if (codeSplitting === false || codeSplitting === 'page') {
+          config.splitChunks = false;
+        } else {
+          config.splitChunks = codeSplitting;
+        }
+      }
     },
   },
   {

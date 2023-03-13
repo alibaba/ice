@@ -133,7 +133,7 @@ const transformPipe = (options: PluginOptions = {}): Plugin => {
                 sourceMap = result.map;
               }
             }
-            if (sourceMap) {
+            if (sourceMap && typeof sourceMap !== 'string') {
               if (!sourceMap.sourcesContent || sourceMap.sourcesContent.length === 0) {
                 sourceMap.sourcesContent = [sourceCode];
               }
