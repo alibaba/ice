@@ -45,6 +45,7 @@ class Config {
       const { error } = await serverCompiler({
         entryPoints: [entry],
         format: 'esm',
+        platform: 'node',
         outfile,
         plugins: [removeTopLevelCode(keepExports, transformInclude)],
         sourcemap: false,
