@@ -265,7 +265,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
       alias: aliasWithRoot,
       symlinks: true,
       extensions: ['.ts', '.tsx', '.jsx', '...'],
-      mainFields: ['browser', 'module', 'jsnext:main', 'main'],
+
       fallback: {
         // TODO: add more fallback module
         events: require.resolve('events'),
