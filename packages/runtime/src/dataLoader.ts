@@ -16,6 +16,11 @@ interface LoaderOptions {
   appExport: AppExport;
 }
 
+export interface LoadRoutesDataOptions {
+  ssg?: boolean;
+  forceRequest?: boolean;
+}
+
 export function defineDataLoader(dataLoaderConfig: DataLoaderConfig): DataLoaderConfig {
   return dataLoaderConfig;
 }
@@ -210,7 +215,7 @@ async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
   }
 
   (window as any).__ICE_DATA_LOADER__ = {
-    getData: async (id, options) => {
+    getData: async (id, options: LoadRoutesDataOptions) => {
       let result;
 
       // first render for ssg use data from build time.
@@ -222,7 +227,7 @@ async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
       }
 
       // Already send data request.
-      if (result) {
+      if (result && !options?.forceRequest) {
         const { status, value } = result;
 
         if (status === 'RESOLVED') {
