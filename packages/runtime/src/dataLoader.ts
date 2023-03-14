@@ -234,11 +234,20 @@ async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
           return result;
         }
 
-        if (Array.isArray(value)) {
-          return await Promise.all(value);
-        }
+        try {
+          if (Array.isArray(value)) {
+            return await Promise.all(value);
+          }
 
-        return await value;
+          return await value;
+        } catch (error) {
+          console.error('DataLoader: getData error.\n', error);
+
+          return {
+            message: 'DataLoader: getData err.',
+            error,
+          };
+        }
       }
 
       const dataLoader = dataloaderConfig[id];
