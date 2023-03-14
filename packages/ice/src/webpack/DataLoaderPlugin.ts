@@ -80,6 +80,10 @@ export default class DataLoaderPlugin {
           );
           if (!error) {
             compilation.emitAsset('js/data-loader.js', new RawSource(new TextDecoder('utf-8').decode(outputFiles[0].contents)));
+          } else if (process.env.NODE_ENV === 'production') {
+            // Should break build, and throw error.
+            callback(error);
+            return;
           }
         } else {
           compilation.deleteAsset('js/data-loader.js');
