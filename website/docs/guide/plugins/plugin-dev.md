@@ -567,13 +567,13 @@ export default ({ setAppRouter }) => {
 ```ts
 import ReactDOM from 'react-dom';
 
-export default ({ addDOMRender }) => {
+export default ({ setRender }) => {
   // App: React 组件
   // appMountNode: App 挂载点
-  const DOMRender = ({ App, appMountNode }) => {
+  const DOMRender = (appMountNode, App) => {
     ReactDOM.render(<App />, appMountNode);
   };
-  addDOMRender(DOMRender);
+  setRender(DOMRender);
 };
 ```
 

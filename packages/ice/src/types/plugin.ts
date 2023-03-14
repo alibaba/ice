@@ -6,7 +6,10 @@ import type { NestedRouteManifest } from '@ice/route-manifest';
 import type { Config } from '@ice/webpack-config/types';
 import type { AppConfig, AssetsManifest } from '@ice/runtime/types';
 import type ServerCompileTask from '../utils/ServerCompileTask.js';
+import type { CreateLogger } from '../utils/logger.js';
 import type { DeclarationData, TargetDeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport, Render } from './generator.js';
+
+export type { CreateLoggerReturnType } from '../utils/logger.js';
 
 type AddExport = (exportData: DeclarationData) => void;
 type AddTargetExport = (exportData: TargetDeclarationData) => void;
@@ -16,6 +19,7 @@ type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
 
 type ServerCompilerBuildOptions = Pick<
   esbuild.BuildOptions,
+  'banner' |
   'write' |
   'target' |
   'minify' |
@@ -147,6 +151,7 @@ export interface ExtendsPluginAPI {
   getRouteManifest: () => Routes;
   getFlattenRoutes: () => string[];
   dataCache: Map<string, string>;
+  createLogger: CreateLogger;
 }
 
 export interface OverwritePluginAPI extends ExtendsPluginAPI {

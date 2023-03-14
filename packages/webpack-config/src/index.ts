@@ -102,6 +102,9 @@ function getDefineVars(
   return {
     ...define,
     ...runtimeDefineVars,
+    // Make sure ICE_CORE_SSR and ICE_CORE_SSG is always false in csr mode.
+    'process.env.ICE_CORE_SSR': 'false',
+    'process.env.ICE_CORE_SSG': 'false',
   };
 }
 
@@ -262,7 +265,6 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
       alias: aliasWithRoot,
       symlinks: true,
       extensions: ['.ts', '.tsx', '.jsx', '...'],
-      mainFields: ['browser', 'module', 'jsnext:main', 'main'],
       fallback: {
         // TODO: add more fallback module
         events: require.resolve('events'),

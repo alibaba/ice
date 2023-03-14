@@ -27,9 +27,11 @@ function getDevPath(url: string): string {
 
 const plugin: Plugin<PluginOptions> = (options) => ({
   name: '@ice/plugin-pha',
-  setup: ({ onGetConfig, onHook, context, serverCompileTask, generator, getAllPlugin }) => {
+  setup: ({ onGetConfig, onHook, context, serverCompileTask, generator, getAllPlugin, createLogger }) => {
     const { template = true, preload = false } = options || {};
     const { command, rootDir } = context;
+
+    const logger = createLogger('PHA');
 
     // Get variable blows from task config.
     let compiler: Compiler;
@@ -104,6 +106,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
           preload,
           routeManifest,
         },
+        logger,
       });
     });
 
@@ -159,6 +162,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
             preload,
             routeManifest,
           },
+          logger,
         });
 
         // Add pha middleware after server-compile.

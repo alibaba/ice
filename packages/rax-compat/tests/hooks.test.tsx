@@ -43,6 +43,22 @@ describe('hooks', () => {
     render(<App />);
   });
 
+  it('useState can be function', () => {
+    function App() {
+      const [value] = useState(() => 'useState');
+      useEffect(() => {
+        setTimeout(() => {
+          expect(value).toBe('useState');
+        }, 1);
+        // Expect useEffect to execute once
+        // eslint-disable-next-line
+      }, []);
+      return <div>{value}</div>;
+    }
+
+    render(<App />);
+  });
+
   it('useState update value', () => {
     const { result, rerender } = renderHook(() => useState(0));
     expect(result.current[0]).toEqual(0);

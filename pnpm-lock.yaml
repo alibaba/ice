@@ -534,22 +534,26 @@ importers:
       '@ice/app': workspace:*
       '@ice/plugin-css-assets-local': workspace:*
       '@ice/plugin-fusion': workspace:*
+      '@ice/plugin-moment-locales': workspace:*
       '@ice/runtime': workspace:*
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.2
+      moment: ^2.29.4
       react: ^18.0.0
       react-dom: ^18.0.0
     dependencies:
-      '@alifd/next': 1.26.14_biqbaboplfbrettd7655fr4n2y
+      '@alifd/next': 1.26.2_jb42yyeu5qxbfieyxjks6malva
       '@ice/runtime': link:../../packages/runtime
+      moment: 2.29.4
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     devDependencies:
       '@ice/app': link:../../packages/ice
       '@ice/plugin-css-assets-local': link:../../packages/plugin-css-assets-local
       '@ice/plugin-fusion': link:../../packages/plugin-fusion
-      '@types/react': 18.0.28
-      '@types/react-dom': 18.0.11
+      '@ice/plugin-moment-locales': link:../../packages/plugin-moment-locales
+      '@types/react': 18.0.21
+      '@types/react-dom': 18.0.6
 
   examples/with-jest:
     specifiers:
@@ -1661,8 +1665,8 @@ packages:
       prop-types: 15.8.1
     dev: false
 
-  /@alifd/next/1.26.14_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-fBnmiG19gCV9VV5ZYqT6aozWMNkMeeqS7EqxSGAP2NVKIerNQGY6/AnpKXXD3K5ke5sJcvho/a1Zu/FERBBMdw==}
+  /@alifd/next/1.26.2_jb42yyeu5qxbfieyxjks6malva:
+    resolution: {integrity: sha512-Qz7mJ50lMg3h4yWhV0uIJKzYV4O0zJGN/dZa6xU9+26Yu2VUKMECCcoxBRyiCXVdSNb3XPsLKE8/37R0fw8CGg==}
     peerDependencies:
       '@alifd/meet-react': ^2.0.0
       moment: ^2.22.1
@@ -1678,6 +1682,7 @@ packages:
       dayjs: 1.11.7
       hoist-non-react-statics: 3.3.2
       lodash.clonedeep: 4.5.0
+      moment: 2.29.4
       prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0

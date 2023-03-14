@@ -33,8 +33,8 @@ function importIcon(iconPath: string, cssPrefix: string) {
     name: 'transform-import-icon',
     enforce: 'pre',
     transformInclude(id: string) {
-      // Only transform source code.
-      return id.match(/\.(js|jsx|ts|tsx)$/) && !id.match(/node_modules/);
+      // Only transform source code and icon file.
+      return (id.match(/\.(js|jsx|ts|tsx)$/) && !id.match(/node_modules/)) || iconPath === id;
     },
     async transform(code: string, id: string, options: { isServer: boolean }) {
       const { isServer } = options;
@@ -47,6 +47,7 @@ function importIcon(iconPath: string, cssPrefix: string) {
         if (id === entryFile) {
           return `import '${iconPath}';\n${code}`;
         } else if (id === iconPath) {
+          // Default cssPrefix for icon.scss.
           return `$css-prefix: '${cssPrefix}';\n${code}`;
         }
       }

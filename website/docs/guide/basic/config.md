@@ -386,8 +386,8 @@ export default defineConfig(() => ({
 小程序端不支持该配置。
 :::
 
-- 类型：`{ format: 'esm' | 'cjs'; bundle: boolean; ignores: IgnorePattern[]; externals: string[] }`
-- 默认值：`{ format: 'esm', bundle: false, ignores: [], externals: [] }`
+- 类型：`{ format: 'esm' | 'cjs'; bundle: boolean; ignores: IgnorePattern[]; externals: string[]; onDemand: boolean; }`
+- 默认值：`{ format: 'esm', bundle: false, ignores: [], externals: [], onDemand: false }`
 
 SSR / SSG 产物标准，推荐以 ESM 标准进行执行，如果希望打包成一个 cjs 模块，可以进行如下设置：
 
@@ -430,6 +430,19 @@ import { defineConfig } from '@ice/app';
 export default defineConfig(() => ({
   server: {
     externals: ['react', 'react-dom']
+  },
+}));
+```
+
+通过 `onDemand` 参数，可以在执行 Server 端产物时，按需构建所需的问题，并且提供体验良好的模块热更新服务：
+
+```js
+import { defineConfig } from '@ice/app';
+
+export default defineConfig(() => ({
+  server: {
+    onDemand: true,
+    format: 'esm',
   },
 }));
 ```
@@ -490,6 +503,44 @@ route('/about-me', 'about.tsx');
 route('/about-you', 'about.tsx');
 ```
 :::
+
+#### config
+
+对于简单的自定义场景，通过 `defineRoutes` 可以快速在约定式路由的基础上进行自定义。但对于大量自定义或者原配置式路由的升级项目，支持以 `config` 的字段指定路由信息：
+
+```ts
+import { defineConfig } from '@ice/app';
+
+export default defineConfig({
+  routes: {
+    config: [
+      {
+        path: 'rewrite',
+        // 从 src/page 开始计算路径，并且需要写后缀。
+        component: 'sales/layout.tsx',
+        children: [
+          {
+            path: '/favorites',
+            component: 'sales/favorites.tsx',
+          },
+          {
+            path: 'overview',
+            component: 'sales/overview.tsx',
+          },
+          {
+            path: 'recommends',
+            component: 'sales/recommends.tsx',
+          },
+        ],
+      },
+      {
+        path: '/',
+        component: 'index.tsx',
+      },
+    ],
+  },
+});
+```
 
 ### sourceMap
 
