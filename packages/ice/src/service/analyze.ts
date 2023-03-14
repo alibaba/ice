@@ -96,7 +96,7 @@ export async function analyzeImports(files: string[], options: Options) {
   const importSet = new Set<string>();
   async function analyzeFile(filePath: string) {
     analyzedSet.add(filePath);
-    let source = fs.readFileSync(filePath, 'utf-8');
+    let source = await fs.promises.readFile(filePath, 'utf-8');
     const lang = path.extname(filePath).slice(1);
     let loader: Loader;
     if (lang === 'ts' || lang === 'tsx') {
