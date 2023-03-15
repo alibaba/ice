@@ -19,6 +19,7 @@ import getAppConfig from './appConfig.js';
 import matchRoutes from './matchRoutes.js';
 import DefaultAppRouter from './AppRouter.js';
 import { setFetcher } from './dataLoader.js';
+import addLeadingSlash from './utils/addLeadingSlash.js';
 
 export interface RunClientAppOptions {
   app: AppExport;
@@ -57,7 +58,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     renderMode,
     serverData,
   } = windowContext;
-
+  const formattedBasename = addLeadingSlash(basename);
   const requestContext = getRequestContext(window.location);
   const appConfig = getAppConfig(app);
   const historyOptions = {
@@ -77,7 +78,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routesData,
     routesConfig,
     assetsManifest,
-    basename,
+    basename: formattedBasename,
     routePath,
     renderMode,
     requestContext,
@@ -101,10 +102,14 @@ export default async function runClientApp(options: RunClientAppOptions) {
   const matches = matchRoutes(
     routes,
     memoryRouter ? routePath : history.location,
-    basename,
+    formattedBasename,
   );
   const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
-
+  // If no route module is found, just throw error. otherwise, it will cause a error of Route "xxx" has no component!
+  if (Object.keys(routeModules).length === 0) {
+    console.error(`Routes: ${routes}\nBasename: ${formattedBasename}\nMatch routes: ${matches}`);
+    throw new Error('No route module is found, please check your routes config.');
+  }
   if (!routesData) {
     routesData = await loadRoutesData(matches, requestContext, routeModules, {
       ssg: renderMode === 'SSG',

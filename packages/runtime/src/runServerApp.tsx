@@ -28,6 +28,7 @@ import matchRoutes from './matchRoutes.js';
 import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
 import DefaultAppRouter from './AppRouter.js';
 import { renderHTMLToJS } from './renderHTMLToJS.js';
+import addLeadingSlash from './utils/addLeadingSlash.js';
 
 interface RenderOptions {
   app: AppExport;
@@ -194,7 +195,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     runtimeOptions,
     serverData,
   } = renderOptions;
-  const finalBasename = serverOnlyBasename || basename;
+  const finalBasename = addLeadingSlash(serverOnlyBasename || basename);
   const location = getLocation(req.url);
 
   const requestContext = getRequestContext(location, serverContext);
