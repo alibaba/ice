@@ -231,6 +231,11 @@ export default class Generator {
     this.contentRegistration[registerKey].push(...content);
   };
 
+  public getExportList = (registerKey: string) => {
+    const exportList = this.contentRegistration[registerKey] || [];
+    return exportList;
+  };
+
   private getDeclarations: GetDeclarations = (registerKey, dataKeys) => {
     const exportList = this.contentRegistration[registerKey] || [];
     const {

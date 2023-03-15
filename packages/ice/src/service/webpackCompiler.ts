@@ -46,7 +46,7 @@ async function webpackCompiler(options: {
   // `commandArgs` doesn't guarantee target exists.
   const { target = WEB } = commandArgs;
   const { serverCompiler, serverRunner } = hooksAPI;
-  const { serverCompileTask, dataCache, watch } = context.extendsPluginAPI;
+  const { serverCompileTask, dataCache, watch, generator } = context.extendsPluginAPI;
 
   await applyHook(`before.${command}.run`, {
     urls,
@@ -121,7 +121,16 @@ async function webpackCompiler(options: {
 
     // Add webpack plugin of data-loader.
     if (useDataLoader) {
-      webpackConfig.plugins.push(new DataLoaderPlugin({ serverCompiler, target, rootDir, dataCache, getAllPlugin }));
+      const exportList = generator.getExportList('framework');
+
+      webpackConfig.plugins.push(new DataLoaderPlugin({
+        serverCompiler,
+        target,
+        rootDir,
+        dataCache,
+        getAllPlugin,
+        exportList,
+      }));
     }
   }
 
