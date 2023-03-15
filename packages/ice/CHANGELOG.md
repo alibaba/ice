@@ -1,5 +1,32 @@
 # Changelog
 
+## 3.1.3
+
+### Patch Changes
+
+- acfd0a00: chore: optional ts type of onDemand
+- 18ea5b2d: fix: enable hmr to avoid reload
+- 754e28b4: fix: break build if occur data loader error
+  fix: compatibility with module false
+- fa618ea2: fix: file name should compat with win32
+- 0fb80639: fix: improve performance by use async function
+- bb748872: fix: compatible with dynamic routes when disable lazy import
+  feat: export logger for plugin
+- 6c8d2e46: fix: set platform node for compile project config
+- 54868109: fix: add leading slash for basename
+- e096c671: fix: declarationType of dataLoaderImport should be NORMAL
+- Updated dependencies [18ea5b2d]
+- Updated dependencies [dbff4d0b]
+- Updated dependencies [021ceb91]
+- Updated dependencies [0096f5c0]
+- Updated dependencies [71bb754d]
+- Updated dependencies [2f4e64b2]
+- Updated dependencies [54868109]
+  - @ice/webpack-config@1.0.9
+  - @ice/bundles@0.1.6
+  - @ice/runtime@1.1.4
+  - @ice/route-manifest@1.1.0
+
 ## 3.1.2
 
 ### Patch Changes
