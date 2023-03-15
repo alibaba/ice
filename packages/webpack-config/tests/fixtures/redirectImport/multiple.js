@@ -1,1 +1,1 @@
-import { request, store } from 'ice';
+import { request, store, test } from 'ice';
