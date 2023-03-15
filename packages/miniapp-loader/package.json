@@ -14,7 +14,8 @@
   "homepage": "https://v3.ice.work",
   "scripts": {
     "watch": "tsc -w",
-    "build": "tsc"
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
   },
   "sideEffects": false,
   "dependencies": {

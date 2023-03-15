@@ -39,7 +39,8 @@
   },
   "scripts": {
     "watch": "tsc -w",
-    "build": "tsc"
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
   },
   "publishConfig": {
     "access": "public"

@@ -10,7 +10,8 @@
   ],
   "scripts": {
     "watch": "tsc -w",
-    "build": "tsx scripts/build.ts && tsc"
+    "build": "tsx scripts/build.ts && tsc",
+    "prepublishOnly": "npm run build"
   },
   "main": "./esm/index.js",
   "type": "module",

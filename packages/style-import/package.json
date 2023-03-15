@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "watch": "tsc -w",
-    "build": "tsc"
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
   },
   "main": "./esm/index.js",
   "types": "./esm/index.d.ts",
