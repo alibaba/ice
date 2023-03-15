@@ -3,7 +3,8 @@ import type { Config } from '@ice/webpack-config/types';
 import type { TaskConfig } from 'build-scripts';
 
 const getRouterBasename = (taskConfig: TaskConfig<Config>, appConfig: AppConfig) => {
-  return appConfig?.router?.basename ?? taskConfig?.config?.basename ?? '';
+  const basename = appConfig?.router?.basename ?? taskConfig?.config?.basename ?? '';
+  return basename.charAt(0) === '/' ? basename : `/${basename}`;
 };
 
 export default getRouterBasename;
