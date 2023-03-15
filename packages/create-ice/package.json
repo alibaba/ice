@@ -24,7 +24,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@iceworks/generate-project": "^2.0.0-beta.3",
+    "@iceworks/generate-project": "^2.0.2",
     "chalk": "^5.0.0",
     "commander": "^9.0.0",
     "fs-extra": "^10.0.0",

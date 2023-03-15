@@ -959,7 +959,7 @@ importers:
 
   packages/create-ice:
     specifiers:
-      '@iceworks/generate-project': ^2.0.0-beta.3
+      '@iceworks/generate-project': ^2.0.2
       '@types/inquirer': ^9.0.3
       chalk: ^5.0.0
       commander: ^9.0.0
@@ -967,7 +967,7 @@ importers:
       ice-npm-utils: ^3.0.0
       inquirer: ^9.1.4
     dependencies:
-      '@iceworks/generate-project': 2.0.0-beta.3
+      '@iceworks/generate-project': 2.0.2
       chalk: 5.1.2
       commander: 9.4.0
       fs-extra: 10.1.0
@@ -5303,8 +5303,8 @@ packages:
     resolution: {integrity: sha512-HPeYj+z1ylaD5fJkSqyJ+eXbrHiCdy/t/t56uyf20aqsAyx12EiHVnfV4blW31DSWhFt/veAUXYzbaJ8b9KLOQ==}
     dev: false
 
-  /@iceworks/generate-project/2.0.0-beta.3:
-    resolution: {integrity: sha512-5TbhUeK/76rdhsEMBt4io6adm3Oo30JVpU5s02dbIYB4VC8nz9/Hl3GICUcVD9N1PfuKnyCyb7g1U65FbF76nQ==}
+  /@iceworks/generate-project/2.0.2:
+    resolution: {integrity: sha512-t7/uHl5kM71o+xyR+FnaPsgyFqhFQm89TdqPahM4Kv/ubdKDknFVUYLio1khMDGY8Ops0ahn/+KM+gFnHEKSQw==}
     engines: {node: '>=12.20.0'}
     dependencies:
       '@appworks/constant': 0.1.4
@@ -20470,7 +20470,6 @@ packages:
       serialize-javascript: 6.0.0
       terser: 5.16.2
       webpack: 5.75.0_esbuild@0.16.10
-    dev: true
 
   /terser-webpack-plugin/5.3.6_peqg53aznxdu6ibj7wrnfxrfiq:
     resolution: {integrity: sha512-kfLFk+PoLUQIbLmB1+PZDMRSZS99Mp+/MHqDNmMA6tOItzRt+Npe3E+fsMs5mfcM0wCtrrdU387UnV+vnSffXQ==}
@@ -20496,6 +20495,7 @@ packages:
       serialize-javascript: 6.0.0
       terser: 5.16.2
       webpack: 5.75.0_ncbsfugu56ddhgadp34k4kpsue
+    dev: true
 
   /terser-webpack-plugin/5.3.6_webpack@5.75.0:
     resolution: {integrity: sha512-kfLFk+PoLUQIbLmB1+PZDMRSZS99Mp+/MHqDNmMA6tOItzRt+Npe3E+fsMs5mfcM0wCtrrdU387UnV+vnSffXQ==}
@@ -21665,7 +21665,7 @@ packages:
       mime-types: 2.1.35
       range-parser: 1.2.1
       schema-utils: 4.0.0
-      webpack: 5.75.0_ncbsfugu56ddhgadp34k4kpsue
+      webpack: 5.75.0_esbuild@0.16.10
 
   /webpack-dev-server/4.11.1_debug@4.3.4+webpack@5.75.0:
     resolution: {integrity: sha512-lILVz9tAUy1zGFwieuaQtYiadImb5M3d+H+L1zDYalYoDl0cksAB1UNyuE5MMWJrG6zR1tXkCP2fitl7yoUJiw==}
@@ -21753,7 +21753,7 @@ packages:
       serve-index: 1.9.1
       sockjs: 0.3.24
       spdy: 4.0.2
-      webpack: 5.75.0_ncbsfugu56ddhgadp34k4kpsue
+      webpack: 5.75.0_esbuild@0.16.10
       webpack-dev-middleware: 5.3.3_webpack@5.75.0
       ws: 8.12.0
     transitivePeerDependencies:
@@ -21862,7 +21862,6 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
-    dev: true
 
   /webpack/5.75.0_ncbsfugu56ddhgadp34k4kpsue:
     resolution: {integrity: sha512-piaIaoVJlqMsPtX/+3KTTO6jfvrSYgauFVdt8cr9LTHKmcq/AMd4mhzsiP7ZF/PGRNPGA8336jldh9l2Kt2ogQ==}
@@ -21902,6 +21901,7 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
+    dev: true
 
   /webpackbar/5.0.2_webpack@5.75.0:
     resolution: {integrity: sha512-BmFJo7veBDgQzfWXl/wwYXr/VFus0614qZ8i9znqcl9fnEdiVkdbi0TedLQ6xAK92HZHDJ0QmyQ0fmuZPAgCYQ==}

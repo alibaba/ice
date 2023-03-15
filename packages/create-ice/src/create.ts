@@ -8,6 +8,11 @@ interface ITemplate {
   npmName: string;
   description?: string;
 }
+interface EjsOptions {
+  iceConfig?: Record<string, any>;
+  appConfig?: Record<string, any>;
+  esLintConfigOptions?: string;
+}
 
 export default async function create(dirPath: string, templateName: string, dirname: string): Promise<void> {
   if (!templateName) {
@@ -28,12 +33,12 @@ export default async function create(dirPath: string, templateName: string, dirn
     if (!go) process.exit(1);
   }
 
-  const isAliInternal = await checkAliInternal();
-  let ejsOptions: Record<string, any> = {
+  let ejsOptions: EjsOptions = {
     appConfig: null,
-    esLintConfigOptions: null,
   };
   let extraDependencies: Record<string, any> = {};
+
+  const isAliInternal = await checkAliInternal();
   if (isAliInternal) {
     ejsOptions = {
       ...ejsOptions,
@@ -46,9 +51,16 @@ export default async function create(dirPath: string, templateName: string, dirn
           def(),
         ],`,
       },
+      esLintConfigOptions: `{
+        extends: ['@ali/eslint-config-att/typescript/react']
+      }`,
     };
+
     extraDependencies = {
+      ...extraDependencies,
       devDependencies: {
+        ...extraDependencies?.devDependencies || {},
+        '@ali/eslint-config-att': '^1.0.0',
         '@ali/ice-plugin-def': '^1.0.0',
       },
     };
@@ -58,7 +70,6 @@ export default async function create(dirPath: string, templateName: string, dirn
     templateName,
     {
       ejsOptions,
-      version: 'beta',
       extraDependencies,
     },
   );
