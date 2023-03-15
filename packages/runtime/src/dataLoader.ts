@@ -244,7 +244,7 @@ async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
           console.error('DataLoader: getData error.\n', error);
 
           return {
-            message: 'DataLoader: getData err.',
+            message: 'DataLoader: getData error.',
             error,
           };
         }
