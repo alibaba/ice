@@ -30,7 +30,7 @@ const removeCodePlugin = (keepExports: string[], transformInclude: (id: string) 
         if (!transformInclude(formatPath(id))) {
           return;
         }
-        const source = fs.readFileSync(id, 'utf-8');
+        const source = await fs.promises.readFile(id, 'utf-8');
         let isTS = false;
         if (id.match(/\.(ts|tsx)$/)) {
           isTS = true;
