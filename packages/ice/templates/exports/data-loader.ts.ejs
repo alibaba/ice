@@ -20,7 +20,11 @@ const loaders = {
 <% if(!dataLoaderImport.imports) {-%>
 let dataLoaderFetcher = (options) => {
   window.fetch(options.url, options);
-}  
+}
+
+let dataLoaderWrapper = (dataLoader) => {
+  return dataLoader;
+}
 <% } -%>
 
 // Only init static runtime in data-loader. 
@@ -32,6 +36,7 @@ const staticRuntimeModules = [
 
 dataLoader.init(loaders, {
   fetcher: dataLoaderFetcher,
+  wrapper: dataLoaderWrapper,
   runtimeModules: staticRuntimeModules,
   appExport: app,
 });

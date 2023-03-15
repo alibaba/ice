@@ -12,6 +12,7 @@ interface CachedResult {
 
 interface LoaderOptions {
   fetcher: Function;
+  wrapper: Function;
   runtimeModules: RuntimeModules['statics'];
   appExport: AppExport;
 }
@@ -38,9 +39,16 @@ export function defineStaticDataLoader(dataLoaderConfig: DataLoaderConfig): Data
  * Set globally to avoid passing this fetcher too deep.
  */
 let dataLoaderFetcher;
-
 export function setFetcher(customFetcher) {
   dataLoaderFetcher = customFetcher;
+}
+
+/**
+ * Custom wrapper for deal with data loader.
+ */
+let dataLoaderWrapper;
+export function setWrapper(customWrapper) {
+  dataLoaderWrapper = customWrapper;
 }
 
 /**
@@ -127,8 +135,8 @@ export function loadDataByCustomFetcher(config: StaticDataLoader) {
  */
 export function callDataLoader(dataLoader: DataLoaderConfig, requestContext): DataLoaderResult {
   if (Array.isArray(dataLoader)) {
-    const loaders = dataLoader.map(loader => {
-      return typeof loader === 'object' ? loadDataByCustomFetcher(loader) : loader(requestContext);
+    const loaders = dataLoader.map((loader, index) => {
+      return typeof loader === 'object' ? loadDataByCustomFetcher(loader) : dataLoaderWrapper(loader, index)(requestContext);
     });
     return Promise.all(loaders);
   }
@@ -137,7 +145,7 @@ export function callDataLoader(dataLoader: DataLoaderConfig, requestContext): Da
     return loadDataByCustomFetcher(dataLoader);
   }
 
-  return dataLoader(requestContext);
+  return dataLoaderWrapper(dataLoader)(requestContext);
 }
 
 const cache = new Map<string, CachedResult>();
@@ -187,6 +195,7 @@ function loadInitialDataInClient(loaders: Loaders) {
 async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
   const {
     fetcher,
+    wrapper,
     runtimeModules,
     appExport,
   } = options;
@@ -206,6 +215,10 @@ async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
 
   if (fetcher) {
     setFetcher(fetcher);
+  }
+
+  if (wrapper) {
+    setWrapper(wrapper);
   }
 
   try {
