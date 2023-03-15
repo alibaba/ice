@@ -160,17 +160,12 @@ describe('run client app', () => {
   });
 
   it('run client with empty route', async () => {
-    try {
-      await runClientApp({
-        app: {},
-        routes: [],
-        runtimeModules: { commons: [serverRuntime] },
-        hydrate: false,
-      });
-    } catch (_) {
-      // Throw error when no route matched.
-      expect(true).toBeTruthy();
-    }
+    await runClientApp({
+      app: {},
+      routes: [],
+      runtimeModules: { commons: [serverRuntime] },
+      hydrate: false,
+    });
   });
 
   it('run client with memory router', async () => {

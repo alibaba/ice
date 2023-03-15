@@ -105,10 +105,9 @@ export default async function runClientApp(options: RunClientAppOptions) {
     formattedBasename,
   );
   const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
-  // If no route module is found, just throw error. otherwise, it will cause a error of Route "xxx" has no component!
   if (Object.keys(routeModules).length === 0) {
-    console.error(`Routes: ${routes}\nBasename: ${formattedBasename}\nMatch routes: ${matches}`);
-    throw new Error('No route module is found, please check your routes config.');
+    // Log route info for debug.
+    console.warn('Routes:', routes, 'Basename:', formattedBasename);
   }
   if (!routesData) {
     routesData = await loadRoutesData(matches, requestContext, routeModules, {
