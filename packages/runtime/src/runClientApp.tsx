@@ -18,7 +18,7 @@ import getRequestContext from './requestContext.js';
 import getAppConfig from './appConfig.js';
 import matchRoutes from './matchRoutes.js';
 import DefaultAppRouter from './AppRouter.js';
-import { setFetcher } from './dataLoader.js';
+import { setFetcher, setWrapper } from './dataLoader.js';
 
 export interface RunClientAppOptions {
   app: AppExport;
@@ -29,6 +29,7 @@ export interface RunClientAppOptions {
   memoryRouter?: boolean;
   runtimeOptions?: Record<string, any>;
   dataLoaderFetcher?: Function;
+  dataLoaderWrapper?: Function;
 }
 
 type History = BrowserHistory | HashHistory | MemoryHistory;
@@ -43,6 +44,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     memoryRouter,
     runtimeOptions,
     dataLoaderFetcher,
+    dataLoaderWrapper,
   } = options;
 
   const windowContext: WindowContext = (window as any).__ICE_APP_CONTEXT__ || {};
@@ -93,6 +95,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
   }
 
   setFetcher(dataLoaderFetcher);
+  setWrapper(dataLoaderWrapper);
 
   if (!appData) {
     appData = await getAppData(app, requestContext);
