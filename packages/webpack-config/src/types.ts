@@ -40,7 +40,6 @@ interface SwcOptions {
   removeExportExprs?: string[];
   compilationConfig?: SwcCompilationConfig | ((source: string, id: string) => SwcCompilationConfig);
   keepExports?: string[];
-  getRoutePaths?: Function;
   nodeTransform?: boolean;
 }
 
@@ -186,6 +185,8 @@ export interface Config {
   getAppConfig?: (exportNamse?: string[]) => Promise<any>;
 
   getRoutesConfig?: (specifyRoutId?: string) => Promise<any>;
+
+  getRoutePaths?: () => string[];
 
   useDevServer?: boolean;
 

@@ -18,6 +18,7 @@ import emptyCSSPlugin from '../esbuild/emptyCSS.js';
 import transformImportPlugin from '../esbuild/transformImport.js';
 import transformPipePlugin from '../esbuild/transformPipe.js';
 import isExternalBuiltinDep from '../utils/isExternalBuiltinDep.js';
+import { getRoutePathsFromCache } from '../utils/getRoutePaths.js';
 import getServerEntry from '../utils/getServerEntry.js';
 import type { DepScanData } from '../esbuild/scan.js';
 import formatPath from '../utils/formatPath.js';
@@ -35,6 +36,7 @@ interface Options {
   command: string;
   server: UserConfig['server'];
   syntaxFeatures: UserConfig['syntaxFeatures'];
+  dataCache: Map<string, string>;
 }
 
 const { merge, difference } = lodash;
@@ -90,7 +92,7 @@ export const getRuntimeDefination = (
 };
 
 export function createServerCompiler(options: Options) {
-  const { task, rootDir, command, server, syntaxFeatures } = options;
+  const { task, rootDir, command, server, syntaxFeatures, dataCache } = options;
   const externals = task.config?.externals || {};
   const sourceMap = task.config?.sourceMap;
   const dev = command === 'start';
@@ -137,6 +139,7 @@ export function createServerCompiler(options: Options) {
       polyfill: false,
       swcOptions,
       redirectImports,
+      getRoutePaths: () => getRoutePathsFromCache(dataCache),
     }, 'esbuild', { isServer });
     const define = getRuntimeDefination(task.config?.define || {}, runtimeDefineVars, transformEnv);
 

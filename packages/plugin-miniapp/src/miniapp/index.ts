@@ -119,17 +119,6 @@ const getMiniappTask = ({
     enableCopyPlugin: isPublicDirExist, // Only when public dir exists should copy-webpack-plugin be enabled
     swcOptions: {
       removeExportExprs: ['getServerData', 'getStaticData'],
-      getRoutePaths: () => {
-        const routes = dataCache.get('routes');
-
-        const routeManifest = JSON.parse(routes)?.routeManifest || {};
-        const routeFiles = Object.keys(routeManifest).map((key) => {
-          const { file } = routeManifest[key];
-          return `src/pages/${file}`;
-        });
-
-        return routeFiles;
-      },
     },
     cssFilename: `[name]${fileType.style}`,
     cssChunkFilename: `[name]${fileType.style}`,

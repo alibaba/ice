@@ -7,7 +7,7 @@ import getWebTask from './task.js';
 
 const plugin: Plugin = () => ({
   name: 'plugin-web',
-  setup: ({ registerTask, onHook, context, dataCache, generator }) => {
+  setup: ({ registerTask, onHook, context, generator }) => {
     const { rootDir, commandArgs, command, userConfig } = context;
 
     generator.addTargetExport({
@@ -31,7 +31,7 @@ const plugin: Plugin = () => ({
       target: 'web',
     });
 
-    registerTask(WEB, getWebTask({ rootDir, command, dataCache, userConfig }));
+    registerTask(WEB, getWebTask({ rootDir, command, userConfig }));
 
     onHook('after.start.compile', async ({ isSuccessful, isFirstCompile, urls, devUrlInfo }) => {
       const { port, open } = commandArgs;
