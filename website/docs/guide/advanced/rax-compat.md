@@ -3,13 +3,13 @@ title: 兼容 Rax
 order: 0201
 ---
 
-ice.js 提供了 [rax-compat](https://github.com/alibaba/ice/tree/master/packages/rax-compat) 以支持 [Rax](https://github.com/alibaba/rax) 到 React 运行时的切换。
+框架提供了 [rax-compat](https://github.com/alibaba/ice/tree/master/packages/rax-compat) 以支持 [rax.js](https://github.com/alibaba/rax) 到 [react](https://github.com/facebook/react) 的兼容。
 
-`rax-compat` 通过对 React API 的封装，在内部抹平了 rax.js 与 react 使用上的大部分差异，同时导出了与 rax.js 一致的 API 能力，通过将源码中的 `rax` 引入替换为 `rax-compat`，可以桥接上绝大部分 React 运行时能力。
+`rax-compat` 通过对 react API 的封装，在内部抹平了 rax.js 与 react 使用上的大部分差异，同时导出了与 rax.js 一致的 API 能力，通过将源码中的 `rax` 引入替换为 `rax-compat`，可以桥接上绝大部分 react 运行时能力。
 
 ## 插件安装与使用
 
-用户可以直接通过引入插件 [@ice/plugin-rax-compat](https://www.npmjs.com/package/@ice/plugin-rax-compat) 来完成在 ice.js 中运行 Rax 应用。
+用户可以直接通过引入插件 [@ice/plugin-rax-compat](https://www.npmjs.com/package/@ice/plugin-rax-compat) 来完成在 ice.js 中运行 Rax 组件。
 
 ```bash
 $ npm i @ice/plugin-rax-compat --save-dev
