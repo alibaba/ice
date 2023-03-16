@@ -986,10 +986,10 @@ importers:
       '@babel/parser': 7.18.10
       '@babel/traverse': 7.18.10
       '@babel/types': 7.18.10
-      '@ice/bundles': 0.1.5
-      '@ice/route-manifest': 1.0.0
-      '@ice/runtime': ^1.1.3
-      '@ice/webpack-config': 1.0.8
+      '@ice/bundles': 0.1.6
+      '@ice/route-manifest': 1.1.0
+      '@ice/runtime': ^1.1.4
+      '@ice/webpack-config': 1.0.9
       '@swc/helpers': 0.4.14
       '@types/babel__generator': ^7.6.4
       '@types/babel__traverse': ^7.17.1
@@ -1197,8 +1197,8 @@ importers:
 
   packages/plugin-icestark:
     specifiers:
-      '@ice/app': ^3.1.2
-      '@ice/runtime': ^1.1.3
+      '@ice/app': ^3.1.3
+      '@ice/runtime': ^1.1.4
       '@ice/stark': ^2.7.4
       '@ice/stark-app': ^1.2.0
       '@types/react': ^18.0.0
@@ -1280,7 +1280,7 @@ importers:
 
   packages/plugin-pha:
     specifiers:
-      '@ice/app': ^3.1.2
+      '@ice/app': ^3.1.3
       '@remix-run/router': ^1.0.3
       build-scripts: ^2.1.0
       chalk: ^4.0.0
@@ -1309,13 +1309,13 @@ importers:
     specifiers:
       '@babel/core': ^7.0.0
       '@babel/plugin-proposal-export-default-from': ^7.18.9
-      '@ice/app': ^3.1.2
-      '@ice/bundles': ^0.1.5
+      '@ice/app': ^3.1.3
+      '@ice/bundles': ^0.1.6
       babel-plugin-transform-jsx-stylesheet: 1.0.6
       consola: ^2.15.3
       css: ^2.2.1
       lodash.merge: ^4.6.2
-      rax-compat: ^0.1.8
+      rax-compat: ^0.1.9
       style-unit: ^3.0.5
       stylesheet-loader: ^0.9.1
       webpack: ^5.73.0
@@ -1454,7 +1454,7 @@ importers:
 
   packages/webpack-config:
     specifiers:
-      '@ice/bundles': 0.1.5
+      '@ice/bundles': 0.1.6
       '@rollup/pluginutils': ^4.2.0
       browserslist: ^4.19.3
       consola: ^2.15.3
@@ -20475,6 +20475,7 @@ packages:
       serialize-javascript: 6.0.0
       terser: 5.16.2
       webpack: 5.75.0_esbuild@0.16.10
+    dev: true
 
   /terser-webpack-plugin/5.3.6_peqg53aznxdu6ibj7wrnfxrfiq:
     resolution: {integrity: sha512-kfLFk+PoLUQIbLmB1+PZDMRSZS99Mp+/MHqDNmMA6tOItzRt+Npe3E+fsMs5mfcM0wCtrrdU387UnV+vnSffXQ==}
@@ -20500,7 +20501,6 @@ packages:
       serialize-javascript: 6.0.0
       terser: 5.16.2
       webpack: 5.75.0_ncbsfugu56ddhgadp34k4kpsue
-    dev: true
 
   /terser-webpack-plugin/5.3.6_webpack@5.75.0:
     resolution: {integrity: sha512-kfLFk+PoLUQIbLmB1+PZDMRSZS99Mp+/MHqDNmMA6tOItzRt+Npe3E+fsMs5mfcM0wCtrrdU387UnV+vnSffXQ==}
@@ -21670,7 +21670,7 @@ packages:
       mime-types: 2.1.35
       range-parser: 1.2.1
       schema-utils: 4.0.0
-      webpack: 5.75.0_esbuild@0.16.10
+      webpack: 5.75.0_ncbsfugu56ddhgadp34k4kpsue
 
   /webpack-dev-server/4.11.1_debug@4.3.4+webpack@5.75.0:
     resolution: {integrity: sha512-lILVz9tAUy1zGFwieuaQtYiadImb5M3d+H+L1zDYalYoDl0cksAB1UNyuE5MMWJrG6zR1tXkCP2fitl7yoUJiw==}
@@ -21758,7 +21758,7 @@ packages:
       serve-index: 1.9.1
       sockjs: 0.3.24
       spdy: 4.0.2
-      webpack: 5.75.0_esbuild@0.16.10
+      webpack: 5.75.0_ncbsfugu56ddhgadp34k4kpsue
       webpack-dev-middleware: 5.3.3_webpack@5.75.0
       ws: 8.12.0
     transitivePeerDependencies:
@@ -21867,6 +21867,7 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
+    dev: true
 
   /webpack/5.75.0_ncbsfugu56ddhgadp34k4kpsue:
     resolution: {integrity: sha512-piaIaoVJlqMsPtX/+3KTTO6jfvrSYgauFVdt8cr9LTHKmcq/AMd4mhzsiP7ZF/PGRNPGA8336jldh9l2Kt2ogQ==}
@@ -21906,7 +21907,6 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
-    dev: true
 
   /webpackbar/5.0.2_webpack@5.75.0:
     resolution: {integrity: sha512-BmFJo7veBDgQzfWXl/wwYXr/VFus0614qZ8i9znqcl9fnEdiVkdbi0TedLQ6xAK92HZHDJ0QmyQ0fmuZPAgCYQ==}

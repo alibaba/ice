@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.6
+
+### Patch Changes
+
+- 18ea5b2d: fix: enable hmr to avoid reload
+
 ## 0.1.5
 
 ### Patch Changes
