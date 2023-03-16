@@ -95,8 +95,8 @@ export default async function runClientApp(options: RunClientAppOptions) {
     await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
   }
 
-  setFetcher(dataLoaderFetcher);
-  setWrapper(dataLoaderWrapper);
+  dataLoaderFetcher && setFetcher(dataLoaderFetcher);
+  dataLoaderWrapper && setWrapper(dataLoaderWrapper);
 
   if (!appData) {
     appData = await getAppData(app, requestContext);
