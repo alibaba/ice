@@ -46,7 +46,7 @@ export function setFetcher(customFetcher) {
 /**
  * Custom wrapper for deal with data loader.
  */
-let dataLoaderWrapper = (dataLoader: Function, id?: Number) => {
+let dataLoaderWrapper = (dataLoader: Function, id?: number) => {
   return dataLoader;
 };
 export function setWrapper(customWrapper) {
