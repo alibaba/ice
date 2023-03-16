@@ -1,5 +1,13 @@
 # @ice/runtime
 
+## 1.1.4
+
+### Patch Changes
+
+- dbff4d0b: fix: reload data after navigate
+- 2f4e64b2: fix: getData should not block a reject state request
+- 54868109: fix: add leading slash for basename
+
 ## 1.1.3
 
 ### Patch Changes
