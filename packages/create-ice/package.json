@@ -1,6 +1,6 @@
 {
   "name": "create-ice",
-  "version": "1.8.2",
+  "version": "1.9.0",
   "description": "npm init ice",
   "type": "module",
   "main": "./esm/index.mjs",
@@ -24,7 +24,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@iceworks/generate-project": "^1.0.0",
+    "@iceworks/generate-project": "^2.0.2",
     "chalk": "^5.0.0",
     "commander": "^9.0.0",
     "fs-extra": "^10.0.0",

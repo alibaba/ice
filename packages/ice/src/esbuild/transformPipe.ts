@@ -27,8 +27,8 @@ const extToLoader: Record<string, Loader> = {
   '.txt': 'text',
 };
 
-export function guessLoader(id: string): Loader {
-  return extToLoader[path.extname(id).toLowerCase()] || 'js';
+function guessLoader(id: string): Loader {
+  return extToLoader[path.extname(id).toLowerCase()];
 }
 
 /**
@@ -101,6 +101,11 @@ const transformPipe = (options: PluginOptions = {}): Plugin => {
         // it is required to forward `resolveDir` for esbuild to find dependencies.
         const resolveDir = path.dirname(args.path);
         const loader = guessLoader(id);
+
+        // If file extension is not recognized, return it to esbuild.
+        if (!loader) {
+          return;
+        }
 
         const transformedResult = await plugins.reduce(async (prevData, plugin) => {
           const { contents } = await prevData;

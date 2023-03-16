@@ -53,7 +53,7 @@ export default {
 
 export function getRoutesDefination(nestRouteManifest: NestedRouteManifest[], lazy = false, depth = 0) {
   const routeImports: string[] = [];
-  const routeDefination = nestRouteManifest.reduce((prev, route) => {
+  const routeDefination = nestRouteManifest.reduce((prev, route, currentIndex) => {
     const { children, path: routePath, index, componentName, file, id, layout, exports } = route;
 
     const componentPath = id.startsWith('__') ? file : `@/pages/${file}`.replace(new RegExp(`${path.extname(file)}$`), '');
@@ -62,9 +62,9 @@ export function getRoutesDefination(nestRouteManifest: NestedRouteManifest[], la
     if (lazy) {
       loadStatement = `import(/* webpackChunkName: "p_${componentName}" */ '${formatPath(componentPath)}')`;
     } else {
-      const camelComponentName = componentName.replace(/-(\w)/g, (_, letter) => letter.toUpperCase());
-      routeImports.push(`import * as ${camelComponentName} from '${formatPath(componentPath)}';`);
-      loadStatement = camelComponentName;
+      const routeSpecifier = `route_${depth}_${currentIndex}`;
+      routeImports.push(`import * as ${routeSpecifier} from '${formatPath(componentPath)}';`);
+      loadStatement = routeSpecifier;
     }
     const routeProperties: string[] = [
       `path: '${formatPath(routePath || '')}',`,

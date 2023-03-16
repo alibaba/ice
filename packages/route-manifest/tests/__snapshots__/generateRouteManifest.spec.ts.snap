@@ -103,7 +103,7 @@ exports[`generateRouteManifest function > define-extra-routes 1`] = `
 exports[`generateRouteManifest function > doc-delimeters-routes 1`] = `
 {
   "home.news": {
-    "componentName": "home-news",
+    "componentName": "home.news",
     "file": "home.news.tsx",
     "id": "home.news",
     "index": undefined,
@@ -160,6 +160,29 @@ exports[`generateRouteManifest function > dynamic-routes 1`] = `
     "layout": false,
     "parentId": undefined,
     "path": undefined,
+  },
+}
+`;
+
+exports[`generateRouteManifest function > escape-routes 1`] = `
+{
+  "1[.pdf]": {
+    "componentName": "1[.pdf]",
+    "file": "1[.pdf].tsx",
+    "id": "1[.pdf]",
+    "index": undefined,
+    "layout": false,
+    "parentId": undefined,
+    "path": "1.pdf",
+  },
+  "[index]": {
+    "componentName": "[index]",
+    "file": "[index].tsx",
+    "id": "[index]",
+    "index": undefined,
+    "layout": false,
+    "parentId": undefined,
+    "path": "index",
   },
 }
 `;
@@ -287,6 +310,29 @@ exports[`generateRouteManifest function > layout-routes 1`] = `
     "layout": true,
     "parentId": undefined,
     "path": undefined,
+  },
+}
+`;
+
+exports[`generateRouteManifest function > nested-routes 1`] = `
+{
+  "a/b/c": {
+    "componentName": "a-b-c",
+    "file": "a/b/c.tsx",
+    "id": "a/b/c",
+    "index": undefined,
+    "layout": false,
+    "parentId": undefined,
+    "path": "a/b/c",
+  },
+  "d.e.f": {
+    "componentName": "d.e.f",
+    "file": "d.e.f.tsx",
+    "id": "d.e.f",
+    "index": undefined,
+    "layout": false,
+    "parentId": undefined,
+    "path": "d/e/f",
   },
 }
 `;

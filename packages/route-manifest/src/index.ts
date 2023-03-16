@@ -18,7 +18,7 @@ export interface RouteItem {
   children?: RouteItem[];
 }
 
-const validRouteChar = ['-', '\\w', '/', ':', '*'];
+const validRouteChar = ['-', '\\w', '/', ':', '*', '\\[', '\\]', '\\.'];
 
 const routeModuleExts = [
   '.js',
@@ -172,7 +172,7 @@ function defineConventionalRoutes(
         routeId.slice(parentRoutePath.length + (parentRoutePath ? 1 : 0)),
       );
       const routeFilePath = normalizeSlashes(path.join('src', 'pages', files[routeId]));
-      if (RegExp(`[^${validRouteChar.join(',')}]`).test(routePath)) {
+      if (RegExp(`[^${validRouteChar.join('')}]+`).test(routePath)) {
         throw new Error(`invalid character in '${routeFilePath}'. Only support char: ${validRouteChar.join(', ')}`);
       }
       const isIndexRoute = routeId === 'index' || routeId.endsWith('/index');
@@ -215,16 +215,47 @@ function defineConventionalRoutes(
   return defineRoutes(defineNestedRoutes);
 }
 
+const escapeStart = '[';
+const escapeEnd = ']';
+
 export function createRoutePath(routeId: string): string | undefined {
   let result = '';
   let rawSegmentBuffer = '';
+
+  let inEscapeSequence = 0;
+  let skipSegment = false;
 
   const partialRouteId = removeLastLayoutStrFromId(routeId);
 
   for (let i = 0; i < partialRouteId.length; i++) {
     const char = partialRouteId.charAt(i);
-
+    const lastChar = i > 0 ? partialRouteId.charAt(i - 1) : undefined;
     const nextChar = i < partialRouteId.length - 1 ? partialRouteId.charAt(i + 1) : undefined;
+
+    const isNewEscapeSequence = !inEscapeSequence && char === escapeStart && lastChar !== escapeStart;
+    const isCloseEscapeSequence = inEscapeSequence && char === escapeEnd && nextChar !== escapeEnd;
+
+    if (skipSegment) {
+      if (char === '/' || char === '.' || char === path.win32.sep) {
+        skipSegment = false;
+      }
+      continue;
+    }
+    // We try to get the string in the escape sequence. For example, try to get the `index` string in `[index]`.
+    if (isNewEscapeSequence) {
+      inEscapeSequence++;
+      continue;
+    }
+
+    if (isCloseEscapeSequence) {
+      inEscapeSequence--;
+      continue;
+    }
+
+    if (inEscapeSequence) {
+      result += char;
+      continue;
+    }
 
     if (char === '/' || char === path.win32.sep || char === '.') {
       if (rawSegmentBuffer === 'index' && result.endsWith('index')) {

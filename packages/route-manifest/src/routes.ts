@@ -152,8 +152,7 @@ function stripFileExtension(file: string) {
 }
 
 export function createComponentName(id: string) {
-  return id.replace('.', '/') // 'pages/home.news' -> pages/home/news
-    .split('/')
+  return id.split('/')
     .map((item: string) => item.toLowerCase())
     .join('-');
 }
