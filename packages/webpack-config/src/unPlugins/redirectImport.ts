@@ -69,7 +69,7 @@ export function generateImport(matchedImports: MatchedImports): string {
   const importStatements = Object.keys(matchedImports).map((source) => {
     const importStatements = matchedImports[source];
     let defaultImport = '';
-    let namedImports = [];
+    const namedImports = [];
     importStatements.forEach(({ isDefault, identifier, alias }) => {
       if (isDefault) {
         defaultImport = parseLocalIdentifier(identifier, alias);

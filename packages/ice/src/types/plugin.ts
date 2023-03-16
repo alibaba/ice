@@ -17,7 +17,7 @@ type AddTargetExport = (exportData: TargetDeclarationData) => void;
 type AddEntryCode = (callback: (code: string) => string) => void;
 type RemoveExport = (removeSource: string | string[]) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
-type GetExportList = (key: string) => DeclarationData[];
+type GetExportList = (key: string, target?: string) => (DeclarationData | TargetDeclarationData)[];
 
 type ServerCompilerBuildOptions = Pick<
   esbuild.BuildOptions,

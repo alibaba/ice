@@ -121,7 +121,7 @@ async function webpackCompiler(options: {
 
     // Add webpack plugin of data-loader.
     if (useDataLoader) {
-      const exportList = generator.getExportList('framework');
+      const exportList = generator.getExportList('framework', target);
 
       webpackConfig.plugins.push(new DataLoaderPlugin({
         serverCompiler,
