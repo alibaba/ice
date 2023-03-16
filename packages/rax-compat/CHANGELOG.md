@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.10
+
+- chore: bump version for npm sync error.
+
 ## 0.1.9
 
 ### Patch Changes
