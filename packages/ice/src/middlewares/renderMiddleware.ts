@@ -5,13 +5,13 @@ import type { ServerContext, RenderMode } from '@ice/runtime';
 import matchRoutes from '@ice/runtime/matchRoutes';
 import type { TaskConfig } from 'build-scripts';
 import type { Config } from '@ice/webpack-config/types';
-import type { ExtendsPluginAPI } from '../../types/plugin.js';
-import getRouterBasename from '../../utils/getRouterBasename.js';
-import dynamicImport from '../../utils/dynamicImport.js';
-import warnOnHashRouterEnabled from '../../utils/warnOnHashRouterEnabled.js';
-import type { UserConfig } from '../../types/userConfig.js';
-import { logger } from '../../utils/logger.js';
-import type RouteManifest from '../../utils/routeManifest.js';
+import type { ExtendsPluginAPI } from '../types/plugin.js';
+import getRouterBasename from '../utils/getRouterBasename.js';
+import dynamicImport from '../utils/dynamicImport.js';
+import warnOnHashRouterEnabled from '../utils/warnOnHashRouterEnabled.js';
+import type { UserConfig } from '../types/userConfig.js';
+import { logger } from '../utils/logger.js';
+import type RouteManifest from '../utils/routeManifest.js';
 
 const require = createRequire(import.meta.url);
 
@@ -43,8 +43,9 @@ export default function createRenderMiddleware(options: Options): Middleware {
     }
     const basename = getRouterBasename(taskConfig, appConfig);
     const matches = matchRoutes(routes, req.path, basename);
+    const isStaticResources = /\.(js|mjs|map|json|png|jpg|jpeg|gif|svg|eot|woff2|ttf)$/;
     // When documentOnly is true, it means that the app is CSR and it should return the html.
-    if (matches.length || documentOnly) {
+    if (matches.length || documentOnly || !isStaticResources) {
       // Wait for the server compilation to finish
       const { serverEntry, error } = await serverCompileTask.get();
       if (error) {
