@@ -50,6 +50,27 @@ describe('createElement', () => {
     ));
   });
 
+  it('component should not work with onAppear', () => {
+    let appearFun = vi.spyOn({
+      func: () => {
+        expect(appearFun).toBeCalledTimes(0);
+      },
+    }, 'func');
+    const str = 'hello world';
+
+    const FunctionComponent = ({ onDisappear }) => {
+      console.log(onDisappear);
+      return createElement('div');
+    };
+    render(createElement(
+      FunctionComponent,
+      {
+        onDisappear: appearFun,
+      },
+      str,
+    ));
+  });
+
   it('rpx should transform to vw', () => {
     const str = 'hello world';
     const wrapper = render(createElement(
