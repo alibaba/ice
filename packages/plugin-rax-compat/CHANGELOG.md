@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.5
+
+### Patch Changes
+
+- 0fb80639: fix: improve performance by use async function
+- Updated dependencies
+  - @ice/bundles@0.1.6
+  - rax-compat@0.1.9
+
 ## 0.1.4
 
 ### Patch Changes

@@ -19,6 +19,7 @@ import getAppConfig from './appConfig.js';
 import matchRoutes from './matchRoutes.js';
 import DefaultAppRouter from './AppRouter.js';
 import { setFetcher } from './dataLoader.js';
+import addLeadingSlash from './utils/addLeadingSlash.js';
 
 export interface RunClientAppOptions {
   app: AppExport;
@@ -57,7 +58,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     renderMode,
     serverData,
   } = windowContext;
-
+  const formattedBasename = addLeadingSlash(basename);
   const requestContext = getRequestContext(window.location);
   const appConfig = getAppConfig(app);
   const historyOptions = {
@@ -77,7 +78,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routesData,
     routesConfig,
     assetsManifest,
-    basename,
+    basename: formattedBasename,
     routePath,
     renderMode,
     requestContext,
@@ -101,10 +102,13 @@ export default async function runClientApp(options: RunClientAppOptions) {
   const matches = matchRoutes(
     routes,
     memoryRouter ? routePath : history.location,
-    basename,
+    formattedBasename,
   );
   const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
-
+  if (Object.keys(routeModules).length === 0) {
+    // Log route info for debug.
+    console.warn('Routes:', routes, 'Basename:', formattedBasename);
+  }
   if (!routesData) {
     routesData = await loadRoutesData(matches, requestContext, routeModules, {
       ssg: renderMode === 'SSG',
@@ -214,10 +218,10 @@ function BrowserEntry({
   const { action, location } = historyState;
   const { routesData, routesConfig, matches, routeModules } = routeState;
 
-  // listen the history change and update the state which including the latest action and location
+  // Listen the history change and update the state which including the latest action and location.
   useLayoutEffect(() => {
     if (history) {
-      history.listen(({ action, location }) => {
+      const unlisten = history.listen(({ action, location }) => {
         const currentMatches = matchRoutes(routes, location, basename);
         if (!currentMatches.length) {
           throw new Error(`Routes not found in location ${location.pathname}.`);
@@ -239,23 +243,26 @@ function BrowserEntry({
           });
         });
       });
+
+      return () => unlisten();
     }
-    // just trigger once
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    // Should add routeState to dependencies to ensure get the correct state in `history.listen`.
+  }, [routeState, history, basename, routes]);
 
   useEffect(() => {
-    // rerender page use actual data for ssg.
+    // Rerender page use actual data for ssg.
     if (renderMode === 'SSG') {
       const initialContext = getRequestContext(window.location);
       loadRoutesData(matches, initialContext, routeModules).then(data => {
-        setRouteState({
-          ...routeState,
-          routesData: data,
+        setRouteState(r => {
+          return {
+            ...r,
+            routesData: data,
+          };
         });
       });
     }
-    // just trigger once
+    // Trigger once after first render for SSG to update data.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -302,7 +309,10 @@ export async function loadNextPage(
   // load data for changed route.
   const initialContext = getRequestContext(window.location);
   const matchesToLoad = filterMatchesToLoad(preMatches, currentMatches);
-  const data = await loadRoutesData(matchesToLoad, initialContext, routeModules);
+  // Navigate to other router should always fetch the latest data.
+  const data = await loadRoutesData(matchesToLoad, initialContext, routeModules, {
+    forceRequest: true,
+  });
 
   const routesData: RoutesData = {};
   // merge page data.

@@ -53,6 +53,7 @@ export async function loadRouteModules(routes: RouteModule[], originRouteModules
 export interface LoadRoutesDataOptions {
   renderMode?: RenderMode;
   ssg?: boolean;
+  forceRequest?: boolean;
 }
 
 /**

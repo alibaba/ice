@@ -247,7 +247,7 @@ class ServerRunner extends Runner {
                   if (res) {
                     const { contents, loader } = res;
                     if (['json', 'text'].includes(loader)) {
-                      code = `__ice_exports__.default = ${contents || JSON.stringify(fse.readFileSync(formatedId, 'utf-8'))}`;
+                      code = `__ice_exports__.default = ${contents || JSON.stringify(await fse.readFile(formatedId, 'utf-8'))}`;
                     } else {
                       code = typeof contents === 'string' ? contents : contents.toString();
                     }
