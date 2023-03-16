@@ -18,7 +18,7 @@ order: 0901
 
 ## ice.js 与 Rax App 的差异
 
-ice.js 和 Rax App 都是应用研发框架，它们默认使用的 UI Framework 不同，前者使用 React，而后者使用 rax.js。但是在 ice.js 3.x 中，你可以使用 [Rax 兼容模式](../rax-compat.md)来运行 Rax 组件。
+ice.js 和 Rax App 都是应用研发框架，它们默认使用的 UI Framework 不同，前者使用 React，而后者使用 rax.js。但是在 ice.js 3.x 中，你可以使用 [Rax 兼容模式](./rax-compat.md)来运行 Rax 组件。
 
 核心差异包括：
 - 路由差异
