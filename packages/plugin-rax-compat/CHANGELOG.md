@@ -5,8 +5,7 @@
 ### Patch Changes
 
 - 0fb80639: fix: improve performance by use async function
-- Updated dependencies [18ea5b2d]
-- Updated dependencies [8cfdfd96]
+- Updated dependencies
   - @ice/bundles@0.1.6
   - rax-compat@0.1.9
 
