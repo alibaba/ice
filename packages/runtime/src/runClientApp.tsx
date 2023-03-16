@@ -19,6 +19,7 @@ import getAppConfig from './appConfig.js';
 import matchRoutes from './matchRoutes.js';
 import DefaultAppRouter from './AppRouter.js';
 import { setFetcher, setWrapper } from './dataLoader.js';
+import addLeadingSlash from './utils/addLeadingSlash.js';
 
 export interface RunClientAppOptions {
   app: AppExport;
@@ -59,7 +60,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     renderMode,
     serverData,
   } = windowContext;
-
+  const formattedBasename = addLeadingSlash(basename);
   const requestContext = getRequestContext(window.location);
   const appConfig = getAppConfig(app);
   const historyOptions = {
@@ -79,7 +80,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routesData,
     routesConfig,
     assetsManifest,
-    basename,
+    basename: formattedBasename,
     routePath,
     renderMode,
     requestContext,
@@ -104,10 +105,13 @@ export default async function runClientApp(options: RunClientAppOptions) {
   const matches = matchRoutes(
     routes,
     memoryRouter ? routePath : history.location,
-    basename,
+    formattedBasename,
   );
   const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
-
+  if (Object.keys(routeModules).length === 0) {
+    // Log route info for debug.
+    console.warn('Routes:', routes, 'Basename:', formattedBasename);
+  }
   if (!routesData) {
     routesData = await loadRoutesData(matches, requestContext, routeModules, {
       ssg: renderMode === 'SSG',

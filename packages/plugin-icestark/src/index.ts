@@ -30,11 +30,10 @@ const plugin: Plugin<PluginOptions> = ({ type, library }) => ({
         };
       });
       generator.addEntryCode(() => {
-        return `
+        return `let root;
 if (!window.ICESTARK?.root) {
-  render();
+  root = render();
 }
-let root;
 
 // For qiankun lifecycle validation.
 export async function bootstrap(props) {
@@ -43,7 +42,11 @@ export async function bootstrap(props) {
 
 export async function mount(props) {
   await app?.icestark?.mount?.(props);
-  root = render({ runtimeOptions: props });
+  // Avoid remount when app mount in other micro app framework.
+  if (!root) {
+    root = render({ runtimeOptions: props });
+  }
+  await root;
 }
 export async function unmount(props) {
   root?.then((res) => res.unmount());

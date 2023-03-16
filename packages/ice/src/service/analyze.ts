@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { performance } from 'perf_hooks';
-import fs from 'fs-extra';
+import fse from 'fs-extra';
 import fg from 'fast-glob';
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
 import { esbuild } from '@ice/bundles';
@@ -96,7 +96,7 @@ export async function analyzeImports(files: string[], options: Options) {
   const importSet = new Set<string>();
   async function analyzeFile(filePath: string) {
     analyzedSet.add(filePath);
-    let source = fs.readFileSync(filePath, 'utf-8');
+    let source = await fse.readFile(filePath, 'utf-8');
     const lang = path.extname(filePath).slice(1);
     let loader: Loader;
     if (lang === 'ts' || lang === 'tsx') {
@@ -128,7 +128,7 @@ export async function analyzeImports(files: string[], options: Options) {
             if (!path.isAbsolute(importPath)) {
               importPath = getImportPath(importPath, filePath, alias);
             }
-            if (importPath && importPath.match(/\.(j|t)sx?$/) && fs.existsSync(importPath) && !analyzedSet.has(importPath)) {
+            if (importPath && importPath.match(/\.(j|t)sx?$/) && fse.existsSync(importPath) && !analyzedSet.has(importPath)) {
               await analyzeFile(importPath);
             }
           }
