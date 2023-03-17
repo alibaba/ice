@@ -4,7 +4,8 @@ import type { Compiler } from 'webpack';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type { Context } from 'build-scripts';
 import type { ServerCompiler, PluginData } from '../types/plugin.js';
-import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR, RUNTIME_EXPORTS } from '../constant.js';
+import type { DeclarationData } from '../types/generator.js';
+import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR } from '../constant.js';
 import { getRoutePathsFromCache } from '../utils/getRoutePaths.js';
 
 const pluginName = 'DataLoaderPlugin';
@@ -16,6 +17,7 @@ export default class DataLoaderPlugin {
   private target: string;
   private dataCache: Map<string, string>;
   private getAllPlugin: Context['getAllPlugin'];
+  private frameworkExports: DeclarationData[];
 
   public constructor(options: {
     serverCompiler: ServerCompiler;
@@ -23,13 +25,15 @@ export default class DataLoaderPlugin {
     target: string;
     dataCache: Map<string, string>;
     getAllPlugin?: Context['getAllPlugin'];
+    frameworkExports: DeclarationData[];
   }) {
-    const { serverCompiler, rootDir, dataCache, getAllPlugin, target } = options;
+    const { serverCompiler, rootDir, dataCache, getAllPlugin, target, frameworkExports } = options;
     this.serverCompiler = serverCompiler;
     this.rootDir = rootDir;
     this.dataCache = dataCache;
     this.getAllPlugin = getAllPlugin;
     this.target = target;
+    this.frameworkExports = frameworkExports;
   }
 
   public apply(compiler: Compiler) {
@@ -74,7 +78,7 @@ export default class DataLoaderPlugin {
               transformEnv: false,
               enableEnv: true,
               // Redirect imports to @ice/runtime to avoid build plugin side effect code.
-              redirectImports: RUNTIME_EXPORTS,
+              redirectImports: this.frameworkExports,
               isServer: false,
             },
           );
