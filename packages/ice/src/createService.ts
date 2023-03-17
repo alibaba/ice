@@ -109,6 +109,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         declarationType: DeclarationType.NORMAL,
       });
     },
+    getExportList: (registerKey: string) => {
+      return generator.getExportList(registerKey);
+    },
     render: generator.render,
   };
 

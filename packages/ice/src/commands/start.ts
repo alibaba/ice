@@ -15,8 +15,8 @@ import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR, WEB, DEFAULT
 import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import prepareURLs from '../utils/prepareURLs.js';
-import createRenderMiddleware from '../middlewares/ssr/renderMiddleware.js';
-import createOnDemandMiddleware from '../middlewares/ssr/renderOnDemand.js';
+import createRenderMiddleware from '../middlewares/renderMiddleware.js';
+import createOnDemandMiddleware from '../middlewares/renderOnDemand.js';
 import createMockMiddleware from '../middlewares/mock/createMiddleware.js';
 import getRouterBasename from '../utils/getRouterBasename.js';
 import { getExpandedEnvs } from '../utils/runtimeEnv.js';

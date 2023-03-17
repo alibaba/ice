@@ -20,7 +20,7 @@ describe('redirect import', () => {
     specifier: 'store',
     source: '@ice/store',
   }, {
-    specifier: 'request',
+    specifier: ['request', 'test'],
     source: 'axios',
   }];
 
@@ -52,7 +52,7 @@ describe('redirect import', () => {
   it('multiple transform', async () => {
     const code = fs.readFileSync(path.join(__dirname, './fixtures/redirectImport/multiple.js'), 'utf-8');
     const transformed = await redirectImport(code, { exportData, targetSource: 'ice' });
-    expect(transformed).toBe('import request from \'axios\';\nimport store from \'@ice/store\';');
+    expect(transformed).toBe('import { request, test } from \'axios\';\nimport store from \'@ice/store\';');
   });
   it('matched transform', async () => {
     const code = fs.readFileSync(path.join(__dirname, './fixtures/redirectImport/matched.js'), 'utf-8');

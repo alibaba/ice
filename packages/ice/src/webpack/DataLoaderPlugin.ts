@@ -4,7 +4,8 @@ import type { Compiler } from 'webpack';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type { Context } from 'build-scripts';
 import type { ServerCompiler, PluginData } from '../types/plugin.js';
-import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR, RUNTIME_EXPORTS } from '../constant.js';
+import type { DeclarationData } from '../types/generator.js';
+import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR } from '../constant.js';
 
 const pluginName = 'DataLoaderPlugin';
 const { RawSource } = webpack.sources;
@@ -14,18 +15,21 @@ export default class DataLoaderPlugin {
   private rootDir: string;
   private target: string;
   private getAllPlugin: Context['getAllPlugin'];
+  private frameworkExports: DeclarationData[];
 
   public constructor(options: {
     serverCompiler: ServerCompiler;
     rootDir: string;
     target: string;
     getAllPlugin?: Context['getAllPlugin'];
+    frameworkExports: DeclarationData[];
   }) {
-    const { serverCompiler, rootDir, getAllPlugin, target } = options;
+    const { serverCompiler, rootDir, getAllPlugin, target, frameworkExports } = options;
     this.serverCompiler = serverCompiler;
     this.rootDir = rootDir;
     this.getAllPlugin = getAllPlugin;
     this.target = target;
+    this.frameworkExports = frameworkExports;
   }
 
   public apply(compiler: Compiler) {
@@ -67,7 +71,7 @@ export default class DataLoaderPlugin {
               transformEnv: false,
               enableEnv: true,
               // Redirect imports to @ice/runtime to avoid build plugin side effect code.
-              redirectImports: RUNTIME_EXPORTS,
+              redirectImports: this.frameworkExports,
               isServer: false,
             },
           );
