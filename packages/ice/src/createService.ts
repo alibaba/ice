@@ -231,13 +231,13 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   // Render exports files if route component export dataLoader / pageConfig.
   renderExportsTemplate({
-      ...routesInfo,
-      hasExportAppData,
+    ...routesInfo,
+    hasExportAppData,
   }, generator.addRenderFile, {
-      rootDir,
-      runtimeDir: RUNTIME_TMP_DIR,
-      templateDir: path.join(templateDir, 'exports'),
-      dataLoader: Boolean(userConfig.dataLoader),
+    rootDir,
+    runtimeDir: RUNTIME_TMP_DIR,
+    templateDir: path.join(templateDir, 'exports'),
+    dataLoader: Boolean(userConfig.dataLoader),
   });
 
   if (typeof userConfig.dataLoader === 'object' && userConfig.dataLoader.fetcher) {
@@ -247,14 +247,14 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     } = userConfig.dataLoader.fetcher;
 
     generatorAPI.addDataLoaderImport(method ? {
-            source: packageName,
-            alias: {
-              [method]: 'dataLoaderFetcher',
-            },
-            specifier: [method],
+      source: packageName,
+      alias: {
+        [method]: 'dataLoaderFetcher',
+      },
+      specifier: [method],
     } : {
-            source: packageName,
-            specifier: '',
+      source: packageName,
+      specifier: '',
     });
   }
 
