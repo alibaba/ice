@@ -5207,7 +5207,7 @@ packages:
       glob: 7.2.3
       ice-npm-utils: 3.0.2
       ora: 5.4.1
-      prettier: 2.7.1
+      prettier: 2.8.4
     transitivePeerDependencies:
       - debug
     dev: false
@@ -8232,7 +8232,6 @@ packages:
       buffer: 5.7.1
       inherits: 2.0.4
       readable-stream: 3.6.1
-    dev: true
 
   /bl/5.1.0:
     resolution: {integrity: sha512-tv1ZJHLfTDnXE6tMHv73YgSJaWR2AFuPwMntBe7XL/GBFHnT0CLnsHMogfk5+GzCDC5ZWarSCYaIGATZt9dNsQ==}
@@ -19454,7 +19453,6 @@ packages:
       serialize-javascript: 6.0.1
       terser: 5.14.2
       webpack: 5.75.0_esbuild@0.16.17
-    dev: true
 
   /terser-webpack-plugin/5.3.5_phqwq6afprn5sirevnmqrc76tu:
     resolution: {integrity: sha512-AOEDLDxD2zylUGf/wxHxklEkOe2/r+seuyOWujejFrIxHf11brA1/dWQNIgXa1c6/Wkxgu7zvv0JhOWfc2ELEA==}
@@ -19480,6 +19478,7 @@ packages:
       serialize-javascript: 6.0.1
       terser: 5.14.2
       webpack: 5.75.0_7jiftoiwerx7h5latzwlalkkfy
+    dev: true
 
   /terser-webpack-plugin/5.3.5_webpack@5.75.0:
     resolution: {integrity: sha512-AOEDLDxD2zylUGf/wxHxklEkOe2/r+seuyOWujejFrIxHf11brA1/dWQNIgXa1c6/Wkxgu7zvv0JhOWfc2ELEA==}
@@ -20656,7 +20655,7 @@ packages:
       mime-types: 2.1.35
       range-parser: 1.2.1
       schema-utils: 4.0.0
-      webpack: 5.75.0_7jiftoiwerx7h5latzwlalkkfy
+      webpack: 5.75.0_esbuild@0.16.17
 
   /webpack-dev-server/4.11.1_debug@4.3.4+webpack@5.75.0:
     resolution: {integrity: sha512-lILVz9tAUy1zGFwieuaQtYiadImb5M3d+H+L1zDYalYoDl0cksAB1UNyuE5MMWJrG6zR1tXkCP2fitl7yoUJiw==}
@@ -20744,7 +20743,7 @@ packages:
       serve-index: 1.9.1
       sockjs: 0.3.24
       spdy: 4.0.2
-      webpack: 5.75.0_7jiftoiwerx7h5latzwlalkkfy
+      webpack: 5.75.0_esbuild@0.16.17
       webpack-dev-middleware: 5.3.3_webpack@5.75.0
       ws: 8.12.1
     transitivePeerDependencies:
@@ -20853,6 +20852,7 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
+    dev: true
 
   /webpack/5.75.0_esbuild@0.16.17:
     resolution: {integrity: sha512-piaIaoVJlqMsPtX/+3KTTO6jfvrSYgauFVdt8cr9LTHKmcq/AMd4mhzsiP7ZF/PGRNPGA8336jldh9l2Kt2ogQ==}
@@ -20892,7 +20892,6 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
-    dev: true
 
   /webpackbar/5.0.2_webpack@5.75.0:
     resolution: {integrity: sha512-BmFJo7veBDgQzfWXl/wwYXr/VFus0614qZ8i9znqcl9fnEdiVkdbi0TedLQ6xAK92HZHDJ0QmyQ0fmuZPAgCYQ==}
