@@ -11,7 +11,6 @@ interface Options {
   outputDir: string;
   serverEntry: string;
   incremental: boolean;
-  dataCache: Map<string, string>;
   serverCompileTask: ExtendsPluginAPI['serverCompileTask'];
   ensureRoutesConfig: () => Promise<void>;
   runtimeDefineVars: Record<string, string>;

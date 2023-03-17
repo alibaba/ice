@@ -36,7 +36,7 @@ interface GetWebpackConfigOptions {
   userConfigHash: string;
   getExpandedEnvs: () => Record<string, string>;
   runtimeDefineVars?: Record<string, any>;
-  getRoutePaths?: () => string[];
+  getRoutesFile?: () => string[];
 }
 
 enum JSMinifier {
@@ -137,7 +137,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     userConfigHash,
     getExpandedEnvs,
     runtimeDefineVars = {},
-    getRoutePaths,
+    getRoutesFile,
   } = options;
 
   const {
@@ -231,7 +231,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     swcOptions,
     polyfill,
     enableEnv: true,
-    getRoutePaths,
+    getRoutesFile,
   });
   const webpackConfig = {
     mode,

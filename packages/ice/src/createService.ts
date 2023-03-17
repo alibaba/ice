@@ -141,6 +141,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       },
       getRouteManifest: () => routeManifest.getNestedRoute(),
       getFlattenRoutes: () => routeManifest.getFlattenRoute(),
+      getRoutesFile: () => routeManifest.getRoutesFile(),
       context: {
         webpack,
       },
@@ -230,13 +231,13 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   // Render exports files if route component export dataLoader / pageConfig.
   renderExportsTemplate({
-    ...routesInfo,
-    hasExportAppData,
+      ...routesInfo,
+      hasExportAppData,
   }, generator.addRenderFile, {
-    rootDir,
-    runtimeDir: RUNTIME_TMP_DIR,
-    templateDir: path.join(templateDir, 'exports'),
-    dataLoader: Boolean(userConfig.dataLoader),
+      rootDir,
+      runtimeDir: RUNTIME_TMP_DIR,
+      templateDir: path.join(templateDir, 'exports'),
+      dataLoader: Boolean(userConfig.dataLoader),
   });
 
   if (typeof userConfig.dataLoader === 'object' && userConfig.dataLoader.fetcher) {
@@ -246,14 +247,14 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     } = userConfig.dataLoader.fetcher;
 
     generatorAPI.addDataLoaderImport(method ? {
-      source: packageName,
-      alias: {
-        [method]: 'dataLoaderFetcher',
-      },
-      specifier: [method],
+            source: packageName,
+            alias: {
+              [method]: 'dataLoaderFetcher',
+            },
+            specifier: [method],
     } : {
-      source: packageName,
-      specifier: '',
+            source: packageName,
+            specifier: '',
     });
   }
 
@@ -285,7 +286,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     command,
     server,
     syntaxFeatures,
-    dataCache,
+    getRoutesFile: () => routeManifest.getRoutesFile(),
   });
   initAppConfigCompiler(serverCompiler);
   initRouteConfigCompiler(serverCompiler);
@@ -326,7 +327,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             devPath: (routePaths[0] || '').replace(/^[/\\]/, ''),
             spinner: buildSpinner,
             userConfigHash,
-            dataCache,
           });
         } else if (command === 'build') {
           return await build(ctx, {
@@ -340,7 +340,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             spinner: buildSpinner,
             userConfigHash,
             userConfig,
-            dataCache,
           });
         } else if (command === 'test') {
           return test(ctx, {

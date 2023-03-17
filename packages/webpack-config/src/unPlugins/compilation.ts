@@ -23,7 +23,7 @@ interface Options {
   cacheDir?: string;
   polyfill?: Config['polyfill'];
   enableEnv?: boolean;
-  getRoutePaths?: () => string[];
+  getRoutesFile?: () => string[];
 }
 
 const formatId = (id: string) => id.split(path.sep).join('/');
@@ -40,7 +40,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
     cacheDir,
     polyfill,
     enableEnv,
-    getRoutePaths,
+    getRoutesFile,
   } = options;
 
   const { removeExportExprs, compilationConfig, keepExports, nodeTransform } = swcOptions;
@@ -50,7 +50,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
   });
 
   function isRouteEntry(id: string) {
-    const routes = getRoutePaths();
+    const routes = getRoutesFile();
 
     const matched = routes.find(route => {
       return id.indexOf(route) > -1;

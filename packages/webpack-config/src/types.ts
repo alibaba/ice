@@ -186,7 +186,7 @@ export interface Config {
 
   getRoutesConfig?: (specifyRoutId?: string) => Promise<any>;
 
-  getRoutePaths?: () => string[];
+  getRoutesFile?: () => string[];
 
   useDevServer?: boolean;
 

@@ -19,7 +19,6 @@ export default class DataLoaderPlugin {
     serverCompiler: ServerCompiler;
     rootDir: string;
     target: string;
-    dataCache: Map<string, string>;
     getAllPlugin?: Context['getAllPlugin'];
   }) {
     const { serverCompiler, rootDir, getAllPlugin, target } = options;

@@ -19,7 +19,6 @@ import generateEntry from '../utils/generateEntry.js';
 import { logger } from '../utils/logger.js';
 import { getExpandedEnvs } from '../utils/runtimeEnv.js';
 import type RouteManifest from '../utils/routeManifest.js';
-import { getRoutePathsFromCache } from '../utils/getRoutePaths.js';
 
 const build = async (
   context: Context<Config, ExtendsPluginAPI>,
@@ -34,7 +33,6 @@ const build = async (
     userConfigHash: string;
     userConfig: UserConfig;
     routeManifest: RouteManifest;
-    dataCache: Map<string, string>;
   },
 ) => {
   const {
@@ -48,10 +46,10 @@ const build = async (
     userConfigHash,
     userConfig,
     routeManifest,
-    dataCache,
   } = options;
-  const { applyHook, commandArgs, rootDir } = context;
+  const { applyHook, commandArgs, rootDir, extendsPluginAPI } = context;
   const { target = WEB } = commandArgs;
+  const { getRoutesFile } = extendsPluginAPI;
 
   if (appConfig?.router?.type === 'hash') {
     warnOnHashRouterEnabled(userConfig);
@@ -69,7 +67,7 @@ const build = async (
       [IMPORT_META_TARGET]: JSON.stringify(target),
       [IMPORT_META_RENDERER]: JSON.stringify('client'),
     },
-    getRoutePaths: () => getRoutePathsFromCache(dataCache),
+    getRoutesFile,
   }));
   const outputDir = webpackConfigs[0].output.path;
 

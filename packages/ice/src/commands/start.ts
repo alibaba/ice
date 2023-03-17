@@ -23,7 +23,6 @@ import { getExpandedEnvs } from '../utils/runtimeEnv.js';
 import { logger } from '../utils/logger.js';
 import type ServerRunner from '../service/ServerRunner.js';
 import type RouteManifest from '../utils/routeManifest.js';
-import { getRoutePathsFromCache } from '../utils/getRoutePaths.js';
 
 const { merge } = lodash;
 
@@ -41,7 +40,6 @@ const start = async (
     getDataloaderConfig: GetDataloaderConfig;
     userConfigHash: string;
     serverRunner?: ServerRunner;
-    dataCache: Map<string, string>;
   },
 ) => {
   const {
@@ -56,10 +54,10 @@ const start = async (
     userConfigHash,
     serverRunner,
     routeManifest,
-    dataCache,
   } = options;
-  const { commandArgs, rootDir } = context;
+  const { commandArgs, rootDir, extendsPluginAPI } = context;
   const { target = WEB } = commandArgs;
+  const { getRoutesFile } = extendsPluginAPI;
   const webpackConfigs = taskConfigs.map(({ config }) => getWebpackConfig({
     config,
     rootDir,
@@ -72,7 +70,7 @@ const start = async (
       [IMPORT_META_TARGET]: JSON.stringify(target),
       [IMPORT_META_RENDERER]: JSON.stringify('client'),
     },
-    getRoutePaths: () => getRoutePathsFromCache(dataCache),
+    getRoutesFile,
   }));
 
   const hooksAPI = {

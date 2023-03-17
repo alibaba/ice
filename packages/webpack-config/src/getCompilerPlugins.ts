@@ -47,7 +47,7 @@ function getCompilerPlugins(rootDir: string, config: Config, compiler: Compiler,
     cacheDir,
     polyfill,
     enableEnv,
-    getRoutePaths,
+    getRoutesFile,
   } = config;
   const compilerPlugins = [];
 
@@ -71,7 +71,7 @@ function getCompilerPlugins(rootDir: string, config: Config, compiler: Compiler,
       swcOptions,
       polyfill,
       enableEnv,
-      getRoutePaths,
+      getRoutesFile,
     }));
   }
 
