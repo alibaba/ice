@@ -1,6 +1,5 @@
 import type { ExpressRequestHandler, Middleware } from 'webpack-dev-server';
 import type { ServerContext, RenderMode } from '@ice/runtime';
-// @ts-expect-error FIXME: esm type error
 import matchRoutes from '@ice/runtime/matchRoutes';
 import type { TaskConfig } from 'build-scripts';
 import type { Config } from '@ice/webpack-config/types';
