@@ -34,7 +34,6 @@ const getMiniappTask = ({
   command,
   target,
   configAPI,
-  dataCache,
   runtimeDir,
   nativeConfig,
 }): Config => {
