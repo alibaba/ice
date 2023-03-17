@@ -25,10 +25,10 @@ export function getRoutesFile(routes: NestedRouteManifest[]): string[] {
   let fileList = [];
 
   routes.forEach(route => {
+    fileList.push(`src/pages/${route.file}`);
+
     if (route.children) {
       fileList = fileList.concat(getRoutesFile(route.children));
-    } else {
-      fileList.push(`src/pages/${route.file}`);
     }
   });
 
