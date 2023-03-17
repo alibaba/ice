@@ -10,7 +10,6 @@ import type { CreateLogger } from '../utils/logger.js';
 import type { DeclarationData, TargetDeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport, Render } from './generator.js';
 
 export type { CreateLoggerReturnType } from '../utils/logger.js';
-export type { DeclarationData } from './generator.js';
 
 type AddExport = (exportData: DeclarationData) => void;
 type AddTargetExport = (exportData: TargetDeclarationData) => void;

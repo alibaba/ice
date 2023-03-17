@@ -121,7 +121,7 @@ async function webpackCompiler(options: {
 
     // Add webpack plugin of data-loader.
     if (useDataLoader) {
-      const exportList = generator.getExportList('framework', target);
+      const frameworkExports = generator.getExportList('framework', target);
 
       webpackConfig.plugins.push(new DataLoaderPlugin({
         serverCompiler,
@@ -129,7 +129,7 @@ async function webpackCompiler(options: {
         rootDir,
         dataCache,
         getAllPlugin,
-        exportList,
+        frameworkExports,
       }));
     }
   }
