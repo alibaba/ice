@@ -59,7 +59,7 @@ describe('createElement', () => {
     const str = 'hello world';
 
     const FunctionComponent = ({ onDisappear }) => {
-      console.log(onDisappear);
+      expect(typeof onDisappear).toBe('function');
       return createElement('div');
     };
     render(createElement(
