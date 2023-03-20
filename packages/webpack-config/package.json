@@ -1,6 +1,6 @@
 {
   "name": "@ice/webpack-config",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "repository": "alibaba/ice",
   "bugs": "https://github.com/alibaba/ice/issues",
   "homepage": "https://v3.ice.work",
