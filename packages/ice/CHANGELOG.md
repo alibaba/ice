@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.1.4
+
+### Patch Changes
+
+- 4a73cb2a: fix: redirect request for data loader
+- 1ef827b1: fix: external node builtin modules
+- 4671cbe7: fix: resource should not run document render
+- Updated dependencies [4a73cb2a]
+  - @ice/webpack-config@1.0.10
+
 ## 3.1.3
 
 ### Patch Changes

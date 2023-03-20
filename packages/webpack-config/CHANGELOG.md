@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.10
+
+### Patch Changes
+
+- 4a73cb2a: fix: redirect named import
+
 ## 1.0.9
 
 ### Patch Changes
