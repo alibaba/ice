@@ -8,6 +8,7 @@ import dynamicImport from '../utils/dynamicImport.js';
 import formatPath from '../utils/formatPath.js';
 import { RUNTIME_TMP_DIR, CACHE_DIR } from '../constant.js';
 import { createLogger } from '../utils/logger.js';
+import externalBuiltinPlugin from '../esbuild/externalNodeBuiltin.js';
 
 type GetOutfile = (entry: string, exportNames: string[]) => string;
 
@@ -45,11 +46,12 @@ class Config {
       const { error } = await serverCompiler({
         entryPoints: [entry],
         format: 'esm',
-        platform: 'node',
-        // Don't add banner for config file, it will cause name conflict when bundled by server entry.
-        banner: undefined,
         outfile,
-        plugins: [removeTopLevelCode(keepExports, transformInclude)],
+        plugins: [
+          removeTopLevelCode(keepExports, transformInclude),
+          // External node builtin modules, such as `fs`, it will be imported by weex document.
+          externalBuiltinPlugin(),
+        ],
         sourcemap: false,
         logLevel: 'silent', // The main server compiler process will log it.
       }, {});
