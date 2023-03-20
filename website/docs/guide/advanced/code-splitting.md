@@ -1,10 +1,10 @@
 ---
-title: 代码分割
+title: 代码分包
 ---
 
 ## 默认策略
 
-为了给页面提供最优的性能，ice.js 默认以路由维度分割代码，每个路由会生成一个独立的 js 和 css（如果有 css 源码），另外默认会根据第三方模块体积自动拆分 chunks，有可能会出现多个 bundle。
+为了给页面提供最优的性能，ice.js 默认以路由维度分割代码，每个路由会生成一个独立的 js 和 css（如果有 css 源码），另外默认会根据第三方模块体积自动拆分 `chunk`，有可能会出现多个产物包。
 
 ## 组件级别的代码分割
 
@@ -20,13 +20,13 @@ export default function Home() {
     <div>
       <Avatar />
     </div>
-  )
+  );
 }
 ```
 
 ## 控制三方依赖的分包
 
-三方依赖默认根据体积大小进行拆分。如果三方依赖过多，在某些场景下可能出现较多的网络请求，导致页面加载速度过慢，可关闭 [splitChunks](../basic/config#codesplitting) 配置：
+三方依赖默认根据体积大小进行拆分。如果三方依赖过多，在某些场景下可能出现较多的网络请求，导致页面加载速度过慢，可关闭 [codeSplitting](../basic/config#codesplitting) 配置：
 
 ```ts title="ice.config.mts"
 import { defineConfig } from '@ice/app';

@@ -1,11 +1,7 @@
 ---
-title: Keep Alive
+title: 组件缓存
+order: 0600
 ---
-
-:::tip
-小程序端不支持该能力。
-:::
-
 <details open>
   <summary>示例</summary>
   <ul>

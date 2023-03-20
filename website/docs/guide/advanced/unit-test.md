@@ -1,5 +1,6 @@
 ---
 title: 单元测试
+order: 0401
 ---
 
 <details open>
@@ -141,7 +142,7 @@ export default function Header() {
 编写组件的测试用例：
 ```tsx title="tests/Header.spec.tsx"
 import { render, screen } from '@testing-library/react';
-import Header from '../src/components/Header';
+import Header from '@/components/Header';
 
 test('test Header component', () => {
   render(<Header />);
@@ -258,7 +259,7 @@ export default function Header() {
 ```tsx title="tests/Header.spec.tsx"
 import { test, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import Header from '../src/components/Header';
+import Header from '@/components/Header';
 
 test('test Header component', () => {
   render(<Header />);
