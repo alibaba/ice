@@ -268,6 +268,11 @@ class ServerRunner extends Runner {
             const bundlePath = await runtimeMeta.bundle(id);
             return { externalize: bundlePath };
           }
+
+          if (id.includes('runtimeModule')) {
+            console.log('code ===>', await transformJsxRuntime(code));
+          }
+
           return {
             code: await transformJsxRuntime(code),
           };
