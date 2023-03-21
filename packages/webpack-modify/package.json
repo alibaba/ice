@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@ice/webpack-config": "^1.0.0",
-    "webpack": "^5.73.0"
+    "webpack": "^5.76.2"
   },
   "scripts": {
     "watch": "tsc -w",

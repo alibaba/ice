@@ -84,6 +84,8 @@ class Runner {
 
     try {
       return await promise;
+    } catch (err) {
+      console.log('errr==>', id);
     } finally {
       mod.evaluated = true;
     }
