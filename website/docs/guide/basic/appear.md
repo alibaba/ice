@@ -39,7 +39,10 @@ export default function Home() {
 
 有时候我们只需要元素首次可见的时机，例如发送曝光埋点，我们可以通过实现一个 `useOnce` 的自定义 `hook` 来实现：
 
-```ts
+```ts title="src/pages/home.tsx"
+import { useState } from 'react';
+import VisibilityChange from '@ice/appear';
+
 // 示例代码
 function useOnce(fn) {
   const [called, setCalled] = useState(false);
@@ -70,7 +73,7 @@ export default function Index() {
 
 ## 当元素进入不可见状态时
 
-```jsx
+```jsx title="src/pages/home.tsx"
 import VisibilityChange from '@ice/appear';
 
 export default function Home() {
