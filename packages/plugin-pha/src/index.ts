@@ -102,7 +102,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
         getRoutesConfig,
         getDataloaderConfig,
         parseOptions: {
-
+          excuteServerEntry,
           publicPath,
           urlPrefix,
           template,

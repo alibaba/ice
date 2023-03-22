@@ -287,7 +287,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const renderStart = new Date().getTime();
   generator.render();
   logger.debug('template render cost:', new Date().getTime() - renderStart);
-  if (server.onDemand) {
+  if (server.onDemand && command === 'start') {
     serverRunner = new ServerRunner({
       rootDir,
       task: platformTaskConfig,

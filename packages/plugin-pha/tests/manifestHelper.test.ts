@@ -599,7 +599,7 @@ describe('get multiple manifest', async () => {
     publicPath: 'https://cdn-path.com/',
     urlPrefix: 'https://url-prefix.com/',
     routesConfig: (await import(path.join(__dirname, './mockConfig.mjs')))?.default,
-    excuteServerEntry: () => mockServer,
+    excuteServerEntry: async () => mockServer,
     routeManifest: path.join(__dirname, './route-manifest.json'),
   };
 
