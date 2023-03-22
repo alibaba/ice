@@ -21,7 +21,7 @@ import { setEnv, updateRuntimeEnv, getCoreEnvKeys } from './utils/runtimeEnv.js'
 import getRuntimeModules from './utils/getRuntimeModules.js';
 import { generateRoutesInfo, getRoutesDefination } from './routes.js';
 import * as config from './config.js';
-import { RUNTIME_TMP_DIR, WEB, RUNTIME_EXPORTS } from './constant.js';
+import { RUNTIME_TMP_DIR, WEB, RUNTIME_EXPORTS, SERVER_ENTRY } from './constant.js';
 import createSpinner from './utils/createSpinner.js';
 import ServerCompileTask from './utils/ServerCompileTask.js';
 import { getAppExportConfig, getRouteExportConfig } from './service/config.js';
@@ -31,6 +31,7 @@ import { getFileHash } from './utils/hash.js';
 import { logger, createLogger } from './utils/logger.js';
 import ServerRunner from './service/ServerRunner.js';
 import RouteManifest from './utils/routeManifest.js';
+import dynamicImport from './utils/dynamicImport.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -114,8 +115,29 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     },
     render: generator.render,
   };
-
+  // Store server runner for plugins.
+  let serverRunner: ServerRunner;
   const serverCompileTask = new ServerCompileTask();
+
+  async function excuteServerEntry() {
+    try {
+      if (serverRunner) {
+        return serverRunner.run(SERVER_ENTRY);
+      } else {
+        const { error, serverEntry } = await serverCompileTask.get();
+        if (error) {
+          logger.error('Server compile error:', error);
+          return;
+        }
+        delete require.cache[serverEntry];
+        return await dynamicImport(serverEntry);
+      }
+    } catch (err) {
+      // make error clearly, notice typeof err === 'string'
+      logger.error('Excute server entry error:', err);
+      return;
+    }
+  }
 
   const { target = WEB } = commandArgs;
   const plugins = [];
@@ -144,6 +166,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       },
       getRouteManifest: () => routeManifest.getNestedRoute(),
       getFlattenRoutes: () => routeManifest.getFlattenRoute(),
+      excuteServerEntry,
       context: {
         webpack,
       },
@@ -264,8 +287,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const renderStart = new Date().getTime();
   generator.render();
   logger.debug('template render cost:', new Date().getTime() - renderStart);
-  // Create server runner
-  let serverRunner: ServerRunner;
   if (server.onDemand) {
     serverRunner = new ServerRunner({
       rootDir,
@@ -323,11 +344,11 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             getRoutesConfig,
             getDataloaderConfig,
             getAppConfig,
-            serverRunner,
             appConfig,
             devPath: (routePaths[0] || '').replace(/^[/\\]/, ''),
             spinner: buildSpinner,
             userConfigHash,
+            serverRunner,
           });
         } else if (command === 'build') {
           return await build(ctx, {

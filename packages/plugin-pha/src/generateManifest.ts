@@ -14,7 +14,6 @@ export interface Options {
   getAppConfig: GetAppConfig;
   getRoutesConfig: GetRoutesConfig;
   getDataloaderConfig: GetDataloaderConfig;
-  compileTask?: () => ReturnType<ServerCompiler>;
   getAllPlugin: Context['getAllPlugin'];
   logger?: CreateLoggerReturnType;
 }

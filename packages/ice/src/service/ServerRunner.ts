@@ -269,10 +269,6 @@ class ServerRunner extends Runner {
             return { externalize: bundlePath };
           }
 
-          if (id.includes('runtimeModule')) {
-            console.log('code ===>', await transformJsxRuntime(code));
-          }
-
           return {
             code: await transformJsxRuntime(code),
           };

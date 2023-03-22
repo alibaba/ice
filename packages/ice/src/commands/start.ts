@@ -16,7 +16,6 @@ import webpackCompiler from '../service/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import prepareURLs from '../utils/prepareURLs.js';
 import createRenderMiddleware from '../middlewares/renderMiddleware.js';
-import createOnDemandMiddleware from '../middlewares/renderOnDemand.js';
 import createMockMiddleware from '../middlewares/mock/createMiddleware.js';
 import getRouterBasename from '../utils/getRouterBasename.js';
 import { getExpandedEnvs } from '../utils/runtimeEnv.js';
@@ -52,8 +51,8 @@ const start = async (
     getRoutesConfig,
     getDataloaderConfig,
     userConfigHash,
-    serverRunner,
     routeManifest,
+    serverRunner,
   } = options;
   const { commandArgs, rootDir } = context;
   const { target = WEB } = commandArgs;
@@ -73,10 +72,10 @@ const start = async (
 
   const hooksAPI = {
     serverCompiler,
-    serverRunner,
     getAppConfig,
     getRoutesConfig,
     getDataloaderConfig,
+    serverRunner,
   };
 
   const useDevServer = taskConfigs.reduce((prev, curr) => prev || curr.config.useDevServer, false);
@@ -112,7 +111,6 @@ interface StartDevServerOptions {
     getAppConfig: GetAppConfig;
     getRoutesConfig: GetRoutesConfig;
     getDataloaderConfig: GetDataloaderConfig;
-    serverRunner?: ServerRunner;
   };
   appConfig: AppConfig;
   devPath: string;
@@ -128,9 +126,9 @@ async function startDevServer({
   devPath,
   routeManifest,
 }: StartDevServerOptions): Promise<{ compiler: Compiler; devServer: WebpackDevServer }> {
-  const { commandArgs, userConfig, rootDir, applyHook, extendsPluginAPI: { serverCompileTask } } = context;
+  const { commandArgs, userConfig, rootDir, applyHook, extendsPluginAPI: { excuteServerEntry } } = context;
   const { ssg, ssr } = userConfig;
-  const { getAppConfig, serverRunner } = hooksAPI;
+  const { getAppConfig } = hooksAPI;
   const webTaskConfig = taskConfigs.find(({ name }) => name === WEB);
   const customMiddlewares = webpackConfigs[0].devServer?.setupMiddlewares;
   // Get the value of the host and port from the command line, environment variables, and webpack config.
@@ -166,15 +164,10 @@ async function startDevServer({
         userConfig,
         routeManifest,
       };
-      const serverRenderMiddleware = serverRunner
-        ? createOnDemandMiddleware({
-          ...middlewareOptions,
-          serverRunner,
-        })
-        : createRenderMiddleware({
-          ...middlewareOptions,
-          serverCompileTask,
-        });
+      const serverRenderMiddleware = createRenderMiddleware({
+        ...middlewareOptions,
+        excuteServerEntry,
+      });
       // @ts-ignore
       const insertIndex = middlewares.findIndex(({ name }) => name === 'serve-index');
       middlewares.splice(

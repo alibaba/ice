@@ -2,6 +2,7 @@ import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { expect, it, describe } from 'vitest';
 import { transformManifestKeys, parseManifest, getAppWorkerUrl, rewriteAppWorker, getMultipleManifest } from '../src/manifestHelpers';
+import * as mockServer from './mockServer.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -255,7 +256,7 @@ describe('parse manifest', async () => {
     publicPath: 'https://cdn-path.com/',
     urlPrefix: 'https://url-prefix.com/',
     routesConfig: (await import(path.join(__dirname, './mockConfig.mjs')))?.default,
-    serverEntry: path.join(__dirname, './mockServer.mjs'),
+    excuteServerEntry: async () => mockServer,
     routeManifest: path.join(__dirname, './route-manifest.json'),
   };
 
@@ -598,7 +599,7 @@ describe('get multiple manifest', async () => {
     publicPath: 'https://cdn-path.com/',
     urlPrefix: 'https://url-prefix.com/',
     routesConfig: (await import(path.join(__dirname, './mockConfig.mjs')))?.default,
-    serverEntry: path.join(__dirname, './mockServer.mjs'),
+    excuteServerEntry: () => mockServer,
     routeManifest: path.join(__dirname, './route-manifest.json'),
   };
 
