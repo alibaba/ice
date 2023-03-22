@@ -1,4 +1,3 @@
-import { createRequire } from 'module';
 import type { ExpressRequestHandler, Middleware } from 'webpack-dev-server';
 import type { ServerContext, RenderMode } from '@ice/runtime';
 // @ts-expect-error FIXME: esm type error
@@ -9,10 +8,7 @@ import type { ExtendsPluginAPI } from '../types/plugin.js';
 import getRouterBasename from '../utils/getRouterBasename.js';
 import warnOnHashRouterEnabled from '../utils/warnOnHashRouterEnabled.js';
 import type { UserConfig } from '../types/userConfig.js';
-import { logger } from '../utils/logger.js';
 import type RouteManifest from '../utils/routeManifest.js';
-
-const require = createRequire(import.meta.url);
 
 interface Options {
   excuteServerEntry: ExtendsPluginAPI['excuteServerEntry'];

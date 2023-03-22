@@ -2,7 +2,6 @@ import * as path from 'path';
 import type { ServerResponse } from 'http';
 import * as fs from 'fs';
 import type { ExpressRequestHandler } from 'webpack-dev-server';
-import consola from 'consola';
 import { getCompilerConfig } from './constants.js';
 import { parseManifest, rewriteAppWorker, getAppWorkerUrl, getMultipleManifest, type ParseOptions } from './manifestHelpers.js';
 import { getAppWorkerContent, type Options } from './generateManifest.js';
