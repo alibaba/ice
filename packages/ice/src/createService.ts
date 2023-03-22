@@ -130,7 +130,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
           return;
         }
         delete require.cache[serverEntry];
-        return await dynamicImport(serverEntry);
+        return await dynamicImport(serverEntry, true);
       }
     } catch (err) {
       // make error clearly, notice typeof err === 'string'
