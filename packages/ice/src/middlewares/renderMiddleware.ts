@@ -1,4 +1,3 @@
-import { createRequire } from 'module';
 import type { ExpressRequestHandler, Middleware } from 'webpack-dev-server';
 import type { ServerContext, RenderMode } from '@ice/runtime';
 // @ts-expect-error FIXME: esm type error
@@ -7,16 +6,12 @@ import type { TaskConfig } from 'build-scripts';
 import type { Config } from '@ice/webpack-config/types';
 import type { ExtendsPluginAPI } from '../types/plugin.js';
 import getRouterBasename from '../utils/getRouterBasename.js';
-import dynamicImport from '../utils/dynamicImport.js';
 import warnOnHashRouterEnabled from '../utils/warnOnHashRouterEnabled.js';
 import type { UserConfig } from '../types/userConfig.js';
-import { logger } from '../utils/logger.js';
 import type RouteManifest from '../utils/routeManifest.js';
 
-const require = createRequire(import.meta.url);
-
 interface Options {
-  serverCompileTask: ExtendsPluginAPI['serverCompileTask'];
+  excuteServerEntry: ExtendsPluginAPI['excuteServerEntry'];
   getAppConfig: () => Promise<any>;
   userConfig: UserConfig;
   documentOnly?: boolean;
@@ -29,7 +24,7 @@ export default function createRenderMiddleware(options: Options): Middleware {
   const {
     documentOnly,
     renderMode,
-    serverCompileTask,
+    excuteServerEntry,
     getAppConfig,
     taskConfig,
     userConfig,
@@ -46,30 +41,17 @@ export default function createRenderMiddleware(options: Options): Middleware {
     const isStaticResources = /\.(js|mjs|map|json|png|jpg|jpeg|gif|svg|eot|woff2|ttf)$/;
     // When documentOnly is true, it means that the app is CSR and it should return the html.
     if (matches.length || documentOnly || !isStaticResources) {
-      // Wait for the server compilation to finish
-      const { serverEntry, error } = await serverCompileTask.get();
-      if (error) {
-        logger.error('Server compile error in render middleware.');
-        return;
+      const serverModule = await excuteServerEntry();
+      if (serverModule) {
+        const requestContext: ServerContext = {
+          req,
+          res,
+        };
+        serverModule.renderToResponse(requestContext, {
+          renderMode,
+          documentOnly,
+        });
       }
-      let serverModule;
-      try {
-        delete require.cache[serverEntry];
-        serverModule = await dynamicImport(serverEntry, true);
-      } catch (err) {
-        // make error clearly, notice typeof err === 'string'
-        logger.error(`import ${serverEntry} error: ${err}`);
-        return;
-      }
-      const requestContext: ServerContext = {
-        req,
-        res,
-      };
-
-      serverModule.renderToResponse(requestContext, {
-        renderMode,
-        documentOnly,
-      });
     } else {
       next();
     }
