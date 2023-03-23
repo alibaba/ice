@@ -31,7 +31,7 @@ const plugin: Plugin<PluginOptions> = ({ type, library }) => ({
       });
       generator.addEntryCode(() => {
         return `let root;
-if (!window.ICESTARK?.root) {
+if (!window.ICESTARK?.root && !window.__POWERED_BY_QIANKUN__) {
   root = render();
 }
 
@@ -46,7 +46,18 @@ export async function mount(props) {
   if (!root) {
     // When app mount in qiankun, do not use props passed by.
     // Props of container if conflict with render node in ice, it may cause node overwritten.
-    const runtimeOptions = props.singleSpa ? {} : props;
+    let runtimeOptions = props;
+    if (props.singleSpa) {
+      const iceContainer = props.container?.querySelector('#ice-container');
+      if (iceContainer) {
+        runtimeOptions = {...props, container: iceContainer };
+      } else {
+        const ele = document.createElement('div');
+        ele.id = 'ice-container';
+        props.container.appendChild(ele);
+        runtimeOptions = {...props, container: ele };
+      }
+    }
     root = render({ runtimeOptions });
   }
   await root;
