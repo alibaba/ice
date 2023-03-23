@@ -44,13 +44,18 @@ export async function mount(props) {
   await app?.icestark?.mount?.(props);
   // Avoid remount when app mount in other micro app framework.
   if (!root) {
-    root = render({ runtimeOptions: props });
+    // When app mount in qiankun, do not use props passed by.
+    // Props of container if conflict with render node in ice, it may cause node overwritten.
+    const runtimeOptions = props.singleSpa ? {} : props;
+    root = render({ runtimeOptions });
   }
   await root;
 }
 export async function unmount(props) {
   root?.then((res) => res.unmount());
   await app?.icestark?.unmount?.(props);
+  // Reset root to null when app unmount.
+  root = null;
 }`;
 });
     } else {
