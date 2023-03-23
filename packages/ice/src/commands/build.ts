@@ -19,6 +19,7 @@ import generateEntry from '../utils/generateEntry.js';
 import { logger } from '../utils/logger.js';
 import { getExpandedEnvs } from '../utils/runtimeEnv.js';
 import type RouteManifest from '../utils/routeManifest.js';
+import injectInitialEntry from '../utils/injectInitialEntry.js';
 
 const build = async (
   context: Context<Config, ExtendsPluginAPI>,
@@ -156,20 +157,7 @@ const build = async (
   output.paths = [...outputPaths];
 
   if (routeType === 'memory' && userConfig?.routes?.injectInitialEntry) {
-    // Read the latest routes info.
-    const routePaths = routeManifest.getFlattenRoute();
-    routePaths.forEach((routePath) => {
-      // Inject `initialPath` when router type is memory.
-      const routeAssetPath = path.join(outputDir, 'js',
-        `p_${routePath === '/' ? 'index' : routePath.replace(/^\//, '').replace(/\//g, '-')}.js`);
-      if (fse.existsSync(routeAssetPath)) {
-        fse.writeFileSync(routeAssetPath,
-          `window.__ICE_APP_CONTEXT__=Object.assign(window.__ICE_APP_CONTEXT__||{}, {routePath: '${routePath}'});${
-            fse.readFileSync(routeAssetPath, 'utf-8')}`);
-      } else {
-        logger.warn(`Can not find ${routeAssetPath} when inject initial path.`);
-      }
-    });
+    injectInitialEntry(routeManifest, outputDir);
   }
 
   await applyHook('after.build.compile', {
