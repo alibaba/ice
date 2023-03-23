@@ -48,7 +48,7 @@ const build = async (
     userConfig,
     routeManifest,
   } = options;
-  const { applyHook, commandArgs, rootDir } = context;
+  const { applyHook, commandArgs, rootDir, extendsPluginAPI: { serverCompileTask } } = context;
   const { target = WEB } = commandArgs;
 
   if (appConfig?.router?.type === 'hash') {
@@ -137,15 +137,15 @@ const build = async (
   if (ssg) {
     renderMode = 'SSG';
   }
-  const serverOutfile = path.join(outputDir, SERVER_OUTPUT_DIR, `index${userConfig?.server?.format === 'esm' ? '.mjs' : '.cjs'}`);
-  serverEntryRef.current = serverOutfile;
+  const { serverEntry } = await serverCompileTask.get();
+  serverEntryRef.current = serverEntry;
   const routeType = appConfig?.router?.type;
   const {
     outputPaths = [],
   } = await generateEntry({
     rootDir,
     outputDir,
-    entry: serverOutfile,
+    entry: serverEntry,
     // only ssg need to generate the whole page html when build time.
     documentOnly: !ssg,
     renderMode,
