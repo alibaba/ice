@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useEffect, useState } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { createHashHistory, createBrowserHistory, createMemoryHistory } from 'history';
 import type { HashHistory, BrowserHistory, Action, Location, MemoryHistory } from 'history';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import type {
   AppContext, WindowContext, AppExport, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
   RouteWrapperConfig, RuntimeModules, RouteMatch, RouteModules, AppConfig, AssetsManifest,
@@ -99,33 +100,13 @@ export default async function runClientApp(options: RunClientAppOptions) {
     appData = await getAppData(app, requestContext);
   }
 
-  const matches = matchRoutes(
-    routes,
-    memoryRouter ? routePath : history.location,
-    formattedBasename,
-  );
-  const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
-  if (Object.keys(routeModules).length === 0) {
-    // Log route info for debug.
-    console.warn('Routes:', routes, 'Basename:', formattedBasename);
-  }
-  if (!routesData) {
-    routesData = await loadRoutesData(matches, requestContext, routeModules, {
-      ssg: renderMode === 'SSG',
-    });
-  }
-
-  if (!routesConfig) {
-    routesConfig = getRoutesConfig(matches, routesData, routeModules);
-  }
-
   if (hydrate && !downgrade && !documentOnly) {
     runtime.setRender((container, element) => {
       return ReactDOM.hydrateRoot(container, element);
     });
   }
   // Reset app context after app context is updated.
-  runtime.setAppContext({ ...appContext, matches, routeModules, routesData, routesConfig, appData });
+  runtime.setAppContext({ ...appContext, appData });
   if (runtimeModules.commons) {
     await Promise.all(runtimeModules.commons.map(m => runtime.loadModule(m)).filter(Boolean));
   }
@@ -140,7 +121,7 @@ interface RenderOptions {
 
 async function render({ history, runtime }: RenderOptions) {
   const appContext = runtime.getAppContext();
-  const { appConfig, appData } = appContext;
+  const { appConfig, appData, routes } = appContext;
   const appRender = runtime.getRender();
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
   const RouteWrappers = runtime.getWrappers();
@@ -154,17 +135,14 @@ async function render({ history, runtime }: RenderOptions) {
     document.body.appendChild(root);
     console.warn(`Root node #${rootId} is not found, current root is automatically created by the framework.`);
   }
+  // @ts-ignore
+  const router = createBrowserRouter(routes);
 
   return appRender(
     root,
     <AppDataProvider value={appData}>
       <AppRuntimeProvider>
-        <BrowserEntry
-          history={history}
-          appContext={appContext}
-          RouteWrappers={RouteWrappers}
-          AppRouter={AppRouter}
-        />
+        <RouterProvider router={router} fallbackElement={<p>Loading...</p>} />
       </AppRuntimeProvider>
     </AppDataProvider>,
   );

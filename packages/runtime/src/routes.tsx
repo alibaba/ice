@@ -6,7 +6,7 @@ import RouteWrapper from './RouteWrapper.js';
 import { useAppContext } from './AppContext.js';
 import { callDataLoader } from './dataLoader.js';
 
-type RouteModule = Pick<RouteItem, 'id' | 'load'>;
+type RouteModule = Pick<RouteItem, 'id' | 'load' | 'lazy'>;
 
 export function getRoutesPath(routes: RouteItem[], parentPath = ''): string[] {
   let paths = [];
@@ -23,7 +23,8 @@ export function getRoutesPath(routes: RouteItem[], parentPath = ''): string[] {
 }
 
 export async function loadRouteModule(route: RouteModule, routeModulesCache: RouteModules) {
-  const { id, load } = route;
+  console.log('routerouteroute ==>', route);
+  const { id, load, lazy } = route;
   if (
     typeof window !== 'undefined' && // Don't use module cache and should load again in ssr. Ref: https://github.com/ice-lab/ice-next/issues/82
     id in routeModulesCache
@@ -32,7 +33,8 @@ export async function loadRouteModule(route: RouteModule, routeModulesCache: Rou
   }
 
   try {
-    const routeModule = await load();
+    const routeModule = lazy ? await lazy() : await load();
+    console.log('routeModule ==>', routeModule);
     routeModulesCache[id] = routeModule;
     return routeModule;
   } catch (error) {
@@ -168,7 +170,8 @@ export function createRouteElements(
 export function RouteComponent({ id }: { id: string }) {
   // get current route component from latest routeModules
   const { routeModules } = useAppContext();
-  const { default: Component } = routeModules[id] || {};
+  // @ts-ignore
+  const { Component } = routeModules[id] || {};
   if (process.env.NODE_ENV === 'development') {
     if (!Component) {
       throw new Error(

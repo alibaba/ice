@@ -1,12 +1,14 @@
 import * as React from 'react';
+import { useLoaderData } from 'react-router-dom';
 import type { RouteData, RouteConfig } from './types.js';
 
 const DataContext = React.createContext<RouteData | undefined>(undefined);
 DataContext.displayName = 'Data';
 
 function useData<T = any>(): T {
-  const value = React.useContext(DataContext);
-  return value;
+  const data = useLoaderData();
+  console.log('data ==>', data);
+  return (data as any).data;
 }
 const DataProvider = DataContext.Provider;
 
@@ -14,8 +16,9 @@ const ConfigContext = React.createContext<RouteConfig<any> | undefined>(undefine
 ConfigContext.displayName = 'Config';
 
 function useConfig<T = {}>(): RouteConfig<T> {
-  const value = React.useContext(ConfigContext);
-  return value;
+  const data = useLoaderData();
+  console.log('pageConfig ==>', data);
+  return (data as any).pageConfig;
 }
 const ConfigProvider = ConfigContext.Provider;
 

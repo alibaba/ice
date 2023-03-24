@@ -47,7 +47,7 @@ interface RenderOptions {
 export async function renderToHTML(requestContext, options: RenderOptions = {}) {
   const { renderMode = 'SSR' } = options;
   setRuntimeEnv(renderMode);
-  
+
   const mergedOptions = mergeOptions(options);
   return await runtime.renderToHTML(requestContext, mergedOptions);
 }
@@ -55,7 +55,7 @@ export async function renderToHTML(requestContext, options: RenderOptions = {}) 
 export async function renderToResponse(requestContext, options: RenderOptions = {}) {
   const { renderMode = 'SSR' } = options;
   setRuntimeEnv(renderMode);
-  
+
   const mergedOptions = mergeOptions(options);
   return runtime.renderToResponse(requestContext, mergedOptions);
 }

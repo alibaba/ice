@@ -9,11 +9,12 @@ interface Location {
  * context for getData both in server and client side.
  */
 export default function getRequestContext(location: Location, serverContext: ServerContext = {}): RequestContext {
+  console.log('loaction ==>', location);
   const { pathname, search } = location;
   const query = parseSearch(search);
 
   const requestContext: RequestContext = {
-    ...serverContext,
+    ...(serverContext || {}),
     pathname,
     query,
   };

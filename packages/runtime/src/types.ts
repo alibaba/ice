@@ -131,6 +131,7 @@ export interface RouteItem {
   exact?: boolean;
   strict?: boolean;
   load?: () => Promise<RouteComponent>;
+  lazy?: () => Promise<any>;
   children?: RouteItem[];
   layout?: boolean;
 }

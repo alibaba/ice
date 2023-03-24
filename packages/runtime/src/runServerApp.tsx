@@ -3,6 +3,7 @@ import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { Action, parsePath } from 'history';
 import type { Location } from 'history';
+import { createStaticRouter, StaticRouterProvider } from 'react-router-dom/server.mjs';
 import type {
   AppContext, RouteItem, ServerContext,
   AppExport, AssetsManifest,
@@ -19,7 +20,7 @@ import { AppContextProvider } from './AppContext.js';
 import { AppDataProvider, getAppData } from './AppData.js';
 import getAppConfig from './appConfig.js';
 import { DocumentContextProvider } from './Document.js';
-import { loadRouteModules, loadRoutesData, getRoutesConfig } from './routes.js';
+import { loadRouteModules, loadRoutesData, getRoutesConfig, RouteComponent } from './routes.js';
 import { pipeToString, renderToNodeStream } from './server/streamRender.js';
 import { createStaticNavigator } from './server/navigator.js';
 import type { NodeWritablePiper } from './server/streamRender.js';
@@ -243,12 +244,29 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
   } else if (!matches.length) {
     return render404();
   }
-
+  console.log(matches);
   try {
-    const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
-    const routesData = await loadRoutesData(matches, requestContext, routeModules, { renderMode });
-    const routesConfig = getRoutesConfig(matches, routesData, routeModules);
-    runtime.setAppContext({ ...appContext, routeModules, routesData, routesConfig, routePath, matches, appData });
+    const routeModules = await loadRouteModules(matches.map(({ route: { id, load, lazy } }) => ({ id, load, lazy })));
+    const routesData = {};
+    const routesConfig = {};
+    const loaderData = {};
+    for (const routeId in routeModules) {
+      const { loader } = routeModules[routeId];
+      if (loader) {
+        const { data, pageConfig } = await loader(location, requestContext);
+        loaderData[routeId] = {
+          data,
+          pageConfig,
+        };
+        routesData[routeId] = data;
+        routesConfig[routeId] = pageConfig;
+      }
+    }
+    console.log('initialdata ==>', routesData, routesConfig);
+    // const routesData = await loadRoutesData(matches, requestContext, routeModules, { renderMode });
+    // const routesConfig = getRoutesConfig(matches, routesData, routeModules);
+    // @ts-ignore loaderData
+    runtime.setAppContext({ ...appContext, routeModules, loaderData, routesData, routesConfig, routePath, matches, appData });
     if (runtimeModules.commons) {
       await Promise.all(runtimeModules.commons.map(m => runtime.loadModule(m)).filter(Boolean));
     }
@@ -283,6 +301,27 @@ interface RenderServerEntry {
   renderOptions: RenderOptions;
 }
 
+function createServerRoutes(routes, routeModules) {
+  return routes.map((route) => {
+    let dataRoute = {
+      element: <RouteComponent id={route.id} />,
+      id: route.id,
+      index: route.index,
+      path: route.path,
+    };
+
+    if (route?.children?.length > 0) {
+      let children = createServerRoutes(
+        routes.children,
+        routeModules,
+      );
+      // @ts-ignore
+      dataRoute.children = children;
+    }
+    return dataRoute;
+  });
+}
+
 /**
  * Render App by SSR.
  */
@@ -296,21 +335,32 @@ async function renderServerEntry(
 ): Promise<RenderResult> {
   const { Document } = renderOptions;
   const appContext = runtime.getAppContext();
-  const { appData, routePath } = appContext;
+  // @ts-ignore
+  const { appData, routePath, routeModules, loaderData } = appContext;
   const staticNavigator = createStaticNavigator();
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
   const RouteWrappers = runtime.getWrappers();
   const AppRouter = runtime.getAppRouter();
-
+  let routes = createServerRoutes(
+    appContext.routes,
+    routeModules,
+  );
+  const context = {
+    matches,
+    basemane: appContext.basename,
+    location,
+    loaderData,
+  };
+  const router = createStaticRouter(routes, context);
+  console.log('router ==>', router);
   const documentContext = {
-    main: <App
-      action={Action.Pop}
-      location={location}
-      navigator={staticNavigator}
-      static
-      RouteWrappers={RouteWrappers}
-      AppRouter={AppRouter}
-    />,
+    main: (
+      <StaticRouterProvider
+        router={router}
+        context={context}
+        hydrate={false}
+      />
+    ),
   };
 
   const element = (

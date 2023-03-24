@@ -68,8 +68,18 @@ export function getRoutesDefination(nestRouteManifest: NestedRouteManifest[], la
     }
     const routeProperties: string[] = [
       `path: '${formatPath(routePath || '')}',`,
-      `load: () => ${loadStatement},`,
-      `componentName: '${componentName}',`,
+      `async lazy() {
+        const module = await ${loadStatement};
+        return {
+          Component: module.default,
+          loader: async (location, requestContext) => {
+            const data = module.dataLoader ? await callDataLoader(module.dataLoader, getRequestContext(location || window.location, requestContext)) : null;
+            const pageConfig = module.pageConfig ? module.pageConfig(data) : {};
+            return { data, pageConfig };
+          },
+        };
+      },`,
+      // `componentName: '${componentName}',`,
       `index: ${index},`,
       `id: '${id}',`,
       'exact: true,',

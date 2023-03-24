@@ -42,7 +42,8 @@ import type {
   DataType,
   MainType,
 } from './Document.js';
-import dataLoader, { defineDataLoader, defineServerDataLoader, defineStaticDataLoader } from './dataLoader.js';
+import dataLoader, { defineDataLoader, defineServerDataLoader, defineStaticDataLoader, callDataLoader } from './dataLoader.js';
+import getRequestContext from './requestContext.js';
 import AppRouter from './AppRouter.js';
 import AppErrorBoundary from './AppErrorBoundary.js';
 import getAppConfig, { defineAppConfig } from './appConfig.js';
@@ -76,7 +77,10 @@ export {
   Scripts,
   Data,
   Main,
+  // API for data-loader.
   dataLoader,
+  callDataLoader,
+  getRequestContext,
   // react-router-dom API
   Link,
   Outlet,
