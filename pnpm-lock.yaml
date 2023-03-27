@@ -564,12 +564,14 @@ importers:
       moment: ^2.29.4
       react: ^18.0.0
       react-dom: ^18.0.0
+      react-intl: ^6.3.2
     dependencies:
       '@alifd/next': 1.26.2_jb42yyeu5qxbfieyxjks6malva
       '@ice/runtime': link:../../packages/runtime
       moment: 2.29.4
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      react-intl: 6.3.2_react@18.2.0
     devDependencies:
       '@ice/app': link:../../packages/ice
       '@ice/plugin-css-assets-local': link:../../packages/plugin-css-assets-local

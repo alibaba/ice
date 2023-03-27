@@ -1,12 +1,11 @@
 import { Outlet } from 'ice';
 import { useState } from 'react';
-import { IntlProvider } from 'react-intl';
+import { IntlProvider, FormattedMessage } from 'react-intl';
 import { ConfigProvider, Radio } from 'antd';
 import type { RadioChangeEvent } from 'antd';
 import enUS from 'antd/locale/en_US';
 import zhCN from 'antd/locale/zh_CN';
 import type { Locale } from 'antd/es/locale';
-import { FormattedMessage } from 'react-intl';
 
 import * as dayjs from 'dayjs';
 import { messages } from '@/locales';
