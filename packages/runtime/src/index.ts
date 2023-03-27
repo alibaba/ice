@@ -20,7 +20,6 @@ import type {
   RouteWrapperConfig,
 } from './types.js';
 import Runtime from './runtime.js';
-import App from './App.js';
 import runClientApp from './runClientApp.js';
 import type { RunClientAppOptions } from './runClientApp.js';
 import { useAppContext, AppContextProvider } from './AppContext.js';
@@ -52,12 +51,12 @@ import KeepAliveOutlet from './KeepAliveOutlet.js';
 import ClientOnly from './ClientOnly.js';
 import useMounted from './useMounted.js';
 import { withSuspense, useSuspenseData } from './Suspense.js';
+import { createRouteLoader } from './routes.js';
 
 export {
   getAppConfig,
   defineAppConfig,
   Runtime,
-  App,
   runClientApp,
   AppContextProvider,
   useAppContext,
@@ -97,6 +96,8 @@ export {
 
   withSuspense,
   useSuspenseData,
+
+  createRouteLoader,
 };
 
 export type {

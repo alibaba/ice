@@ -8,7 +8,7 @@ import Document from '@/document';
 import type { RenderMode, DistType } from '@ice/runtime';
 // @ts-ignore
 import assetsManifest from 'virtual:assets-manifest.json';
-import routes from './routes';
+import createRoutes from './routes';
 import routesConfig from './routes-config.bundle.mjs';
 <% if(dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
 <%- runtimeOptions.imports %>
@@ -80,7 +80,7 @@ function mergeOptions(options) {
   return {
     app,
     assetsManifest,
-    routes,
+    createRoutes,
     runtimeModules,
     Document,
     serverOnlyBasename,

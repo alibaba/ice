@@ -69,17 +69,19 @@ export function getRoutesDefination(nestRouteManifest: NestedRouteManifest[], la
     const routeProperties: string[] = [
       `path: '${formatPath(routePath || '')}',`,
       `async lazy() {
-        const module = await ${loadStatement};
+        const componentModule = await ${loadStatement};
+        const loader = createRouteLoader({
+          routeId: '${id}',
+          requestContext,
+          renderMode,
+          module: componentModule,
+        });
         return {
-          Component: module.default,
-          loader: async (location, requestContext) => {
-            const data = module.dataLoader ? await callDataLoader(module.dataLoader, getRequestContext(location || window.location, requestContext)) : null;
-            const pageConfig = module.pageConfig ? module.pageConfig(data) : {};
-            return { data, pageConfig };
-          },
+          Component: componentModule.default,
+          loader,
         };
       },`,
-      // `componentName: '${componentName}',`,
+      `componentName: '${componentName}',`,
       `index: ${index},`,
       `id: '${id}',`,
       'exact: true,',

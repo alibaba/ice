@@ -12,7 +12,7 @@ interface Props {
 
 export default function RouteWrapper(props: Props) {
   const { wrappers = [], id, isLayout } = props;
-  const { routesData, routesConfig } = useAppContext();
+  const { loaderData } = useAppContext();
   // layout should only be wrapped by Wrapper with `layout: true`
   const filtered = isLayout ? wrappers.filter(wrapper => wrapper.layout === true) : wrappers;
   const RouteWrappers = filtered.map(item => item.Wrapper);
@@ -29,11 +29,5 @@ export default function RouteWrapper(props: Props) {
     element = props.children;
   }
 
-  return (
-    <DataProvider value={routesData[id]}>
-      <ConfigProvider value={routesConfig[id]}>
-        {element}
-      </ConfigProvider>
-    </DataProvider>
-  );
+  return element;
 }

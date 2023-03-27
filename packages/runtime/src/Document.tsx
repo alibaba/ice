@@ -27,8 +27,8 @@ interface MetaProps extends React.HTMLAttributes<HTMLMetaElement>{
 export type MetaType = (props: MetaProps) => JSX.Element;
 
 export const Meta: MetaType = (props: MetaProps) => {
-  const { matches, routesConfig } = useAppContext();
-  const meta = getMeta(matches, routesConfig);
+  const { matches, loaderData } = useAppContext();
+  const meta = getMeta(matches, loaderData);
   const {
     MetaElement = 'meta',
   } = props;
@@ -48,8 +48,8 @@ interface TitleProps extends React.HTMLAttributes<HTMLTitleElement>{
 export type TitleType = (props: TitleProps) => JSX.Element;
 
 export const Title: TitleType = (props: TitleProps) => {
-  const { matches, routesConfig } = useAppContext();
-  const title = getTitle(matches, routesConfig);
+  const { matches, loaderData } = useAppContext();
+  const title = getTitle(matches, loaderData);
   const {
     TitleElement = 'title',
     ...rest
@@ -67,13 +67,13 @@ interface LinksProps extends React.LinkHTMLAttributes<HTMLLinkElement>{
 export type LinksType = (props: LinksProps) => JSX.Element;
 
 export const Links: LinksType = (props: LinksProps) => {
-  const { routesConfig, matches, assetsManifest } = useAppContext();
+  const { loaderData, matches, assetsManifest } = useAppContext();
   const {
     LinkElement = 'link',
     ...rest
   } = props;
 
-  const routeLinks = getLinks(matches, routesConfig);
+  const routeLinks = getLinks(matches, loaderData);
   const pageAssets = getPageAssets(matches, assetsManifest);
   const entryAssets = getEntryAssets(assetsManifest);
   const styles = entryAssets.concat(pageAssets).filter(path => path.indexOf('.css') > -1);
@@ -97,18 +97,21 @@ interface ScriptsProps extends React.ScriptHTMLAttributes<HTMLScriptElement>{
 export type ScriptsType = (props: ScriptsProps) => JSX.Element;
 
 export const Scripts: ScriptsType = (props: ScriptsProps) => {
-  const { routesConfig, matches, assetsManifest } = useAppContext();
+  const { loaderData, matches, assetsManifest } = useAppContext();
+
   const {
     ScriptElement = 'script',
     ...rest
   } = props;
 
-  const routeScripts = getScripts(matches, routesConfig);
+  const routeScripts = getScripts(matches, loaderData);
+  console.log('document matches', matches);
+  console.log('document loaderData', loaderData);
   const pageAssets = getPageAssets(matches, assetsManifest);
   const entryAssets = getEntryAssets(assetsManifest);
   // Page assets need to be load before entry assets, so when call dynamic import won't cause duplicate js chunk loaded.
   let scripts = pageAssets.concat(entryAssets).filter(path => path.indexOf('.js') > -1);
-
+  console.log('scripts ==>', assetsManifest, scripts);
   if (assetsManifest.dataLoader) {
     scripts.unshift(`${assetsManifest.publicPath}${assetsManifest.dataLoader}`);
   }
@@ -146,7 +149,7 @@ export type DataType = (props: DataProps) => JSX.Element;
 
 // use app context separately
 export const Data: DataType = (props: DataProps) => {
-  const { routesData, documentOnly, matches, routesConfig, downgrade, renderMode, serverData } = useAppContext();
+  const { documentOnly, matches, downgrade, renderMode, serverData, loaderData } = useAppContext();
   const appData = useAppData();
   const {
     ScriptElement = 'script',
@@ -156,8 +159,7 @@ export const Data: DataType = (props: DataProps) => {
   const routePath = getCurrentRoutePath(matches);
   const windowContext: WindowContext = {
     appData,
-    routesData,
-    routesConfig,
+    loaderData,
     routePath,
     downgrade,
     matchedIds,

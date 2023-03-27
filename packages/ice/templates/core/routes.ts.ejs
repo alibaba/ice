@@ -1,5 +1,8 @@
-import { callDataLoader, getRequestContext } from '@ice/runtime';
+import { createRouteLoader } from '@ice/runtime';
 <%- routeImports.length ? routeImports.join('\n') + '\n\n' : ''; -%>
-export default [
+export default ({
+  requestContext,
+  renderMode,
+}) => ([
   <%- routeDefination %>
-];
+]);

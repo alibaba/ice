@@ -4,6 +4,7 @@ import customPlugin from './plugin';
 
 export default defineConfig(() => ({
   ssr: true,
+  ssg: false,
   publicPath: '/',
   polyfill: 'entry',
   syntaxFeatures: {

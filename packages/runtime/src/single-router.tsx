@@ -3,7 +3,7 @@
  * if user config `optimize.router` false
  */
 import * as React from 'react';
-import type { History } from 'history';
+import type { History } from '@remix-run/router';
 
 export const useRoutes = (routes) => {
   return <>{routes[0].element}</>;

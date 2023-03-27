@@ -1,10 +1,10 @@
 import React from 'react';
-import type { RouteObject } from 'react-router-dom';
-import { RouteComponent } from './types.js';
-import type { RouteItem, RouteModules, RouteWrapperConfig, RouteMatch, RequestContext, RoutesConfig, RoutesData, RenderMode } from './types.js';
+import type { RouteItem, RouteModules, RouteWrapperConfig, RenderMode, DataLoaderConfig } from './types.js';
 import RouteWrapper from './RouteWrapper.js';
 import { useAppContext } from './AppContext.js';
 import { callDataLoader } from './dataLoader.js';
+import type { RequestContext, ComponentModule } from './types.js';
+import { updateRoutesConfig } from './routesConfig.js';
 
 type RouteModule = Pick<RouteItem, 'id' | 'load' | 'lazy'>;
 
@@ -22,8 +22,7 @@ export function getRoutesPath(routes: RouteItem[], parentPath = ''): string[] {
   return paths.map(str => str.replace('//', '/'));
 }
 
-export async function loadRouteModule(route: RouteModule, routeModulesCache: RouteModules) {
-  console.log('routerouteroute ==>', route);
+export async function loadRouteModule(route: RouteModule, routeModulesCache = {}) {
   const { id, load, lazy } = route;
   if (
     typeof window !== 'undefined' && // Don't use module cache and should load again in ssr. Ref: https://github.com/ice-lab/ice-next/issues/82
@@ -33,8 +32,8 @@ export async function loadRouteModule(route: RouteModule, routeModulesCache: Rou
   }
 
   try {
+    // Function load will return route module when lazy loaded is disabled.
     const routeModule = lazy ? await lazy() : await load();
-    console.log('routeModule ==>', routeModule);
     routeModulesCache[id] = routeModule;
     return routeModule;
   } catch (error) {
@@ -52,125 +51,25 @@ export async function loadRouteModules(routes: RouteModule[], originRouteModules
   return routeModules;
 }
 
-export interface LoadRoutesDataOptions {
-  renderMode?: RenderMode;
-  ssg?: boolean;
-  forceRequest?: boolean;
-}
-
-/**
-* get data for the matched routes.
-*/
-export async function loadRoutesData(
-  matches: RouteMatch[],
-  requestContext: RequestContext,
-  routeModules: RouteModules,
-  options?: LoadRoutesDataOptions,
-): Promise<RoutesData> {
-  const { renderMode } = options || {};
-  const routesData: RoutesData = {};
-
-  const hasGlobalLoader = typeof window !== 'undefined' && (window as any).__ICE_DATA_LOADER__;
-  const globalLoader = hasGlobalLoader ? (window as any).__ICE_DATA_LOADER__ : null;
-
-  await Promise.all(
-    matches.map(async (match) => {
-      const { id } = match.route;
-
-      if (globalLoader) {
-        routesData[id] = await globalLoader.getData(id, options);
-        return;
-      }
-
-      const routeModule = routeModules[id];
-      const { dataLoader, serverDataLoader, staticDataLoader } = routeModule ?? {};
-
-      let loader;
-
-      // SSG -> getStaticData
-      // SSR -> getServerData || getData
-      // CSR -> getData
-      if (renderMode === 'SSG') {
-        loader = staticDataLoader;
-      } else if (renderMode === 'SSR') {
-        loader = serverDataLoader || dataLoader;
-      } else {
-        loader = dataLoader;
-      }
-
-      if (loader) {
-        routesData[id] = await callDataLoader(loader, requestContext);
-      }
-    }),
+// Wrap route component with runtime wrappers.
+export function wrapRouteComponent(options: {
+  routeId: string;
+  isLayout?: boolean;
+  RouteComponent: React.ComponentType;
+  RouteWrappers?: RouteWrapperConfig[];
+}) {
+  const { routeId, isLayout, RouteComponent, RouteWrappers } = options;
+  return (
+    <RouteWrapper id={routeId} isLayout={isLayout} wrappers={RouteWrappers}>
+      <RouteComponent />
+    </RouteWrapper>
   );
-
-  return routesData;
-}
-
-/**
- * Get page config for matched routes.
- */
-export function getRoutesConfig(
-  matches: RouteMatch[],
-  routesData: RoutesData,
-  routeModules: RouteModules,
-): RoutesConfig {
-  const routesConfig: RoutesConfig = {};
-
-  matches.forEach(async (match) => {
-    const { id } = match.route;
-    const routeModule = routeModules[id];
-
-    if (typeof routeModule === 'object') {
-      const { pageConfig } = routeModule;
-      const data = routesData[id];
-      if (pageConfig) {
-        const value = pageConfig({ data });
-        routesConfig[id] = value;
-      }
-    } else {
-      routesConfig[id] = {};
-    }
-  });
-
-  return routesConfig;
-}
-
-/**
- * Create elements in routes which will be consumed by react-router-dom
- */
-export function createRouteElements(
-  routes: RouteItem[],
-  RouteWrappers?: RouteWrapperConfig[],
-) {
-  return routes.map((routeItem: RouteItem) => {
-    let { path, children, index, id, layout, element, ...rest } = routeItem;
-    element = (
-      <RouteWrapper id={id} isLayout={layout} wrappers={RouteWrappers}>
-        <RouteComponent id={id} />
-      </RouteWrapper>
-    );
-
-    const route: RouteObject = {
-      path,
-      element,
-      index,
-      id,
-      ...rest,
-    };
-
-    if (children) {
-      route.children = createRouteElements(children, RouteWrappers);
-    }
-
-    return route;
-  });
 }
 
 export function RouteComponent({ id }: { id: string }) {
   // get current route component from latest routeModules
   const { routeModules } = useAppContext();
-  // @ts-ignore
+  console.log('routeModules[id]', routeModules[id]);
   const { Component } = routeModules[id] || {};
   if (process.env.NODE_ENV === 'development') {
     if (!Component) {
@@ -184,28 +83,47 @@ export function RouteComponent({ id }: { id: string }) {
 }
 
 /**
- * filter matches is new or path changed.
+ * Create loader function for route module.
  */
-export function filterMatchesToLoad(prevMatches: RouteMatch[], currentMatches: RouteMatch[]): RouteMatch[] {
-  let isNew = (match: RouteMatch, index: number) => {
-    // [a] -> [a, b]
-    if (!prevMatches[index]) return true;
-    // [a, b] -> [a, c]
-    return match.route.id !== prevMatches[index].route.id;
-  };
+interface LoaderData {
+  data: any;
+  pageConfig: any;
+}
 
-  let matchPathChanged = (match: RouteMatch, index: number) => {
-    return (
-      // param change, /users/123 -> /users/456
-      prevMatches[index].pathname !== match.pathname ||
-      // splat param changed, which is not present in match.path
-      // e.g. /files/images/avatar.jpg -> files/finances.xls
-      (prevMatches[index].route.path?.endsWith('*') &&
-        prevMatches[index].params['*'] !== match.params['*'])
-    );
-  };
+export interface RouteLoaderOptions {
+  routeId: string;
+  requestContext: RequestContext;
+  module: ComponentModule;
+  renderMode: RenderMode;
+}
 
-  return currentMatches.filter((match, index) => {
-    return isNew(match, index) || matchPathChanged(match, index);
-  });
+export function createRouteLoader(options: RouteLoaderOptions): () => Promise<LoaderData> {
+  return async () => {
+    const { dataLoader, pageConfig, staticDataLoader, serverDataLoader } = options.module;
+    const { requestContext, renderMode, routeId } = options;
+
+    const hasGlobalLoader = typeof window !== 'undefined' && (window as any).__ICE_DATA_LOADER__;
+    const globalLoader = hasGlobalLoader ? (window as any).__ICE_DATA_LOADER__ : null;
+    let routeData: any;
+    if (globalLoader) {
+      routeData = await globalLoader.getData(routeId, { renderMode });
+    } else {
+      let loader: DataLoaderConfig;
+      if (renderMode === 'SSG') {
+        loader = staticDataLoader;
+      } else if (renderMode === 'SSR') {
+        loader = serverDataLoader || dataLoader;
+      } else {
+        loader = dataLoader;
+      }
+      routeData = dataLoader && await callDataLoader(loader, requestContext);
+    }
+    const routeConfig = pageConfig ? pageConfig({ data: routeData }) : {};
+    const loaderData = { data: routeData, pageConfig: routeConfig };
+    // CSR and load next route data.
+    if (typeof window !== 'undefined') {
+      // await updateRoutesConfig(loaderData);
+    }
+    return loaderData;
+  };
 }
