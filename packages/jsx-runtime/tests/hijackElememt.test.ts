@@ -19,4 +19,13 @@ describe('hijack element', () => {
       },
     });
   });
+
+  it('hijackElementProps base64', () => {
+    const props = hijackElementProps({ style: { backgroundImage: 'url(\'data:image/png;base64,iVBORwrpx...)' } });
+    expect(props).toStrictEqual({
+      style: {
+        backgroundImage: 'url(\'data:image/png;base64,iVBORwrpx...)',
+      },
+    });
+  });
 });

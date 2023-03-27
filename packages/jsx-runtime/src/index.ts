@@ -39,9 +39,7 @@ export function hijackElementProps(props: { style?: object } | object): object {
       const result = Object.assign({}, props);
       const convertedStyle = {};
       for (const prop in style) {
-        if (!isBase64(style[prop])) {
-          convertedStyle[prop] = convertUnit(style[prop]);
-        }
+        convertedStyle[prop] = isBase64(style[prop]) ? style[prop] : convertUnit(style[prop]);
       }
       result['style'] = convertedStyle;
       return result;
