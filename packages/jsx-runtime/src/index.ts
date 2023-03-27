@@ -27,6 +27,10 @@ function isObject(obj: any): obj is object {
   return typeof obj === 'object';
 }
 
+const REG_BASE64 = /data:image\/(png|jpg|jpeg|gif|svg|webp|bmp|dpg);base64,/;
+function isBase64(str: any) {
+  return typeof str === 'string' && REG_BASE64.test(str);
+}
 // Support rpx unit.
 export function hijackElementProps(props: { style?: object } | object): object {
   if (props && STYLE in props) {
@@ -35,8 +39,9 @@ export function hijackElementProps(props: { style?: object } | object): object {
       const result = Object.assign({}, props);
       const convertedStyle = {};
       for (const prop in style) {
-        // @ts-ignore
-        convertedStyle[prop] = convertUnit(style[prop]);
+        if (!isBase64(style[prop])) {
+          convertedStyle[prop] = convertUnit(style[prop]);
+        }
       }
       result['style'] = convertedStyle;
       return result;

@@ -1,21 +1,11 @@
 {
-  "compileOnSave": false,
-  "buildOnSave": false,
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "build",
-    "module": "esnext",
-    "target": "esnext",
-    "jsx": "react",
-    "moduleResolution": "node",
-    "lib": ["es6", "dom"],
-    "sourceMap": true,
-    "allowJs": true,
-    "noUnusedLocals": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
-    "skipLibCheck": true
+    "baseUrl": "./",
+    "rootDir": "src",
+    "outDir": "esm",
+    "module": "ES2020",
+    "moduleResolution": "NodeNext",
   },
-  "include": ["src/*.ts", "src/*.tsx"],
-  "exclude": ["node_modules", "build", "public"]
+  "include": ["src"]
 }
