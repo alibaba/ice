@@ -117,6 +117,7 @@ const getMiniappTask = ({
       maxEntrypointSize: 2 * 1000 * 1000,
     },
     devServer: {}, // No need to use devServer in miniapp
+    useDevServer: false,
     enableCopyPlugin: isPublicDirExist, // Only when public dir exists should copy-webpack-plugin be enabled
     swcOptions: {
       removeExportExprs: ['getServerData', 'getStaticData'],

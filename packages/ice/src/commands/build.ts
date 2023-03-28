@@ -137,27 +137,28 @@ const build = async (
   if (ssg) {
     renderMode = 'SSG';
   }
-  const { serverEntry } = await serverCompileTask.get();
-  serverEntryRef.current = serverEntry;
-  const routeType = appConfig?.router?.type;
-  const {
-    outputPaths = [],
-  } = await generateEntry({
-    rootDir,
-    outputDir,
-    entry: serverEntry,
-    // only ssg need to generate the whole page html when build time.
-    documentOnly: !ssg,
-    renderMode,
-    routeType: appConfig?.router?.type,
-    distType,
-    routeManifest,
-  });
-  // This depends on orders.
-  output.paths = [...outputPaths];
-
-  if (routeType === 'memory' && userConfig?.routes?.injectInitialEntry) {
-    injectInitialEntry(routeManifest, outputDir);
+  const { serverEntry } = await serverCompileTask.get() || {};
+  if (serverEntry) {
+    serverEntryRef.current = serverEntry;
+    const routeType = appConfig?.router?.type;
+    const {
+      outputPaths = [],
+    } = await generateEntry({
+      rootDir,
+      outputDir,
+      entry: serverEntry,
+      // only ssg need to generate the whole page html when build time.
+      documentOnly: !ssg,
+      renderMode,
+      routeType: appConfig?.router?.type,
+      distType,
+      routeManifest,
+    });
+    // This depends on orders.
+    output.paths = [...outputPaths];
+    if (routeType === 'memory' && userConfig?.routes?.injectInitialEntry) {
+      injectInitialEntry(routeManifest, outputDir);
+    }
   }
 
   await applyHook('after.build.compile', {
