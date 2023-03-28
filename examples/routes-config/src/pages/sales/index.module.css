@@ -1,0 +1,24 @@
+.tabs {
+  display: flex;
+  border-bottom:  1px solid #ccc;
+}
+
+.tabs a {
+  line-height: 36px;
+  color: #333;
+  text-decoration: none;
+  padding: 0 8px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  background-color: rgba(208, 215, 222, 0.32);
+}
+
+.tabs a:hover {
+  background-color: rgba(208, 215, 222, 0.64);
+}
+
+.container {
+  border-top:  1px solid #ccc;
+  padding-top: 20px;
+}

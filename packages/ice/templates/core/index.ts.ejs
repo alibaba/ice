@@ -1,16 +1,26 @@
 <% if (globalStyle) {-%>
 import '<%= globalStyle %>'
 <% } -%>
-import type { PageConfig } from './types';
+import type { PageConfig, PageConfigDefinition } from './types';
 <%- framework.imports %>
 
-function definePageConfig(pageConfig: () => PageConfig): () => PageConfig {
-  return pageConfig;
+<%- framework.variablesStr %>
+<%- framework.targetImport %>
+
+function definePageConfig(pageConfig: PageConfig | PageConfigDefinition): PageConfigDefinition {
+  if (typeof pageConfig !== 'function') {
+    return () => pageConfig;
+  } else {
+    return pageConfig;
+  }
 }
 
 export {
   definePageConfig,
   <% if (framework.exports) { -%><%- framework.exports %><% } -%>
+
+  <% if (framework.targetExports) { -%><%- framework.targetExports %><% } -%>
+
 };
 
 export * from './types';

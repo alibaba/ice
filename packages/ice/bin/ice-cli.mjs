@@ -1,14 +1,15 @@
 #!/usr/bin/env node
 import path from 'path';
-import { fileURLToPath } from 'url';
+import chalk from 'chalk';
+import semver from 'semver';
 import fse from 'fs-extra';
+import { fileURLToPath } from 'url';
 import { program, Option } from 'commander';
-import detectPort from 'detect-port';
+import yargsParser from 'yargs-parser';
 // hijack webpack before import other modules
 import '../esm/requireHook.js';
 import createService from '../esm/createService.js';
-import { ALL_PLATFORMS } from '../esm/constant.js';
-import checkNodeVersion from './checkNodeVersion.mjs';
+import { TARGETS, WEB } from '../esm/constant.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -24,14 +25,19 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .command('build')
     .description('build project')
     .allowUnknownOption()
-    .addOption(new Option('--platform <platform>', 'set platform').default('web').choices(ALL_PLATFORMS))
+    .addOption(new Option('--target <target>', 'set build target').default(WEB).choices(TARGETS))
+    .option('--target <target>', 'same as --target', WEB)
     .option('--mode <mode>', 'set mode', 'production')
     .option('--analyzer', 'visualize size of output files', false)
     .option('--config <config>', 'use custom config')
     .option('--rootDir <rootDir>', 'project root directory', cwd)
-    .action(async ({ rootDir, ...commandArgs }) => {
+    .action(async ({ rootDir, ...commandArgs }, ctx) => {
+      renamePlatformToTarget(commandArgs);
       process.env.NODE_ENV = 'production';
-      const service = await createService({ rootDir, command: 'build', commandArgs });
+      const service = await createService({ rootDir, command: 'build', commandArgs: {
+        ...parseUnknownOptions(ctx.args),
+        ...commandArgs,
+      } });
       service.run();
     });
 
@@ -39,21 +45,25 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .command('start')
     .description('start server')
     .allowUnknownOption()
-    .addOption(new Option('--platform <platform>', 'set platform').default('web').choices(ALL_PLATFORMS))
+    .addOption(new Option('--target <target>', 'set build target').default(WEB).choices(TARGETS))
+    .option('--target <target>', 'same as --target', WEB)
     .option('--mode <mode>', 'set mode', 'development')
     .option('--config <config>', 'custom config path')
-    .option('-h, --host <host>', 'dev server host', '0.0.0.0')
-    .option('-p, --port <port>', 'dev server port', 3000)
+    .option('-h, --host <host>', 'dev server host')
+    .option('-p, --port <port>', 'dev server port')
     .option('--no-open', "don't open browser on startup")
     .option('--no-mock', "don't start mock service")
     .option('--rootDir <rootDir>', 'project root directory', cwd)
     .option('--analyzer', 'visualize size of output files', false)
     .option('--https [https]', 'enable https', false)
     .option('--force', 'force remove cache directory', false)
-    .action(async ({ rootDir, ...commandArgs }) => {
+    .action(async ({ rootDir, ...commandArgs }, ctx) => {
+      renamePlatformToTarget(commandArgs);
       process.env.NODE_ENV = 'development';
-      commandArgs.port = await detectPort(commandArgs.port);
-      const service = await createService({ rootDir, command: 'start', commandArgs });
+      const service = await createService({ rootDir, command: 'start', commandArgs: {
+        ...parseUnknownOptions(ctx.args),
+        ...commandArgs
+      } });
       service.run();
     });
 
@@ -73,3 +83,38 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     program.help();
   }
 })();
+
+function parseUnknownOptions(args) {
+  let unKnownOptions = {};
+  if (args.length > 0) {
+    unKnownOptions = yargsParser(args, {
+      // Transform dashed arguments to camel case.
+      // e.g. --foo-bar => { fooBar: true }.
+      configuration: { 'strip-dashed': true },
+    });
+    // Custom options do not support positional arguments.
+    delete unKnownOptions._;
+  }
+  return unKnownOptions;
+}
+
+// Rename `platform` to `target`, for compatibility.
+// For ice.js <3.0.3, using --platform to set build target.
+function renamePlatformToTarget(commandArgs) {
+  // Rename `platform` to `target`.
+  if (commandArgs.hasOwnProperty('platform')) {
+    commandArgs.target = commandArgs.platform;
+    delete commandArgs.platform;
+  }
+}
+
+function checkNodeVersion (requireNodeVersion, frameworkName = 'ice') {
+  if (!semver.satisfies(process.version, requireNodeVersion)) {
+    console.log();
+    console.log(chalk.red(`  You are using Node ${process.version}`));
+    console.log(chalk.red(`  ${frameworkName} requires Node ${requireNodeVersion}, please update Node.`));
+    console.log();
+    console.log();
+    process.exit(1);
+  }
+}

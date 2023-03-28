@@ -1,12 +1,9 @@
 ---
-title: 使用 fusion 组件
+title: 使用 Fusion 组件
+order: 0700
 ---
 
-:::tip
-小程序端不支持该能力。
-:::
-
-icejs 项目中可以直接使用 fusion 组件，关于 fusion 组件按需引入的问题说明：
+ice.js 项目中可以直接使用 fusion 组件，关于 fusion 组件按需引入的问题说明：
 - 脚本代码按需引入：不推荐使用 babel-plugin-import，社区主流工具 Webpack/Vite 等都已支持 tree-shaking，构建时默认都会做按需的引入
 - 样式代码按需引入：结合社区讨论 [issue](https://github.com/ant-design/ant-design/issues/16600#issuecomment-492572520)，大多数场景下样式按需引入并无太大意义，反而会引入其他工程问题，因此推荐组件样式在项目级全量引入
 
@@ -91,3 +88,44 @@ export default defineConfig(() => ({
   ],
 }));
 ```
+
+## 推荐配置
+
+对于样式方案为 `sass` 的开发场景，推荐通过以下方式进行配置：
+
+```ts title="ice.config.mts"
+import { defineConfig } from '@ice/app';
+import fusion from '@ice/plugin-fusion';
+
+export default defineConfig(() => ({
+  plugins: [
+    fusion({
+      importStyle: 'sass',
+      themePackage: '@alifd/theme-design-pro',
+    }),
+  ],
+}));
+```
+
+如果样式方案选择为 `css`，并且存在主题定制诉求的，推荐配合在 `src/global.css` 中 css variables：
+
+```css title="src/global.css"
+@import '@alifd/theme-design-pro/variables.css';
+
+body {}
+```
+
+```ts title="ice.config.mts"
+import { defineConfig } from '@ice/app';
+import fusion from '@ice/plugin-fusion';
+
+export default defineConfig(() => ({
+  plugins: [
+    fusion({
+      importStyle: true,
+    }),
+  ],
+}));
+```
+
+> 对于样式大小没有极致尺寸要求的，直接引入全量 css 样式即可，无需额外配置插件

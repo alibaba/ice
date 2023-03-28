@@ -12,7 +12,7 @@ function createWatch(options: {
 }) {
   const { watchDir, command = 'start', watchOptions } = options;
   const watchEvents = options.watchEvents || [];
-  // do not setup chokidar when run build
+  // Do not set up chokidar when run build.
   const watcher = command === 'start' && chokidar.watch(watchDir, {
     ignoreInitial: true,
     ignored: [/node_modules/],

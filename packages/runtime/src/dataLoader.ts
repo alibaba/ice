@@ -1,4 +1,4 @@
-import type { DataLoaderConfig, DataLoaderResult, RuntimeModules, AppExport, RuntimePlugin, CommonJsRuntime } from './types.js';
+import type { DataLoaderConfig, DataLoaderResult, RuntimeModules, AppExport, StaticRuntimePlugin, CommonJsRuntime, StaticDataLoader } from './types.js';
 import getRequestContext from './requestContext.js';
 
 interface Loaders {
@@ -14,6 +14,11 @@ interface LoaderOptions {
   fetcher: Function;
   runtimeModules: RuntimeModules['statics'];
   appExport: AppExport;
+}
+
+export interface LoadRoutesDataOptions {
+  ssg?: boolean;
+  forceRequest?: boolean;
 }
 
 export function defineDataLoader(dataLoaderConfig: DataLoaderConfig): DataLoaderConfig {
@@ -38,8 +43,83 @@ export function setFetcher(customFetcher) {
   dataLoaderFetcher = customFetcher;
 }
 
-export function loadDataByCustomFetcher(config) {
-  return dataLoaderFetcher(config);
+/**
+ * Parse template for static dataLoader.
+ */
+export function parseTemplate(config: StaticDataLoader) {
+  const queryParams = {};
+  const getQueryParams = () => {
+    if (Object.keys(queryParams).length === 0) {
+      if (location.search.includes('?')) {
+        location.search.substring(1).split('&').forEach(query => {
+          const res = query.split('=');
+          // ?test=1&hello=world
+          if (res[0] !== undefined && res[1] !== undefined) {
+            queryParams[res[0]] = res[1];
+          }
+        });
+      }
+    }
+
+    return queryParams;
+  };
+
+  const cookie = {};
+  const getCookie = () => {
+    if (Object.keys(cookie).length === 0) {
+      document.cookie.split(';').forEach(c => {
+        const [key, value] = c.split('=');
+        if (key !== undefined && value !== undefined) {
+          cookie[key.trim()] = value.trim();
+        }
+      });
+    }
+
+    return cookie;
+  };
+
+  // Match all template of query cookie and storage.
+  let strConfig = JSON.stringify(config) || '';
+  const regexp = /\$\{(queryParams|cookie|storage)(\.(\w|-)+)?}/g;
+  let cap = [];
+  let matched = [];
+  while ((cap = regexp.exec(strConfig)) !== null) {
+    matched.push(cap);
+  }
+
+  matched.forEach(item => {
+    const [origin, key, value] = item;
+    if (item && origin && key && value && value.startsWith('.')) {
+      if (key === 'queryParams') {
+        // Replace query params.
+        strConfig = strConfig.replace(origin, getQueryParams()[value.substring(1)]);
+      } else if (key === 'cookie') {
+        // Replace cookie.
+        strConfig = strConfig.replace(origin, getCookie()[value.substring(1)]);
+      } else if (key === 'storage') {
+        // Replace storage.
+        strConfig = strConfig.replace(origin, localStorage.getItem(value.substring(1)));
+      }
+    }
+  });
+
+  // Replace url.
+  strConfig = strConfig.replace('${url}', location.href);
+
+  return JSON.parse(strConfig);
+}
+
+export function loadDataByCustomFetcher(config: StaticDataLoader) {
+  let parsedConfig = config;
+  try {
+    // Not parse template in SSG/SSR.
+    if (typeof window !== 'undefined') {
+      parsedConfig = parseTemplate(config);
+    }
+  } catch (error) {
+    console.error('parse template error: ', error);
+  }
+  return dataLoaderFetcher(parsedConfig);
 }
 
 /**
@@ -47,9 +127,10 @@ export function loadDataByCustomFetcher(config) {
  */
 export function callDataLoader(dataLoader: DataLoaderConfig, requestContext): DataLoaderResult {
   if (Array.isArray(dataLoader)) {
-    return dataLoader.map(loader => {
+    const loaders = dataLoader.map(loader => {
       return typeof loader === 'object' ? loadDataByCustomFetcher(loader) : loader(requestContext);
     });
+    return Promise.all(loaders);
   }
 
   if (typeof dataLoader === 'object') {
@@ -68,17 +149,20 @@ function loadInitialDataInClient(loaders: Loaders) {
   const context = (window as any).__ICE_APP_CONTEXT__ || {};
   const matchedIds = context.matchedIds || [];
   const routesData = context.routesData || {};
+  const { renderMode } = context;
 
   const ids = ['_app'].concat(matchedIds);
   ids.forEach(id => {
     const dataFromSSR = routesData[id];
     if (dataFromSSR) {
-      cache.set(id, {
+      cache.set(renderMode === 'SSG' ? `${id}_ssg` : id, {
         value: dataFromSSR,
         status: 'RESOLVED',
       });
 
-      return dataFromSSR;
+      if (renderMode === 'SSR') {
+        return;
+      }
     }
 
     const dataLoader = loaders[id];
@@ -100,7 +184,7 @@ function loadInitialDataInClient(loaders: Loaders) {
  * Load initial data and register global loader.
  * In order to load data, JavaScript modules, CSS and other assets in parallel.
  */
-async function init(loadersConfig: Loaders, options: LoaderOptions) {
+async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
   const {
     fetcher,
     runtimeModules,
@@ -115,7 +199,7 @@ async function init(loadersConfig: Loaders, options: LoaderOptions) {
 
   if (runtimeModules) {
     await Promise.all(runtimeModules.map(module => {
-      const runtimeModule = (module as CommonJsRuntime).default || module as RuntimePlugin;
+      const runtimeModule = ((module as CommonJsRuntime).default || module) as StaticRuntimePlugin;
       return runtimeModule(runtimeApi);
     }).filter(Boolean));
   }
@@ -125,31 +209,48 @@ async function init(loadersConfig: Loaders, options: LoaderOptions) {
   }
 
   try {
-    loadInitialDataInClient(loadersConfig);
+    loadInitialDataInClient(dataloaderConfig);
   } catch (error) {
     console.error('Load initial data error: ', error);
   }
 
   (window as any).__ICE_DATA_LOADER__ = {
-    getData: async (id) => {
-      const result = cache.get(id);
+    getData: async (id, options: LoadRoutesDataOptions) => {
+      let result;
+
+      // first render for ssg use data from build time.
+      // second render for ssg will use data from data loader.
+      if (options?.ssg) {
+        result = cache.get(`${id}_ssg`);
+      } else {
+        result = cache.get(id);
+      }
 
       // Already send data request.
-      if (result) {
+      if (result && !options?.forceRequest) {
         const { status, value } = result;
 
         if (status === 'RESOLVED') {
           return result;
         }
 
-        if (Array.isArray(value)) {
-          return await Promise.all(value);
-        }
+        try {
+          if (Array.isArray(value)) {
+            return await Promise.all(value);
+          }
 
-        return await value;
+          return await value;
+        } catch (error) {
+          console.error('DataLoader: getData error.\n', error);
+
+          return {
+            message: 'DataLoader: getData error.',
+            error,
+          };
+        }
       }
 
-      const dataLoader = loadersConfig[id];
+      const dataLoader = dataloaderConfig[id];
 
       // No data loader.
       if (!dataLoader) {

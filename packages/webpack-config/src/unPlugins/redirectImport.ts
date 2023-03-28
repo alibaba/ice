@@ -63,13 +63,13 @@ export function parseRedirectData(data: DeclarationData[]): RedirectData {
 }
 
 export function generateImport(matchedImports: MatchedImports): string {
-  let defaultImport = '';
-  let namedImports = [];
   function parseLocalIdentifier(identifier: string, alias: Record<string, string>): string {
     return alias[identifier] ? `${alias[identifier]} as ${identifier}` : identifier;
   }
   const importStatements = Object.keys(matchedImports).map((source) => {
     const importStatements = matchedImports[source];
+    let defaultImport = '';
+    const namedImports = [];
     importStatements.forEach(({ isDefault, identifier, alias }) => {
       if (isDefault) {
         defaultImport = parseLocalIdentifier(identifier, alias);
@@ -95,7 +95,7 @@ export async function redirectImport(code: string, options: Options): Promise<st
   try {
     imports = parse(code)[0];
   } catch (e) {
-    consola.error('[parse error]', e);
+    consola.debug('[parse error]', e);
   }
   if (!imports.length) {
     return code;
@@ -146,6 +146,7 @@ export async function redirectImport(code: string, options: Options): Promise<st
 
         if (Object.keys(matchedImports).length > 0) {
           const transformedImport = generateImport(matchedImports);
+          // TODO: Add file name detail.
           consola.debug(`transform ${importStr} to ${transformedImport}`);
 
           if (missMatchedIdentifiers.length > 0) {

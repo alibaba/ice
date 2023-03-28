@@ -1,15 +1,19 @@
-import { swc, swcPluginRemoveExport, swcPluginKeepExport, swcPluginKeepPlatform, coreJsPath } from '@ice/bundles';
+import path from 'path';
+import { swc, swcPluginRemoveExport, swcPluginKeepExport, swcPluginNodeTransform, coreJsPath } from '@ice/bundles';
+import browserslist from 'browserslist';
+import consola from 'consola';
 import type { SwcConfig, ReactConfig } from '@ice/bundles';
 import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { Config } from '../types.js';
-import transformCoreJs from '../utils/transformCoreJs.js';
+import transformImport from '../utils/transformImport.js';
 
 const { merge } = lodash;
 
 type JSXSuffix = 'jsx' | 'tsx';
 
 interface Options {
+  rootDir: string;
   mode: 'development' | 'production' | 'none';
   fastRefresh: boolean;
   compileIncludes?: (string | RegExp)[];
@@ -18,11 +22,14 @@ interface Options {
   swcOptions?: Config['swcOptions'];
   cacheDir?: string;
   polyfill?: Config['polyfill'];
-  env?: boolean;
+  enableEnv?: boolean;
 }
+
+const formatId = (id: string) => id.split(path.sep).join('/');
 
 const compilationPlugin = (options: Options): UnpluginOptions => {
   const {
+    rootDir,
     sourceMap,
     mode,
     fastRefresh,
@@ -31,16 +38,16 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
     swcOptions = {},
     cacheDir,
     polyfill,
-    env,
+    enableEnv,
   } = options;
 
-  const { removeExportExprs, compilationConfig, keepPlatform, keepExports, getRoutePaths } = swcOptions;
+  const { removeExportExprs, compilationConfig, keepExports, getRoutePaths, nodeTransform } = swcOptions;
 
   const compileRegex = compileIncludes.map((includeRule) => {
     return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);
   });
 
-  function isRouteEntry(id) {
+  function isRouteEntry(id: string) {
     const routes = getRoutePaths();
 
     const matched = routes.find(route => {
@@ -50,17 +57,20 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
     return !!matched;
   }
 
-  function isAppEntry(id) {
-    return /(.*)src\/app/.test(id);
+  function isAppEntry(id: string) {
+    return /(.*)src\/app.(ts|tsx|js|jsx)/.test(id);
   }
 
   const extensionRegex = /\.(jsx?|tsx?|mjs)$/;
   return {
     name: 'compilation-plugin',
     transformInclude(id) {
-      return extensionRegex.test(id) && !compileExcludes.some((regex) => regex.test(id));
+      // Resolved id is not formatted when used in webpack loader test.
+      const formatedId = formatId(id);
+      return extensionRegex.test(formatedId) && !compileExcludes.some((regex) => regex.test(formatedId));
     },
-    async transform(source: string, id: string) {
+    async transform(source: string, fileId: string) {
+      const id = formatId(fileId);
       if ((/node_modules/.test(id) && !compileRegex.some((regex) => regex.test(id)))) {
         return;
       }
@@ -72,7 +82,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
         sourceMaps: !!sourceMap,
       };
 
-      const commonOptions = getJsxTransformOptions({ suffix, fastRefresh, polyfill, env });
+      const commonOptions = getJsxTransformOptions({ rootDir, mode, suffix, fastRefresh, polyfill, enableEnv });
 
       // auto detect development mode
       if (
@@ -85,11 +95,14 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
 
       merge(programmaticOptions, commonOptions);
 
-      if (compilationConfig) {
+      if (typeof compilationConfig === 'function') {
+        merge(programmaticOptions, compilationConfig(source, fileId));
+      } else if (compilationConfig) {
         merge(programmaticOptions, compilationConfig);
       }
 
       const swcPlugins = [];
+
       // handle app.tsx and page entries only
       if (removeExportExprs) {
         if (isRouteEntry(id) || isAppEntry(id)) {
@@ -123,13 +136,9 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
         }
       }
 
-      if (keepPlatform) {
-        swcPlugins.push([
-          swcPluginKeepPlatform,
-          keepPlatform,
-        ]);
+      if (nodeTransform) {
+        swcPlugins.push([swcPluginNodeTransform, {}]);
       }
-
       if (swcPlugins.length > 0) {
         merge(programmaticOptions, {
           jsc: {
@@ -147,11 +156,10 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
         const { code } = output;
         let { map } = output;
         return {
-          code: polyfill
-            ? await transformCoreJs(
-              code,
-              coreJsPath,
-            ) : code,
+          code: await transformImport(
+            code,
+            coreJsPath,
+          ),
           map,
         };
       } catch (error) {
@@ -170,19 +178,25 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
 };
 
 interface GetJsxTransformOptions {
+  rootDir: string;
+  mode: Options['mode'];
   suffix: JSXSuffix;
   fastRefresh: boolean;
   polyfill: Config['polyfill'];
-  env: boolean;
+  enableEnv: boolean;
 }
 
 function getJsxTransformOptions({
   suffix,
   fastRefresh,
   polyfill,
-  env,
+  enableEnv,
+  mode,
+  rootDir,
 }: GetJsxTransformOptions) {
   const reactTransformConfig: ReactConfig = {
+    // Swc won't enable fast refresh when development is false in the latest version.
+    development: mode === 'development',
     refresh: fastRefresh,
     runtime: 'automatic',
     importSource: '@ice/runtime', // The exact import source is '@ice/runtime/jsx-runtime'
@@ -196,14 +210,14 @@ function getJsxTransformOptions({
       },
       // This option will greatly reduce your file size while bundling.
       // This option depends on `@swc/helpers`.
-      externalHelpers: false,
+      externalHelpers: true,
     },
     module: {
       type: 'es6',
       noInterop: false,
     },
   };
-  if (env) {
+  if (enableEnv) {
     commonOptions.env = {
       loose: false,
       ...(polyfill ? {
@@ -211,6 +225,11 @@ function getJsxTransformOptions({
         coreJs: '3.26',
       } : {}),
     };
+    const supportBrowsers = getSupportedBrowsers(rootDir, mode === 'development');
+    if (supportBrowsers) {
+      // Fix issue of https://github.com/swc-project/swc/issues/3365
+      commonOptions.env.targets = supportBrowsers;
+    }
   } else {
     // Set target `es2022` for default transform when env is false.
     commonOptions.jsc.target = 'es2022';
@@ -247,6 +266,22 @@ function getJsxTransformOptions({
     return tsOptions;
   }
   return commonOptions;
+}
+
+function getSupportedBrowsers(
+  dir: string,
+  isDevelopment: boolean,
+): string[] | undefined {
+  let browsers: any;
+  try {
+    browsers = browserslist.loadConfig({
+      path: dir,
+      env: isDevelopment ? 'development' : 'production',
+    });
+  } catch {
+    consola.debug('[browsers]', 'fail to load config of browsers');
+  }
+  return browsers;
 }
 
 export default compilationPlugin;

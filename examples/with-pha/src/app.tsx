@@ -1,4 +1,4 @@
-import type { Manifest } from '@ice/plugin-pha/esm/types';
+import type { Manifest } from '@ice/plugin-pha/types';
 
 export const phaManifest: Manifest = {
   title: 'test',
@@ -15,6 +15,7 @@ export const phaManifest: Manifest = {
     },
     'home',
     'about',
+    'custom',
   ],
 };
 

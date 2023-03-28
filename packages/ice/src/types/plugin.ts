@@ -1,18 +1,26 @@
 import type webpack from '@ice/bundles/compiled/webpack';
 import type { _Plugin, CommandArgs, TaskConfig } from 'build-scripts';
 import type { Configuration, Stats, WebpackOptionsNormalized } from '@ice/bundles/compiled/webpack';
-import type { BuildOptions, BuildResult } from 'esbuild';
+import type { esbuild } from '@ice/bundles';
 import type { NestedRouteManifest } from '@ice/route-manifest';
-import type { Config } from '@ice/webpack-config/esm/types';
-import type { AppConfig, AssetsManifest } from '@ice/runtime/esm/types';
-import type { DeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport, Render } from './generator.js';
+import type { Config } from '@ice/webpack-config/types';
+import type { AppConfig, AssetsManifest } from '@ice/runtime/types';
+import type ServerCompileTask from '../utils/ServerCompileTask.js';
+import type { CreateLogger } from '../utils/logger.js';
+import type { DeclarationData, TargetDeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport, Render } from './generator.js';
+
+export type { CreateLoggerReturnType } from '../utils/logger.js';
 
 type AddExport = (exportData: DeclarationData) => void;
+type AddTargetExport = (exportData: TargetDeclarationData) => void;
+type AddEntryCode = (callback: (code: string) => string) => void;
 type RemoveExport = (removeSource: string | string[]) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
+type GetExportList = (key: string, target?: string) => (DeclarationData | TargetDeclarationData)[];
 
 type ServerCompilerBuildOptions = Pick<
-  BuildOptions,
+  esbuild.BuildOptions,
+  'banner' |
   'write' |
   'target' |
   'minify' |
@@ -24,25 +32,36 @@ type ServerCompilerBuildOptions = Pick<
   'outdir' |
   'splitting' |
   'platform' |
+  'mainFields' |
   'outExtension' |
   'plugins' |
   'logLevel' |
   'sourcemap' |
-  'metafile'
+  'metafile' |
+  'incremental'
 >;
+
+export type ServerBuildResult = Partial<esbuild.BuildResult & { serverEntry: string; error: any }>;
+
+export interface CompilerOptions {
+  swc?: Config['swcOptions'];
+  preBundle?: boolean;
+  externalDependencies?: boolean;
+  transformEnv?: boolean;
+  compilationInfo?: {
+    assetsManifest?: AssetsManifest;
+  };
+  redirectImports?: Config['redirectImports'];
+  removeOutputs?: boolean;
+  runtimeDefineVars?: Record<string, string>;
+  enableEnv?: boolean;
+  isServer?: boolean;
+}
 
 export type ServerCompiler = (
   buildOptions: ServerCompilerBuildOptions,
-  options?: {
-    swc?: Config['swcOptions'];
-    preBundle?: boolean;
-    externalDependencies?: boolean;
-    transformEnv?: boolean;
-    assetsManifest?: AssetsManifest;
-    redirectImports?: Config['redirectImports'];
-    removeOutputs?: boolean;
-  }
-) => Promise<Partial<BuildResult & { serverEntry: string; error: any }>>;
+  options?: CompilerOptions,
+) => Promise<ServerBuildResult>;
 export type WatchEvent = [
   pattern: RegExp | string,
   event: (eventName: EventName, filePath: string) => void,
@@ -58,6 +77,7 @@ export interface Urls {
 
 export type GetAppConfig = (exportNames?: string[]) => Promise<any>;
 export type GetRoutesConfig = (specifyRoutId?: string) => Promise<any>;
+export type GetDataloaderConfig = (specifyRoutId?: string) => Promise<any>;
 
 interface BeforeCommandRunOptions {
   commandArgs: CommandArgs;
@@ -66,6 +86,7 @@ interface BeforeCommandRunOptions {
   urls?: Urls;
   getAppConfig: GetAppConfig;
   getRoutesConfig: GetRoutesConfig;
+  getDataloaderConfig: GetDataloaderConfig;
   serverCompiler: ServerCompiler;
 }
 
@@ -80,11 +101,13 @@ interface AfterCommandCompileOptions {
   getRoutesConfig: GetRoutesConfig;
   serverCompiler: ServerCompiler;
   webpackConfigs: Configuration | Configuration[];
+  output: {
+    paths: Array<string>;
+  };
 }
 
 interface DevServerInfo {
   devPath: string;
-  hashChar: string;
 }
 
 export interface HookLifecycle {
@@ -109,6 +132,7 @@ export interface ExtendsPluginAPI {
   };
   generator: {
     addExport: AddExport;
+    addTargetExport: AddTargetExport;
     addExportTypes: AddExport;
     addRuntimeOptions: AddExport;
     removeRuntimeOptions: RemoveExport;
@@ -118,16 +142,18 @@ export interface ExtendsPluginAPI {
     modifyRenderData: ModifyRenderData;
     render: Render;
     addDataLoaderImport: AddDataLoaderImport;
+    addEntryCode: AddEntryCode;
+    getExportList: GetExportList;
   };
   watch: {
     addEvent?: (watchEvent: WatchEvent) => void;
     removeEvent?: (name: string) => void;
   };
-  serverCompileTask: {
-    set: (task: ReturnType<ServerCompiler>) => void;
-    get: () => ReturnType<ServerCompiler>;
-  };
+  serverCompileTask: ServerCompileTask;
+  getRouteManifest: () => Routes;
+  getFlattenRoutes: () => string[];
   dataCache: Map<string, string>;
+  createLogger: CreateLogger;
 }
 
 export interface OverwritePluginAPI extends ExtendsPluginAPI {

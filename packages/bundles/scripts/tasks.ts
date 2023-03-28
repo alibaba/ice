@@ -19,10 +19,11 @@ export const taskExternals = {
   postcss: 'postcss',
   '@swc/core': '@swc/core',
   'jest-worker': 'jest-worker',
+  esbuild: 'esbuild',
 };
 
 const commonDeps = ['terser', 'tapable', 'cssnano', 'terser-webpack-plugin', 'webpack', 'schema-utils',
-'lodash', 'postcss-preset-env', 'loader-utils', 'find-up', 'common-path-prefix', 'acorn', 'magic-string'];
+  'lodash', 'postcss-preset-env', 'loader-utils', 'find-up', 'common-path-prefix', 'magic-string'];
 
 const webpackDevServerDeps = ['bonjour-service', 'colorette', 'compression', 'connect-history-api-fallback',
 'default-gateway', 'express', 'graceful-fs', 'http-proxy-middleware',
@@ -57,12 +58,18 @@ const tasks = [
     'less-loader', 'postcss-loader', 'sass-loader', 'css-loader',
     'postcss-preset-env', 'postcss-nested', 'postcss-modules', 'postcss-plugin-rpx2vw',
     'webpack-bundle-analyzer', 'es-module-lexer', 'terser', 'trusted-cert', 'magic-string',
-    'eslint-webpack-plugin', 'copy-webpack-plugin', 'cacache', 'ora', 'unplugin', 'acorn',
+    'eslint-webpack-plugin', 'copy-webpack-plugin', 'cacache', 'ora', 'unplugin',
     // Dependencies of react-refresh-webpack-plugin.
     'loader-utils', 'source-map', 'find-up', 'common-path-prefix',
     // Dependencies of webpack-dev-server.
     ...webpackDevServerDeps,
   ].map((pkgName) => ({ pkgName, externals: taskExternals })),
+  {
+    pkgName: 'esbuild-register',
+    file: 'node_modules/esbuild-register/dist/node.js',
+    externals: taskExternals,
+    bundleName: 'node.js',
+  },
   {
     pkgName: 'unplugin',
     declaration: false,

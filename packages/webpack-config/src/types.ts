@@ -38,10 +38,10 @@ interface ConfigurationCtx<T = typeof webpack> extends Config {
 type Experimental = Configuration['experiments'];
 interface SwcOptions {
   removeExportExprs?: string[];
-  compilationConfig?: SwcCompilationConfig;
-  keepPlatform?: 'node' | 'web' | 'weex' | 'miniapp' | 'wechat-miniprogram' | 'bytedance-microapp' | 'baidu-smartprogram' | 'kuaishou-miniprogram';
+  compilationConfig?: SwcCompilationConfig | ((source: string, id: string) => SwcCompilationConfig);
   keepExports?: string[];
   getRoutePaths?: Function;
+  nodeTransform?: boolean;
 }
 
 interface ImportDeclaration {
@@ -118,7 +118,7 @@ export interface Config {
 
   polyfill?: 'usage' | 'entry' | false;
   // You can use `browserslist` to automatically configure supported browsers if set to be true.
-  env?: boolean;
+  enableEnv?: boolean;
 
   compileIncludes?: (string | RegExp)[];
 
@@ -148,7 +148,7 @@ export interface Config {
     [key: string]: string;
   };
 
-  splitChunks?: boolean;
+  splitChunks?: boolean | 'vendors' | 'chunks' | webpack.Configuration['optimization']['splitChunks'];
 
   optimization?: Optimization;
 
@@ -186,4 +186,8 @@ export interface Config {
   getAppConfig?: (exportNamse?: string[]) => Promise<any>;
 
   getRoutesConfig?: (specifyRoutId?: string) => Promise<any>;
+
+  useDevServer?: boolean;
+
+  useDataLoader?: boolean;
 }

@@ -20,13 +20,15 @@ import { AppDataProvider, getAppData } from './AppData.js';
 import getAppConfig from './appConfig.js';
 import { DocumentContextProvider } from './Document.js';
 import { loadRouteModules, loadRoutesData, getRoutesConfig } from './routes.js';
-import { piperToString, renderToNodeStream } from './server/streamRender.js';
+import { pipeToString, renderToNodeStream } from './server/streamRender.js';
 import { createStaticNavigator } from './server/navigator.js';
 import type { NodeWritablePiper } from './server/streamRender.js';
 import getRequestContext from './requestContext.js';
 import matchRoutes from './matchRoutes.js';
 import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
 import DefaultAppRouter from './AppRouter.js';
+import { renderHTMLToJS } from './renderHTMLToJS.js';
+import addLeadingSlash from './utils/addLeadingSlash.js';
 
 interface RenderOptions {
   app: AppExport;
@@ -46,6 +48,8 @@ interface RenderOptions {
     [key: string]: PageConfig;
   };
   runtimeOptions?: Record<string, any>;
+  distType?: Array<'html' | 'javascript'>;
+  serverData?: any;
 }
 
 interface Piper {
@@ -58,9 +62,41 @@ interface RenderResult {
 }
 
 /**
+ * Render and send the result with both entry bundle and html.
+ */
+export async function renderToEntry(
+  requestContext: ServerContext,
+  renderOptions: RenderOptions,
+) {
+  const result = await renderToHTML(requestContext, renderOptions);
+  const { value } = result;
+
+  let jsOutput;
+  const {
+    distType = ['html'],
+  } = renderOptions;
+  if (value && distType.includes('javascript')) {
+    jsOutput = await renderHTMLToJS(value);
+  }
+
+  let htmlOutput;
+  if (distType.includes('html')) {
+    htmlOutput = result;
+  }
+
+  return {
+    ...htmlOutput,
+    jsOutput,
+  };
+}
+
+/**
  * Render and return the result as html string.
  */
-export async function renderToHTML(requestContext: ServerContext, renderOptions: RenderOptions): Promise<RenderResult> {
+export async function renderToHTML(
+  requestContext: ServerContext,
+  renderOptions: RenderOptions,
+): Promise<RenderResult> {
   const result = await doRender(requestContext, renderOptions);
 
   const { value } = result;
@@ -72,17 +108,17 @@ export async function renderToHTML(requestContext: ServerContext, renderOptions:
   const { pipe, fallback } = value;
 
   try {
-    const html = await piperToString(pipe);
+    const entryStr = await pipeToString(pipe);
 
     return {
-      value: html,
+      value: entryStr,
       statusCode: 200,
     };
   } catch (error) {
     if (renderOptions.disableFallback) {
       throw error;
     }
-    console.error('PiperToString error, downgrade to CSR.', error);
+    console.error('PipeToString error, downgrade to CSR.', error);
     // downgrade to CSR.
     const result = fallback();
     return result;
@@ -106,17 +142,32 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
-    try {
-      await pipeToResponse(res, pipe);
-    } catch (error) {
-      if (renderOptions.disableFallback) {
-        throw error;
-      }
-      console.error('PiperToResponse error, downgrade to CSR.', error);
-      // downgrade to CSR.
-      const result = await fallback();
-      sendResult(res, result);
-    }
+    return new Promise<void>((resolve, reject) => {
+      // Send stream result to ServerResponse.
+      pipe(res, {
+        onShellError: async (err) => {
+          if (renderOptions.disableFallback) {
+            reject(err);
+          }
+
+          // downgrade to CSR.
+          console.error('PipeToResponse onShellError, downgrade to CSR.');
+          console.error(err);
+          const result = await fallback();
+          sendResult(res, result);
+          resolve();
+        },
+        onError: async (err) => {
+          // onError triggered after shell ready, should not downgrade to csr
+          // and should not be throw to break the render process
+          console.error('PipeToResponse error.');
+          console.error(err);
+        },
+        onAllReady: () => {
+          resolve();
+        },
+      });
+    });
   }
 }
 
@@ -127,15 +178,6 @@ async function sendResult(res: ServerResponse, result: RenderResult) {
   res.statusCode = result.statusCode;
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.end(result.value);
-}
-
-/**
- * Send stream result to ServerResponse.
- */
-function pipeToResponse(res: ServerResponse, pipe: NodeWritablePiper) {
-  return new Promise((resolve, reject) => {
-    pipe(res, (err) => (err ? reject(err) : resolve(null)));
-  });
 }
 
 async function doRender(serverContext: ServerContext, renderOptions: RenderOptions): Promise<RenderResult> {
@@ -151,8 +193,9 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     runtimeModules,
     renderMode,
     runtimeOptions,
+    serverData,
   } = renderOptions;
-  const finalBasename = serverOnlyBasename || basename;
+  const finalBasename = addLeadingSlash(serverOnlyBasename || basename);
   const location = getLocation(req.url);
 
   const requestContext = getRequestContext(location, serverContext);
@@ -166,9 +209,12 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     appData,
     routesData: null,
     routesConfig: null,
+    renderMode,
     assetsManifest,
     basename: finalBasename,
     matches: [],
+    requestContext,
+    serverData,
   };
   const runtime = new Runtime(appContext, runtimeOptions);
   runtime.setAppRouter(DefaultAppRouter);
@@ -184,21 +230,20 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
       console.error('Error: get app data error when SSR.', err);
     }
   }
+
   // HashRouter loads route modules by the CSR.
   if (appConfig?.router?.type === 'hash') {
     return renderDocument({ matches: [], renderOptions });
   }
 
   const matches = matchRoutes(routes, location, finalBasename);
-  if (!matches.length) {
+  const routePath = getCurrentRoutePath(matches);
+  if (documentOnly) {
+    return renderDocument({ matches, routePath, renderOptions });
+  } else if (!matches.length) {
     return render404();
   }
 
-  const routePath = getCurrentRoutePath(matches);
-
-  if (documentOnly) {
-    return renderDocument({ matches, routePath, renderOptions });
-  }
   try {
     const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
     const routesData = await loadRoutesData(matches, requestContext, routeModules, { renderMode });
@@ -207,6 +252,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     if (runtimeModules.commons) {
       await Promise.all(runtimeModules.commons.map(m => runtime.loadModule(m)).filter(Boolean));
     }
+
     return await renderServerEntry({
       runtime,
       matches,
@@ -279,7 +325,7 @@ async function renderServerEntry(
     </AppDataProvider>
   );
 
-  const pipe = renderToNodeStream(element, false);
+  const pipe = renderToNodeStream(element);
 
   const fallback = () => {
     return renderDocument({ matches, routePath, renderOptions, downgrade: true });
@@ -299,11 +345,17 @@ interface RenderDocumentOptions {
   routePath?: string;
   downgrade?: boolean;
 }
+
 /**
  * Render Document for CSR.
  */
 function renderDocument(options: RenderDocumentOptions): RenderResult {
-  const { matches, renderOptions, routePath, downgrade }: RenderDocumentOptions = options;
+  const {
+    matches,
+    renderOptions,
+    routePath,
+    downgrade,
+  }: RenderDocumentOptions = options;
 
   const {
     routes,
@@ -312,6 +364,7 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
     Document,
     basename,
     routesConfig = {},
+    serverData,
   } = renderOptions;
 
   const routesData = null;
@@ -338,13 +391,14 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
     routePath,
     basename,
     downgrade,
+    serverData,
   };
 
   const documentContext = {
     main: null,
   };
 
-  const html = ReactDOMServer.renderToString(
+  const htmlStr = ReactDOMServer.renderToString(
     <AppContextProvider value={appContext}>
       <DocumentContextProvider value={documentContext}>
         <Document pagePath={routePath} />
@@ -353,7 +407,7 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
   );
 
   return {
-    value: `<!DOCTYPE html>${html}`,
+    value: `<!DOCTYPE html>${htmlStr}`,
     statusCode: 200,
   };
 }

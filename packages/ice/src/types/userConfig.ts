@@ -1,8 +1,8 @@
-import type { DefineRouteFunction } from '@ice/route-manifest';
+import type { DefineRouteFunction, RouteItem } from '@ice/route-manifest';
 import type { PluginList } from 'build-scripts';
 import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import type { ProcessOptions } from '@ice/bundles';
-import type { Config, ModifyWebpackConfig, MinimizerOptions } from '@ice/webpack-config/esm/types';
+import type { Config, ModifyWebpackConfig, MinimizerOptions } from '@ice/webpack-config/types';
 import type { OverwritePluginAPI } from './plugin';
 
 interface SyntaxFeatures {
@@ -25,7 +25,17 @@ interface IgnorePattern {
   contextRegExp?: RegExp;
 }
 
+type DistType = 'javascript' | 'html';
+
+interface Fetcher {
+  packageName: string;
+  method?: string;
+}
+
 export interface UserConfig {
+  output?: {
+    distType: Array<DistType> | DistType;
+  };
   alias?: Record<string, string | false>;
   define?: Record<string, string | boolean>;
   devPublicPath?: string;
@@ -41,6 +51,8 @@ export interface UserConfig {
   routes?: {
     ignoreFiles?: string[];
     defineRoutes?: (defineRoute: DefineRouteFunction) => void;
+    config?: RouteItem[];
+    injectInitialEntry?: boolean;
   };
   plugins?: PluginList<Config, OverwritePluginAPI>;
   dropLogLevel?: 'trace' | 'debug' | 'log' | 'info' | 'warn' | 'error';
@@ -52,6 +64,7 @@ export interface UserConfig {
   ssr?: boolean;
   ssg?: boolean;
   server?: {
+    onDemand?: boolean;
     format?: 'esm' | 'cjs';
     bundle?: boolean;
     ignores?: IgnorePattern[];
@@ -62,7 +75,14 @@ export interface UserConfig {
   experimental?: Config['experimental'];
   transform?: UnpluginOptions['transform'];
   syntaxFeatures?: SyntaxFeatures;
+  /**
+   * @deprecated
+   * Please use `codeSplitting` instead
+   */
   splitChunks?: boolean;
-  dataLoader?: boolean;
+  codeSplitting?: 'page' | 'vendors' | boolean;
+  dataLoader?: {
+    fetcher?: Fetcher;
+  } | Boolean;
   crossOriginLoading?: Config['output']['crossOriginLoading'];
 }

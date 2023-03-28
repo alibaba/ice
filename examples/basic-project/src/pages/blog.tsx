@@ -1,5 +1,8 @@
 import { Link, useData, useConfig, definePageConfig } from 'ice';
+import { isWeb } from '@uni/env';
 
+
+console.log('isWeb', isWeb);
 export default function Blog() {
   const data = useData();
   const config = useConfig();

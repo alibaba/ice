@@ -1,5 +1,4 @@
 /* @jsx createElement */
-import { createElement } from 'rax';
 import { Meta, Title, Links, Main, Scripts } from 'ice';
 
 function Document() {

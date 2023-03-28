@@ -1,0 +1,22 @@
+<% if(appWorkerPath) {-%>import '<%- appWorkerPath %>';<% } -%>
+<% if(!!loaders && !!dataLoader) {-%>
+import dataloaderConfig from './dataloader-config';
+
+addEventListener('beforepageload', (pageInfos = {}) => {
+  const {
+    key,
+  } = pageInfos.detail || {};
+  const config = dataloaderConfig[key];
+  if (config) {
+    if (typeof config === 'function') {
+      config();
+    } else if (Array.isArray(config)) {
+      config.forEach(item => {
+        if (typeof item === 'function') {
+          item();
+        }
+      });
+    }
+  }
+});
+<% } -%>

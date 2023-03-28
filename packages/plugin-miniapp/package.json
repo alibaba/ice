@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-miniapp",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "ice.js plugin for miniapp.",
   "license": "MIT",
   "type": "module",
@@ -35,8 +35,8 @@
   "dependencies": {
     "@ice/bundles": "^0.1.0",
     "@ice/miniapp-loader": "^1.0.0",
-    "@ice/miniapp-react-dom": "^1.0.0",
-    "@ice/miniapp-runtime": "^1.0.0",
+    "@ice/miniapp-react-dom": "^1.0.1",
+    "@ice/miniapp-runtime": "^1.0.2",
     "@ice/shared": "^1.0.0",
     "acorn-walk": "^8.2.0",
     "chalk": "^4.0.0",
@@ -47,12 +47,15 @@
     "sax": "^1.2.4"
   },
   "devDependencies": {
-    "@ice/app": "^3.0.0",
+    "@ice/app": "^3.1.1",
     "@ice/runtime": "^1.0.0",
     "webpack": "^5.73.0"
   },
   "repository": {
     "type": "http",
     "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-miniapp"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

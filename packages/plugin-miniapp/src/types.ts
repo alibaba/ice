@@ -24,7 +24,7 @@ export interface FileType {
   script: string;
   xs?: string;
 }
-export interface PlatformConfig {
+export interface TargetConfig {
   globalObject: string;
   projectConfigJson?: string;
   fileType: FileType;
@@ -34,8 +34,8 @@ export interface PlatformConfig {
 export interface MiniappWebpackOptions {
   rootDir: string;
   env?: Record<string, string>;
-  template: PlatformConfig['template'];
-  fileType: PlatformConfig['fileType'];
+  template: TargetConfig['template'];
+  fileType: TargetConfig['fileType'];
   configAPI: {
     getAppConfig: Config['getAppConfig'];
     getRoutesConfig: Config['getRoutesConfig'];

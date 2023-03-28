@@ -1,5 +1,5 @@
 import { request as requestAPI, defineDataLoader } from 'ice';
-import { defineRequestConfig } from '@ice/plugin-request/esm/types';
+import { defineRequestConfig } from '@ice/plugin-request/types';
 
 export const dataLader = defineDataLoader(async () => {
   try {

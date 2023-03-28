@@ -41,7 +41,7 @@ const config = {
           sidebarPath: require.resolve('./config/sidebars.js'),
           // TODO
           editUrl:
-            'https://github.com/ice-lab/ice-next/edit/master/website/',
+            'https://github.com/alibaba/ice/edit/master/website/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

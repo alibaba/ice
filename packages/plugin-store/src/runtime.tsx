@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { RuntimePlugin, AppProvider, RouteWrapper } from '@ice/runtime/esm/types';
+import type { RuntimePlugin, AppProvider, RouteWrapper } from '@ice/runtime/types';
 import { PAGE_STORE_INITIAL_STATES, PAGE_STORE_PROVIDER } from './constants.js';
 import type { StoreConfig } from './types.js';
 
@@ -30,7 +30,7 @@ const runtime: RuntimePlugin = async ({ appContext, addWrapper, addProvider, use
   const StoreProviderWrapper: RouteWrapper = ({ children, routeId }) => {
     const { routeModules } = useAppContext();
     const routeModule = routeModules[routeId];
-    if (routeModule[PAGE_STORE_PROVIDER]) {
+    if (routeModule?.[PAGE_STORE_PROVIDER]) {
       const Provider = routeModule[PAGE_STORE_PROVIDER];
       const initialStates = routeModule[PAGE_STORE_INITIAL_STATES];
       if (initialStates) {

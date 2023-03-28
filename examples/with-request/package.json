@@ -1,5 +1,6 @@
 {
-  "name": "with-request",
+  "name": "@examples/with-request",
+  "private": true,
   "version": "1.0.0",
   "scripts": {
     "start": "ice start",

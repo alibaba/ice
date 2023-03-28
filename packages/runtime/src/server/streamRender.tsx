@@ -1,73 +1,38 @@
 import * as Stream from 'stream';
 import type * as StreamType from 'stream';
 import * as ReactDOMServer from 'react-dom/server';
+import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 
 const { Writable } = Stream;
 
 export type NodeWritablePiper = (
   res: StreamType.Writable,
-  next?: (err?: Error) => void
+  options?: RenderToPipeableStreamOptions,
 ) => void;
 
 export function renderToNodeStream(
   element: React.ReactElement,
-  generateStaticHTML: boolean,
 ): NodeWritablePiper {
-  return (res, next) => {
-    const { pipe } = ReactDOMServer.renderToPipeableStream(
-      element,
-      {
-        onShellReady() {
-          if (!generateStaticHTML) {
-            pipe(res);
-          }
-        },
-        onAllReady() {
-          if (generateStaticHTML) {
-            pipe(res);
-          }
-          next();
-        },
-        onError(error: Error) {
-          next(error);
-        },
+  return (res, options) => {
+    const { pipe } = ReactDOMServer.renderToPipeableStream(element, {
+      onShellReady() {
+        pipe(res);
+        options?.onShellReady && options.onShellReady();
       },
-    );
-  };
-}
-
-/**
- * Environments with Web Streams, like Deno and modern edge runtimes, should use renderToReadableStream instead.
- */
-export function renderToReadableStream(
-  element: React.ReactElement,
-): NodeWritablePiper {
-  return (res, next) => {
-    const readable = (ReactDOMServer as any).renderToReadableStream(element, {
-      onError: (error) => {
-        next(error);
+      onShellError(error) {
+        options?.onShellError && options?.onShellError(error);
+      },
+      onError(error) {
+        options?.onError && options?.onError(error);
+      },
+      onAllReady() {
+        options?.onAllReady && options?.onAllReady();
       },
     });
-
-    const reader = readable.getReader();
-    const decoder = new TextDecoder();
-    const process = () => {
-      reader.read().then(({ done, value }) => {
-        if (done) {
-          next();
-        } else {
-          const s = typeof value === 'string' ? value : decoder.decode(value);
-          res.write(s);
-          process();
-        }
-      });
-    };
-
-    process();
   };
 }
 
-export function piperToString(input): Promise<string> {
+export function pipeToString(input): Promise<string> {
   return new Promise((resolve, reject) => {
     const bufferedChunks: any[] = [];
 
@@ -87,10 +52,10 @@ export function piperToString(input): Promise<string> {
       reject(error);
     });
 
-    input(stream, (error) => {
-      if (error) {
+    input(stream, {
+      onError: (error) => {
         reject(error);
-      }
+      },
     });
   });
 }

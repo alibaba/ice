@@ -27,6 +27,7 @@ coverage
 .happypack
 .vscode
 .tmp
+.cache
 *.swp
 *.dia~
 *.temp.json
@@ -53,6 +54,5 @@ compiled
 .docusaurus
 .cache-loader
 
-.env
 *.local
 .fleet/

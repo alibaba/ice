@@ -15,6 +15,7 @@ import type {
   AppProvider,
   RouteWrapper,
   RenderMode,
+  DistType,
   DataLoaderConfig,
   RouteWrapperConfig,
 } from './types.js';
@@ -33,6 +34,14 @@ import {
   Main,
   Data,
 } from './Document.js';
+import type {
+  MetaType,
+  TitleType,
+  LinksType,
+  ScriptsType,
+  DataType,
+  MainType,
+} from './Document.js';
 import dataLoader, { defineDataLoader, defineServerDataLoader, defineStaticDataLoader } from './dataLoader.js';
 import AppRouter from './AppRouter.js';
 import AppErrorBoundary from './AppErrorBoundary.js';
@@ -42,6 +51,7 @@ import KeepAliveOutlet from './KeepAliveOutlet.js';
 import ClientOnly from './ClientOnly.js';
 import useMounted from './useMounted.js';
 import usePageLifecycle from './usePageLifecycle.js';
+import { withSuspense, useSuspenseData } from './Suspense.js';
 
 export {
   getAppConfig,
@@ -80,8 +90,12 @@ export {
   AppRouter,
   AppErrorBoundary,
   ClientOnly,
+
   useMounted,
   usePageLifecycle,
+
+  withSuspense,
+  useSuspenseData,
 };
 
 export type {
@@ -95,6 +109,13 @@ export type {
   AppProvider,
   RouteWrapper,
   RenderMode,
+  DistType,
   DataLoaderConfig,
   RunClientAppOptions,
+  MetaType,
+  TitleType,
+  LinksType,
+  ScriptsType,
+  DataType,
+  MainType,
 };

@@ -1,7 +1,7 @@
 import { createHash } from 'crypto';
 
 export function getCSSModuleLocalIdent(filename: string, localName: string) {
-  const hash = createHash('md4');
+  const hash = createHash('md5');
   hash.update(Buffer.from(filename + localName, 'utf8'));
   const localIdentHash = hash.digest('base64')
     // Remove all leading digits

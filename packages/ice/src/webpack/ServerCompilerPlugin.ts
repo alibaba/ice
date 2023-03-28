@@ -1,5 +1,5 @@
 import type { Compiler, Compilation } from 'webpack';
-import type { ExtendsPluginAPI, ServerCompiler } from '../types/plugin.js';
+import type { ExtendsPluginAPI, ServerCompiler, ServerBuildResult } from '../types/plugin.js';
 
 const pluginName = 'ServerCompilerPlugin';
 
@@ -12,7 +12,9 @@ export default class ServerCompilerPlugin {
   private serverCompileTask: ExtendsPluginAPI['serverCompileTask'];
   private ensureRoutesConfig: () => Promise<void>;
   private isCompiling: boolean;
-  private lastAssets: string;
+  private task: ReturnType<ServerCompiler>;
+  private compilerOptions: Parameters<ServerCompiler>[1];
+  public buildResult: ServerBuildResult;
 
   public constructor(
     serverCompiler: ServerCompiler,
@@ -22,27 +24,36 @@ export default class ServerCompilerPlugin {
   ) {
     this.serverCompiler = serverCompiler;
     this.serverCompilerOptions = serverCompilerOptions;
+    const [, customConfig = {}] = this.serverCompilerOptions;
     this.serverCompileTask = serverCompileTask;
     this.ensureRoutesConfig = ensureRoutesConfig;
+    this.compilerOptions = {
+      ...customConfig,
+      compilationInfo: {},
+    };
   }
 
   public compileTask = async (compilation?: Compilation) => {
-    const [buildOptions, customConfig = {}] = this.serverCompilerOptions;
-      let task = null;
-      if (!this.isCompiling) {
-        await this.ensureRoutesConfig();
-        let assets = this.lastAssets;
-        if (compilation) {
-          assets = compilation.assets['assets-manifest.json'].source().toString();
-          // Store last assets for compilation Document.
-          this.lastAssets = assets;
-        }
-        task = this.serverCompiler(buildOptions, {
-          ...customConfig,
-          assetsManifest: JSON.parse(assets),
+    const [buildOptions] = this.serverCompilerOptions;
+    if (!this.isCompiling) {
+      await this.ensureRoutesConfig();
+      if (compilation) {
+        // Option of compilationInfo need to be object, while it may changed during multi-time compilation.
+        this.compilerOptions.compilationInfo.assetsManifest =
+          JSON.parse(compilation.assets['assets-manifest.json'].source().toString());
+      }
+      // For first time, we create a new task.
+      // The next time, we use incremental build so do not create task again.
+      if (!this.task) {
+        this.task = this.serverCompiler(buildOptions, this.compilerOptions);
+        this.task.then((buildResult) => {
+          this.buildResult = buildResult;
+          if (this.buildResult.error) {
+            this.task = null;
+          }
         });
       }
-      return task;
+    }
   };
 
   public apply(compiler: Compiler) {
@@ -51,11 +62,25 @@ export default class ServerCompilerPlugin {
     });
     compiler.hooks.emit.tapPromise(pluginName, async (compilation: Compilation) => {
       this.isCompiling = false;
-      const task = await this.compileTask(compilation);
+      await this.compileTask(compilation);
+
+      const compilerTask = this.buildResult?.rebuild
+        ? this.buildResult.rebuild()
+          .then((result) => {
+            return {
+              // Pass original buildResult, because it's returned serverEntry.
+              ...this.buildResult,
+              result,
+            };
+          })
+          .catch(({ errors }) => {
+            return { error: errors };
+          })
+        : this.task;
       if (this.serverCompileTask) {
-        this.serverCompileTask.set(task);
+        this.serverCompileTask.set(compilerTask);
       } else {
-        return task;
+        return compilerTask;
       }
     });
   }

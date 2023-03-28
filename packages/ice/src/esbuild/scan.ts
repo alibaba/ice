@@ -4,9 +4,9 @@ import fse from 'fs-extra';
 import type { Plugin } from 'esbuild';
 import fg from 'fast-glob';
 import findUp from 'find-up';
-import consola from 'consola';
 import { resolveId } from '../service/analyze.js';
 import formatPath from '../utils/formatPath.js';
+import { logger } from '../utils/logger.js';
 import { ASSET_TYPES } from './assets.js';
 
 const require = createRequire(import.meta.url);
@@ -18,7 +18,8 @@ export interface DepScanData {
 
 interface Options {
   rootDir: string;
-  alias: Record<string, string | false>;
+  alias: Record<string, string>;
+  ignores: string[];
   deps: Record<string, DepScanData>;
   exclude: string[];
 }
@@ -28,7 +29,7 @@ interface Options {
  */
 const scanPlugin = (options: Options): Plugin => {
   // deps for record scanned imports
-  const { deps, exclude, alias, rootDir } = options;
+  const { deps, exclude, alias, rootDir, ignores = [] } = options;
   const dataUrlRE = /^\s*data:/i;
   const httpUrlRE = /^(https?:)?\/\//;
   const cache = new Map<string, string | false>();
@@ -63,12 +64,12 @@ const scanPlugin = (options: Options): Plugin => {
       pkgNameCache.set(resolved, result);
       return result;
     } catch (err) {
-      consola.error(`cant resolve package of path: ${resolved}`, err);
+      logger.error(`cant resolve package of path: ${resolved}`, err);
     }
   };
 
   return {
-    name: 'esbuild-scan',
+    name: 'esbuild-scan-deps',
     setup(build) {
       // external urls
       build.onResolve({ filter: httpUrlRE }, ({ path }) => ({
@@ -116,8 +117,9 @@ const scanPlugin = (options: Options): Plugin => {
         const resolved = resolve(id, importer);
         if (resolved) {
           // aliased dependencies
-          if (!path.isAbsolute(resolved) && !id.startsWith('.')) {
-            const { pkgPath } = getPackageData(require.resolve(resolved, { paths: [path.dirname(importer)] }));
+          if (!path.isAbsolute(resolved) && !resolved.startsWith('.') && !id.startsWith('.')) {
+            const resolvePath = require.resolve(resolved, { paths: [path.dirname(importer)] });
+            const { pkgPath } = getPackageData(resolvePath);
             deps[id] = {
               name: resolved,
               pkgPath,
@@ -143,11 +145,10 @@ const scanPlugin = (options: Options): Plugin => {
                 external: true,
               };
             }
-            return {
-              path: resolved,
-            };
           }
-        } else if (resolved === false) {
+        }
+
+        if (ignores.includes(id)) {
           // alias set to be false
           return {
             path: id,

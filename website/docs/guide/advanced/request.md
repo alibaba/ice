@@ -1,8 +1,8 @@
-# 网络请求
+---
+order: 0302
+---
 
-:::tip
-小程序端不支持该能力。
-:::
+# HTTP 请求
 
 大部分前端应用都会选择通过 HTTP(s) 协议与后端服务通讯。  
 ice.js 提供了一套从 UI 交互到请求服务端数据的完整方案，通过切面编程的方式统一了数据请求管理，简化了设置参数、错误处理等逻辑的实现。
@@ -341,21 +341,27 @@ const {
 
 ```ts
 import { useRequest } from 'ice';
-// 用法 1：传入字符串
-const { data, error, loading } = useRequest('/api/repo');
+// 用法 1：传入请求地址
+const { data, error, loading, request } = useRequest('/api/repo');
 
-// 用法 2：传入配置对象
-const { data, error, loading } = useRequest({
+request();
+
+// 用法 2：传入 Axios 配置对象
+const { data, error, loading, request } = useRequest({
   url: '/api/repo',
   method: 'get',
 });
 
+request();
+
 // 用法 3：传入 service 函数
-const { data, error, loading, request } = useRequest((id) => ({
+const { data, error, loading, request } = useRequest((id) => Promise.resolve({
   url: '/api/repo',
   method: 'get',
   data: { id },
-});
+}));
+
+request();
 ```
 
 更多使用方式详见 [ahooks/useRequest](https://ahooks.js.org/zh-CN/hooks/use-request/index)
@@ -365,7 +371,7 @@ const { data, error, loading, request } = useRequest((id) => ({
 在实际项目中通常需要对请求进行全局统一的封装，例如配置请求的 baseURL、统一 header、拦截请求和响应等等，这时只需要在应用的的 appConfig 中进行配置即可。
 
 ```ts title="src/app.tsx"
-import { defineRequestConfig } from '@ice/plugin-request/esm/types';
+import { defineRequestConfig } from '@ice/plugin-request/types';
 
 export const requestConfig = defineRequestConfig({
   // 可选的，全局设置 request 是否返回 response 对象，默认为 false
@@ -412,7 +418,7 @@ export const requestConfig = defineRequestConfig({
 在某些复杂场景的应用中，我们也可以配置多个请求，每个配置请求都是单一的实例对象。
 
 ```ts title="src/app.tsx"
-import { defineRequestConfig } from '@ice/plugin-request/esm/types';
+import { defineRequestConfig } from '@ice/plugin-request/types';
 
 export const requestConfig = defineRequestConfig([
   {
@@ -492,7 +498,7 @@ const error = {
 大部分情况下，前端代码里用到的后端接口写的都是相对路径如 `/api/getFoo.json`，然后访问不同环境时浏览器会根据当前域名发起对应的请求。如果域名跟实际请求的接口地址不一致，则需要通过 `request.baseURL` 来配置：
 
 ```ts title="src/app.tsx"
-import { defineRequestConfig } from '@ice/plugin-request/esm/types';
+import { defineRequestConfig } from '@ice/plugin-request/types';
 
 export const requestConfig = defineRequestConfig({
   baseURL: '//service.example.com/api',
@@ -513,7 +519,7 @@ BASEURL=https://example.com/api
 在 `src/app.tsx` 中配置 `request.baseURL`:
 
 ```ts title="src/app.tsx"
-import { defineRequestConfig } from '@ice/plugin-request/esm/types';
+import { defineRequestConfig } from '@ice/plugin-request/types';
 
 export const requestConfig = defineRequestConfig({
   baseURL: process.env.BASEURL,

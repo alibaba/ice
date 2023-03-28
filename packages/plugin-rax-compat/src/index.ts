@@ -1,7 +1,6 @@
 import fs from 'fs';
-import path from 'path';
 import { createRequire } from 'module';
-import type { Plugin } from '@ice/app/esm/types';
+import type { Plugin } from '@ice/app/types';
 import type { RuleSetRule } from 'webpack';
 import consola from 'consola';
 import merge from 'lodash.merge';
@@ -23,6 +22,9 @@ const alias = {
   'rax-find-dom-node': require.resolve('rax-compat/find-dom-node'),
   'rax-is-valid-element': require.resolve('rax-compat/is-valid-element'),
   'rax-unmount-component-at-node': require.resolve('rax-compat/unmount-component-at-node'),
+
+  'rax-compat/runtime/jsx-dev-runtime': require.resolve('rax-compat/runtime/jsx-dev-runtime'),
+  'rax-compat/runtime/jsx-runtime': require.resolve('rax-compat/runtime/jsx-runtime'),
 };
 
 const ruleSetStylesheet = {
@@ -65,16 +67,31 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
     onGetConfig((config) => {
       // Reset jsc.transform.react.runtime to classic.
       config.swcOptions = merge(config.swcOptions || {}, {
-        compilationConfig: {
-          jsc: {
-            transform: {
-              react: {
-                runtime: 'classic',
-                pragma: 'createElement',
-                pragmaFrag: 'Fragment',
+        compilationConfig: (source: string) => {
+          const isRaxComponent = /from\s['"]rax['"]/.test(source);
+          if (isRaxComponent) {
+            const hasJSXComment = source.indexOf('@jsx createElement') !== -1;
+            if (hasJSXComment) {
+              return {
+                jsc: {
+                  transform: {
+                    react: {
+                      runtime: 'classic',
+                    },
+                  },
+                },
+              };
+            }
+            return {
+              jsc: {
+                transform: {
+                  react: {
+                    importSource: 'rax-compat/runtime',
+                  },
+                },
               },
-            },
-          },
+            };
+          }
         },
       });
 
@@ -238,16 +255,8 @@ const inlineStylePlugin = () => {
   return {
     name: 'esbuild-inline-style',
     setup: (build) => {
-      build.onResolve({ filter: /\.(css|sass|scss|less)$/ }, (args) => {
-        const absolutePath = path.resolve(args.resolveDir, args.path);
-        return {
-          path: absolutePath,
-          namespace: 'css-content',
-        };
-      });
-
-      build.onLoad({ filter: /.*/, namespace: 'css-content' }, async (args) => {
-        const cssContent = fs.readFileSync(args.path, 'utf8');
+      build.onLoad({ filter: /\.(css|sass|scss|less)$/ }, async (args) => {
+        const cssContent = await fs.promises.readFile(args.path, 'utf8');
         const content = await styleSheetLoader(cssContent, args.path.includes('.less') ? 'less' : 'css');
 
         return {

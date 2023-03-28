@@ -2,7 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import minimatch from 'minimatch';
-import { createRouteId, defineRoutes, normalizeSlashes } from './routes.js';
+import { createComponentName, createRouteId, defineRoutes, normalizeSlashes } from './routes.js';
 import type { RouteManifest, DefineRouteFunction, NestedRouteManifest, ConfigRoute } from './routes.js';
 
 export type {
@@ -12,7 +12,13 @@ export type {
   ConfigRoute,
 };
 
-const validRouteChar = ['-', '\\w', '/', ':', '*'];
+export interface RouteItem {
+  path: string;
+  component: string;
+  children?: RouteItem[];
+}
+
+const validRouteChar = ['-', '\\w', '/', ':', '*', '\\[', '\\]', '\\.'];
 
 const routeModuleExts = [
   '.js',
@@ -28,10 +34,12 @@ export function isRouteModuleFile(filename: string): boolean {
   return routeModuleExts.includes(path.extname(filename));
 }
 
+
 export function generateRouteManifest(
   rootDir: string,
   ignoreFiles: string[] = [],
   defineExtraRoutes?: (defineRoute: DefineRouteFunction) => void,
+  routeConfig?: RouteItem[],
 ) {
   const srcDir = path.join(rootDir, 'src');
   const routeManifest: RouteManifest = {};
@@ -61,7 +69,48 @@ export function generateRouteManifest(
       };
     }
   }
+
+  // Add routes by routes config.
+  if (routeConfig) {
+    routeConfig.forEach((routeItem) => {
+      const routes = parseRoute(routeItem);
+      routes.forEach((route) => {
+        routeManifest[route.id] = route;
+      });
+    });
+  }
+
   return routeManifest;
+}
+
+export function parseRoute(routeItem: RouteItem, parentId?: string, parentPath?: string) {
+  const routes = [];
+  const { path: routePath, component, children } = routeItem;
+  const id = createRouteId(component);
+  let index;
+  const currentPath = path.join(parentPath || '/', routePath).split(path.sep).join('/');
+  const isRootPath = currentPath === '/';
+  if (!children && isRootPath) {
+    index = true;
+  }
+  const route: ConfigRoute = {
+    // An absolute child route path must start with the combined path of all its parent routes
+    // Replace the first slash with an empty string to compatible with the route definintion, e.g. /foo
+    path: parentId && routePath !== '/' ? routePath.replace(/^\//, '') : routePath,
+    index,
+    id,
+    parentId,
+    file: component,
+    componentName: createComponentName(id),
+    layout: !!children,
+  };
+  routes.push(route);
+  if (children) {
+    children.forEach((childRoute) => {
+      routes.push(...parseRoute(childRoute, id, currentPath));
+    });
+  }
+  return routes;
 }
 
 export function formatNestedRouteManifest(routeManifest: RouteManifest, parentId?: string): NestedRouteManifest[] {
@@ -123,7 +172,7 @@ function defineConventionalRoutes(
         routeId.slice(parentRoutePath.length + (parentRoutePath ? 1 : 0)),
       );
       const routeFilePath = normalizeSlashes(path.join('src', 'pages', files[routeId]));
-      if (RegExp(`[^${validRouteChar.join(',')}]`).test(routePath)) {
+      if (RegExp(`[^${validRouteChar.join('')}]+`).test(routePath)) {
         throw new Error(`invalid character in '${routeFilePath}'. Only support char: ${validRouteChar.join(', ')}`);
       }
       const isIndexRoute = routeId === 'index' || routeId.endsWith('/index');
@@ -133,7 +182,7 @@ function defineConventionalRoutes(
       if (uniqueRouteId) {
         if (uniqueRoutes.has(uniqueRouteId)) {
           throw new Error(
-            `Path ${JSON.stringify(fullPath)} defined by route ${JSON.stringify(routeFilePath)} 
+            `Path ${JSON.stringify(fullPath)} defined by route ${JSON.stringify(routeFilePath)}
             conflicts with route ${JSON.stringify(uniqueRoutes.get(uniqueRouteId))}`,
           );
         } else {
@@ -166,16 +215,47 @@ function defineConventionalRoutes(
   return defineRoutes(defineNestedRoutes);
 }
 
+const escapeStart = '[';
+const escapeEnd = ']';
+
 export function createRoutePath(routeId: string): string | undefined {
   let result = '';
   let rawSegmentBuffer = '';
+
+  let inEscapeSequence = 0;
+  let skipSegment = false;
 
   const partialRouteId = removeLastLayoutStrFromId(routeId);
 
   for (let i = 0; i < partialRouteId.length; i++) {
     const char = partialRouteId.charAt(i);
-
+    const lastChar = i > 0 ? partialRouteId.charAt(i - 1) : undefined;
     const nextChar = i < partialRouteId.length - 1 ? partialRouteId.charAt(i + 1) : undefined;
+
+    const isNewEscapeSequence = !inEscapeSequence && char === escapeStart && lastChar !== escapeStart;
+    const isCloseEscapeSequence = inEscapeSequence && char === escapeEnd && nextChar !== escapeEnd;
+
+    if (skipSegment) {
+      if (char === '/' || char === '.' || char === path.win32.sep) {
+        skipSegment = false;
+      }
+      continue;
+    }
+    // We try to get the string in the escape sequence. For example, try to get the `index` string in `[index]`.
+    if (isNewEscapeSequence) {
+      inEscapeSequence++;
+      continue;
+    }
+
+    if (isCloseEscapeSequence) {
+      inEscapeSequence--;
+      continue;
+    }
+
+    if (inEscapeSequence) {
+      result += char;
+      continue;
+    }
 
     if (char === '/' || char === path.win32.sep || char === '.') {
       if (rawSegmentBuffer === 'index' && result.endsWith('index')) {

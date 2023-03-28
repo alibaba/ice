@@ -1,5 +1,6 @@
 ---
 title: 状态管理
+order: 0204
 ---
 
 import Tabs from '@theme/Tabs';
@@ -251,9 +252,9 @@ export default createModel({
 我们可以在 `src/app.ts` 中设置两个 Model 初始状态：
 
 ```ts title="src/app.ts"
-import { defineStoreConfig } from '@ice/plugin-store/esm/runtime';
+import { defineStoreConfig } from '@ice/plugin-store/types';
 
-export const store = defineStoreConfig(async () => {
+export const storeConfig = defineStoreConfig(async () => {
   // 模拟请求后端数据
   // const data = (await fetch('your-url')).json();
   return {

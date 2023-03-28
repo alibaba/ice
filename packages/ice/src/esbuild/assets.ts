@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as mrmime from 'mrmime';
 import fs from 'fs-extra';
 import type { PluginBuild } from 'esbuild';
+import type { AssetsManifest } from '@ice/runtime/types';
 
 export const ASSET_TYPES = [
   // images
@@ -37,14 +38,11 @@ export const ASSET_TYPES = [
 
 const ASSETS_RE = new RegExp(`\\.(${ASSET_TYPES.join('|')})(\\?.*)?$`);
 
-interface AssetsManifest {
-  publicPath: string;
-  assets?: {
-    [assetPath: string]: string;
-  };
+interface CompilationInfo {
+  assetsManifest?: AssetsManifest;
 }
 
-const createAssetsPlugin = (assetsManifest: AssetsManifest, rootDir: string) => ({
+const createAssetsPlugin = (compilationInfo: CompilationInfo | (() => CompilationInfo), rootDir: string) => ({
   name: 'esbuild-assets',
   setup(build: PluginBuild) {
     build.onResolve({ filter: /assets-manifest.json$/ }, (args) => {
@@ -56,12 +54,14 @@ const createAssetsPlugin = (assetsManifest: AssetsManifest, rootDir: string) => 
       }
     });
     build.onLoad({ filter: /.*/, namespace: 'asset-manifest' }, () => {
+      const manifest = typeof compilationInfo === 'function' ? compilationInfo() : compilationInfo;
       return {
-        contents: JSON.stringify(assetsManifest),
+        contents: JSON.stringify(manifest?.assetsManifest || ''),
         loader: 'json',
       };
     });
     build.onLoad({ filter: ASSETS_RE }, async (args) => {
+      const manifest = typeof compilationInfo === 'function' ? compilationInfo() : compilationInfo;
       if (args.suffix == '?raw') {
         return {
           loader: 'text',
@@ -72,19 +72,19 @@ const createAssetsPlugin = (assetsManifest: AssetsManifest, rootDir: string) => 
       let url = '';
       // Suffix `?url` will generate content hash in assets manifest,
       // keep the same file rule with client side.
-      const contentHash = assetsManifest!.assets[`${relativePath}${args.suffix}`];
+      const contentHash = manifest?.assetsManifest!.assets[`${relativePath}${args.suffix}`];
       if (contentHash) {
         const basename = path.basename(args.path);
         const extname = path.extname(basename);
         const ext = extname.substring(1);
         const name = basename.slice(0, -extname.length);
         // assets/[name].[hash:8][ext]
-        url = `${assetsManifest.publicPath}assets/${name}.${contentHash}.${ext}`;
+        url = `${manifest?.assetsManifest.publicPath}assets/${name}.${contentHash}.${ext}`;
       } else {
         url = `data:${mrmime.lookup(args.path)};base64,${content.toString('base64')}`;
       }
       return {
-        contents: `export default ${JSON.stringify(url)}`,
+        contents: `module.exports = ${JSON.stringify(url)}`,
         loader: 'js',
       };
     });

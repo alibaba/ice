@@ -1,5 +1,6 @@
 {
-  "name": "with-jsx-plus",
+  "name": "@examples/with-jsx-plus",
+  "private": true,
   "version": "1.0.0",
   "scripts": {
     "start": "ice start",

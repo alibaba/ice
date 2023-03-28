@@ -1,12 +1,13 @@
 {
   "name": "@ice/app",
-  "version": "3.0.1",
+  "version": "3.1.4",
   "description": "provide scripts and configuration used by web framework ice",
   "type": "module",
   "main": "./esm/index.js",
   "exports": {
     ".": "./esm/index.js",
-    "./types": "./esm/types/index.js"
+    "./types": "./esm/types/index.js",
+    "./analyze": "./esm/service/analyze.js"
   },
   "bin": {
     "ice": "./bin/ice-cli.mjs"
@@ -17,7 +18,7 @@
     "!esm/**/*.map",
     "templates",
     "openChrome.applescript",
-    "types.d.ts"
+    "*.d.ts"
   ],
   "engines": {
     "node": ">=14.19.0",
@@ -37,14 +38,14 @@
     "@babel/parser": "7.18.10",
     "@babel/traverse": "7.18.10",
     "@babel/types": "7.18.10",
-    "@ice/bundles": "0.1.1",
-    "@ice/route-manifest": "1.0.0",
-    "@ice/runtime": "^1.0.0",
-    "@ice/webpack-config": "1.0.1",
-    "@swc/helpers": "0.4.12",
+    "@ice/bundles": "0.1.6",
+    "@ice/route-manifest": "1.1.0",
+    "@ice/runtime": "^1.1.4",
+    "@ice/webpack-config": "1.0.10",
+    "@swc/helpers": "0.4.14",
     "@types/express": "^4.17.14",
     "address": "^1.1.2",
-    "build-scripts": "^2.0.0-26",
+    "build-scripts": "^2.1.0",
     "chalk": "^4.0.0",
     "commander": "^9.0.0",
     "consola": "^2.15.3",
@@ -54,32 +55,33 @@
     "dotenv": "^16.0.0",
     "dotenv-expand": "^8.0.3",
     "ejs": "^3.1.6",
-    "esbuild": "^0.14.51",
-    "esbuild-register": "^3.3.2",
+    "estree-walker": "^3.0.2",
     "fast-glob": "^3.2.11",
     "find-up": "^5.0.0",
     "fs-extra": "^10.0.0",
     "micromatch": "^4.0.5",
+    "mlly": "^1.1.0",
     "mrmime": "^1.0.0",
     "open": "^8.4.0",
     "path-to-regexp": "^6.2.0",
     "regenerator-runtime": "^0.13.0",
     "resolve.exports": "^1.1.0",
     "semver": "^7.3.5",
-    "temp": "^0.9.4"
+    "temp": "^0.9.4",
+    "yargs-parser": "^21.1.1"
   },
   "devDependencies": {
     "@types/babel__generator": "^7.6.4",
     "@types/babel__traverse": "^7.17.1",
     "@types/cross-spawn": "^6.0.2",
     "@types/ejs": "^3.1.0",
-    "@types/estree": "^0.0.51",
     "@types/less": "^3.0.3",
     "@types/micromatch": "^4.0.2",
     "@types/multer": "^1.4.7",
     "@types/sass": "^1.43.1",
     "@types/temp": "^0.9.1",
     "chokidar": "^3.5.3",
+    "esbuild": "^0.16.5",
     "jest": "^29.0.2",
     "react": "^18.2.0",
     "react-router": "^6.3.0",
@@ -90,5 +92,8 @@
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

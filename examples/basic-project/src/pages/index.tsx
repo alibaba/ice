@@ -11,7 +11,7 @@ import lessStyles from './index.module.less';
 import sassStyles from './index.module.scss';
 import type { AppData } from '@/types';
 
-const Bar = lazy(() => import('../components/bar'));
+const Bar = lazy(() => import('@comp/bar'));
 
 export default function Home(props) {
   const appContext = useAppContext();

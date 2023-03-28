@@ -5,13 +5,13 @@ export const BYTEDANCE_MICROAPP = 'bytedance-microapp';
 export const BAIDU_SMARTPROGRAM = 'baidu-smartprogram';
 export const KUAISHOU_MINIPROGRAM = 'kuaishou-miniprogram';
 
-export const MINIAPP_PLATFORMS = [
+export const MINIAPP_TARGETS = [
   ALI_MINIAPP, WECHAT_MINIPROGRAM, BYTEDANCE_MICROAPP,
   BAIDU_SMARTPROGRAM, KUAISHOU_MINIPROGRAM,
 ];
-export const ALL_PLATFORMS = [
+export const ALL_TARGETS = [
   WEB,
-  ...MINIAPP_PLATFORMS,
+  ...MINIAPP_TARGETS,
 ];
 
 export const REG_TEMPLATE = /\.(wxml|axml|ttml|swan|ksml)(\?.*)?$/;

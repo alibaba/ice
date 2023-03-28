@@ -105,10 +105,10 @@ console.log(process.env.TEST);
 
 ### dataLoader
 
-- 类型 `boolean`
+- 类型： `boolean | { fetcher: { packageName: string; method: string } }`
 - 默认值 `true`
 
-是否启用内置的数据预加载能力。
+是否启用内置的数据预加载能力以及自定义发送者（fetcher）。
 
 ### publicPath
 
@@ -386,8 +386,8 @@ export default defineConfig(() => ({
 小程序端不支持该配置。
 :::
 
-- 类型：`{ format: 'esm' | 'cjs'; bundle: boolean; ignores: IgnorePattern[] }`
-- 默认值：`{ format: 'esm', bundle: false, ignores: [] }`
+- 类型：`{ format: 'esm' | 'cjs'; bundle: boolean; ignores: IgnorePattern[]; externals: string[]; onDemand: boolean; }`
+- 默认值：`{ format: 'esm', bundle: false, ignores: [], externals: [], onDemand: false }`
 
 SSR / SSG 产物标准，推荐以 ESM 标准进行执行，如果希望打包成一个 cjs 模块，可以进行如下设置：
 
@@ -422,29 +422,71 @@ export default defineConfig(() => ({
 - resourceRegExp 对应文件的匹配路径
 - contextRegExp （可选）对应文件内容的匹配规则
 
+通过 `externals` 参数，可以在构建 Server 端产物时 external 指定内容：
+
+```js
+import { defineConfig } from '@ice/app';
+
+export default defineConfig(() => ({
+  server: {
+    externals: ['react', 'react-dom']
+  },
+}));
+```
+
+通过 `onDemand` 参数，可以在执行 Server 端产物时，按需构建所需的问题，并且提供体验良好的模块热更新服务：
+
+```js
+import { defineConfig } from '@ice/app';
+
+export default defineConfig(() => ({
+  server: {
+    onDemand: true,
+    format: 'esm',
+  },
+}));
+```
+
 ### routes
 
 :::caution
 小程序端不支持该配置。
 :::
 
-- 类型：`{ignoreFiles: string[]; defineRoutes: (route) => void}`
+- 类型：`{ ignoreFiles: string[]; defineRoutes: (route: DefineRouteFunction) => void }`
 - 默认值：`{}`
 
-定制路由地址，对于约定式路由不满足的场景，可以通过 `routes` 方式进行自定义：
+#### ignoreFiles
 
-```js
+用于忽略 `src/pages` 下的文件被处理成路由模块，使用 glob 表达式([minimatch](https://github.com/isaacs/minimatch))对文件路径匹配。
+
+```ts
 import { defineConfig } from '@ice/app';
 
 export default defineConfig(() => ({
   routes: {
-    // 忽略 pages 下的 components 目录
+    // 忽略 src/pages 下所有 components 目录
     ignoreFiles: ['**/components/**'],
+  },
+}));
+```
+
+#### defineRoutes
+
+对于约定式路由不满足的场景，可以通过以下方式自定义路由地址。
+
+```ts
+import { defineConfig } from '@ice/app';
+
+export default defineConfig(() => ({
+  routes: {
     defineRoutes: (route) => {
       // 将 /about-me 路由访问内容指定为 about.tsx
+      // 第一个参数是路由地址
+      // 第二个参数是页面组件的相对地址（前面不能带 `/`），相对于 `src/pages` 目录
       route('/about-me', 'about.tsx');
 
-      // 为 /product 路由添加 layout.tsx 作为 layout，并渲染 products.tsx 内容
+      // 嵌套路由的场景需要使用第三个 callback 参数来定义嵌套路由
       route('/', 'layout.tsx', () => {
         route('/product', 'products.tsx');
       });
@@ -453,21 +495,79 @@ export default defineConfig(() => ({
 }));
 ```
 
+:::caution
+同一个路由组件只能分配一条路由规则，即同时执行以下语句时，仅生效后执行的逻辑。
+
+```ts
+route('/about-me', 'about.tsx');
+route('/about-you', 'about.tsx');
+```
+:::
+
+#### config
+
+对于简单的自定义场景，通过 `defineRoutes` 可以快速在约定式路由的基础上进行自定义。但对于大量自定义或者原配置式路由的升级项目，支持以 `config` 的字段指定路由信息：
+
+```ts
+import { defineConfig } from '@ice/app';
+
+export default defineConfig({
+  routes: {
+    config: [
+      {
+        path: 'rewrite',
+        // 从 src/page 开始计算路径，并且需要写后缀。
+        component: 'sales/layout.tsx',
+        children: [
+          {
+            path: '/favorites',
+            component: 'sales/favorites.tsx',
+          },
+          {
+            path: 'overview',
+            component: 'sales/overview.tsx',
+          },
+          {
+            path: 'recommends',
+            component: 'sales/recommends.tsx',
+          },
+        ],
+      },
+      {
+        path: '/',
+        component: 'index.tsx',
+      },
+    ],
+  },
+});
+```
+
 ### sourceMap
 
 - 类型：`boolean | string`
 - 默认值：`development` 模式：默认为 'cheap-module-source-map'，支持通过 `false` 关闭，不支持设置为其他枚举值。`production` 模式：默认 `false`。
 
-### splitChunks
+### splitChunks @deprecated
 
 :::caution
+不再建议使用，能力由 codeSplitting 替代。
 小程序端不支持该配置。
 :::
 
-- 类型：`boolean`
+默认会根据模块体积自动拆分 chunks，有可能会出现多个 bundle。如果不希望打包产物出现过多 bundle ，可设置成 `false`。
+
+### codeSplitting
+
+- 类型：`boolean | 'vendors' | 'page' | 'chunks'`
 - 默认值：`true`
 
-默认会根据模块体积自动拆分 chunks，有可能会出现多个 bundle。如果不希望打包产物出现过多 bundle ，可设置成 `false`。
+框架内置了三种分包策略分别为 `chunks`（默认策略，无需额外设置），`page` 和 `vendors`。
+
+- `vendors` 策略：将异步 chunks 里的三方依赖统一打入到 vendor.js 中，避免重复，在依赖不变的情况下有效利用缓存。缺陷是如果项目过大会导致单文件尺寸过大。
+- `page` 策略：所有路由级别组件按需加载，如果需保留原 `splitChunks: false` 的效果，配置该策略 。
+- `chunks` 策略：在路由级别组件按需加载的基础上，根据模块体积大小自动拆分 chunks，为框架默认推荐策略。
+
+如果存在特殊场景期望关闭分包能力，可以设置成 `false`。
 
 ### syntaxFeatures
 

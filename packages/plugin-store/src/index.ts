@@ -1,5 +1,5 @@
 import * as path from 'path';
-import type { Config, Plugin } from '@ice/app/esm/types';
+import type { Config, Plugin } from '@ice/app/types';
 import micromatch from 'micromatch';
 import fg from 'fast-glob';
 import { PAGE_STORE_MODULE, PAGE_STORE_PROVIDER, PAGE_STORE_INITIAL_STATES } from './constants.js';
@@ -60,13 +60,13 @@ const plugin: Plugin<Options> = (options) => ({
     // Export store api: createStore, createModel from `.ice/index.ts`.
     generator.addExport({
       specifier: ['createStore', 'createModel'],
-      source: '@ice/plugin-store/esm/runtime',
+      source: '@ice/plugin-store/runtime',
       type: false,
     });
   },
-  runtime: `${PLUGIN_NAME}/esm/runtime`,
+  runtime: `${PLUGIN_NAME}/runtime`,
 });
-
+const formatId = (id: string) => id.split(path.sep).join('/');
 function exportStoreProviderPlugin({ pageDir, resetPageState }: { pageDir: string; resetPageState: boolean }): Config['transformPlugins'][0] {
   return {
     name: 'export-store-provider',
@@ -74,7 +74,7 @@ function exportStoreProviderPlugin({ pageDir, resetPageState }: { pageDir: strin
     transformInclude: (id) => {
       return (
         /\.[jt]sx?$/i.test(id) &&
-        id.startsWith(pageDir.split(path.sep).join('/')) &&
+        formatId(id).startsWith(formatId(pageDir)) &&
         !micromatch.isMatch(id, ignoreStoreFilePatterns)
       );
     },

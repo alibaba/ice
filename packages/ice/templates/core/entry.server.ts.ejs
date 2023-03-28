@@ -1,21 +1,27 @@
 import './env.server';
 import * as runtime from '@ice/runtime/server';
+<% if(hydrate) {-%>
 import { commons, statics } from './runtimeModules';
+<% }-%>
 import * as app from '@/app';
 import Document from '@/document';
-import type { RenderMode } from '@ice/runtime';
+import type { RenderMode, DistType } from '@ice/runtime';
 // @ts-ignore
 import assetsManifest from 'virtual:assets-manifest.json';
 import routes from './routes';
 import routesConfig from './routes-config.bundle.mjs';
 <% if(dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
 <%- runtimeOptions.imports %>
-
+<% if(!hydrate) {-%>
+// Do not inject runtime modules when render mode is document only.
+const commons = [];
+const statics = [];
+<% } -%>
 const runtimeModules = { commons, statics };
 
 const getRouterBasename = () => {
   const appConfig = runtime.getAppConfig(app);
-  return appConfig?.router?.basename ?? '<%- basename %>' ?? '';
+  return appConfig?.router?.basename ?? <%- basename %> ?? '';
 }
 
 const setRuntimeEnv = (renderMode) => {
@@ -33,13 +39,45 @@ interface RenderOptions {
   serverOnlyBasename?: string;
   routePath?: string;
   disableFallback?: boolean;
+  distType?: DistType;
+  publicPath?: string;
+  serverData?: any;
 }
 
 export async function renderToHTML(requestContext, options: RenderOptions = {}) {
-  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback } = options;
+  const { renderMode = 'SSR' } = options;
+  setRuntimeEnv(renderMode);
+  
+  const mergedOptions = mergeOptions(options);
+  return await runtime.renderToHTML(requestContext, mergedOptions);
+}
+
+export async function renderToResponse(requestContext, options: RenderOptions = {}) {
+  const { renderMode = 'SSR' } = options;
+  setRuntimeEnv(renderMode);
+  
+  const mergedOptions = mergeOptions(options);
+  return runtime.renderToResponse(requestContext, mergedOptions);
+}
+
+<% if (jsOutput) { -%>
+export async function renderToEntry(requestContext, options: RenderOptions = {}) {
+  const { renderMode = 'SSR' } = options;
   setRuntimeEnv(renderMode);
 
-  return await runtime.renderToHTML(requestContext, {
+  const mergedOptions = mergeOptions(options);
+  return await runtime.renderToEntry(requestContext, mergedOptions);
+}
+<% } -%>
+
+function mergeOptions(options) {
+  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback, distType, serverData, publicPath } = options;
+
+  if (publicPath) {
+    assetsManifest.publicPath = publicPath;
+  }
+
+  return {
     app,
     assetsManifest,
     routes,
@@ -52,34 +90,12 @@ export async function renderToHTML(requestContext, options: RenderOptions = {}) 
     routePath,
     disableFallback,
     routesConfig,
+    distType,
+    serverData,
 <% if (runtimeOptions.exports) { -%>
     runtimeOptions: {
       <%- runtimeOptions.exports %>
     },
 <% } -%>
-  });
-}
-
-export async function renderToResponse(requestContext, options: RenderOptions = {}) {
-  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, disableFallback } = options;
-  setRuntimeEnv(options);
-
-  runtime.renderToResponse(requestContext, {
-    app,
-    assetsManifest,
-    routes,
-    runtimeModules,
-    Document,
-    serverOnlyBasename,
-    basename: basename || getRouterBasename(),
-    documentOnly,
-    renderMode,
-    disableFallback,
-    routesConfig,
-<% if (runtimeOptions.exports) { -%>
-    runtimeOptions: {
-      <%- runtimeOptions.exports %>
-    },
-<% } -%>
-  });
+  };
 }

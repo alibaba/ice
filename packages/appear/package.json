@@ -1,6 +1,6 @@
 {
   "name": "@ice/appear",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "",
   "main": "./esm/index.js",
   "types": "./esm/index.d.ts",
@@ -19,5 +19,8 @@
   "peerDependencies": {
     "react": "^18",
     "react-dom": "^18"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

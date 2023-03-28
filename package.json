@@ -5,28 +5,30 @@
   "author": "ice-admin@alibaba-inc.com",
   "license": "MIT",
   "homepage": "https://v3.ice.work",
-  "repository": "ice-lab/ice-next",
-  "bugs": "https://github.com/ice-lab/ice-next/issues",
+  "repository": "alibaba/ice",
+  "bugs": "https://github.com/alibaba/ice/issues",
   "scripts": {
     "prepare": "husky install",
     "setup": "rm -rf node_modules packages/*/node_modules && pnpm install && pnpm prebundle && pnpm build",
+    "setup-git": "tsx ./scripts/setupUser.ts",
     "rebuild": "pnpm install && pnpm run build",
     "watch": "pnpm --parallel --filter=./packages/* run watch",
     "build": "pnpm run clean && pnpm -r --filter=./packages/* run build",
     "prebundle": "cd packages/bundles && pnpm build",
     "clean": "rimraf packages/*/esm",
     "dependency:check": "tsx ./scripts/dependencyCheck.ts",
-    "version": "tsx ./scripts/tagVersion.ts",
-    "version:check": "tsx ./scripts/versionCheck.ts",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
-    "publish": "tsx ./scripts/publishPackage.ts",
-    "publish:beta": "PUBLISH_TYPE=beta tsx ./scripts/publishPackageWithDistTag.ts",
-    "publish:release": "PUBLISH_TYPE=release VERSION_PREFIX=rc tsx ./scripts/publishPackageWithDistTag.ts",
     "cov": "vitest run --coverage",
-    "test": "vitest"
+    "test": "vitest",
+    "changeset": "changeset",
+    "version": "changeset version && pnpm install --frozen-lockfile false",
+    "release": "changeset publish",
+    "release:beta": "changeset pre enter beta && pnpm run version && pnpm run release && changeset pre exit"
   },
   "devDependencies": {
+    "@actions/exec": "^1.1.1",
     "@applint/spec": "^1.2.3",
+    "@changesets/cli": "^2.26.0",
     "@commitlint/cli": "^16.3.0",
     "@ice/bundles": "workspace:^0.1.0",
     "@testing-library/react": "^13.3.0",
@@ -34,7 +36,6 @@
     "@types/fs-extra": "^9.0.13",
     "@types/glob": "^7.2.0",
     "@types/node": "^17.0.45",
-    "@types/semver": "^7.3.12",
     "@vercel/ncc": "^0.33.4",
     "@vitest/coverage-c8": "^0.23.1",
     "c8": "^7.12.0",
@@ -53,18 +54,17 @@
     "jsdom": "^20.0.0",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
-    "puppeteer": "^13.7.0",
+    "puppeteer": "^19.6.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rimraf": "^3.0.2",
-    "semver": "^7.3.7",
     "stylelint": "^14.10.0",
-    "tsx": "^3.9.0",
+    "tsx": "^3.12.1",
     "typescript": "^4.7.4",
     "vitest": "^0.15.2"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
   },
-  "packageManager": "pnpm@7.2.1"
+  "packageManager": "pnpm@7.29.1"
 }

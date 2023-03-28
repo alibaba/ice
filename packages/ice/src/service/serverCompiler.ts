@@ -1,9 +1,8 @@
 import * as path from 'path';
-import consola from 'consola';
-import esbuild from 'esbuild';
+import { esbuild } from '@ice/bundles';
 import fse from 'fs-extra';
 import fg from 'fast-glob';
-import type { Config } from '@ice/webpack-config/esm/types';
+import type { Config } from '@ice/webpack-config/types';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { TaskConfig } from 'build-scripts';
 import { getCompilerPlugins, getCSSModuleLocalIdent } from '@ice/webpack-config';
@@ -11,7 +10,7 @@ import type { ServerCompiler } from '../types/plugin.js';
 import type { UserConfig } from '../types/userConfig.js';
 import escapeLocalIdent from '../utils/escapeLocalIdent.js';
 import cssModulesPlugin from '../esbuild/cssModules.js';
-import resolvePlugin from '../esbuild/resolve.js';
+import externalPlugin from '../esbuild/external.js';
 import ignorePlugin from '../esbuild/ignore.js';
 import createAssetsPlugin from '../esbuild/assets.js';
 import { CACHE_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
@@ -22,9 +21,13 @@ import isExternalBuiltinDep from '../utils/isExternalBuiltinDep.js';
 import getServerEntry from '../utils/getServerEntry.js';
 import type { DepScanData } from '../esbuild/scan.js';
 import formatPath from '../utils/formatPath.js';
+import { createLogger } from '../utils/logger.js';
+import { getExpandedEnvs } from '../utils/runtimeEnv.js';
 import { scanImports } from './analyze.js';
-import type { DepsMetaData } from './preBundleCJSDeps.js';
-import preBundleCJSDeps from './preBundleCJSDeps.js';
+import type { PreBundleDepsMetaData } from './preBundleDeps.js';
+import preBundleDeps from './preBundleDeps.js';
+
+const logger = createLogger('server-compiler');
 
 interface Options {
   rootDir: string;
@@ -36,53 +39,115 @@ interface Options {
 
 const { merge, difference } = lodash;
 
+export const filterAlias = (taskAlias: TaskConfig<Config>['config']['alias']) => {
+  // Filter empty alias.
+  const ignores: string[] = [];
+  const alias: Record<string, string> = {};
+  Object.keys(taskAlias).forEach((aliasKey) => {
+    const value = taskAlias[aliasKey];
+    if (value) {
+      alias[aliasKey] = value;
+    } else {
+      ignores.push(aliasKey);
+    }
+  });
+  return { alias, ignores };
+};
+
+export const getRuntimeDefination = (
+  defineVars: Record<string, string | boolean> = {},
+  runtimeVars: Record<string, string> = {},
+  transformEnv = true,
+) => {
+  const stringifiedDefine = {};
+  const runtimeDefineVars = {
+    ...runtimeVars,
+  };
+  // auto stringify define value
+  Object.keys(defineVars).forEach((key) => {
+    stringifiedDefine[key] = JSON.stringify(defineVars[key]);
+  });
+  // get runtime variable for server build
+  Object.keys(process.env).forEach((key) => {
+    // Do not transform env when bundle client side code.
+    if (/^ICE_CORE_/i.test(key) && transformEnv) {
+      // in server.entry
+      runtimeDefineVars[`__process.env.${key}__`] = JSON.stringify(process.env[key]);
+    } else if (/^ICE_/i.test(key)) {
+      runtimeDefineVars[`process.env.${key}`] = JSON.stringify(process.env[key]);
+    }
+  });
+  const define = {
+    ...stringifiedDefine,
+    ...runtimeDefineVars,
+  };
+  const expandedEnvs = getExpandedEnvs();
+  // Add user defined envs.
+  for (const [key, value] of Object.entries(expandedEnvs)) {
+    define[`import.meta.env.${key}`] = JSON.stringify(value);
+  }
+  return define;
+};
+
 export function createServerCompiler(options: Options) {
   const { task, rootDir, command, server, syntaxFeatures } = options;
-
-  const alias = task.config?.alias || {};
   const externals = task.config?.externals || {};
-  const define = task.config?.define || {};
   const sourceMap = task.config?.sourceMap;
   const dev = command === 'start';
 
-  const defineVars = {};
-  // auto stringify define value
-  Object.keys(define).forEach((key) => {
-    defineVars[key] = JSON.stringify(define[key]);
-  });
+  // Filter empty alias.
+  const { ignores, alias } = filterAlias(task.config?.alias || {});
 
   const serverCompiler: ServerCompiler = async (customBuildOptions, {
     preBundle,
     swc,
     externalDependencies,
-    transformEnv = true,
-    assetsManifest,
+    compilationInfo,
     redirectImports,
     removeOutputs,
+    runtimeDefineVars = {},
+    enableEnv = false,
+    transformEnv = true,
+    isServer = true,
   } = {}) => {
-    let depsMetadata: DepsMetaData;
+    let preBundleDepsMetadata: PreBundleDepsMetaData;
     let swcOptions = merge({}, {
       // Only get the `compilationConfig` from task config.
-      compilationConfig: {
-        ...(task.config?.swcOptions?.compilationConfig || {}),
-        // Force inline when use swc as a transformer.
-        sourceMaps: sourceMap && 'inline',
-      },
+      compilationConfig: getCompilationConfig(),
     }, swc);
+    function getCompilationConfig() {
+      const customCompilationConfig = task.config?.swcOptions?.compilationConfig || {};
+      const getConfig = typeof customCompilationConfig === 'function'
+        ? customCompilationConfig
+        : () => customCompilationConfig;
+
+      return (source: string, id: string) => {
+        return {
+          ...getConfig(source, id),
+          // Force inline when use swc as a transformer.
+          sourceMaps: sourceMap && 'inline',
+        };
+      };
+    }
     const enableSyntaxFeatures = syntaxFeatures && Object.keys(syntaxFeatures).some(key => syntaxFeatures[key]);
-    const transformPlugins = getCompilerPlugins({
+    const transformPlugins = getCompilerPlugins(rootDir, {
       ...task.config,
       fastRefresh: false,
-      env: false,
+      enableEnv,
       polyfill: false,
       swcOptions,
       redirectImports,
-    }, 'esbuild');
+    }, 'esbuild', { isServer });
+    const define = getRuntimeDefination(task.config?.define || {}, runtimeDefineVars, transformEnv);
 
     if (preBundle) {
-      depsMetadata = await createDepsMetadata({
+      preBundleDepsMetadata = await createPreBundleDepsMetadata({
         task,
+        alias,
+        ignores,
         rootDir,
+        define,
+        external: Object.keys(externals),
         // Pass transformPlugins only if syntaxFeatures is enabled
         plugins: enableSyntaxFeatures ? [
           transformPipePlugin({
@@ -92,30 +157,13 @@ export function createServerCompiler(options: Options) {
       });
     }
 
-    // get runtime variable for server build
-    const runtimeDefineVars = {};
-    Object.keys(process.env).forEach((key) => {
-      // Do not transform env when bundle client side code.
-      if (/^ICE_CORE_/i.test(key) && transformEnv) {
-        // in server.entry
-        runtimeDefineVars[`__process.env.${key}__`] = JSON.stringify(process.env[key]);
-      } else if (/^ICE_/i.test(key)) {
-        runtimeDefineVars[`process.env.${key}`] = JSON.stringify(process.env[key]);
-      }
-    });
-    const define = {
-      // ref: https://github.com/evanw/esbuild/blob/master/CHANGELOG.md#01117
-      // in esm, this in the global should be undefined. Set the following config to avoid warning
-      this: undefined,
-      ...defineVars,
-      ...runtimeDefineVars,
-    };
     const format = customBuildOptions?.format || 'esm';
 
     let buildOptions: esbuild.BuildOptions = {
       bundle: true,
       format,
       target: 'node12.20.0',
+      alias,
       // enable JSX syntax in .js files by default for compatible with migrate project
       // while it is not recommended
       loader: { '.js': 'jsx' },
@@ -123,15 +171,21 @@ export function createServerCompiler(options: Options) {
       sourcemap: typeof sourceMap === 'boolean'
         // Transform sourceMap for esbuild.
         ? sourceMap : (sourceMap.includes('inline') ? 'inline' : !!sourceMap),
+      banner: customBuildOptions.platform === 'node' && server?.format !== 'cjs'
+        ? {
+            // See https://github.com/evanw/esbuild/issues/1921#issuecomment-1152991694
+            js: 'import { createRequire } from \'module\';const require = createRequire(import.meta.url);',
+          }
+        : undefined,
       ...customBuildOptions,
-      define,
       absWorkingDir: rootDir,
+      define,
       external: Object.keys(externals),
       plugins: [
         ...(customBuildOptions.plugins || []),
         emptyCSSPlugin(),
-        resolvePlugin({
-          alias,
+        externalPlugin({
+          ignores,
           externalDependencies: externalDependencies ?? !server.bundle,
           format,
           externals: server.externals,
@@ -144,13 +198,13 @@ export function createServerCompiler(options: Options) {
             return escapeLocalIdent(getCSSModuleLocalIdent(filename, name));
           },
         }),
-        assetsManifest && createAssetsPlugin(assetsManifest, rootDir),
+        compilationInfo && createAssetsPlugin(compilationInfo, rootDir),
         transformPipePlugin({
           plugins: [
             ...transformPlugins,
             // Plugin transformImportPlugin need after transformPlugins in case of it has onLoad lifecycle.
-            dev && preBundle && depsMetadata && transformImportPlugin(
-              depsMetadata,
+            dev && preBundle && preBundleDepsMetadata && transformImportPlugin(
+              preBundleDepsMetadata,
               path.join(rootDir, task.config.outputDir, SERVER_OUTPUT_DIR),
             ),
           ].filter(Boolean),
@@ -162,12 +216,12 @@ export function createServerCompiler(options: Options) {
     }
 
     const startTime = new Date().getTime();
-    consola.debug('[esbuild]', `start compile for: ${JSON.stringify(buildOptions.entryPoints)}`);
+    logger.debug('[esbuild]', `start compile for: ${JSON.stringify(buildOptions.entryPoints)}`);
 
     try {
       const esbuildResult = await esbuild.build(buildOptions);
 
-      consola.debug('[esbuild]', `time cost: ${new Date().getTime() - startTime}ms`);
+      logger.debug('[esbuild]', `time cost: ${new Date().getTime() - startTime}ms`);
 
       const esm = server?.format === 'esm';
       const outJSExtension = esm ? '.mjs' : '.cjs';
@@ -187,9 +241,14 @@ export function createServerCompiler(options: Options) {
         serverEntry,
       };
     } catch (error) {
-      consola.error('Server compile error.', `\nEntryPoints: ${JSON.stringify(buildOptions.entryPoints)}`);
-      consola.debug('Build options: ', buildOptions);
-      consola.debug(error.stack);
+      logger.error(
+        'Server compiled with errors.',
+        `\nEntryPoints: ${JSON.stringify(buildOptions.entryPoints)}`,
+        `\n${error.message}`,
+      );
+      // TODO: Log esbuild options with namespace.
+      // logger.debug('esbuild options: ', buildOptions);
+      logger.debug(error.stack);
       return {
         error: error as Error,
       };
@@ -202,16 +261,22 @@ interface CreateDepsMetadataOptions {
   rootDir: string;
   task: TaskConfig<Config>;
   plugins: esbuild.Plugin[];
+  alias: Record<string, string>;
+  ignores: string[];
+  define: esbuild.BuildOptions['define'];
+  external: esbuild.BuildOptions['external'];
 }
 /**
  *  Create dependencies metadata only when server entry is bundled to esm.
  */
-async function createDepsMetadata({ rootDir, task, plugins }: CreateDepsMetadataOptions) {
+async function createPreBundleDepsMetadata(
+  { rootDir, task, plugins, alias, ignores, define, external }: CreateDepsMetadataOptions,
+) {
   const serverEntry = getServerEntry(rootDir, task.config?.server?.entry);
-  const alias = (task.config?.alias || {}) as TaskConfig<Config>['config']['alias'];
   const deps = await scanImports([serverEntry], {
     rootDir,
     alias,
+    ignores,
     plugins,
   });
 
@@ -228,12 +293,15 @@ async function createDepsMetadata({ rootDir, task, plugins }: CreateDepsMetadata
   // For examples: react, react-dom, @ice/runtime
   const preBundleDepsInfo = filterPreBundleDeps(deps);
   const cacheDir = path.join(rootDir, CACHE_DIR);
-  const ret = await preBundleCJSDeps({
-    depsInfo: preBundleDepsInfo,
+  const ret = await preBundleDeps(preBundleDepsInfo, {
+    rootDir,
     cacheDir,
     taskConfig: task.config,
     alias,
+    ignores,
     plugins,
+    define,
+    external,
   });
 
   return ret.metadata;

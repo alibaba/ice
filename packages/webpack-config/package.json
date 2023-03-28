@@ -1,6 +1,6 @@
 {
   "name": "@ice/webpack-config",
-  "version": "1.0.1",
+  "version": "1.0.10",
   "repository": "alibaba/ice",
   "bugs": "https://github.com/alibaba/ice/issues",
   "homepage": "https://v3.ice.work",
@@ -12,17 +12,19 @@
   },
   "files": [
     "esm",
-    "!esm/**/*.map"
+    "!esm/**/*.map",
+    "*.d.ts"
   ],
   "dependencies": {
-    "@ice/bundles": "0.1.1",
+    "@ice/bundles": "0.1.6",
     "@rollup/pluginutils": "^4.2.0",
+    "browserslist": "^4.19.3",
     "consola": "^2.15.3",
     "fast-glob": "^3.2.11",
     "process": "^0.11.10"
   },
   "devDependencies": {
-    "esbuild": "^0.14.51",
+    "esbuild": "^0.16.5",
     "postcss": "^8.4.18",
     "webpack": "^5.73.0",
     "webpack-dev-server": "^4.7.4"
@@ -30,5 +32,8 @@
   "scripts": {
     "watch": "tsc -w",
     "build": "tsc"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

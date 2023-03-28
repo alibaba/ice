@@ -1,7 +1,9 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import type { GetAppConfig, GetRoutesConfig, ServerCompiler } from '@ice/app/esm/types';
+import type { GetAppConfig, GetDataloaderConfig, GetRoutesConfig, ServerCompiler, CreateLoggerReturnType } from '@ice/app/types';
+import type { Context } from 'build-scripts';
 import { parseManifest, rewriteAppWorker, getAppWorkerUrl, getMultipleManifest, type ParseOptions } from './manifestHelpers.js';
+import { getCompilerConfig } from './constants.js';
 import type { Compiler } from './index.js';
 
 export interface Options {
@@ -11,46 +13,76 @@ export interface Options {
   compiler: Compiler;
   getAppConfig: GetAppConfig;
   getRoutesConfig: GetRoutesConfig;
+  getDataloaderConfig: GetDataloaderConfig;
   compileTask?: () => ReturnType<ServerCompiler>;
+  getAllPlugin: Context['getAllPlugin'];
+  logger?: CreateLoggerReturnType;
 }
 
 export async function getAppWorkerContent(
   compiler: Compiler,
-  options: {
+  buildOptions: {
     entry: string;
     outfile: string;
     minify?: boolean;
-  }): Promise<string> {
-  const { entry, outfile, minify = false } = options;
+  }, options): Promise<string> {
+  const { entry, outfile, minify = false } = buildOptions;
   const appWorkerFile = await compiler({
     entry,
     outfile,
     minify,
     timestamp: false,
-  });
+  }, options);
   return fs.readFileSync(appWorkerFile, 'utf-8');
+}
+
+export async function getAppWorkerPath({
+  getAppConfig,
+  rootDir,
+}) {
+  const appConfig = await getAppConfig(['phaManifest']);
+  let manifest = appConfig.phaManifest;
+  return getAppWorkerUrl(manifest, path.join(rootDir, 'src'));
 }
 
 export default async function generateManifest({
   rootDir,
   outputDir,
   parseOptions,
+  getAllPlugin,
   getAppConfig,
   getRoutesConfig,
+  getDataloaderConfig,
   compiler,
+  logger,
 }: Options) {
   const [appConfig, routesConfig] = await Promise.all([getAppConfig(['phaManifest']), getRoutesConfig()]);
+
+  let dataloaderConfig;
+  try {
+    // dataLoader may have side effect code.
+    dataloaderConfig = await getDataloaderConfig();
+  } catch (err) {
+    logger.debug('GetDataloaderConfig failed.');
+    logger.debug(err);
+  }
+
   let manifest = appConfig.phaManifest;
   const appWorkerPath = getAppWorkerUrl(manifest, path.join(rootDir, 'src'));
+  // TODO: PHA Worker should deal with url which load by script element.
   if (appWorkerPath) {
     manifest = rewriteAppWorker(manifest);
+    const entry = path.join(rootDir, './.ice/appWorker.ts');
+
     await getAppWorkerContent(compiler, {
-      entry: appWorkerPath,
+      entry: fs.existsSync(entry) ? entry : appWorkerPath,
       outfile: path.join(outputDir, 'app-worker.js'),
       minify: true,
-    });
+    }, getCompilerConfig({ getAllPlugin }));
   }
+
   const phaManifest = await parseManifest(manifest, {
+    dataloaderConfig,
     ...parseOptions,
     routesConfig,
   } as ParseOptions);

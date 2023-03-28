@@ -1,6 +1,5 @@
 import path from 'path';
 import fse from 'fs-extra';
-import consola from 'consola';
 import fg from 'fast-glob';
 import ejs from 'ejs';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
@@ -19,10 +18,12 @@ import type {
   RenderTemplate,
   RenderData,
   DeclarationData,
+  TargetDeclarationData,
   Registration,
   TemplateOptions,
 } from '../types/generator.js';
 import getGlobalStyleGlobPattern from '../utils/getGlobalStyleGlobPattern.js';
+import { logger } from '../utils/logger.js';
 
 const { debounce } = lodash;
 
@@ -36,27 +37,72 @@ interface Options {
   templates?: (string | TemplateOptions)[];
 }
 
-export function generateDeclaration(exportList: DeclarationData[]) {
-  const importDeclarations = [];
-  let exportDeclarations = [];
-  let exportNames: string[] = [];
+function isDeclarationData(data: TargetDeclarationData | DeclarationData): data is DeclarationData {
+  return data.declarationType === 'normal';
+}
+
+function isTargetDeclarationData(data: TargetDeclarationData | DeclarationData): data is TargetDeclarationData {
+  return data.declarationType === 'target';
+}
+
+export function generateDeclaration(exportList: Array<TargetDeclarationData | DeclarationData>) {
+  const targetImportDeclarations: Array<string> = [];
+  const importDeclarations: Array<string> = [];
+  const exportDeclarations: Array<string> = [];
+  const exportNames: Array<string> = [];
+  const variables: Map<string, string> = new Map();
+
+  let moduleId = 0;
   exportList.forEach(data => {
-    const { specifier, source, alias, type } = data;
-    const isDefaultImport = !Array.isArray(specifier);
-    const specifiers = isDefaultImport ? [specifier] : specifier;
-    const symbol = type ? ';' : ',';
-    importDeclarations.push(`import ${type ? 'type ' : ''}${isDefaultImport ? specifier : `{ ${specifiers.map(specifierStr => ((alias && alias[specifierStr]) ? `${specifierStr} as ${alias[specifierStr]}` : specifierStr)).join(', ')} }`} from '${source}';`);
-    specifiers.forEach((specifierStr) => {
-      if (alias && alias[specifierStr]) {
-        exportDeclarations.push(`${alias[specifierStr]}: ${specifierStr}${symbol}`);
-      } else {
-        exportDeclarations.push(`${specifierStr}${symbol}`);
+    // Deal with target.
+    if (isTargetDeclarationData(data)) {
+      const { specifier, source, target, types = [] } = data;
+      const isDefaultImport = !Array.isArray(specifier);
+      const specifiers = isDefaultImport ? [specifier] : specifier;
+      const arrTypes: Array<string> = Array.isArray(types) ? types : [types];
+
+      moduleId++;
+      const moduleName = `${target}Module${moduleId}`;
+      targetImportDeclarations.push(`if (import.meta.target === '${target}') {
+  ${specifiers.map(item => `${item} = ${moduleName}.${item};`).join('\n  ')}
+}
+      `);
+
+      importDeclarations.push(`import ${isDefaultImport ? moduleName : `* as ${moduleName}`} from '${source}';`);
+
+      if (arrTypes.length) {
+        importDeclarations.push(`import type { ${arrTypes.join(', ')}} from '${source}';`);
       }
-      exportNames.push(specifierStr);
-    });
+
+      specifiers.forEach((specifierStr, index) => {
+        if (!variables.has(specifierStr)) {
+          variables.set(specifierStr, arrTypes[index] || 'any');
+        }
+      });
+    } else if (isDeclarationData(data)) {
+      const { specifier, source, alias, type } = data;
+      const isDefaultImport = !Array.isArray(specifier);
+      const specifiers = isDefaultImport ? [specifier] : specifier;
+      const symbol = type ? ';' : ',';
+
+      importDeclarations.push(`import ${type ? 'type ' : ''}${isDefaultImport ? specifier : `{ ${specifiers.map(specifierStr => ((alias && alias[specifierStr]) ? `${specifierStr} as ${alias[specifierStr]}` : specifierStr)).join(', ')} }`} from '${source}';`);
+
+      specifiers.forEach((specifierStr) => {
+        if (alias && alias[specifierStr]) {
+          exportDeclarations.push(`${alias[specifierStr]}: ${specifierStr}${symbol}`);
+          exportNames.push(alias[specifierStr]);
+        } else {
+          exportDeclarations.push(`${specifierStr}${symbol}`);
+          exportNames.push(specifierStr);
+        }
+      });
+    }
   });
+
   return {
+    targetImportStr: targetImportDeclarations.join('\n'),
     importStr: importDeclarations.join('\n'),
+    targetExportStr: Array.from(variables.keys()).join(',\n  '),
     /**
      * Add two whitespace character in order to get the formatted code. For example:
      *  export {
@@ -66,27 +112,39 @@ export function generateDeclaration(exportList: DeclarationData[]) {
      */
     exportStr: exportDeclarations.join('\n  '),
     exportNames,
+    variablesStr: Array.from(variables.entries()).map(item => `let ${item[0]}: ${item[1]};`).join('\n'),
   };
 }
 
 export function checkExportData(
-  currentList: DeclarationData[],
-  exportData: DeclarationData | DeclarationData[],
+  currentList: (DeclarationData | TargetDeclarationData)[],
+  exportData: (DeclarationData | TargetDeclarationData) | (DeclarationData | TargetDeclarationData)[],
   apiName: string,
 ) {
   (Array.isArray(exportData) ? exportData : [exportData]).forEach((data) => {
     const exportNames = (Array.isArray(data.specifier) ? data.specifier : [data.specifier]).map((specifierStr) => {
-      return data?.alias?.[specifierStr] || specifierStr;
+      if (isDeclarationData(data)) {
+        return data?.alias?.[specifierStr] || specifierStr;
+      } else {
+        return specifierStr;
+      }
     });
-    currentList.forEach(({ specifier, alias }) => {
-      // check exportName and specifier
-      const currentExportNames = (Array.isArray(specifier) ? specifier : [specifier]).map((specifierStr) => {
-        return alias?.[specifierStr] || specifierStr;
-      });
-      if (currentExportNames.some((name) => exportNames.includes(name))) {
-        consola.error('specifier:', specifier, 'alias:', alias);
-        consola.error('duplicate with', data);
-        throw new Error(`duplicate export data added by ${apiName}`);
+    currentList.forEach((item) => {
+      if (isTargetDeclarationData(item)) return;
+
+      if (isDeclarationData(item)) {
+        const { specifier, alias } = item;
+
+        // check exportName and specifier
+        const currentExportNames = (Array.isArray(specifier) ? specifier : [specifier]).map((specifierStr) => {
+          return alias?.[specifierStr] || specifierStr;
+        });
+
+        if (currentExportNames.some((name) => exportNames.includes(name))) {
+          logger.error('specifier:', specifier, 'alias:', alias);
+          logger.error('duplicate with', data);
+          throw new Error(`duplicate export data added by ${apiName}`);
+        }
       }
     });
   });
@@ -149,10 +207,6 @@ export default class Generator {
   public addDeclaration: AddDeclaration = (registerKey, exportData) => {
     const exportList = this.contentRegistration[registerKey] || [];
     checkExportData(exportList, exportData, registerKey);
-    // remove export before add
-    this.removeDeclaration(
-      registerKey,
-      Array.isArray(exportData) ? exportData.map((data) => data.source) : exportData.source);
     this.addContent(registerKey, exportData);
   };
 
@@ -177,14 +231,36 @@ export default class Generator {
     this.contentRegistration[registerKey].push(...content);
   };
 
+  public getExportList = (registerKey: string, target?: string) => {
+    const exportList = this.contentRegistration[registerKey] || [];
+
+    if (target) {
+      return exportList.filter(exports => {
+        return !(exports.target && exports.target !== target);
+      });
+    } else {
+      return exportList;
+    }
+  };
+
   private getDeclarations: GetDeclarations = (registerKey, dataKeys) => {
     const exportList = this.contentRegistration[registerKey] || [];
-    const { importStr, exportStr, exportNames } = generateDeclaration(exportList);
-    const [importStrKey, exportStrKey] = dataKeys;
+    const {
+      importStr,
+      exportStr,
+      exportNames,
+      targetExportStr,
+      targetImportStr,
+      variablesStr,
+    } = generateDeclaration(exportList);
+    const [importStrKey, exportStrKey, targetImportStrKey, targetExportStrKey] = dataKeys;
     return {
       [importStrKey]: importStr,
       [exportStrKey]: exportStr,
       exportNames,
+      variablesStr,
+      [targetImportStrKey]: targetImportStr,
+      [targetExportStrKey]: targetExportStr,
     };
   };
 
@@ -193,7 +269,7 @@ export default class Generator {
     const globalStyles = fg.sync([getGlobalStyleGlobPattern()], { cwd: this.rootDir });
     let exportsData = {};
     this.contentTypes.forEach(item => {
-      const data = this.getDeclarations(item, ['imports', 'exports']);
+      const data = this.getDeclarations(item, ['imports', 'exports', 'targetImport', 'targetExports']);
       exportsData = Object.assign({}, exportsData, {
         [`${item}`]: data,
       });
@@ -227,7 +303,7 @@ export default class Generator {
     if (renderIndex > -1) {
       const targetTemplate = this.renderTemplates[renderIndex];
       if (targetTemplate[0] !== templatePath) {
-        consola.error('[template]', `path ${targetPath} already been rendered as file ${targetTemplate[0]}`);
+        logger.error('[template]', `path ${targetPath} already been rendered as file ${targetTemplate[0]}`);
       }
       // replace template with latest content
       this.renderTemplates[renderIndex] = [templatePath, targetPath, extraData];

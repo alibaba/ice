@@ -1,7 +1,9 @@
 import * as path from 'path';
 import type { ServerResponse } from 'http';
+import * as fs from 'fs';
 import type { ExpressRequestHandler } from 'webpack-dev-server';
 import consola from 'consola';
+import { getCompilerConfig } from './constants.js';
 import { parseManifest, rewriteAppWorker, getAppWorkerUrl, getMultipleManifest, type ParseOptions } from './manifestHelpers.js';
 import { getAppWorkerContent, type Options } from './generateManifest.js';
 import type { Manifest } from './types.js';
@@ -17,9 +19,12 @@ const createPHAMiddleware = ({
   outputDir,
   compileTask,
   parseOptions,
+  getAllPlugin,
   getAppConfig,
   getRoutesConfig,
+  getDataloaderConfig,
   compiler,
+  logger,
 }: Options): ExpressRequestHandler => {
   const phaMiddleware: ExpressRequestHandler = async (req, res, next) => {
     // @ts-ignore
@@ -31,22 +36,35 @@ const createPHAMiddleware = ({
       // Get serverEntry from middleware of server-compile.
       const { error, serverEntry } = await compileTask();
       if (error) {
-        consola.error('Server compile error in PHA middleware.');
+        consola.error('Server compile error in plugin-pha middleware.');
         return;
       }
       const [appConfig, routesConfig] = await Promise.all([getAppConfig(['phaManifest']), getRoutesConfig()]);
+
+      let dataloaderConfig;
+      try {
+        // dataLoader may have side effect code.
+        dataloaderConfig = await getDataloaderConfig();
+      } catch (err) {
+        logger.debug('GetDataloaderConfig failed.');
+        logger.debug(err);
+      }
+
       let manifest: Manifest = appConfig.phaManifest;
       const appWorkerPath = getAppWorkerUrl(manifest, path.join(rootDir, 'src'));
       if (appWorkerPath) {
         // over rewrite appWorker.url to app-worker.js
         manifest = rewriteAppWorker(manifest);
         if (requestAppWorker) {
+          const entry = path.join(rootDir, './.ice/appWorker.ts');
           sendResponse(
             res,
             await getAppWorkerContent(compiler, {
-              entry: appWorkerPath,
+              entry: fs.existsSync(entry) ? entry : appWorkerPath,
               outfile: path.join(outputDir, 'app-worker.js'),
-            }),
+            }, getCompilerConfig({
+              getAllPlugin,
+            })),
             'text/javascript',
           );
           return;
@@ -55,6 +73,7 @@ const createPHAMiddleware = ({
       const phaManifest = await parseManifest(manifest, {
         ...parseOptions,
         routesConfig,
+        dataloaderConfig,
         serverEntry: serverEntry,
       } as ParseOptions);
       if (!phaManifest?.tab_bar) {
@@ -64,7 +83,7 @@ const createPHAMiddleware = ({
           sendResponse(res, JSON.stringify(multipleManifest[manifestKey]), 'application/json');
           return;
         }
-      } else if (requestPath === '/manifest.json') {
+      } else if (requestPath === 'manifest.json') {
         sendResponse(res, JSON.stringify(phaManifest), 'application/json');
         return;
       }

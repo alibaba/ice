@@ -98,4 +98,11 @@ describe('remove top level code', () => {
     const content = generate(ast).code;
     expect(content.replace(/\n/g, '').replace(/\s+/g, ' ')).toBe('');
   });
+
+  it('remove nested reference code', () => {
+    const ast = parse(fs.readFileSync(path.join(__dirname, './fixtures/removeCode/properties.ts'), 'utf-8'), parserOptions);
+    traverse(ast, removeTopLevelCodePlugin(['pageConfig']));
+    const content = generate(ast).code;
+    expect(content.replace(/\n/g, '').replace(/\s+/g, ' ')).toBe('');
+  });
 });

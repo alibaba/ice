@@ -8,6 +8,11 @@ interface ITemplate {
   npmName: string;
   description?: string;
 }
+interface EjsOptions {
+  iceConfig?: Record<string, any>;
+  appConfig?: Record<string, any>;
+  esLintConfigOptions?: string;
+}
 
 export default async function create(dirPath: string, templateName: string, dirname: string): Promise<void> {
   if (!templateName) {
@@ -28,8 +33,46 @@ export default async function create(dirPath: string, templateName: string, dirn
     if (!go) process.exit(1);
   }
 
-  await downloadAndGenerateProject(dirPath, templateName);
+  let ejsOptions: EjsOptions = {
+    appConfig: null,
+  };
+  let extraDependencies: Record<string, any> = {};
+
   const isAliInternal = await checkAliInternal();
+  if (isAliInternal) {
+    ejsOptions = {
+      ...ejsOptions,
+      iceConfig: {
+        importDeclarationsStr: 'import def from \'@ali/ice-plugin-def\';\n',
+        options: {
+          pluginItemsStr: 'def(),',
+        },
+        optionsStr: `plugins: [
+          def(),
+        ],`,
+      },
+      esLintConfigOptions: `{
+        extends: ['@ali/eslint-config-att/typescript/react']
+      }`,
+    };
+
+    extraDependencies = {
+      ...extraDependencies,
+      devDependencies: {
+        ...extraDependencies?.devDependencies || {},
+        '@ali/eslint-config-att': '^1.0.0',
+        '@ali/ice-plugin-def': '^1.0.0',
+      },
+    };
+  }
+  await downloadAndGenerateProject(
+    dirPath,
+    templateName,
+    {
+      ejsOptions,
+      extraDependencies,
+    },
+  );
 
   console.log();
   console.log('Initialize project successfully.');
@@ -64,7 +107,11 @@ async function selectTemplate(): Promise<string> {
     },
     {
       npmName: '@ice/antd-pro-scaffold',
-      description: 'Web Pro Scaffold',
+      description: 'Antd Pro Scaffold',
+    },
+    {
+      npmName: '@ice/fusion-pro-scaffold',
+      description: 'Fusion Pro Scaffold',
     },
     {
       npmName: '@ice/miniapp-scaffold',

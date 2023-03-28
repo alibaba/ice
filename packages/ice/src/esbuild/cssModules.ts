@@ -66,7 +66,7 @@ function onStyleLoad(options: PluginOptions) {
     ];
     const result = await postcss(postcssPlugins).process(css, { from: args.path });
     css = result.css;
-    contents += `export default ${data.exportedClasses};`;
+    contents += `module.exports = ${data.exportedClasses};`;
 
     if (extract) {
       const writestream = temp.createWriteStream({ suffix: '.css' });

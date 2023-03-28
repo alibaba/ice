@@ -1,4 +1,4 @@
-<% if (importCoreJs) { -%>import 'core-js';<% } -%>
+<% if (importCoreJs) { -%>import 'core-js';<% } %>
 import { createElement, Fragment } from 'react';
 import { runClientApp, getAppConfig } from '<%- iceRuntimePath %>';
 import { commons, statics } from './runtimeModules';
@@ -10,25 +10,37 @@ import routes from './routes';
 <% if(dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
 const getRouterBasename = () => {
   const appConfig = getAppConfig(app);
-  return appConfig?.router?.basename ?? '<%- basename %>' ?? '';
+  return appConfig?.router?.basename ?? <%- basename %> ?? '';
 }
 // Add react fragment for split chunks of app.
 // Otherwise chunk of route component will pack @ice/jsx-runtime and depend on framework bundle.
 const App = <></>;
-runClientApp({
-  app,
-  runtimeModules: {
-    commons,
-    statics,
-  },
-  <% if (enableRoutes) { %>routes,<% } %>
-<% if (runtimeOptions.exports) { -%>
-  runtimeOptions: {
-    <%- runtimeOptions.exports %>
-  },
-<% } -%>
-  basename: getRouterBasename(),
-  hydrate: <%- hydrate %>,
-  memoryRouter: <%- memoryRouter || false %>,
-  <% if(dataLoaderImport.imports) {-%>dataLoaderFetcher<% } -%>
-});
+
+const render = (customOptions = {}) => {
+  const appProps = {
+    app,
+    runtimeModules: {
+      commons,
+      statics,
+    },
+    <% if (enableRoutes) { %>routes,<% } %>
+    basename: getRouterBasename(),
+    hydrate: <%- hydrate %>,
+    memoryRouter: <%- memoryRouter || false %>,
+    <% if(dataLoaderImport.imports) {-%>dataLoaderFetcher,<% } -%>
+    ...customOptions,
+    <% if (runtimeOptions.exports) { -%>
+    runtimeOptions: {
+      <%- runtimeOptions.exports %>
+      ...(customOptions.runtimeOptions || {}),
+    },
+    <% } -%>
+  };
+  return runClientApp(appProps);
+};
+
+<%- entryCode %>
+
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.accept();
+}

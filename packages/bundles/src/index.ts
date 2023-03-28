@@ -4,13 +4,13 @@ import postcss from 'postcss';
 import less from 'less';
 import sass from 'sass';
 import swc from '@swc/core';
+import esbuild from 'esbuild';
 
 const require = createRequire(import.meta.url);
 const swcPluginRemoveExport = require.resolve('@ice/swc-plugin-remove-export');
 const swcPluginKeepExport = require.resolve('@ice/swc-plugin-keep-export');
-const swcPluginKeepPlatform = require.resolve('@ice/swc-plugin-keep-platform');
+const swcPluginNodeTransform = require.resolve('@ice/swc-plugin-node-transform');
 const coreJsPath = dirname(require.resolve('core-js/package.json'));
-
 export {
   postcss,
   less,
@@ -19,9 +19,11 @@ export {
   swc,
   swcPluginRemoveExport,
   swcPluginKeepExport,
-  swcPluginKeepPlatform,
+  swcPluginNodeTransform,
 
   coreJsPath,
+
+  esbuild,
 };
 
 export type { ProcessOptions } from 'postcss';

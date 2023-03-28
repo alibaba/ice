@@ -7,6 +7,7 @@ import { startFixture, setupStartBrowser } from '../utils/start';
 import type { Page } from '../utils/browser';
 import type Browser from '../utils/browser';
 
+// @ts-ignore
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const example = 'basic-project';
@@ -59,7 +60,7 @@ describe(`build ${example}`, () => {
     browser = res.browser;
 
     const files = fs.readdirSync(path.join(__dirname, `../../examples/${example}/build/js`), 'utf-8');
-    expect(files.length).toBe(10);
+    expect(files.length).toBe(11);
   });
 
   test('render route config when downgrade to CSR.', async () => {
@@ -148,6 +149,7 @@ describe(`start ${example}`, () => {
 
   test('ClientOnly Component', async () => {
     await page.push('/client-only');
+    await page.waitForNetworkIdle();
     expect(await page.$$text('#mounted')).toStrictEqual(['Client']);
     const pageUrlText = await page.$$text('#page-url');
     expect((pageUrlText as string[])[0].endsWith('/client-only')).toBeTruthy();

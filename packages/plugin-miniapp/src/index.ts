@@ -3,7 +3,7 @@ import consola from 'consola';
 import chalk from 'chalk';
 import type { Plugin } from '@ice/app/esm/types';
 import getMiniappTask from './miniapp/index.js';
-import { MINIAPP_PLATFORMS } from './constant.js';
+import { MINIAPP_TARGETS } from './constant.js';
 
 interface MiniappOptions {
   // TODO: specify the config type of native.
@@ -17,8 +17,8 @@ const plugin: Plugin<MiniappOptions> = (miniappOptions = {}) => ({
   setup: ({ registerTask, onHook, context, dataCache, generator }) => {
     const { nativeConfig = {} } = miniappOptions;
     const { commandArgs, rootDir, command } = context;
-    const { platform } = commandArgs;
-    if (MINIAPP_PLATFORMS.includes(platform)) {
+    const { target } = commandArgs;
+    if (MINIAPP_TARGETS.includes(target)) {
       const configAPI = {
         getAppConfig: async () => ({}),
         getRoutesConfig: async () => ({}),
@@ -56,7 +56,7 @@ const plugin: Plugin<MiniappOptions> = (miniappOptions = {}) => ({
       registerTask('miniapp', getMiniappTask({
         rootDir,
         command,
-        platform,
+        target,
         configAPI,
         dataCache,
         runtimeDir: '.ice',
@@ -67,7 +67,7 @@ const plugin: Plugin<MiniappOptions> = (miniappOptions = {}) => ({
         if (shouldShowLog) {
           const outputDir = context.userConfig?.outputDir || 'build';
           let logoutMessage = '\n';
-          logoutMessage += chalk.green(`Use ${platform} developer tools to open the following folder:`);
+          logoutMessage += chalk.green(`Use ${target} developer tools to open the following folder:`);
           logoutMessage += `\n${chalk.underline.white(path.join(rootDir, outputDir))}\n`;
           consola.log(`${logoutMessage}\n`);
         }

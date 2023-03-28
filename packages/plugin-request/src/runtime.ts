@@ -1,10 +1,10 @@
-import type { RuntimePlugin } from '@ice/runtime/esm/types';
+import type { StaticRuntimePlugin } from '@ice/runtime/types';
 import { createAxiosInstance, setAxiosInstance } from './request.js';
 import type { RequestConfig } from './types';
 
 const EXPORT_NAME = 'requestConfig';
 
-const runtime: RuntimePlugin = async ({ appContext }) => {
+const runtime: StaticRuntimePlugin = async ({ appContext }) => {
   const { appExport } = appContext;
   const exported = appExport[EXPORT_NAME];
   const requestConfig: RequestConfig = (typeof exported === 'function' ? await exported() : exported) || {};

@@ -106,3 +106,96 @@ function Document({ pagePath }) {
 :::tip
 在 `script` 标签中添加 `crossOrigin="anonymous"` 有助于错误分析器获取到跨域的全局异常。
 :::
+
+### 自定义标签渲染逻辑
+
+如果想自定义如 `Scripts` 等组件的渲染行为，比如希望 `<script>` 标签的行为是内联代码而不是通过 `src` 来异步拉取的，则可以通过 `Scripts`、 `Link` 等组件暴露的方法来自定义组件的行为。
+
+#### 自定义 Scripts：
+
+```tsx
+import { Main, Scripts } from 'ice';
+
+function Document() {
+  return (
+    <html>
+      <head></head>
+      <body>
+        <Main />
+        <Scripts ScriptElement={(props) => {
+            return <script {...props} >
+              console.log('custom script');
+            </script>;
+          }}
+        />
+      </body>
+    </html>
+  );
+}
+```
+
+#### 自定义 Links
+
+```tsx
+import { Links, Main } from 'ice';
+
+function Document() {
+  return (
+    <html>
+      <head>
+        <Links LinkElement={(props) => {
+            return <link {...props} ></link>;
+          }}
+        />
+      </head>
+      <body>
+        <Main />
+      </body>
+    </html>
+  );
+}
+```
+
+#### 自定义 Title
+
+```tsx
+import { Title, Main } from 'ice';
+
+function Document() {
+  return (
+    <html>
+      <head>
+        <Title TitleElement={(props) => {
+            return <title {...props} ></title>;
+          }}
+        />
+      </head>
+      <body>
+        <Main />
+      </body>
+    </html>
+  );
+}
+```
+
+#### 自定义 Meta
+
+```tsx
+import { Meta, Main } from 'ice';
+
+function Document() {
+  return (
+    <html>
+      <head>
+        <Meta MetaElement={(props) => {
+            return <meta {...props} ></meta>;
+          }}
+        />
+      </head>
+      <body>
+        <Main />
+      </body>
+    </html>
+  );
+}
+```

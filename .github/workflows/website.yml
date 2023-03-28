@@ -5,7 +5,6 @@ on:
       - 'website/**'
     branches:
       - master
-      - release-next
   workflow_dispatch:
 
 # 任务
@@ -19,20 +18,14 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+
       - name: Use Node.js 16.x
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-      
-      - name: Cache .pnpm-store
-        id: cache
-        uses: actions/cache@v1
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-node${{ matrix.node-version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-
-      - name: Install pnpm
-        run: npm i pnpm -g
+          cache: 'pnpm'
 
       - run: pnpm install --filter=./website
 
@@ -41,7 +34,8 @@ jobs:
       # 部署到 GitHub Pages
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.0
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/release-next'
+        if: github.ref == 'refs/heads/master'
         with:
           BRANCH: gh-pages
           FOLDER: website/build
+          clean-exclude: ice.png

@@ -1,9 +1,12 @@
 import * as path from 'path';
+import { fileURLToPath } from 'url';
 import consola from 'consola';
 import chalk from 'chalk';
-import type { Plugin, GetAppConfig, GetRoutesConfig } from '@ice/app/esm/types';
-import generateManifest from './generateManifest.js';
+import type { Plugin, GetAppConfig, GetRoutesConfig, GetDataloaderConfig, ServerCompiler } from '@ice/app/types';
+import generateManifest, { getAppWorkerPath } from './generateManifest.js';
 import createPHAMiddleware from './phaMiddleware.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export type Compiler = (options: {
   entry: string;
@@ -11,10 +14,11 @@ export type Compiler = (options: {
   minify?: boolean;
   timestamp?: boolean;
   removeCode?: boolean;
-}) => Promise<string>;
+}, buildOptions: Parameters<ServerCompiler>[1]) => Promise<string>;
 
 interface PluginOptions {
-  template: boolean;
+  template?: boolean;
+  preload?: boolean;
 }
 
 function getDevPath(url: string): string {
@@ -23,9 +27,11 @@ function getDevPath(url: string): string {
 
 const plugin: Plugin<PluginOptions> = (options) => ({
   name: '@ice/plugin-pha',
-  setup: ({ onGetConfig, onHook, context, serverCompileTask, generator }) => {
-    const { template = true } = options || {};
+  setup: ({ onGetConfig, onHook, context, serverCompileTask, generator, getAllPlugin, createLogger }) => {
+    const { template = true, preload = false } = options || {};
     const { command, rootDir } = context;
+
+    const logger = createLogger('PHA');
 
     // Get variable blows from task config.
     let compiler: Compiler;
@@ -34,38 +40,51 @@ const plugin: Plugin<PluginOptions> = (options) => ({
     let urlPrefix: string;
     let getAppConfig: GetAppConfig;
     let getRoutesConfig: GetRoutesConfig;
+    let getDataloaderConfig: GetDataloaderConfig;
 
     generator.addRouteTypes({
       specifier: ['PageConfig'],
+      alias: { PageConfig: 'PHAPageConfig' },
       type: true,
-      source: '@ice/plugin-pha/esm/types',
+      source: '@ice/plugin-pha/types',
     });
 
     // TODO: get route manifest by API.
     const routeManifest = path.join(rootDir, '.ice', 'route-manifest.json');
     // Get server compiler by hooks
-    onHook(`before.${command as 'start' | 'build'}.run`, async ({ serverCompiler, taskConfigs, urls, ...restAPI }) => {
+    onHook(`before.${command as 'start' | 'build'}.run`, async ({ serverCompiler, taskConfigs, urls = {}, ...restAPI }) => {
       const taskConfig = taskConfigs.find(({ name }) => name === 'web').config;
       outputDir = path.isAbsolute(taskConfig.outputDir)
         ? taskConfig.outputDir : path.join(rootDir, taskConfig.outputDir);
 
       getAppConfig = restAPI.getAppConfig;
       getRoutesConfig = restAPI.getRoutesConfig;
+      getDataloaderConfig = restAPI.getDataloaderConfig;
+
+      const appWorkerPath = await getAppWorkerPath({
+        rootDir,
+        getAppConfig,
+      });
+
+      generator.addRenderFile(path.join(__dirname, '../template/appWorker.ejs'), 'appWorker.ts', {
+        appWorkerPath,
+      });
 
       // Need absolute path for pha dev.
-      publicPath = command === 'start' ? getDevPath(urls.lanUrlForTerminal) : (taskConfig.publicPath || '/');
+      publicPath = command === 'start' ? getDevPath(urls.lanUrlForTerminal || urls.localUrlForTerminal) : (taskConfig.publicPath || '/');
 
       // process.env.DEPLOY_PATH is defined by cloud environment such as DEF plugin.
       urlPrefix = command === 'start' ? urls.lanUrlForTerminal : process.env.DEPLOY_PATH;
 
-      compiler = async (options) => {
+      compiler = async (options, buildOptions) => {
         const { entry, outfile, minify = false } = options;
         await serverCompiler({
+          target: 'es2015',
           entryPoints: [entry],
           format: 'esm',
           outfile,
           minify,
-        });
+        }, buildOptions);
         return `${outfile}`;
       };
     });
@@ -75,42 +94,50 @@ const plugin: Plugin<PluginOptions> = (options) => ({
         rootDir,
         outputDir,
         compiler,
+        getAllPlugin,
         getAppConfig,
         getRoutesConfig,
+        getDataloaderConfig,
         parseOptions: {
           publicPath,
           urlPrefix,
           serverEntry: serverEntryRef.current,
           template,
+          preload,
           routeManifest,
         },
+        logger,
       });
     });
 
-    onHook('after.start.compile', async ({ urls }) => {
-      // Log out pha dev urls.
-      const lanUrl = urls.lanUrlForTerminal;
-      const appConfig = await getAppConfig(['phaManifest']);
-      const { phaManifest } = appConfig || {};
-      const phaDevUrls = [];
-      if (phaManifest?.tabBar) {
-        phaDevUrls.push(`${lanUrl}manifest.json`);
-      } else if (phaManifest?.routes?.length > 0) {
-        phaManifest.routes.forEach((route) => {
-          if (typeof route === 'string') {
-            phaDevUrls.push(`${lanUrl}${route}-manifest.json`);
-          } else if (typeof route?.frames![0] === 'string') {
-            phaDevUrls.push(`${lanUrl}${route.frames[0]}-manifest.json`);
-          }
+    onHook('after.start.compile', async ({ isSuccessful, isFirstCompile, urls }) => {
+      // Only print logout message once when build is successful.
+      // See also @ice/app -> plugins/web.ts
+      if (isSuccessful && isFirstCompile) {
+        // Log out pha dev urls.
+        const lanUrl = urls.lanUrlForTerminal;
+        const appConfig = await getAppConfig(['phaManifest']);
+        const { phaManifest } = appConfig || {};
+        const phaDevUrls = [];
+        if (phaManifest?.tabBar) {
+          phaDevUrls.push(`${lanUrl}manifest.json?pha=true`);
+        } else if (phaManifest?.routes?.length > 0) {
+          phaManifest.routes.forEach((route) => {
+            if (typeof route === 'string') {
+              phaDevUrls.push(`${lanUrl}${route}-manifest.json?pha=true`);
+            } else if (typeof route?.frames![0] === 'string') {
+              phaDevUrls.push(`${lanUrl}${route.frames[0]}-manifest.json?pha=true`);
+            }
+          });
+        }
+        let logoutMessage = '\n';
+        logoutMessage += chalk.green(' Serve PHA Manifest at:\n');
+        phaDevUrls.forEach((url) => {
+          logoutMessage += `\n   ${chalk.underline.white(url)}`;
         });
-      }
-      let logoutMessage = '\n';
-      logoutMessage += chalk.green(' Serve PHA Manifest at:\n');
-      phaDevUrls.forEach((url) => {
-        logoutMessage += `\n   ${chalk.underline.white(url)}`;
-      });
-      if (phaDevUrls.length > 0) {
-        consola.log(`${logoutMessage}\n`);
+        if (phaDevUrls.length > 0) {
+          consola.log(`${logoutMessage}\n`);
+        }
       }
     });
 
@@ -125,13 +152,17 @@ const plugin: Plugin<PluginOptions> = (options) => ({
           outputDir,
           getAppConfig,
           getRoutesConfig,
+          getAllPlugin,
+          getDataloaderConfig,
           compileTask: () => serverCompileTask.get(),
           parseOptions: {
             publicPath,
             urlPrefix,
             template,
+            preload,
             routeManifest,
           },
+          logger,
         });
 
         // Add pha middleware after server-compile.

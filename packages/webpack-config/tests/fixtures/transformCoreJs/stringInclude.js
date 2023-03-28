@@ -1,1 +1,0 @@
-import 'somepack/core-js/modules/test';

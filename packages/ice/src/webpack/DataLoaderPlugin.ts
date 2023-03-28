@@ -1,11 +1,11 @@
 import * as path from 'path';
 import fse from 'fs-extra';
-import consola from 'consola';
 import type { Compiler } from 'webpack';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type { Context } from 'build-scripts';
 import type { ServerCompiler, PluginData } from '../types/plugin.js';
-import { RUNTIME_TMP_DIR } from '../constant.js';
+import type { DeclarationData } from '../types/generator.js';
+import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR } from '../constant.js';
 import { getRoutePathsFromCache } from '../utils/getRoutePaths.js';
 
 const pluginName = 'DataLoaderPlugin';
@@ -14,20 +14,26 @@ const { RawSource } = webpack.sources;
 export default class DataLoaderPlugin {
   private serverCompiler: ServerCompiler;
   private rootDir: string;
+  private target: string;
   private dataCache: Map<string, string>;
   private getAllPlugin: Context['getAllPlugin'];
+  private frameworkExports: DeclarationData[];
 
   public constructor(options: {
     serverCompiler: ServerCompiler;
     rootDir: string;
+    target: string;
     dataCache: Map<string, string>;
     getAllPlugin?: Context['getAllPlugin'];
+    frameworkExports: DeclarationData[];
   }) {
-    const { serverCompiler, rootDir, dataCache, getAllPlugin } = options;
+    const { serverCompiler, rootDir, dataCache, getAllPlugin, target, frameworkExports } = options;
     this.serverCompiler = serverCompiler;
     this.rootDir = rootDir;
     this.dataCache = dataCache;
     this.getAllPlugin = getAllPlugin;
+    this.target = target;
+    this.frameworkExports = frameworkExports;
   }
 
   public apply(compiler: Compiler) {
@@ -50,8 +56,7 @@ export default class DataLoaderPlugin {
         if (fse.existsSync(filePath)) {
           const { outputFiles, error } = await this.serverCompiler(
             {
-              // Code will be transformed by @swc/core reset target to esnext make modern js syntax do not transformed.
-              target: 'esnext',
+              target: 'es6', // should not set to esnext, https://github.com/alibaba/ice/issues/5830
               entryPoints: [filePath],
               write: false,
               logLevel: 'silent', // The main server compile process will log it.
@@ -59,26 +64,30 @@ export default class DataLoaderPlugin {
             {
               swc: {
                 keepExports,
-                keepPlatform: 'web',
                 getRoutePaths: () => {
                   return getRoutePathsFromCache(this.dataCache);
                 },
               },
+              runtimeDefineVars: {
+                [IMPORT_META_TARGET]: JSON.stringify(this.target),
+                // `data-loader.js` runs in the browser.
+                [IMPORT_META_RENDERER]: JSON.stringify('client'),
+              },
               preBundle: false,
               externalDependencies: false,
               transformEnv: false,
-              // Redirect import defineDataLoader from @ice/runtime to avoid build plugin side effect code.
-              redirectImports: [{
-                specifier: ['defineDataLoader'],
-                source: '@ice/runtime',
-              }],
+              enableEnv: true,
+              // Redirect imports to @ice/runtime to avoid build plugin side effect code.
+              redirectImports: this.frameworkExports,
+              isServer: false,
             },
           );
-          if (error) {
-            consola.error('Server compile error in DataLoaderPlugin.');
-            consola.debug(error.stack);
-          } else {
+          if (!error) {
             compilation.emitAsset('js/data-loader.js', new RawSource(new TextDecoder('utf-8').decode(outputFiles[0].contents)));
+          } else if (process.env.NODE_ENV === 'production') {
+            // Should break build, and throw error.
+            callback(error);
+            return;
           }
         } else {
           compilation.deleteAsset('js/data-loader.js');

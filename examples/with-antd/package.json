@@ -1,5 +1,6 @@
 {
-  "name": "with-antd",
+  "name": "@examples/with-antd",
+  "private": true,
   "version": "1.0.0",
   "scripts": {
     "start": "ice start",

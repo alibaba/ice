@@ -1,0 +1,9 @@
+coverage:
+  status:
+    patch: off
+    project:
+      default:
+        threshold: 5%
+        
+github_checks:
+  annotations: false

@@ -1,5 +1,6 @@
 {
-  "name": "with-jest",
+  "name": "@examples/with-jest",
+  "private": true,
   "version": "1.0.0",
   "scripts": {
     "start": "ice start",

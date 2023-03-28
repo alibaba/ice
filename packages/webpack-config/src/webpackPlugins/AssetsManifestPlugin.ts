@@ -52,9 +52,11 @@ export default class AssetsManifestPlugin {
       entryFiles.push(jsMainFiles[0]);
       const chunks = entrypoint?.getChildren();
       chunks.forEach((chunk) => {
+        // Dynamic import missing chunk name, but not output solid assets.
         const chunkName = chunk.name;
-        const chunkFiles = filterAssets(chunk);
-        pages[chunkName] = chunkFiles;
+        if (chunkName) {
+          pages[chunkName.replace(/^p_/, '')] = filterAssets(chunk);
+        }
       });
     }
 

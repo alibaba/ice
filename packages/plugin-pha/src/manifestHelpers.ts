@@ -5,8 +5,9 @@ import humps from 'humps';
 import consola from 'consola';
 import cloneDeep from 'lodash.clonedeep';
 import { matchRoutes } from '@remix-run/router';
+import * as htmlparser2 from 'htmlparser2';
 import { decamelizeKeys, camelizeKeys, validPageConfigKeys } from './constants.js';
-import type { Page, PHAPage, PageHeader, PageConfig, Manifest, PHAManifest } from './types';
+import type { Page, PageHeader, PageConfig, Manifest, PHAManifest, Frame } from './types';
 
 const { decamelize } = humps;
 
@@ -22,8 +23,10 @@ export interface ParseOptions {
   routesConfig?: Record<string, any>;
   serverEntry: string;
   template?: boolean;
+  preload?: boolean;
   urlSuffix?: string;
   ssr?: boolean;
+  dataloaderConfig?: object | Function | Array<object | Function>;
 }
 
 interface TabConfig {
@@ -32,7 +35,20 @@ interface TabConfig {
   html?: string;
 }
 
-type MixedPage = PHAPage & PageConfig;
+type ResourcePrefetchConfig = Array<{
+  src: string;
+  mimeType?: string;
+  headers?: string;
+  queryParams?: string;
+}>;
+
+interface InternalPageConfig {
+  path?: string;
+  document?: string;
+  resourcePrefetch?: ResourcePrefetchConfig;
+}
+
+type MixedPage = InternalPageConfig & PageConfig;
 
 export function transformManifestKeys(manifest: Manifest, options?: TransformOptions): PHAManifest {
   const { parentKey, isRoot } = options;
@@ -54,7 +70,6 @@ export function transformManifestKeys(manifest: Manifest, options?: TransformOpt
     if (!camelizeKeys.includes(key)) {
       transformKey = decamelize(key);
     }
-
     if (typeof value === 'string' || typeof value === 'number') {
       data[transformKey] = value;
     } else if (Array.isArray(value)) {
@@ -96,9 +111,23 @@ function getPageUrl(routeId: string, options: ParseOptions) {
   return `${urlPrefix}${splitCharacter}${routeId}${urlSuffix}`;
 }
 
-async function getPageConfig(routeId: string, routeManifest: string, routesConfig: Record<string, any>): Promise<MixedPage> {
-  const routes = fs.readFileSync(routeManifest, 'utf-8');
-  const matches = matchRoutes(JSON.parse(routes), routeId.startsWith('/') ? routeId : `/${routeId}`);
+function getRouteManifest(routeManifest: string) {
+  try {
+    const routes = fs.readFileSync(routeManifest, 'utf-8');
+    return JSON.parse(routes);
+  } catch (e) {
+    console.warn(`[plugin-pha warn] ${JSON.stringify(e)}`);
+    return [];
+  }
+}
+
+async function getPageConfig(
+  routeId: string,
+  routeManifest: string,
+  routesConfig: Record<string, any>,
+): Promise<MixedPage> {
+  const routes = getRouteManifest(routeManifest);
+  const matches = matchRoutes(routes, routeId.startsWith('/') ? routeId : `/${routeId}`);
   let routeConfig: MixedPage = {};
   if (matches) {
     // Merge route config when return muitiple route.
@@ -135,7 +164,7 @@ async function renderPageDocument(routeId: string, serverEntry: string): Promise
 }
 
 async function getPageManifest(page: string | Page, options: ParseOptions): Promise<MixedPage> {
-  const { template, serverEntry, routesConfig, routeManifest } = options;
+  const { template, preload, serverEntry, routesConfig, routeManifest } = options;
   // Page will be type string when it is a source frame.
   if (typeof page === 'string') {
     // Get html content by render document.
@@ -145,8 +174,40 @@ async function getPageManifest(page: string | Page, options: ParseOptions): Prom
       key: page,
       ...rest,
     };
+    const html = await renderPageDocument(page, serverEntry);
     if (template && !Array.isArray(pageConfig.frames)) {
-      pageManifest.document = await renderPageDocument(page, serverEntry);
+      pageManifest.document = html;
+    }
+
+    if (preload) {
+      let scripts = [];
+      let stylesheets = [];
+      function getPreload(dom) {
+        if (
+          dom.name === 'script' &&
+          dom.attribs &&
+          dom.attribs.src
+        ) {
+          scripts.push({
+            src: dom.attribs.src,
+          });
+        } else if (
+          dom.name === 'link' &&
+          dom.attribs &&
+          dom.attribs.href &&
+          dom.attribs.rel === 'stylesheet'
+        ) {
+          stylesheets.push({
+            src: dom.attribs.href,
+          });
+        }
+
+        if (dom.children) {
+          dom.children.forEach(getPreload);
+        }
+      }
+      getPreload(htmlparser2.parseDocument(pageManifest.document));
+      pageManifest.resourcePrefetch = [...scripts, ...stylesheets];
     }
 
     // Always need path for page item.
@@ -183,7 +244,7 @@ async function getTabConfig(tabManifest: Manifest['tabBar'] | PageHeader, genera
     url: '',
   };
   const tabRouteId = parseRouteId(tabManifest!.source);
-  if (generateDocument && options.serverEntry) {
+  if (options.template && generateDocument && options.serverEntry) {
     tabConfig.html = await renderPageDocument(tabRouteId, options.serverEntry);
   }
 
@@ -243,10 +304,21 @@ export function rewriteAppWorker(manifest: Manifest): Manifest {
     appWorker,
   };
 }
-
+export function getRouteIdByPage(routeManifest: string, page: Page) {
+  const routes = getRouteManifest(routeManifest);
+  const routeId = typeof page === 'string' ? page : page?.name;
+  const locationArg = routeId?.startsWith('/') ? routeId : `/${routeId}`;
+  const matches = matchRoutes(routes, locationArg);
+  return (matches || []).map((match) => {
+    return match?.route?.id;
+  });
+}
 export async function parseManifest(manifest: Manifest, options: ParseOptions): Promise<PHAManifest> {
-  const { publicPath } = options;
-
+  const {
+    publicPath,
+    dataloaderConfig,
+    routeManifest,
+  } = options;
   const { appWorker, tabBar, routes } = manifest;
 
   if (appWorker?.url && !appWorker.url.startsWith('http')) {
@@ -270,10 +342,53 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
 
   if (routes && routes.length > 0) {
     manifest.pages = await Promise.all(routes.map(async (page) => {
+      const pageIds = getRouteIdByPage(routeManifest, page);
       const pageManifest = await getPageManifest(page, options);
+      // Set static dataloader to data_prefetch of page.
+      pageIds.forEach((pageId) => {
+        if (typeof page === 'string' && dataloaderConfig && dataloaderConfig[pageId]) {
+          const staticDataLoaders = [];
+          if (Array.isArray(dataloaderConfig[pageId])) {
+            dataloaderConfig[pageId].forEach(item => {
+              if (typeof item === 'object') {
+                staticDataLoaders.push(item);
+              }
+            });
+          } else if (typeof dataloaderConfig[pageId] === 'object') {
+            // Single prefetch loader config.
+            staticDataLoaders.push(dataloaderConfig[pageId]);
+          }
+          pageManifest.dataPrefetch = [...(pageManifest.dataPrefetch || []), ...staticDataLoaders];
+        }
+      });
+
       if (pageManifest.frames && pageManifest.frames.length > 0) {
         pageManifest.frames = await Promise.all(pageManifest.frames.map((frame) => getPageManifest(frame, options)));
+        // Set static dataloader to dataPrefetch of frames.
+        pageManifest.frames.forEach((frame: Frame) => {
+          if (typeof frame === 'string') return;
+          const title = frame.title || '';
+          const titleIds = getRouteIdByPage(routeManifest, title);
+          titleIds.forEach((titleId) => {
+            if (dataloaderConfig && dataloaderConfig[titleId]) {
+              const staticDataLoaders = [];
+              if (Array.isArray(dataloaderConfig[title])) {
+                dataloaderConfig[title].forEach(item => {
+                  if (typeof item === 'object') {
+                    staticDataLoaders.push(item);
+                  }
+                });
+              } else if (typeof dataloaderConfig[title] === 'object') {
+                // Single prefetch loader config.
+                staticDataLoaders.push(dataloaderConfig[title]);
+              }
+
+              frame.dataPrefetch = [...(frame.dataPrefetch || []), ...staticDataLoaders];
+            }
+          });
+        });
       }
+
       if (pageManifest?.pageHeader?.source) {
         if (!pageManifest.pageHeader.url) {
           pageManifest.pageHeader = {
@@ -289,6 +404,7 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
     // Delete manifest routes after transform.
     delete manifest.routes;
   }
+
   return transformManifestKeys(manifest, { isRoot: true });
 }
 
@@ -313,6 +429,11 @@ export function getMultipleManifest(manifest: PHAManifest): Record<string, PHAMa
     if (copiedManifest?.pages![0]?.data_prefetch) {
       copiedManifest.data_prefetch = copiedManifest.pages[0].data_prefetch;
       delete copiedManifest.pages[0].data_prefetch;
+    }
+    // take out the page preload and assign it to the root node
+    if (copiedManifest?.pages![0]?.resource_prefetch) {
+      copiedManifest.resource_prefetch = copiedManifest.pages[0].resource_prefetch;
+      delete copiedManifest.pages[0].resource_prefetch;
     }
     multipleManifest[pageKey] = copiedManifest;
   });

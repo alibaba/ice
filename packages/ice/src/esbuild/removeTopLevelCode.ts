@@ -1,10 +1,11 @@
 import * as fs from 'fs';
-import consola from 'consola';
 import type { Plugin } from 'esbuild';
 import { parse, type ParserOptions } from '@babel/parser';
 import babelTraverse from '@babel/traverse';
 import babelGenerate from '@babel/generator';
 import removeTopLevelCode from '../utils/babelPluginRemoveCode.js';
+import formatPath from '../utils/formatPath.js';
+import { logger } from '../utils/logger.js';
 
 // @ts-ignore @babel/traverse is not a valid export in esm
 const traverse = babelTraverse.default || babelTraverse;
@@ -26,10 +27,10 @@ const removeCodePlugin = (keepExports: string[], transformInclude: (id: string) 
     name: 'esbuild-remove-top-level-code',
     setup(build) {
       build.onLoad({ filter: /\.(js|jsx|ts|tsx)$/ }, async ({ path: id }) => {
-        if (!transformInclude(id)) {
+        if (!transformInclude(formatPath(id))) {
           return;
         }
-        const source = fs.readFileSync(id, 'utf-8');
+        const source = await fs.promises.readFile(id, 'utf-8');
         let isTS = false;
         if (id.match(/\.(ts|tsx)$/)) {
           isTS = true;
@@ -44,7 +45,7 @@ const removeCodePlugin = (keepExports: string[], transformInclude: (id: string) 
             loader: isTS ? 'tsx' : 'jsx',
           };
         } catch (error) {
-          consola.debug('Remove top level code error.', error.stack);
+          logger.debug('Remove top level code error.', `\nFile id: ${id}`, `\n${error.stack}`);
         }
       });
     },

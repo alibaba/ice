@@ -1,16 +1,25 @@
-import http from 'http';
-import url from 'url';
-import path from 'path';
-import fse from 'fs-extra';
+import * as http from 'http';
+import * as url from 'url';
+import * as path from 'path';
+import * as fse from 'fs-extra';
+import type {
+  Page as PuppeteerPage,
+  Browser as PuppeteerBrowser,
+  WaitForOptions,
+  HTTPResponse,
+} from 'puppeteer';
 import puppeteer from 'puppeteer';
 
-export interface Page extends puppeteer.Page {
+export interface Page extends PuppeteerPage {
   html: () => Promise<string>;
   $text: (selector: string, trim?: boolean) => Promise<string | null>;
   $$text: (selector: string, trim?: boolean) => Promise<(string | null)[]>;
   $attr: (selector: string, attr: string) => Promise<string | null>;
   $$attr: (selector: string, attr: string) => Promise<(string | null)[]>;
-  push: (url: string, options?: puppeteer.WaitForOptions & { referer?: string }) => Promise<puppeteer.HTTPResponse>;
+  push: (url: string, options?: WaitForOptions & {
+    referer?: string;
+    referrerPolicy?: string;
+  }) => Promise<HTTPResponse | null>;
 }
 
 interface BrowserOptions {
@@ -21,7 +30,7 @@ interface BrowserOptions {
 
 export default class Browser {
   private server: http.Server;
-  private browser: puppeteer.Browser;
+  private browser: PuppeteerBrowser;
   private baseUrl: string;
 
   constructor(options: BrowserOptions) {
@@ -97,7 +106,7 @@ export default class Browser {
     const page = (await this.browser.newPage()) as Page;
 
     if (disableJS) {
-      page.setJavaScriptEnabled(false);
+      await page.setJavaScriptEnabled(false);
     }
 
     await page.goto(`${this.baseUrl}${path}`);
@@ -112,10 +121,8 @@ export default class Browser {
       page.$$eval(selector, (els, trim) => els.map((el) => {
         return trim ? (el.textContent || '').replace(/^\s+|\s+$/g, '') : el.textContent;
       }), trim);
-
     page.$attr = (selector, attr) =>
       page.$eval(selector, (el, attr) => el.getAttribute(attr as string), attr);
-
     page.$$attr = (selector, attr) =>
       page.$$eval(
         selector,

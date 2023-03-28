@@ -6,7 +6,12 @@ import { getFileExports } from './service/analyze.js';
 import formatPath from './utils/formatPath.js';
 
 export async function generateRoutesInfo(rootDir: string, routesConfig: UserConfig['routes'] = {}) {
-  const routeManifest = generateRouteManifest(rootDir, routesConfig.ignoreFiles, routesConfig.defineRoutes);
+  const routeManifest = generateRouteManifest(
+    rootDir,
+    routesConfig.ignoreFiles,
+    routesConfig.defineRoutes,
+    routesConfig.config,
+  );
 
   const analyzeTasks = Object.keys(routeManifest).map(async (key) => {
     const routeItem = routeManifest[key];
@@ -19,7 +24,6 @@ export async function generateRoutesInfo(rootDir: string, routesConfig: UserConf
   await Promise.all(analyzeTasks);
 
   const routes = formatNestedRouteManifest(routeManifest);
-  const routesStr = generateRoutesStr(routes);
   let routesCount = 0;
   Object.keys(routeManifest).forEach((key) => {
     const routeItem = routeManifest[key];
@@ -31,11 +35,10 @@ export async function generateRoutesInfo(rootDir: string, routesConfig: UserConf
   return {
     routesCount,
     routeManifest,
-    routesStr,
     routes,
     loaders: generateRouteConfig(routes, 'dataLoader', (str, imports) => {
       return imports.length > 0 ? `${str}
-const loaders = {
+export default {
   ${imports.map(([routeId, importKey]) => `'${routeId}': ${importKey},`).join('\n  ')}
 };` : '';
     }),
@@ -48,36 +51,47 @@ export default {
   };
 }
 
-function generateRoutesStr(nestRouteManifest: NestedRouteManifest[]) {
-  return `[
-  ${recurseRoutesStr(nestRouteManifest)}
-]`;
-}
-
-function recurseRoutesStr(nestRouteManifest: NestedRouteManifest[], depth = 0) {
-  return nestRouteManifest.reduce((prev, route) => {
+export function getRoutesDefination(nestRouteManifest: NestedRouteManifest[], lazy = false, depth = 0) {
+  const routeImports: string[] = [];
+  const routeDefination = nestRouteManifest.reduce((prev, route, currentIndex) => {
     const { children, path: routePath, index, componentName, file, id, layout, exports } = route;
 
     const componentPath = id.startsWith('__') ? file : `@/pages/${file}`.replace(new RegExp(`${path.extname(file)}$`), '');
+
+    let loadStatement = '';
+    if (lazy) {
+      loadStatement = `import(/* webpackChunkName: "p_${componentName}" */ '${formatPath(componentPath)}')`;
+    } else {
+      const routeSpecifier = `route_${depth}_${currentIndex}`;
+      routeImports.push(`import * as ${routeSpecifier} from '${formatPath(componentPath)}';`);
+      loadStatement = routeSpecifier;
+    }
     const routeProperties: string[] = [
       `path: '${formatPath(routePath || '')}',`,
-      `load: () => import(/* webpackChunkName: "${componentName}" */ '${formatPath(componentPath)}'),`,
+      `load: () => ${loadStatement},`,
       `componentName: '${componentName}',`,
       `index: ${index},`,
       `id: '${id}',`,
       'exact: true,',
       `exports: ${JSON.stringify(exports)},`,
     ];
+
     if (layout) {
       routeProperties.push('layout: true,');
     }
     if (children) {
-      routeProperties.push(`children: [${recurseRoutesStr(children, depth + 1)}]`);
+      const res = getRoutesDefination(children, lazy, depth + 1);
+      routeImports.push(...res.routeImports);
+      routeProperties.push(`children: [${res.routeDefination}]`);
     }
-
     prev += formatRoutesStr(depth, routeProperties);
     return prev;
   }, '');
+
+  return {
+    routeImports,
+    routeDefination,
+  };
 }
 
 function formatRoutesStr(deep: number, strs: string[]) {

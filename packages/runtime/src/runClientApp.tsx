@@ -1,7 +1,7 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useEffect, useState } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { createHashHistory, createBrowserHistory, createMemoryHistory } from 'history';
-import type { HashHistory, BrowserHistory, Action, Location, InitialEntry, MemoryHistory } from 'history';
+import type { HashHistory, BrowserHistory, Action, Location, MemoryHistory } from 'history';
 import type {
   AppContext, WindowContext, AppExport, RouteItem, AppRouterProps, RoutesData, RoutesConfig,
   RouteWrapperConfig, RuntimeModules, RouteMatch, RouteModules, AppConfig, AssetsManifest,
@@ -12,13 +12,14 @@ import Runtime from './runtime.js';
 import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
 import { AppDataProvider, getAppData } from './AppData.js';
-import { loadRouteModules, loadRoutesData, getRoutesConfig, filterMatchesToLoad } from './routes.js';
+import { loadRouteModules, loadRoutesData, getRoutesConfig, filterMatchesToLoad, getRoutesPath } from './routes.js';
 import { updateRoutesConfig } from './routesConfig.js';
 import getRequestContext from './requestContext.js';
 import getAppConfig from './appConfig.js';
 import matchRoutes from './matchRoutes.js';
 import DefaultAppRouter from './AppRouter.js';
 import { setFetcher } from './dataLoader.js';
+import addLeadingSlash from './utils/addLeadingSlash.js';
 
 export interface RunClientAppOptions {
   app: AppExport;
@@ -54,11 +55,18 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routePath,
     downgrade,
     documentOnly,
+    renderMode,
+    serverData,
   } = windowContext;
-
+  const formattedBasename = addLeadingSlash(basename);
   const requestContext = getRequestContext(window.location);
   const appConfig = getAppConfig(app);
-  const history = createHistory(appConfig, { memoryRouter, routePath });
+  const historyOptions = {
+    memoryRouter,
+    initialEntry: routePath,
+    routes,
+  };
+  const history = createHistory(appConfig, historyOptions);
   // Set history for import it from ice.
   setHistory(history);
 
@@ -70,8 +78,11 @@ export default async function runClientApp(options: RunClientAppOptions) {
     routesData,
     routesConfig,
     assetsManifest,
-    basename,
+    basename: formattedBasename,
     routePath,
+    renderMode,
+    requestContext,
+    serverData,
   };
 
   const runtime = new Runtime(appContext, runtimeOptions);
@@ -91,12 +102,17 @@ export default async function runClientApp(options: RunClientAppOptions) {
   const matches = matchRoutes(
     routes,
     memoryRouter ? routePath : history.location,
-    basename,
+    formattedBasename,
   );
   const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
-
+  if (Object.keys(routeModules).length === 0) {
+    // Log route info for debug.
+    console.warn('Routes:', routes, 'Basename:', formattedBasename);
+  }
   if (!routesData) {
-    routesData = await loadRoutesData(matches, requestContext, routeModules);
+    routesData = await loadRoutesData(matches, requestContext, routeModules, {
+      ssg: renderMode === 'SSG',
+    });
   }
 
   if (!routesConfig) {
@@ -105,7 +121,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
 
   if (hydrate && !downgrade && !documentOnly) {
     runtime.setRender((container, element) => {
-      ReactDOM.hydrateRoot(container, element);
+      return ReactDOM.hydrateRoot(container, element);
     });
   }
   // Reset app context after app context is updated.
@@ -114,7 +130,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     await Promise.all(runtimeModules.commons.map(m => runtime.loadModule(m)).filter(Boolean));
   }
 
-  render({ runtime, history });
+  return render({ runtime, history });
 }
 
 interface RenderOptions {
@@ -125,7 +141,7 @@ interface RenderOptions {
 async function render({ history, runtime }: RenderOptions) {
   const appContext = runtime.getAppContext();
   const { appConfig, appData } = appContext;
-  const render = runtime.getRender();
+  const appRender = runtime.getRender();
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
   const RouteWrappers = runtime.getWrappers();
   const AppRouter = runtime.getAppRouter();
@@ -139,7 +155,7 @@ async function render({ history, runtime }: RenderOptions) {
     console.warn(`Root node #${rootId} is not found, current root is automatically created by the framework.`);
   }
 
-  render(
+  return appRender(
     root,
     <AppDataProvider value={appData}>
       <AppRuntimeProvider>
@@ -185,6 +201,7 @@ function BrowserEntry({
     routesConfig: initialRoutesConfig,
     routeModules: initialRouteModules,
     basename,
+    renderMode,
   } = appContext;
 
   const [historyState, setHistoryState] = useState<HistoryState>({
@@ -201,10 +218,10 @@ function BrowserEntry({
   const { action, location } = historyState;
   const { routesData, routesConfig, matches, routeModules } = routeState;
 
-  // listen the history change and update the state which including the latest action and location
+  // Listen the history change and update the state which including the latest action and location.
   useLayoutEffect(() => {
     if (history) {
-      history.listen(({ action, location }) => {
+      const unlisten = history.listen(({ action, location }) => {
         const currentMatches = matchRoutes(routes, location, basename);
         if (!currentMatches.length) {
           throw new Error(`Routes not found in location ${location.pathname}.`);
@@ -214,33 +231,52 @@ function BrowserEntry({
           currentMatches,
           routeState,
         ).then(({ routesData, routesConfig, routeModules }) => {
-          setHistoryState({
-            action,
-            location,
-          });
           setRouteState({
             routesData,
             routesConfig,
             matches: currentMatches,
             routeModules,
           });
+          setHistoryState({
+            action,
+            location,
+          });
+        });
+      });
+
+      return () => unlisten();
+    }
+    // Should add routeState to dependencies to ensure get the correct state in `history.listen`.
+  }, [routeState, history, basename, routes]);
+
+  useEffect(() => {
+    // Rerender page use actual data for ssg.
+    if (renderMode === 'SSG') {
+      const initialContext = getRequestContext(window.location);
+      loadRoutesData(matches, initialContext, routeModules).then(data => {
+        setRouteState(r => {
+          return {
+            ...r,
+            routesData: data,
+          };
         });
       });
     }
-    // just trigger once
+    // Trigger once after first render for SSG to update data.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // update app context for the current route.
-  Object.assign(appContext, {
+  const context = {
+    ...appContext,
     matches,
     routesData,
     routesConfig,
     routeModules,
-  });
+  };
 
   return (
-    <AppContextProvider value={appContext}>
+    <AppContextProvider value={context}>
       <App
         action={action}
         location={location}
@@ -273,7 +309,10 @@ export async function loadNextPage(
   // load data for changed route.
   const initialContext = getRequestContext(window.location);
   const matchesToLoad = filterMatchesToLoad(preMatches, currentMatches);
-  const data = await loadRoutesData(matchesToLoad, initialContext, routeModules);
+  // Navigate to other router should always fetch the latest data.
+  const data = await loadRoutesData(matchesToLoad, initialContext, routeModules, {
+    forceRequest: true,
+  });
 
   const routesData: RoutesData = {};
   // merge page data.
@@ -292,23 +331,35 @@ export async function loadNextPage(
   };
 }
 
+interface HistoryOptions {
+  memoryRouter: boolean;
+  initialEntry?: string;
+  routes?: RouteItem[];
+}
+
 function createHistory(
   appConfig: AppConfig,
-  { memoryRouter, routePath }: { memoryRouter: boolean; routePath: string },
+  { memoryRouter, initialEntry, routes }: HistoryOptions,
 ): History {
+  const routerType = memoryRouter ? 'memory' : appConfig?.router?.type;
   const createHistory = process.env.ICE_CORE_ROUTER === 'true'
     ? createRouterHistory(appConfig?.router?.type, memoryRouter)
     : createHistorySingle;
-  const createHistoryOptions: Parameters<typeof createHistory>[0] = { window };
+  let createHistoryOptions: Parameters<typeof createHistory>[0] = { window };
 
-  if (memoryRouter || appConfig?.router?.type === 'memory') {
-    let initialEntries: InitialEntry[] = [];
-    if (memoryRouter) {
-      initialEntries = [routePath];
-    } else if (appConfig?.router?.type === 'memory') {
-      initialEntries = appConfig?.router?.initialEntries || [window.location.pathname];
+  if (routerType === 'memory') {
+    const memoryOptions: Parameters<typeof createMemoryHistory>[0] = {};
+    memoryOptions.initialEntries = appConfig?.router?.initialEntries || getRoutesPath(routes);
+    if (initialEntry) {
+      const initialIndex = memoryOptions.initialEntries.findIndex((entry) =>
+        typeof entry === 'string' && entry === initialEntry);
+      if (initialIndex >= 0) {
+        memoryOptions.initialIndex = initialIndex;
+      } else {
+        console.error(`path: ${initialEntry} do not match any initialEntries ${memoryOptions.initialEntries}`);
+      }
     }
-    (createHistoryOptions as Parameters<typeof createMemoryHistory>[0]).initialEntries = initialEntries;
+    createHistoryOptions = memoryOptions;
   }
 
   const history = createHistory(createHistoryOptions);

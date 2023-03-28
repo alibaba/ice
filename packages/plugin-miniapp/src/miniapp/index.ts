@@ -8,7 +8,7 @@ import { createRequire } from 'node:module';
 import fs from 'fs-extra';
 import fg from 'fast-glob';
 import type { Config } from '@ice/app/esm/types';
-import getMiniappPlatformConfig from '../platforms/index.js';
+import getMiniappTargetConfig from '../targets/index.js';
 import getMiniappWebpackConfig from './webpack/index.js';
 
 const require = createRequire(import.meta.url);
@@ -32,7 +32,7 @@ function getEntry(rootDir: string, runtimeDir: string) {
 const getMiniappTask = ({
   rootDir,
   command,
-  platform,
+  target,
   configAPI,
   dataCache,
   runtimeDir,
@@ -40,7 +40,7 @@ const getMiniappTask = ({
 }): Config => {
   const entry = getEntry(rootDir, runtimeDir);
   const mode = command === 'start' ? 'development' : 'production';
-  const { template, globalObject, fileType, projectConfigJson } = getMiniappPlatformConfig(platform);
+  const { template, globalObject, fileType, projectConfigJson } = getMiniappTargetConfig(target);
   const { plugins, module } = getMiniappWebpackConfig({
     rootDir,
     template,
@@ -118,8 +118,6 @@ const getMiniappTask = ({
     devServer: {}, // No need to use devServer in miniapp
     enableCopyPlugin: isPublicDirExist, // Only when public dir exists should copy-webpack-plugin be enabled
     swcOptions: {
-      // compatible with former design that miniapp represents ali miniapp
-      keepPlatform: platform === 'ali-miniapp' ? 'miniapp' : platform,
       removeExportExprs: ['getServerData', 'getStaticData'],
       getRoutePaths: () => {
         const routes = dataCache.get('routes');

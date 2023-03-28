@@ -151,9 +151,8 @@ function stripFileExtension(file: string) {
   return file.replace(/\.[a-z0-9]+$/i, '');
 }
 
-function createComponentName(id: string) {
-  return id.replace('.', '/') // 'pages/home.news' -> pages/home/news
-    .split('/')
+export function createComponentName(id: string) {
+  return id.split('/')
     .map((item: string) => item.toLowerCase())
     .join('-');
 }

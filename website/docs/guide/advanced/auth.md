@@ -1,9 +1,8 @@
 ---
 title: 权限管理
+order: 0510
 ---
-:::tip
-小程序端不支持该能力。
-:::
+> 对于移动端场景，鉴权通常由 SSO 或统一登录平台完成，业务开发者无需关注。本文档主要介绍中后台场景中的权限管理。
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -19,7 +18,7 @@ import TabItem from '@theme/TabItem';
   </ul>
 </details>
 
-对于一个 Web 应用，权限管理是经常会涉及的需求之一，通常包含以下几种常见的权限管理类型：
+中后台 Web 应用中，权限管理是经常会涉及的需求之一，通常包含以下几种常见的权限管理类型：
 
 - 页面权限：当用户访问某个没有权限的页面时跳转到无权限页面
 - 操作权限：页面中的某些按钮或组件针对无权限的用户直接隐藏
@@ -53,7 +52,7 @@ export default defineConfig(() => ({
 大多数情况下权限管理通常需要从服务端获取权限数据，然后在前端通过权限对比以此控制页面、操作等等权限行为。约定在 `src/app.ts` 中导出 `auth` 对象，该对象包含从服务端异步获取初始化的权限数据，并且约定最终返回格式为 `{ initialAuth: { [key: string]: boolean } }`。
 
 ```ts title="src/app.ts"
-import { defineAuthConfig } from '@ice/plugin-auth/esm/types';
+import { defineAuthConfig } from '@ice/plugin-auth/types';
 
 export const authConfig = defineAuthConfig(async () => {
   // 模拟请求权限数据
@@ -196,7 +195,7 @@ function Foo() {
 支持自定义无权限时的展示组件，默认为 `<>No Auth</>`
 
 ```diff title="src/app.tsx"
-import { defineAuthConfig } from '@ice/plugin-auth/esm/types';
+import { defineAuthConfig } from '@ice/plugin-auth/types';
 
 export const authConfig = defineAuthConfig(async () => {
   return {

@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-request",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Request plugin for ice.",
   "license": "MIT",
   "type": "module",
@@ -45,15 +45,16 @@
   "types": "./esm/index.d.ts",
   "files": [
     "esm",
-    "!esm/**/*.map"
+    "!esm/**/*.map",
+    "*.d.ts"
   ],
   "dependencies": {
     "ahooks": "^3.0.0",
     "axios": "^0.27.2"
   },
   "devDependencies": {
-    "@ice/app": "^3.0.0",
-    "@ice/runtime": "^1.0.0",
+    "@ice/app": "^3.1.2",
+    "@ice/runtime": "^1.1.3",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "regenerator-runtime": "^0.13.9"
@@ -69,5 +70,8 @@
   "scripts": {
     "watch": "tsc -w",
     "build": "tsc"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

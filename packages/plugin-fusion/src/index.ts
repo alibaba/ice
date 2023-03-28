@@ -1,5 +1,5 @@
 import { createRequire } from 'module';
-import type { Plugin } from '@ice/app/esm/types';
+import type { Plugin } from '@ice/app/types';
 import styleImportPlugin from '@ice/style-import';
 
 interface PluginOptions {
@@ -32,17 +32,22 @@ function importIcon(iconPath: string, cssPrefix: string) {
   return {
     name: 'transform-import-icon',
     enforce: 'pre',
+    transformInclude(id: string) {
+      // Only transform source code and icon file.
+      return (id.match(/\.(js|jsx|ts|tsx)$/) && !id.match(/node_modules/)) || iconPath === id;
+    },
     async transform(code: string, id: string, options: { isServer: boolean }) {
       const { isServer } = options;
       // Only import icon scss in client
       if (!isServer) {
         // Icon just import once.
-        if (!entryFile && !id.match(/node_modules/) && id.match(/[js|jsx|ts|tsx]$/)) {
+        if (!entryFile) {
           entryFile = id;
         }
         if (id === entryFile) {
           return `import '${iconPath}';\n${code}`;
         } else if (id === iconPath) {
+          // Default cssPrefix for icon.scss.
           return `$css-prefix: '${cssPrefix}';\n${code}`;
         }
       }
@@ -71,7 +76,7 @@ const plugin: Plugin<PluginOptions> = (options = {}) => ({
           silent: true,
         });
         if (iconFile) {
-          config.transformPlugins = [...(config.transformPlugins || []), importIcon(iconFile, theme['css-prefix'] || 'next-')];
+          config.transformPlugins = [...(config.transformPlugins || []), importIcon(iconFile, theme?.['css-prefix'] || 'next-')];
         }
         // Modify webpack config of scss rule for fusion theme.
         config.configureWebpack ??= [];

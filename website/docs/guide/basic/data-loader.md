@@ -66,8 +66,45 @@ export const dataLoader = defineDataLoader(async () => {
 <img src="https://iceworks.oss-cn-hangzhou.aliyuncs.com/site-assets/dataloader-compare.gif" width="750px" />
 
 :::info
+在 dataLoader 应避免处理 UI 相关逻辑，或引入较大的依赖，以确保 dataLoader 的构建产物足够小
+
 受小程序环境限制，通过 `dataLoader` 定义的应用级数据加载将在 `App` 的 `onLaunch` 生命周期中进行，页面级数据加载则会在 `Page` 的 `onLoad` 生命周期中，二者均会阻塞页面的 UI 渲染。如果这不是你想要的效果，请按照常规方式进行数据请求。（比如在组件首次 `useEffect` 时发起数据请求）
 :::
+
+## 静态 dataLoader
+
+当开发者希望通过统一的发送函数处理静态配置以完成 `dataLoader` 时，可以通过自定义 `fetcher` 以完成发送逻辑的统一封装，在 `dataLoader` 中只需要传递一份配置即可。
+
+```js
+export const dataLoader = defineDataLoader({
+  api: 'xxx',
+  options: {}
+});
+```
+
+通过 `defineConfig` 配置 `dataLoader` 配置以自定义 `fetcher`。
+
+```jsx title="ice.config.mts"
+export default defineConfig(() => ({
+  dataLoader: {
+    fetcher: {
+      packageName: '@ice/custom-fetcher-lib', // 统一处理静态 dataLoader 的 NPM 包
+      method: 'request', // NPM 包导出的方法
+    },
+  },
+}));
+```
+
+最终构建后会呈现以下形式：
+
+```js
+import { request as fetcher } '@ice/custom-fetcher-lib';
+
+fetcher({
+  api: 'xxx',
+  options: {}
+});
+```
 
 ## 使用示例
 
@@ -115,7 +152,7 @@ export const dataLoader = defineDataLoader(async (ctx) => {
 如果是应用级的数据加载，可以在应用入口 `src/app.ts` 中定义并导出 `dataLoader` 方法，来注册数据加载逻辑。示例：
 
 ```ts title="src/app.ts"
-import type { defineDataLoader } from 'ice';
+import { defineDataLoader } from 'ice';
 
 // ...
 

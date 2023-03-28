@@ -3,9 +3,18 @@ import SpeedMeasurePlugin from 'speed-measure-webpack-plugin';
 import customPlugin from './plugin';
 
 export default defineConfig(() => ({
+  ssr: true,
   publicPath: '/',
+  polyfill: 'entry',
   syntaxFeatures: {
     exportDefaultFrom: true,
+  },
+  server: {
+    onDemand: true,
+    format: 'esm',
+  },
+  alias: {
+    '@comp': './src/components',
   },
   define: {
     HAHA: JSON.stringify(true),
@@ -23,7 +32,7 @@ export default defineConfig(() => ({
     }
     return webpackConfig;
   },
-  dropLogLevel: 'warn',
+  dropLogLevel: process.env.ICE_ENV === 'common' ? 'warn' : 'error',
   plugins: [
     customPlugin(),
   ],

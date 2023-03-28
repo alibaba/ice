@@ -1,9 +1,11 @@
 const configData = {
   home: {
     priority: 'low',
-    dataPrefetch: {
-      api: 'test/api',
-    },
+    dataPrefetch: [
+      {
+        api: 'test/api',
+      },
+    ],
   },
   about: {
     defaultFrameIndex: 0,
