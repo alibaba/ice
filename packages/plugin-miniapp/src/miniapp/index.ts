@@ -70,6 +70,7 @@ const getMiniappTask = ({
       '@': path.join(rootDir, 'src'),
       // 小程序使用 regenerator-runtime@0.11
       'regenerator-runtime': require.resolve('regenerator-runtime'),
+      '@swc/helpers': path.dirname(require.resolve('@swc/helpers/package.json')),
       '@ice/miniapp-runtime/esm/app': require.resolve('@ice/miniapp-runtime/app'),
       // 开发组件库时 link 到本地调试，runtime 包需要指向本地 node_modules 顶层的 runtime，保证闭包值 Current 一致，shared 也一样
       '@ice/miniapp-runtime': require.resolve('@ice/miniapp-runtime'),
