@@ -72,7 +72,6 @@ const start = async (
 
   const hooksAPI = {
     serverCompiler,
-    serverRunner,
     getAppConfig,
     getRoutesConfig,
     getDataloaderConfig,
@@ -129,7 +128,7 @@ async function startDevServer({
 }: StartDevServerOptions): Promise<{ compiler: Compiler; devServer: WebpackDevServer }> {
   const { commandArgs, userConfig, rootDir, applyHook, extendsPluginAPI: { excuteServerEntry } } = context;
   const { ssg, ssr } = userConfig;
-  const { getAppConfig, serverRunner } = hooksAPI;
+  const { getAppConfig } = hooksAPI;
   const webTaskConfig = taskConfigs.find(({ name }) => name === WEB);
   const customMiddlewares = webpackConfigs[0].devServer?.setupMiddlewares;
   // Get the value of the host and port from the command line, environment variables, and webpack config.

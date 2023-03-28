@@ -344,7 +344,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             getRoutesConfig,
             getDataloaderConfig,
             getAppConfig,
-            serverRunner,
             appConfig,
             devPath: (routePaths[0] || '').replace(/^[/\\]/, ''),
             spinner: buildSpinner,
