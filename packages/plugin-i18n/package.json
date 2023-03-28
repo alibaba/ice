@@ -15,8 +15,8 @@
       "import": "./es2017/index.js"
     },
     "./runtime": {
-      "types": "./es2017/runtime/index.d.ts",
-      "import": "./es2017/runtime/index.js"
+      "types": "./es2017/runtime.d.ts",
+      "import": "./es2017/runtime.js"
     },
     "./*": "./*"
   },

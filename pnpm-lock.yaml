@@ -580,6 +580,27 @@ importers:
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
 
+  examples/with-i18n:
+    specifiers:
+      '@ice/app': workspace:*
+      '@ice/plugin-i18n': workspace:*
+      '@ice/runtime': workspace:*
+      '@types/react': ^18.0.0
+      '@types/react-dom': ^18.0.2
+      react: ^18.0.0
+      react-dom: ^18.0.0
+      react-intl: ^6.3.2
+    dependencies:
+      '@ice/runtime': link:../../packages/runtime
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-intl: 6.3.2_react@18.2.0
+    devDependencies:
+      '@ice/app': link:../../packages/ice
+      '@ice/plugin-i18n': link:../../packages/plugin-i18n
+      '@types/react': 18.0.28
+      '@types/react-dom': 18.0.11
+
   examples/with-jest:
     specifiers:
       '@ice/app': workspace:*
@@ -20383,6 +20404,7 @@ packages:
       serialize-javascript: 6.0.1
       terser: 5.14.2
       webpack: 5.76.2_x5vjxkescd7wbsfiatu6dm4yia
+    dev: true
 
   /terser-webpack-plugin/5.3.5_ru5mwuzjydtus6p6kkdltzgpiq:
     resolution: {integrity: sha512-AOEDLDxD2zylUGf/wxHxklEkOe2/r+seuyOWujejFrIxHf11brA1/dWQNIgXa1c6/Wkxgu7zvv0JhOWfc2ELEA==}
@@ -20407,7 +20429,6 @@ packages:
       serialize-javascript: 6.0.1
       terser: 5.14.2
       webpack: 5.76.2_esbuild@0.16.17
-    dev: true
 
   /terser-webpack-plugin/5.3.5_webpack@5.76.2:
     resolution: {integrity: sha512-AOEDLDxD2zylUGf/wxHxklEkOe2/r+seuyOWujejFrIxHf11brA1/dWQNIgXa1c6/Wkxgu7zvv0JhOWfc2ELEA==}
@@ -21601,7 +21622,7 @@ packages:
       mime-types: 2.1.35
       range-parser: 1.2.1
       schema-utils: 4.0.0
-      webpack: 5.76.2_x5vjxkescd7wbsfiatu6dm4yia
+      webpack: 5.76.2_esbuild@0.16.17
 
   /webpack-dev-server/4.11.1_debug@4.3.4+webpack@5.76.2:
     resolution: {integrity: sha512-lILVz9tAUy1zGFwieuaQtYiadImb5M3d+H+L1zDYalYoDl0cksAB1UNyuE5MMWJrG6zR1tXkCP2fitl7yoUJiw==}
@@ -21689,7 +21710,7 @@ packages:
       serve-index: 1.9.1
       sockjs: 0.3.24
       spdy: 4.0.2
-      webpack: 5.76.2_x5vjxkescd7wbsfiatu6dm4yia
+      webpack: 5.76.2_esbuild@0.16.17
       webpack-dev-middleware: 5.3.3_webpack@5.76.2
       ws: 8.12.1
     transitivePeerDependencies:
@@ -21798,7 +21819,6 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
-    dev: true
 
   /webpack/5.76.2_x5vjxkescd7wbsfiatu6dm4yia:
     resolution: {integrity: sha512-Th05ggRm23rVzEOlX8y67NkYCHa9nTNcwHPBhdg+lKG+mtiW7XgggjAeeLnADAe7mLjJ6LUNfgHAuRRh+Z6J7w==}
@@ -21838,6 +21858,7 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
+    dev: true
 
   /webpackbar/5.0.2_webpack@5.76.2:
     resolution: {integrity: sha512-BmFJo7veBDgQzfWXl/wwYXr/VFus0614qZ8i9znqcl9fnEdiVkdbi0TedLQ6xAK92HZHDJ0QmyQ0fmuZPAgCYQ==}

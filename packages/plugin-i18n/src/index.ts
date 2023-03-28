@@ -1,4 +1,9 @@
+import { createRequire } from 'module';
 import type { Plugin } from '@ice/app/types';
+
+const require = createRequire(import.meta.url);
+const packageJSON = require('../package.json');
+const { name: packageName } = packageJSON;
 
 interface PluginOptions {
   locales: string[];
@@ -6,14 +11,11 @@ interface PluginOptions {
 }
 
 const plugin: Plugin<PluginOptions> = (options) => ({
-  // name 可选，插件名称
-  name: 'plugin-name',
-  // setup 必选，用于定制工程构建配置
+  name: packageName,
   setup: (pluginAPI) => {
 
   },
-  // runtime 可选，用于定制运行时配置
-  runtime: '@ice/plugin-i18n/runtime',
+  runtime: `${packageName}/runtime`,
 });
 
 export default plugin;
