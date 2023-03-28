@@ -73,7 +73,7 @@ export default function Index() {
 
 ## 当元素进入不可见状态时
 
-```jsx title="src/pages/home.tsx"
+```jsx
 import VisibilityChange from '@ice/appear';
 
 export default function Home() {

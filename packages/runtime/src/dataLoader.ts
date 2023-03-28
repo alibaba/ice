@@ -92,13 +92,13 @@ export function parseTemplate(config: StaticDataLoader) {
     if (item && origin && key && value && value.startsWith('.')) {
       if (key === 'queryParams') {
         // Replace query params.
-        strConfig = strConfig.replace(origin, getQueryParams()[value.substring(1)]);
+        strConfig = strConfig.replace(origin, getQueryParams()[value.substring(1)] || '');
       } else if (key === 'cookie') {
         // Replace cookie.
-        strConfig = strConfig.replace(origin, getCookie()[value.substring(1)]);
+        strConfig = strConfig.replace(origin, getCookie()[value.substring(1)] || '');
       } else if (key === 'storage') {
         // Replace storage.
-        strConfig = strConfig.replace(origin, localStorage.getItem(value.substring(1)));
+        strConfig = strConfig.replace(origin, localStorage.getItem(value.substring(1)) || '');
       }
     }
   });

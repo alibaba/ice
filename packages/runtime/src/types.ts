@@ -2,7 +2,7 @@ import type { IncomingMessage, ServerResponse } from 'http';
 import type { Action, InitialEntry, Location } from 'history';
 import type { ComponentType, ReactNode, PropsWithChildren } from 'react';
 import type { HydrationOptions, Root } from 'react-dom/client';
-import type { Navigator, Params } from 'react-router-dom';
+import type { Navigator, Params, RouteObject } from 'react-router-dom';
 
 type UseConfig = () => RouteConfig<Record<string, any>>;
 type UseData = () => RouteData;
@@ -218,7 +218,7 @@ export interface AppRouterProps {
   action: Action;
   location: Location;
   navigator: Navigator;
-  routes: RouteItem[];
+  routes: RouteObject[];
   static?: boolean;
   basename?: string;
 }

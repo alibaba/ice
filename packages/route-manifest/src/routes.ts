@@ -24,7 +24,7 @@ export interface ConfigRoute {
   /**
    * The path this route uses to match on the URL pathname.
    */
-  path?: string;
+  path: string;
   /**
    * Should be `true` if it is an index route. This disallows child routes.
    */

@@ -78,7 +78,6 @@ describe('JSX Plus Plugin', () => {
       const transformer = fakeConfig['transforms'][0];
       const ret = transformer('<div x-if={false} />', '/foo/bar/a.tsx');
       expect(ret.code).toBe(`import { createCondition as __create_condition__ } from "babel-runtime-jsx-plus";
-
 __create_condition__([[() => false, () => <div />]]);`);
     });
   });
