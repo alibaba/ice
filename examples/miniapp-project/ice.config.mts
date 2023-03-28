@@ -11,11 +11,11 @@ export default defineConfig({
   },
   plugins: [miniapp({
     nativeConfig: {
-      appid: 'tourist'
-    }
+      appid: 'tourist',
+    },
   })],
   // eslint: false,
   define: {
-    ASSETS_VERSION: '1.0.1'
-  }
+    ASSETS_VERSION: JSON.stringify('1.0.1'),
+  },
 });
