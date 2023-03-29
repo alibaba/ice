@@ -51,7 +51,7 @@ interface InternalPageConfig {
 type MixedPage = InternalPageConfig & PageConfig;
 
 export function transformManifestKeys(manifest: Manifest, options?: TransformOptions): PHAManifest {
-  const { parentKey, isRoot } = options;
+  const { parentKey, isRoot } = options || {};
   const data = {};
 
   for (let key in manifest) {
