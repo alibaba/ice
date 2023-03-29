@@ -14,7 +14,7 @@
     "@ice/style-import": "^1.0.0"
   },
   "devDependencies": {
-    "@ice/app": "^3.1.2"
+    "@ice/app": "^3.1.5-beta.0"
   },
   "repository": {
     "type": "http",
