@@ -78,6 +78,7 @@ export const validPageConfigKeys = [
   'spm',
   'queryParams',
   'queryParamsPassKeys',
+  'pullRefresh',
   'queryParamsPassIgnoreKeys',
 ];
 
