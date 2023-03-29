@@ -384,7 +384,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
       },
       proxy,
       hot: true,
-      compress: true,
+      compress: false,
       webSocketServer: 'ws',
       devMiddleware: {
         publicPath,

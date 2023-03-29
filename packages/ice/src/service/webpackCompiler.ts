@@ -78,7 +78,7 @@ async function webpackCompiler(options: {
           rootDir,
           serverEntry: server?.entry,
           outputDir,
-          serverCompileTask: command === 'start' ? serverCompileTask : null,
+          serverCompileTask,
           userConfig,
           ensureRoutesConfig,
           runtimeDefineVars: {

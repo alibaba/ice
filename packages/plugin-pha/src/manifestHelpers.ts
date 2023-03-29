@@ -20,8 +20,8 @@ export interface ParseOptions {
   urlPrefix: string;
   publicPath: string;
   routeManifest: string;
+  excuteServerEntry: () => Promise<any>;
   routesConfig?: Record<string, any>;
-  serverEntry: string;
   template?: boolean;
   preload?: boolean;
   urlSuffix?: string;
@@ -148,23 +148,25 @@ async function getPageConfig(
   return filteredConfig;
 }
 
-async function renderPageDocument(routeId: string, serverEntry: string): Promise<string> {
+async function renderPageDocument(routeId: string, excuteServerEntry: ParseOptions['excuteServerEntry']): Promise<string> {
   const serverContext = {
     req: {
       url: `/${routeId}`,
     },
   };
-  const serverModule = await import(serverEntry);
-  const { value } = await serverModule.renderToHTML(serverContext, {
-    documentOnly: true,
-    serverOnlyBasename: '/',
-    renderMode: 'SSG',
-  });
-  return value;
+  const serverModule = await excuteServerEntry();
+  if (serverModule) {
+    const { value } = await serverModule.renderToHTML(serverContext, {
+      documentOnly: true,
+      serverOnlyBasename: '/',
+      renderMode: 'SSG',
+    });
+    return value;
+  }
 }
 
 async function getPageManifest(page: string | Page, options: ParseOptions): Promise<MixedPage> {
-  const { template, preload, serverEntry, routesConfig, routeManifest } = options;
+  const { template, preload, excuteServerEntry, routesConfig, routeManifest } = options;
   // Page will be type string when it is a source frame.
   if (typeof page === 'string') {
     // Get html content by render document.
@@ -174,7 +176,7 @@ async function getPageManifest(page: string | Page, options: ParseOptions): Prom
       key: page,
       ...rest,
     };
-    const html = await renderPageDocument(page, serverEntry);
+    const html = await renderPageDocument(page, excuteServerEntry);
     if (template && !Array.isArray(pageConfig.frames)) {
       pageManifest.document = html;
     }
@@ -244,8 +246,8 @@ async function getTabConfig(tabManifest: Manifest['tabBar'] | PageHeader, genera
     url: '',
   };
   const tabRouteId = parseRouteId(tabManifest!.source);
-  if (options.template && generateDocument && options.serverEntry) {
-    tabConfig.html = await renderPageDocument(tabRouteId, options.serverEntry);
+  if (options.template && generateDocument && options.excuteServerEntry) {
+    tabConfig.html = await renderPageDocument(tabRouteId, options.excuteServerEntry);
   }
 
   // TODO: iOS issue

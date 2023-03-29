@@ -76,3 +76,7 @@ div[class^='announcementBar_'] {
   );
   font-weight: bold;
 }
+
+.menu__link--sublist-caret:after {
+  background-size: 1.3rem 1.3rem;
+}

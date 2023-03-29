@@ -2,4 +2,4 @@
 '@ice/webpack-config': patch
 ---
 
-fix: redirect named import
+fix: compile config of coreJs

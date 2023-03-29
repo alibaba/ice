@@ -2,7 +2,6 @@ import * as path from 'path';
 import type { ServerResponse } from 'http';
 import * as fs from 'fs';
 import type { ExpressRequestHandler } from 'webpack-dev-server';
-import consola from 'consola';
 import { getCompilerConfig } from './constants.js';
 import { parseManifest, rewriteAppWorker, getAppWorkerUrl, getMultipleManifest, type ParseOptions } from './manifestHelpers.js';
 import { getAppWorkerContent, type Options } from './generateManifest.js';
@@ -17,7 +16,6 @@ function sendResponse(res: ServerResponse, content: string, mime: string): void 
 const createPHAMiddleware = ({
   rootDir,
   outputDir,
-  compileTask,
   parseOptions,
   getAllPlugin,
   getAppConfig,
@@ -33,12 +31,6 @@ const createPHAMiddleware = ({
 
     const requestAppWorker = req.url === '/app-worker.js';
     if (requestManifest || requestAppWorker) {
-      // Get serverEntry from middleware of server-compile.
-      const { error, serverEntry } = await compileTask();
-      if (error) {
-        consola.error('Server compile error in plugin-pha middleware.');
-        return;
-      }
       const [appConfig, routesConfig] = await Promise.all([getAppConfig(['phaManifest']), getRoutesConfig()]);
 
       let dataloaderConfig;
@@ -74,7 +66,6 @@ const createPHAMiddleware = ({
         ...parseOptions,
         routesConfig,
         dataloaderConfig,
-        serverEntry: serverEntry,
       } as ParseOptions);
       if (!phaManifest?.tab_bar) {
         const multipleManifest = getMultipleManifest(phaManifest);

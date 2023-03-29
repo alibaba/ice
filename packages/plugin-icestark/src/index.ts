@@ -31,7 +31,7 @@ const plugin: Plugin<PluginOptions> = ({ type, library }) => ({
       });
       generator.addEntryCode(() => {
         return `let root;
-if (!window.ICESTARK?.root) {
+if (!window.ICESTARK?.root && !window.__POWERED_BY_QIANKUN__) {
   root = render();
 }
 
@@ -44,13 +44,29 @@ export async function mount(props) {
   await app?.icestark?.mount?.(props);
   // Avoid remount when app mount in other micro app framework.
   if (!root) {
-    root = render({ runtimeOptions: props });
+    // When app mount in qiankun, do not use props passed by.
+    // Props of container if conflict with render node in ice, it may cause node overwritten.
+    let runtimeOptions = props;
+    if (props.singleSpa) {
+      const iceContainer = props.container?.querySelector('#ice-container');
+      if (iceContainer) {
+        runtimeOptions = {...props, container: iceContainer };
+      } else {
+        const ele = document.createElement('div');
+        ele.id = 'ice-container';
+        props.container.appendChild(ele);
+        runtimeOptions = {...props, container: ele };
+      }
+    }
+    root = render({ runtimeOptions });
   }
   await root;
 }
 export async function unmount(props) {
   root?.then((res) => res.unmount());
   await app?.icestark?.unmount?.(props);
+  // Reset root to null when app unmount.
+  root = null;
 }`;
 });
     } else {
