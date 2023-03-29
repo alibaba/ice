@@ -56,9 +56,9 @@ export function wrapRouteComponent(options: {
   routeId: string;
   isLayout?: boolean;
   RouteComponent: React.ComponentType;
-  RouteWrappers?: RouteWrapperConfig[];
 }) {
-  const { routeId, isLayout, RouteComponent, RouteWrappers } = options;
+  const { routeId, isLayout, RouteComponent } = options;
+  const { RouteWrappers } = useAppContext();
   return (
     <RouteWrapper id={routeId} isLayout={isLayout} wrappers={RouteWrappers}>
       <RouteComponent />
@@ -69,7 +69,6 @@ export function wrapRouteComponent(options: {
 export function RouteComponent({ id }: { id: string }) {
   // get current route component from latest routeModules
   const { routeModules } = useAppContext();
-  console.log('routeModules[id]', routeModules[id]);
   const { Component } = routeModules[id] || {};
   if (process.env.NODE_ENV === 'development') {
     if (!Component) {
@@ -101,7 +100,6 @@ export function createRouteLoader(options: RouteLoaderOptions): () => Promise<Lo
   return async () => {
     const { dataLoader, pageConfig, staticDataLoader, serverDataLoader } = options.module;
     const { requestContext, renderMode, routeId } = options;
-
     const hasGlobalLoader = typeof window !== 'undefined' && (window as any).__ICE_DATA_LOADER__;
     const globalLoader = hasGlobalLoader ? (window as any).__ICE_DATA_LOADER__ : null;
     let routeData: any;
@@ -120,9 +118,10 @@ export function createRouteLoader(options: RouteLoaderOptions): () => Promise<Lo
     }
     const routeConfig = pageConfig ? pageConfig({ data: routeData }) : {};
     const loaderData = { data: routeData, pageConfig: routeConfig };
+    console.log('routeid-->', loaderData);
     // CSR and load next route data.
     if (typeof window !== 'undefined') {
-      // await updateRoutesConfig(loaderData);
+      await updateRoutesConfig(loaderData);
     }
     return loaderData;
   };

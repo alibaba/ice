@@ -1,7 +1,6 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { RouterProvider } from 'react-router-dom';
-import { createRouter, createHashHistory, createBrowserHistory, createMemoryHistory } from '@remix-run/router';
+import { createHashHistory, createBrowserHistory, createMemoryHistory } from '@remix-run/router';
 import type { History } from '@remix-run/router';
 import type {
   AppContext, WindowContext, AppExport, RouteItem, RuntimeModules, AppConfig, AssetsManifest,
@@ -9,14 +8,15 @@ import type {
 import { createHistory as createHistorySingle } from './single-router.js';
 import { setHistory } from './history.js';
 import Runtime from './runtime.js';
-import { AppDataProvider, getAppData } from './AppData.js';
+import { getAppData } from './appData.js';
 import { getRoutesPath } from './routes.js';
 import type { RouteLoaderOptions } from './routes.js';
 import getRequestContext from './requestContext.js';
 import getAppConfig from './appConfig.js';
-import DefaultAppRouter from './AppRouter.js';
+import ClientRouter from './ClientRouter.js';
 import { setFetcher } from './dataLoader.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
+import { AppContextProvider } from './AppContext.js';
 
 export interface RunClientAppOptions {
   app: AppExport;
@@ -83,7 +83,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
   };
 
   const runtime = new Runtime(appContext, runtimeOptions);
-  runtime.setAppRouter(DefaultAppRouter);
+  runtime.setAppRouter(ClientRouter);
   // Load static module before getAppData,
   // so we can call request in in getAppData which provide by `plugin-request`.
   if (runtimeModules.statics) {
@@ -96,7 +96,8 @@ export default async function runClientApp(options: RunClientAppOptions) {
     appData = await getAppData(app, requestContext);
   }
 
-  if (hydrate && !downgrade && !documentOnly) {
+  const needHydrate = hydrate && !downgrade && !documentOnly;
+  if (needHydrate) {
     runtime.setRender((container, element) => {
       return ReactDOM.hydrateRoot(container, element);
     });
@@ -107,21 +108,21 @@ export default async function runClientApp(options: RunClientAppOptions) {
     await Promise.all(runtimeModules.commons.map(m => runtime.loadModule(m)).filter(Boolean));
   }
 
-  return render({ runtime, history });
+  return render({ runtime, history, needHydrate });
 }
 
 interface RenderOptions {
   history: History;
   runtime: Runtime;
+  needHydrate: boolean;
 }
 
-async function render({ history, runtime }: RenderOptions) {
+async function render({ history, runtime, needHydrate }: RenderOptions) {
   const appContext = runtime.getAppContext();
-  const { appConfig, appData, routes, loaderData } = appContext;
+  const { appConfig, loaderData, routes } = appContext;
   const appRender = runtime.getRender();
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
-  // const RouteWrappers = runtime.getWrappers();
-  // const AppRouter = runtime.getAppRouter();
+  const AppRouter = runtime.getAppRouter();
 
   const rootId = appConfig.app.rootId || 'app';
   let root = document.getElementById(rootId);
@@ -131,20 +132,13 @@ async function render({ history, runtime }: RenderOptions) {
     document.body.appendChild(root);
     console.warn(`Root node #${rootId} is not found, current root is automatically created by the framework.`);
   }
-
-  const router = createRouter({
-    routes,
-    history,
-    hydrationData: { loaderData },
-  }).initialize();
-
   return appRender(
     root,
-    <AppDataProvider value={appData}>
+    <AppContextProvider value={appContext}>
       <AppRuntimeProvider>
-        <RouterProvider router={router} fallbackElement={<p>Loading...</p>} />
+        <AppRouter routes={routes} history={history} loaderData={needHydrate ? loaderData : null} />
       </AppRuntimeProvider>
-    </AppDataProvider>,
+    </AppContextProvider>,
   );
 }
 

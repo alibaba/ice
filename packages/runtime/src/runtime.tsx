@@ -44,7 +44,12 @@ class Runtime {
     this.runtimeOptions = runtimeOptions;
   }
 
-  public getAppContext = () => this.appContext;
+  public getAppContext = () => {
+    return {
+      ...this.appContext,
+      RouteWrappers: this.RouteWrappers,
+    };
+  };
 
   public setAppContext = (appContext: AppContext) => {
     this.appContext = appContext;

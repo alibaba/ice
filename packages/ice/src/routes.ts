@@ -69,18 +69,22 @@ export function getRoutesDefination(nestRouteManifest: NestedRouteManifest[], la
     const routeProperties: string[] = [
       `path: '${formatPath(routePath || '')}',`,
       `async lazy() {
-        const componentModule = await ${loadStatement};
-        const loader = createRouteLoader({
+      const componentModule = await ${loadStatement};
+      const loader = createRouteLoader({
+        routeId: '${id}',
+        requestContext,
+        renderMode,
+        module: componentModule,
+      });
+      return {
+        Component: () => wrapRouteComponent({
           routeId: '${id}',
-          requestContext,
-          renderMode,
-          module: componentModule,
-        });
-        return {
-          Component: componentModule.default,
-          loader,
-        };
-      },`,
+          isLayout: ${layout},
+          RouteComponent: componentModule.default,
+        }),
+        loader,
+      };
+    },`,
       `componentName: '${componentName}',`,
       `index: ${index},`,
       `id: '${id}',`,

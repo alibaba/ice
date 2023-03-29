@@ -1,7 +1,6 @@
 import * as React from 'react';
 import type { WindowContext, RouteMatch, AssetsManifest } from './types.js';
-import { useAppContext } from './AppContext.js';
-import { useAppData } from './AppData.js';
+import { useAppContext, useAppData } from './AppContext.js';
 import { getMeta, getTitle, getLinks, getScripts } from './routesConfig.js';
 import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
 
@@ -105,13 +104,10 @@ export const Scripts: ScriptsType = (props: ScriptsProps) => {
   } = props;
 
   const routeScripts = getScripts(matches, loaderData);
-  console.log('document matches', matches);
-  console.log('document loaderData', loaderData);
   const pageAssets = getPageAssets(matches, assetsManifest);
   const entryAssets = getEntryAssets(assetsManifest);
   // Page assets need to be load before entry assets, so when call dynamic import won't cause duplicate js chunk loaded.
   let scripts = pageAssets.concat(entryAssets).filter(path => path.indexOf('.js') > -1);
-  console.log('scripts ==>', assetsManifest, scripts);
   if (assetsManifest.dataLoader) {
     scripts.unshift(`${assetsManifest.publicPath}${assetsManifest.dataLoader}`);
   }

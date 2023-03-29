@@ -65,7 +65,6 @@ export default function createRenderMiddleware(options: Options): Middleware {
         req,
         res,
       };
-
       serverModule.renderToResponse(requestContext, {
         renderMode,
         documentOnly,

@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'http';
-import type { Action, InitialEntry, Location, AgnosticRouteObject } from '@remix-run/router';
+import type { InitialEntry, History, Location, AgnosticRouteObject } from '@remix-run/router';
 import type { ComponentType, PropsWithChildren } from 'react';
 import type { HydrationOptions, Root } from 'react-dom/client';
 import type { Navigator, Params, RouteObject } from 'react-router-dom';
@@ -88,6 +88,7 @@ export interface AppContext {
   assetsManifest?: AssetsManifest;
   loaderData?: LoaderDatas;
   routeModules?: RouteModules;
+  RouteWrappers?: RouteWrapperConfig[];
   routePath?: string;
   matches?: RouteMatch[];
   routes?: RouteItem[];
@@ -218,12 +219,10 @@ export interface RuntimeModules {
 }
 
 export interface AppRouterProps {
-  action: Action;
-  location: Location;
-  navigator: Navigator;
+  history?: History;
   routes: RouteObject[];
-  static?: boolean;
-  basename?: string;
+  loaderData?: LoaderDatas;
+  location?: Location;
 }
 
 export interface AppRouteProps {

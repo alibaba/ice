@@ -1,4 +1,4 @@
-import { createRouteLoader } from '@ice/runtime';
+import { createRouteLoader, wrapRouteComponent } from '@ice/runtime';
 <%- routeImports.length ? routeImports.join('\n') + '\n\n' : ''; -%>
 export default ({
   requestContext,

@@ -1,7 +1,5 @@
 import * as React from 'react';
 import type { RouteWrapperConfig } from './types.js';
-import { useAppContext } from './AppContext.js';
-import { DataProvider, ConfigProvider } from './RouteContext.js';
 
 interface Props {
   id: string;
@@ -12,7 +10,6 @@ interface Props {
 
 export default function RouteWrapper(props: Props) {
   const { wrappers = [], id, isLayout } = props;
-  const { loaderData } = useAppContext();
   // layout should only be wrapped by Wrapper with `layout: true`
   const filtered = isLayout ? wrappers.filter(wrapper => wrapper.layout === true) : wrappers;
   const RouteWrappers = filtered.map(item => item.Wrapper);

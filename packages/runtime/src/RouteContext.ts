@@ -7,7 +7,6 @@ DataContext.displayName = 'Data';
 
 function useData<T = any>(): T {
   const data = useLoaderData();
-  console.log('data ==>', data);
   return (data as any).data;
 }
 const DataProvider = DataContext.Provider;
@@ -17,7 +16,6 @@ ConfigContext.displayName = 'Config';
 
 function useConfig<T = {}>(): RouteConfig<T> {
   const data = useLoaderData();
-  console.log('pageConfig ==>', data);
   return (data as any).pageConfig;
 }
 const ConfigProvider = ConfigContext.Provider;

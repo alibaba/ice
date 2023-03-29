@@ -3,7 +3,6 @@ import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { parsePath } from 'react-router-dom';
 import type { Location } from 'history';
-import { createStaticRouter, StaticRouterProvider } from 'react-router-dom/server.mjs';
 import type {
   AppContext, RouteItem, ServerContext,
   AppExport, AssetsManifest,
@@ -16,18 +15,17 @@ import type {
 } from './types.js';
 import Runtime from './runtime.js';
 import { AppContextProvider } from './AppContext.js';
-import { AppDataProvider, getAppData } from './AppData.js';
+import { getAppData } from './appData.js';
 import getAppConfig from './appConfig.js';
 import { DocumentContextProvider } from './Document.js';
-import { loadRouteModules, RouteComponent } from './routes.js';
+import { loadRouteModules } from './routes.js';
 import type { RouteLoaderOptions } from './routes.js';
 import { pipeToString, renderToNodeStream } from './server/streamRender.js';
-import { createStaticNavigator } from './server/navigator.js';
 import type { NodeWritablePiper } from './server/streamRender.js';
 import getRequestContext from './requestContext.js';
 import matchRoutes from './matchRoutes.js';
 import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
-import DefaultAppRouter from './AppRouter.js';
+import ServerRouter from './ServerRouter.js';
 import { renderHTMLToJS } from './renderHTMLToJS.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 
@@ -69,6 +67,7 @@ export async function renderToEntry(
   requestContext: ServerContext,
   renderOptions: RenderOptions,
 ) {
+  console.log('renderToEntry.tsx');
   const result = await renderToHTML(requestContext, renderOptions);
   const { value } = result;
 
@@ -98,6 +97,7 @@ export async function renderToHTML(
   requestContext: ServerContext,
   renderOptions: RenderOptions,
 ): Promise<RenderResult> {
+  console.log('renderHTMLToJS.tsx');
   const result = await doRender(requestContext, renderOptions);
 
   const { value } = result;
@@ -220,7 +220,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     serverData,
   };
   const runtime = new Runtime(appContext, runtimeOptions);
-  runtime.setAppRouter(DefaultAppRouter);
+  runtime.setAppRouter(ServerRouter);
   // Load static module before getAppData.
   if (runtimeModules.statics) {
     await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
@@ -294,28 +294,6 @@ interface RenderServerEntry {
   location: Location;
   renderOptions: RenderOptions;
 }
-
-function createServerRoutes(routes, routeModules) {
-  return routes.map((route) => {
-    let dataRoute = {
-      element: <RouteComponent id={route.id} />,
-      id: route.id,
-      index: route.index,
-      path: route.path,
-    };
-
-    if (route?.children?.length > 0) {
-      let children = createServerRoutes(
-        routes.children,
-        routeModules,
-      );
-      // @ts-ignore
-      dataRoute.children = children;
-    }
-    return dataRoute;
-  });
-}
-
 /**
  * Render App by SSR.
  */
@@ -329,43 +307,22 @@ async function renderServerEntry(
 ): Promise<RenderResult> {
   const { Document } = renderOptions;
   const appContext = runtime.getAppContext();
-  // @ts-ignore
-  const { appData, routePath, routeModules, loaderData } = appContext;
-  const staticNavigator = createStaticNavigator();
+  const { routes, routePath, loaderData } = appContext;
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
-  const RouteWrappers = runtime.getWrappers();
   const AppRouter = runtime.getAppRouter();
-  let routes = createServerRoutes(
-    appContext.routes,
-    routeModules,
-  );
-  const context = {
-    matches,
-    basemane: appContext.basename,
-    location,
-    loaderData,
-  };
-  const router = createStaticRouter(routes, context);
   const documentContext = {
     main: (
-      <StaticRouterProvider
-        router={router}
-        context={context}
-        hydrate={false}
-      />
+      <AppRouter routes={routes} location={location} loaderData={loaderData} />
     ),
   };
-
   const element = (
-    <AppDataProvider value={appData}>
+    <AppContextProvider value={appContext}>
       <AppRuntimeProvider>
-        <AppContextProvider value={appContext}>
-          <DocumentContextProvider value={documentContext}>
-            <Document pagePath={routePath} />
-          </DocumentContextProvider>
-        </AppContextProvider>
+        <DocumentContextProvider value={documentContext}>
+          <Document pagePath={routePath} />
+        </DocumentContextProvider>
       </AppRuntimeProvider>
-    </AppDataProvider>
+    </AppContextProvider>
   );
 
   const pipe = renderToNodeStream(element);
@@ -411,23 +368,24 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
     serverData,
   } = renderOptions;
 
-  const routesData = null;
   const appData = null;
   const appConfig = getAppConfig(app);
 
-  const matchedRoutesConfig = {};
+  const loaderData = {};
   matches.forEach(async (match) => {
     const { id } = match.route;
     const pageConfig = routesConfig[id];
 
-    matchedRoutesConfig[id] = pageConfig ? pageConfig({}) : {};
+    loaderData[id] = {
+      pageConfig: pageConfig ? pageConfig({}) : {},
+    };
   });
 
   const appContext: AppContext = {
     assetsManifest,
     appConfig,
     appData,
-    loaderData: {},
+    loaderData,
     matches,
     routes,
     documentOnly: true,
