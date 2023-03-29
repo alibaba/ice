@@ -1,6 +1,5 @@
-import type { DataLoaderConfig, DataLoaderResult, RuntimeModules, AppExport, StaticRuntimePlugin, CommonJsRuntime, StaticDataLoader } from './types.js';
+import type { RequestContext, RenderMode, DataLoaderConfig, DataLoaderResult, RuntimeModules, AppExport, StaticRuntimePlugin, CommonJsRuntime, StaticDataLoader } from './types.js';
 import getRequestContext from './requestContext.js';
-import type { RequestContext, RenderMode } from './types.js';
 
 interface Loaders {
   [routeId: string]: DataLoaderConfig;

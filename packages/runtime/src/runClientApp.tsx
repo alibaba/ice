@@ -1,6 +1,6 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { createHashHistory, createBrowserHistory, createMemoryHistory } from '@remix-run/router';
+import { createRouter, createHashHistory, createBrowserHistory, createMemoryHistory } from '@remix-run/router';
 import type { History } from '@remix-run/router';
 import type {
   AppContext, WindowContext, AppExport, RouteItem, RuntimeModules, AppConfig, AssetsManifest,
@@ -51,13 +51,14 @@ export default async function runClientApp(options: RunClientAppOptions) {
     documentOnly,
     renderMode,
     serverData,
+    revalidate,
   } = windowContext;
   const formattedBasename = addLeadingSlash(basename);
   const requestContext = getRequestContext(window.location);
   const appConfig = getAppConfig(app);
   const routes = createRoutes ? createRoutes({
     requestContext,
-    renderMode,
+    renderMode: 'CSR',
   }) : [];
   const historyOptions = {
     memoryRouter,
@@ -80,6 +81,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     renderMode,
     requestContext,
     serverData,
+    revalidate,
   };
 
   const runtime = new Runtime(appContext, runtimeOptions);
@@ -98,8 +100,21 @@ export default async function runClientApp(options: RunClientAppOptions) {
 
   const needHydrate = hydrate && !downgrade && !documentOnly;
   if (needHydrate) {
+    const defaultOnRecoverableError = typeof reportError === 'function' ? reportError
+      : function (error: unknown) {
+        console['error'](error);
+      };
     runtime.setRender((container, element) => {
-      return ReactDOM.hydrateRoot(container, element);
+      const hydrateOptions = revalidate
+        ? {
+          onRecoverableError(error: unknown) {
+            // Ignore this error caused by router.revalidate
+            if ((error as Error)?.message?.indexOf('This Suspense boundary received an update before it finished hydrating.') == -1) {
+              defaultOnRecoverableError(error);
+            }
+          },
+        } : {};
+      return ReactDOM.hydrateRoot(container, element, hydrateOptions);
     });
   }
   // Reset app context after app context is updated.
@@ -119,7 +134,7 @@ interface RenderOptions {
 
 async function render({ history, runtime, needHydrate }: RenderOptions) {
   const appContext = runtime.getAppContext();
-  const { appConfig, loaderData, routes } = appContext;
+  const { appConfig, loaderData, routes, revalidate } = appContext;
   const appRender = runtime.getRender();
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
   const AppRouter = runtime.getAppRouter();
@@ -132,14 +147,29 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
     document.body.appendChild(root);
     console.warn(`Root node #${rootId} is not found, current root is automatically created by the framework.`);
   }
-  return appRender(
+  const hydrationData = needHydrate ? { loaderData } : undefined;
+  const routerOptions = {
+    routes,
+    history,
+    hydrationData,
+  };
+  // Create router before render.
+  const router = process.env.ICE_CORE_ROUTER === 'true' ? createRouter(routerOptions).initialize() : null;
+
+  const renderRoot = appRender(
     root,
     <AppContextProvider value={appContext}>
       <AppRuntimeProvider>
-        <AppRouter routes={routes} history={history} loaderData={needHydrate ? loaderData : null} />
+        <AppRouter router={router} routes={routes} />
       </AppRuntimeProvider>
     </AppContextProvider>,
   );
+  if (revalidate) {
+    setTimeout(() => {
+      router?.revalidate();
+    });
+  }
+  return renderRoot;
 }
 
 interface HistoryOptions {

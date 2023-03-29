@@ -145,7 +145,7 @@ export type DataType = (props: DataProps) => JSX.Element;
 
 // use app context separately
 export const Data: DataType = (props: DataProps) => {
-  const { documentOnly, matches, downgrade, renderMode, serverData, loaderData } = useAppContext();
+  const { documentOnly, matches, downgrade, renderMode, serverData, loaderData, revalidate } = useAppContext();
   const appData = useAppData();
   const {
     ScriptElement = 'script',
@@ -162,6 +162,7 @@ export const Data: DataType = (props: DataProps) => {
     documentOnly,
     renderMode,
     serverData,
+    revalidate,
   };
 
   return (

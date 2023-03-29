@@ -2,7 +2,9 @@ import type { ServerResponse } from 'http';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { parsePath } from 'react-router-dom';
+import { createStaticRouter } from 'react-router-dom/server.mjs';
 import type { Location } from 'history';
+import type { RouteObject } from 'react-router-dom';
 import type {
   AppContext, RouteItem, ServerContext,
   AppExport, AssetsManifest,
@@ -18,7 +20,7 @@ import { AppContextProvider } from './AppContext.js';
 import { getAppData } from './appData.js';
 import getAppConfig from './appConfig.js';
 import { DocumentContextProvider } from './Document.js';
-import { loadRouteModules } from './routes.js';
+import { loadRouteModules, RouteComponent } from './routes.js';
 import type { RouteLoaderOptions } from './routes.js';
 import { pipeToString, renderToNodeStream } from './server/streamRender.js';
 import type { NodeWritablePiper } from './server/streamRender.js';
@@ -181,6 +183,10 @@ async function sendResult(res: ServerResponse, result: RenderResult) {
   res.end(result.value);
 }
 
+function needRevalidate(matchedRoutes: RouteMatch[]) {
+  return matchedRoutes.some(({ route }) => route.exports.includes('dataLoader') && route.exports.includes('staticDataLoader'));
+}
+
 async function doRender(serverContext: ServerContext, renderOptions: RenderOptions): Promise<RenderResult> {
   const { req } = serverContext;
   const {
@@ -248,19 +254,20 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
   }
 
   try {
-    const routeModules = await loadRouteModules(matches.map(({ route: { id, load, lazy } }) => ({ id, load, lazy })));
+    const routeModules = await loadRouteModules(matches.map(({ route: { id, lazy } }) => ({ id, lazy })));
     const loaderData = {};
     for (const routeId in routeModules) {
       const { loader } = routeModules[routeId];
       if (loader) {
-        const { data, pageConfig } = await loader(location, requestContext);
+        const { data, pageConfig } = await loader();
         loaderData[routeId] = {
           data,
           pageConfig,
         };
       }
     }
-    runtime.setAppContext({ ...appContext, routeModules, loaderData, routePath, matches, appData });
+    const revalidate = renderMode === 'SSG' && needRevalidate(matches);
+    runtime.setAppContext({ ...appContext, revalidate, routeModules, loaderData, routePath, matches, appData });
     if (runtimeModules.commons) {
       await Promise.all(runtimeModules.commons.map(m => runtime.loadModule(m)).filter(Boolean));
     }
@@ -288,6 +295,28 @@ function render404(): RenderResult {
   };
 }
 
+
+function createServerRoutes(routes: RouteObject[]) {
+  return routes.map((route) => {
+    let dataRoute = {
+      // Static Router need element or Component when matched.
+      element: <RouteComponent id={route.id} />,
+      id: route.id,
+      index: route.index,
+      path: route.path,
+      children: null,
+    };
+
+    if (route?.children?.length > 0) {
+      let children = createServerRoutes(
+        route.children,
+      );
+      dataRoute.children = children;
+    }
+    return dataRoute;
+  });
+}
+
 interface RenderServerEntry {
   runtime: Runtime;
   matches: RouteMatch[];
@@ -307,12 +336,16 @@ async function renderServerEntry(
 ): Promise<RenderResult> {
   const { Document } = renderOptions;
   const appContext = runtime.getAppContext();
-  const { routes, routePath, loaderData } = appContext;
+  const { routes, routePath, loaderData, basename } = appContext;
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
   const AppRouter = runtime.getAppRouter();
+  const routerContext = {
+    matches, basename, loaderData, location,
+  };
+  const router = createStaticRouter(createServerRoutes(routes), routerContext);
   const documentContext = {
     main: (
-      <AppRouter routes={routes} location={location} loaderData={loaderData} />
+      <AppRouter router={router} routerContext={routerContext} />
     ),
   };
   const element = (

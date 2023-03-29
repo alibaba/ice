@@ -1,8 +1,8 @@
 import type { IncomingMessage, ServerResponse } from 'http';
-import type { InitialEntry, History, Location, AgnosticRouteObject } from '@remix-run/router';
+import type { InitialEntry, AgnosticRouteObject, Router } from '@remix-run/router';
 import type { ComponentType, PropsWithChildren } from 'react';
 import type { HydrationOptions, Root } from 'react-dom/client';
-import type { Navigator, Params, RouteObject } from 'react-router-dom';
+import type { Params, RouteObject } from 'react-router-dom';
 
 type UseConfig = () => RouteConfig<Record<string, any>>;
 type UseData = () => RouteData;
@@ -99,11 +99,12 @@ export interface AppContext {
   downgrade?: boolean;
   renderMode?: RenderMode;
   requestContext?: RequestContext;
+  revalidate?: boolean;
 }
 
 export type WindowContext = Pick<
   AppContext,
-  'appData' | 'loaderData' | 'routePath' | 'downgrade' | 'matchedIds' | 'documentOnly' | 'renderMode' | 'serverData'
+  'appData' | 'loaderData' | 'routePath' | 'downgrade' | 'matchedIds' | 'documentOnly' | 'renderMode' | 'serverData' | 'revalidate'
 >;
 
 export type Renderer = (
@@ -134,7 +135,7 @@ export type ComponentModule = {
 
 export type RouteItem = AgnosticRouteObject & {
   componentName: string;
-  load?: () => Promise<ComponentModule>;
+  exports: string[];
   layout?: boolean;
   children?: RouteItem[];
 };
@@ -219,10 +220,9 @@ export interface RuntimeModules {
 }
 
 export interface AppRouterProps {
-  history?: History;
-  routes: RouteObject[];
-  loaderData?: LoaderDatas;
-  location?: Location;
+  routes?: RouteObject[];
+  router?: Router;
+  routerContext?: any;
 }
 
 export interface AppRouteProps {

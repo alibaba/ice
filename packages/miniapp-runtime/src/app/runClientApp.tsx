@@ -42,7 +42,6 @@ async function render(
   runtime: Runtime,
 ) {
   const appContext = runtime.getAppContext();
-  const { appData } = appContext;
   const render = runtime.getRender();
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
 

@@ -66,23 +66,24 @@ export function getRoutesDefination(nestRouteManifest: NestedRouteManifest[], la
       routeImports.push(`import * as ${routeSpecifier} from '${formatPath(componentPath)}';`);
       loadStatement = routeSpecifier;
     }
+    const component = `Component: () => WrapRouteComponent({
+          routeId: '${id}',
+          isLayout: ${layout},
+          RouteComponent: ${lazy ? 'componentModule' : loadStatement}.default,
+        })`;
+    const loader = `loader: createRouteLoader({
+          routeId: '${id}',
+          requestContext,
+          renderMode,
+          module: ${lazy ? 'componentModule' : loadStatement},
+        })`;
     const routeProperties: string[] = [
       `path: '${formatPath(routePath || '')}',`,
       `async lazy() {
-      const componentModule = await ${loadStatement};
-      const loader = createRouteLoader({
-        routeId: '${id}',
-        requestContext,
-        renderMode,
-        module: componentModule,
-      });
+      ${lazy ? `const componentModule = await ${loadStatement}` : ''};
       return {
-        Component: () => wrapRouteComponent({
-          routeId: '${id}',
-          isLayout: ${layout},
-          RouteComponent: componentModule.default,
-        }),
-        loader,
+        ${component},
+        ${loader},
       };
     },`,
       `componentName: '${componentName}',`,
@@ -90,7 +91,7 @@ export function getRoutesDefination(nestRouteManifest: NestedRouteManifest[], la
       `id: '${id}',`,
       'exact: true,',
       `exports: ${JSON.stringify(exports)},`,
-    ];
+    ].filter(Boolean);
 
     if (layout) {
       routeProperties.push('layout: true,');

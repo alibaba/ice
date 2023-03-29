@@ -1,12 +1,11 @@
 import React from 'react';
-import type { RouteItem, RouteModules, RouteWrapperConfig, RenderMode, DataLoaderConfig } from './types.js';
+import type { RouteItem, RouteModules, RenderMode, DataLoaderConfig, RequestContext, ComponentModule } from './types.js';
 import RouteWrapper from './RouteWrapper.js';
 import { useAppContext } from './AppContext.js';
 import { callDataLoader } from './dataLoader.js';
-import type { RequestContext, ComponentModule } from './types.js';
 import { updateRoutesConfig } from './routesConfig.js';
 
-type RouteModule = Pick<RouteItem, 'id' | 'load' | 'lazy'>;
+type RouteModule = Pick<RouteItem, 'id' | 'lazy'>;
 
 export function getRoutesPath(routes: RouteItem[], parentPath = ''): string[] {
   let paths = [];
@@ -23,7 +22,7 @@ export function getRoutesPath(routes: RouteItem[], parentPath = ''): string[] {
 }
 
 export async function loadRouteModule(route: RouteModule, routeModulesCache = {}) {
-  const { id, load, lazy } = route;
+  const { id, lazy } = route;
   if (
     typeof window !== 'undefined' && // Don't use module cache and should load again in ssr. Ref: https://github.com/ice-lab/ice-next/issues/82
     id in routeModulesCache
@@ -32,8 +31,7 @@ export async function loadRouteModule(route: RouteModule, routeModulesCache = {}
   }
 
   try {
-    // Function load will return route module when lazy loaded is disabled.
-    const routeModule = lazy ? await lazy() : await load();
+    const routeModule = await lazy();
     routeModulesCache[id] = routeModule;
     return routeModule;
   } catch (error) {
@@ -52,7 +50,7 @@ export async function loadRouteModules(routes: RouteModule[], originRouteModules
 }
 
 // Wrap route component with runtime wrappers.
-export function wrapRouteComponent(options: {
+export function WrapRouteComponent(options: {
   routeId: string;
   isLayout?: boolean;
   RouteComponent: React.ComponentType;
@@ -118,7 +116,6 @@ export function createRouteLoader(options: RouteLoaderOptions): () => Promise<Lo
     }
     const routeConfig = pageConfig ? pageConfig({ data: routeData }) : {};
     const loaderData = { data: routeData, pageConfig: routeConfig };
-    console.log('routeid-->', loaderData);
     // CSR and load next route data.
     if (typeof window !== 'undefined') {
       await updateRoutesConfig(loaderData);
