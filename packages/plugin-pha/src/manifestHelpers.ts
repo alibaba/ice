@@ -6,7 +6,7 @@ import consola from 'consola';
 import cloneDeep from 'lodash.clonedeep';
 import { matchRoutes } from '@remix-run/router';
 import * as htmlparser2 from 'htmlparser2';
-import { decamelizeKeys, camelizeKeys, validPageConfigKeys } from './constants.js';
+import { decamelizeKeys, camelizeKeys, validPageConfigKeys, pageDefaultValueKeys } from './constants.js';
 import type { Page, PageHeader, PageConfig, Manifest, PHAManifest, Frame } from './types';
 
 const { decamelize } = humps;
@@ -93,6 +93,13 @@ export function transformManifestKeys(manifest: Manifest, options?: TransformOpt
         }
         return item;
       });
+    } else if (key === 'pullRefresh') {
+      if (value && value.reload) {
+        // Need reload.
+        data['pull_refresh'] = true;
+      } else {
+        data['enable_pull_refresh'] = true;
+      }
     } else if (key === 'requestHeaders') {
       // Keys of requestHeaders should not be transformed.
       data[transformKey] = value;
@@ -346,6 +353,14 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
     manifest.pages = await Promise.all(routes.map(async (page) => {
       const pageIds = getRouteIdByPage(routeManifest, page);
       const pageManifest = await getPageManifest(page, options);
+
+      // The manifest configuration is the default value for the page configuration.
+      pageDefaultValueKeys.forEach(key => {
+        if (!(key in pageManifest) && (key in manifest)) {
+          pageManifest[key] = manifest[key];
+        }
+      });
+
       // Set static dataloader to data_prefetch of page.
       pageIds.forEach((pageId) => {
         if (typeof page === 'string' && dataloaderConfig && dataloaderConfig[pageId]) {

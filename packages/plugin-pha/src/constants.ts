@@ -82,6 +82,11 @@ export const validPageConfigKeys = [
   'queryParamsPassIgnoreKeys',
 ];
 
+// The manifest configuration is the default value for the page configuration
+export const pageDefaultValueKeys = [
+  'pullRefresh',
+];
+
 export const getCompilerConfig = (options: {
   getAllPlugin: Context['getAllPlugin'];
 }) => {
