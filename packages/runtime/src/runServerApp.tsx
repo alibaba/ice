@@ -99,7 +99,6 @@ export async function renderToHTML(
   requestContext: ServerContext,
   renderOptions: RenderOptions,
 ): Promise<RenderResult> {
-  console.log('renderHTMLToJS.tsx');
   const result = await doRender(requestContext, renderOptions);
 
   const { value } = result;
