@@ -160,7 +160,7 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
     root,
     <AppContextProvider value={appContext}>
       <AppRuntimeProvider>
-        <AppRouter router={router} routes={routes} />
+        <AppRouter router={router} routes={routes} location={history.location} />
       </AppRuntimeProvider>
     </AppContextProvider>,
   );
