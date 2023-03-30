@@ -104,9 +104,6 @@ export const getCompilerConfig = (options: {
   return {
     swc: {
       keepExports,
-      getRoutePaths: () => {
-        return ['src/pages'];
-      },
     },
     preBundle: false,
     externalDependencies: false,

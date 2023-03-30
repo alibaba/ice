@@ -36,6 +36,7 @@ interface GetWebpackConfigOptions {
   userConfigHash: string;
   getExpandedEnvs: () => Record<string, string>;
   runtimeDefineVars?: Record<string, any>;
+  getRoutesFile?: () => string[];
 }
 
 enum JSMinifier {
@@ -128,7 +129,17 @@ function getImportMetaEnv(getExpandedEnvs: () => Record<string, string>): Record
 }
 
 export function getWebpackConfig(options: GetWebpackConfigOptions): Configuration {
-  const { rootDir, config, webpack, runtimeTmpDir, userConfigHash, getExpandedEnvs, runtimeDefineVars = {} } = options;
+  const {
+    rootDir,
+    config,
+    webpack,
+    runtimeTmpDir,
+    userConfigHash,
+    getExpandedEnvs,
+    runtimeDefineVars = {},
+    getRoutesFile,
+  } = options;
+
   const {
     mode,
     externals = {},
@@ -208,6 +219,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     },
     module: true,
   }, minimizerOptions);
+
   const compilation = compilationPlugin({
     rootDir,
     cacheDir,
@@ -219,6 +231,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     swcOptions,
     polyfill,
     enableEnv: true,
+    getRoutesFile,
   });
   const webpackConfig = {
     mode,

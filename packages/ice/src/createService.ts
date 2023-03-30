@@ -166,6 +166,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       },
       getRouteManifest: () => routeManifest.getNestedRoute(),
       getFlattenRoutes: () => routeManifest.getFlattenRoute(),
+      getRoutesFile: () => routeManifest.getRoutesFile(),
       excuteServerEntry,
       context: {
         webpack,
@@ -309,6 +310,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     command,
     server,
     syntaxFeatures,
+    getRoutesFile: () => routeManifest.getRoutesFile(),
   });
   initAppConfigCompiler(serverCompiler);
   initRouteConfigCompiler(serverCompiler);

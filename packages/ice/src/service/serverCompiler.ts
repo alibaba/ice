@@ -35,6 +35,7 @@ interface Options {
   command: string;
   server: UserConfig['server'];
   syntaxFeatures: UserConfig['syntaxFeatures'];
+  getRoutesFile: () => string[];
 }
 
 const { merge, difference } = lodash;
@@ -90,7 +91,7 @@ export const getRuntimeDefination = (
 };
 
 export function createServerCompiler(options: Options) {
-  const { task, rootDir, command, server, syntaxFeatures } = options;
+  const { task, rootDir, command, server, syntaxFeatures, getRoutesFile } = options;
   const externals = task.config?.externals || {};
   const sourceMap = task.config?.sourceMap;
   const dev = command === 'start';
@@ -137,6 +138,7 @@ export function createServerCompiler(options: Options) {
       polyfill: false,
       swcOptions,
       redirectImports,
+      getRoutesFile,
     }, 'esbuild', { isServer });
     const define = getRuntimeDefination(task.config?.define || {}, runtimeDefineVars, transformEnv);
 
