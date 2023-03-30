@@ -26,12 +26,12 @@ export default function Home() {
 
 ## 控制三方依赖的分包
 
-三方依赖默认根据体积大小进行拆分。如果三方依赖过多，在某些场景下可能出现较多的网络请求，导致页面加载速度过慢，可关闭 [splitChunks](../basic/config.md#splitchunks) 配置：
+三方依赖默认根据体积大小进行拆分。如果三方依赖过多，在某些场景下可能出现较多的网络请求，导致页面加载速度过慢，可关闭 [codeSplitting](../basic/config#codesplitting) 配置：
 
-```diff title="ice.config.mts"
+```ts title="ice.config.mts"
 import { defineConfig } from '@ice/app';
 
 export default defineConfig(() => ({
-+  splitChunks: false,
-}));
+  codeSplitting: 'page',
+}))
 ```

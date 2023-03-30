@@ -78,8 +78,7 @@ async function webpackCompiler(options: {
           rootDir,
           serverEntry: server?.entry,
           outputDir,
-          dataCache,
-          serverCompileTask: command === 'start' ? serverCompileTask : null,
+          serverCompileTask,
           userConfig,
           ensureRoutesConfig,
           runtimeDefineVars: {
@@ -127,7 +126,6 @@ async function webpackCompiler(options: {
         serverCompiler,
         target,
         rootDir,
-        dataCache,
         getAllPlugin,
         frameworkExports,
       }));

@@ -149,9 +149,15 @@ export interface ExtendsPluginAPI {
     addEvent?: (watchEvent: WatchEvent) => void;
     removeEvent?: (name: string) => void;
   };
+  excuteServerEntry: () => Promise<any>;
+  /**
+   * @deprecated
+   * Please use `excuteServerEntry` to get server modules.
+   */
   serverCompileTask: ServerCompileTask;
   getRouteManifest: () => Routes;
   getFlattenRoutes: () => string[];
+  getRoutesFile: () => string[];
   dataCache: Map<string, string>;
   createLogger: CreateLogger;
 }
