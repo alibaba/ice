@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.2.0
+
+### Minor Changes
+
+- 2debc7f7: fix: appear event should not work on component
+
+### Patch Changes
+
+- Updated dependencies [2debc7f7]
+- Updated dependencies [ee4141d5]
+  - rax-compat@0.2.0
+  - @ice/bundles@0.1.7
+
 ## 0.1.5
 
 ### Patch Changes

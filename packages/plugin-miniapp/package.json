@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-miniapp",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "ice.js plugin for miniapp.",
   "license": "MIT",
   "type": "module",
@@ -16,7 +16,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@ice/bundles": "^0.1.0",
+    "@ice/bundles": "^0.1.7",
     "@ice/miniapp-loader": "^1.0.0",
     "@ice/miniapp-react-dom": "^1.0.1",
     "@ice/miniapp-runtime": "^1.0.2",
@@ -30,7 +30,7 @@
     "sax": "^1.2.4"
   },
   "devDependencies": {
-    "@ice/app": "^3.1.1",
+    "@ice/app": "^3.1.5",
     "webpack": "^5.76.2"
   },
   "repository": {
