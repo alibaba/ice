@@ -112,7 +112,7 @@ export function createRouteLoader(options: RouteLoaderOptions): () => Promise<Lo
       } else {
         loader = dataLoader;
       }
-      routeData = dataLoader && await callDataLoader(loader, requestContext);
+      routeData = loader && await callDataLoader(loader, requestContext);
     }
     const routeConfig = pageConfig ? pageConfig({ data: routeData }) : {};
     const loaderData = { data: routeData, pageConfig: routeConfig };
