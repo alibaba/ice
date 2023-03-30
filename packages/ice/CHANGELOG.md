@@ -1,5 +1,25 @@
 # Changelog
 
+## 3.1.5
+
+### Patch Changes
+
+- 4e1d9065: refactor: reuse route paths
+- baacf8d0: chore: env compatible with default export
+- 764ef0b6: fix: get route assets by route manifest
+- 085498aa: feat: support plugin API of excuteServerEntry
+- Updated dependencies [4e1d9065]
+- Updated dependencies [f519338c]
+- Updated dependencies [ee4141d5]
+- Updated dependencies [764ef0b6]
+- Updated dependencies [97f8a801]
+- Updated dependencies [ee4141d5]
+- Updated dependencies [ee4141d5]
+  - @ice/webpack-config@1.0.11
+  - @ice/runtime@1.1.5
+  - @ice/route-manifest@1.1.1
+  - @ice/bundles@0.1.7
+
 ## 3.1.4
 
 ### Patch Changes
