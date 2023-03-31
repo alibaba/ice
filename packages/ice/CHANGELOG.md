@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.1.6
+
+### Patch Changes
+
+- Updated dependencies [deda06de]
+  - @ice/bundles@0.1.8
+  - @ice/webpack-config@1.0.12
+
 ## 3.1.5
 
 ### Patch Changes

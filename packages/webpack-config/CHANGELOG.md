@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.12
+
+### Patch Changes
+
+- Updated dependencies [deda06de]
+  - @ice/bundles@0.1.8
+
 ## 1.0.11
 
 ### Patch Changes
