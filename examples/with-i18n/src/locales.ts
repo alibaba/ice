@@ -1,8 +1,8 @@
 export const messages: Record<string, any> = {
   en: {
-    buttonText: 'Button',
+    buttonText: 'Normal Button',
   },
   'zh-cn': {
-    buttonText: '按钮',
+    buttonText: '普通按钮',
   },
 };
