@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.1.1
+
+### Patch Changes
+
+- 764ef0b6: fix: get route assets by route manifest
+
 ## 1.1.0
 
 ### Minor Changes

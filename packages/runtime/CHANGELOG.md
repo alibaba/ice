@@ -1,5 +1,12 @@
 # @ice/runtime
 
+## 1.1.5
+
+### Patch Changes
+
+- f519338c: fix: parse template should return emply string when can't find
+- ee4141d5: chore: update ts defination for latest react-router
+
 ## 1.1.4
 
 ### Patch Changes
