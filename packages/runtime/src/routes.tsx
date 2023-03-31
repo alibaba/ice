@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouteError } from 'react-router-dom';
-import type { RouteItem, RouteModules, RenderMode, DataLoaderConfig, RequestContext, ComponentModule, RouteExports } from './types.js';
+import type { RouteItem, RouteModules, RenderMode, DataLoaderConfig, RequestContext, ComponentModule } from './types.js';
 import RouteWrapper from './RouteWrapper.js';
 import { useAppContext } from './AppContext.js';
 import { callDataLoader } from './dataLoader.js';
