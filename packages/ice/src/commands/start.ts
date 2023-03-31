@@ -54,8 +54,9 @@ const start = async (
     routeManifest,
     serverRunner,
   } = options;
-  const { commandArgs, rootDir } = context;
+  const { commandArgs, rootDir, extendsPluginAPI } = context;
   const { target = WEB } = commandArgs;
+  const { getRoutesFile } = extendsPluginAPI;
   const webpackConfigs = taskConfigs.map(({ config }) => getWebpackConfig({
     config,
     rootDir,
@@ -68,6 +69,7 @@ const start = async (
       [IMPORT_META_TARGET]: JSON.stringify(target),
       [IMPORT_META_RENDERER]: JSON.stringify('client'),
     },
+    getRoutesFile,
   }));
 
   const hooksAPI = {

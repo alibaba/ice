@@ -6,7 +6,6 @@ import type { Context } from 'build-scripts';
 import type { ServerCompiler, PluginData } from '../types/plugin.js';
 import type { DeclarationData } from '../types/generator.js';
 import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR } from '../constant.js';
-import { getRoutePathsFromCache } from '../utils/getRoutePaths.js';
 
 const pluginName = 'DataLoaderPlugin';
 const { RawSource } = webpack.sources;
@@ -15,7 +14,6 @@ export default class DataLoaderPlugin {
   private serverCompiler: ServerCompiler;
   private rootDir: string;
   private target: string;
-  private dataCache: Map<string, string>;
   private getAllPlugin: Context['getAllPlugin'];
   private frameworkExports: DeclarationData[];
 
@@ -23,14 +21,12 @@ export default class DataLoaderPlugin {
     serverCompiler: ServerCompiler;
     rootDir: string;
     target: string;
-    dataCache: Map<string, string>;
     getAllPlugin?: Context['getAllPlugin'];
     frameworkExports: DeclarationData[];
   }) {
-    const { serverCompiler, rootDir, dataCache, getAllPlugin, target, frameworkExports } = options;
+    const { serverCompiler, rootDir, getAllPlugin, target, frameworkExports } = options;
     this.serverCompiler = serverCompiler;
     this.rootDir = rootDir;
-    this.dataCache = dataCache;
     this.getAllPlugin = getAllPlugin;
     this.target = target;
     this.frameworkExports = frameworkExports;
@@ -64,9 +60,6 @@ export default class DataLoaderPlugin {
             {
               swc: {
                 keepExports,
-                getRoutePaths: () => {
-                  return getRoutePathsFromCache(this.dataCache);
-                },
               },
               runtimeDefineVars: {
                 [IMPORT_META_TARGET]: JSON.stringify(this.target),

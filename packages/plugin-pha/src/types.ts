@@ -123,6 +123,7 @@ export interface PageConfig extends FrameConfig {
   defaultFrameIndex?: number;
   dataPrefetch?: DataPrefetch[];
   queryParams?: string;
+  pullRefresh?: PullRefresh;
 }
 
 export type Page = string | PageConfig;
@@ -134,6 +135,7 @@ export type PHAFrame = Partial<{
   background_color: string;
   header_position: 'absolute' | 'static';
   enable_pull_refresh: boolean;
+  pull_refresh: boolean;
   priority: Priority;
 } & Omit<PHAPage, 'frames' | 'default_frame_index'>>;
 
@@ -154,6 +156,7 @@ export type PHAPage = Partial<{
   path: string;
   background_color: string;
   enable_pull_refresh: boolean;
+  pull_refresh: boolean;
   priority: Priority;
   script: string;
   stylesheet: string;
@@ -168,6 +171,10 @@ export type PHAPage = Partial<{
   frames: PHAFrame[];
 }>;
 
+type PullRefresh = boolean | {
+  reload: boolean;
+};
+
 export type Manifest = Partial<{
   enablePoplayer: boolean;
   disableCapture: boolean;
@@ -181,6 +188,7 @@ export type Manifest = Partial<{
   appWorker: AppWorker;
   routes: Page[];
   enableExpiredManifest: boolean;
+  pullRefresh?: PullRefresh;
 }> & WindowConfig & Record<string, any>;
 
 export type PHAManifest = Partial<{
