@@ -11,6 +11,7 @@ import Runtime from './runtime.js';
 import { getAppData } from './appData.js';
 import { getRoutesPath } from './routes.js';
 import type { RouteLoaderOptions } from './routes.js';
+import { loadRouteModule } from './routes.js';
 import getRequestContext from './requestContext.js';
 import getAppConfig from './appConfig.js';
 import ClientRouter from './ClientRouter.js';
@@ -154,14 +155,28 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
     history,
     hydrationData,
   };
+  let router = null;
+  let singleComponent = null;
+  let routeData = null;
   // Create router before render.
-  const router = process.env.ICE_CORE_ROUTER === 'true' ? createRouter(routerOptions).initialize() : null;
-
+  if (process.env.ICE_CORE_ROUTER === 'true') {
+    router = createRouter(routerOptions).initialize();
+  } else {
+    const { Component, loader } = await loadRouteModule(routes[0]);
+    singleComponent = Component || routes[0].Component;
+    routeData = loader && await loader();
+  }
   const renderRoot = appRender(
     root,
     <AppContextProvider value={appContext}>
       <AppRuntimeProvider>
-        <AppRouter router={router} routes={routes} location={history.location} />
+        <AppRouter
+          router={router}
+          routes={routes}
+          location={history.location}
+          Component={singleComponent}
+          loaderData={routeData}
+        />
       </AppRuntimeProvider>
     </AppContextProvider>,
   );

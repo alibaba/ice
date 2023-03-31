@@ -6,3 +6,5 @@ export {
   useLocation,
   useNavigate,
 } from 'react-router-dom';
+
+export { useData, useConfig } from './RouteContext.js';

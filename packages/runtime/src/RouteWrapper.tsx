@@ -1,12 +1,12 @@
 import * as React from 'react';
-import type { RouteWrapperConfig, RouteExports } from './types.js';
+import type { RouteWrapperConfig, ComponentModule } from './types.js';
 
 interface Props {
   id: string;
   isLayout?: boolean;
   wrappers?: RouteWrapperConfig[];
   children?: React.ReactNode;
-  routeExports: RouteExports;
+  routeExports: ComponentModule;
 }
 
 export default function RouteWrapper(props: Props) {

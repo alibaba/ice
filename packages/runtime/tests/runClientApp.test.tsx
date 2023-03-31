@@ -2,11 +2,12 @@
  * @vitest-environment jsdom
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { renderToString } from 'react-dom/server';
 import { expect, it, vi, describe, beforeEach, afterEach } from 'vitest';
-import runClientApp, { loadNextPage } from '../src/runClientApp';
-import { useAppData } from '../src/AppData';
+import runClientApp from '../src/runClientApp';
+import { useAppData } from '../src/AppContext';
+import { createRouteLoader } from '../src/routes';
 import { useConfig, useData } from '../src/RouteContext';
 
 describe('run client app', () => {
@@ -79,22 +80,23 @@ describe('run client app', () => {
     addProvider(Provider);
   };
 
+  const homeItem = {
+    default: () => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const appData = useAppData();
+      return (
+        <div>home{appData?.msg || ''}</div>
+      );
+    },
+    pageConfig: () => ({ title: 'home' }),
+    dataLoader: async () => ({ data: 'test' }),
+  };
   const basicRoutes = [
     {
       id: 'home',
       path: '/',
       componentName: 'Home',
-      load: async () => ({
-        default: () => {
-          // eslint-disable-next-line react-hooks/rules-of-hooks
-          const appData = useAppData();
-          return (
-            <div>home{appData?.msg || ''}</div>
-          );
-        },
-        pageConfig: () => ({ title: 'home' }),
-        dataLoader: async () => ({ data: 'test' }),
-      }),
+      Component: homeItem.default,
     },
   ];
 
@@ -105,9 +107,10 @@ describe('run client app', () => {
           return { msg: staticMsg };
         },
       },
-      routes: basicRoutes,
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => basicRoutes,
       runtimeModules: { commons: [serverRuntime], statics: [staticRuntime] },
-      hydrate: false,
+      hydrate: true,
     });
     expect(domstring).toBe('<div>home<!-- -->static</div>');
   });
@@ -117,10 +120,10 @@ describe('run client app', () => {
       ...mockData,
       location: new URL('http://localhost:4000/?test=1&runtime=true&baisc'),
     }));
-
     await runClientApp({
       app: {},
-      routes: basicRoutes,
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => basicRoutes,
       runtimeModules: { commons: [serverRuntime] },
       hydrate: false,
     });
@@ -131,14 +134,14 @@ describe('run client app', () => {
     process.env.ICE_CORE_ROUTER = '';
     await runClientApp({
       app: {},
-      routes: basicRoutes,
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => basicRoutes,
       runtimeModules: { commons: [serverRuntime] },
       hydrate: false,
     });
     process.env.ICE_CORE_ROUTER = 'true';
     expect(domstring).toBe('<div>home</div>');
   });
-
   it('run client with wrapper', async () => {
     await runClientApp({
       app: {},

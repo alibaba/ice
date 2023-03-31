@@ -54,7 +54,7 @@ export async function loadRouteModules(routes: RouteModule[], originRouteModules
 export function WrapRouteComponent(options: {
   routeId: string;
   isLayout?: boolean;
-  routeExports: RouteExports;
+  routeExports: ComponentModule;
 }) {
   const { routeId, isLayout, routeExports } = options;
   const { RouteWrappers } = useAppContext();
@@ -99,7 +99,7 @@ interface LoaderData {
 
 export interface RouteLoaderOptions {
   routeId: string;
-  requestContext: RequestContext;
+  requestContext?: RequestContext;
   module: ComponentModule;
   renderMode: RenderMode;
 }

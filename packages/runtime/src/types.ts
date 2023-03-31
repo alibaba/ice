@@ -135,6 +135,7 @@ export type ComponentModule = {
 
 export type RouteItem = AgnosticRouteObject & {
   componentName: string;
+  Component?: ComponentType<any>;
   exports: string[];
   layout?: boolean;
   children?: RouteItem[];
@@ -149,11 +150,6 @@ export type DocumentComponent = ComponentWithChildren<{
 export interface RouteWrapperConfig {
   Wrapper: RouteWrapper;
   layout?: boolean;
-}
-
-export interface RouteExports {
-  [key: string]: any;
-  default: React.ComponentType;
 }
 
 export type AppProvider = ComponentWithChildren<any>;
@@ -229,6 +225,8 @@ export interface AppRouterProps {
   router?: Router;
   routerContext?: any;
   location?: Location;
+  Component?: ComponentType<any>;
+  loaderData?: LoaderData;
 }
 
 export interface AppRouteProps {
