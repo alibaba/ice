@@ -151,6 +151,11 @@ export interface RouteWrapperConfig {
   layout?: boolean;
 }
 
+export interface RouteExports {
+  [key: string]: any;
+  default: React.ComponentType;
+}
+
 export type AppProvider = ComponentWithChildren<any>;
 export type RouteWrapper = ComponentType<any>;
 

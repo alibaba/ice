@@ -1,5 +1,6 @@
 import React from 'react';
-import type { RouteItem, RouteModules, RenderMode, DataLoaderConfig, RequestContext, ComponentModule } from './types.js';
+import { useRouteError } from 'react-router-dom';
+import type { RouteItem, RouteModules, RenderMode, DataLoaderConfig, RequestContext, ComponentModule, RouteExports } from './types.js';
 import RouteWrapper from './RouteWrapper.js';
 import { useAppContext } from './AppContext.js';
 import { callDataLoader } from './dataLoader.js';
@@ -53,13 +54,13 @@ export async function loadRouteModules(routes: RouteModule[], originRouteModules
 export function WrapRouteComponent(options: {
   routeId: string;
   isLayout?: boolean;
-  RouteComponent: React.ComponentType;
+  routeExports: RouteExports;
 }) {
-  const { routeId, isLayout, RouteComponent } = options;
+  const { routeId, isLayout, routeExports } = options;
   const { RouteWrappers } = useAppContext();
   return (
-    <RouteWrapper id={routeId} isLayout={isLayout} wrappers={RouteWrappers}>
-      <RouteComponent />
+    <RouteWrapper routeExports={routeExports} id={routeId} isLayout={isLayout} wrappers={RouteWrappers}>
+      <routeExports.default />
     </RouteWrapper>
   );
 }
@@ -77,6 +78,15 @@ export function RouteComponent({ id }: { id: string }) {
     }
   }
   return <Component />;
+}
+
+export function RouteErrorComponent() {
+  const error = useRouteError();
+  if (error) {
+    // Re-throws the error so it can be caught by App Error Boundary.
+    throw error;
+  }
+  return <></>;
 }
 
 /**

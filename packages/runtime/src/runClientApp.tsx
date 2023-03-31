@@ -134,7 +134,7 @@ interface RenderOptions {
 
 async function render({ history, runtime, needHydrate }: RenderOptions) {
   const appContext = runtime.getAppContext();
-  const { appConfig, loaderData, routes, revalidate } = appContext;
+  const { appConfig, loaderData, routes, revalidate, basename } = appContext;
   const appRender = runtime.getRender();
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
   const AppRouter = runtime.getAppRouter();
@@ -149,6 +149,7 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
   }
   const hydrationData = needHydrate ? { loaderData } : undefined;
   const routerOptions = {
+    basename,
     routes,
     history,
     hydrationData,

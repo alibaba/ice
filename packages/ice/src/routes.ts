@@ -69,7 +69,7 @@ export function getRoutesDefination(nestRouteManifest: NestedRouteManifest[], la
     const component = `Component: () => WrapRouteComponent({
           routeId: '${id}',
           isLayout: ${layout},
-          RouteComponent: ${lazy ? 'componentModule' : loadStatement}.default,
+          routeExports: ${lazy ? 'componentModule' : loadStatement},
         })`;
     const loader = `loader: createRouteLoader({
           routeId: '${id}',
@@ -82,10 +82,13 @@ export function getRoutesDefination(nestRouteManifest: NestedRouteManifest[], la
       `async lazy() {
       ${lazy ? `const componentModule = await ${loadStatement}` : ''};
       return {
+        ${lazy ? '...componentModule' : `...${loadStatement}`},
         ${component},
         ${loader},
       };
     },`,
+      // Empty errorElement to avoid default ui provided by react-router.
+      'ErrorBoundary: RouteErrorComponent,',
       `componentName: '${componentName}',`,
       `index: ${index},`,
       `id: '${id}',`,
