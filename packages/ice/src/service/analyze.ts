@@ -14,7 +14,7 @@ import { createLogger } from '../utils/logger.js';
 
 const logger = createLogger('scan-modules');
 
-type Alias = Record<string, string>;
+export type Alias = Record<string, string>;
 type AliasWithEmpty = Record<string, string | false>;
 
 interface Options {
