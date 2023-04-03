@@ -1,9 +1,9 @@
 import { expect, it, describe } from 'vitest';
-import { getRuntimeDefination } from '../src/service/serverCompiler';
+import { getRuntimeDefinition } from '../src/service/serverCompiler';
 
-describe('Get node runtime defination', () => {
+describe('Get node runtime definition', () => {
   it('basic', () => {
-    const define = getRuntimeDefination({
+    const define = getRuntimeDefinition({
       'process.env.ROUTER_BASE_NAME': JSON.stringify('/'),
       'process.env.WEB_APP': true,
     });

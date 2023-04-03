@@ -20,7 +20,7 @@ import { logger } from '../utils/logger.js';
 import { resolveId as resolveWithAlias } from './analyze.js';
 import Runner from './Runner.js';
 import { RuntimeMeta } from './onDemandPreBundle.js';
-import { filterAlias, getRuntimeDefination } from './serverCompiler.js';
+import { filterAlias, getRuntimeDefinition } from './serverCompiler.js';
 
 interface InitOptions {
   rootDir: string;
@@ -109,7 +109,7 @@ class ServerRunner extends Runner {
       alias,
       ignores,
       external: server.externals || [],
-      define: getRuntimeDefination(task.config.define || {}),
+      define: getRuntimeDefinition(task.config.define || {}),
     });
 
     const esbuildPlugins = [

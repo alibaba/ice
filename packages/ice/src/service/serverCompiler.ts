@@ -55,7 +55,7 @@ export const filterAlias = (taskAlias: TaskConfig<Config>['config']['alias']) =>
   return { alias, ignores };
 };
 
-export const getRuntimeDefination = (
+export const getRuntimeDefinition = (
   defineVars: Record<string, string | boolean> = {},
   runtimeVars: Record<string, string> = {},
   transformEnv = true,
@@ -144,7 +144,7 @@ export function createServerCompiler(options: Options) {
       redirectImports,
       getRoutesFile,
     }, 'esbuild', { isServer });
-    const define = getRuntimeDefination(task.config?.define || {}, runtimeDefineVars, transformEnv);
+    const define = getRuntimeDefinition(task.config?.define || {}, runtimeDefineVars, transformEnv);
 
     if (preBundle) {
       preBundleDepsMetadata = await createPreBundleDepsMetadata({
