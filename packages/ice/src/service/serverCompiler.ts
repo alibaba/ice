@@ -64,9 +64,13 @@ export const getRuntimeDefination = (
   const runtimeDefineVars = {
     ...runtimeVars,
   };
-  // auto stringify define value
   Object.keys(defineVars).forEach((key) => {
-    stringifiedDefine[key] = JSON.stringify(defineVars[key]);
+    // auto stringify boolean type define value
+    if (typeof defineVars[key] === 'boolean') {
+      stringifiedDefine[key] = JSON.stringify(defineVars[key]);
+    } else {
+      stringifiedDefine[key] = defineVars[key];
+    }
   });
   // get runtime variable for server build
   Object.keys(process.env).forEach((key) => {
