@@ -6,7 +6,7 @@ import consola from 'consola';
 import cloneDeep from 'lodash.clonedeep';
 import { matchRoutes } from '@remix-run/router';
 import * as htmlparser2 from 'htmlparser2';
-import { decamelizeKeys, camelizeKeys, validPageConfigKeys } from './constants.js';
+import { decamelizeKeys, camelizeKeys, validPageConfigKeys, pageDefaultValueKeys } from './constants.js';
 import type { Page, PageHeader, PageConfig, Manifest, PHAManifest, Frame } from './types';
 
 const { decamelize } = humps;
@@ -20,8 +20,8 @@ export interface ParseOptions {
   urlPrefix: string;
   publicPath: string;
   routeManifest: string;
+  excuteServerEntry: () => Promise<any>;
   routesConfig?: Record<string, any>;
-  serverEntry: string;
   template?: boolean;
   preload?: boolean;
   urlSuffix?: string;
@@ -51,7 +51,7 @@ interface InternalPageConfig {
 type MixedPage = InternalPageConfig & PageConfig;
 
 export function transformManifestKeys(manifest: Manifest, options?: TransformOptions): PHAManifest {
-  const { parentKey, isRoot } = options;
+  const { parentKey, isRoot } = options || {};
   const data = {};
 
   for (let key in manifest) {
@@ -93,6 +93,13 @@ export function transformManifestKeys(manifest: Manifest, options?: TransformOpt
         }
         return item;
       });
+    } else if (key === 'pullRefresh') {
+      if (value && value.reload) {
+        // Need reload.
+        data['pull_refresh'] = true;
+      } else {
+        data['enable_pull_refresh'] = true;
+      }
     } else if (key === 'requestHeaders') {
       // Keys of requestHeaders should not be transformed.
       data[transformKey] = value;
@@ -148,23 +155,25 @@ async function getPageConfig(
   return filteredConfig;
 }
 
-async function renderPageDocument(routeId: string, serverEntry: string): Promise<string> {
+async function renderPageDocument(routeId: string, excuteServerEntry: ParseOptions['excuteServerEntry']): Promise<string> {
   const serverContext = {
     req: {
       url: `/${routeId}`,
     },
   };
-  const serverModule = await import(serverEntry);
-  const { value } = await serverModule.renderToHTML(serverContext, {
-    documentOnly: true,
-    serverOnlyBasename: '/',
-    renderMode: 'SSG',
-  });
-  return value;
+  const serverModule = await excuteServerEntry();
+  if (serverModule) {
+    const { value } = await serverModule.renderToHTML(serverContext, {
+      documentOnly: true,
+      serverOnlyBasename: '/',
+      renderMode: 'SSG',
+    });
+    return value;
+  }
 }
 
 async function getPageManifest(page: string | Page, options: ParseOptions): Promise<MixedPage> {
-  const { template, preload, serverEntry, routesConfig, routeManifest } = options;
+  const { template, preload, excuteServerEntry, routesConfig, routeManifest } = options;
   // Page will be type string when it is a source frame.
   if (typeof page === 'string') {
     // Get html content by render document.
@@ -174,7 +183,7 @@ async function getPageManifest(page: string | Page, options: ParseOptions): Prom
       key: page,
       ...rest,
     };
-    const html = await renderPageDocument(page, serverEntry);
+    const html = await renderPageDocument(page, excuteServerEntry);
     if (template && !Array.isArray(pageConfig.frames)) {
       pageManifest.document = html;
     }
@@ -244,8 +253,8 @@ async function getTabConfig(tabManifest: Manifest['tabBar'] | PageHeader, genera
     url: '',
   };
   const tabRouteId = parseRouteId(tabManifest!.source);
-  if (options.template && generateDocument && options.serverEntry) {
-    tabConfig.html = await renderPageDocument(tabRouteId, options.serverEntry);
+  if (options.template && generateDocument && options.excuteServerEntry) {
+    tabConfig.html = await renderPageDocument(tabRouteId, options.excuteServerEntry);
   }
 
   // TODO: iOS issue
@@ -344,6 +353,14 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
     manifest.pages = await Promise.all(routes.map(async (page) => {
       const pageIds = getRouteIdByPage(routeManifest, page);
       const pageManifest = await getPageManifest(page, options);
+
+      // The manifest configuration is the default value for the page configuration.
+      pageDefaultValueKeys.forEach(key => {
+        if (!(key in pageManifest) && (key in manifest)) {
+          pageManifest[key] = manifest[key];
+        }
+      });
+
       // Set static dataloader to data_prefetch of page.
       pageIds.forEach((pageId) => {
         if (typeof page === 'string' && dataloaderConfig && dataloaderConfig[pageId]) {

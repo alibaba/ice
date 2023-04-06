@@ -78,7 +78,13 @@ export const validPageConfigKeys = [
   'spm',
   'queryParams',
   'queryParamsPassKeys',
+  'pullRefresh',
   'queryParamsPassIgnoreKeys',
+];
+
+// The manifest configuration is the default value for the page configuration
+export const pageDefaultValueKeys = [
+  'pullRefresh',
 ];
 
 export const getCompilerConfig = (options: {
@@ -98,9 +104,6 @@ export const getCompilerConfig = (options: {
   return {
     swc: {
       keepExports,
-      getRoutePaths: () => {
-        return ['src/pages'];
-      },
     },
     preBundle: false,
     externalDependencies: false,

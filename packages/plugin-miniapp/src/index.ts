@@ -12,7 +12,7 @@ interface MiniappOptions {
 
 const plugin: Plugin<MiniappOptions> = (miniappOptions = {}) => ({
   name: '@ice/plugin-miniapp',
-  setup: ({ registerTask, onHook, context, dataCache, generator }) => {
+  setup: ({ registerTask, onHook, context, generator }) => {
     const { nativeConfig = {} } = miniappOptions;
     const { commandArgs, rootDir, command } = context;
     const { target } = commandArgs;
@@ -55,7 +55,6 @@ const plugin: Plugin<MiniappOptions> = (miniappOptions = {}) => ({
         command,
         target,
         configAPI,
-        dataCache,
         runtimeDir: '.ice',
         nativeConfig,
       }));

@@ -136,7 +136,7 @@ export type ComponentModule = {
 export type RouteItem = AgnosticRouteObject & {
   componentName: string;
   Component?: ComponentType<any>;
-  exports: string[];
+  exports?: string[];
   layout?: boolean;
   children?: RouteItem[];
 };
