@@ -1,6 +1,6 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { createRouter, createHashHistory, createBrowserHistory, createMemoryHistory } from '@remix-run/router';
+import { createHashHistory, createBrowserHistory, createMemoryHistory } from '@remix-run/router';
 import type { History } from '@remix-run/router';
 import type {
   AppContext, WindowContext, AppExport, RouteItem, RuntimeModules, AppConfig, AssetsManifest,
@@ -9,9 +9,8 @@ import { createHistory as createHistorySingle } from './single-router.js';
 import { setHistory } from './history.js';
 import Runtime from './runtime.js';
 import { getAppData } from './appData.js';
-import { getRoutesPath } from './routes.js';
+import { getRoutesPath, loadRouteModule } from './routes.js';
 import type { RouteLoaderOptions } from './routes.js';
-import { loadRouteModule } from './routes.js';
 import getRequestContext from './requestContext.js';
 import getAppConfig from './appConfig.js';
 import ClientRouter from './ClientRouter.js';
@@ -175,10 +174,7 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
   let router = null;
   let singleComponent = null;
   let routeData = null;
-  // Create router before render.
-  if (process.env.ICE_CORE_ROUTER === 'true') {
-    router = createRouter(routerOptions).initialize();
-  } else {
+  if (process.env.ICE_CORE_ROUTER !== 'true') {
     const { Component, loader } = await loadRouteModule(routes[0]);
     singleComponent = Component || routes[0].Component;
     routeData = loader && await loader();
@@ -188,7 +184,7 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
     <AppContextProvider value={appContext}>
       <AppRuntimeProvider>
         <AppRouter
-          router={router}
+          routerContext={routerOptions}
           routes={routes}
           location={history.location}
           Component={singleComponent}

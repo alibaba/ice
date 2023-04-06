@@ -98,8 +98,11 @@ describe('routes', () => {
 
   it('route WrapRouteComponent', () => {
     const domstring = renderToString(
-      // @ts-ignore
-      <AppContextProvider value={{ RouteWrappers: [{ Wrapper: ({ children }) => <div>wrapper{children}</div>, layout: false }] }}>
+
+      <AppContextProvider
+        // @ts-ignore unnecessary to add app context when test WrapRouteComponent.
+        value={{ RouteWrappers: [{ Wrapper: ({ children }) => <div>wrapper{children}</div>, layout: false }] }}
+      >
         <WrapRouteComponent routeId="test" isLayout={false} routeExports={{ default: () => <div>home</div> }} />
       </AppContextProvider>,
     );
@@ -108,8 +111,11 @@ describe('routes', () => {
 
   it('route WrapRouteComponent match layout', () => {
     const domstring = renderToString(
-      // @ts-ignore
-      <AppContextProvider value={{ RouteWrappers: [{ Wrapper: ({ children }) => <div>wrapper{children}</div>, layout: false }] }}>
+
+      <AppContextProvider
+      // @ts-ignore unnecessary to add app context when test WrapRouteComponent.
+        value={{ RouteWrappers: [{ Wrapper: ({ children }) => <div>wrapper{children}</div>, layout: false }] }}
+      >
         <WrapRouteComponent routeId="test" isLayout routeExports={{ default: () => <div>home</div> }} />
       </AppContextProvider>,
     );
