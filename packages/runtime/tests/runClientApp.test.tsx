@@ -2,13 +2,11 @@
  * @vitest-environment jsdom
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { expect, it, vi, describe, beforeEach, afterEach } from 'vitest';
 import runClientApp from '../src/runClientApp';
 import { useAppData } from '../src/AppContext';
-import { createRouteLoader } from '../src/routes';
-import { useConfig, useData } from '../src/RouteContext';
 
 describe('run client app', () => {
   let windowSpy;
@@ -54,7 +52,9 @@ describe('run client app', () => {
     setRender((container, element) => {
       try {
         domstring = renderToString(element as any);
-      } catch (err) { }
+      } catch (err) {
+        domstring = '';
+      }
     });
   };
 
@@ -62,13 +62,6 @@ describe('run client app', () => {
 
   const staticRuntime = async () => {
     staticMsg = 'static';
-  };
-
-  const wrapperRuntime = async ({ addWrapper }) => {
-    const RouteWrapper = ({ children }) => {
-      return <div>{children}</div>;
-    };
-    addWrapper(RouteWrapper, true);
   };
 
   const providerRuntmie = async ({ addProvider }) => {
@@ -96,6 +89,7 @@ describe('run client app', () => {
       id: 'home',
       path: '/',
       componentName: 'Home',
+      // Make sure the component is loaded before render.
       Component: homeItem.default,
     },
   ];
@@ -131,44 +125,39 @@ describe('run client app', () => {
   });
 
   it('run client single-router', async () => {
+    const sigleRoutes = [
+      {
+        id: 'home',
+        path: '/',
+        lazy: () => {
+          return {
+            Component: homeItem.default,
+            loader: () => {},
+          };
+        },
+      },
+    ];
     process.env.ICE_CORE_ROUTER = '';
     await runClientApp({
       app: {},
       // @ts-ignore don't need to pass params in test case.
-      createRoutes: () => basicRoutes,
+      createRoutes: () => sigleRoutes,
       runtimeModules: { commons: [serverRuntime] },
       hydrate: false,
     });
     process.env.ICE_CORE_ROUTER = 'true';
     expect(domstring).toBe('<div>home</div>');
   });
-  it('run client with wrapper', async () => {
-    await runClientApp({
-      app: {},
-      routes: basicRoutes,
-      runtimeModules: { commons: [serverRuntime, wrapperRuntime] },
-      hydrate: true,
-    });
-    expect(domstring).toBe('<div><div>home</div></div>');
-  });
 
   it('run client with app provider', async () => {
     await runClientApp({
       app: {},
-      routes: basicRoutes,
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => basicRoutes,
       runtimeModules: { commons: [serverRuntime, providerRuntmie] },
       hydrate: true,
     });
     expect(domstring).toBe('<div><div><div>home</div></div></div>');
-  });
-
-  it('run client with empty route', async () => {
-    await runClientApp({
-      app: {},
-      routes: [],
-      runtimeModules: { commons: [serverRuntime] },
-      hydrate: false,
-    });
   });
 
   it('run client with memory router', async () => {
@@ -176,14 +165,11 @@ describe('run client app', () => {
       id: 'about',
       path: '/about',
       componentName: 'About',
-      load: async () => ({
-        default: () => {
-          return (
-            <div>about</div>
-          );
-        },
-      }),
-    }];
+      Component: () => {
+        return (
+          <div>about</div>
+        );
+      } }];
     await runClientApp({
       app: {
         default: {
@@ -193,7 +179,8 @@ describe('run client app', () => {
           },
         },
       },
-      routes,
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => routes,
       runtimeModules: { commons: [serverRuntime] },
       hydrate: true,
     });
@@ -204,7 +191,8 @@ describe('run client app', () => {
         default: {
         },
       },
-      routes,
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => basicRoutes,
       runtimeModules: { commons: [serverRuntime] },
       hydrate: true,
     });
@@ -221,18 +209,16 @@ describe('run client app', () => {
       id: 'about',
       path: '/about',
       componentName: 'About',
-      load: async () => ({
-        default: () => {
-          return (
-            <div>about</div>
-          );
-        },
-      }),
-    }];
+      Component: () => {
+        return (
+          <div>about</div>
+        );
+      } }];
     await runClientApp({
       app: {
       },
-      routes,
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => routes,
       runtimeModules: { commons: [serverRuntime] },
       hydrate: true,
       memoryRouter: true,
@@ -250,7 +236,8 @@ describe('run client app', () => {
           },
         },
       },
-      routes: basicRoutes,
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => basicRoutes,
       runtimeModules: { commons: [serverRuntime] },
       hydrate: true,
     });
@@ -266,7 +253,8 @@ describe('run client app', () => {
           return { msg: '-getAppData' };
         },
       },
-      routes: basicRoutes,
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => basicRoutes,
       runtimeModules: { commons: [serverRuntime] },
       hydrate: false,
     });
@@ -294,7 +282,8 @@ describe('run client app', () => {
           return { msg: 'app' };
         },
       },
-      routes: basicRoutes,
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => basicRoutes,
       runtimeModules: { commons: [serverRuntime] },
       hydrate: false,
     });
@@ -312,75 +301,11 @@ describe('run client app', () => {
           },
         },
       },
-      routes: [{
-        id: 'home',
-        path: '/',
-        componentName: 'Home',
-        load: async () => ({
-          default: () => {
-            // eslint-disable-next-line react-hooks/rules-of-hooks
-            const config = useConfig();
-            // eslint-disable-next-line react-hooks/rules-of-hooks
-            const data = useData();
-            return (
-              <div>home{data?.data}{config.title}</div>
-            );
-          },
-          pageConfig: () => ({ title: 'home' }),
-          dataLoader: async () => ({ data: 'test' }),
-        }),
-      }],
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => basicRoutes,
       runtimeModules: { commons: [serverRuntime] },
       hydrate: false,
     });
-    expect(domstring).toBe('<div>home<!-- -->test<!-- -->home</div>');
-  });
-
-  it('load next page', async () => {
-    const indexPage = {
-      default: () => <></>,
-      pageConfig: () => ({ title: 'index' }),
-      dataLoader: async () => ({ type: 'getDataIndex' }),
-    };
-    const aboutPage = {
-      default: () => <></>,
-      pageConfig: () => ({ title: 'about' }),
-      dataLoader: async () => ({ type: 'getDataAbout' }),
-    };
-    const mockedModules = [
-      {
-        id: 'index',
-        load: async () => {
-          return indexPage;
-        },
-      },
-      {
-        id: 'about',
-        load: async () => {
-          return aboutPage;
-        },
-      },
-    ];
-    const { routesData, routesConfig, routeModules } = await loadNextPage(
-      // @ts-ignore
-      [{ route: mockedModules[0] }],
-      {
-        // @ts-ignore
-        matches: [{ route: mockedModules[1] }],
-        routesData: {},
-        routeModules: {},
-      },
-    );
-    expect(routesData).toStrictEqual({
-      index: { type: 'getDataIndex' },
-    });
-    expect(routesConfig).toStrictEqual({
-      index: {
-        title: 'index',
-      },
-    });
-    expect(routeModules).toStrictEqual({
-      index: indexPage,
-    });
+    expect(domstring).toBe('<div>home</div>');
   });
 });

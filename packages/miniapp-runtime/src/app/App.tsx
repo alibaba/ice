@@ -7,7 +7,7 @@ export default function App() {
   const { strict, errorBoundary } = appConfig.app;
   const StrictMode = strict ? React.StrictMode : React.Fragment;
   const ErrorBoundary = errorBoundary ? AppErrorBoundary : React.Fragment;
-
+  console.log('ErrorBoundary', ErrorBoundary);
   return (
     <StrictMode>
       <ErrorBoundary>

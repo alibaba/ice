@@ -6,13 +6,12 @@ import App from './App.js';
 import { DataContextProvider } from './single-router.js';
 
 function ClientRouter(props: AppRouterProps) {
-  const { router, routes, Component, loaderData } = props;
+  const { router, Component, loaderData } = props;
 
   let element: React.ReactNode;
   if (process.env.ICE_CORE_ROUTER === 'true') {
     element = <RouterProvider router={router} fallbackElement={<></>} />;
   } else {
-    const routeItem = routes[0];
     element = (
       <DataContextProvider value={loaderData}>
         <Component />

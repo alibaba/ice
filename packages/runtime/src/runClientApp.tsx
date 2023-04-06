@@ -181,6 +181,7 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
     </AppContextProvider>,
   );
   if (revalidate) {
+    // Revalidate after render for SSG while staticDataLoader and dataLoader both defined.
     setTimeout(() => {
       router?.revalidate();
     });
