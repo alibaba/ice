@@ -67,7 +67,6 @@ export async function renderToEntry(
   requestContext: ServerContext,
   renderOptions: RenderOptions,
 ) {
-  console.log('renderToEntry.tsx');
   const result = await renderToHTML(requestContext, renderOptions);
   const { value } = result;
 
@@ -98,7 +97,6 @@ export async function renderToHTML(
   renderOptions: RenderOptions,
 ): Promise<RenderResult> {
   const result = await doRender(requestContext, renderOptions);
-
   const { value } = result;
 
   if (typeof value === 'string') {
