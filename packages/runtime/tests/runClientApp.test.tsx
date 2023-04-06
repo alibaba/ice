@@ -89,8 +89,11 @@ describe('run client app', () => {
       id: 'home',
       path: '/',
       componentName: 'Home',
-      // Make sure the component is loaded before render.
-      Component: homeItem.default,
+      lazy: () => {
+        return {
+          Component: homeItem.default,
+        };
+      },
     },
   ];
 

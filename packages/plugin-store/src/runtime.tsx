@@ -5,7 +5,7 @@ import type { StoreConfig } from './types.js';
 
 const EXPORT_CONFIG_NAME = 'storeConfig';
 
-const runtime: RuntimePlugin = async ({ appContext, addWrapper, addProvider, useAppContext }, runtimeOptions) => {
+const runtime: RuntimePlugin = async ({ appContext, addWrapper, addProvider }, runtimeOptions) => {
   const { appExport, appData } = appContext;
   const exported = appExport[EXPORT_CONFIG_NAME];
   const storeConfig: StoreConfig = (typeof exported === 'function' ? await exported(appData) : exported) || {};

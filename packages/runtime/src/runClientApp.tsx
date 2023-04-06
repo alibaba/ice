@@ -18,6 +18,7 @@ import ClientRouter from './ClientRouter.js';
 import { setFetcher } from './dataLoader.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 import { AppContextProvider } from './AppContext.js';
+import matchRoutes from './matchRoutes.js';
 
 export interface RunClientAppOptions {
   app: AppExport;
@@ -149,6 +150,22 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
     console.warn(`Root node #${rootId} is not found, current root is automatically created by the framework.`);
   }
   const hydrationData = needHydrate ? { loaderData } : undefined;
+  if (needHydrate) {
+    const lazyMatches = matchRoutes(routes, history.location, basename).filter((m) => m.route.lazy);
+    if (lazyMatches?.length > 0) {
+      // Load the lazy matches and update the routes before creating your router
+      // so we can hydrate the SSR-rendered content synchronously.
+      await Promise.all(
+        lazyMatches.map(async (m) => {
+          let routeModule = await m.route.lazy();
+          Object.assign(m.route, {
+            ...routeModule,
+            lazy: undefined,
+          });
+        }),
+      );
+    }
+  }
   const routerOptions = {
     basename,
     routes,

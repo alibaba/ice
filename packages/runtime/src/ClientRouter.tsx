@@ -10,7 +10,7 @@ function ClientRouter(props: AppRouterProps) {
 
   let element: React.ReactNode;
   if (process.env.ICE_CORE_ROUTER === 'true') {
-    element = <RouterProvider router={router} fallbackElement={<></>} />;
+    element = <RouterProvider router={router} fallbackElement={null} />;
   } else {
     element = (
       <DataContextProvider value={loaderData}>
