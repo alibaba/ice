@@ -12,17 +12,24 @@
   "exports": {
     ".": {
       "types": "./es2017/index.d.ts",
-      "import": "./es2017/index.js"
+      "import": "./es2017/index.js",
+      "default": "./es2017/index.js"
     },
     "./runtime": {
-      "types": "./es2017/runtime.d.ts",
-      "import": "./es2017/runtime.js"
+      "types": "./es2017/runtime/index.d.ts",
+      "import": "./es2017/runtime/index.js",
+      "default": "./es2017/runtime/index.js"
+    },
+    "./I18nContext": {
+      "types": "./es2017/runtime/I18nContext.d.ts",
+      "import": "./es2017/runtime/I18nContext.js",
+      "default": "./es2017/runtime/I18nContext.js"
     },
     "./*": "./*"
   },
   "sideEffects": false,
   "scripts": {
-    "start": "ice-pkg start",
+    "watch": "ice-pkg start",
     "build": "ice-pkg build"
   },
   "keywords": [
@@ -31,12 +38,23 @@
     "plugin"
   ],
   "dependencies": {
-    "@swc/helpers": "^0.4.14"
+    "@ice/jsx-runtime": "^0.2.0",
+    "@swc/helpers": "^0.4.14",
+    "accept-language-parser": "^1.5.0",
+    "consola": "^2.15.3",
+    "universal-cookie": "^4.0.4"
   },
   "devDependencies": {
     "@ice/pkg": "^1.0.0",
-    "@ice/app": "^3.1.4",
-    "@ice/runtime": "^1.1.4"
+    "@ice/app": "workspace:^",
+    "@ice/runtime": "workspace:^",
+    "@types/react": "^18.0.33",
+    "@types/accept-language-parser": "^1.5.3",
+    "history": "^5.3.0"
+  },
+  "peerDependencies": {
+    "@ice/app": "^3.0.0",
+    "@ice/runtime": "^1.0.0"
   },
   "publishConfig": {
     "access": "public"

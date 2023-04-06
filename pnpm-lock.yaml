@@ -1239,16 +1239,30 @@ importers:
 
   packages/plugin-i18n:
     specifiers:
-      '@ice/app': ^3.1.4
+      '@ice/app': workspace:^
+      '@ice/jsx-runtime': ^0.2.0
       '@ice/pkg': ^1.0.0
-      '@ice/runtime': ^1.1.4
+      '@ice/runtime': workspace:^
       '@swc/helpers': ^0.4.14
+      '@types/accept-language-parser': ^1.5.3
+      '@types/react': ^18.0.33
+      accept-language-parser: ^1.5.0
+      consola: ^2.15.3
+      history: ^5.3.0
+      universal-cookie: ^4.0.4
     dependencies:
+      '@ice/jsx-runtime': link:../jsx-runtime
       '@swc/helpers': 0.4.14
+      accept-language-parser: 1.5.0
+      consola: 2.15.3
+      universal-cookie: 4.0.4
     devDependencies:
-      '@ice/app': 3.1.6
+      '@ice/app': link:../ice
       '@ice/pkg': 1.5.4
       '@ice/runtime': link:../runtime
+      '@types/accept-language-parser': 1.5.3
+      '@types/react': 18.0.33
+      history: 5.3.0
 
   packages/plugin-icestark:
     specifiers:
@@ -1410,8 +1424,8 @@ importers:
 
   packages/plugin-store:
     specifiers:
-      '@ice/app': ^3.1.2
-      '@ice/runtime': ^1.1.3
+      '@ice/app': workspace:^
+      '@ice/runtime': workspace:^
       '@ice/store': ^2.0.3
       '@types/micromatch': ^4.0.2
       '@types/react': ^18.0.0
@@ -1426,7 +1440,7 @@ importers:
       fast-glob: 3.2.12
       micromatch: 4.0.5
     devDependencies:
-      '@ice/app': 3.1.6_biqbaboplfbrettd7655fr4n2y
+      '@ice/app': link:../ice
       '@ice/runtime': link:../runtime
       '@types/micromatch': 4.0.2
       '@types/react': 18.0.28
@@ -2268,7 +2282,7 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
     dependencies:
-      '@babel/types': 7.21.2
+      '@babel/types': 7.18.10
 
   /@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression/7.18.6_@babel+core@7.21.0:
     resolution: {integrity: sha512-Dgxsyg54Fx1d4Nge8UnvTrED63vrwOdPmyvPzlNN/boaliRP54pm3pGzZD1SJUwrBA+Cs/xdG8kXX6Mn/RfISQ==}
@@ -4020,8 +4034,8 @@ packages:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@babel/parser': 7.21.2
-      '@babel/traverse': 7.21.2
+      '@babel/parser': 7.18.10
+      '@babel/traverse': 7.18.10
       '@docusaurus/logger': 2.3.1
       '@docusaurus/utils': 2.3.1_@docusaurus+types@2.3.1
       '@mdx-js/mdx': 1.6.22
@@ -4056,7 +4070,7 @@ packages:
       '@docusaurus/react-loadable': 5.5.2_react@17.0.2
       '@docusaurus/types': 2.3.1_sfoxds7t5ydpegc3knd667wn6m
       '@types/history': 4.7.11
-      '@types/react': 18.0.28
+      '@types/react': 18.0.33
       '@types/react-router-config': 5.0.6
       '@types/react-router-dom': 5.3.3
       react: 17.0.2
@@ -4442,7 +4456,7 @@ packages:
     peerDependencies:
       react: '*'
     dependencies:
-      '@types/react': 18.0.28
+      '@types/react': 18.0.33
       prop-types: 15.8.1
       react: 17.0.2
 
@@ -4512,7 +4526,7 @@ packages:
       '@docusaurus/plugin-content-pages': 2.3.1_jgxnvbe4faw3ohf4h6p42qq6oy
       '@docusaurus/utils': 2.3.1_@docusaurus+types@2.3.1
       '@types/history': 4.7.11
-      '@types/react': 18.0.28
+      '@types/react': 18.0.33
       '@types/react-router-config': 5.0.6
       clsx: 1.2.1
       parse-numeric-range: 1.3.0
@@ -4601,7 +4615,7 @@ packages:
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 18.0.28
+      '@types/react': 18.0.33
       commander: 5.1.0
       joi: 17.8.3
       react: 17.0.2
@@ -5333,54 +5347,6 @@ packages:
       - supports-color
     dev: true
 
-  /@ice/app/3.1.6_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-ch0UwX9VJikgg+cd9Yh9KUtkdbZVzTmm1vSZU/HP3fzsLugTWkxQz1LoULIS0hAfUCvrruzvCaXqGKoLeqfHpw==}
-    engines: {node: '>=14.19.0', npm: '>=3.0.0'}
-    hasBin: true
-    peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
-    dependencies:
-      '@babel/generator': 7.18.10
-      '@babel/parser': 7.18.10
-      '@babel/traverse': 7.18.10
-      '@babel/types': 7.18.10
-      '@ice/bundles': 0.1.8
-      '@ice/route-manifest': 1.1.1
-      '@ice/runtime': 1.1.5_biqbaboplfbrettd7655fr4n2y
-      '@ice/webpack-config': 1.0.12
-      '@swc/helpers': 0.4.14
-      '@types/express': 4.17.17
-      address: 1.2.2
-      build-scripts: 2.1.0
-      chalk: 4.1.2
-      commander: 9.5.0
-      consola: 2.15.3
-      cross-spawn: 7.0.3
-      detect-port: 1.5.1
-      dotenv: 16.0.3
-      dotenv-expand: 8.0.3
-      ejs: 3.1.8
-      estree-walker: 3.0.3
-      fast-glob: 3.2.12
-      find-up: 5.0.0
-      fs-extra: 10.1.0
-      micromatch: 4.0.5
-      mlly: 1.1.1
-      mrmime: 1.0.1
-      open: 8.4.2
-      path-to-regexp: 6.2.1
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      regenerator-runtime: 0.13.11
-      resolve.exports: 1.1.1
-      semver: 7.3.8
-      temp: 0.9.4
-      yargs-parser: 21.1.1
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   /@ice/bundles/0.1.8:
     resolution: {integrity: sha512-cjaUkwcVkVO5EOdZqyFyDFYAPs5nnNXdOVRAY3CegBMOxy8K5MgoQO5xJkOMmphUSm+X0pbb0xUza1b9wR2fYA==}
     dependencies:
@@ -5411,15 +5377,6 @@ packages:
     peerDependencies:
       react: ^16 || ^17 || ^18
     dependencies:
-      style-unit: 3.0.5
-    dev: true
-
-  /@ice/jsx-runtime/0.2.0_react@18.2.0:
-    resolution: {integrity: sha512-yUfoWloQq2mdyCTsTTWwxtx0dmiwC4Xe2QEaQCg/yFqQKz7hOFBOrju6RodMl7K0fdpj6k1UBfjLd9gPyUBAbw==}
-    peerDependencies:
-      react: ^16 || ^17 || ^18
-    dependencies:
-      react: 18.2.0
       style-unit: 3.0.5
     dev: true
 
@@ -5527,22 +5484,6 @@ packages:
       history: 5.3.0
       htmlparser2: 8.0.1
       react-router-dom: 6.8.2
-    dev: true
-
-  /@ice/runtime/1.1.5_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-QodI80xuhsPk8+q4Jprc9YXJ6xrsrtxLwBMa7zozvuo7lz0eycSahGukOnUJu7BB+ip6iBqID6q+yAxkQbMzmw==}
-    peerDependencies:
-      react: ^18.1.0
-      react-dom: ^18.1.0
-    dependencies:
-      '@ice/jsx-runtime': 0.2.0_react@18.2.0
-      ejs: 3.1.8
-      fs-extra: 10.1.0
-      history: 5.3.0
-      htmlparser2: 8.0.1
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      react-router-dom: 6.8.2_biqbaboplfbrettd7655fr4n2y
     dev: true
 
   /@ice/sandbox/1.1.4:
@@ -6243,6 +6184,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
@@ -6252,6 +6194,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
@@ -6261,6 +6204,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
@@ -6270,6 +6214,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
@@ -7024,6 +6969,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: true
     optional: true
@@ -7033,6 +6979,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: true
     optional: true
@@ -7042,6 +6989,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     optional: true
 
@@ -7050,6 +6998,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: true
     optional: true
@@ -7059,6 +7008,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: true
     optional: true
@@ -7068,6 +7018,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     optional: true
 
@@ -7076,6 +7027,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: true
     optional: true
@@ -7085,6 +7037,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: true
     optional: true
@@ -7094,6 +7047,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     optional: true
 
@@ -7102,6 +7056,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: true
     optional: true
@@ -7111,6 +7066,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: true
     optional: true
@@ -7120,6 +7076,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     optional: true
 
@@ -7331,6 +7288,10 @@ packages:
     resolution: {integrity: sha512-yOlFc+7UtL/89t2ZhjPvvB/DeAr3r+Dq58IgzsFkOAvVC6NMJXmCGjbptdXdR9qsX7pKcTL+s87FtYREi2dEEQ==}
     dev: true
 
+  /@types/accept-language-parser/1.5.3:
+    resolution: {integrity: sha512-S8oM29O6nnRC3/+rwYV7GBYIIgNIZ52PCxqBG7OuItq9oATnYWy8FfeLKwvq5F7pIYjeeBSCI7y+l+Z9UEQpVQ==}
+    dev: true
+
   /@types/aria-query/5.0.1:
     resolution: {integrity: sha512-XTIieEY+gvJ39ChLcB4If5zHtPxt3Syj5rgZR+e1ctpmK8NjPf0zFqsz4JpLJT0xla9GFDKjy8Cpu331nrmE1Q==}
     dev: true
@@ -7399,6 +7360,10 @@ packages:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
     dependencies:
       '@types/node': 18.14.6
+
+  /@types/cookie/0.3.3:
+    resolution: {integrity: sha512-LKVP3cgXBT9RYj+t+9FDKwS5tdI+rPBXaNSkma7hvqy35lc7mAokC2zsqWJH0LaqIt3B962nuYI77hsJoT1gow==}
+    dev: false
 
   /@types/cross-spawn/6.0.2:
     resolution: {integrity: sha512-KuwNhp3eza+Rhu8IFI5HUXRP0LIhqH5cAjubUvGXXthh4YYBuP2ntwEX+Cz8GJoZUHlKo247wPWOfA9LYEq4cw==}
@@ -7504,7 +7469,7 @@ packages:
   /@types/hoist-non-react-statics/3.3.1:
     resolution: {integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==}
     dependencies:
-      '@types/react': 18.0.28
+      '@types/react': 18.0.33
       hoist-non-react-statics: 3.3.2
     dev: false
 
@@ -7677,7 +7642,7 @@ packages:
     resolution: {integrity: sha512-bAGh4e+w5D8dajd6InASVIyCo4pZLJ66oLb80F9OBLO1gKESbZcRCJpTT6uLXX+HAB57zw1WTdwJdAsewuTweg==}
     dependencies:
       '@types/hoist-non-react-statics': 3.3.1
-      '@types/react': 18.0.28
+      '@types/react': 18.0.33
       hoist-non-react-statics: 3.3.2
       redux: 4.2.1
     dev: false
@@ -7686,21 +7651,21 @@ packages:
     resolution: {integrity: sha512-db1mx37a1EJDf1XeX8jJN7R3PZABmJQXR8r28yUjVMFSjkmnQo6X6pOEEmNl+Tp2gYQOGPdYbFIipBtdElZ3Yg==}
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 18.0.28
+      '@types/react': 18.0.33
       '@types/react-router': 5.1.20
 
   /@types/react-router-dom/5.3.3:
     resolution: {integrity: sha512-kpqnYK4wcdm5UaWI3fLcELopqLrHgLqNsdpHauzlQktfkHL3npOSwtj1Uz9oKBAzs7lFtVkV8j83voAz2D8fhw==}
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 18.0.28
+      '@types/react': 18.0.33
       '@types/react-router': 5.1.20
 
   /@types/react-router/5.1.20:
     resolution: {integrity: sha512-jGjmu/ZqS7FjSH6owMcD5qpq19+1RS9DeVRqfl1FeBMxTDQAGwlMWOcs52NDoXaNKyG3d1cYQFMs9rCrb88o9Q==}
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 18.0.28
+      '@types/react': 18.0.33
 
   /@types/react/17.0.53:
     resolution: {integrity: sha512-1yIpQR2zdYu1Z/dc1OxC+MA6GR240u3gcnP4l6mvj/PJiVaqHsQPmWttsvHsfnhfPbU2FuGmo0wSITPygjBmsw==}
@@ -7711,6 +7676,13 @@ packages:
 
   /@types/react/18.0.28:
     resolution: {integrity: sha512-RD0ivG1kEztNBdoAK7lekI9M+azSnitIn85h4iOiaLjaTrMjzslhaqCGaI4IyCJ1RljWiLCEu4jyrLLgqxBTew==}
+    dependencies:
+      '@types/prop-types': 15.7.5
+      '@types/scheduler': 0.16.2
+      csstype: 3.1.1
+
+  /@types/react/18.0.33:
+    resolution: {integrity: sha512-sHxzVxeanvQyQ1lr8NSHaj0kDzcNiGpILEVt69g9S31/7PfMvNCKLKcsHw4lYKjs3cGNJjXSP4mYzX43QlnjNA==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
@@ -8120,6 +8092,10 @@ packages:
   /abab/2.0.6:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
     dev: true
+
+  /accept-language-parser/1.5.0:
+    resolution: {integrity: sha512-QhyTbMLYo0BBGg1aWbeMG4ekWtds/31BrEU+DONOg/7ax23vxpL03Pb7/zBmha2v7vdD3AyzZVWBVGEZxKOXWw==}
+    dev: false
 
   /accepts/1.3.8:
     resolution: {integrity: sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==}
@@ -9841,6 +9817,11 @@ packages:
 
   /cookie-signature/1.0.6:
     resolution: {integrity: sha512-QADzlaHc8icV8I7vbaJXJwod9HWYp8uCqf1xa4OfNu1T7JVxQIrUgOWtHdNDtPiywmFbiS12VjotIXLrKM3orQ==}
+
+  /cookie/0.4.2:
+    resolution: {integrity: sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA==}
+    engines: {node: '>= 0.6'}
+    dev: false
 
   /cookie/0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
@@ -18981,6 +18962,7 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-router: 6.8.2_react@18.2.0
+    dev: false
 
   /react-router/5.3.4_react@17.0.2:
     resolution: {integrity: sha512-Ys9K+ppnJah3QuaRiLxk+jDWOR1MekYQrlytiXxC1RyfbdsZkS5pvKAzCCr031xHixZwpnsYNT5xysdFHQaYsA==}
@@ -21327,6 +21309,13 @@ packages:
       '@types/unist': 2.0.6
       unist-util-is: 4.1.0
       unist-util-visit-parents: 3.1.1
+
+  /universal-cookie/4.0.4:
+    resolution: {integrity: sha512-lbRVHoOMtItjWbM7TwDLdl8wug7izB0tq3/YVKhT/ahB4VDvWMyvnADfnJI8y6fSvsjh51Ix7lTGC6Tn4rMPhw==}
+    dependencies:
+      '@types/cookie': 0.3.3
+      cookie: 0.4.2
+    dev: false
 
   /universal-env/3.3.3:
     resolution: {integrity: sha512-4ZyITvWhtcurCEA66Cb7jcd4zpEiAAo91wSwbEscbiu033pIsC2yjgT8LYyasFgsst6jZHD1gtVoSyYcL8oH1Q==}

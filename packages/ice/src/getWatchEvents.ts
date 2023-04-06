@@ -2,7 +2,7 @@ import * as path from 'path';
 import type { Context } from 'build-scripts';
 import type { Config } from '@ice/webpack-config/types';
 import type { WatchEvent } from './types/plugin.js';
-import { generateRoutesInfo, getRoutesDefination } from './routes.js';
+import { generateRoutesInfo, getRoutesDefinition } from './routes.js';
 import type Generator from './service/runtimeGenerator';
 import getGlobalStyleGlobPattern from './utils/getGlobalStyleGlobPattern.js';
 import renderExportsTemplate from './utils/renderExportsTemplate.js';
@@ -30,7 +30,7 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
     async (eventName: string) => {
       if (eventName === 'add' || eventName === 'unlink' || eventName === 'change') {
         const routesRenderData = await generateRoutesInfo(rootDir, routesConfig);
-        const { routeImports, routeDefination } = getRoutesDefination(routesRenderData.routes, lazyRoutes);
+        const { routeImports, routeDefinition } = getRoutesDefinition(routesRenderData.routes, lazyRoutes);
         const stringifiedData = JSON.stringify(routesRenderData);
         if (cache.get('routes') !== stringifiedData) {
           cache.set('routes', stringifiedData);
@@ -40,7 +40,7 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
             generator.renderFile(
               path.join(templateDir, 'routes.ts.ejs'),
               path.join(rootDir, targetDir, 'routes.ts'),
-              { routeImports, routeDefination },
+              { routeImports, routeDefinition },
             );
             // Keep generate route manifest for avoid breaking change.
             generator.renderFile(

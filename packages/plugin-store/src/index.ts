@@ -28,6 +28,7 @@ const plugin: Plugin<Options> = (options) => ({
       generator.addRuntimeOptions({
         source: '@/store',
         specifier: 'appStore',
+        key: 'declarationData',
       });
     }
 
@@ -41,6 +42,7 @@ const plugin: Plugin<Options> = (options) => ({
           generator.addRuntimeOptions({
             source: '@/store',
             specifier: 'appStore',
+            key: 'declarationData',
           });
         }
         if (['add', 'unlink'].includes(event)) {

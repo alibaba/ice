@@ -1,15 +1,19 @@
 import * as path from 'path';
 import { formatNestedRouteManifest, generateRouteManifest } from '@ice/route-manifest';
-import type { NestedRouteManifest } from '@ice/route-manifest';
+import type { NestedRouteManifest, DefineExtraRoutes } from '@ice/route-manifest';
 import type { UserConfig } from './types/userConfig.js';
 import { getFileExports } from './service/analyze.js';
 import formatPath from './utils/formatPath.js';
 
-export async function generateRoutesInfo(rootDir: string, routesConfig: UserConfig['routes'] = {}) {
+export async function generateRoutesInfo(
+  rootDir: string,
+  routesConfig: UserConfig['routes'] = {},
+  defineRoutesFuncs: DefineExtraRoutes[] = [],
+) {
   const routeManifest = generateRouteManifest(
     rootDir,
     routesConfig.ignoreFiles,
-    routesConfig.defineRoutes,
+    [routesConfig.defineRoutes, ...defineRoutesFuncs],
     routesConfig.config,
   );
 
@@ -51,9 +55,9 @@ export default {
   };
 }
 
-export function getRoutesDefination(nestRouteManifest: NestedRouteManifest[], lazy = false, depth = 0) {
+export function getRoutesDefinition(nestRouteManifest: NestedRouteManifest[], lazy = false, depth = 0) {
   const routeImports: string[] = [];
-  const routeDefination = nestRouteManifest.reduce((prev, route, currentIndex) => {
+  const routeDefinition = nestRouteManifest.reduce((prev, route, currentIndex) => {
     const { children, path: routePath, index, componentName, file, id, layout, exports } = route;
 
     const componentPath = id.startsWith('__') ? file : `@/pages/${file}`.replace(new RegExp(`${path.extname(file)}$`), '');
@@ -80,9 +84,9 @@ export function getRoutesDefination(nestRouteManifest: NestedRouteManifest[], la
       routeProperties.push('layout: true,');
     }
     if (children) {
-      const res = getRoutesDefination(children, lazy, depth + 1);
+      const res = getRoutesDefinition(children, lazy, depth + 1);
       routeImports.push(...res.routeImports);
-      routeProperties.push(`children: [${res.routeDefination}]`);
+      routeProperties.push(`children: [${res.routeDefinition}]`);
     }
     prev += formatRoutesStr(depth, routeProperties);
     return prev;
@@ -90,7 +94,7 @@ export function getRoutesDefination(nestRouteManifest: NestedRouteManifest[], la
 
   return {
     routeImports,
-    routeDefination,
+    routeDefinition: routeDefinition,
   };
 }
 

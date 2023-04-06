@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import type { ComponentType } from 'react';
+import { routerHistory as history } from './history.js';
 import type {
   Renderer,
   AppContext,
@@ -69,6 +70,7 @@ class Runtime {
       useData,
       useConfig,
       useAppContext,
+      history,
     };
 
     const runtimeModule = ((module as CommonJsRuntime).default || module) as RuntimePlugin;

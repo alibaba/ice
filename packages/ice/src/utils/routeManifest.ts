@@ -1,11 +1,13 @@
-import type { NestedRouteManifest } from '@ice/route-manifest';
+import type { NestedRouteManifest, DefineExtraRoutes } from '@ice/route-manifest';
 import getRoutePath, { getRoutesFile } from './getRoutePaths.js';
 
 export default class RouteManifest {
   private routeManifest: NestedRouteManifest[];
+  private defineRoutesFuncs: DefineExtraRoutes[];
 
   constructor() {
     this.routeManifest = null;
+    this.defineRoutesFuncs = [];
   }
 
   getNestedRoute() {
@@ -25,5 +27,13 @@ export default class RouteManifest {
 
   getRoutesFile() {
     return getRoutesFile(this.getNestedRoute());
+  }
+
+  public addDefineRoutesFunc(defineRoutes: DefineExtraRoutes) {
+    this.defineRoutesFuncs.push(defineRoutes);
+  }
+
+  public getDefineRoutesFuncs() {
+    return this.defineRoutesFuncs;
   }
 }

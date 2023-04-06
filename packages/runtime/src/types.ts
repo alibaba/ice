@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'http';
-import type { Action, InitialEntry, Location } from 'history';
+import type { Action, InitialEntry, Location, History } from 'history';
 import type { ComponentType, ReactNode, PropsWithChildren } from 'react';
 import type { HydrationOptions, Root } from 'react-dom/client';
 import type { Navigator, Params, RouteObject } from 'react-router-dom';
@@ -183,6 +183,7 @@ export interface RuntimeAPI {
   useData: UseData;
   useConfig: UseConfig;
   useAppContext: UseAppContext;
+  history: History;
 }
 
 export interface StaticRuntimeAPI {

@@ -3,13 +3,22 @@ import fs from 'fs';
 import path from 'path';
 import minimatch from 'minimatch';
 import { createComponentName, createRouteId, defineRoutes, normalizeSlashes } from './routes.js';
-import type { RouteManifest, DefineRouteFunction, NestedRouteManifest, ConfigRoute } from './routes.js';
+import type {
+  RouteManifest,
+  DefineRouteFunction,
+  NestedRouteManifest,
+  ConfigRoute,
+  DefineRoutesOptions,
+  DefineExtraRoutes,
+} from './routes.js';
 
 export type {
   RouteManifest,
   NestedRouteManifest,
   DefineRouteFunction,
   ConfigRoute,
+  DefineExtraRoutes,
+  DefineRoutesOptions,
 };
 
 export interface RouteItem {
@@ -38,7 +47,7 @@ export function isRouteModuleFile(filename: string): boolean {
 export function generateRouteManifest(
   rootDir: string,
   ignoreFiles: string[] = [],
-  defineExtraRoutes?: (defineRoute: DefineRouteFunction) => void,
+  defineExtraRoutesQueue?: DefineExtraRoutes[],
   routeConfig?: RouteItem[],
 ) {
   const srcDir = path.join(rootDir, 'src');
@@ -47,6 +56,10 @@ export function generateRouteManifest(
   if (fs.existsSync(path.resolve(srcDir, 'pages'))) {
     const conventionalRoutes = defineConventionalRoutes(
       rootDir,
+      {
+        routeManifest,
+        nestedRouteManifest: formatNestedRouteManifest(routeManifest),
+      },
       ignoreFiles,
     );
 
@@ -59,15 +72,25 @@ export function generateRouteManifest(
     }
   }
   // 3. add extra routes from user config
-  if (defineExtraRoutes) {
-    const extraRoutes = defineRoutes(defineExtraRoutes);
-    for (const key of Object.keys(extraRoutes)) {
-      const route = extraRoutes[key];
-      routeManifest[route.id] = {
-        ...route,
-        parentId: route.parentId || undefined,
-      };
-    }
+  if (Array.isArray(defineExtraRoutesQueue)) {
+    defineExtraRoutesQueue.forEach((defineExtraRoutes) => {
+      if (defineExtraRoutes) {
+        const extraRoutes = defineRoutes(
+          defineExtraRoutes,
+          {
+            routeManifest,
+            nestedRouteManifest: formatNestedRouteManifest(routeManifest),
+          },
+        );
+        for (const key of Object.keys(extraRoutes)) {
+          const route = extraRoutes[key];
+          routeManifest[route.id] = {
+            ...route,
+            parentId: route.parentId || undefined,
+          };
+        }
+      }
+    });
   }
 
   // Add routes by routes config.
@@ -128,6 +151,7 @@ export function formatNestedRouteManifest(routeManifest: RouteManifest, parentId
 
 function defineConventionalRoutes(
   rootDir: string,
+  options: DefineRoutesOptions,
   ignoredFilePatterns?: string[],
 ): RouteManifest {
   const files: { [routeId: string]: string } = {};
@@ -157,6 +181,7 @@ function defineConventionalRoutes(
   // 2. recurse through all routes using the public defineRoutes() API
   function defineNestedRoutes(
     defineRoute: DefineRouteFunction,
+    options: DefineRoutesOptions,
     parentId?: string,
   ): void {
     const childRouteIds = routeIds.filter((id) => {
@@ -206,13 +231,13 @@ function defineConventionalRoutes(
         });
       } else {
         defineRoute(routePath, files[routeId], () => {
-          defineNestedRoutes(defineRoute, routeId);
+          defineNestedRoutes(defineRoute, options, routeId);
         });
       }
     }
   }
 
-  return defineRoutes(defineNestedRoutes);
+  return defineRoutes(defineNestedRoutes, options);
 }
 
 const escapeStart = '[';

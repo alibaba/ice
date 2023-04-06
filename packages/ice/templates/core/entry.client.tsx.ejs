@@ -16,7 +16,7 @@ const getRouterBasename = () => {
 // Otherwise chunk of route component will pack @ice/jsx-runtime and depend on framework bundle.
 const App = <></>;
 
-const render = (customOptions = {}) => {
+const render = (customOptions: Record<string, any> = {}) => {
   const appProps = {
     app,
     runtimeModules: {
@@ -29,12 +29,17 @@ const render = (customOptions = {}) => {
     memoryRouter: <%- memoryRouter || false %>,
     <% if(dataLoaderImport.imports) {-%>dataLoaderFetcher,<% } -%>
     ...customOptions,
-    <% if (runtimeOptions.exports) { -%>
     runtimeOptions: {
+    <% if (runtimeOptions.exports) { -%>
       <%- runtimeOptions.exports %>
-      ...(customOptions.runtimeOptions || {}),
-    },
     <% } -%>
+    <% if (runtimeOptions.raw) { _%>
+      <%- runtimeOptions.raw %>
+    <% } _%>
+      ...customOptions.runtimeOptions,
+    
+    },
+
   };
   return runClientApp(appProps);
 };

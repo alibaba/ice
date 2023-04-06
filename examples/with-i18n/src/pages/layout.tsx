@@ -1,10 +1,10 @@
-import { Outlet } from 'ice';
-import { useState } from 'react';
-import { IntlProvider } from 'react-intl';
+import { Outlet, useLocale } from 'ice';
+import { IntlProvider as ReactIntlProvider } from 'react-intl';
 import { messages } from '@/locales';
 
 export default function Layout() {
-  const [locale, setLocale] = useState<string>('en');
+  const { locale, setLocale } = useLocale();
+  console.log('locale====>', locale);
   return (
     <main>
       <label>
@@ -15,14 +15,13 @@ export default function Layout() {
           value={locale}
           onChange={e => setLocale(e.target.value)}
         >
-          <option value="en">English</option>
-          <option value="zh-cn">中文</option>
+          <option value="en-US">English</option>
+          <option value="zh-CN">中文</option>
         </select>
       </label>
-      <IntlProvider locale={locale} messages={messages[locale]}>
+      <ReactIntlProvider locale={locale} messages={messages[locale]}>
         <Outlet />
-      </IntlProvider>
+      </ReactIntlProvider>
     </main>
   );
 }
-

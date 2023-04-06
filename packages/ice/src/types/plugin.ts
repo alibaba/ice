@@ -2,7 +2,7 @@ import type webpack from '@ice/bundles/compiled/webpack';
 import type { _Plugin, CommandArgs, TaskConfig } from 'build-scripts';
 import type { Configuration, Stats, WebpackOptionsNormalized } from '@ice/bundles/compiled/webpack';
 import type { esbuild } from '@ice/bundles';
-import type { NestedRouteManifest } from '@ice/route-manifest';
+import type { DefineExtraRoutes, NestedRouteManifest } from '@ice/route-manifest';
 import type { Config } from '@ice/webpack-config/types';
 import type { AppConfig, AssetsManifest } from '@ice/runtime/types';
 import type ServerCompileTask from '../utils/ServerCompileTask.js';
@@ -17,6 +17,12 @@ type AddEntryCode = (callback: (code: string) => string) => void;
 type RemoveExport = (removeSource: string | string[]) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
 type GetExportList = (key: string, target?: string) => (DeclarationData | TargetDeclarationData)[];
+
+export type NormalRuntimeOptions = {
+  key: 'normal';
+  [k: string]: any;
+};
+export type DeclarationRuntimeOptions = (Omit<DeclarationData, 'declarationType'> & { key: 'declarationData' });
 
 type ServerCompilerBuildOptions = Pick<
   esbuild.BuildOptions,
@@ -134,7 +140,7 @@ export interface ExtendsPluginAPI {
     addExport: AddExport;
     addTargetExport: AddTargetExport;
     addExportTypes: AddExport;
-    addRuntimeOptions: AddExport;
+    addRuntimeOptions: (exportData: { key: 'normal';[k: string]: any } | DeclarationData & { key: 'declarationData' }) => void;
     removeRuntimeOptions: RemoveExport;
     addRouteTypes: AddExport;
     addRenderFile: AddRenderFile;
@@ -158,6 +164,7 @@ export interface ExtendsPluginAPI {
   getRouteManifest: () => Routes;
   getFlattenRoutes: () => string[];
   getRoutesFile: () => string[];
+  addDefineRoutesFunc: (defineRoutes: DefineExtraRoutes) => void;
   dataCache: Map<string, string>;
   createLogger: CreateLogger;
 }

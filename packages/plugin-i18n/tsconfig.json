@@ -1,16 +1,8 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "ESNext",
-    "moduleResolution": "node",
-    "lib": ["ESNext", "DOM"],
-    "sourceMap": true,
-    "allowJs": true,
-    "noUnusedLocals": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
-    "skipLibCheck": true
+    "baseUrl": "./",
+    "rootDir": "src",
   },
   "include": ["src", "typings.d.ts"]
 }
