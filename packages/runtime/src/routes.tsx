@@ -1,4 +1,5 @@
 import React from 'react';
+import { defer } from 'react-router-dom';
 import type { RouteItem, RouteModules, RenderMode, DataLoaderConfig, RequestContext, ComponentModule } from './types.js';
 import RouteWrapper from './RouteWrapper.js';
 import { useAppContext } from './AppContext.js';
@@ -94,26 +95,63 @@ export interface RouteLoaderOptions {
   renderMode: RenderMode;
 }
 
-export function createRouteLoader(options: RouteLoaderOptions): () => Promise<LoaderData> {
-  return async () => {
-    const { dataLoader, pageConfig, staticDataLoader, serverDataLoader } = options.module;
-    const { requestContext, renderMode, routeId } = options;
+export function createRouteLoader(options: RouteLoaderOptions): () => any {
+  const { dataLoader, pageConfig, staticDataLoader, serverDataLoader } = options.module;
+  const { requestContext, renderMode, routeId } = options;
+
+  let loaderConfig: any;
+  if (renderMode === 'SSG') {
+    loaderConfig = staticDataLoader;
+  } else if (renderMode === 'SSR') {
+    loaderConfig = serverDataLoader || dataLoader;
+  } else {
+    loaderConfig = dataLoader;
+  }
+
+  const getData = () => {
     const hasGlobalLoader = typeof window !== 'undefined' && (window as any).__ICE_DATA_LOADER__;
     const globalLoader = hasGlobalLoader ? (window as any).__ICE_DATA_LOADER__ : null;
     let routeData: any;
     if (globalLoader) {
-      routeData = await globalLoader.getData(routeId, { renderMode });
+      routeData = globalLoader.getData(routeId, { renderMode });
     } else {
-      let loader: DataLoaderConfig;
-      if (renderMode === 'SSG') {
-        loader = staticDataLoader;
-      } else if (renderMode === 'SSR') {
-        loader = serverDataLoader || dataLoader;
-      } else {
-        loader = dataLoader;
-      }
-      routeData = loader && await callDataLoader(loader, requestContext);
+      routeData = loaderConfig && callDataLoader(loaderConfig[0], requestContext);
     }
+    return routeData;
+  };
+
+  if (loaderConfig?.[1]?.defer) {
+    return async () => {
+      const promise = getData();
+
+      return defer({
+        data: promise,
+        routeConfig: pageConfig ? pageConfig({}) : {},
+      });
+    };
+  }
+
+  return async () => {
+    let routeData;
+    const promise = getData();
+
+    try {
+      if (Array.isArray(promise)) {
+        routeData = await Promise.all(promise);
+      } else if (promise instanceof Promise) {
+        routeData = await promise;
+      } else {
+        routeData = promise;
+      }
+    } catch (error) {
+      console.error('DataLoader: getData error.\n', error);
+
+      routeData = {
+        message: 'DataLoader: getData error.',
+        error,
+      };
+    }
+
     const routeConfig = pageConfig ? pageConfig({ data: routeData }) : {};
     const loaderData = { data: routeData, pageConfig: routeConfig };
     // CSR and load next route data.

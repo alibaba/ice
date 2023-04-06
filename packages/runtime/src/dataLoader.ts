@@ -7,7 +7,6 @@ interface Loaders {
 
 interface CachedResult {
   value: any;
-  status: string;
 }
 
 interface LoaderOptions {
@@ -16,20 +15,26 @@ interface LoaderOptions {
   appExport: AppExport;
 }
 
+interface DefineOptions {
+  defer?: boolean;
+}
+
+type DefineResult = [DataLoaderConfig, DefineOptions?];
+
 export interface LoadRoutesDataOptions {
   renderMode: RenderMode;
 }
 
-export function defineDataLoader(dataLoaderConfig: DataLoaderConfig): DataLoaderConfig {
-  return dataLoaderConfig;
+export function defineDataLoader(dataLoaderConfig: DataLoaderConfig, options?: DefineOptions): DefineResult {
+  return [dataLoaderConfig, options];
 }
 
-export function defineServerDataLoader(dataLoaderConfig: DataLoaderConfig): DataLoaderConfig {
-  return dataLoaderConfig;
+export function defineServerDataLoader(dataLoaderConfig: DataLoaderConfig, options?: DefineOptions): DefineResult {
+  return [dataLoaderConfig, options];
 }
 
-export function defineStaticDataLoader(dataLoaderConfig: DataLoaderConfig): DataLoaderConfig {
-  return dataLoaderConfig;
+export function defineStaticDataLoader(dataLoaderConfig: DataLoaderConfig): DefineResult {
+  return [dataLoaderConfig];
 }
 
 /**
@@ -129,7 +134,8 @@ export function callDataLoader(dataLoader: DataLoaderConfig, requestContext: Req
     const loaders = dataLoader.map(loader => {
       return typeof loader === 'object' ? loadDataByCustomFetcher(loader) : loader(requestContext);
     });
-    return Promise.all(loaders);
+
+    return loaders;
   }
 
   if (typeof dataLoader === 'object') {
@@ -156,7 +162,6 @@ function loadInitialDataInClient(loaders: Loaders) {
     if (dataFromSSR) {
       cache.set(renderMode === 'SSG' ? `${id}_ssg` : id, {
         value: dataFromSSR,
-        status: 'RESOLVED',
       });
 
       if (renderMode === 'SSR') {
@@ -164,15 +169,14 @@ function loadInitialDataInClient(loaders: Loaders) {
       }
     }
 
-    const dataLoader = loaders[id];
+    const dataLoaderConfig = loaders[id];
 
-    if (dataLoader) {
+    if (dataLoaderConfig) {
       const requestContext = getRequestContext(window.location);
-      const loader = callDataLoader(dataLoader, requestContext);
+      const loader = callDataLoader(dataLoaderConfig[0], requestContext);
 
       cache.set(id, {
         value: loader,
-        status: 'LOADING',
       });
     }
   });
@@ -214,38 +218,20 @@ async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
   }
 
   (window as any).__ICE_DATA_LOADER__ = {
-    getData: async (id, options: LoadRoutesDataOptions) => {
+    getData: (id, options: LoadRoutesDataOptions) => {
       let result;
 
-      // first render for ssg use data from build time.
-      // second render for ssg will use data from data loader.
+      // First render for ssg use data from build time, second render for ssg will use data from data loader.
       const cacheKey = `${id}${options?.renderMode === 'SSG' ? '_ssg' : ''}`;
+
+      // In CSR, all dataLoader is called by global data loader to avoid bundle dataLoader in page bundle duplicate.
       result = cache.get(cacheKey);
       // Always fetch new data after cache is been used.
       cache.delete(cacheKey);
 
       // Already send data request.
       if (result) {
-        const { status, value } = result;
-
-        if (status === 'RESOLVED') {
-          return result;
-        }
-
-        try {
-          if (Array.isArray(value)) {
-            return await Promise.all(value);
-          }
-
-          return await value;
-        } catch (error) {
-          console.error('DataLoader: getData error.\n', error);
-
-          return {
-            message: 'DataLoader: getData error.',
-            error,
-          };
-        }
+        return result.value;
       }
 
       const dataLoader = dataloaderConfig[id];
@@ -256,9 +242,8 @@ async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
       }
 
       // Call dataLoader.
-      // In CSR, all dataLoader is called by global data loader to avoid bundle dataLoader in page bundle duplicate.
       const requestContext = getRequestContext(window.location);
-      return await callDataLoader(dataLoader, requestContext);
+      return callDataLoader(dataLoader[0], requestContext);
     },
   };
 }
