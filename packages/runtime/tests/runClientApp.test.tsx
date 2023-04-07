@@ -5,18 +5,28 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { expect, it, vi, describe, beforeEach, afterEach } from 'vitest';
+import { fetch, Request, Response } from '@remix-run/web-fetch';
 import runClientApp from '../src/runClientApp';
 import { useAppData } from '../src/AppContext';
 
 describe('run client app', () => {
   let windowSpy;
   let documentSpy;
+  if (!globalThis.fetch) {
+    // @ts-expect-error
+    globalThis.fetch = fetch;
+    // @ts-expect-error
+    globalThis.Request = Request;
+    // @ts-expect-error
+    globalThis.Response = Response;
+  }
   const mockData = {
     location: new URL('http://localhost:4000/'),
     history: {
       replaceState: vi.fn(),
     },
     addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
   };
   beforeEach(() => {
     process.env.ICE_CORE_ROUTER = 'true';
