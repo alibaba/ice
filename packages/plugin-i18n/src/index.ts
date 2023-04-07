@@ -61,7 +61,7 @@ const plugin: Plugin<I18nConfig> = (i18nConfig) => ({
     });
     generator.addExport({
       specifier: ['withLocale', 'useLocale'],
-      source: `${packageName}/I18nContext`,
+      source: `${packageName}/runtime`,
     });
     generator.addRuntimeOptions({
       i18nConfig,

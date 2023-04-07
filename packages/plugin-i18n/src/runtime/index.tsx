@@ -1,6 +1,6 @@
 import * as React from 'react';
 import type { RuntimePlugin } from '@ice/runtime/types';
-import { I18nProvider } from './I18nContext.js';
+import { I18nProvider, useLocale, withLocale } from './I18nContext.js';
 import modifyHistory from './modifyHistory.js';
 
 const runtime: RuntimePlugin = async ({ appContext, addProvider, history }, runtimeOptions) => {
@@ -26,3 +26,5 @@ const runtime: RuntimePlugin = async ({ appContext, addProvider, history }, runt
 };
 
 export default runtime;
+
+export { useLocale, withLocale };

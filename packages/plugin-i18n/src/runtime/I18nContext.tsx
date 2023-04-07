@@ -41,7 +41,6 @@ export const I18nProvider = ({ children, i18nConfig, pathname, basename, headers
 };
 
 export function useLocale() {
-  console.log('====>', useContext(I18nContext));
   return useContext(I18nContext);
 }
 

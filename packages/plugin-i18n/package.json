@@ -1,9 +1,10 @@
 {
   "name": "@ice/plugin-i18n",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "I18n plugin for ice.js 3.",
   "files": [
-    "es2017"
+    "es2017",
+    "!es2017/**/*.map"
   ],
   "type": "module",
   "main": "es2017/index.js",
@@ -19,11 +20,6 @@
       "types": "./es2017/runtime/index.d.ts",
       "import": "./es2017/runtime/index.js",
       "default": "./es2017/runtime/index.js"
-    },
-    "./I18nContext": {
-      "types": "./es2017/runtime/I18nContext.d.ts",
-      "import": "./es2017/runtime/I18nContext.js",
-      "default": "./es2017/runtime/I18nContext.js"
     },
     "./*": "./*"
   },
