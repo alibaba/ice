@@ -9,7 +9,6 @@ export default defineConfig(() => ({
   syntaxFeatures: {
     exportDefaultFrom: true,
   },
-  codeSplitting: false,
   server: {
     onDemand: true,
     format: 'esm',
