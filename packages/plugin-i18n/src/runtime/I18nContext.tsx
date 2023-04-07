@@ -4,12 +4,7 @@ import type { I18nConfig } from '../types.js';
 import setLocaleToCookie from '../utils/setLocaleToCookie.js';
 import detectLocale from '../utils/detectLocale.js';
 
-type ContextValue = {
-  locale: string;
-  setLocale: Dispatch<SetStateAction<string>>;
-  locales: I18nConfig['locales'];
-  defaultLocale: I18nConfig['defaultLocale'];
-};
+type ContextValue = [string, Dispatch<SetStateAction<string>>];
 
 interface I18nProvider {
   children: ReactElement;
@@ -39,25 +34,20 @@ export const I18nProvider = ({ children, i18nConfig, pathname, basename, headers
   }
 
   return (
-    <I18nContext.Provider value={{
-      locale,
-      setLocale,
-      locales: i18nConfig.locales,
-      defaultLocale: i18nConfig.defaultLocale,
-    }}
-    >
+    <I18nContext.Provider value={[locale, setLocale]}>
       {children}
     </I18nContext.Provider>
   );
 };
 
 export function useLocale() {
+  console.log('====>', useContext(I18nContext));
   return useContext(I18nContext);
 }
 
 export function withLocale<Props>(Component: React.ComponentType<Props>) {
   return (props: Props) => {
-    const { locale, setLocale } = useLocale();
+    const [locale, setLocale] = useLocale();
     return <Component {...props} locale={locale} setLocale={setLocale} />;
   };
 }

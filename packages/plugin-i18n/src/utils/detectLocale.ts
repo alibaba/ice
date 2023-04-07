@@ -20,7 +20,6 @@ export default function detectLocale({
 }: DetectLocaleParams): string {
   const { pathLocale } = normalizeLocalePath({ pathname, locales: i18nConfig.locales, basename });
   const preferredLocale = getPreferredLocale(i18nConfig.locales, headers);
-  debugger;
   const detectedLocale = (
     pathLocale ||
     getLocaleFromCookie(i18nConfig.locales, headers) ||

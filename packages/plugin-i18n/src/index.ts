@@ -1,9 +1,12 @@
+import * as path from 'path';
 import { createRequire } from 'module';
+import { fileURLToPath } from 'url';
 import consola from 'consola';
 import type { Plugin } from '@ice/app/types';
 import type { I18nConfig } from './types.js';
 
 const _require = createRequire(import.meta.url);
+const _dirname = path.dirname(fileURLToPath(import.meta.url));
 const packageJSON = _require('../package.json');
 const { name: packageName } = packageJSON;
 
@@ -44,11 +47,22 @@ const plugin: Plugin<I18nConfig> = (i18nConfig) => ({
     };
     addDefineRoutesFunc(defineRoutes);
 
+    generator.addRenderFile(
+      path.join(_dirname, 'templates/plugin-i18n.ts.ejs'),
+      'plugin-i18n.ts',
+      {
+        defaultLocale: i18nConfig.defaultLocale,
+        locales: JSON.stringify(i18nConfig.locales),
+      },
+    );
+    generator.addExport({
+      specifier: ['getDefaultLocale', 'getAllLocales'],
+      source: './plugin-i18n',
+    });
     generator.addExport({
       specifier: ['withLocale', 'useLocale'],
       source: `${packageName}/I18nContext`,
     });
-
     generator.addRuntimeOptions({
       i18nConfig,
       key: 'normal',

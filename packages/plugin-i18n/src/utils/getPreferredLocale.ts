@@ -5,7 +5,6 @@ export default function getPreferredLocale(locales: string[], headers: { [key: s
     const acceptLanguageValue = headers?.['accept-language'] as string;
     return acceptLanguagePick(locales, acceptLanguageValue);
   } else {
-    debugger;
     const acceptLanguages = window.navigator.languages || [];
     return acceptLanguages.find(acceptLanguage => locales.includes(acceptLanguage));
   }

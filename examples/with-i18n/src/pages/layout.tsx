@@ -1,10 +1,11 @@
-import { Outlet, useLocale } from 'ice';
+import { Outlet, useLocale, getAllLocales, getDefaultLocale } from 'ice';
 import { IntlProvider as ReactIntlProvider } from 'react-intl';
 import { messages } from '@/locales';
 
 export default function Layout() {
-  const { locale, setLocale } = useLocale();
-  console.log('locale====>', locale);
+  const [locale, setLocale] = useLocale();
+  console.log('allLocales: ', getAllLocales());
+  console.log('defaultLocale: ', getDefaultLocale());
   return (
     <main>
       <label>
