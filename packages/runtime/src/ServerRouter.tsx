@@ -2,11 +2,8 @@ import React from 'react';
 import { StaticRouterProvider, createStaticRouter } from 'react-router-dom/server.mjs';
 import type { RouteObject } from 'react-router-dom';
 import { RouteComponent } from './routes.js';
-import { useOnce } from './utils/useHooks.js';
 import type { AppRouterProps } from './types.js';
 import App from './App.js';
-
-let router: ReturnType<typeof createStaticRouter> = null;
 
 function createServerRoutes(routes: RouteObject[]) {
   return routes.map((route) => {
@@ -31,15 +28,15 @@ function createServerRoutes(routes: RouteObject[]) {
 
 function ServerRouter(props: AppRouterProps) {
   const { routerContext, routes } = props;
-  const router = useOnce(() => {
-    return createStaticRouter(createServerRoutes(routes), routerContext);
-  });
+  // Server router only be called once.
+  const router = createStaticRouter(createServerRoutes(routes), routerContext);
 
   return (
     <App>
       <StaticRouterProvider
         router={router}
         context={routerContext}
+        hydrate={false} // Don't set hydrate, hydation data has been injected by __window.__ICE_APP_CONTEXT__.
       />
     </App>
   );

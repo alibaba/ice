@@ -1,24 +1,39 @@
 import React, { useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { createRouter } from '@remix-run/router';
-import { useOnce } from './utils/useHooks.js';
 import type { AppRouterProps } from './types.js';
 import App from './App.js';
 import { DataContextProvider } from './single-router.js';
+import { useAppContext } from './AppContext.js';
 
+let router: ReturnType<typeof createRouter> = null;
 function ClientRouter(props: AppRouterProps) {
   const { Component, loaderData, routerContext } = props;
-  // createRouter only needs to be called once.
-  const router = useOnce(() => {
-    return process.env.ICE_CORE_ROUTER === 'true' ? createRouter(routerContext).initialize() : {};
-  });
+  const { revalidate } = useAppContext();
+
+  function clearRouter() {
+    if (router) {
+      router.dispose();
+      router = null;
+    }
+  }
+  // API createRouter only needs to be called once, and create before mount.
+  if (process.env.ICE_CORE_ROUTER === 'true') {
+    // Clear router before re-create in case of hot module replacement.
+    clearRouter();
+    router = createRouter(routerContext).initialize();
+  }
   useEffect(() => {
+    if (revalidate) {
+      // Revalidate after render for SSG while staticDataLoader and dataLoader both defined.
+      router?.revalidate();
+    }
     return () => {
       // In case of micro app, ClientRouter will be unmounted,
       // duspose router before mount again.
-      router.dispose();
+      clearRouter();
     };
-  }, []);
+  }, [revalidate]);
 
   let element: React.ReactNode;
   if (process.env.ICE_CORE_ROUTER === 'true') {

@@ -135,7 +135,7 @@ interface RenderOptions {
 
 async function render({ history, runtime, needHydrate }: RenderOptions) {
   const appContext = runtime.getAppContext();
-  const { appConfig, loaderData, routes, revalidate, basename } = appContext;
+  const { appConfig, loaderData, routes, basename } = appContext;
   const appRender = runtime.getRender();
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
   const AppRouter = runtime.getAppRouter();
@@ -171,7 +171,6 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
     history,
     hydrationData,
   };
-  let router = null;
   let singleComponent = null;
   let routeData = null;
   if (process.env.ICE_CORE_ROUTER !== 'true') {
@@ -193,12 +192,6 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
       </AppRuntimeProvider>
     </AppContextProvider>,
   );
-  if (revalidate) {
-    // Revalidate after render for SSG while staticDataLoader and dataLoader both defined.
-    setTimeout(() => {
-      router?.revalidate();
-    });
-  }
   return renderRoot;
 }
 
