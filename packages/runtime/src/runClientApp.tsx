@@ -1,6 +1,6 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { createRouter, createHashHistory, createBrowserHistory, createMemoryHistory } from '@remix-run/router';
+import { createHashHistory, createBrowserHistory, createMemoryHistory } from '@remix-run/router';
 import type { History } from '@remix-run/router';
 import type {
   AppContext, WindowContext, AppExport, RouteItem, RuntimeModules, AppConfig, AssetsManifest,
@@ -9,7 +9,7 @@ import { createHistory as createHistorySingle } from './single-router.js';
 import { setHistory } from './history.js';
 import Runtime from './runtime.js';
 import { getAppData } from './appData.js';
-import { getRoutesPath } from './routes.js';
+import { getRoutesPath, loadRouteModule } from './routes.js';
 import type { RouteLoaderOptions } from './routes.js';
 import getRequestContext from './requestContext.js';
 import getAppConfig from './appConfig.js';
@@ -17,6 +17,7 @@ import ClientRouter from './ClientRouter.js';
 import { setFetcher } from './dataLoader.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 import { AppContextProvider } from './AppContext.js';
+import matchRoutes from './matchRoutes.js';
 
 export interface RunClientAppOptions {
   app: AppExport;
@@ -134,7 +135,7 @@ interface RenderOptions {
 
 async function render({ history, runtime, needHydrate }: RenderOptions) {
   const appContext = runtime.getAppContext();
-  const { appConfig, loaderData, routes, revalidate } = appContext;
+  const { appConfig, loaderData, routes, basename } = appContext;
   const appRender = runtime.getRender();
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
   const AppRouter = runtime.getAppRouter();
@@ -148,27 +149,49 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
     console.warn(`Root node #${rootId} is not found, current root is automatically created by the framework.`);
   }
   const hydrationData = needHydrate ? { loaderData } : undefined;
+  if (needHydrate) {
+    const lazyMatches = matchRoutes(routes, history.location, basename).filter((m) => m.route.lazy);
+    if (lazyMatches?.length > 0) {
+      // Load the lazy matches and update the routes before creating your router
+      // so we can hydrate the SSR-rendered content synchronously.
+      await Promise.all(
+        lazyMatches.map(async (m) => {
+          let routeModule = await m.route.lazy();
+          Object.assign(m.route, {
+            ...routeModule,
+            lazy: undefined,
+          });
+        }),
+      );
+    }
+  }
   const routerOptions = {
+    basename,
     routes,
     history,
     hydrationData,
   };
-  // Create router before render.
-  const router = process.env.ICE_CORE_ROUTER === 'true' ? createRouter(routerOptions).initialize() : null;
-
+  let singleComponent = null;
+  let routeData = null;
+  if (process.env.ICE_CORE_ROUTER !== 'true') {
+    const { Component, loader } = await loadRouteModule(routes[0]);
+    singleComponent = Component || routes[0].Component;
+    routeData = loader && await loader();
+  }
   const renderRoot = appRender(
     root,
     <AppContextProvider value={appContext}>
       <AppRuntimeProvider>
-        <AppRouter router={router} routes={routes} location={history.location} />
+        <AppRouter
+          routerContext={routerOptions}
+          routes={routes}
+          location={history.location}
+          Component={singleComponent}
+          loaderData={routeData}
+        />
       </AppRuntimeProvider>
     </AppContextProvider>,
   );
-  if (revalidate) {
-    setTimeout(() => {
-      router?.revalidate();
-    });
-  }
   return renderRoot;
 }
 

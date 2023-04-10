@@ -27,7 +27,10 @@ function getDevPath(url: string): string {
 
 const plugin: Plugin<PluginOptions> = (options) => ({
   name: '@ice/plugin-pha',
-  setup: ({ onGetConfig, onHook, context, serverCompileTask, generator, getAllPlugin, createLogger }) => {
+  setup: ({ onGetConfig, onHook, context, excuteServerEntry, generator, getAllPlugin, createLogger }) => {
+    if (!excuteServerEntry) {
+      throw new Error('PHA plugin requires excuteServerEntry, Please upgrade @ice/app to latest version (>= 3.1.5).');
+    }
     const { template = true, preload = false } = options || {};
     const { command, rootDir } = context;
 
@@ -89,7 +92,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
       };
     });
 
-    onHook('after.build.compile', async ({ serverEntryRef }) => {
+    onHook('after.build.compile', async () => {
       await generateManifest({
         rootDir,
         outputDir,
@@ -99,9 +102,9 @@ const plugin: Plugin<PluginOptions> = (options) => ({
         getRoutesConfig,
         getDataloaderConfig,
         parseOptions: {
+          excuteServerEntry,
           publicPath,
           urlPrefix,
-          serverEntry: serverEntryRef.current,
           template,
           preload,
           routeManifest,
@@ -154,13 +157,13 @@ const plugin: Plugin<PluginOptions> = (options) => ({
           getRoutesConfig,
           getAllPlugin,
           getDataloaderConfig,
-          compileTask: () => serverCompileTask.get(),
           parseOptions: {
             publicPath,
             urlPrefix,
             template,
             preload,
             routeManifest,
+            excuteServerEntry,
           },
           logger,
         });

@@ -88,3 +88,44 @@ export default defineConfig(() => ({
   ],
 }));
 ```
+
+## 推荐配置
+
+对于样式方案为 `sass` 的开发场景，推荐通过以下方式进行配置：
+
+```ts title="ice.config.mts"
+import { defineConfig } from '@ice/app';
+import fusion from '@ice/plugin-fusion';
+
+export default defineConfig(() => ({
+  plugins: [
+    fusion({
+      importStyle: 'sass',
+      themePackage: '@alifd/theme-design-pro',
+    }),
+  ],
+}));
+```
+
+如果样式方案选择为 `css`，并且存在主题定制诉求的，推荐配合在 `src/global.css` 中 css variables：
+
+```css title="src/global.css"
+@import '@alifd/theme-design-pro/variables.css';
+
+body {}
+```
+
+```ts title="ice.config.mts"
+import { defineConfig } from '@ice/app';
+import fusion from '@ice/plugin-fusion';
+
+export default defineConfig(() => ({
+  plugins: [
+    fusion({
+      importStyle: true,
+    }),
+  ],
+}));
+```
+
+> 对于样式大小没有极致尺寸要求的，直接引入全量 css 样式即可，无需额外配置插件

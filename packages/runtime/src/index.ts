@@ -24,7 +24,7 @@ import runClientApp from './runClientApp.js';
 import type { RunClientAppOptions } from './runClientApp.js';
 import { useAppContext, useAppData, AppContextProvider } from './AppContext.js';
 import { getAppData } from './appData.js';
-import { useData, useConfig, DataProvider, ConfigProvider } from './RouteContext.js';
+import { useData, useConfig } from './RouteContext.js';
 import {
   Meta,
   Title,
@@ -50,7 +50,7 @@ import KeepAliveOutlet from './KeepAliveOutlet.js';
 import ClientOnly from './ClientOnly.js';
 import useMounted from './useMounted.js';
 import { withSuspense, useSuspenseData } from './Suspense.js';
-import { createRouteLoader, WrapRouteComponent } from './routes.js';
+import { createRouteLoader, WrapRouteComponent, RouteErrorComponent } from './routes.js';
 
 export {
   getAppConfig,
@@ -65,8 +65,6 @@ export {
   defineDataLoader,
   defineServerDataLoader,
   defineStaticDataLoader,
-  DataProvider,
-  ConfigProvider,
   useConfig,
   Meta,
   Title,
@@ -96,6 +94,7 @@ export {
 
   createRouteLoader,
   WrapRouteComponent,
+  RouteErrorComponent,
 };
 
 export type {

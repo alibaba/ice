@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0
+
+### Minor Changes
+
+- 2debc7f7: fix: appear event should not work on component
+
 ## 0.1.10
 
 - chore: bump version for npm sync error.

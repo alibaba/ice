@@ -5,7 +5,7 @@ import type { StoreConfig } from './types.js';
 
 const EXPORT_CONFIG_NAME = 'storeConfig';
 
-const runtime: RuntimePlugin = async ({ appContext, addWrapper, addProvider, useAppContext }, runtimeOptions) => {
+const runtime: RuntimePlugin = async ({ appContext, addWrapper, addProvider }, runtimeOptions) => {
   const { appExport, appData } = appContext;
   const exported = appExport[EXPORT_CONFIG_NAME];
   const storeConfig: StoreConfig = (typeof exported === 'function' ? await exported(appData) : exported) || {};
@@ -27,12 +27,10 @@ const runtime: RuntimePlugin = async ({ appContext, addWrapper, addProvider, use
   addProvider(StoreProvider);
 
   // Add page store <Provider />.
-  const StoreProviderWrapper: RouteWrapper = ({ children, routeId }) => {
-    const { routeModules } = useAppContext();
-    const routeModule = routeModules[routeId];
-    if (routeModule?.[PAGE_STORE_PROVIDER]) {
-      const Provider = routeModule[PAGE_STORE_PROVIDER];
-      const initialStates = routeModule[PAGE_STORE_INITIAL_STATES];
+  const StoreProviderWrapper: RouteWrapper = ({ routeExports, children }) => {
+    if (routeExports?.[PAGE_STORE_PROVIDER]) {
+      const Provider = routeExports[PAGE_STORE_PROVIDER];
+      const initialStates = routeExports[PAGE_STORE_INITIAL_STATES];
       if (initialStates) {
         return <Provider initialStates={initialStates}>{children}</Provider>;
       }
