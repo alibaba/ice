@@ -92,12 +92,12 @@ export function RouteErrorComponent() {
 export function Await(props) {
   return (
     <Suspense fallback={props.fallback}>
-      <Await
+      <ReactRouterAwait
         resolve={props.resolve}
         errorElement={props.errorElement}
       >
         {props.children}
-      </Await>
+      </ReactRouterAwait>
     </Suspense>
   );
 }
