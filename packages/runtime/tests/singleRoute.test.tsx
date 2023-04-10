@@ -12,7 +12,7 @@ import {
   useSearchParams,
   useLocation,
   useNavigate,
-} from '../src/single-router';
+} from '../src/singleRouter';
 
 describe('single route api', () => {
   it('useRoutes', () => {
