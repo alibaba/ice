@@ -1,5 +1,5 @@
-import React from 'react';
-import { defer, useRouteError } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { defer, useRouteError, Await as ReactRouterAwait } from 'react-router-dom';
 import type { RouteItem, RouteModules, RenderMode, DataLoaderConfig, RequestContext, ComponentModule } from './types.js';
 import RouteWrapper from './RouteWrapper.js';
 import { useAppContext } from './AppContext.js';
@@ -87,6 +87,19 @@ export function RouteErrorComponent() {
     throw error;
   }
   return <></>;
+}
+
+export function Await(props) {
+  return (
+    <Suspense fallback={props.fallback}>
+      <Await
+        resolve={props.resolve}
+        errorElement={props.errorElement}
+      >
+        {props.children}
+      </Await>
+    </Suspense>
+  );
 }
 
 /**

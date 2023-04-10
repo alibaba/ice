@@ -1,6 +1,4 @@
-import { useData, defineDataLoader } from 'ice';
-import * as React from 'react';
-import { Await } from 'react-router-dom';
+import { useData, defineDataLoader, Await } from 'ice';
 import styles from './index.module.css';
 
 export default function Home() {
@@ -9,24 +7,11 @@ export default function Home() {
   return (
     <>
       <h2 className={styles.title}>With dataLoader</h2>
-      <React.Suspense
-        fallback={<p>Loading item info...</p>}
-      >
-        <Await
-          resolve={data}
-          errorElement={
-            <p>Error loading!</p>
-          }
-        >
-          {(itemInfo) => {
-            return (
-              <p>
-                Item id is {itemInfo.id}
-              </p>
-            );
-}}
-        </Await>
-      </React.Suspense>
+      <Await resolve={data} fallback={<p>Loading item info...</p>} errorElement={<p>Error loading!</p>}>
+        {(itemInfo) => {
+          return <p>Item id is {itemInfo.id}</p>;
+        }}
+      </Await>
     </>
   );
 }

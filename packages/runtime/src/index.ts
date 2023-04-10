@@ -50,7 +50,7 @@ import KeepAliveOutlet from './KeepAliveOutlet.js';
 import ClientOnly from './ClientOnly.js';
 import useMounted from './useMounted.js';
 import { withSuspense, useSuspenseData } from './Suspense.js';
-import { createRouteLoader, WrapRouteComponent, RouteErrorComponent } from './routes.js';
+import { createRouteLoader, WrapRouteComponent, RouteErrorComponent, Await } from './routes.js';
 
 export {
   getAppConfig,
@@ -91,6 +91,8 @@ export {
 
   withSuspense,
   useSuspenseData,
+
+  Await,
 
   createRouteLoader,
   WrapRouteComponent,
