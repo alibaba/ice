@@ -281,6 +281,185 @@ describe('parse manifest', async () => {
     expect(manifest?.app_worker?.url).toBe('https://cdn-path.com/pha-worker.js');
   });
 
+  it('should work with enable pull refresh', async () => {
+    const phaManifest = {
+      appWorker: {
+        url: 'pha-worker.js',
+      },
+      pullRefresh: {
+        reload: false,
+      },
+      routes: [
+        {
+          path: '/',
+          name: 'home',
+        },
+        {
+          path: '/about',
+          name: 'about',
+        },
+        {
+          path: '/',
+          name: 'frames',
+          frames: [
+            {
+              name: 'frame1',
+              url: 'https://m.taobao.com',
+            },
+            {
+              name: 'frame2',
+              url: 'https://m.taobao.com',
+            },
+          ],
+        },
+      ],
+    };
+    const manifest = await parseManifest(phaManifest, options);
+    expect(manifest?.pages![0].enable_pull_refresh).toBe(true);
+    expect(manifest?.pages![1].enable_pull_refresh).toBe(true);
+    expect(manifest?.pages![2].enable_pull_refresh).toBe(true);
+  });
+
+  it('should work with enable pull refresh', async () => {
+    const phaManifest = {
+      appWorker: {
+        url: 'pha-worker.js',
+      },
+      pullRefresh: {
+        reload: true,
+      },
+      routes: [
+        {
+          path: '/',
+          name: 'home',
+          pullRefresh: {
+            reload: true,
+          },
+        },
+        {
+          path: '/about',
+          name: 'about',
+
+        },
+        {
+          path: '/',
+          name: 'frames',
+          frames: [
+            {
+              name: 'frame1',
+              url: 'https://m.taobao.com',
+              pullRefresh: {
+                reload: true,
+              },
+            },
+            {
+              name: 'frame2',
+              url: 'https://m.taobao.com',
+              pullRefresh: {
+                reload: true,
+              },
+            },
+          ],
+        },
+      ],
+    };
+    const manifest = await parseManifest(phaManifest, options);
+    expect(manifest?.pages![0].pull_refresh).toBe(true);
+    expect(manifest?.pages![1].pull_refresh).toBe(true);
+    expect(manifest?.pages![2].frames![0].pull_refresh).toBe(true);
+    expect(manifest?.pages![2].frames![1].pull_refresh).toBe(true);
+  });
+
+  it('pull refresh of manifest should be default value of page', async () => {
+    const phaManifest = {
+      appWorker: {
+        url: 'pha-worker.js',
+      },
+      pullRefresh: {
+        reload: true,
+      },
+      routes: [
+        {
+          path: '/',
+          name: 'home',
+        },
+        {
+          path: '/about',
+          name: 'about',
+        },
+      ],
+    };
+    const manifest = await parseManifest(phaManifest, options);
+    expect(manifest?.pages![0].pull_refresh).toBe(true);
+    expect(manifest?.pages![1].pull_refresh).toBe(true);
+  });
+
+  it('enable pull refresh of manifest should be default value of page', async () => {
+    const phaManifest = {
+      appWorker: {
+        url: 'pha-worker.js',
+      },
+      pullRefresh: true,
+      routes: [
+        {
+          path: '/',
+          name: 'home',
+        },
+        {
+          path: '/about',
+          name: 'about',
+        },
+      ],
+    };
+    const manifest = await parseManifest(phaManifest, options);
+    expect(manifest?.pages![0].enable_pull_refresh).toBe(true);
+    expect(manifest?.pages![1].enable_pull_refresh).toBe(true);
+  });
+
+  it('enable pull refresh of page should cover value of page', async () => {
+    const phaManifest = {
+      appWorker: {
+        url: 'pha-worker.js',
+      },
+      pullRefresh: {
+        reload: true,
+      },
+      routes: [
+        {
+          path: '/',
+          name: 'home',
+          pullRefresh: {
+            reload: true,
+          },
+        },
+        {
+          path: '/about',
+          name: 'about',
+        },
+      ],
+    };
+    const manifest = await parseManifest(phaManifest, options);
+    expect(manifest?.pages![0].pull_refresh).toBe(true);
+    expect(manifest?.pages![1].pull_refresh).toBe(true);
+  });
+
+  it('should work with enable pull refresh', async () => {
+    const phaManifest = {
+      appWorker: {
+        url: 'pha-worker.js',
+      },
+      routes: [
+        {
+          path: '/',
+          name: 'home',
+          pullRefresh: true,
+        },
+      ],
+    };
+    const manifest = await parseManifest(phaManifest, options);
+    expect(manifest?.pages![0].enable_pull_refresh).toBe(true);
+  });
+
   it('should set document to manifest', async () => {
     const phaManifest = {
       routes: [

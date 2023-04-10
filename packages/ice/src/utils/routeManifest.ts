@@ -1,5 +1,5 @@
 import type { NestedRouteManifest } from '@ice/route-manifest';
-import getRoutePath from './getRoutePaths.js';
+import getRoutePath, { getRoutesFile } from './getRoutePaths.js';
 
 export default class RouteManifest {
   private routeManifest: NestedRouteManifest[];
@@ -21,5 +21,9 @@ export default class RouteManifest {
 
   getFlattenRoute() {
     return getRoutePath(this.getNestedRoute());
+  }
+
+  getRoutesFile() {
+    return getRoutesFile(this.getNestedRoute());
   }
 }

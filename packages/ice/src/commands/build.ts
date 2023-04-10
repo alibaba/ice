@@ -48,7 +48,8 @@ const build = async (
     userConfig,
     routeManifest,
   } = options;
-  const { applyHook, commandArgs, rootDir, extendsPluginAPI: { serverCompileTask } } = context;
+
+  const { applyHook, commandArgs, rootDir, extendsPluginAPI: { serverCompileTask, getRoutesFile } } = context;
   const { target = WEB } = commandArgs;
 
   if (appConfig?.router?.type === 'hash') {
@@ -67,6 +68,7 @@ const build = async (
       [IMPORT_META_TARGET]: JSON.stringify(target),
       [IMPORT_META_RENDERER]: JSON.stringify('client'),
     },
+    getRoutesFile,
   }));
   const outputDir = webpackConfigs[0].output.path;
 

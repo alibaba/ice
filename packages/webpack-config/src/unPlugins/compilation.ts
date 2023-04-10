@@ -23,6 +23,7 @@ interface Options {
   cacheDir?: string;
   polyfill?: Config['polyfill'];
   enableEnv?: boolean;
+  getRoutesFile?: () => string[];
 }
 
 const formatId = (id: string) => id.split(path.sep).join('/');
@@ -39,16 +40,17 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
     cacheDir,
     polyfill,
     enableEnv,
+    getRoutesFile,
   } = options;
 
-  const { removeExportExprs, compilationConfig, keepExports, getRoutePaths, nodeTransform } = swcOptions;
+  const { removeExportExprs, compilationConfig, keepExports, nodeTransform } = swcOptions;
 
   const compileRegex = compileIncludes.map((includeRule) => {
     return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);
   });
 
   function isRouteEntry(id: string) {
-    const routes = getRoutePaths();
+    const routes = getRoutesFile();
 
     const matched = routes.find(route => {
       return id.indexOf(route) > -1;

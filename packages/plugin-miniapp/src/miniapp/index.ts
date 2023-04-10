@@ -34,7 +34,6 @@ const getMiniappTask = ({
   command,
   target,
   configAPI,
-  dataCache,
   runtimeDir,
   nativeConfig,
 }): Config => {
@@ -120,18 +119,7 @@ const getMiniappTask = ({
     useDevServer: false,
     enableCopyPlugin: isPublicDirExist, // Only when public dir exists should copy-webpack-plugin be enabled
     swcOptions: {
-      removeExportExprs: ['getServerData', 'getStaticData'],
-      getRoutePaths: () => {
-        const routes = dataCache.get('routes');
-
-        const routeManifest = JSON.parse(routes)?.routeManifest || {};
-        const routeFiles = Object.keys(routeManifest).map((key) => {
-          const { file } = routeManifest[key];
-          return `src/pages/${file}`;
-        });
-
-        return routeFiles;
-      },
+      removeExportExprs: ['serverDataLoader', 'staticDataLoader'],
     },
     cssFilename: `[name]${fileType.style}`,
     cssChunkFilename: `[name]${fileType.style}`,

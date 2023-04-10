@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.0.12
+
+### Patch Changes
+
+- Updated dependencies [deda06de]
+  - @ice/bundles@0.1.8
+
+## 1.0.11
+
+### Patch Changes
+
+- 4e1d9065: refactor: reuse route paths
+- ee4141d5: fix: compile config of coreJs
+- 97f8a801: feat: disable `compress` config in dev server for streaming render
+- Updated dependencies [ee4141d5]
+  - @ice/bundles@0.1.7
+
 ## 1.0.10
 
 ### Patch Changes

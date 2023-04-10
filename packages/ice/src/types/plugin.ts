@@ -157,6 +157,7 @@ export interface ExtendsPluginAPI {
   serverCompileTask: ServerCompileTask;
   getRouteManifest: () => Routes;
   getFlattenRoutes: () => string[];
+  getRoutesFile: () => string[];
   dataCache: Map<string, string>;
   createLogger: CreateLogger;
 }

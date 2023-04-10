@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.8
+
+### Patch Changes
+
+- deda06de: fix: revert @swc/core version because of https://github.com/swc-project/swc/issues/7174
+
+## 0.1.7
+
+### Patch Changes
+
+- ee4141d5: chore: update dependencies @swc/core(1.3.19 -> 1.3.41), cacache(16.0.7 -> 17.0.4), webpack(5.75.0 -> 5.76.2), core-js(3.26 -> 3.29)
+
 ## 0.1.6
 
 ### Patch Changes
