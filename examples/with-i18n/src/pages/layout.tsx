@@ -1,26 +1,30 @@
-import { Outlet, useLocale, getAllLocales, getDefaultLocale } from 'ice';
+import { Outlet, useLocale, getAllLocales, getDefaultLocale, Link, useLocation } from 'ice';
 import { IntlProvider as ReactIntlProvider } from 'react-intl';
 import { messages } from '@/locales';
 
 export default function Layout() {
-  const [locale, setLocale] = useLocale();
-  console.log('allLocales: ', getAllLocales());
-  console.log('defaultLocale: ', getDefaultLocale());
+  const location = useLocation();
+  const [activeLocale, setLocale] = useLocale();
+
   return (
     <main>
-      <label>
-        <b>Choose language: </b>
-        <select
-          name="language-selector"
-          id="language-selector"
-          value={locale}
-          onChange={e => setLocale(e.target.value)}
-        >
-          <option value="en-US">English</option>
-          <option value="zh-CN">中文</option>
-        </select>
-      </label>
-      <ReactIntlProvider locale={locale} messages={messages[locale]}>
+      <p><b>Current locale: </b>{activeLocale}</p>
+      <p><b>Default locale: </b>{getDefaultLocale()}</p>
+      <p><b>Configured locales: </b>{JSON.stringify(getAllLocales())}</p>
+
+      <b>Choose language: </b>
+      <ul>
+        {
+          getAllLocales().map((locale: string) => {
+            return (
+              <li key={locale}>
+                <Link to={location.pathname} onClick={() => setLocale(locale)}>{locale}</Link>
+              </li>
+            );
+          })
+        }
+      </ul>
+      <ReactIntlProvider locale={activeLocale} messages={messages[activeLocale]}>
         <Outlet />
       </ReactIntlProvider>
     </main>

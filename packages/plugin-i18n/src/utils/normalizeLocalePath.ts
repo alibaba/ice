@@ -12,6 +12,7 @@ export default function normalizeLocalePath({ pathname, locales, basename }: Nor
   const subPaths = originPathname.split('/');
   let newPathname = originPathname;
   let pathLocale: string | undefined;
+
   for (const locale of locales) {
     if (subPaths[1] && subPaths[1] === locale) {
       pathLocale = locale;

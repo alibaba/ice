@@ -18,12 +18,10 @@ export default function detectLocale({
   basename,
   headers = {},
 }: DetectLocaleParams): string {
-  const { pathLocale } = normalizeLocalePath({ pathname, locales: i18nConfig.locales, basename });
-  const preferredLocale = getPreferredLocale(i18nConfig.locales, headers);
   const detectedLocale = (
-    pathLocale ||
+    normalizeLocalePath({ pathname, locales: i18nConfig.locales, basename }).pathLocale ||
     getLocaleFromCookie(i18nConfig.locales, headers) ||
-    preferredLocale ||
+    getPreferredLocale(i18nConfig.locales, headers) ||
     i18nConfig.defaultLocale
   );
 

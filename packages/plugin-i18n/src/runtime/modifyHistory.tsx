@@ -1,4 +1,5 @@
 import type { History } from 'history';
+import urlJoin from 'url-join';
 import detectLocale from '../utils/detectLocale.js';
 import getLocaleFromCookie from '../utils/getLocaleFromCookie.js';
 import normalizeLocalePath from '../utils/normalizeLocalePath.js';
@@ -31,13 +32,16 @@ export default function modifyHistory(history: History, i18nConfig: I18nConfig, 
 
   function getLocalePath(path: string | Location, basename?: string) {
     const pathname = getPathname(path);
+    // TODO: cookie blocked
     const locale = (cookieBlocked ? detectLocale({ i18nConfig, pathname }) : getLocaleFromCookie(i18nConfig.locales)) ||
       defaultLocale;
     const { pathname: newPathname } = normalizeLocalePath({ pathname, locales, basename });
-    if (locale === defaultLocale) {
-      return newPathname;
-    }
-    return `${basename === '/' ? '' : basename}/${locale}${newPathname === '/' ? '' : newPathname}`;
+
+    return urlJoin(
+      basename,
+      locale === defaultLocale ? '' : locale,
+      newPathname,
+    );
   }
 }
 

@@ -3,6 +3,7 @@ import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
 import consola from 'consola';
 import type { Plugin } from '@ice/app/types';
+import createI18nMiddleware from './middleware.js';
 import type { I18nConfig } from './types.js';
 
 const _require = createRequire(import.meta.url);
@@ -14,38 +15,54 @@ consola.withTag(packageName);
 
 const plugin: Plugin<I18nConfig> = (i18nConfig) => ({
   name: packageName,
-  setup: ({ addDefineRoutesFunc, generator }) => {
+  setup: ({ addDefineRoutesFunc, generator, onGetConfig, context: { userConfig } }) => {
     checkPluginOptions(i18nConfig);
+    i18nConfig = mergeDefaultConfig(i18nConfig);
 
-    const prefixLocales = i18nConfig.locales.filter(locale => locale !== i18nConfig.defaultLocale);
+    const prefixedLocales = i18nConfig.locales.filter(locale => locale !== i18nConfig.defaultLocale);
 
     const defineRoutes: Parameters<typeof addDefineRoutesFunc>[0] = (defineRoute, options) => {
-      function defineChildrenRoutes(children: any[], prefixLocale: string) {
+      function defineChildrenRoutes(children: any[], prefixedLocale: string) {
         children.forEach(child => {
-          const newChildRouteId = `${prefixLocale}/${child.id}`;
+          const newChildRouteId = `${prefixedLocale}/${child.id}`;
           defineRoute(
             child.path,
             child.file,
             { index: child.index, id: newChildRouteId },
             () => {
               if (child.children) {
-                defineChildrenRoutes(child.children, prefixLocale);
+                defineChildrenRoutes(child.children, prefixedLocale);
               }
             });
         });
       }
-      prefixLocales.forEach(prefixLocale => {
+      prefixedLocales.forEach(prefixedLocale => {
         options.nestedRouteManifest.forEach(route => {
-          const newRoutePath = `${prefixLocale}${route.path ? `/${route.path}` : ''}`;
-          const newRouteId = `${prefixLocale}/${route.id}`;
+          const newRoutePath = `${prefixedLocale}${route.path ? `/${route.path}` : ''}`;
+          const newRouteId = `${prefixedLocale}/${route.id}`;
 
           defineRoute(newRoutePath, route.file, { index: route.index, id: newRouteId }, () => {
-            route.children && defineChildrenRoutes(route.children, prefixLocale);
+            route.children && defineChildrenRoutes(route.children, prefixedLocale);
           });
         });
       });
     };
     addDefineRoutesFunc(defineRoutes);
+
+    if (i18nConfig.autoRedirect && (userConfig.ssr || userConfig.ssg)) {
+      onGetConfig(config => {
+        config.middlewares = (middlewares) => {
+          const newMiddlewares = [...middlewares];
+          // TODO: how to get the basename
+          const basename = '/app';
+          const i18nMiddleware = createI18nMiddleware(i18nConfig, basename);
+          const serverRenderMiddlewareIndex = newMiddlewares.findIndex((middleware) => middleware.name === 'server-render');
+          newMiddlewares.splice(serverRenderMiddlewareIndex, 0, i18nMiddleware);
+
+          return newMiddlewares;
+        };
+      });
+    }
 
     generator.addRenderFile(
       path.join(_dirname, 'templates/plugin-i18n.ts.ejs'),
@@ -83,4 +100,10 @@ function checkPluginOptions(options: I18nConfig) {
   }
 }
 
+function mergeDefaultConfig(i18nConfig: I18nConfig) {
+  if (i18nConfig.autoRedirect === undefined) {
+    i18nConfig.autoRedirect = true;
+  }
+  return i18nConfig;
+}
 export default plugin;

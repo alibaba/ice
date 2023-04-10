@@ -21,6 +21,11 @@
       "import": "./es2017/runtime/index.js",
       "default": "./es2017/runtime/index.js"
     },
+    "./middleware": {
+      "types": "./es2017/middleware.d.ts",
+      "import": "./es2017/middleware.js",
+      "default": "./es2017/middleware.js"
+    },
     "./*": "./*"
   },
   "sideEffects": false,
@@ -38,7 +43,8 @@
     "@swc/helpers": "^0.4.14",
     "accept-language-parser": "^1.5.0",
     "consola": "^2.15.3",
-    "universal-cookie": "^4.0.4"
+    "universal-cookie": "^4.0.4",
+    "url-join": "^5.0.0"
   },
   "devDependencies": {
     "@ice/pkg": "^1.0.0",
@@ -46,7 +52,8 @@
     "@ice/runtime": "workspace:^",
     "@types/react": "^18.0.33",
     "@types/accept-language-parser": "^1.5.3",
-    "history": "^5.3.0"
+    "history": "^5.3.0",
+    "webpack-dev-server": "^4.13.2"
   },
   "peerDependencies": {
     "@ice/app": "^3.0.0",

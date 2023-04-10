@@ -6,7 +6,7 @@ export default function getLocaleFromCookie(
   locales: I18nConfig['locales'],
   headers: { [key: string]: string | string[] | undefined } = {},
 ) {
-  const cookies: Cookies = new Cookies(import.meta.renderer === 'server' ? headers.cookie : undefined);
+  const cookies: Cookies = new Cookies(typeof window === 'undefined' ? headers.cookie : undefined);
   const iceLocale = cookies.get(LOCALE_COOKIE_NAME);
   const locale = locales.find(locale => iceLocale === locale) || undefined;
 
