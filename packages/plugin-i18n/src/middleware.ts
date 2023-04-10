@@ -11,15 +11,19 @@ export default function createI18nMiddleware(i18nConfig: I18nConfig, basename?: 
       pathname: req.path,
       headers: req.headers,
     });
+    const url = new URL(`${req.protocol}://${req.get('host')}${req.originalUrl}`);
+
     const localeRedirectPath = getLocaleRedirectPath({
       pathname: req.path,
       defaultLocale: i18nConfig.defaultLocale,
       detectedLocale,
       basename,
     });
-
     if (localeRedirectPath) {
-      res.redirect(localeRedirectPath);
+      url.pathname = localeRedirectPath;
+      res.redirect(
+        String(Object.assign(new URL(`${req.protocol}://${req.get('host')}`), url)),
+      );
     } else {
       next();
     }
