@@ -5,7 +5,7 @@ import type { History } from '@remix-run/router';
 import type {
   AppContext, WindowContext, AppExport, RouteItem, RuntimeModules, AppConfig, AssetsManifest,
 } from './types.js';
-import { createHistory as createHistorySingle } from './single-router.js';
+import { createHistory as createHistorySingle } from './singleRouter.js';
 import { setHistory } from './history.js';
 import Runtime from './runtime.js';
 import { getAppData } from './appData.js';
