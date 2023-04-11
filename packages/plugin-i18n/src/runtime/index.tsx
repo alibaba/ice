@@ -7,6 +7,8 @@ import { I18nProvider, useLocale, withLocale } from './I18nContext.js';
 import modifyHistory from './modifyHistory.js';
 
 const EXPORT_NAME = 'i18nConfig';
+// Mock it to avoid ssg error and use new URL to parse url instead of url.parse.
+const baseUrl = 'http://127.0.0.1';
 
 const runtime: RuntimePlugin = async (
   {
@@ -46,7 +48,7 @@ const runtime: RuntimePlugin = async (
 
   addResponseHandler((req) => {
     // @ts-ignore req.protocol type is not existed
-    const url = new URL(`${req.protocol}://${req.headers.host}${req.url}`);
+    const url = new URL(`${baseUrl}${req.url}`);
     const detectedLocale = detectLocale({
       locales,
       defaultLocale,
@@ -68,8 +70,7 @@ const runtime: RuntimePlugin = async (
         statusCode: 302,
         statusText: 'Found',
         headers: {
-          // @ts-ignore req.protocol type is not existed
-          location: String(Object.assign(new URL(`${req.protocol}://${req.headers.host}`), url)),
+          location: String(Object.assign(new URL(baseUrl), url)).replace(RegExp(`^${baseUrl}`), ''),
         },
       };
     }
