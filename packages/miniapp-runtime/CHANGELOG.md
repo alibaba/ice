@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.1.0-beta.2
+
+### Minor Changes
+
+- set default value for miniappLifecycles
+
+## 1.1.0-beta.1
+
+### Patch Changes
+
+- 4655a76d: update remove expressions for data loader
+
 ## 1.0.2
 
 ### Patch Changes

@@ -24,7 +24,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
   }
 
-  const { miniappManifest, miniappLifecycles } = app;
+  const { miniappManifest, miniappLifecycles = {} } = app;
   injectMiniappLifecycles(miniappLifecycles);
   // TODO: transform routes to pages in miniappManifest
   createMiniApp(miniappManifest, miniappLifecycles);
