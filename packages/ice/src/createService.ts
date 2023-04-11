@@ -293,6 +293,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       rootDir,
       task: platformTaskConfig,
       server,
+      csr,
     });
     addWatchEvent([
       /src\/?[\w*-:.$]+$/,
