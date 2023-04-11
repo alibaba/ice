@@ -31,7 +31,7 @@ export type RouteConfig<T = {}> = T & {
 export interface AppExport {
   default?: AppConfig;
   [key: string]: any;
-  dataLoader?: DataLoader;
+  dataLoader?: DataLoaderConfig;
 }
 
 export type DataLoaderResult = (Promise<RouteData> | RouteData) | RouteData;

@@ -12,14 +12,13 @@ async function getAppData(appExport: AppExport, requestContext?: RequestContext)
     return await globalLoader.getData('__app');
   }
 
-  if (appExport?.dataLoader) {
-    return await appExport.dataLoader(requestContext);
+  const appDataLoaderConfig = appExport?.dataLoader;
+
+  if (!appDataLoaderConfig) {
+    return null;
   }
 
-  const loader = appExport?.dataLoader;
-
-  if (!loader) return null;
-
+  const [loader] = appDataLoaderConfig;
   await callDataLoader(loader, requestContext);
 }
 
