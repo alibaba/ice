@@ -8,4 +8,5 @@ export default defineConfig({
       defaultLocale: 'zh-CN',
     }),
   ],
+  ssr: true,
 });
