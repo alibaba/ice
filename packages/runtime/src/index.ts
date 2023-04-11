@@ -16,7 +16,7 @@ import type {
   RouteWrapper,
   RenderMode,
   DistType,
-  DataLoaderConfig,
+  Loader,
   RouteWrapperConfig,
 } from './types.js';
 import Runtime from './runtime.js';
@@ -111,7 +111,7 @@ export type {
   RouteWrapper,
   RenderMode,
   DistType,
-  DataLoaderConfig,
+  Loader,
   RunClientAppOptions,
   MetaType,
   TitleType,

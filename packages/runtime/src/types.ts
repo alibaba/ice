@@ -49,7 +49,7 @@ export interface StaticDataLoader {
 // route.defineDataLoader
 // route.defineServerDataLoader
 // route.defineStaticDataLoader
-export type DataLoaderConfig = DataLoader | StaticDataLoader | Array<DataLoader | StaticDataLoader>;
+export type Loader = DataLoader | StaticDataLoader | Array<DataLoader | StaticDataLoader>;
 
 // route.pageConfig
 export type PageConfig = (args: { data?: RouteData }) => RouteConfig;
@@ -126,9 +126,9 @@ export interface RequestContext extends ServerContext {
 export type ComponentModule = {
   default?: ComponentType<any>;
   Component?: ComponentType<any>;
-  staticDataLoader?: DataLoaderConfig;
-  serverDataLoader?: DataLoaderConfig;
-  dataLoader?: DataLoaderConfig;
+  staticDataLoader?: Loader;
+  serverDataLoader?: Loader;
+  dataLoader?: Loader;
   pageConfig?: PageConfig;
   [key: string]: any;
 };

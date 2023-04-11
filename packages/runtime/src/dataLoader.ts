@@ -1,4 +1,4 @@
-import type { RequestContext, RenderMode, DataLoaderConfig, DataLoaderResult, RuntimeModules, AppExport, StaticRuntimePlugin, CommonJsRuntime, StaticDataLoader } from './types.js';
+import type { RequestContext, RenderMode, Loader, DataLoaderResult, RuntimeModules, AppExport, StaticRuntimePlugin, CommonJsRuntime, StaticDataLoader } from './types.js';
 import getRequestContext from './requestContext.js';
 
 interface Loaders {
@@ -15,26 +15,26 @@ interface LoaderOptions {
   appExport: AppExport;
 }
 
-interface DefineOptions {
+interface Options {
   defer?: boolean;
 }
 
-type DefineResult = [DataLoaderConfig, DefineOptions?];
+type DataLoaderConfig = [Loader, Options?];
 
 export interface LoadRoutesDataOptions {
   renderMode: RenderMode;
 }
 
-export function defineDataLoader(dataLoaderConfig: DataLoaderConfig, options?: DefineOptions): DefineResult {
-  return [dataLoaderConfig, options];
+export function defineDataLoader(dataLoader: Loader, options?: Options): DataLoaderConfig {
+  return [dataLoader, options];
 }
 
-export function defineServerDataLoader(dataLoaderConfig: DataLoaderConfig, options?: DefineOptions): DefineResult {
-  return [dataLoaderConfig, options];
+export function defineServerDataLoader(dataLoader: Loader, options?: Options): DataLoaderConfig {
+  return [dataLoader, options];
 }
 
-export function defineStaticDataLoader(dataLoaderConfig: DataLoaderConfig): DefineResult {
-  return [dataLoaderConfig];
+export function defineStaticDataLoader(dataLoader: Loader): DataLoaderConfig {
+  return [dataLoader];
 }
 
 /**
@@ -129,7 +129,7 @@ export function loadDataByCustomFetcher(config: StaticDataLoader) {
 /**
  * Handle for different dataLoader.
  */
-export function callDataLoader(dataLoader: DataLoaderConfig, requestContext: RequestContext): DataLoaderResult {
+export function callDataLoader(dataLoader: Loader, requestContext: RequestContext): DataLoaderResult {
   if (Array.isArray(dataLoader)) {
     const loaders = dataLoader.map(loader => {
       return typeof loader === 'object' ? loadDataByCustomFetcher(loader) : loader(requestContext);
@@ -173,10 +173,11 @@ function loadInitialDataInClient(loaders: Loaders) {
 
     if (dataLoaderConfig) {
       const requestContext = getRequestContext(window.location);
-      const loader = callDataLoader(dataLoaderConfig[0], requestContext);
+      const [dataLoader] = dataLoaderConfig;
+      const promise = callDataLoader(dataLoader, requestContext);
 
       cache.set(id, {
-        value: loader,
+        value: promise,
       });
     }
   });
@@ -187,7 +188,7 @@ function loadInitialDataInClient(loaders: Loaders) {
  * Load initial data and register global loader.
  * In order to load data, JavaScript modules, CSS and other assets in parallel.
  */
-async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
+async function init(loaders: Loaders, options: LoaderOptions) {
   const {
     fetcher,
     runtimeModules,
@@ -212,7 +213,7 @@ async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
   }
 
   try {
-    loadInitialDataInClient(dataloaderConfig);
+    loadInitialDataInClient(loaders);
   } catch (error) {
     console.error('Load initial data error: ', error);
   }
@@ -234,16 +235,17 @@ async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
         return result.value;
       }
 
-      const dataLoader = dataloaderConfig[id];
+      const dataLoaderConfig = loaders[id];
 
       // No data loader.
-      if (!dataLoader) {
+      if (!dataLoaderConfig) {
         return null;
       }
 
       // Call dataLoader.
       const requestContext = getRequestContext(window.location);
-      return callDataLoader(dataLoader[0], requestContext);
+      const [loader] = dataLoaderConfig;
+      return callDataLoader(loader, requestContext);
     },
   };
 }
