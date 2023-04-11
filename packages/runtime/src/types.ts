@@ -71,6 +71,12 @@ export interface RoutesData {
   [routeId: string]: RouteData;
 }
 
+export interface DataLoaderOptions {
+  defer?: boolean;
+}
+
+export type DataLoaderConfig = [Loader, DataLoaderOptions?];
+
 export interface LoaderDatas {
   [routeId: string]: LoaderData;
 }
@@ -126,9 +132,9 @@ export interface RequestContext extends ServerContext {
 export type ComponentModule = {
   default?: ComponentType<any>;
   Component?: ComponentType<any>;
-  staticDataLoader?: Loader;
-  serverDataLoader?: Loader;
-  dataLoader?: Loader;
+  staticDataLoader?: DataLoaderConfig;
+  serverDataLoader?: DataLoaderConfig;
+  dataLoader?: DataLoaderConfig;
   pageConfig?: PageConfig;
   [key: string]: any;
 };

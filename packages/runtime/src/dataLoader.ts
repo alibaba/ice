@@ -1,6 +1,9 @@
-import type { RequestContext, RenderMode, Loader, DataLoaderResult, RuntimeModules, AppExport, StaticRuntimePlugin, CommonJsRuntime, StaticDataLoader } from './types.js';
 import getRequestContext from './requestContext.js';
-
+import type {
+  RequestContext, RenderMode, AppExport,
+  RuntimeModules, StaticRuntimePlugin, CommonJsRuntime,
+  Loader, DataLoaderResult, StaticDataLoader, DataLoaderConfig, DataLoaderOptions,
+} from './types.js';
 interface Loaders {
   [routeId: string]: DataLoaderConfig;
 }
@@ -9,27 +12,21 @@ interface CachedResult {
   value: any;
 }
 
-interface LoaderOptions {
+interface Options {
   fetcher: Function;
   runtimeModules: RuntimeModules['statics'];
   appExport: AppExport;
 }
 
-interface Options {
-  defer?: boolean;
-}
-
-type DataLoaderConfig = [Loader, Options?];
-
 export interface LoadRoutesDataOptions {
   renderMode: RenderMode;
 }
 
-export function defineDataLoader(dataLoader: Loader, options?: Options): DataLoaderConfig {
+export function defineDataLoader(dataLoader: Loader, options?: DataLoaderOptions): DataLoaderConfig {
   return [dataLoader, options];
 }
 
-export function defineServerDataLoader(dataLoader: Loader, options?: Options): DataLoaderConfig {
+export function defineServerDataLoader(dataLoader: Loader, options?: DataLoaderOptions): DataLoaderConfig {
   return [dataLoader, options];
 }
 
@@ -188,7 +185,7 @@ function loadInitialDataInClient(loaders: Loaders) {
  * Load initial data and register global loader.
  * In order to load data, JavaScript modules, CSS and other assets in parallel.
  */
-async function init(loaders: Loaders, options: LoaderOptions) {
+async function init(loaders: Loaders, options: Options) {
   const {
     fetcher,
     runtimeModules,

@@ -1,6 +1,8 @@
 import React, { Suspense } from 'react';
-import { defer, useRouteError, Await as ReactRouterAwait } from 'react-router-dom';
-import type { RouteItem, RouteModules, RenderMode, DataLoaderConfig, RequestContext, ComponentModule } from './types.js';
+import { useRouteError, defer, Await as ReactRouterAwait } from 'react-router-dom';
+// eslint-disable-next-line camelcase
+import type { UNSAFE_DeferredData } from '@remix-run/router';
+import type { RouteItem, RouteModules, RenderMode, RequestContext, ComponentModule, DataLoaderConfig } from './types.js';
 import RouteWrapper from './RouteWrapper.js';
 import { useAppContext } from './AppContext.js';
 import { callDataLoader } from './dataLoader.js';
@@ -106,8 +108,8 @@ export function Await(props) {
  * Create loader function for route module.
  */
 interface LoaderData {
-  data: any;
-  pageConfig: any;
+  data?: any;
+  pageConfig?: any;
 }
 
 export interface RouteLoaderOptions {
@@ -117,18 +119,31 @@ export interface RouteLoaderOptions {
   renderMode: RenderMode;
 }
 
-export function createRouteLoader(options: RouteLoaderOptions): () => any {
+// eslint-disable-next-line camelcase
+type LoaderFunction = () => LoaderData | UNSAFE_DeferredData | Promise<LoaderData>;
+
+export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
   const { dataLoader, pageConfig, staticDataLoader, serverDataLoader } = options.module;
   const { requestContext, renderMode, routeId } = options;
 
-  let loaderConfig: any;
+  let dataLoaderConfig: DataLoaderConfig;
   if (renderMode === 'SSG') {
-    loaderConfig = staticDataLoader;
+    dataLoaderConfig = staticDataLoader;
   } else if (renderMode === 'SSR') {
-    loaderConfig = serverDataLoader || dataLoader;
+    dataLoaderConfig = serverDataLoader || dataLoader;
   } else {
-    loaderConfig = dataLoader;
+    dataLoaderConfig = dataLoader;
   }
+
+  if (!dataLoaderConfig) {
+    return () => {
+      return {
+        pageConfig: pageConfig ? pageConfig({}) : {},
+      };
+    };
+  }
+
+  const [loader, loaderOptions] = dataLoaderConfig;
 
   const getData = () => {
     const hasGlobalLoader = typeof window !== 'undefined' && (window as any).__ICE_DATA_LOADER__;
@@ -137,33 +152,36 @@ export function createRouteLoader(options: RouteLoaderOptions): () => any {
     if (globalLoader) {
       routeData = globalLoader.getData(routeId, { renderMode });
     } else {
-      routeData = loaderConfig && callDataLoader(loaderConfig[0], requestContext);
+      routeData = callDataLoader(loader, requestContext);
     }
     return routeData;
   };
 
-  if (loaderConfig?.[1]?.defer) {
+  // Async dataLoader.
+  if (loaderOptions?.defer) {
     return async () => {
       const promise = getData();
 
       return defer({
         data: promise,
-        routeConfig: pageConfig ? pageConfig({}) : {},
+        // Call pageConfig without data.
+        pageConfig: pageConfig ? pageConfig({}) : {},
       });
     };
   }
 
+  // Await dataLoader before render.
   return async () => {
-    let routeData;
-    const promise = getData();
+    const result = getData();
 
+    let routeData;
     try {
-      if (Array.isArray(promise)) {
-        routeData = await Promise.all(promise);
-      } else if (promise instanceof Promise) {
-        routeData = await promise;
+      if (Array.isArray(result)) {
+        routeData = await Promise.all(result);
+      } else if (result instanceof Promise) {
+        routeData = await result;
       } else {
-        routeData = promise;
+        routeData = result;
       }
     } catch (error) {
       console.error('DataLoader: getData error.\n', error);
@@ -175,11 +193,16 @@ export function createRouteLoader(options: RouteLoaderOptions): () => any {
     }
 
     const routeConfig = pageConfig ? pageConfig({ data: routeData }) : {};
-    const loaderData = { data: routeData, pageConfig: routeConfig };
+    const loaderData = {
+      data: routeData,
+      pageConfig: routeConfig,
+    };
+
     // CSR and load next route data.
     if (typeof window !== 'undefined') {
       await updateRoutesConfig(loaderData);
     }
+
     return loaderData;
   };
 }
