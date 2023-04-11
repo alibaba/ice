@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.8
+
+### Patch Changes
+
+- deda06de: fix: revert @swc/core version because of https://github.com/swc-project/swc/issues/7174
+
 ## 0.1.7
 
 ### Patch Changes
