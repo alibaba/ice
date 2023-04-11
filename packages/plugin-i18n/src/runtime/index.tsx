@@ -1,10 +1,12 @@
 import * as React from 'react';
 import type { RuntimePlugin } from '@ice/runtime/types';
 import detectLocale from '../utils/detectLocale.js';
-import type { I18nConfig } from '../types.js';
+import type { I18nAppConfig, I18nConfig } from '../types.js';
 import getLocaleRedirectPath from '../utils/getLocaleRedirectPath.js';
 import { I18nProvider, useLocale, withLocale } from './I18nContext.js';
 import modifyHistory from './modifyHistory.js';
+
+const EXPORT_NAME = 'i18nConfig';
 
 const runtime: RuntimePlugin = async (
   {
@@ -15,7 +17,13 @@ const runtime: RuntimePlugin = async (
   },
   runtimeOptions,
 ) => {
-  const { basename, requestContext } = appContext;
+  const { basename, requestContext, appExport } = appContext;
+  const exported = appExport[EXPORT_NAME];
+  const i18nAppConfig: I18nAppConfig = Object.assign(
+    { blockCookie: false },
+    (typeof exported === 'function' ? await exported() : exported),
+  );
+
   const { i18nConfig } = runtimeOptions;
   const { locales, defaultLocale } = i18nConfig as I18nConfig;
 
@@ -33,7 +41,7 @@ const runtime: RuntimePlugin = async (
   });
 
   if (history) {
-    modifyHistory(history, i18nConfig, basename);
+    modifyHistory(history, i18nConfig, i18nAppConfig, basename);
   }
 
   addResponseHandler((req) => {

@@ -3,15 +3,22 @@ import urlJoin from 'url-join';
 import detectLocale from '../utils/detectLocale.js';
 import getLocaleFromCookie from '../utils/getLocaleFromCookie.js';
 import normalizeLocalePath from '../utils/normalizeLocalePath.js';
-import type { I18nConfig } from '../types.js';
+import type { I18nAppConfig, I18nConfig } from '../types.js';
 
-export default function modifyHistory(history: History, i18nConfig: I18nConfig, basename?: string) {
+/**
+ * Add locale prefix to the route path.
+ */
+export default function modifyHistory(
+  history: History,
+  i18nConfig: I18nConfig,
+  i18nAppConfig: I18nAppConfig,
+  basename?: string,
+) {
   const originHistory = { ...history };
   const { defaultLocale, locales } = i18nConfig;
-  // TODO: cookie blocked
-  // const { blockCookie = false } = i18nAppConfig;
-  // const cookieBlocked = typeof blockCookie === 'function' ? blockCookie() : blockCookie;
-  const cookieBlocked = false;
+
+  const { blockCookie } = i18nAppConfig;
+  const cookieBlocked = typeof blockCookie === 'function' ? blockCookie() : blockCookie;
 
   history.push = (path: string | Location, state?: unknown) => {
     const localePath = getLocalePath(path, basename);
@@ -33,8 +40,11 @@ export default function modifyHistory(history: History, i18nConfig: I18nConfig, 
   function getLocalePath(path: string | Location, basename?: string) {
     const pathname = getPathname(path);
     // TODO: cookie blocked
-    const locale = (cookieBlocked ? detectLocale({ i18nConfig, pathname }) : getLocaleFromCookie(i18nConfig.locales)) ||
-      defaultLocale;
+    const locale = (
+      cookieBlocked
+        ? detectLocale({ locales, defaultLocale, pathname })
+        : getLocaleFromCookie(locales)
+    ) || defaultLocale;
     const { pathname: newPathname } = normalizeLocalePath({ pathname, locales, basename });
 
     return urlJoin(

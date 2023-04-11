@@ -12,3 +12,21 @@ export interface I18nConfig {
    */
   autoRedirect?: boolean;
 }
+
+export interface I18nAppConfig {
+  /**
+   * Weather or not current application cookie is blocked.
+   * If it is, we will not get the locale value(ice_locale) from cookie.
+   * @default {false}
+   */
+  blockCookie?: boolean | (() => boolean);
+}
+
+export function defineI18nConfig(
+  configOrDefineConfig: I18nAppConfig | (() => I18nAppConfig),
+): I18nAppConfig {
+  if (typeof configOrDefineConfig === 'function') {
+    return configOrDefineConfig();
+  }
+  return configOrDefineConfig;
+}
