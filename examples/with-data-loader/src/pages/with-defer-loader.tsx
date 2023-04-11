@@ -23,7 +23,7 @@ export function pageConfig() {
 }
 
 export const dataLoader = defineDataLoader(async () => {
-  const promise = new Promise((resolve, reject) => {
+  const promise = new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         id: 1233,
