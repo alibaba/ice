@@ -114,6 +114,9 @@ export async function renderToHTML(
 
     return {
       value: entryStr,
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+      },
       statusCode: 200,
     };
   } catch (error) {
