@@ -20,7 +20,7 @@ export const I18nContext = createContext<ContextValue>(null);
 
 I18nContext.displayName = 'I18nContext';
 
-export const I18nProvider = ({ children, i18nConfig, pathname, basename, headers }: I18nProvider) => {
+export const I18nProvider = ({ children, i18nConfig, pathname, basename }: I18nProvider) => {
   const [locale, updateLocale] = useState<string>(
     normalizeLocalePath({ pathname, basename, locales: i18nConfig.locales }).pathLocale || i18nConfig.defaultLocale,
   );

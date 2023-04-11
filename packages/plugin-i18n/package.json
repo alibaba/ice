@@ -21,11 +21,6 @@
       "import": "./es2017/runtime/index.js",
       "default": "./es2017/runtime/index.js"
     },
-    "./middleware": {
-      "types": "./es2017/middleware.d.ts",
-      "import": "./es2017/middleware.js",
-      "default": "./es2017/middleware.js"
-    },
     "./*": "./*"
   },
   "sideEffects": false,

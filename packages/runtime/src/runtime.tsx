@@ -16,6 +16,7 @@ import type {
   SetRender,
   AppRouterProps,
   ComponentWithChildren,
+  ResponseHandler,
 } from './types.js';
 import { useData, useConfig } from './RouteContext.js';
 import { useAppContext } from './AppContext.js';
@@ -33,6 +34,8 @@ class Runtime {
 
   private render: Renderer;
 
+  private responseHandlers: ResponseHandler[];
+
   public constructor(appContext: AppContext, runtimeOptions?: Record<string, any>) {
     this.AppProvider = [];
     this.appContext = appContext;
@@ -43,6 +46,7 @@ class Runtime {
     };
     this.RouteWrappers = [];
     this.runtimeOptions = runtimeOptions;
+    this.responseHandlers = [];
   }
 
   public getAppContext = () => this.appContext;
@@ -62,6 +66,8 @@ class Runtime {
   public async loadModule(module: RuntimePlugin | StaticRuntimePlugin | CommonJsRuntime) {
     let runtimeAPI: RuntimeAPI = {
       addProvider: this.addProvider,
+      addResponseHandler: this.addResponseHandler,
+      getResponseHandlers: this.getResponseHandlers,
       getAppRouter: this.getAppRouter,
       setRender: this.setRender,
       addWrapper: this.addWrapper,
@@ -109,6 +115,14 @@ class Runtime {
 
   public setAppRouter: SetAppRouter = (AppRouter) => {
     this.AppRouter = AppRouter;
+  };
+
+  public addResponseHandler = (handler: ResponseHandler) => {
+    this.responseHandlers.push(handler);
+  };
+
+  public getResponseHandlers = () => {
+    return this.responseHandlers;
   };
 }
 

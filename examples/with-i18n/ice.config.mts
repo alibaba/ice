@@ -6,7 +6,6 @@ export default defineConfig({
     i18n({
       locales: ['zh-CN', 'en-US'],
       defaultLocale: 'zh-CN',
-      // autoRedirect: false,
     }),
   ],
 });

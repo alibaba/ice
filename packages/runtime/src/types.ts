@@ -148,12 +148,18 @@ export interface RouteWrapperConfig {
 
 export type AppProvider = ComponentWithChildren<any>;
 export type RouteWrapper = ComponentType<any>;
+export type ResponseHandler = (
+  req: IncomingMessage,
+  res: ServerResponse,
+) => any | Promise<any>;
 
 export type SetAppRouter = (AppRouter: ComponentType<AppRouterProps>) => void;
 export type GetAppRouter = () => AppProvider;
 export type AddProvider = (Provider: AppProvider) => void;
 export type SetRender = (render: Renderer) => void;
 export type AddWrapper = (wrapper: RouteWrapper, forLayout?: boolean) => void;
+export type AddResponseHandler = (handler: ResponseHandler) => void;
+export type GetResponseHandlers = () => ResponseHandler[];
 
 export interface RouteModules {
   [routeId: string]: RouteComponent;
@@ -177,6 +183,8 @@ export interface RuntimeAPI {
   setAppRouter?: SetAppRouter;
   getAppRouter: GetAppRouter;
   addProvider: AddProvider;
+  addResponseHandler: AddResponseHandler;
+  getResponseHandlers: GetResponseHandlers;
   setRender: SetRender;
   addWrapper: AddWrapper;
   appContext: AppContext;

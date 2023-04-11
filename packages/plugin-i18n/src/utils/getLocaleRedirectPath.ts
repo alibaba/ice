@@ -8,7 +8,7 @@ interface GetRedirectPathOptions {
   detectedLocale: string;
   basename?: string;
 }
-// TODO: add urlParsed and we add url param
+
 export default function getLocaleRedirectPath({
   pathname,
   defaultLocale,

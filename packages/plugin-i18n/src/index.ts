@@ -3,7 +3,6 @@ import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
 import consola from 'consola';
 import type { Plugin } from '@ice/app/types';
-import createI18nMiddleware from './middleware.js';
 import type { I18nConfig } from './types.js';
 
 const _require = createRequire(import.meta.url);
@@ -15,11 +14,11 @@ consola.withTag(packageName);
 
 const plugin: Plugin<I18nConfig> = (i18nConfig) => ({
   name: packageName,
-  setup: ({ addDefineRoutesFunc, generator, onGetConfig, context: { userConfig } }) => {
+  setup: ({ addDefineRoutesFunc, generator }) => {
     checkPluginOptions(i18nConfig);
     i18nConfig = mergeDefaultConfig(i18nConfig);
-
-    const prefixedLocales = i18nConfig.locales.filter(locale => locale !== i18nConfig.defaultLocale);
+    const { locales, defaultLocale } = i18nConfig;
+    const prefixedLocales = locales.filter(locale => locale !== defaultLocale);
 
     const defineRoutes: Parameters<typeof addDefineRoutesFunc>[0] = (defineRoute, options) => {
       function defineChildrenRoutes(children: any[], prefixedLocale: string) {
@@ -49,27 +48,12 @@ const plugin: Plugin<I18nConfig> = (i18nConfig) => ({
     };
     addDefineRoutesFunc(defineRoutes);
 
-    if (i18nConfig.autoRedirect && (userConfig.ssr || userConfig.ssg)) {
-      onGetConfig(config => {
-        config.middlewares = (middlewares) => {
-          const newMiddlewares = [...middlewares];
-          // TODO: how to get the basename
-          const basename = '/app';
-          const i18nMiddleware = createI18nMiddleware(i18nConfig, basename);
-          const serverRenderMiddlewareIndex = newMiddlewares.findIndex((middleware) => middleware.name === 'server-render');
-          newMiddlewares.splice(serverRenderMiddlewareIndex, 0, i18nMiddleware);
-
-          return newMiddlewares;
-        };
-      });
-    }
-
     generator.addRenderFile(
       path.join(_dirname, 'templates/plugin-i18n.ts.ejs'),
       'plugin-i18n.ts',
       {
-        defaultLocale: i18nConfig.defaultLocale,
-        locales: JSON.stringify(i18nConfig.locales),
+        defaultLocale: defaultLocale,
+        locales: JSON.stringify(locales),
       },
     );
     generator.addExport({
@@ -86,6 +70,7 @@ const plugin: Plugin<I18nConfig> = (i18nConfig) => ({
     });
   },
   runtime: `${packageName}/runtime`,
+  staticRuntime: true,
 });
 
 function checkPluginOptions(options: I18nConfig) {

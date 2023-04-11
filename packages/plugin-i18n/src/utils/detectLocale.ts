@@ -4,7 +4,8 @@ import normalizeLocalePath from './normalizeLocalePath.js';
 import getPreferredLocale from './getPreferredLocale.js';
 
 interface DetectLocaleParams {
-  i18nConfig: I18nConfig;
+  locales: I18nConfig['locales'];
+  defaultLocale: I18nConfig['defaultLocale'];
   pathname: string;
   basename?: string;
   headers?: {
@@ -13,16 +14,17 @@ interface DetectLocaleParams {
 }
 
 export default function detectLocale({
-  i18nConfig,
+  locales,
+  defaultLocale,
   pathname,
   basename,
   headers = {},
 }: DetectLocaleParams): string {
   const detectedLocale = (
-    normalizeLocalePath({ pathname, locales: i18nConfig.locales, basename }).pathLocale ||
-    getLocaleFromCookie(i18nConfig.locales, headers) ||
-    getPreferredLocale(i18nConfig.locales, headers) ||
-    i18nConfig.defaultLocale
+    normalizeLocalePath({ pathname, locales, basename }).pathLocale ||
+    getLocaleFromCookie(locales, headers) ||
+    getPreferredLocale(locales, headers) ||
+    defaultLocale
   );
 
   return detectedLocale;

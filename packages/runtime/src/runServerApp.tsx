@@ -1,4 +1,4 @@
-import type { ServerResponse } from 'http';
+import type { ServerResponse, IncomingMessage } from 'http';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { Action, parsePath } from 'history';
@@ -56,9 +56,11 @@ interface Piper {
   pipe: NodeWritablePiper;
   fallback: Function;
 }
-interface RenderResult {
+interface Response {
   statusCode?: number;
+  statusText?: string;
   value?: string | Piper;
+  headers?: Record<string, string>;
 }
 
 /**
@@ -96,12 +98,12 @@ export async function renderToEntry(
 export async function renderToHTML(
   requestContext: ServerContext,
   renderOptions: RenderOptions,
-): Promise<RenderResult> {
+): Promise<Response> {
   const result = await doRender(requestContext, renderOptions);
 
   const { value } = result;
 
-  if (typeof value === 'string') {
+  if (typeof value === 'string' || typeof value === 'undefined') {
     return result;
   }
 
@@ -129,13 +131,13 @@ export async function renderToHTML(
  * Render and send the result to ServerResponse.
  */
 export async function renderToResponse(requestContext: ServerContext, renderOptions: RenderOptions) {
-  const { res } = requestContext;
+  const { req, res } = requestContext;
   const result = await doRender(requestContext, renderOptions);
 
   const { value } = result;
 
-  if (typeof value === 'string') {
-    sendResult(res, result);
+  if (typeof value === 'string' || typeof value === 'undefined') {
+    sendResponse(req, res, result);
   } else {
     const { pipe, fallback } = value;
 
@@ -154,7 +156,7 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
           console.error('PipeToResponse onShellError, downgrade to CSR.');
           console.error(err);
           const result = await fallback();
-          sendResult(res, result);
+          sendResponse(req, res, result);
           resolve();
         },
         onError: async (err) => {
@@ -174,14 +176,31 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
 /**
  * Send string result to ServerResponse.
  */
-async function sendResult(res: ServerResponse, result: RenderResult) {
-  res.statusCode = result.statusCode;
-  res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  res.end(result.value);
+// async function sendResult(res: ServerResponse, result: Response) {
+//   res.statusCode = result.statusCode;
+//   res.setHeader('Content-Type', 'text/html; charset=utf-8');
+//   res.end(result.value);
+// }
+
+async function sendResponse(
+  req: IncomingMessage,
+  res: ServerResponse,
+  response: Response,
+) {
+  res.statusCode = response.statusCode;
+  res.statusMessage = response.statusText;
+  Object.entries(response.headers).forEach(([name, value]) => {
+    res.setHeader(name, value);
+  });
+  if (response.value && req.method !== 'HEAD') {
+    res.end(response.value);
+  } else {
+    res.end();
+  }
 }
 
-async function doRender(serverContext: ServerContext, renderOptions: RenderOptions): Promise<RenderResult> {
-  const { req } = serverContext;
+async function doRender(serverContext: ServerContext, renderOptions: RenderOptions): Promise<Response> {
+  const { req, res } = serverContext;
   const {
     app,
     basename,
@@ -222,6 +241,17 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
   if (runtimeModules.statics) {
     await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
   }
+
+  const responseHandlers = runtime.getResponseHandlers();
+  for (const responseHandler of responseHandlers) {
+    if (typeof responseHandler === 'function') {
+      const response = await responseHandler(req, res);
+      if (response) {
+        return response as Response;
+      }
+    }
+  }
+
   // don't need to execute getAppData in CSR
   if (!documentOnly) {
     try {
@@ -269,9 +299,9 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
 }
 
 // https://github.com/ice-lab/ice-next/issues/133
-function render404(): RenderResult {
+function render404(): Response {
   return {
-    value: 'Not Found',
+    statusText: 'Not Found',
     statusCode: 404,
   };
 }
@@ -293,7 +323,7 @@ async function renderServerEntry(
     location,
     renderOptions,
   }: RenderServerEntry,
-): Promise<RenderResult> {
+): Promise<Response> {
   const { Document } = renderOptions;
   const appContext = runtime.getAppContext();
   const { appData, routePath } = appContext;
@@ -349,7 +379,7 @@ interface RenderDocumentOptions {
 /**
  * Render Document for CSR.
  */
-function renderDocument(options: RenderDocumentOptions): RenderResult {
+function renderDocument(options: RenderDocumentOptions): Response {
   const {
     matches,
     renderOptions,
@@ -408,6 +438,9 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
 
   return {
     value: `<!DOCTYPE html>${htmlStr}`,
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+    },
     statusCode: 200,
   };
 }
