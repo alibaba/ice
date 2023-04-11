@@ -117,7 +117,7 @@ $ npm run start -- --no-mock
 [Mock.js](https://github.com/nuysoft/Mock) 是一个随机生成 mock 数据的工具库，可以帮助我们快速生成随机的模拟数据。
 
 ```ts
-import mockjs from 'mockjs';
+import Mock from 'mockjs';
 
 export default {
   'GET /api/list': (req, res) => {
