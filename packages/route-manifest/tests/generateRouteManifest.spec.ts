@@ -45,9 +45,9 @@ describe('generateRouteManifest function', () => {
     const routeManifest = generateRouteManifest(
       path.join(fixturesDir, 'basic-routes'),
       ['About/index.tsx'],
-      (defineRoute) => {
+      [(defineRoute) => {
         defineRoute('/about-me', 'About/index.tsx');
-      },
+      }],
     );
     expect(routeManifest).toMatchSnapshot();
   });
