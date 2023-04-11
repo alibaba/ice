@@ -173,15 +173,6 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
   }
 }
 
-/**
- * Send string result to ServerResponse.
- */
-// async function sendResult(res: ServerResponse, result: Response) {
-//   res.statusCode = result.statusCode;
-//   res.setHeader('Content-Type', 'text/html; charset=utf-8');
-//   res.end(result.value);
-// }
-
 async function sendResponse(
   req: IncomingMessage,
   res: ServerResponse,
@@ -189,7 +180,7 @@ async function sendResponse(
 ) {
   res.statusCode = response.statusCode;
   res.statusMessage = response.statusText;
-  Object.entries(response.headers).forEach(([name, value]) => {
+  Object.entries(response.headers || {}).forEach(([name, value]) => {
     res.setHeader(name, value);
   });
   if (response.value && req.method !== 'HEAD') {
@@ -242,16 +233,6 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
   }
 
-  const responseHandlers = runtime.getResponseHandlers();
-  for (const responseHandler of responseHandlers) {
-    if (typeof responseHandler === 'function') {
-      const response = await responseHandler(req, res);
-      if (response) {
-        return response as Response;
-      }
-    }
-  }
-
   // don't need to execute getAppData in CSR
   if (!documentOnly) {
     try {
@@ -271,7 +252,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
   if (documentOnly) {
     return renderDocument({ matches, routePath, renderOptions });
   } else if (!matches.length) {
-    return render404();
+    return handleNotFoundResponse();
   }
 
   try {
@@ -281,6 +262,16 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     runtime.setAppContext({ ...appContext, routeModules, routesData, routesConfig, routePath, matches, appData });
     if (runtimeModules.commons) {
       await Promise.all(runtimeModules.commons.map(m => runtime.loadModule(m)).filter(Boolean));
+    }
+
+    const responseHandlers = runtime.getResponseHandlers();
+    for (const responseHandler of responseHandlers) {
+      if (typeof responseHandler === 'function') {
+        const response = await responseHandler(req, res);
+        if (response) {
+          return response as Response;
+        }
+      }
     }
 
     return await renderServerEntry({
@@ -299,7 +290,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
 }
 
 // https://github.com/ice-lab/ice-next/issues/133
-function render404(): Response {
+function handleNotFoundResponse(): Response {
   return {
     statusText: 'Not Found',
     statusCode: 404,

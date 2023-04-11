@@ -70,7 +70,6 @@ const plugin: Plugin<I18nConfig> = (i18nConfig) => ({
     });
   },
   runtime: `${packageName}/runtime`,
-  staticRuntime: true,
 });
 
 function checkPluginOptions(options: I18nConfig) {
