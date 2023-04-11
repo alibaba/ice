@@ -37,11 +37,10 @@ type ServerCompilerBuildOptions = Pick<
   'plugins' |
   'logLevel' |
   'sourcemap' |
-  'metafile' |
-  'incremental'
+  'metafile'
 >;
 
-export type ServerBuildResult = Partial<esbuild.BuildResult & { serverEntry: string; error: any }>;
+export type ServerBuildResult = Partial<esbuild.BuildResult & { serverEntry: string; error: any; context: esbuild.BuildContext<esbuild.BuildOptions> }>;
 
 export interface CompilerOptions {
   swc?: Config['swcOptions'];
