@@ -85,9 +85,7 @@ function checkPluginOptions(options: I18nConfig) {
 }
 
 function mergeDefaultConfig(i18nConfig: I18nConfig) {
-  if (i18nConfig.autoRedirect === undefined) {
-    i18nConfig.autoRedirect = true;
-  }
+  i18nConfig.autoRedirect = i18nConfig.autoRedirect || false;
   return i18nConfig;
 }
 export default plugin;

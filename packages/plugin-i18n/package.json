@@ -21,6 +21,11 @@
       "import": "./es2017/runtime/index.js",
       "default": "./es2017/runtime/index.js"
     },
+    "./types": {
+      "types": "./es2017/types.d.ts",
+      "import": "./es2017/types.js",
+      "default": "./es2017/types.js"
+    },
     "./*": "./*"
   },
   "sideEffects": false,

@@ -27,7 +27,7 @@ const runtime: RuntimePlugin = async (
   );
 
   const { i18nConfig } = runtimeOptions;
-  const { locales, defaultLocale } = i18nConfig as I18nConfig;
+  const { locales, defaultLocale, autoRedirect } = i18nConfig as I18nConfig;
 
   addProvider(({ children }) => {
     return (
@@ -46,35 +46,37 @@ const runtime: RuntimePlugin = async (
     modifyHistory(history, i18nConfig, i18nAppConfig, basename);
   }
 
-  addResponseHandler((req) => {
-    // @ts-ignore req.protocol type is not existed
-    const url = new URL(`${baseUrl}${req.url}`);
-    const detectedLocale = detectLocale({
-      locales,
-      defaultLocale,
-      basename,
-      pathname: url.pathname,
-      headers: req.headers,
-    });
+  if (autoRedirect) {
+    addResponseHandler((req) => {
+      // @ts-ignore req.protocol type is not existed
+      const url = new URL(`${baseUrl}${req.url}`);
+      const detectedLocale = detectLocale({
+        locales,
+        defaultLocale,
+        basename,
+        pathname: url.pathname,
+        headers: req.headers,
+      });
 
-    const localeRedirectPath = getLocaleRedirectPath({
-      pathname: url.pathname,
-      defaultLocale,
-      detectedLocale,
-      basename,
-    });
-    if (localeRedirectPath) {
-      url.pathname = localeRedirectPath;
+      const localeRedirectPath = getLocaleRedirectPath({
+        pathname: url.pathname,
+        defaultLocale,
+        detectedLocale,
+        basename,
+      });
+      if (localeRedirectPath) {
+        url.pathname = localeRedirectPath;
 
-      return {
-        statusCode: 302,
-        statusText: 'Found',
-        headers: {
-          location: String(Object.assign(new URL(baseUrl), url)).replace(RegExp(`^${baseUrl}`), ''),
-        },
-      };
-    }
-  });
+        return {
+          statusCode: 302,
+          statusText: 'Found',
+          headers: {
+            location: String(Object.assign(new URL(baseUrl), url)).replace(RegExp(`^${baseUrl}`), ''),
+          },
+        };
+      }
+    });
+  }
 };
 
 export default runtime;

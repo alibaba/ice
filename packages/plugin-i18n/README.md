@@ -43,6 +43,4 @@ The default locale you want to be used when visiting a non-locale prefixed path.
 - **type:** `boolean`
 - **default:** `true`
 
-Redirect to the preferred locale automatically. This option should be used with the middleware which the plugin export. If you deploy your application in production, you should use:
-
-
+Redirect to the preferred locale automatically. This option should be used with the middleware. If you deploy your application in production, you should read the [example]() for more detail.

@@ -4,5 +4,5 @@
     "baseUrl": "./",
     "rootDir": "src",
   },
-  "include": ["src", "typings.d.ts"]
+  "include": ["src"]
 }
