@@ -19,7 +19,7 @@ export default function Layout() {
             return (
               <li key={locale}>
                 <Link
-                  to={`${location.pathname}?a=2`}
+                  to={location.pathname}
                   onClick={() => setLocale(locale)}
                 // state={{ locale }}
                 >

@@ -38,8 +38,8 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
           if (eventName !== 'change') {
             // Specify the route files to re-render.
             generator.renderFile(
-              path.join(templateDir, 'routes.ts.ejs'),
-              path.join(rootDir, targetDir, 'routes.ts'),
+              path.join(templateDir, 'routes.tsx.ejs'),
+              path.join(rootDir, targetDir, 'routes.tsx'),
               { routeImports, routeDefinition },
             );
             // Keep generate route manifest for avoid breaking change.
