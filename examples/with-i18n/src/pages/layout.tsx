@@ -18,7 +18,13 @@ export default function Layout() {
           getAllLocales().map((locale: string) => {
             return (
               <li key={locale}>
-                <Link to={location.pathname} onClick={() => setLocale(locale)}>{locale}</Link>
+                <Link
+                  to={`${location.pathname}?a=2`}
+                  onClick={() => setLocale(locale)}
+                // state={{ locale }}
+                >
+                  {locale}
+                </Link>
               </li>
             );
           })

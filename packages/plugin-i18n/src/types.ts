@@ -15,11 +15,11 @@ export interface I18nConfig {
 
 export interface I18nAppConfig {
   /**
-   * Weather or not current application cookie is blocked.
+   * Weather or not current application cookie is blocked(authorized).
    * If it is, we will not get the locale value(ice_locale) from cookie.
    * @default {false}
    */
-  blockCookie?: boolean | (() => boolean);
+  disabledCookie?: boolean | (() => boolean);
 }
 
 export function defineI18nConfig(

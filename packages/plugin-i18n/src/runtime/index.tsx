@@ -4,7 +4,7 @@ import detectLocale from '../utils/detectLocale.js';
 import type { I18nAppConfig, I18nConfig } from '../types.js';
 import getLocaleRedirectPath from '../utils/getLocaleRedirectPath.js';
 import { I18nProvider, useLocale, withLocale } from './I18nContext.js';
-import modifyHistory from './modifyHistory.js';
+import hijackHistory from './hijackHistory.js';
 
 const EXPORT_NAME = 'i18nConfig';
 // Mock it to avoid ssg error and use new URL to parse url instead of url.parse.
@@ -22,9 +22,12 @@ const runtime: RuntimePlugin = async (
   const { basename, requestContext, appExport } = appContext;
   const exported = appExport[EXPORT_NAME];
   const i18nAppConfig: I18nAppConfig = Object.assign(
-    { blockCookie: false },
+    { disabledCookie: false },
     (typeof exported === 'function' ? await exported() : exported),
   );
+  const disabledCookie = typeof i18nAppConfig.disabledCookie === 'function'
+    ? i18nAppConfig.disabledCookie()
+    : i18nAppConfig.disabledCookie;
 
   const { i18nConfig } = runtimeOptions;
   const { locales, defaultLocale, autoRedirect } = i18nConfig as I18nConfig;
@@ -33,8 +36,10 @@ const runtime: RuntimePlugin = async (
     return (
       <I18nProvider
         pathname={requestContext.pathname}
-        i18nConfig={i18nConfig}
+        locales={locales}
+        defaultLocale={defaultLocale}
         basename={basename}
+        disabledCookie={disabledCookie}
         headers={requestContext.req?.headers}
       >
         {children}
@@ -43,12 +48,11 @@ const runtime: RuntimePlugin = async (
   });
 
   if (history) {
-    modifyHistory(history, i18nConfig, i18nAppConfig, basename);
+    hijackHistory(history, i18nConfig, disabledCookie, basename);
   }
 
   if (autoRedirect) {
     addResponseHandler((req) => {
-      // @ts-ignore req.protocol type is not existed
       const url = new URL(`${baseUrl}${req.url}`);
       const detectedLocale = detectLocale({
         locales,
@@ -56,6 +60,7 @@ const runtime: RuntimePlugin = async (
         basename,
         pathname: url.pathname,
         headers: req.headers,
+        disabledCookie: false,
       });
 
       const localeRedirectPath = getLocaleRedirectPath({

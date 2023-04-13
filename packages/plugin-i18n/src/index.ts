@@ -64,6 +64,7 @@ const plugin: Plugin<I18nConfig> = (i18nConfig) => ({
       specifier: ['withLocale', 'useLocale'],
       source: `${packageName}/runtime`,
     });
+
     generator.addRuntimeOptions({
       i18nConfig,
       key: 'normal',

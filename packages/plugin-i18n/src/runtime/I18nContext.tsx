@@ -8,8 +8,10 @@ type ContextValue = [string, Dispatch<SetStateAction<string>>];
 
 interface I18nProvider {
   children: ReactElement;
-  i18nConfig: I18nConfig;
+  locales: I18nConfig['locales'];
+  defaultLocale: I18nConfig['defaultLocale'];
   pathname: string;
+  disabledCookie: boolean;
   basename?: string;
   headers?: {
     [key: string]: string | string[];
@@ -20,13 +22,20 @@ export const I18nContext = createContext<ContextValue>(null);
 
 I18nContext.displayName = 'I18nContext';
 
-export const I18nProvider = ({ children, i18nConfig, pathname, basename }: I18nProvider) => {
+export const I18nProvider = ({
+  children,
+  locales,
+  defaultLocale,
+  disabledCookie,
+  pathname,
+  basename,
+}: I18nProvider) => {
   const [locale, updateLocale] = useState<string>(
-    normalizeLocalePath({ pathname, basename, locales: i18nConfig.locales }).pathLocale || i18nConfig.defaultLocale,
+    normalizeLocalePath({ pathname, basename, locales: locales }).pathLocale || defaultLocale,
   );
 
   function setLocale(locale: string) {
-    setLocaleToCookie(locale);
+    !disabledCookie && setLocaleToCookie(locale);
     updateLocale(locale);
   }
 
