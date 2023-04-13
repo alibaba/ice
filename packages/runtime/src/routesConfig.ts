@@ -1,38 +1,38 @@
-import type { RouteMatch, RoutesConfig, RouteConfig } from './types.js';
+import type { RouteMatch, LoadersData, LoaderData, RouteConfig } from './types.js';
 
 export function getMeta(
   matches: RouteMatch[],
-  routesConfig: RoutesConfig,
+  loadersData: LoadersData,
 ): React.MetaHTMLAttributes<HTMLMetaElement>[] {
-  return getMergedValue('meta', matches, routesConfig) || [];
+  return getMergedValue('meta', matches, loadersData) || [];
 }
 
 export function getLinks(
   matches: RouteMatch[],
-  routesConfig: RoutesConfig,
+  loadersData: LoadersData,
 ): React.LinkHTMLAttributes<HTMLLinkElement>[] {
-  return getMergedValue('links', matches, routesConfig) || [];
+  return getMergedValue('links', matches, loadersData) || [];
 }
 
 export function getScripts(
   matches: RouteMatch[],
-  routesConfig: RoutesConfig,
+  loadersData: LoadersData,
 ): React.ScriptHTMLAttributes<HTMLScriptElement>[] {
-  return getMergedValue('scripts', matches, routesConfig) || [];
+  return getMergedValue('scripts', matches, loadersData) || [];
 }
 
-export function getTitle(matches: RouteMatch[], routesConfig: RoutesConfig): string {
-  return getMergedValue('title', matches, routesConfig);
+export function getTitle(matches: RouteMatch[], loadersData: LoadersData): string {
+  return getMergedValue('title', matches, loadersData);
 }
 
 /**
  * merge value for each matched route
  */
-function getMergedValue(key: string, matches: RouteMatch[], routesConfig: RoutesConfig) {
+function getMergedValue(key: string, matches: RouteMatch[], loadersData: LoadersData) {
   let result;
   for (let match of matches) {
     const routeId = match.route.id;
-    const data = routesConfig[routeId];
+    const data = loadersData[routeId]?.pageConfig;
     const value = data?.[key];
 
     if (Array.isArray(value)) {
@@ -50,15 +50,17 @@ function getMergedValue(key: string, matches: RouteMatch[], routesConfig: Routes
 /**
  * update routes config to document.
  */
-export async function updateRoutesConfig(matches: RouteMatch[], routesConfig: RoutesConfig) {
-  const title = getTitle(matches, routesConfig);
+export async function updateRoutesConfig(loaderData: LoaderData) {
+  const routeConfig = loaderData?.pageConfig;
+
+  const title = routeConfig?.title;
 
   if (title) {
     document.title = title;
   }
-  const meta = getMeta(matches, routesConfig) || [];
-  const links = getLinks(matches, routesConfig) || [];
-  const scripts = getScripts(matches, routesConfig) || [];
+  const meta = routeConfig?.meta || [];
+  const links = routeConfig?.links || [];
+  const scripts = routeConfig?.scripts || [];
 
   await Promise.all([
     updateMeta(meta),

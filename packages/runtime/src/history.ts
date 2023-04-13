@@ -1,4 +1,4 @@
-import type { History } from 'history';
+import type { History } from '@remix-run/router';
 
 // Value of history will be modified after render Router.
 let routerHistory: History | null = null;
