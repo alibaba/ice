@@ -7,7 +7,7 @@ export default function Home() {
       <h1>I18n Example</h1>
       <Link to="/blog">Blog</Link>
       <br />
-      <button style={{ marginTop: 20 }}>
+      <button style={{ marginTop: 20 }} id="button">
         <FormattedMessage id="buttonText" />
       </button>
     </div>
