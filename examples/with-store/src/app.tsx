@@ -19,4 +19,8 @@ export const dataLoader = defineDataLoader(() => {
   });
 });
 
-export default defineAppConfig(() => ({}));
+export default defineAppConfig(() => ({
+  router: {
+    type: 'hash',
+  },
+}));

@@ -49,7 +49,12 @@ class Runtime {
     this.responseHandlers = [];
   }
 
-  public getAppContext = () => this.appContext;
+  public getAppContext = () => {
+    return {
+      ...this.appContext,
+      RouteWrappers: this.RouteWrappers,
+    };
+  };
 
   public setAppContext = (appContext: AppContext) => {
     this.appContext = appContext;

@@ -1,4 +1,4 @@
-import type { DataLoaderConfig, DataLoaderResult, RuntimeModules, AppExport, StaticRuntimePlugin, CommonJsRuntime, StaticDataLoader } from './types.js';
+import type { RequestContext, RenderMode, DataLoaderConfig, DataLoaderResult, RuntimeModules, AppExport, StaticRuntimePlugin, CommonJsRuntime, StaticDataLoader } from './types.js';
 import getRequestContext from './requestContext.js';
 
 interface Loaders {
@@ -17,8 +17,7 @@ interface LoaderOptions {
 }
 
 export interface LoadRoutesDataOptions {
-  ssg?: boolean;
-  forceRequest?: boolean;
+  renderMode: RenderMode;
 }
 
 export function defineDataLoader(dataLoaderConfig: DataLoaderConfig): DataLoaderConfig {
@@ -125,7 +124,7 @@ export function loadDataByCustomFetcher(config: StaticDataLoader) {
 /**
  * Handle for different dataLoader.
  */
-export function callDataLoader(dataLoader: DataLoaderConfig, requestContext): DataLoaderResult {
+export function callDataLoader(dataLoader: DataLoaderConfig, requestContext: RequestContext): DataLoaderResult {
   if (Array.isArray(dataLoader)) {
     const loaders = dataLoader.map(loader => {
       return typeof loader === 'object' ? loadDataByCustomFetcher(loader) : loader(requestContext);
@@ -220,14 +219,13 @@ async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
 
       // first render for ssg use data from build time.
       // second render for ssg will use data from data loader.
-      if (options?.ssg) {
-        result = cache.get(`${id}_ssg`);
-      } else {
-        result = cache.get(id);
-      }
+      const cacheKey = `${id}${options?.renderMode === 'SSG' ? '_ssg' : ''}`;
+      result = cache.get(cacheKey);
+      // Always fetch new data after cache is been used.
+      cache.delete(cacheKey);
 
       // Already send data request.
-      if (result && !options?.forceRequest) {
+      if (result) {
         const { status, value } = result;
 
         if (status === 'RESOLVED') {

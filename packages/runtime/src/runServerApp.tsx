@@ -1,7 +1,7 @@
 import type { ServerResponse, IncomingMessage } from 'http';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
-import { Action, parsePath } from 'history';
+import { parsePath } from 'react-router-dom';
 import type { Location } from 'history';
 import type {
   AppContext, RouteItem, ServerContext,
@@ -14,26 +14,25 @@ import type {
   AppData,
 } from './types.js';
 import Runtime from './runtime.js';
-import App from './App.js';
 import { AppContextProvider } from './AppContext.js';
-import { AppDataProvider, getAppData } from './AppData.js';
+import { getAppData } from './appData.js';
 import getAppConfig from './appConfig.js';
 import { DocumentContextProvider } from './Document.js';
-import { loadRouteModules, loadRoutesData, getRoutesConfig } from './routes.js';
+import { loadRouteModules } from './routes.js';
+import type { RouteLoaderOptions } from './routes.js';
 import { pipeToString, renderToNodeStream } from './server/streamRender.js';
-import { createStaticNavigator } from './server/navigator.js';
 import type { NodeWritablePiper } from './server/streamRender.js';
 import getRequestContext from './requestContext.js';
 import matchRoutes from './matchRoutes.js';
 import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
-import DefaultAppRouter from './AppRouter.js';
+import ServerRouter from './ServerRouter.js';
 import { renderHTMLToJS } from './renderHTMLToJS.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 
 interface RenderOptions {
   app: AppExport;
   assetsManifest: AssetsManifest;
-  routes: RouteItem[];
+  createRoutes: (options: Pick<RouteLoaderOptions, 'requestContext' | 'renderMode'>) => RouteItem[];
   runtimeModules: RuntimeModules;
   Document: DocumentComponent;
   documentOnly?: boolean;
@@ -100,7 +99,6 @@ export async function renderToHTML(
   renderOptions: RenderOptions,
 ): Promise<Response> {
   const result = await doRender(requestContext, renderOptions);
-
   const { value } = result;
 
   if (typeof value === 'string' || typeof value === 'undefined') {
@@ -193,13 +191,17 @@ async function sendResponse(
   }
 }
 
+function needRevalidate(matchedRoutes: RouteMatch[]) {
+  return matchedRoutes.some(({ route }) => route.exports.includes('dataLoader') && route.exports.includes('staticDataLoader'));
+}
+
 async function doRender(serverContext: ServerContext, renderOptions: RenderOptions): Promise<Response> {
   const { req, res } = serverContext;
   const {
     app,
     basename,
     serverOnlyBasename,
-    routes,
+    createRoutes,
     documentOnly,
     disableFallback,
     assetsManifest,
@@ -213,15 +215,17 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
 
   const requestContext = getRequestContext(location, serverContext);
   const appConfig = getAppConfig(app);
-
+  const routes = createRoutes({
+    requestContext,
+    renderMode,
+  });
   let appData: AppData;
   const appContext: AppContext = {
     appExport: app,
     routes,
     appConfig,
     appData,
-    routesData: null,
-    routesConfig: null,
+    loaderData: {},
     renderMode,
     assetsManifest,
     basename: finalBasename,
@@ -230,7 +234,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     serverData,
   };
   const runtime = new Runtime(appContext, runtimeOptions);
-  runtime.setAppRouter(DefaultAppRouter);
+  runtime.setAppRouter(ServerRouter);
   // Load static module before getAppData.
   if (runtimeModules.statics) {
     await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
@@ -247,22 +251,32 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
 
   // HashRouter loads route modules by the CSR.
   if (appConfig?.router?.type === 'hash') {
-    return renderDocument({ matches: [], renderOptions });
+    return renderDocument({ matches: [], routes, renderOptions });
   }
 
   const matches = matchRoutes(routes, location, finalBasename);
   const routePath = getCurrentRoutePath(matches);
   if (documentOnly) {
-    return renderDocument({ matches, routePath, renderOptions });
+    return renderDocument({ matches, routePath, routes, renderOptions });
   } else if (!matches.length) {
     return handleNotFoundResponse();
   }
 
   try {
-    const routeModules = await loadRouteModules(matches.map(({ route: { id, load } }) => ({ id, load })));
-    const routesData = await loadRoutesData(matches, requestContext, routeModules, { renderMode });
-    const routesConfig = getRoutesConfig(matches, routesData, routeModules);
-    runtime.setAppContext({ ...appContext, routeModules, routesData, routesConfig, routePath, matches, appData });
+    const routeModules = await loadRouteModules(matches.map(({ route: { id, lazy } }) => ({ id, lazy })));
+    const loaderData = {};
+    for (const routeId in routeModules) {
+      const { loader } = routeModules[routeId];
+      if (loader) {
+        const { data, pageConfig } = await loader();
+        loaderData[routeId] = {
+          data,
+          pageConfig,
+        };
+      }
+    }
+    const revalidate = renderMode === 'SSG' && needRevalidate(matches);
+    runtime.setAppContext({ ...appContext, revalidate, routeModules, loaderData, routePath, matches, appData });
     if (runtimeModules.commons) {
       await Promise.all(runtimeModules.commons.map(m => runtime.loadModule(m)).filter(Boolean));
     }
@@ -288,7 +302,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
       throw err;
     }
     console.error('Warning: render server entry error, downgrade to csr.', err);
-    return renderDocument({ matches, routePath, renderOptions, downgrade: true });
+    return renderDocument({ matches, routePath, renderOptions, routes, downgrade: true });
   }
 }
 
@@ -306,7 +320,6 @@ interface RenderServerEntry {
   location: Location;
   renderOptions: RenderOptions;
 }
-
 /**
  * Render App by SSR.
  */
@@ -320,39 +333,32 @@ async function renderServerEntry(
 ): Promise<Response> {
   const { Document } = renderOptions;
   const appContext = runtime.getAppContext();
-  const { appData, routePath } = appContext;
-  const staticNavigator = createStaticNavigator();
+  const { routes, routePath, loaderData, basename } = appContext;
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
-  const RouteWrappers = runtime.getWrappers();
   const AppRouter = runtime.getAppRouter();
-
-  const documentContext = {
-    main: <App
-      action={Action.Pop}
-      location={location}
-      navigator={staticNavigator}
-      static
-      RouteWrappers={RouteWrappers}
-      AppRouter={AppRouter}
-    />,
+  const routerContext = {
+    matches, basename, loaderData, location,
   };
 
+  const documentContext = {
+    main: (
+      <AppRouter routes={routes} routerContext={routerContext} />
+    ),
+  };
   const element = (
-    <AppDataProvider value={appData}>
+    <AppContextProvider value={appContext}>
       <AppRuntimeProvider>
-        <AppContextProvider value={appContext}>
-          <DocumentContextProvider value={documentContext}>
-            <Document pagePath={routePath} />
-          </DocumentContextProvider>
-        </AppContextProvider>
+        <DocumentContextProvider value={documentContext}>
+          <Document pagePath={routePath} />
+        </DocumentContextProvider>
       </AppRuntimeProvider>
-    </AppDataProvider>
+    </AppContextProvider>
   );
 
   const pipe = renderToNodeStream(element);
 
   const fallback = () => {
-    return renderDocument({ matches, routePath, renderOptions, downgrade: true });
+    return renderDocument({ matches, routePath, renderOptions, routes, downgrade: true });
   };
 
   return {
@@ -366,6 +372,7 @@ async function renderServerEntry(
 interface RenderDocumentOptions {
   matches: RouteMatch[];
   renderOptions: RenderOptions;
+  routes: RouteItem[];
   routePath?: string;
   downgrade?: boolean;
 }
@@ -379,10 +386,10 @@ function renderDocument(options: RenderDocumentOptions): Response {
     renderOptions,
     routePath,
     downgrade,
+    routes,
   }: RenderDocumentOptions = options;
 
   const {
-    routes,
     assetsManifest,
     app,
     Document,
@@ -391,24 +398,24 @@ function renderDocument(options: RenderDocumentOptions): Response {
     serverData,
   } = renderOptions;
 
-  const routesData = null;
   const appData = null;
   const appConfig = getAppConfig(app);
 
-  const matchedRoutesConfig = {};
+  const loaderData = {};
   matches.forEach(async (match) => {
     const { id } = match.route;
     const pageConfig = routesConfig[id];
 
-    matchedRoutesConfig[id] = pageConfig ? pageConfig({}) : {};
+    loaderData[id] = {
+      pageConfig: pageConfig ? pageConfig({}) : {},
+    };
   });
 
   const appContext: AppContext = {
     assetsManifest,
     appConfig,
     appData,
-    routesData,
-    routesConfig: matchedRoutesConfig,
+    loaderData,
     matches,
     routes,
     documentOnly: true,

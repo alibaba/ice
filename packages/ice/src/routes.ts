@@ -70,15 +70,35 @@ export function getRoutesDefinition(nestRouteManifest: NestedRouteManifest[], la
       routeImports.push(`import * as ${routeSpecifier} from '${formatPath(componentPath)}';`);
       loadStatement = routeSpecifier;
     }
+    const component = `Component: () => WrapRouteComponent({
+          routeId: '${id}',
+          isLayout: ${layout},
+          routeExports: ${lazy ? 'componentModule' : loadStatement},
+        })`;
+    const loader = `loader: createRouteLoader({
+          routeId: '${id}',
+          requestContext,
+          renderMode,
+          module: ${lazy ? 'componentModule' : loadStatement},
+        })`;
     const routeProperties: string[] = [
       `path: '${formatPath(routePath || '')}',`,
-      `load: () => ${loadStatement},`,
+      `async lazy() {
+      ${lazy ? `const componentModule = await ${loadStatement}` : ''};
+      return {
+        ${lazy ? '...componentModule' : `...${loadStatement}`},
+        ${component},
+        ${loader},
+      };
+    },`,
+      // Empty errorElement to avoid default ui provided by react-router.
+      'ErrorBoundary: RouteErrorComponent,',
       `componentName: '${componentName}',`,
       `index: ${index},`,
       `id: '${id}',`,
       'exact: true,',
       `exports: ${JSON.stringify(exports)},`,
-    ];
+    ].filter(Boolean);
 
     if (layout) {
       routeProperties.push('layout: true,');
