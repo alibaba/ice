@@ -8,5 +8,5 @@ export default defineAppConfig(() => ({
 }));
 
 export const i18nConfig = defineI18nConfig(() => ({
-  // blockCookie: true,
+  // disabledCookie: true,
 }));
