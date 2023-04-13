@@ -240,7 +240,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   const hasExportAppData = (await getFileExports({ rootDir, file: 'src/app' })).includes('dataLoader');
   const csr = !userConfig.ssr && !userConfig.ssg;
-  // TODO: routesInfo.routesCount need to be updated
+
   const disableRouter = userConfig?.optimization?.router && routesInfo.routesCount <= 1;
   let taskAlias = {};
   if (disableRouter) {

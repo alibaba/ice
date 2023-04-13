@@ -6,6 +6,5 @@ import { LOCALE_COOKIE_NAME } from '../constants.js';
  */
 export default function setLocaleToCookie(locale: string) {
   const cookies = new Cookies();
-  // TODO: support cookie block
   cookies.set(LOCALE_COOKIE_NAME, locale, { path: '/' });
 }
