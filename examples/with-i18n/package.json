@@ -20,7 +20,6 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.2",
     "express": "^4.17.3",
-    "ts-node": "^10.9.1",
     "tslib": "^2.5.0",
     "tsx": "^3.12.1"
   }
