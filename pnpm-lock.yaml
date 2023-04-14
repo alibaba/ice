@@ -1430,8 +1430,8 @@ importers:
       fs-extra: 10.1.0
       history: 5.3.0
       htmlparser2: 8.0.1
-      semver: 7.4.0
       react-router-dom: 6.10.0_biqbaboplfbrettd7655fr4n2y
+      semver: 7.4.0
     devDependencies:
       '@remix-run/web-fetch': 4.3.3
       '@types/react': 18.0.28
