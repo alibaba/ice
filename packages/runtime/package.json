@@ -21,7 +21,8 @@
     "esm",
     "!esm/**/*.map",
     "templates",
-    "*.d.ts"
+    "*.d.ts",
+    "scripts"
   ],
   "author": "ICE",
   "license": "MIT",
@@ -30,7 +31,8 @@
   "homepage": "https://v3.ice.work",
   "scripts": {
     "watch": "tsc -w",
-    "build": "tsc"
+    "build": "tsc",
+    "postinstall": "node ./scripts/postinstall.mjs"
   },
   "devDependencies": {
     "@types/react": "^18.0.8",
@@ -48,7 +50,8 @@
     "fs-extra": "^10.0.0",
     "history": "^5.3.0",
     "htmlparser2": "^8.0.1",
-    "react-router-dom": "6.10.0"
+    "react-router-dom": "6.10.0",
+    "semver": "^7.4.0"
   },
   "peerDependencies": {
     "react": "^18.1.0",
