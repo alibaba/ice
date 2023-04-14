@@ -5,20 +5,20 @@ import type { Location } from 'history';
 import type { RouteObject } from 'react-router-dom';
 import { matchRoutes as originMatchRoutes } from 'react-router-dom';
 import type { RouteItem, RouteMatch } from './types.js';
-import { matchRoutes as matchRoutesSingle } from './single-router.js';
+import { matchRoutes as matchRoutesSingle } from './singleRouter.js';
 
 export default function matchRoutes(
-  routes: RouteItem[],
+  routes: unknown[],
   location: Partial<Location> | string,
   basename?: string,
 ): RouteMatch[] {
   const matchRoutesFn = process.env.ICE_CORE_ROUTER === 'true' ? originMatchRoutes : matchRoutesSingle;
-  let matches = matchRoutesFn(routes as unknown as RouteObject[], location, basename);
+  let matches = matchRoutesFn(routes as RouteObject[], location, basename);
   if (!matches) return [];
   return matches.map(({ params, pathname, pathnameBase, route }) => ({
     params,
     pathname,
-    route: route as unknown as RouteItem,
+    route: route as RouteItem,
     pathnameBase,
   }));
 }

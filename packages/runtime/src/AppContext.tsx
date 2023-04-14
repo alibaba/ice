@@ -10,9 +10,15 @@ function useAppContext() {
   return value;
 }
 
+function useAppData() {
+  const value = React.useContext(Context);
+  return value.appData;
+}
+
 const AppContextProvider = Context.Provider;
 
 export {
   useAppContext,
+  useAppData,
   AppContextProvider,
 };

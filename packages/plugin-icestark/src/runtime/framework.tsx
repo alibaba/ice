@@ -4,10 +4,12 @@ import type { RuntimePlugin, AppRouterProps } from '@ice/runtime/types';
 import type { RouteInfo, AppConfig } from '../types';
 
 const { useState, useEffect } = React;
+
 const runtime: RuntimePlugin = ({ getAppRouter, setAppRouter, appContext }) => {
   const { appExport, appData } = appContext;
   const OriginalRouter = getAppRouter();
   const { layout, getApps, appRouter } = appExport?.icestark || {};
+
   if (getApps) {
     const FrameworkRouter = (props: AppRouterProps) => {
       const [routeInfo, setRouteInfo] = useState<RouteInfo>({});
@@ -62,7 +64,23 @@ const runtime: RuntimePlugin = ({ getAppRouter, setAppRouter, appContext }) => {
                 path="/"
                 location={props.location}
                 render={() => {
-                  return <OriginalRouter {...props} />;
+                  const { routerContext } = props;
+                  routerContext.routes = [
+                    ...routerContext.routes,
+                    {
+                      path: '*',
+                      Component: () => (
+                        process.env.NODE_ENV === 'development'
+                          ? <div>Add $.tsx to folder pages as a 404 component</div>
+                          : null
+                        ),
+                    },
+                  ];
+                  const routerProps = {
+                    ...props,
+                    routerContext,
+                  };
+                  return <OriginalRouter {...routerProps} />;
                 }}
               />
             </AppRouter>
