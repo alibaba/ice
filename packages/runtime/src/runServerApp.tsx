@@ -70,12 +70,15 @@ export async function renderToEntry(
   const result = await renderToHTML(requestContext, renderOptions);
   const { value } = result;
 
-  let jsOutput;
+  let jsOutput,
+sourceMap;
   const {
     distType = ['html'],
   } = renderOptions;
   if (value && distType.includes('javascript')) {
-    jsOutput = await renderHTMLToJS(value);
+    const res = await renderHTMLToJS(value);
+    jsOutput = res.jsOutput;
+    sourceMap = res.sourceMap;
   }
 
   let htmlOutput;
@@ -86,6 +89,7 @@ export async function renderToEntry(
   return {
     ...htmlOutput,
     jsOutput,
+    sourceMap,
   };
 }
 

@@ -50,6 +50,7 @@ export default async function generateEntry(options: Options): Promise<EntryResu
     const {
       htmlOutput,
       jsOutput,
+      sourceMap,
     } = await renderEntry({ routePath, serverEntry, documentOnly, renderMode, distType });
     const generateOptions = { rootDir, routePath, outputDir };
     if (htmlOutput) {
@@ -57,6 +58,15 @@ export default async function generateEntry(options: Options): Promise<EntryResu
       await writeFile(
         path,
         htmlOutput,
+      );
+      outputPaths.push(path);
+    }
+
+    if (sourceMap) {
+      const path = await generateFilePath({ ...generateOptions, type: 'js.map' });
+      await writeFile(
+        path,
+        jsOutput,
       );
       outputPaths.push(path);
     }
@@ -81,7 +91,7 @@ const writeFile = async (file: string, content: string) => {
   await fse.writeFile(file, content);
 };
 
-function formatFilePath(routePath: string, type: 'js' | 'html'): string {
+function formatFilePath(routePath: string, type: 'js' | 'html' | 'js.map'): string {
   // Win32 do not support file name start with ':' and '*'.
   return routePath === '/' ? `index.${type}` : `${routePath.replace(/\/(:|\*)/g, '/$')}.${type}`;
 }
@@ -96,7 +106,7 @@ async function generateFilePath(
     rootDir: string;
     routePath: string;
     outputDir: string;
-    type: 'js' | 'html';
+    type: 'js' | 'html' | 'js.map' ;
   },
 ) {
   const fileName = formatFilePath(routePath, type);
@@ -134,6 +144,7 @@ async function renderEntry(
   const {
     value,
     jsOutput,
+    sourceMap,
   } = await render(serverContext, {
     renderMode,
     documentOnly,
@@ -145,5 +156,6 @@ async function renderEntry(
   return {
     htmlOutput: value,
     jsOutput,
+    sourceMap,
   };
 }

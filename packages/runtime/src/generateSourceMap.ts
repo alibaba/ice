@@ -1,12 +1,12 @@
 import fse from 'fs-extra';
 import { SourceMapConsumer, SourceMapGenerator } from 'source-map';
 
-
-export function generateSourceMap({
+export function generate({
+  fileName = '',
   sourceMapList = [],
 }) {
   const generator = new SourceMapGenerator({
-    file: 'home.js.map',
+    file: fileName,
     sourceRoot: '',
   });
 
@@ -38,5 +38,6 @@ export function generateSourceMap({
     });
   });
 
+  fse.writeFileSync('', generator.toJSON());
   return generator.toJSON();
 }

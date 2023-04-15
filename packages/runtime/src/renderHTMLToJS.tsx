@@ -4,6 +4,7 @@ import * as htmlparser2 from 'htmlparser2';
 import ejs from 'ejs';
 import fse from 'fs-extra';
 import __createElement from './domRender.js';
+import { generate } from './generateSourceMap.js';
 
 let dirname;
 if (typeof __dirname === 'string') {
@@ -71,5 +72,11 @@ export function renderHTMLToJS(html) {
     extraScript,
   });
 
-  return jsOutput;
+  // Generate souceMap for entry js.
+  const sourceMap = generate({});
+
+  return {
+    jsOutput,
+    sourceMap,
+  };
 }
