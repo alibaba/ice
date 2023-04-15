@@ -3,14 +3,14 @@ import { SourceMapConsumer, SourceMapGenerator } from 'source-map';
 
 export function generate({
   fileName = '',
-  sourceMapList = [],
+  fileList = [],
 }) {
   const generator = new SourceMapGenerator({
     file: fileName,
     sourceRoot: '',
   });
 
-  sourceMapList.forEach((content) => {
+  fileList.forEach((content) => {
     SourceMapConsumer.with(content, null, consumer => {
       // consumer.allGeneratedPositionsFor()
       // Set content by source.
