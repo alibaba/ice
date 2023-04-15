@@ -281,6 +281,24 @@ describe('parse manifest', async () => {
     expect(manifest?.app_worker?.url).toBe('https://cdn-path.com/pha-worker.js');
   });
 
+  it('multiple should work with frames', async () => {
+    const phaManifest = {
+      routes: [
+        'home',
+        'about',
+        {
+          defaultFrameIndex: 0,
+          frames: ['home', 'about'],
+        },
+      ],
+    };
+
+    const manifest = await parseManifest(phaManifest, options);
+    const remultipleManifests = await getMultipleManifest(manifest);
+
+    expect(remultipleManifests['home']?.pages![0]?.frames?.length).toBe(2);
+  });
+
   it('should work with enable pull refresh', async () => {
     const phaManifest = {
       appWorker: {
