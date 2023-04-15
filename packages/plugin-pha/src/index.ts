@@ -19,6 +19,10 @@ export type Compiler = (options: {
 interface PluginOptions {
   template?: boolean;
   preload?: boolean;
+  dataLoader?: {
+    // Dynamic of dataLoader config will build the dataLoader into the app worker.
+    dynamic: boolean;
+  };
 }
 
 function getDevPath(url: string): string {
@@ -31,7 +35,14 @@ const plugin: Plugin<PluginOptions> = (options) => ({
     if (!excuteServerEntry) {
       throw new Error('PHA plugin requires excuteServerEntry, Please upgrade @ice/app to latest version (>= 3.1.5).');
     }
-    const { template = true, preload = false } = options || {};
+    const {
+      template = true,
+      preload = false,
+      dataLoader = {
+        dynamic: true,
+      },
+    } = options || {};
+
     const { command, rootDir } = context;
 
     const logger = createLogger('PHA');
@@ -71,6 +82,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
 
       generator.addRenderFile(path.join(__dirname, '../template/appWorker.ejs'), 'appWorker.ts', {
         appWorkerPath,
+        dynamic: dataLoader.dynamic,
       });
 
       // Need absolute path for pha dev.
