@@ -54,6 +54,8 @@ export async function renderHTMLToJS(html) {
         if (attribs['data-sourcemap']) {
           sourceMapInfo.sourceMapFileList.push(attribs['data-sourcemap']);
         }
+
+        delete attribs['data-sourcemap'];
       } else {
         resChildren = node.children.map(parse);
       }
