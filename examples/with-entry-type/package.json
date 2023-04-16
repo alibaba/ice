@@ -1,0 +1,24 @@
+{
+  "name": "@examples/with-entry-type",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "start": "ice start --target testTarget",
+    "build": "ice build --target testTarget"
+  },
+  "description": "",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@ice/app": "workspace:*",
+    "@ice/plugin-pha": "workspace:*",
+    "@ice/runtime": "workspace:*",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.2",
+    "webpack": "^5.73.0"
+  }
+}
