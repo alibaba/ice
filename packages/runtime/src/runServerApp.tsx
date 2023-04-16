@@ -70,8 +70,8 @@ export async function renderToEntry(
   const result = await renderToHTML(requestContext, renderOptions);
   const { value } = result;
 
-  let jsOutput,
-sourceMap;
+  let jsOutput;
+  let sourceMap;
   const {
     distType = ['html'],
   } = renderOptions;

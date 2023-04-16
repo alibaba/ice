@@ -66,7 +66,7 @@ export default async function generateEntry(options: Options): Promise<EntryResu
       const path = await generateFilePath({ ...generateOptions, type: 'js.map' });
       await writeFile(
         path,
-        jsOutput,
+        sourceMap,
       );
       outputPaths.push(path);
     }

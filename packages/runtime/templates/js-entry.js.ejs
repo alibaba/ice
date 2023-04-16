@@ -1,12 +1,10 @@
 (function () {
   <%- createElement %>
-
   <% if (head && head.children) {-%>
   <%- JSON.stringify(head.children) %>.forEach(ele => {
     __ICE__CREATE_ELEMENT(ele, document.head);
   });
   <% } -%>
-
   <% if (body && body.children) {-%>
   <%- JSON.stringify(body.children) %>.forEach(ele => {
   __ICE__CREATE_ELEMENT(ele, document.body);

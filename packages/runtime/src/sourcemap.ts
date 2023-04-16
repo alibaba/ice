@@ -3,16 +3,18 @@ import { SourceMapConsumer, SourceMapGenerator } from 'source-map';
 
 export function generateSourceMap({
   fileName = '',
-  fileList = [],
+  sourceMapFileList = [],
 }) {
   const generator = new SourceMapGenerator({
     file: fileName,
     sourceRoot: '',
   });
 
-  fileList.forEach((content) => {
+  sourceMapFileList.forEach((sourceMapFile, fileIndex) => {
+    if (!fse.existsSync(sourceMapFile)) return;
+
+    const content = fse.readFileSync(sourceMapFile, 'utf-8');
     SourceMapConsumer.with(content, null, consumer => {
-      // consumer.allGeneratedPositionsFor()
       // Set content by source.
       consumer.sources.forEach((source) => {
         generator.setSourceContent(source, consumer.sourceContentFor(source));
@@ -24,7 +26,7 @@ export function generateSourceMap({
 
           generator.addMapping({
             generated: {
-              line: mapping.generatedLine,
+              line: mapping.generatedLine + fileIndex + 2,
               column: mapping.generatedColumn,
             },
             original: {

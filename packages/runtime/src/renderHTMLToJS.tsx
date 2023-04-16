@@ -17,7 +17,7 @@ export function renderHTMLToJS(html) {
   let jsOutput = '';
   const dom = htmlparser2.parseDocument(html);
   const sourceMapInfo = {
-    fileList: [],
+    sourceMapFileList: [],
   };
 
   let headElement;
@@ -52,7 +52,7 @@ export function renderHTMLToJS(html) {
       if (name === 'script' && children[0] && children[0].data) {
         extraScript.push(`(function(){${children[0].data}})();`);
         if (attribs['data-sourcemap']) {
-          sourceMapInfo.fileList.push(attribs['data-sourcemap']);
+          sourceMapInfo.sourceMapFileList.push(attribs['data-sourcemap']);
         }
       } else {
         resChildren = node.children.map(parse);
