@@ -18,7 +18,7 @@ import getRequestContext from './requestContext.js';
 import getAppConfig from './appConfig.js';
 import matchRoutes from './matchRoutes.js';
 import DefaultAppRouter from './AppRouter.js';
-import { setFetcher, setWrapper } from './dataLoader.js';
+import { setFetcher, setDecorator } from './dataLoader.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 
 export interface RunClientAppOptions {
@@ -96,7 +96,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
   }
 
   dataLoaderFetcher && setFetcher(dataLoaderFetcher);
-  dataLoaderDecorator && setWrapper(dataLoaderDecorator);
+  dataLoaderDecorator && setDecorator(dataLoaderDecorator);
 
   if (!appData) {
     appData = await getAppData(app, requestContext);
