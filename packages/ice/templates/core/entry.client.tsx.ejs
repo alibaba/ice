@@ -21,7 +21,7 @@ let dataLoaderFetcher = (options) => {
   window.fetch(options.url, options);
 }
 
-let dataLoaderWrapper = (dataLoader) => {
+let dataLoaderDecorator = (dataLoader) => {
   return dataLoader;
 }
 <% } -%>
@@ -38,7 +38,7 @@ const render = (customOptions = {}) => {
     hydrate: <%- hydrate %>,
     memoryRouter: <%- memoryRouter || false %>,
     dataLoaderFetcher,
-    dataLoaderWrapper,
+    dataLoaderDecorator,
     ...customOptions,
     <% if (runtimeOptions.exports) { -%>
     runtimeOptions: {

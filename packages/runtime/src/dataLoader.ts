@@ -12,7 +12,7 @@ interface CachedResult {
 
 interface LoaderOptions {
   fetcher: Function;
-  wrapper: Function;
+  decorator: Function;
   runtimeModules: RuntimeModules['statics'];
   appExport: AppExport;
 }
@@ -44,13 +44,13 @@ export function setFetcher(customFetcher) {
 }
 
 /**
- * Custom wrapper for deal with data loader.
+ * Custom decorator for deal with data loader.
  */
-let dataLoaderWrapper = (dataLoader: Function, id?: number) => {
+let dataLoaderDecorator = (dataLoader: Function, id?: number) => {
   return dataLoader;
 };
-export function setWrapper(customWrapper) {
-  dataLoaderWrapper = customWrapper;
+export function setDecorator(customDecorator) {
+  dataLoaderDecorator = customDecorator;
 }
 
 /**
@@ -138,7 +138,7 @@ export function loadDataByCustomFetcher(config: StaticDataLoader) {
 export function callDataLoader(dataLoader: DataLoaderConfig, requestContext): DataLoaderResult {
   if (Array.isArray(dataLoader)) {
     const loaders = dataLoader.map((loader, index) => {
-      return typeof loader === 'object' ? loadDataByCustomFetcher(loader) : dataLoaderWrapper(loader, index)(requestContext);
+      return typeof loader === 'object' ? loadDataByCustomFetcher(loader) : dataLoaderDecorator(loader, index)(requestContext);
     });
     return Promise.all(loaders);
   }
@@ -147,7 +147,7 @@ export function callDataLoader(dataLoader: DataLoaderConfig, requestContext): Da
     return loadDataByCustomFetcher(dataLoader);
   }
 
-  return dataLoaderWrapper(dataLoader)(requestContext);
+  return dataLoaderDecorator(dataLoader)(requestContext);
 }
 
 const cache = new Map<string, CachedResult>();
@@ -197,7 +197,7 @@ function loadInitialDataInClient(loaders: Loaders) {
 async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
   const {
     fetcher,
-    wrapper,
+    decorator,
     runtimeModules,
     appExport,
   } = options;
@@ -219,8 +219,8 @@ async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
     setFetcher(fetcher);
   }
 
-  if (wrapper) {
-    setWrapper(wrapper);
+  if (decorator) {
+    setDecorator(decorator);
   }
 
   try {

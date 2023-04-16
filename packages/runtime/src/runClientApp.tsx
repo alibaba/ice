@@ -30,7 +30,7 @@ export interface RunClientAppOptions {
   memoryRouter?: boolean;
   runtimeOptions?: Record<string, any>;
   dataLoaderFetcher?: Function;
-  dataLoaderWrapper?: Function;
+  dataLoaderDecorator?: Function;
 }
 
 type History = BrowserHistory | HashHistory | MemoryHistory;
@@ -45,7 +45,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     memoryRouter,
     runtimeOptions,
     dataLoaderFetcher,
-    dataLoaderWrapper,
+    dataLoaderDecorator,
   } = options;
 
   const windowContext: WindowContext = (window as any).__ICE_APP_CONTEXT__ || {};
@@ -96,7 +96,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
   }
 
   dataLoaderFetcher && setFetcher(dataLoaderFetcher);
-  dataLoaderWrapper && setWrapper(dataLoaderWrapper);
+  dataLoaderDecorator && setWrapper(dataLoaderDecorator);
 
   if (!appData) {
     appData = await getAppData(app, requestContext);

@@ -22,7 +22,7 @@ let dataLoaderFetcher = (options) => {
   window.fetch(options.url, options);
 }
 
-let dataLoaderWrapper = (dataLoader) => {
+let dataLoaderDecorator = (dataLoader) => {
   return dataLoader;
 }
 <% } -%>
@@ -36,7 +36,7 @@ const staticRuntimeModules = [
 
 dataLoader.init(loaders, {
   fetcher: dataLoaderFetcher,
-  wrapper: dataLoaderWrapper,
+  wrapper: dataLoaderDecorator,
   runtimeModules: staticRuntimeModules,
   appExport: app,
 });
