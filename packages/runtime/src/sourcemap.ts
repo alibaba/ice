@@ -1,7 +1,7 @@
 import fse from 'fs-extra';
 import { SourceMapConsumer, SourceMapGenerator } from 'source-map';
 
-export function generate({
+export function generateSourceMap({
   fileName = '',
   fileList = [],
 }) {
@@ -38,7 +38,5 @@ export function generate({
     });
   });
 
-  fse.writeFileSync('', generator.toString());
-
-  return generator.toJSON();
+  return generator.toString();
 }
