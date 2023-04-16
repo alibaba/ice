@@ -13,7 +13,7 @@ if (typeof __dirname === 'string') {
   dirname = path.dirname(fileURLToPath(import.meta.url));
 }
 
-export function renderHTMLToJS(html) {
+export async function renderHTMLToJS(html) {
   let jsOutput = '';
   const dom = htmlparser2.parseDocument(html);
   const sourceMapInfo = {
@@ -79,7 +79,7 @@ export function renderHTMLToJS(html) {
   });
 
   // Generate souceMap for entry js.
-  const sourceMap = generateSourceMap(sourceMapInfo);
+  const sourceMap = await generateSourceMap(sourceMapInfo);
 
   return {
     jsOutput,
