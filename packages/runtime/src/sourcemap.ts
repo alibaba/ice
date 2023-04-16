@@ -1,12 +1,13 @@
 import fse from 'fs-extra';
 import { SourceMapConsumer, SourceMapGenerator } from 'source-map';
 
+const BASE_LINE = 27;
+const BASE_COLUYMN = 12;
+
 export function generateSourceMap({
-  fileName = '',
   sourceMapFileList = [],
 }) {
   const generator = new SourceMapGenerator({
-    file: fileName,
     sourceRoot: '',
   });
 
@@ -26,8 +27,8 @@ export function generateSourceMap({
 
           generator.addMapping({
             generated: {
-              line: mapping.generatedLine + fileIndex + 2,
-              column: mapping.generatedColumn,
+              line: mapping.generatedLine + BASE_LINE + fileIndex * 2,
+              column: mapping.generatedColumn + BASE_COLUYMN,
             },
             original: {
               line: mapping.originalLine,
