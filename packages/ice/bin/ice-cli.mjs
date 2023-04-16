@@ -25,7 +25,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .command('build')
     .description('build project')
     .allowUnknownOption()
-    .addOption(new Option('--target <target>', 'set build target').default(WEB).choices(TARGETS))
+    .addOption(new Option('--target <target>', 'set build target').default(WEB))
     .option('--target <target>', 'same as --target', WEB)
     .option('--mode <mode>', 'set mode', 'production')
     .option('--analyzer', 'visualize size of output files', false)
