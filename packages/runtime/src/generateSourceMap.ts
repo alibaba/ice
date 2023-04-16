@@ -38,6 +38,7 @@ export function generate({
     });
   });
 
-  fse.writeFileSync('', generator.toJSON());
+  fse.writeFileSync('', generator.toString());
+
   return generator.toJSON();
 }
