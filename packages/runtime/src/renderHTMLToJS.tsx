@@ -16,6 +16,9 @@ if (typeof __dirname === 'string') {
 export function renderHTMLToJS(html) {
   let jsOutput = '';
   const dom = htmlparser2.parseDocument(html);
+  const sourceMapInfo = {
+    fileList: [],
+  };
 
   let headElement;
   let bodyElement;
@@ -48,6 +51,9 @@ export function renderHTMLToJS(html) {
     if (children) {
       if (name === 'script' && children[0] && children[0].data) {
         extraScript.push(`(function(){${children[0].data}})();`);
+        if (attribs['data-sourcemap']) {
+          sourceMapInfo.fileList.push(attribs['data-sourcemap']);
+        }
       } else {
         resChildren = node.children.map(parse);
       }
@@ -73,7 +79,7 @@ export function renderHTMLToJS(html) {
   });
 
   // Generate souceMap for entry js.
-  const sourceMap = generate({});
+  const sourceMap = generate(sourceMapInfo);
 
   return {
     jsOutput,
