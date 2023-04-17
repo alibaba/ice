@@ -18,7 +18,8 @@
     "!esm/**/*.map",
     "templates",
     "openChrome.applescript",
-    "*.d.ts"
+    "*.d.ts",
+    "scripts"
   ],
   "engines": {
     "node": ">=14.19.0",
@@ -26,7 +27,8 @@
   },
   "scripts": {
     "watch": "tsc -w",
-    "build": "tsc"
+    "build": "tsc",
+    "postinstall": "node ./scripts/postinstall.mjs"
   },
   "author": "ice-admin",
   "license": "MIT",

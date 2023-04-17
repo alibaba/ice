@@ -3,7 +3,7 @@ import { RouterProvider } from 'react-router-dom';
 import { createRouter } from '@remix-run/router';
 import type { AppRouterProps } from './types.js';
 import App from './App.js';
-import { DataContextProvider } from './single-router.js';
+import { DataContextProvider } from './singleRouter.js';
 import { useAppContext } from './AppContext.js';
 
 let router: ReturnType<typeof createRouter> = null;

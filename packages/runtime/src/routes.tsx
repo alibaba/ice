@@ -202,7 +202,6 @@ export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
     if (typeof window !== 'undefined') {
       await updateRoutesConfig(loaderData);
     }
-
     return loaderData;
   };
 }

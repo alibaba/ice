@@ -1,38 +1,38 @@
-import type { RouteMatch, LoaderDatas, LoaderData, RouteConfig } from './types.js';
+import type { RouteMatch, LoadersData, LoaderData, RouteConfig } from './types.js';
 
 export function getMeta(
   matches: RouteMatch[],
-  loaderData: LoaderDatas,
+  loadersData: LoadersData,
 ): React.MetaHTMLAttributes<HTMLMetaElement>[] {
-  return getMergedValue('meta', matches, loaderData) || [];
+  return getMergedValue('meta', matches, loadersData) || [];
 }
 
 export function getLinks(
   matches: RouteMatch[],
-  loaderData: LoaderDatas,
+  loadersData: LoadersData,
 ): React.LinkHTMLAttributes<HTMLLinkElement>[] {
-  return getMergedValue('links', matches, loaderData) || [];
+  return getMergedValue('links', matches, loadersData) || [];
 }
 
 export function getScripts(
   matches: RouteMatch[],
-  loaderData: LoaderDatas,
+  loadersData: LoadersData,
 ): React.ScriptHTMLAttributes<HTMLScriptElement>[] {
-  return getMergedValue('scripts', matches, loaderData) || [];
+  return getMergedValue('scripts', matches, loadersData) || [];
 }
 
-export function getTitle(matches: RouteMatch[], loaderData: LoaderDatas): string {
-  return getMergedValue('title', matches, loaderData);
+export function getTitle(matches: RouteMatch[], loadersData: LoadersData): string {
+  return getMergedValue('title', matches, loadersData);
 }
 
 /**
  * merge value for each matched route
  */
-function getMergedValue(key: string, matches: RouteMatch[], loaderData: LoaderDatas) {
+function getMergedValue(key: string, matches: RouteMatch[], loadersData: LoadersData) {
   let result;
   for (let match of matches) {
     const routeId = match.route.id;
-    const data = loaderData[routeId]?.pageConfig;
+    const data = loadersData[routeId]?.pageConfig;
     const value = data?.[key];
 
     if (Array.isArray(value)) {

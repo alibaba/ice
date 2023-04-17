@@ -77,7 +77,7 @@ export interface DataLoaderOptions {
 
 export type DataLoaderConfig = [Loader, DataLoaderOptions?];
 
-export interface LoaderDatas {
+export interface LoadersData {
   [routeId: string]: LoaderData;
 }
 
@@ -92,7 +92,7 @@ export interface AppContext {
   appData: any;
   serverData?: any;
   assetsManifest?: AssetsManifest;
-  loaderData?: LoaderDatas;
+  loaderData?: LoadersData;
   routeModules?: RouteModules;
   RouteWrappers?: RouteWrapperConfig[];
   routePath?: string;
