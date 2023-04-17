@@ -21,7 +21,7 @@ interface PluginOptions {
   preload?: boolean;
   dataLoader?: {
     // Dynamic of dataLoader config will build the dataLoader into the app worker.
-    dynamic: boolean;
+    useAppWorker: boolean;
   };
 }
 
@@ -39,7 +39,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
       template = true,
       preload = false,
       dataLoader = {
-        dynamic: true,
+        useAppWorker: true,
       },
     } = options || {};
 
