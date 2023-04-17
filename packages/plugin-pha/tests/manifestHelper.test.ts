@@ -80,12 +80,14 @@ describe('transform config keys', () => {
             pageHeader: {
               includedSafeArea: true,
             },
+            downgradeUrl: 'http://www.taobao.com',
           },
         ],
       },
       { isRoot: true },
     );
     expect(manifestJSON.name).toStrictEqual('name');
+    expect(manifestJSON?.pages![0].downgrade_url).toStrictEqual('http://www.taobao.com');
     expect(manifestJSON.offline_resources).toStrictEqual(['//g.alicdn.com/.*']);
     expect(manifestJSON?.pages![0].tab_header).toStrictEqual({ included_safe_area: true });
   });
