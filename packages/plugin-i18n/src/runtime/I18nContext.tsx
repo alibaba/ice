@@ -22,14 +22,14 @@ export const I18nContext = createContext<ContextValue>(null);
 
 I18nContext.displayName = 'I18nContext';
 
-export const I18nProvider = ({
+export function I18nProvider({
   children,
   locales,
   defaultLocale,
   disabledCookie,
   pathname,
   basename,
-}: I18nProvider) => {
+}: I18nProvider) {
   const [locale, updateLocale] = useState<string>(
     normalizeLocalePath({ pathname, basename, locales: locales }).pathLocale || defaultLocale,
   );
@@ -44,7 +44,7 @@ export const I18nProvider = ({
       {children}
     </I18nContext.Provider>
   );
-};
+}
 
 export function useLocale() {
   return useContext(I18nContext);

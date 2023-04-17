@@ -17,10 +17,10 @@ export default function Layout() {
   const changeLocale = (e: RadioChangeEvent) => {
     const localeValue = e.target.value;
     setLocale(localeValue);
-    if (!localeValue) {
-      dayjs.locale('en');
-    } else {
+    if (localeValue) {
       dayjs.locale('zh-cn');
+    } else {
+      dayjs.locale('en');
     }
   };
 

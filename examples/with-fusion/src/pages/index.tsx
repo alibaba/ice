@@ -1,6 +1,5 @@
-import { Button } from '@alifd/next';
+import { Button, DatePicker } from '@alifd/next';
 import '@alifd/next/dist/next.css';
-import { DatePicker } from '@alifd/next';
 import { FormattedMessage } from 'react-intl';
 
 export default function Home() {
