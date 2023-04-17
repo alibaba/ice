@@ -12,15 +12,16 @@ export function createJSXElementFactory(factory: typeof ElementFactory) {
     // Get a shallow copy of props, to avoid mutating the original object.
     let rest = Object.assign({}, props) as any;
     const { onAppear, onDisappear } = rest;
-
-    // Delete props that are not allowed in react.
-    delete rest.onAppear;
-    delete rest.onDisappear;
+    const isRealDOM = typeof type === 'string';
 
     // Compat for props.
-    // Only the dom needs to be transformed, not the components.
-    if (typeof type === 'string') {
+    if (isRealDOM) {
+      // Only the dom needs to be transformed, not the components.
       rest = transformProps(rest);
+
+      // Delete props on real dom that are not allowed in react.
+      delete rest.onAppear;
+      delete rest.onDisappear;
     }
 
     // Compat for style unit.
@@ -39,7 +40,8 @@ export function createJSXElementFactory(factory: typeof ElementFactory) {
     }
 
     // Compat for visibility events.
-    if (isFunction(onAppear) || isFunction(onDisappear)) {
+    // The appear event will only work with real dom.
+    if ((isRealDOM && (isFunction(onAppear) || isFunction(onDisappear)))) {
       // Using React.createElement to instantiate the [VisibilityChange] element.
       return createElement(
         VisibilityChange,

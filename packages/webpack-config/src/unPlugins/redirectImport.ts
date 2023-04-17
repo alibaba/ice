@@ -63,13 +63,13 @@ export function parseRedirectData(data: DeclarationData[]): RedirectData {
 }
 
 export function generateImport(matchedImports: MatchedImports): string {
-  let defaultImport = '';
-  let namedImports = [];
   function parseLocalIdentifier(identifier: string, alias: Record<string, string>): string {
     return alias[identifier] ? `${alias[identifier]} as ${identifier}` : identifier;
   }
   const importStatements = Object.keys(matchedImports).map((source) => {
     const importStatements = matchedImports[source];
+    let defaultImport = '';
+    const namedImports = [];
     importStatements.forEach(({ isDefault, identifier, alias }) => {
       if (isDefault) {
         defaultImport = parseLocalIdentifier(identifier, alias);

@@ -2,6 +2,7 @@ import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { expect, it, describe } from 'vitest';
 import { transformManifestKeys, parseManifest, getAppWorkerUrl, rewriteAppWorker, getMultipleManifest } from '../src/manifestHelpers';
+import * as mockServer from './mockServer.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -79,12 +80,14 @@ describe('transform config keys', () => {
             pageHeader: {
               includedSafeArea: true,
             },
+            downgradeUrl: 'http://www.taobao.com',
           },
         ],
       },
       { isRoot: true },
     );
     expect(manifestJSON.name).toStrictEqual('name');
+    expect(manifestJSON?.pages![0].downgrade_url).toStrictEqual('http://www.taobao.com');
     expect(manifestJSON.offline_resources).toStrictEqual(['//g.alicdn.com/.*']);
     expect(manifestJSON?.pages![0].tab_header).toStrictEqual({ included_safe_area: true });
   });
@@ -255,7 +258,7 @@ describe('parse manifest', async () => {
     publicPath: 'https://cdn-path.com/',
     urlPrefix: 'https://url-prefix.com/',
     routesConfig: (await import(path.join(__dirname, './mockConfig.mjs')))?.default,
-    serverEntry: path.join(__dirname, './mockServer.mjs'),
+    excuteServerEntry: async () => mockServer,
     routeManifest: path.join(__dirname, './route-manifest.json'),
   };
 
@@ -278,6 +281,203 @@ describe('parse manifest', async () => {
     expect(manifest?.pages![1].path).toBe('https://url-prefix.com/about?c=123');
     expect(manifest?.pages![2]?.frames![1].path).toBe('https://m.taobao.com');
     expect(manifest?.app_worker?.url).toBe('https://cdn-path.com/pha-worker.js');
+  });
+
+  it('multiple should work with frames', async () => {
+    const phaManifest = {
+      routes: [
+        'home',
+        'about',
+        {
+          defaultFrameIndex: 0,
+          frames: ['home', 'about'],
+        },
+      ],
+    };
+
+    const manifest = await parseManifest(phaManifest, options);
+    const remultipleManifests = await getMultipleManifest(manifest);
+
+    expect(remultipleManifests['home']?.pages![0]?.frames?.length).toBe(2);
+  });
+
+  it('should work with enable pull refresh', async () => {
+    const phaManifest = {
+      appWorker: {
+        url: 'pha-worker.js',
+      },
+      pullRefresh: {
+        reload: false,
+      },
+      routes: [
+        {
+          path: '/',
+          name: 'home',
+        },
+        {
+          path: '/about',
+          name: 'about',
+        },
+        {
+          path: '/',
+          name: 'frames',
+          frames: [
+            {
+              name: 'frame1',
+              url: 'https://m.taobao.com',
+            },
+            {
+              name: 'frame2',
+              url: 'https://m.taobao.com',
+            },
+          ],
+        },
+      ],
+    };
+    const manifest = await parseManifest(phaManifest, options);
+    expect(manifest?.pages![0].enable_pull_refresh).toBe(true);
+    expect(manifest?.pages![1].enable_pull_refresh).toBe(true);
+    expect(manifest?.pages![2].enable_pull_refresh).toBe(true);
+  });
+
+  it('should work with enable pull refresh', async () => {
+    const phaManifest = {
+      appWorker: {
+        url: 'pha-worker.js',
+      },
+      pullRefresh: {
+        reload: true,
+      },
+      routes: [
+        {
+          path: '/',
+          name: 'home',
+          pullRefresh: {
+            reload: true,
+          },
+        },
+        {
+          path: '/about',
+          name: 'about',
+
+        },
+        {
+          path: '/',
+          name: 'frames',
+          frames: [
+            {
+              name: 'frame1',
+              url: 'https://m.taobao.com',
+              pullRefresh: {
+                reload: true,
+              },
+            },
+            {
+              name: 'frame2',
+              url: 'https://m.taobao.com',
+              pullRefresh: {
+                reload: true,
+              },
+            },
+          ],
+        },
+      ],
+    };
+    const manifest = await parseManifest(phaManifest, options);
+    expect(manifest?.pages![0].pull_refresh).toBe(true);
+    expect(manifest?.pages![1].pull_refresh).toBe(true);
+    expect(manifest?.pages![2].frames![0].pull_refresh).toBe(true);
+    expect(manifest?.pages![2].frames![1].pull_refresh).toBe(true);
+  });
+
+  it('pull refresh of manifest should be default value of page', async () => {
+    const phaManifest = {
+      appWorker: {
+        url: 'pha-worker.js',
+      },
+      pullRefresh: {
+        reload: true,
+      },
+      routes: [
+        {
+          path: '/',
+          name: 'home',
+        },
+        {
+          path: '/about',
+          name: 'about',
+        },
+      ],
+    };
+    const manifest = await parseManifest(phaManifest, options);
+    expect(manifest?.pages![0].pull_refresh).toBe(true);
+    expect(manifest?.pages![1].pull_refresh).toBe(true);
+  });
+
+  it('enable pull refresh of manifest should be default value of page', async () => {
+    const phaManifest = {
+      appWorker: {
+        url: 'pha-worker.js',
+      },
+      pullRefresh: true,
+      routes: [
+        {
+          path: '/',
+          name: 'home',
+        },
+        {
+          path: '/about',
+          name: 'about',
+        },
+      ],
+    };
+    const manifest = await parseManifest(phaManifest, options);
+    expect(manifest?.pages![0].enable_pull_refresh).toBe(true);
+    expect(manifest?.pages![1].enable_pull_refresh).toBe(true);
+  });
+
+  it('enable pull refresh of page should cover value of page', async () => {
+    const phaManifest = {
+      appWorker: {
+        url: 'pha-worker.js',
+      },
+      pullRefresh: {
+        reload: true,
+      },
+      routes: [
+        {
+          path: '/',
+          name: 'home',
+          pullRefresh: {
+            reload: true,
+          },
+        },
+        {
+          path: '/about',
+          name: 'about',
+        },
+      ],
+    };
+    const manifest = await parseManifest(phaManifest, options);
+    expect(manifest?.pages![0].pull_refresh).toBe(true);
+    expect(manifest?.pages![1].pull_refresh).toBe(true);
+  });
+
+  it('should work with enable pull refresh', async () => {
+    const phaManifest = {
+      appWorker: {
+        url: 'pha-worker.js',
+      },
+      routes: [
+        {
+          path: '/',
+          name: 'home',
+          pullRefresh: true,
+        },
+      ],
+    };
+    const manifest = await parseManifest(phaManifest, options);
+    expect(manifest?.pages![0].enable_pull_refresh).toBe(true);
   });
 
   it('should set document to manifest', async () => {
@@ -598,7 +798,7 @@ describe('get multiple manifest', async () => {
     publicPath: 'https://cdn-path.com/',
     urlPrefix: 'https://url-prefix.com/',
     routesConfig: (await import(path.join(__dirname, './mockConfig.mjs')))?.default,
-    serverEntry: path.join(__dirname, './mockServer.mjs'),
+    excuteServerEntry: async () => mockServer,
     routeManifest: path.join(__dirname, './route-manifest.json'),
   };
 

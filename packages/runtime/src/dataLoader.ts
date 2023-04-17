@@ -1,4 +1,4 @@
-import type { DataLoaderConfig, DataLoaderResult, RuntimeModules, AppExport, StaticRuntimePlugin, CommonJsRuntime, StaticDataLoader } from './types.js';
+import type { RequestContext, RenderMode, DataLoaderConfig, DataLoaderResult, RuntimeModules, AppExport, StaticRuntimePlugin, CommonJsRuntime, StaticDataLoader } from './types.js';
 import getRequestContext from './requestContext.js';
 
 interface Loaders {
@@ -18,8 +18,7 @@ interface LoaderOptions {
 }
 
 export interface LoadRoutesDataOptions {
-  ssg?: boolean;
-  forceRequest?: boolean;
+  renderMode: RenderMode;
 }
 
 export function defineDataLoader(dataLoaderConfig: DataLoaderConfig): DataLoaderConfig {
@@ -102,13 +101,13 @@ export function parseTemplate(config: StaticDataLoader) {
     if (item && origin && key && value && value.startsWith('.')) {
       if (key === 'queryParams') {
         // Replace query params.
-        strConfig = strConfig.replace(origin, getQueryParams()[value.substring(1)]);
+        strConfig = strConfig.replace(origin, getQueryParams()[value.substring(1)] || '');
       } else if (key === 'cookie') {
         // Replace cookie.
-        strConfig = strConfig.replace(origin, getCookie()[value.substring(1)]);
+        strConfig = strConfig.replace(origin, getCookie()[value.substring(1)] || '');
       } else if (key === 'storage') {
         // Replace storage.
-        strConfig = strConfig.replace(origin, localStorage.getItem(value.substring(1)));
+        strConfig = strConfig.replace(origin, localStorage.getItem(value.substring(1)) || '');
       }
     }
   });
@@ -135,7 +134,7 @@ export function loadDataByCustomFetcher(config: StaticDataLoader) {
 /**
  * Handle for different dataLoader.
  */
-export function callDataLoader(dataLoader: DataLoaderConfig, requestContext): DataLoaderResult {
+export function callDataLoader(dataLoader: DataLoaderConfig, requestContext: RequestContext): DataLoaderResult {
   if (Array.isArray(dataLoader)) {
     const loaders = dataLoader.map((loader, index) => {
       return typeof loader === 'object' ? loadDataByCustomFetcher(loader) : dataLoaderDecorator(loader, index)(requestContext);
@@ -235,14 +234,13 @@ async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
 
       // first render for ssg use data from build time.
       // second render for ssg will use data from data loader.
-      if (options?.ssg) {
-        result = cache.get(`${id}_ssg`);
-      } else {
-        result = cache.get(id);
-      }
+      const cacheKey = `${id}${options?.renderMode === 'SSG' ? '_ssg' : ''}`;
+      result = cache.get(cacheKey);
+      // Always fetch new data after cache is been used.
+      cache.delete(cacheKey);
 
       // Already send data request.
-      if (result && !options?.forceRequest) {
+      if (result) {
         const { status, value } = result;
 
         if (status === 'RESOLVED') {

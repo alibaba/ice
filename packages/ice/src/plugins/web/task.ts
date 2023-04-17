@@ -2,10 +2,9 @@ import * as path from 'path';
 import { createRequire } from 'module';
 import type { Config } from '@ice/webpack-config/types';
 import { CACHE_DIR, RUNTIME_TMP_DIR } from '../../constant.js';
-import { getRoutePathsFromCache } from '../../utils/getRoutePaths.js';
 
 const require = createRequire(import.meta.url);
-const getWebTask = ({ rootDir, command, dataCache, userConfig }): Config => {
+const getWebTask = ({ rootDir, command, userConfig }): Config => {
   // basic task config of web task
   const defaultLogging = command === 'start' ? 'summary' : 'summary assets';
   const removeExportExprs = ['serverDataLoader', 'staticDataLoader'];
@@ -34,11 +33,7 @@ const getWebTask = ({ rootDir, command, dataCache, userConfig }): Config => {
       '@uni/env': envReplacement,
     },
     swcOptions: {
-      // The dataLoader is built by data-loader
       removeExportExprs,
-      getRoutePaths: () => {
-        return getRoutePathsFromCache(dataCache);
-      },
     },
     assetsManifest: true,
     fastRefresh: command === 'start',

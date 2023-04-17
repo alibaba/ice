@@ -5,17 +5,13 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { expect, it, describe, beforeEach, afterEach, vi } from 'vitest';
-import type { RouteComponent as IRouteComponent } from '../src/types';
-import RouteWrapper from '../src/RouteWrapper';
 import { AppContextProvider } from '../src/AppContext';
 import {
-  filterMatchesToLoad,
-  createRouteElements,
   RouteComponent,
   loadRouteModules,
-  loadRoutesData,
-  getRoutesConfig,
+  createRouteLoader,
   getRoutesPath,
+  WrapRouteComponent,
 } from '../src/routes.js';
 
 describe('routes', () => {
@@ -40,17 +36,33 @@ describe('routes', () => {
     default: () => <></>,
     pageConfig: () => ({ title: 'about' }),
   };
+  const homeLazyItem = {
+    Component: homeItem.default,
+    loader: createRouteLoader({
+      routeId: 'home',
+      module: homeItem,
+      renderMode: 'CSR',
+    }),
+  };
+  const aboutLazyItem = {
+    Component: aboutItem.default,
+    loader: createRouteLoader({
+      routeId: 'about',
+      module: aboutItem,
+      renderMode: 'CSR',
+    }),
+  };
   const routeModules = [
     {
       id: 'home',
-      load: async () => {
-        return homeItem as IRouteComponent;
+      lazy: async () => {
+        return homeLazyItem;
       },
     },
     {
       id: 'about',
-      load: async () => {
-        return aboutItem as IRouteComponent;
+      lazy: async () => {
+        return aboutLazyItem;
       },
     },
   ];
@@ -61,7 +73,7 @@ describe('routes', () => {
       <AppContextProvider value={{
         routeModules: {
           home: {
-            default: () => <div>home</div>,
+            Component: () => <div>home</div>,
           },
         },
       }}
@@ -84,12 +96,38 @@ describe('routes', () => {
     process.env.NODE_ENV = currentEnv;
   });
 
+  it('route WrapRouteComponent', () => {
+    const domstring = renderToString(
+
+      <AppContextProvider
+        // @ts-ignore unnecessary to add app context when test WrapRouteComponent.
+        value={{ RouteWrappers: [{ Wrapper: ({ children }) => <div>wrapper{children}</div>, layout: false }] }}
+      >
+        <WrapRouteComponent routeId="test" isLayout={false} routeExports={{ default: () => <div>home</div> }} />
+      </AppContextProvider>,
+    );
+    expect(domstring).toBe('<div>wrapper<div>home</div></div>');
+  });
+
+  it('route WrapRouteComponent match layout', () => {
+    const domstring = renderToString(
+
+      <AppContextProvider
+      // @ts-ignore unnecessary to add app context when test WrapRouteComponent.
+        value={{ RouteWrappers: [{ Wrapper: ({ children }) => <div>wrapper{children}</div>, layout: false }] }}
+      >
+        <WrapRouteComponent routeId="test" isLayout routeExports={{ default: () => <div>home</div> }} />
+      </AppContextProvider>,
+    );
+    expect(domstring).toBe('<div>home</div>');
+  });
+
   it('load route modules', async () => {
     windowSpy.mockImplementation(() => ({}));
-    const routeModule = await loadRouteModules(routeModules, { home: homeItem });
+    const routeModule = await loadRouteModules(routeModules, {});
     expect(routeModule).toStrictEqual({
-      home: homeItem,
-      about: aboutItem,
+      home: homeLazyItem,
+      about: aboutLazyItem,
     });
   });
 
@@ -97,7 +135,7 @@ describe('routes', () => {
     const routeModule = await loadRouteModules([{
       id: 'error',
       // @ts-ignore
-      load: async () => {
+      lazy: async () => {
         throw new Error('err');
         return {};
       },
@@ -108,58 +146,52 @@ describe('routes', () => {
   });
 
   it('load route data for SSG', async () => {
-    const routeModule = await loadRouteModules(routeModules);
-    const routesDataSSG = await loadRoutesData(
-      // @ts-ignore
-      [{ route: routeModules[0] }],
-      {},
-      routeModule,
-      {
-        renderMode: 'SSG',
-      },
-    );
+    const routesDataSSG = await createRouteLoader({
+      routeId: 'home',
+      module: homeItem,
+      renderMode: 'SSG',
+    })();
 
     expect(routesDataSSG).toStrictEqual({
-      home: {
+      data: {
         type: 'getStaticData',
+      },
+      pageConfig: {
+        title: 'home',
       },
     });
   });
 
   it('load route data for SSR', async () => {
-    const routeModule = await loadRouteModules(routeModules);
-    const routesDataSSR = await loadRoutesData(
-      // @ts-ignore
-      [{ route: routeModules[0] }],
-      {},
-      routeModule,
-      {
-        renderMode: 'SSR',
-      },
-    );
+    const routesDataSSR = await createRouteLoader({
+      routeId: 'home',
+      module: homeItem,
+      renderMode: 'SSR',
+    })();
 
     expect(routesDataSSR).toStrictEqual({
-      home: {
+      data: {
         type: 'getServerData',
+      },
+      pageConfig: {
+        title: 'home',
       },
     });
   });
 
   it('load route data for CSR', async () => {
-    const routeModule = await loadRouteModules(routeModules);
-    const routesDataCSR = await loadRoutesData(
-      // @ts-ignore
-      [{ route: routeModules[0] }],
-      {},
-      routeModule,
-      {
-        renderMode: 'CSR',
-      },
-    );
+    const routesDataCSR = await createRouteLoader({
+      routeId: 'home',
+      module: homeItem,
+      renderMode: 'CSR',
+    })();
 
     expect(routesDataCSR).toStrictEqual({
-      home: {
+      data: {
         type: 'getData',
+      },
+      pageConfig: {
+        title: 'home',
       },
     });
   });
@@ -170,180 +202,35 @@ describe('routes', () => {
         getData: async (id) => ({ id: `${id}_data` }),
       },
     }));
-    const routesData = await loadRoutesData(
-      // @ts-ignore
-      [{ route: routeModules[0] }],
-      {},
-      {},
-      { renderMode: 'SSG' },
-    );
-    expect(routesData).toStrictEqual({
-      home: {
+    const routesDataCSR = await createRouteLoader({
+      routeId: 'home',
+      module: homeItem,
+      renderMode: 'CSR',
+    })();
+
+    expect(routesDataCSR).toStrictEqual({
+      data: {
         id: 'home_data',
       },
-    });
-  });
-
-  it('get routes config', async () => {
-    const routeModule = await loadRouteModules(routeModules);
-    const routesConfig = getRoutesConfig(
-      // @ts-ignore
-      [{ route: routeModules[0] }],
-      { home: {} },
-      routeModule,
-    );
-    expect(routesConfig).toStrictEqual({
-      home: {
+      pageConfig: {
         title: 'home',
       },
     });
   });
 
-  it('get routes config when failed get route module', async () => {
-    const routesConfig = getRoutesConfig(
-      // @ts-ignore
-      [{ route: routeModules[0] }],
-      { home: {} },
-      {},
-    );
-    expect(routesConfig).toStrictEqual({
-      home: {},
+  it('get routes config without data', async () => {
+    const routesDataCSR = await createRouteLoader({
+      routeId: 'about',
+      module: aboutItem,
+      renderMode: 'CSR',
+    })();
+
+    expect(routesDataCSR).toStrictEqual({
+      data: undefined,
+      pageConfig: {
+        title: 'about',
+      },
     });
-  });
-
-  it('create route element', () => {
-    const routeElement = createRouteElements([{
-      path: '/',
-      id: 'home',
-      componentName: 'home',
-    }]);
-    expect(routeElement).toEqual([{
-      componentName: 'home',
-      element: (
-        <RouteWrapper id="home">
-          <RouteComponent
-            id="home"
-          />
-        </RouteWrapper>
-      ),
-      id: 'home',
-      path: '/',
-    }]);
-  });
-
-  it('create route with children', () => {
-    const routeElement = createRouteElements([{
-      path: '/',
-      id: 'home',
-      componentName: 'home',
-      children: [{
-        path: '/about',
-        id: 'about',
-        componentName: 'about',
-      }],
-    }]);
-    expect(routeElement).toEqual([{
-      componentName: 'home',
-      element: (
-        <RouteWrapper id="home">
-          <RouteComponent
-            id="home"
-          />
-        </RouteWrapper>
-      ),
-      children: [{
-        componentName: 'about',
-        element: (
-          <RouteWrapper id="about">
-            <RouteComponent
-              id="about"
-            />
-          </RouteWrapper>
-        ),
-        id: 'about',
-        path: '/about',
-      }],
-      id: 'home',
-      path: '/',
-    }]);
-  });
-
-  it('filter new matches', () => {
-    const oldMatches = [
-      {
-        pathname: '/',
-        route: {
-          id: '/page/layout',
-        },
-      },
-      {
-        pathname: '/',
-        route: {
-          id: '/page/home',
-        },
-      },
-    ];
-
-    const newMatches = [
-      {
-        pathname: '/',
-        route: {
-          id: '/page/layout',
-        },
-      },
-      {
-        pathname: '/about',
-        route: {
-          id: '/page/about',
-        },
-      },
-    ];
-
-    // @ts-ignore
-    const matches = filterMatchesToLoad(oldMatches, newMatches);
-
-    expect(
-      matches,
-    ).toEqual([{
-      pathname: '/about',
-      route: {
-        id: '/page/about',
-      },
-    }]);
-  });
-
-  it('filter matches with path changed', () => {
-    const oldMatches = [
-      {
-        pathname: '/users/123',
-        route: {
-          id: '/users/123',
-        },
-      },
-    ];
-
-    const newMatches = [
-      {
-        pathname: '/users/456',
-        route: {
-          id: '/users/456',
-        },
-      },
-    ];
-
-    // @ts-ignore
-    const matches = filterMatchesToLoad(oldMatches, newMatches);
-
-    expect(
-      matches,
-    ).toEqual([
-      {
-        pathname: '/users/456',
-        route: {
-          id: '/users/456',
-        },
-      },
-    ]);
   });
 
   it('get routes flatten path', () => {

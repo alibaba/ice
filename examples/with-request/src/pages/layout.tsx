@@ -1,6 +1,9 @@
-import { Outlet, defineDataLoader } from 'ice';
+import { Outlet, defineDataLoader, useData, request } from 'ice';
 
 export default () => {
+  const data = useData();
+  console.log(data);
+
   return (
     <div>
       <h1>ICE 3.0 Layout</h1>
@@ -21,12 +24,12 @@ export function pageConfig() {
   };
 }
 
-export const dataLoader = defineDataLoader(() => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        layout: true,
-      });
-    }, 1 * 100);
-  });
+export const dataLoader = defineDataLoader(async () => {
+  try {
+    const data = await request('/data');
+    return data;
+  } catch (e) {
+    console.error(e);
+    return {};
+  }
 });

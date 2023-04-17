@@ -1,11 +1,9 @@
 ---
-title: 使用 antd 组件
+title: 使用 Ant Design 组件
+order: 0701
 ---
-:::tip
-小程序端不支持该能力。
-:::
 
-icejs 项目中可以直接使用 antd 组件，关于 antd 组件按需引入的问题说明：
+ice.js 项目中可以直接使用 antd 组件，关于 antd 组件按需引入的问题说明：
 - 脚本代码按需引入：不推荐使用 babel-plugin-import，社区主流工具 Webpack/Vite 等都已支持 tree-shaking，构建时默认都会做按需的引入
 - 样式代码按需引入：结合社区讨论 [issue](https://github.com/ant-design/ant-design/issues/16600#issuecomment-492572520)，大多数场景下样式按需引入并无太大意义，反而会引入其他工程问题，因此推荐组件样式在项目级全量引入
 
@@ -16,6 +14,10 @@ icejs 项目中可以直接使用 antd 组件，关于 antd 组件按需引入�
 
 body {}
 ```
+
+:::caution
+以上全量样式引入针对 and 版本 4.x 及以下，antd 5.x 开始使用 css in js 的方式引入样式，因此不再需要全量引入 css 文件。
+:::
 
 ## 开启插件
 

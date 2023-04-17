@@ -1,5 +1,58 @@
 # Changelog
 
+## 3.1.6
+
+### Patch Changes
+
+- Updated dependencies [deda06de]
+  - @ice/bundles@0.1.8
+  - @ice/webpack-config@1.0.12
+
+## 3.1.5
+
+### Patch Changes
+
+- 4e1d9065: refactor: reuse route paths
+- baacf8d0: chore: env compatible with default export
+- 764ef0b6: fix: get route assets by route manifest
+- 085498aa: feat: support plugin API of excuteServerEntry
+- Updated dependencies [ee4141d5]
+  - @ice/webpack-config@1.0.11
+  - @ice/runtime@1.1.5
+  - @ice/route-manifest@1.1.1
+  - @ice/bundles@0.1.7
+
+## 3.1.4
+
+### Patch Changes
+
+- 4a73cb2a: fix: redirect request for data loader
+- 1ef827b1: fix: external node builtin modules
+- 4671cbe7: fix: resource should not run document render
+- Updated dependencies [4a73cb2a]
+  - @ice/webpack-config@1.0.10
+
+## 3.1.3
+
+### Patch Changes
+
+- acfd0a00: chore: optional ts type of onDemand
+- 18ea5b2d: fix: enable hmr to avoid reload
+- 754e28b4: fix: break build if occur data loader error
+- 754e28b4: fix: compatibility with module false
+- fa618ea2: fix: file name should compat with win32
+- 0fb80639: fix: improve performance by use async function
+- bb748872: fix: compatible with dynamic routes when disable lazy import
+- bb748872: feat: export logger for plugin
+- 6c8d2e46: fix: set platform node for compile project config
+- 54868109: fix: add leading slash for basename
+- e096c671: fix: declarationType of dataLoaderImport should be NORMAL
+- Updated dependencies
+  - @ice/webpack-config@1.0.9
+  - @ice/bundles@0.1.6
+  - @ice/runtime@1.1.4
+  - @ice/route-manifest@1.1.0
+
 ## 3.1.2
 
 ### Patch Changes

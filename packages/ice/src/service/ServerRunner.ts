@@ -25,6 +25,7 @@ import { filterAlias, getRuntimeDefination } from './serverCompiler.js';
 interface InitOptions {
   rootDir: string;
   server: UserConfig['server'];
+  csr: boolean;
   task: TaskConfig<Config>;
 }
 
@@ -86,6 +87,7 @@ class ServerRunner extends Runner {
     task,
     server,
     rootDir,
+    csr,
   }: InitOptions) {
     const transformPlugins = getCompilerPlugins(rootDir, {
       ...task.config,
@@ -94,6 +96,8 @@ class ServerRunner extends Runner {
       polyfill: false,
       swcOptions: {
         nodeTransform: true,
+        // Remove all exports except pageConfig when ssr and ssg both are false.
+        keepExports: csr ? ['pageConfig'] : null,
         compilationConfig: {
           jsc: {
             // https://node.green/#ES2020
@@ -268,6 +272,7 @@ class ServerRunner extends Runner {
             const bundlePath = await runtimeMeta.bundle(id);
             return { externalize: bundlePath };
           }
+
           return {
             code: await transformJsxRuntime(code),
           };

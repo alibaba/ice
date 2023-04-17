@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.5
+
+### Patch Changes
+
+- 42d18539: fix: ignore props pass by other micro app framework
+
+## 1.0.4
+
+### Patch Changes
+
+- dec56a33: fix: avoid remount when app mount in other micro app framework
+
 ## 1.0.3
 
 ### Patch Changes

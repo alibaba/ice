@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.0.2
+
+### Patch Changes
+
+- 4e1d9065: refactor: reuse route paths
+- 085498aa: fix: use latest plugin API of excuteServerEntry
+- 83af2887: feat: support pull refresh
+
+## 2.0.1
+
+### Patch Changes
+
+- 0c61f469: fix: prevent data loader to breack generate manifest
+  fix: should replace env vars when build appWork
+
 ## 2.0.0
 
 ### Major Changes

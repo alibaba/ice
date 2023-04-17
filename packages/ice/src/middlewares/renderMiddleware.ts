@@ -1,34 +1,32 @@
 import type { ExpressRequestHandler, Middleware } from 'webpack-dev-server';
 import type { ServerContext, RenderMode } from '@ice/runtime';
-// @ts-expect-error FIXME: esm type error
 import matchRoutes from '@ice/runtime/matchRoutes';
 import type { TaskConfig } from 'build-scripts';
 import type { Config } from '@ice/webpack-config/types';
-import getRouterBasename from '../../utils/getRouterBasename.js';
-import warnOnHashRouterEnabled from '../../utils/warnOnHashRouterEnabled.js';
-import type { UserConfig } from '../../types/userConfig.js';
-import { logger } from '../../utils/logger.js';
-import type ServerRunner from '../../service/ServerRunner.js';
-import type RouteManifest from '../../utils/routeManifest.js';
+import type { ExtendsPluginAPI } from '../types/plugin.js';
+import getRouterBasename from '../utils/getRouterBasename.js';
+import warnOnHashRouterEnabled from '../utils/warnOnHashRouterEnabled.js';
+import type { UserConfig } from '../types/userConfig.js';
+import type RouteManifest from '../utils/routeManifest.js';
 
 interface Options {
-  routeManifest: RouteManifest;
+  excuteServerEntry: ExtendsPluginAPI['excuteServerEntry'];
   getAppConfig: () => Promise<any>;
   userConfig: UserConfig;
   documentOnly?: boolean;
   renderMode?: RenderMode;
   taskConfig?: TaskConfig<Config>;
-  serverRunner?: ServerRunner;
+  routeManifest: RouteManifest;
 }
 
-export default function createOnDemandRenderMiddleware(options: Options): Middleware {
+export default function createRenderMiddleware(options: Options): Middleware {
   const {
     documentOnly,
     renderMode,
+    excuteServerEntry,
     getAppConfig,
     taskConfig,
     userConfig,
-    serverRunner,
     routeManifest,
   } = options;
   const middleware: ExpressRequestHandler = async function (req, res, next) {
@@ -39,31 +37,27 @@ export default function createOnDemandRenderMiddleware(options: Options): Middle
     }
     const basename = getRouterBasename(taskConfig, appConfig);
     const matches = matchRoutes(routes, req.path, basename);
+    const isStaticResources = /\.(js|mjs|map|json|png|jpg|jpeg|gif|svg|eot|woff2|ttf)$/;
     // When documentOnly is true, it means that the app is CSR and it should return the html.
-    if (matches.length || documentOnly) {
-      let serverModule;
-      try {
-        serverModule = await serverRunner.run('.ice/entry.server.ts');
-      } catch (err) {
-        logger.error(`server entry error: ${err}`);
-        return;
+    if (matches.length || documentOnly || !isStaticResources) {
+      const serverModule = await excuteServerEntry();
+      if (serverModule) {
+        const requestContext: ServerContext = {
+          req,
+          res,
+        };
+        serverModule.renderToResponse(requestContext, {
+          renderMode,
+          documentOnly,
+        });
       }
-
-      const requestContext: ServerContext = {
-        req,
-        res,
-      };
-      serverModule.renderToResponse(requestContext, {
-        renderMode,
-        documentOnly,
-      });
     } else {
       next();
     }
   };
 
   return {
-    name: 'on-demand-render',
+    name: 'server-render',
     middleware,
   };
 }

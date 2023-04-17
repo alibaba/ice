@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.2.0
+
+### Minor Changes
+
+- 2debc7f7: fix: appear event should not work on component
+- Updated dependencies [ee4141d5]
+  - rax-compat@0.2.0
+  - @ice/bundles@0.1.7
+
+## 0.1.5
+
+### Patch Changes
+
+- 0fb80639: fix: improve performance by use async function
+- Updated dependencies
+  - @ice/bundles@0.1.6
+  - rax-compat@0.1.9
+
 ## 0.1.4
 
 ### Patch Changes

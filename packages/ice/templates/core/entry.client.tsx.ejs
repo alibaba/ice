@@ -4,7 +4,7 @@ import { runClientApp, getAppConfig } from '<%- iceRuntimePath %>';
 import { commons, statics } from './runtimeModules';
 import * as app from '@/app';
 <% if (enableRoutes) { -%>
-import routes from './routes';
+import createRoutes from './routes';
 <% } -%>
 <%- runtimeOptions.imports %>
 <% if(dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
@@ -33,7 +33,7 @@ const render = (customOptions = {}) => {
       commons,
       statics,
     },
-    <% if (enableRoutes) { %>routes,<% } %>
+    <% if (enableRoutes) { %>createRoutes,<% } %>
     basename: getRouterBasename(),
     hydrate: <%- hydrate %>,
     memoryRouter: <%- memoryRouter || false %>,

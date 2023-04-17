@@ -1,5 +1,38 @@
 # Changelog
 
+## 1.0.12
+
+### Patch Changes
+
+- Updated dependencies [deda06de]
+  - @ice/bundles@0.1.8
+
+## 1.0.11
+
+### Patch Changes
+
+- 4e1d9065: refactor: reuse route paths
+- ee4141d5: fix: compile config of coreJs
+- 97f8a801: feat: disable `compress` config in dev server for streaming render
+- Updated dependencies [ee4141d5]
+  - @ice/bundles@0.1.7
+
+## 1.0.10
+
+### Patch Changes
+
+- 4a73cb2a: fix: redirect named import
+
+## 1.0.9
+
+### Patch Changes
+
+- 18ea5b2d: fix: enable hmr to avoid reload
+- 021ceb91: fix: remove resolve of jsnext:main
+- 0096f5c0: fix: make sure ssr / ssg env variable is always false in csr
+- Updated dependencies [18ea5b2d]
+  - @ice/bundles@0.1.6
+
 ## 1.0.8
 
 ### Patch Changes

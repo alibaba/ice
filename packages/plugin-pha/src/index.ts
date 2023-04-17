@@ -27,7 +27,10 @@ function getDevPath(url: string): string {
 
 const plugin: Plugin<PluginOptions> = (options) => ({
   name: '@ice/plugin-pha',
-  setup: ({ onGetConfig, onHook, context, serverCompileTask, generator, getAllPlugin, createLogger }) => {
+  setup: ({ onGetConfig, onHook, context, excuteServerEntry, generator, getAllPlugin, createLogger }) => {
+    if (!excuteServerEntry) {
+      throw new Error('PHA plugin requires excuteServerEntry, Please upgrade @ice/app to latest version (>= 3.1.5).');
+    }
     const { template = true, preload = false } = options || {};
     const { command, rootDir } = context;
 
@@ -53,7 +56,12 @@ const plugin: Plugin<PluginOptions> = (options) => ({
     const routeManifest = path.join(rootDir, '.ice', 'route-manifest.json');
     // Get server compiler by hooks
     onHook(`before.${command as 'start' | 'build'}.run`, async ({ serverCompiler, taskConfigs, urls = {}, ...restAPI }) => {
-      const taskConfig = taskConfigs.find(({ name }) => name === 'web').config;
+      const webTask = taskConfigs.find(({ name }) => name === 'web');
+      if (!webTask) {
+        throw new Error('PHA plugin can only run in web.');
+        return;
+      }
+      const taskConfig = webTask.config;
       outputDir = path.isAbsolute(taskConfig.outputDir)
         ? taskConfig.outputDir : path.join(rootDir, taskConfig.outputDir);
 
@@ -89,7 +97,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
       };
     });
 
-    onHook('after.build.compile', async ({ serverEntryRef }) => {
+    onHook('after.build.compile', async () => {
       await generateManifest({
         rootDir,
         outputDir,
@@ -99,9 +107,9 @@ const plugin: Plugin<PluginOptions> = (options) => ({
         getRoutesConfig,
         getDataloaderConfig,
         parseOptions: {
+          excuteServerEntry,
           publicPath,
           urlPrefix,
-          serverEntry: serverEntryRef.current,
           template,
           preload,
           routeManifest,
@@ -154,13 +162,13 @@ const plugin: Plugin<PluginOptions> = (options) => ({
           getRoutesConfig,
           getAllPlugin,
           getDataloaderConfig,
-          compileTask: () => serverCompileTask.get(),
           parseOptions: {
             publicPath,
             urlPrefix,
             template,
             preload,
             routeManifest,
+            excuteServerEntry,
           },
           logger,
         });
