@@ -164,7 +164,7 @@ export interface ExtendsPluginAPI {
   getRouteManifest: () => Routes;
   getFlattenRoutes: () => string[];
   getRoutesFile: () => string[];
-  addDefineRoutesFunc: (defineRoutes: DefineExtraRoutes) => void;
+  addRoutesDefinition: (defineRoutes: DefineExtraRoutes) => void;
   dataCache: Map<string, string>;
   createLogger: CreateLogger;
 }

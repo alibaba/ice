@@ -14,13 +14,13 @@ consola.withTag(packageName);
 
 const plugin: Plugin<I18nConfig> = (i18nConfig) => ({
   name: packageName,
-  setup: ({ addDefineRoutesFunc, generator }) => {
+  setup: ({ addRoutesDefinition, generator }) => {
     checkPluginOptions(i18nConfig);
     i18nConfig = mergeDefaultConfig(i18nConfig);
     const { locales, defaultLocale } = i18nConfig;
     const prefixedLocales = locales.filter(locale => locale !== defaultLocale);
 
-    const defineRoutes: Parameters<typeof addDefineRoutesFunc>[0] = (defineRoute, options) => {
+    const defineRoutes: Parameters<typeof addRoutesDefinition>[0] = (defineRoute, options) => {
       function defineChildrenRoutes(children: any[], prefixedLocale: string) {
         children.forEach(child => {
           const newChildRouteId = `${prefixedLocale}/${child.id}`;
@@ -46,7 +46,7 @@ const plugin: Plugin<I18nConfig> = (i18nConfig) => ({
         });
       });
     };
-    addDefineRoutesFunc(defineRoutes);
+    addRoutesDefinition(defineRoutes);
 
     generator.addRenderFile(
       path.join(_dirname, 'templates/plugin-i18n.ts.ejs'),

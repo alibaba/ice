@@ -3,11 +3,11 @@ import getRoutePath, { getRoutesFile } from './getRoutePaths.js';
 
 export default class RouteManifest {
   private routeManifest: NestedRouteManifest[];
-  private defineRoutesFuncs: DefineExtraRoutes[];
+  private routesDefinitions: DefineExtraRoutes[];
 
   constructor() {
     this.routeManifest = null;
-    this.defineRoutesFuncs = [];
+    this.routesDefinitions = [];
   }
 
   getNestedRoute() {
@@ -29,11 +29,11 @@ export default class RouteManifest {
     return getRoutesFile(this.getNestedRoute());
   }
 
-  public addDefineRoutesFunc(defineRoutes: DefineExtraRoutes) {
-    this.defineRoutesFuncs.push(defineRoutes);
+  public addRoutesDefinition(defineRoutes: DefineExtraRoutes) {
+    this.routesDefinitions.push(defineRoutes);
   }
 
-  public getDefineRoutesFuncs() {
-    return this.defineRoutesFuncs;
+  public getRoutesDefinitions() {
+    return this.routesDefinitions;
   }
 }

@@ -189,7 +189,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       getRouteManifest: () => routeManifest.getNestedRoute(),
       getFlattenRoutes: () => routeManifest.getFlattenRoute(),
       getRoutesFile: () => routeManifest.getRoutesFile(),
-      addDefineRoutesFunc: routeManifest.addDefineRoutesFunc.bind(routeManifest),
+      addRoutesDefinition: routeManifest.addRoutesDefinition.bind(routeManifest),
       excuteServerEntry,
       context: {
         webpack,
@@ -235,7 +235,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   const coreEnvKeys = getCoreEnvKeys();
 
-  const routesInfo = await generateRoutesInfo(rootDir, routesConfig, routeManifest.getDefineRoutesFuncs());
+  const routesInfo = await generateRoutesInfo(rootDir, routesConfig, routeManifest.getRoutesDefinitions());
   routeManifest.setRoutes(routesInfo.routes);
 
   const hasExportAppData = (await getFileExports({ rootDir, file: 'src/app' })).includes('dataLoader');
