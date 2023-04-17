@@ -140,6 +140,7 @@ function getClassNameToStyleTransformer(syntaxFeatures) {
   const plugins: (string | Array<string | object>)[] = [
     [require.resolve('babel-plugin-transform-jsx-stylesheet'), {
       retainClassName: true,
+      forceEnableCSS: true,
     }],
   ];
 
@@ -205,9 +206,11 @@ const styleSheetLoaderForClient = (config) => {
       const rule: RuleSetRule | any = rules[i];
       // Find the css rule, that default to CSS Modules.
       if (rule.test && rule.test instanceof RegExp && rule.test.source.indexOf('.css') > -1) {
+        rule.test = /\.module\.css$/i;
         rules[i] = {
           test: /\.css$/i,
           oneOf: [
+            rule,
             ruleSetStylesheet,
           ],
         };
@@ -215,9 +218,11 @@ const styleSheetLoaderForClient = (config) => {
 
       // Find and replace the less rule
       if (rule.test && rule.test instanceof RegExp && rule.test.source.indexOf('.less') > -1) {
+        rule.test = /\.module\.less$/i;
         rules[i] = {
           test: /\.less$/i,
           oneOf: [
+            rule,
             ruleSetStylesheetForLess,
           ],
         };
@@ -240,7 +245,7 @@ function applyStylesheetLoaderForServer(preBuildOptions) {
     const cssModuleIndex = currentOptions.plugins?.findIndex(({ name }) => name === 'esbuild-css-modules');
 
     // Add custom transform for server compile.
-    currentOptions.plugins?.splice(cssModuleIndex as number, 0, inlineStylePlugin());
+    currentOptions.plugins?.splice(cssModuleIndex as number + 1, 0, inlineStylePlugin());
 
     currentOptions.treeShaking = true;
     return currentOptions;
