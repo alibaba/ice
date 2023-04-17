@@ -19,7 +19,7 @@ async function getAppData(appExport: AppExport, requestContext?: RequestContext)
   }
 
   const [loader] = appDataLoaderConfig;
-  await callDataLoader(loader, requestContext);
+  return await callDataLoader(loader, requestContext);
 }
 
 export {

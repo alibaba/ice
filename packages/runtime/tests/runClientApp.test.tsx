@@ -110,9 +110,9 @@ describe('run client app', () => {
   it('run with static runtime', async () => {
     await runClientApp({
       app: {
-        dataLoader: async () => {
+        dataLoader: [async () => {
           return { msg: staticMsg };
-        },
+        }],
       },
       // @ts-ignore don't need to pass params in test case.
       createRoutes: () => basicRoutes,
@@ -261,10 +261,10 @@ describe('run client app', () => {
     let executed = false;
     await runClientApp({
       app: {
-        dataLoader: async () => {
+        dataLoader: [async () => {
           executed = true;
           return { msg: '-getAppData' };
-        },
+        }],
       },
       // @ts-ignore don't need to pass params in test case.
       createRoutes: () => basicRoutes,
@@ -290,10 +290,10 @@ describe('run client app', () => {
 
     await runClientApp({
       app: {
-        dataLoader: async () => {
+        dataLoader: [async () => {
           executed = true;
           return { msg: 'app' };
-        },
+        }],
       },
       // @ts-ignore don't need to pass params in test case.
       createRoutes: () => basicRoutes,
