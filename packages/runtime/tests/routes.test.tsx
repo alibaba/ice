@@ -28,9 +28,9 @@ describe('routes', () => {
   const homeItem = {
     default: () => <></>,
     pageConfig: () => ({ title: 'home' }),
-    dataLoader: async () => ({ type: 'getData' }),
-    serverDataLoader: async () => ({ type: 'getServerData' }),
-    staticDataLoader: async () => ({ type: 'getStaticData' }),
+    dataLoader: [async () => ({ type: 'getData' })],
+    serverDataLoader: [async () => ({ type: 'getServerData' })],
+    staticDataLoader: [async () => ({ type: 'getStaticData' })],
   };
   const aboutItem = {
     default: () => <></>,
@@ -226,7 +226,6 @@ describe('routes', () => {
     })();
 
     expect(routesDataCSR).toStrictEqual({
-      data: undefined,
       pageConfig: {
         title: 'about',
       },

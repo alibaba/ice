@@ -14,7 +14,7 @@ describe('run server app', () => {
   const homeItem = {
     default: () => <div>home</div>,
     pageConfig: () => ({ title: 'home' }),
-    dataLoader: async () => ({ data: 'test' }),
+    dataLoader: [async () => ({ data: 'test' })],
   };
   const basicRoutes = [
     {
