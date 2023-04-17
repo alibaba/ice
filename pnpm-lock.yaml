@@ -800,7 +800,7 @@ importers:
 
   packages/bundles:
     specifiers:
-      '@ice/swc-plugin-keep-export': 0.1.4
+      '@ice/swc-plugin-keep-export': 0.1.4-2
       '@ice/swc-plugin-node-transform': 0.1.0-5
       '@ice/swc-plugin-remove-export': 0.1.2
       '@pmmmwh/react-refresh-webpack-plugin': 0.5.10
@@ -879,7 +879,7 @@ importers:
       webpack-dev-server: 4.11.1
       ws: ^8.4.2
     dependencies:
-      '@ice/swc-plugin-keep-export': 0.1.4
+      '@ice/swc-plugin-keep-export': 0.1.4-2
       '@ice/swc-plugin-node-transform': 0.1.0-5
       '@ice/swc-plugin-remove-export': 0.1.2
       '@swc/core': 1.3.19
@@ -5171,8 +5171,8 @@ packages:
       - react-native
     dev: false
 
-  /@ice/swc-plugin-keep-export/0.1.4:
-    resolution: {integrity: sha512-fOc09KALmL2zJK1xNGTEt/C27mXL7NVn/v1eRjjuM4uer+qmWIxYXIa9dpfTX5ZUn8zXhrKH8lGdczoKHCzyQQ==}
+  /@ice/swc-plugin-keep-export/0.1.4-2:
+    resolution: {integrity: sha512-kmQms1GTc4LBfPK+SyEo3UBBX0GMhPB02VJPA34AtIpNmaWApgmkqQBHbmeeV8ad0nrHrxTfRL80ldMhplyC4g==}
     dev: false
 
   /@ice/swc-plugin-node-transform/0.1.0-5:
