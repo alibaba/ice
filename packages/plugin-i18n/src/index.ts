@@ -1,8 +1,8 @@
 import * as path from 'path';
 import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
-import consola from 'consola';
 import type { Plugin } from '@ice/app/types';
+import type { CreateLoggerReturnType } from '@ice/app';
 import type { I18nConfig } from './types.js';
 
 const _require = createRequire(import.meta.url);
@@ -10,12 +10,11 @@ const _dirname = path.dirname(fileURLToPath(import.meta.url));
 const packageJSON = _require('../package.json');
 const { name: packageName } = packageJSON;
 
-consola.withTag(packageName);
-
 const plugin: Plugin<I18nConfig> = (i18nConfig) => ({
   name: packageName,
-  setup: ({ addRoutesDefinition, generator }) => {
-    checkPluginOptions(i18nConfig);
+  setup: ({ addRoutesDefinition, generator, createLogger }) => {
+    const logger = createLogger('plugin-i18n');
+    checkPluginOptions(i18nConfig, logger);
 
     const { locales, defaultLocale } = i18nConfig;
     const prefixedLocales = locales.filter(locale => locale !== defaultLocale);
@@ -74,14 +73,14 @@ const plugin: Plugin<I18nConfig> = (i18nConfig) => ({
   runtime: `${packageName}/runtime`,
 });
 
-function checkPluginOptions(options: I18nConfig) {
+function checkPluginOptions(options: I18nConfig, logger: CreateLoggerReturnType) {
   const { locales, defaultLocale } = options;
   if (!Array.isArray(locales)) {
-    consola.error(`The plugin option \`locales\` type should be array but received ${typeof locales}`);
+    logger.error(`The plugin option \`locales\` type should be array but received ${typeof locales}`);
     process.exit(1);
   }
   if (typeof defaultLocale !== 'string') {
-    consola.error(`The plugin option \`defaultLocale\` type should be string but received ${typeof defaultLocale}`);
+    logger.error(`The plugin option \`defaultLocale\` type should be string but received ${typeof defaultLocale}`);
     process.exit(1);
   }
 }

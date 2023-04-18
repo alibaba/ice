@@ -1256,7 +1256,6 @@ importers:
       '@types/accept-language-parser': ^1.5.3
       '@types/react': ^18.0.33
       accept-language-parser: ^1.5.0
-      consola: ^2.15.3
       universal-cookie: ^4.0.4
       url-join: ^5.0.0
       webpack-dev-server: ^4.13.2
@@ -1264,7 +1263,6 @@ importers:
       '@ice/jsx-runtime': link:../jsx-runtime
       '@swc/helpers': 0.4.14
       accept-language-parser: 1.5.0
-      consola: 2.15.3
       universal-cookie: 4.0.4
       url-join: 5.0.0
     devDependencies:
