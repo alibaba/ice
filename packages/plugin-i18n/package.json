@@ -50,9 +50,9 @@
     "@ice/pkg": "^1.0.0",
     "@ice/app": "workspace:^",
     "@ice/runtime": "workspace:^",
+    "@remix-run/router": "^1.5.0",
     "@types/react": "^18.0.33",
     "@types/accept-language-parser": "^1.5.3",
-    "history": "^5.3.0",
     "webpack-dev-server": "^4.13.2"
   },
   "peerDependencies": {

@@ -1,4 +1,4 @@
-import type { History, To } from 'history';
+import type { History, To } from '@remix-run/router';
 import urlJoin from 'url-join';
 import detectLocale from '../utils/detectLocale.js';
 import normalizeLocalePath from '../utils/normalizeLocalePath.js';
@@ -10,28 +10,30 @@ import type { I18nConfig } from '../types.js';
 export default function hijackHistory(
   history: History,
   i18nConfig: I18nConfig,
-  disabledCookie: boolean,
+  disableCookie: boolean,
   basename?: string,
 ) {
   const originHistory = { ...history };
   const { defaultLocale, locales } = i18nConfig;
 
-  function navigate(toPath: To, state?: Record<string, any>) {
-    const locale = state?.locale;
-    const localePrefixPathname = getLocalePrefixPathname({
-      toPath,
-      basename,
-      locales,
-      currentLocale: locale,
-      defaultLocale,
-      disabledCookie,
-    });
-    originHistory.push(localePrefixPathname, state);
+  function createNewNavigate(type: 'push' | 'replace') {
+    return function (toPath: To, state?: Record<string, any>) {
+      const locale = state?.locale;
+      const localePrefixPathname = getLocalePrefixPathname({
+        toPath,
+        basename,
+        locales,
+        currentLocale: locale,
+        defaultLocale,
+        disableCookie,
+      });
+      originHistory[type](localePrefixPathname, state);
+    };
   }
 
-  history.push = navigate;
+  history.push = createNewNavigate('push');
 
-  history.replace = navigate;
+  history.replace = createNewNavigate('replace');
 }
 
 function getLocalePrefixPathname({
@@ -39,22 +41,22 @@ function getLocalePrefixPathname({
   locales,
   defaultLocale,
   basename,
-  disabledCookie,
+  disableCookie,
   currentLocale = '',
 }: {
   toPath: To;
   locales: string[];
   defaultLocale: string;
-  disabledCookie: boolean;
+    disableCookie: boolean;
   currentLocale: string;
   basename?: string;
 }) {
   const pathname = getPathname(toPath);
-  const locale = disabledCookie ? currentLocale : detectLocale({
+  const locale = disableCookie ? currentLocale : detectLocale({
     locales,
     defaultLocale,
     pathname,
-    disabledCookie,
+    disableCookie,
   });
   const { pathname: newPathname } = normalizeLocalePath({ pathname, locales, basename });
   return urlJoin(

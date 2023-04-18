@@ -7,7 +7,7 @@ interface DetectLocaleParams {
   locales: I18nConfig['locales'];
   defaultLocale: I18nConfig['defaultLocale'];
   pathname: string;
-  disabledCookie: boolean;
+  disableCookie: boolean;
   basename?: string;
   headers?: {
     [key: string]: string | string[];
@@ -19,12 +19,12 @@ export default function detectLocale({
   defaultLocale,
   pathname,
   basename,
-  disabledCookie,
+  disableCookie,
   headers = {},
 }: DetectLocaleParams): string {
   const detectedLocale = (
     normalizeLocalePath({ pathname, locales, basename }).pathLocale ||
-    (!disabledCookie && getLocaleFromCookie(locales, headers)) ||
+    (!disableCookie && getLocaleFromCookie(locales, headers)) ||
     getPreferredLocale(locales, headers) ||
     defaultLocale
   );

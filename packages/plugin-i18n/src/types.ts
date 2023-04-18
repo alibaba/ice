@@ -19,7 +19,7 @@ export interface I18nAppConfig {
    * If it is, we will not get the locale value(ice_locale) from cookie.
    * @default {false}
    */
-  disabledCookie?: boolean | (() => boolean);
+  disableCookie?: boolean | (() => boolean);
 }
 
 export function defineI18nConfig(

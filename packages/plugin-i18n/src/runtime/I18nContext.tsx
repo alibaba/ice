@@ -11,7 +11,7 @@ interface I18nProvider {
   locales: I18nConfig['locales'];
   defaultLocale: I18nConfig['defaultLocale'];
   pathname: string;
-  disabledCookie: boolean;
+  disableCookie: boolean;
   basename?: string;
   headers?: {
     [key: string]: string | string[];
@@ -26,7 +26,7 @@ export function I18nProvider({
   children,
   locales,
   defaultLocale,
-  disabledCookie,
+  disableCookie,
   pathname,
   basename,
 }: I18nProvider) {
@@ -35,7 +35,7 @@ export function I18nProvider({
   );
 
   function setLocale(locale: string) {
-    !disabledCookie && setLocaleToCookie(locale);
+    !disableCookie && setLocaleToCookie(locale);
     updateLocale(locale);
   }
 

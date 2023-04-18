@@ -10,7 +10,7 @@ const EXPORT_NAME = 'i18nConfig';
 // Mock it to avoid ssg error and use new URL to parse url instead of url.parse.
 const baseUrl = 'http://127.0.0.1';
 
-const runtime: RuntimePlugin = async (
+const runtime: RuntimePlugin<{ i18nConfig: I18nConfig }> = async (
   {
     appContext,
     addProvider,
@@ -22,15 +22,15 @@ const runtime: RuntimePlugin = async (
   const { basename, requestContext, appExport } = appContext;
   const exported = appExport[EXPORT_NAME];
   const i18nAppConfig: I18nAppConfig = Object.assign(
-    { disabledCookie: false },
+    { disableCookie: false },
     (typeof exported === 'function' ? await exported() : exported),
   );
-  const disabledCookie = typeof i18nAppConfig.disabledCookie === 'function'
-    ? i18nAppConfig.disabledCookie()
-    : i18nAppConfig.disabledCookie;
+  const disableCookie = typeof i18nAppConfig.disableCookie === 'function'
+    ? i18nAppConfig.disableCookie()
+    : i18nAppConfig.disableCookie;
 
   const { i18nConfig } = runtimeOptions;
-  const { locales, defaultLocale, autoRedirect } = i18nConfig as I18nConfig;
+  const { locales, defaultLocale, autoRedirect } = i18nConfig;
 
   addProvider(({ children }) => {
     return (
@@ -39,7 +39,7 @@ const runtime: RuntimePlugin = async (
         locales={locales}
         defaultLocale={defaultLocale}
         basename={basename}
-        disabledCookie={disabledCookie}
+        disableCookie={disableCookie}
         headers={requestContext.req?.headers}
       >
         {children}
@@ -48,7 +48,7 @@ const runtime: RuntimePlugin = async (
   });
 
   if (history) {
-    hijackHistory(history, i18nConfig, disabledCookie, basename);
+    hijackHistory(history, i18nConfig, disableCookie, basename);
   }
 
   if (autoRedirect) {
@@ -60,7 +60,7 @@ const runtime: RuntimePlugin = async (
         basename,
         pathname: url.pathname,
         headers: req.headers,
-        disabledCookie: false,
+        disableCookie: false,
       });
 
       const localeRedirectPath = getLocaleRedirectPath({

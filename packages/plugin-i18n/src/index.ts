@@ -16,7 +16,7 @@ const plugin: Plugin<I18nConfig> = (i18nConfig) => ({
   name: packageName,
   setup: ({ addRoutesDefinition, generator }) => {
     checkPluginOptions(i18nConfig);
-    i18nConfig = mergeDefaultConfig(i18nConfig);
+
     const { locales, defaultLocale } = i18nConfig;
     const prefixedLocales = locales.filter(locale => locale !== defaultLocale);
 
@@ -86,8 +86,4 @@ function checkPluginOptions(options: I18nConfig) {
   }
 }
 
-function mergeDefaultConfig(i18nConfig: I18nConfig) {
-  i18nConfig.autoRedirect = i18nConfig.autoRedirect || false;
-  return i18nConfig;
-}
 export default plugin;
