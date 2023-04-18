@@ -39,7 +39,7 @@ type Experimental = Configuration['experiments'];
 interface SwcOptions {
   removeExportExprs?: string[];
   compilationConfig?: SwcCompilationConfig | ((source: string, id: string) => SwcCompilationConfig);
-  keepExports?: string[];
+  keepExports?: string[] | { value: string[]; include?: (id: string) => boolean };
   nodeTransform?: boolean;
 }
 

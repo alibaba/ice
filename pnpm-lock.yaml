@@ -800,7 +800,7 @@ importers:
 
   packages/bundles:
     specifiers:
-      '@ice/swc-plugin-keep-export': 0.1.4
+      '@ice/swc-plugin-keep-export': 0.1.4-2
       '@ice/swc-plugin-node-transform': 0.1.0-5
       '@ice/swc-plugin-remove-export': 0.1.2
       '@pmmmwh/react-refresh-webpack-plugin': 0.5.10
@@ -879,7 +879,7 @@ importers:
       webpack-dev-server: 4.11.1
       ws: ^8.4.2
     dependencies:
-      '@ice/swc-plugin-keep-export': 0.1.4
+      '@ice/swc-plugin-keep-export': 0.1.4-2
       '@ice/swc-plugin-node-transform': 0.1.0-5
       '@ice/swc-plugin-remove-export': 0.1.2
       '@swc/core': 1.3.19
@@ -980,10 +980,6 @@ importers:
 
   packages/ice:
     specifiers:
-      '@babel/generator': 7.18.10
-      '@babel/parser': 7.18.10
-      '@babel/traverse': 7.18.10
-      '@babel/types': 7.18.10
       '@ice/bundles': 0.1.8
       '@ice/route-manifest': 1.1.1
       '@ice/runtime': ^1.1.5
@@ -1010,7 +1006,6 @@ importers:
       dotenv-expand: ^8.0.3
       ejs: ^3.1.6
       esbuild: ^0.16.5
-      estree-walker: ^3.0.2
       fast-glob: ^3.2.11
       find-up: ^5.0.0
       fs-extra: ^10.0.0
@@ -1032,10 +1027,6 @@ importers:
       webpack-dev-server: ^4.7.4
       yargs-parser: ^21.1.1
     dependencies:
-      '@babel/generator': 7.18.10
-      '@babel/parser': 7.18.10
-      '@babel/traverse': 7.18.10
-      '@babel/types': 7.18.10
       '@ice/bundles': link:../bundles
       '@ice/route-manifest': link:../route-manifest
       '@ice/runtime': link:../runtime
@@ -1052,7 +1043,6 @@ importers:
       dotenv: 16.0.3
       dotenv-expand: 8.0.3
       ejs: 3.1.8
-      estree-walker: 3.0.3
       fast-glob: 3.2.12
       find-up: 5.0.0
       fs-extra: 10.1.0
@@ -5187,8 +5177,8 @@ packages:
       - react-native
     dev: false
 
-  /@ice/swc-plugin-keep-export/0.1.4:
-    resolution: {integrity: sha512-fOc09KALmL2zJK1xNGTEt/C27mXL7NVn/v1eRjjuM4uer+qmWIxYXIa9dpfTX5ZUn8zXhrKH8lGdczoKHCzyQQ==}
+  /@ice/swc-plugin-keep-export/0.1.4-2:
+    resolution: {integrity: sha512-kmQms1GTc4LBfPK+SyEo3UBBX0GMhPB02VJPA34AtIpNmaWApgmkqQBHbmeeV8ad0nrHrxTfRL80ldMhplyC4g==}
     dev: false
 
   /@ice/swc-plugin-node-transform/0.1.0-5:
@@ -11129,12 +11119,6 @@ packages:
 
   /estree-walker/2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
-
-  /estree-walker/3.0.3:
-    resolution: {integrity: sha512-7RUKfXgSMMkzt6ZuXmqapOurLGPPfgj6l9uRZ7lRGolvk0y2yocc35LdcxKC5PQZdn2DMqioAQ2NoWcrTKmm6g==}
-    dependencies:
-      '@types/estree': 1.0.0
-    dev: false
 
   /esutils/2.0.3:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
