@@ -8,12 +8,12 @@ import formatPath from './utils/formatPath.js';
 export async function generateRoutesInfo(
   rootDir: string,
   routesConfig: UserConfig['routes'] = {},
-  defineRoutesFuncs: DefineExtraRoutes[] = [],
+  routesDefinitions: DefineExtraRoutes[] = [],
 ) {
   const routeManifest = generateRouteManifest(
     rootDir,
     routesConfig.ignoreFiles,
-    [routesConfig.defineRoutes, ...defineRoutesFuncs],
+    [routesConfig.defineRoutes, ...routesDefinitions],
     routesConfig.config,
   );
 
