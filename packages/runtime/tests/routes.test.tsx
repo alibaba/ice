@@ -12,7 +12,9 @@ import {
   createRouteLoader,
   getRoutesPath,
   WrapRouteComponent,
+  Await,
 } from '../src/routes.js';
+import { useData } from '../src/singleRouter';
 
 describe('routes', () => {
   let windowSpy;
@@ -36,6 +38,12 @@ describe('routes', () => {
     default: () => <></>,
     pageConfig: () => ({ title: 'about' }),
   };
+  const InfoItem = {
+    default: () => <></>,
+    pageConfig: () => ({ title: 'home' }),
+    dataLoader: [async () => ({ type: 'getAsyncData' }), { defer: true }],
+  };
+
   const homeLazyItem = {
     Component: homeItem.default,
     loader: createRouteLoader({
@@ -142,6 +150,19 @@ describe('routes', () => {
     }], {});
     expect(routeModule).toStrictEqual({
       error: undefined,
+    });
+  });
+
+  it('load async route', async () => {
+    const { data: deferredResult } = await createRouteLoader({
+      routeId: 'home',
+      module: InfoItem,
+    })();
+
+    const data = await deferredResult.data;
+
+    expect(data).toStrictEqual({
+      type: 'getAsyncData',
     });
   });
 
