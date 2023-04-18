@@ -2,4 +2,4 @@
 '@ice/route-manifest': minor
 ---
 
-feat: support accept more `defineExtraRoutes` function
+feat: support accept one more `defineExtraRoutes` functions
