@@ -12,9 +12,7 @@ import {
   createRouteLoader,
   getRoutesPath,
   WrapRouteComponent,
-  Await,
 } from '../src/routes.js';
-import { useData } from '../src/singleRouter';
 
 describe('routes', () => {
   let windowSpy;
