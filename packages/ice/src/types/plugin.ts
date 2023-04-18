@@ -18,12 +18,6 @@ type RemoveExport = (removeSource: string | string[]) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
 type GetExportList = (key: string, target?: string) => (DeclarationData | TargetDeclarationData)[];
 
-export type NormalRuntimeOptions = {
-  key: 'normal';
-  [k: string]: any;
-};
-export type DeclarationRuntimeOptions = (Omit<DeclarationData, 'declarationType'> & { key: 'declarationData' });
-
 type ServerCompilerBuildOptions = Pick<
   esbuild.BuildOptions,
   'banner' |
@@ -140,7 +134,7 @@ export interface ExtendsPluginAPI {
     addExport: AddExport;
     addTargetExport: AddTargetExport;
     addExportTypes: AddExport;
-    addRuntimeOptions: (exportData: { key: 'normal';[k: string]: any } | DeclarationData & { key: 'declarationData' }) => void;
+    addRuntimeOptions: AddExport;
     removeRuntimeOptions: RemoveExport;
     addRouteTypes: AddExport;
     addRenderFile: AddRenderFile;

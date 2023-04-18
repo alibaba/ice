@@ -114,7 +114,7 @@ export function getRoutesDefinition(nestRouteManifest: NestedRouteManifest[], la
 
   return {
     routeImports,
-    routeDefinition: routeDefinition,
+    routeDefinition,
   };
 }
 

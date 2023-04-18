@@ -96,8 +96,8 @@ function mergeOptions(options) {
     <% if (runtimeOptions.exports) { -%>
       <%- runtimeOptions.exports %>
     <% } -%>
-    <% if (runtimeOptions.raw) { _%>
-      <%- runtimeOptions.raw %>
+    <% if (locals.customRuntimeOptions) { _%>
+      <%- customRuntimeOptions %>
     <% } _%>
     },
   };

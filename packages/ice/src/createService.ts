@@ -12,8 +12,6 @@ import type {
   PluginData,
   ExtendsPluginAPI,
   TargetDeclarationData,
-  NormalRuntimeOptions,
-  DeclarationRuntimeOptions,
 } from './types/index.js';
 import { DeclarationType } from './types/index.js';
 import Generator from './service/runtimeGenerator.js';
@@ -90,26 +88,11 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         declarationType: DeclarationType.NORMAL,
       });
     },
-    addRuntimeOptions: (
-      runtimeOptions: NormalRuntimeOptions | DeclarationRuntimeOptions,
-    ) => {
-      const { key } = runtimeOptions;
-      delete runtimeOptions.key;
-
-      if (key === 'normal') {
-        generator.modifyRenderData(renderData => {
-          renderData.runtimeOptions.raw ||= '';
-          renderData.runtimeOptions.raw += Object.entries(runtimeOptions).map(([key, value]) => {
-            return `${key}: ${typeof value === 'object' ? JSON.stringify(value) : value},`;
-          });
-          return renderData;
-        });
-      } else {
-        generator.addDeclaration('runtimeOptions', {
-          ...runtimeOptions,
-          declarationType: DeclarationType.NORMAL,
-        });
-      }
+    addRuntimeOptions: (declarationData: Omit<DeclarationData, 'declarationType'>) => {
+      generator.addDeclaration('runtimeOptions', {
+        ...declarationData,
+        declarationType: DeclarationType.NORMAL,
+      });
     },
     removeRuntimeOptions: (removeSource: string | string[]) => {
       generator.removeDeclaration('runtimeOptions', removeSource);

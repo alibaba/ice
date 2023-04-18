@@ -30,16 +30,14 @@ const render = (customOptions: Record<string, any> = {}) => {
     <% if(dataLoaderImport.imports) {-%>dataLoaderFetcher,<% } -%>
     ...customOptions,
     runtimeOptions: {
-    <% if (runtimeOptions.exports) { -%>
-      <%- runtimeOptions.exports %>
-    <% } -%>
-    <% if (runtimeOptions.raw) { _%>
-      <%- runtimeOptions.raw %>
-    <% } _%>
+  <% if (runtimeOptions.exports) { -%>
+    <%- runtimeOptions.exports %>
+  <% } -%>
+  <% if (locals.customRuntimeOptions) { -%>
+    <%- customRuntimeOptions %>
+  <% } -%>
       ...customOptions.runtimeOptions,
-    
     },
-
   };
   return runClientApp(appProps);
 };
