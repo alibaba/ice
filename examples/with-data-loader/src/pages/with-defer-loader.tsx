@@ -9,7 +9,7 @@ export default function Home() {
       <h2 className={styles.title}>With dataLoader</h2>
       <Await resolve={data} fallback={<p>Loading item info...</p>} errorElement={<p>Error loading!</p>}>
         {(itemInfo) => {
-          return <p>Item id is {itemInfo.id}</p>;
+          return <p>Item id is <span id="itemId">{itemInfo.id}</span></p>;
         }}
       </Await>
     </>

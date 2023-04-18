@@ -49,6 +49,14 @@ describe(`start ${example}`, () => {
     expect(timeStampForRouter3).not.toStrictEqual(timeStampForRouter1);
   });
 
+  test('should work with deferred data loader', async () => {
+    await page.push('/with-defer-loader');
+    await page.waitForNetworkIdle();
+    const data = (await page.$$text('#itemId'))[0];
+
+    expect(data).toEqual('1233');
+  });
+
   afterAll(async () => {
     await browser.close();
   });
