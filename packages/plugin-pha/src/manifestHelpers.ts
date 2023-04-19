@@ -433,7 +433,7 @@ export function getMultipleManifest(manifest: PHAManifest): Record<string, PHAMa
     const copiedManifest = cloneDeep(manifest);
     // Reduce routes config by matched source.
     copiedManifest.pages = copiedManifest.pages.filter((copiedPage) => {
-      if (page.frames && !pageKey) {
+      if (copiedPage.frames && !pageKey) {
         // TODO: frames key may conflict with other page keys
         // https://github.com/raxjs/rax-app/blob/57a536723c8cc9ce7cd4892c1a5990854e395e2c/packages/plugin-rax-pha/src/plugins/AppToManifestPlugin.js#L110
         pageKey = page.frames[page.default_frame_index || 0].key;

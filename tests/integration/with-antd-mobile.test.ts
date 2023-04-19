@@ -11,10 +11,9 @@ describe(`build ${example}`, () => {
 
   test('open /', async () => {
     await buildFixture(example);
-    const res = await setupBrowser({ example, disableJS: false });
+    const res = await setupBrowser({ example });
     page = res.page;
     browser = res.browser;
-    await page.waitForFunction('document.getElementsByTagName(\'h2\').length > 0');
     expect(await page.$$text('h2')).toStrictEqual(['Counter']);
   });
 

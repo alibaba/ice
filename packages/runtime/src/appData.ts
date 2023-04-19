@@ -1,17 +1,5 @@
-import * as React from 'react';
 import type { AppExport, AppData, RequestContext } from './types.js';
 import { callDataLoader } from './dataLoader.js';
-
-const Context = React.createContext<AppData | undefined>(undefined);
-
-Context.displayName = 'AppDataContext';
-
-function useAppData <T = AppData>(): T {
-  const value = React.useContext(Context);
-  return value;
-}
-
-const AppDataProvider = Context.Provider;
 
 /**
  * Call the getData of app config.
@@ -37,6 +25,4 @@ async function getAppData(appExport: AppExport, requestContext?: RequestContext)
 
 export {
   getAppData,
-  useAppData,
-  AppDataProvider,
 };
