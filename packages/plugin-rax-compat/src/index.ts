@@ -206,7 +206,7 @@ const styleSheetLoaderForClient = (config) => {
       const rule: RuleSetRule | any = rules[i];
       // Find the css rule, that default to CSS Modules.
       if (rule.test && rule.test instanceof RegExp && rule.test.source.indexOf('.css') > -1) {
-        rule.test = /\.module\.css$/i;
+        rule.test = /(\.module|global)\.css$/i;
         rules[i] = {
           test: /\.css$/i,
           oneOf: [
@@ -218,7 +218,7 @@ const styleSheetLoaderForClient = (config) => {
 
       // Find and replace the less rule
       if (rule.test && rule.test instanceof RegExp && rule.test.source.indexOf('.less') > -1) {
-        rule.test = /\.module\.less$/i;
+        rule.test = /(\.module|global)\.less$/i;
         rules[i] = {
           test: /\.less$/i,
           oneOf: [
