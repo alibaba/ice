@@ -6,7 +6,7 @@ order: 1
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-ice.js 提供了插件机制，在提供丰富的框架能力的基础上也可以让开发者可以在框架能力不满足诉求的情况下进行定制：
+ice.js 底层基于 [build-scripts](https://github.com/ice-lab/build-scripts) 插件系统，在提供丰富的框架能力的基础上也可以让开发者可以在框架能力不满足诉求的情况下进行定制：
 
 - 定制修改框架构建配置
 - 支持在整个构建生命周期定制行为，比如项目启动前拉取某些资源
@@ -37,26 +37,54 @@ export default plugin;
 
 ### 开发本地插件
 
-假设在项目根目录下有一个自定义插件 `my-plugin`：
+推荐在项目根目录下新建一个插件目录，目录名比如叫 `my-plugin`。然后在该目录下新建以下文件：
 
-```ts title="my-plugin.ts"
+- `index.ts`：必选，插件入口，用于定制工程构建能力
+- `runtime.tsx`：可选，用于定制运行时能力
+
+<Tabs>
+
+<TabItem value="index.ts" label="my-plugin/index.ts">
+
+```ts
+import * as path from 'path';
 import type { Plugin } from '@ice/app/types';
 
 const plugin: Plugin = () => ({
   name: 'my-plugin',
-  setup: (pluginAPI) => {},
+  setup: (pluginAPI) => {
+    console.log(pluginAPI);
+  },
   // runtime 为可选，用于定制运行时配置。runtime 的值必须是一个绝对路径
-  runtime: '/my-project/runtime.tsx',
+  runtime: path.join(__dirname, 'runtime.tsx'),
 });
 
 export default plugin;
 ```
 
+</TabItem>
+
+<TabItem value="runtime.tsx" label="my-plugin/runtime.tsx">
+
+```tsx
+import type { RuntimePlugin } from '@ice/runtime/types';
+
+const runtime: RuntimePlugin = async ({ appContext }) => {
+  console.log(appContext);
+}
+
+export default runtime;
+```
+
+</TabItem>
+
+</Tabs>
+
 开发完成后，我们需要把插件添加到应用的构建配置中：
 
 ```diff title="ice.config.mts"
 import { defineConfig } from '@ice/app';
-+ import myPlugin from './my-plugin';
++ import myPlugin from './my-plugin/index.js';
 
 export default defineConfig(() => ({
   plugins: [
@@ -177,6 +205,8 @@ const plugin = () => ({
     console.log('context: ', context);
   },
 })
+
+export default plugin;
 ```
 ### `onGetConfig`
 
@@ -193,6 +223,8 @@ const plugin = () => ({
     });
   },
 });
+
+export default plugin;
 ```
 
 为了简化开发者的配置，通过 `onGetConfig` 修改配置项是基于底层工程工具的抽象，包括以下配置项：
@@ -279,7 +311,7 @@ export default () => ({
   setup: ({ registerUserConfig }) => {
     registerUserConfig({
       name: 'custom-key',
-      validation: 'boolean' // 可选，支持类型有 string, number, array, object, boolean
+      validation: 'boolean', // 可选，支持类型有 string, number, array, object, boolean
       setConfig: () => {
         // 该字段对于配置的影响，通过 onGetConfig 设置
       },
@@ -309,13 +341,15 @@ export default () => ({
 
 ### `modifyUserConfig`
 
-为命令行启动添加自定义参数：
+修改用户配置：
 
 ```ts
 export default () => ({
   name: 'plugin-test',
   setup: ({ modifyUserConfig }) => {
-    modifyUserConfig(key, value); // key, value 分别为用户配置文件键值对
+    modifyUserConfig('key', 'value'); // key, value 分别为用户配置文件键值对
+    // 例如：把 ssr 配置项修改为 true，以开启 SSR
+    modifyUserConfig('ssr', true);
   },
 });
 ```
@@ -328,7 +362,10 @@ export default () => ({
 export default () => ({
   name: 'plugin-test',
   setup: ({ registerTask }) => {
-    registerTask(name, config); // name: Task名, config: 对于任务配置同 onGetConfig 配置项
+    const config = {
+      sourceMap: true,
+    };
+    registerTask('task name', config); // name: Task名, config: 对于任务配置同 onGetConfig 配置项
   },
 });
 ```
@@ -342,6 +379,7 @@ export default () => ({
   name: 'plugin-test',
   setup: ({ getAllTask }) => {
     const tasks = getAllTask();
+    console.log(tasks);
   },
 });
 ```
@@ -405,7 +443,7 @@ export default () => ({
   setup: ({ generator }) => {
     generator.addExportTypes({
       source: './request/types',
-      specifier: '{ Request }'
+      specifier: '{ Request }',
       exportName: 'Request',
     });
   },
@@ -472,7 +510,7 @@ export default () => ({
 ```ts
 import type { Plugin } from '@ice/app/types';
 const plugin: Plugin = () => ({
-  name: 'plugin-name'
+  name: 'plugin-name',
   runtime: '/absolute/path/to/runtime',
 });
 
@@ -587,6 +625,7 @@ import { useEffect } from 'react';
 export default ({ addWrapper, useData }) => {
   const PageWrapper = (PageComponent) => {
     const pageData = useData();
+    console.log(pageData);
     return PageComponent;
   };
   addWrapper(PageWrapper);
@@ -603,6 +642,7 @@ import { useEffect } from 'react';
 export default ({ addWrapper, useConfig }) => {
   const PageWrapper = (PageComponent) => {
     const pageConfig = useConfig();
+    console.log(pageConfig);
     return PageComponent;
   };
   addWrapper(PageWrapper);
