@@ -65,8 +65,8 @@ const plugin: Plugin<I18nConfig> = (i18nConfig) => ({
     });
 
     generator.modifyRenderData((renderData) => {
-      renderData.customRuntimeOptions ||= '';
-      renderData.customRuntimeOptions += `i18nConfig: ${JSON.stringify(i18nConfig)},`;
+      renderData.customRuntimeOptions ||= {};
+      (renderData.customRuntimeOptions as Record<string, any>).i18nConfig = i18nConfig;
       return renderData;
     });
   },

@@ -34,7 +34,7 @@ const render = (customOptions: Record<string, any> = {}) => {
     <%- runtimeOptions.exports %>
   <% } -%>
   <% if (locals.customRuntimeOptions) { -%>
-    <%- customRuntimeOptions %>
+  ...<%- JSON.stringify(customRuntimeOptions) %>,
   <% } -%>
       ...customOptions.runtimeOptions,
     },
