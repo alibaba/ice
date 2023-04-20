@@ -85,7 +85,6 @@ async function webpackCompiler(options: {
             [IMPORT_META_TARGET]: JSON.stringify(target),
             [IMPORT_META_RENDERER]: JSON.stringify('server'),
           },
-          incremental: command === 'start',
         });
         webpackConfig.plugins.push(serverCompilerPlugin);
       }
@@ -104,7 +103,7 @@ async function webpackCompiler(options: {
           }),
         );
         const debounceCompile = debounce(() => {
-          serverCompilerPlugin?.buildResult?.rebuild();
+          serverCompilerPlugin?.buildResult?.context.rebuild();
           console.log('Document updated, try to reload page for latest html content.');
         }, 200);
         watch.addEvent([

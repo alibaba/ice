@@ -221,7 +221,9 @@ export function createServerCompiler(options: Options) {
     logger.debug('[esbuild]', `start compile for: ${JSON.stringify(buildOptions.entryPoints)}`);
 
     try {
-      const esbuildResult = await esbuild.build(buildOptions);
+      const context = await esbuild.context(buildOptions);
+
+      const esbuildResult = await context.rebuild();
 
       logger.debug('[esbuild]', `time cost: ${new Date().getTime() - startTime}ms`);
 
@@ -240,6 +242,7 @@ export function createServerCompiler(options: Options) {
 
       return {
         ...esbuildResult,
+        context,
         serverEntry,
       };
     } catch (error) {
