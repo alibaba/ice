@@ -505,12 +505,18 @@ export default runtime;
 
 ### `addProvider`
 
-为应用统一添加 Provider：
+在应用最外层添加全局 Provider：
 
-```ts
+```tsx
 export default ({ addProvider }) => {
+  function Provider({ children }) {
+    return (
+      <div>{children}</div>
+    )
+  }
+
   const StoreProvider = ({ children }) => {
-    return <Provider store={store}>{children}</Provider>;
+    return <Provider>{children}</Provider>;
   };
   addProvider(StoreProvider);
 };
@@ -518,27 +524,19 @@ export default ({ addProvider }) => {
 
 ### `addWrapper`
 
-为所有路由组件做一层包裹：
+为所有路由组件添加一层包裹：
 
-```ts
+```tsx
 import { useEffect } from 'react';
 
 export default ({ addWrapper }) => {
-  const PageWrapper = (PageComponent) => {
-    const { title } = PageComponent.pageConfig || {};
+  const PageWrapper = ({ children }) => {
+    useEffect(() => {
+      document.title = 'Hello ICE';
+    }, [])
+    return <>{children}</>
+  }
 
-    if (!title) {
-      return PageComponent;
-    }
-    const TitleWrapperedComponent = () => {
-      useEffect(() => {
-        document.title = title;
-      }, []);
-
-      return <PageComponent />;
-    };
-    return TitleWrapperedComponent;
-  };
   addWrapper(PageWrapper);
 
   // 如果希望同样为 layout 组件添加可以添加第二个参数
