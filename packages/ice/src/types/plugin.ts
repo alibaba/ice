@@ -40,7 +40,11 @@ type ServerCompilerBuildOptions = Pick<
   'metafile'
 >;
 
-export type ServerBuildResult = Partial<esbuild.BuildResult & { serverEntry: string; error: any; context: esbuild.BuildContext<esbuild.BuildOptions> }>;
+export type ServerBuildResult =
+  Partial<
+    esbuild.BuildResult &
+    { serverEntry: string; error: any; context: esbuild.BuildContext<esbuild.BuildOptions> }
+  >;
 
 export interface CompilerOptions {
   swc?: Config['swcOptions'];
