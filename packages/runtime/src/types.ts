@@ -75,7 +75,10 @@ export interface DataLoaderOptions {
   defer?: boolean;
 }
 
-export type DataLoaderConfig = [Loader, DataLoaderOptions?];
+export interface DataLoaderConfig {
+  loader: Loader;
+  options?: DataLoaderOptions;
+}
 
 export interface LoadersData {
   [routeId: string]: LoaderData;

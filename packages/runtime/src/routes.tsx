@@ -143,7 +143,7 @@ export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
     };
   }
 
-  const [loader, loaderOptions] = dataLoaderConfig;
+  const { loader, options: loaderOptions } = dataLoaderConfig;
 
   const getData = () => {
     const hasGlobalLoader = typeof window !== 'undefined' && (window as any).__ICE_DATA_LOADER__;

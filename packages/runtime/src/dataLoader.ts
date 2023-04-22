@@ -23,15 +23,23 @@ export interface LoadRoutesDataOptions {
 }
 
 export function defineDataLoader(dataLoader: Loader, options?: DataLoaderOptions): DataLoaderConfig {
-  return [dataLoader, options];
+  return {
+    loader: dataLoader,
+    options,
+  };
 }
 
 export function defineServerDataLoader(dataLoader: Loader, options?: DataLoaderOptions): DataLoaderConfig {
-  return [dataLoader, options];
+  return {
+    loader: dataLoader,
+    options,
+  };
 }
 
 export function defineStaticDataLoader(dataLoader: Loader): DataLoaderConfig {
-  return [dataLoader];
+  return {
+    loader: dataLoader,
+  };
 }
 
 /**
@@ -170,8 +178,8 @@ function loadInitialDataInClient(loaders: Loaders) {
 
     if (dataLoaderConfig) {
       const requestContext = getRequestContext(window.location);
-      const [dataLoader] = dataLoaderConfig;
-      const promise = callDataLoader(dataLoader, requestContext);
+      const { loader } = dataLoaderConfig;
+      const promise = callDataLoader(loader, requestContext);
 
       cache.set(id, {
         value: promise,
@@ -241,7 +249,7 @@ async function init(loaders: Loaders, options: Options) {
 
       // Call dataLoader.
       const requestContext = getRequestContext(window.location);
-      const [loader] = dataLoaderConfig;
+      const { loader } = dataLoaderConfig;
       return callDataLoader(loader, requestContext);
     },
   };
