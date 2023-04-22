@@ -24,7 +24,7 @@
     "process": "^0.11.10"
   },
   "devDependencies": {
-    "esbuild": "^0.16.5",
+    "esbuild": "^0.17.16",
     "postcss": "^8.4.18",
     "webpack": "^5.76.2",
     "webpack-dev-server": "^4.7.4"
