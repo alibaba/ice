@@ -50,7 +50,7 @@ export function useState<S>(initialState: S | (() => S)): ReturnType<typeof _use
     }
     eagerState.current = newState;
   }
-  
+
   return [stateHook[0], updateState, eagerState.current];
 }
 
