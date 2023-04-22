@@ -30,7 +30,7 @@ import { isFunction } from './type';
  * @returns [ value, dispatch ]
  */
 export function useState<S>(initialState: S | (() => S)): ReturnType<typeof _useState> | any {
-  const eagerState = _useRef();
+  const eagerState = _useRef(null);
   // If the initial state is the result of an expensive computation,
   // you may provide a function instead for lazy initial state.
   if (isFunction(initialState)) {
