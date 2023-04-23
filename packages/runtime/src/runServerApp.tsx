@@ -280,7 +280,22 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     if (runtimeModules.commons) {
       await Promise.all(runtimeModules.commons.map(m => runtime.loadModule(m)).filter(Boolean));
     }
-
+    /**
+       Plugin may register response handlers, for example:
+       ```
+       addResponseHandler((req) => {
+         if (redirect) {
+           return {
+             statusCode: 302,
+             statusText: 'Found',
+             headers: {
+               location: '/redirect',
+             },
+           };
+         }
+       });
+       ```
+     */
     const responseHandlers = runtime.getResponseHandlers();
     for (const responseHandler of responseHandlers) {
       if (typeof responseHandler === 'function') {
