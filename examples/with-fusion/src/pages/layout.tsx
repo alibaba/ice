@@ -27,7 +27,6 @@ export default function Layout() {
   function changeLocale(value: string) {
     setLocale(value);
   }
-  console.log();
   return (
     <main>
       <IntlProvider locale={locale} messages={messages[locale]}>
