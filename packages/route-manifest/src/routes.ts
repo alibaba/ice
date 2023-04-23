@@ -123,11 +123,7 @@ export function defineRoutes(
       ? parentRoutes[parentRoutes.length - 1]
       : undefined;
 
-    const id = join(
-      parentRoute?.path || '',
-      path || (options.index ? '/' : ''),
-      stripFileExtension(file).endsWith('layout') ? 'layout' : '',
-    );
+    const id = createRouteId(file, path, parentRoute?.path, options.index);
 
     const route: ConfigRoute = {
       path,
