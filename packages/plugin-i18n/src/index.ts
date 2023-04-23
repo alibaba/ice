@@ -22,11 +22,10 @@ const plugin: Plugin<I18nConfig> = (i18nConfig) => ({
     const defineRoutes: Parameters<typeof addRoutesDefinition>[0] = (defineRoute, options) => {
       function defineChildrenRoutes(children: any[], prefixedLocale: string) {
         children.forEach(child => {
-          const newChildRouteId = `${prefixedLocale}/${child.id}`;
           defineRoute(
             child.path,
             child.file,
-            { index: child.index, id: newChildRouteId },
+            { index: child.index },
             () => {
               if (child.children) {
                 defineChildrenRoutes(child.children, prefixedLocale);
@@ -37,9 +36,7 @@ const plugin: Plugin<I18nConfig> = (i18nConfig) => ({
       prefixedLocales.forEach(prefixedLocale => {
         options.nestedRouteManifest.forEach(route => {
           const newRoutePath = `${prefixedLocale}${route.path ? `/${route.path}` : ''}`;
-          const newRouteId = `${prefixedLocale}/${route.id}`;
-
-          defineRoute(newRoutePath, route.file, { index: route.index, id: newRouteId }, () => {
+          defineRoute(newRoutePath, route.file, { index: route.index }, () => {
             route.children && defineChildrenRoutes(route.children, prefixedLocale);
           });
         });

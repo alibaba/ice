@@ -57,7 +57,7 @@ export default {
 
 export function getRoutesDefinition(nestRouteManifest: NestedRouteManifest[], lazy = false, depth = 0) {
   const routeImports: string[] = [];
-  const routeDefinition = nestRouteManifest.reduce((prev, route, currentIndex) => {
+  const routeDefinition = nestRouteManifest.reduce((prev, route) => {
     const { children, path: routePath, index, componentName, file, id, layout, exports } = route;
 
     const componentPath = id.startsWith('__') ? file : `@/pages/${file}`.replace(new RegExp(`${path.extname(file)}$`), '');
@@ -66,7 +66,7 @@ export function getRoutesDefinition(nestRouteManifest: NestedRouteManifest[], la
     if (lazy) {
       loadStatement = `import(/* webpackChunkName: "p_${componentName}" */ '${formatPath(componentPath)}')`;
     } else {
-      const routeSpecifier = `route_${depth}_${currentIndex}`;
+      const routeSpecifier = id.replace(/[./-]/g, '_').replace(/[:*]/, '$');
       routeImports.push(`import * as ${routeSpecifier} from '${formatPath(componentPath)}';`);
       loadStatement = routeSpecifier;
     }
