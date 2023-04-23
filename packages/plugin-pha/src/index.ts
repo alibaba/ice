@@ -56,7 +56,12 @@ const plugin: Plugin<PluginOptions> = (options) => ({
     const routeManifest = path.join(rootDir, '.ice', 'route-manifest.json');
     // Get server compiler by hooks
     onHook(`before.${command as 'start' | 'build'}.run`, async ({ serverCompiler, taskConfigs, urls = {}, ...restAPI }) => {
-      const taskConfig = taskConfigs.find(({ name }) => name === 'web').config;
+      const webTask = taskConfigs.find(({ name }) => name === 'web');
+      if (!webTask) {
+        throw new Error('PHA plugin can only run in web.');
+        return;
+      }
+      const taskConfig = webTask.config;
       outputDir = path.isAbsolute(taskConfig.outputDir)
         ? taskConfig.outputDir : path.join(rootDir, taskConfig.outputDir);
 

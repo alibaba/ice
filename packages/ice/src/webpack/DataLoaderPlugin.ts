@@ -53,6 +53,7 @@ export default class DataLoaderPlugin {
           const { outputFiles, error } = await this.serverCompiler(
             {
               target: 'es6', // should not set to esnext, https://github.com/alibaba/ice/issues/5830
+              format: 'iife',
               entryPoints: [filePath],
               write: false,
               logLevel: 'silent', // The main server compile process will log it.

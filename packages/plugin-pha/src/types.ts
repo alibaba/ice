@@ -124,6 +124,7 @@ export interface PageConfig extends FrameConfig {
   dataPrefetch?: DataPrefetch[];
   queryParams?: string;
   pullRefresh?: PullRefresh;
+  downgradeUrl?: string;
 }
 
 export type Page = string | PageConfig;
@@ -166,6 +167,7 @@ export type PHAPage = Partial<{
   external: string;
   request_headers: Record<string, string>;
   tab_header: TabHeader;
+  downgrade_url: string;
   default_frame_index: number;
   data_prefetch: PHADataPrefetch[];
   frames: PHAFrame[];

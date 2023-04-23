@@ -80,12 +80,14 @@ describe('transform config keys', () => {
             pageHeader: {
               includedSafeArea: true,
             },
+            downgradeUrl: 'http://www.taobao.com',
           },
         ],
       },
       { isRoot: true },
     );
     expect(manifestJSON.name).toStrictEqual('name');
+    expect(manifestJSON?.pages![0].downgrade_url).toStrictEqual('http://www.taobao.com');
     expect(manifestJSON.offline_resources).toStrictEqual(['//g.alicdn.com/.*']);
     expect(manifestJSON?.pages![0].tab_header).toStrictEqual({ included_safe_area: true });
   });
@@ -279,6 +281,24 @@ describe('parse manifest', async () => {
     expect(manifest?.pages![1].path).toBe('https://url-prefix.com/about?c=123');
     expect(manifest?.pages![2]?.frames![1].path).toBe('https://m.taobao.com');
     expect(manifest?.app_worker?.url).toBe('https://cdn-path.com/pha-worker.js');
+  });
+
+  it('multiple should work with frames', async () => {
+    const phaManifest = {
+      routes: [
+        'home',
+        'about',
+        {
+          defaultFrameIndex: 0,
+          frames: ['home', 'about'],
+        },
+      ],
+    };
+
+    const manifest = await parseManifest(phaManifest, options);
+    const remultipleManifests = await getMultipleManifest(manifest);
+
+    expect(remultipleManifests['home']?.pages![0]?.frames?.length).toBe(2);
   });
 
   it('should work with enable pull refresh', async () => {

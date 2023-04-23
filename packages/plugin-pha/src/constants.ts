@@ -80,6 +80,7 @@ export const validPageConfigKeys = [
   'queryParamsPassKeys',
   'pullRefresh',
   'queryParamsPassIgnoreKeys',
+  'downgradeUrl',
 ];
 
 // The manifest configuration is the default value for the page configuration
