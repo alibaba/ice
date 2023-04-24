@@ -1,0 +1,65 @@
+{
+  "name": "@ice/plugin-i18n",
+  "version": "0.0.0",
+  "description": "I18n plugin for ice.js 3.",
+  "files": [
+    "es2017",
+    "!es2017/**/*.map"
+  ],
+  "type": "module",
+  "main": "es2017/index.js",
+  "module": "es2017/index.js",
+  "types": "es2017/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./es2017/index.d.ts",
+      "import": "./es2017/index.js",
+      "default": "./es2017/index.js"
+    },
+    "./runtime": {
+      "types": "./es2017/runtime/index.d.ts",
+      "import": "./es2017/runtime/index.js",
+      "default": "./es2017/runtime/index.js"
+    },
+    "./types": {
+      "types": "./es2017/types.d.ts",
+      "import": "./es2017/types.js",
+      "default": "./es2017/types.js"
+    },
+    "./*": "./*"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "watch": "ice-pkg start",
+    "build": "ice-pkg build"
+  },
+  "keywords": [
+    "ice.js",
+    "i18n",
+    "plugin"
+  ],
+  "dependencies": {
+    "@ice/jsx-runtime": "^0.2.0",
+    "@swc/helpers": "^0.4.14",
+    "accept-language-parser": "^1.5.0",
+    "universal-cookie": "^4.0.4",
+    "url-join": "^5.0.0"
+  },
+  "devDependencies": {
+    "@ice/pkg": "^1.0.0",
+    "@ice/app": "workspace:^",
+    "@ice/runtime": "workspace:^",
+    "@remix-run/router": "^1.5.0",
+    "@types/react": "^18.0.33",
+    "@types/accept-language-parser": "^1.5.3",
+    "webpack-dev-server": "^4.13.2"
+  },
+  "peerDependencies": {
+    "@ice/app": "^3.0.0",
+    "@ice/runtime": "^1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT"
+}

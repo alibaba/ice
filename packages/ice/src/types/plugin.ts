@@ -2,7 +2,7 @@ import type webpack from '@ice/bundles/compiled/webpack';
 import type { _Plugin, CommandArgs, TaskConfig } from 'build-scripts';
 import type { Configuration, Stats, WebpackOptionsNormalized } from '@ice/bundles/compiled/webpack';
 import type { esbuild } from '@ice/bundles';
-import type { NestedRouteManifest } from '@ice/route-manifest';
+import type { DefineExtraRoutes, NestedRouteManifest } from '@ice/route-manifest';
 import type { Config } from '@ice/webpack-config/types';
 import type { AppConfig, AssetsManifest } from '@ice/runtime/types';
 import type ServerCompileTask from '../utils/ServerCompileTask.js';
@@ -161,6 +161,7 @@ export interface ExtendsPluginAPI {
   getRouteManifest: () => Routes;
   getFlattenRoutes: () => string[];
   getRoutesFile: () => string[];
+  addRoutesDefinition: (defineRoutes: DefineExtraRoutes) => void;
   dataCache: Map<string, string>;
   createLogger: CreateLogger;
 }

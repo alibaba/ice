@@ -1,4 +1,4 @@
-import type { ServerResponse } from 'http';
+import type { ServerResponse, IncomingMessage } from 'http';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { parsePath } from 'react-router-dom';
@@ -55,9 +55,11 @@ interface Piper {
   pipe: NodeWritablePiper;
   fallback: Function;
 }
-interface RenderResult {
+interface Response {
   statusCode?: number;
+  statusText?: string;
   value?: string | Piper;
+  headers?: Record<string, string>;
 }
 
 /**
@@ -95,11 +97,11 @@ export async function renderToEntry(
 export async function renderToHTML(
   requestContext: ServerContext,
   renderOptions: RenderOptions,
-): Promise<RenderResult> {
+): Promise<Response> {
   const result = await doRender(requestContext, renderOptions);
   const { value } = result;
 
-  if (typeof value === 'string') {
+  if (typeof value === 'string' || typeof value === 'undefined') {
     return result;
   }
 
@@ -110,6 +112,9 @@ export async function renderToHTML(
 
     return {
       value: entryStr,
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+      },
       statusCode: 200,
     };
   } catch (error) {
@@ -127,13 +132,13 @@ export async function renderToHTML(
  * Render and send the result to ServerResponse.
  */
 export async function renderToResponse(requestContext: ServerContext, renderOptions: RenderOptions) {
-  const { res } = requestContext;
+  const { req, res } = requestContext;
   const result = await doRender(requestContext, renderOptions);
 
   const { value } = result;
 
-  if (typeof value === 'string') {
-    sendResult(res, result);
+  if (typeof value === 'string' || typeof value === 'undefined') {
+    sendResponse(req, res, result);
   } else {
     const { pipe, fallback } = value;
 
@@ -152,7 +157,7 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
           console.error('PipeToResponse onShellError, downgrade to CSR.');
           console.error(err);
           const result = await fallback();
-          sendResult(res, result);
+          sendResponse(req, res, result);
           resolve();
         },
         onError: async (err) => {
@@ -169,21 +174,29 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
   }
 }
 
-/**
- * Send string result to ServerResponse.
- */
-async function sendResult(res: ServerResponse, result: RenderResult) {
-  res.statusCode = result.statusCode;
-  res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  res.end(result.value);
+async function sendResponse(
+  req: IncomingMessage,
+  res: ServerResponse,
+  response: Response,
+) {
+  res.statusCode = response.statusCode;
+  res.statusMessage = response.statusText;
+  Object.entries(response.headers || {}).forEach(([name, value]) => {
+    res.setHeader(name, value);
+  });
+  if (response.value && req.method !== 'HEAD') {
+    res.end(response.value);
+  } else {
+    res.end();
+  }
 }
 
 function needRevalidate(matchedRoutes: RouteMatch[]) {
   return matchedRoutes.some(({ route }) => route.exports.includes('dataLoader') && route.exports.includes('staticDataLoader'));
 }
 
-async function doRender(serverContext: ServerContext, renderOptions: RenderOptions): Promise<RenderResult> {
-  const { req } = serverContext;
+async function doRender(serverContext: ServerContext, renderOptions: RenderOptions): Promise<Response> {
+  const { req, res } = serverContext;
   const {
     app,
     basename,
@@ -226,6 +239,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
   if (runtimeModules.statics) {
     await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
   }
+
   // don't need to execute getAppData in CSR
   if (!documentOnly) {
     try {
@@ -245,7 +259,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
   if (documentOnly) {
     return renderDocument({ matches, routePath, routes, renderOptions });
   } else if (!matches.length) {
-    return render404();
+    return handleNotFoundResponse();
   }
 
   try {
@@ -266,6 +280,31 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     if (runtimeModules.commons) {
       await Promise.all(runtimeModules.commons.map(m => runtime.loadModule(m)).filter(Boolean));
     }
+    /**
+       Plugin may register response handlers, for example:
+       ```
+       addResponseHandler((req) => {
+         if (redirect) {
+           return {
+             statusCode: 302,
+             statusText: 'Found',
+             headers: {
+               location: '/redirect',
+             },
+           };
+         }
+       });
+       ```
+     */
+    const responseHandlers = runtime.getResponseHandlers();
+    for (const responseHandler of responseHandlers) {
+      if (typeof responseHandler === 'function') {
+        const response = await responseHandler(req, res);
+        if (response) {
+          return response as Response;
+        }
+      }
+    }
 
     return await renderServerEntry({
       runtime,
@@ -283,9 +322,9 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
 }
 
 // https://github.com/ice-lab/ice-next/issues/133
-function render404(): RenderResult {
+function handleNotFoundResponse(): Response {
   return {
-    value: 'Not Found',
+    statusText: 'Not Found',
     statusCode: 404,
   };
 }
@@ -306,7 +345,7 @@ async function renderServerEntry(
     location,
     renderOptions,
   }: RenderServerEntry,
-): Promise<RenderResult> {
+): Promise<Response> {
   const { Document } = renderOptions;
   const appContext = runtime.getAppContext();
   const { routes, routePath, loaderData, basename } = appContext;
@@ -356,7 +395,7 @@ interface RenderDocumentOptions {
 /**
  * Render Document for CSR.
  */
-function renderDocument(options: RenderDocumentOptions): RenderResult {
+function renderDocument(options: RenderDocumentOptions): Response {
   const {
     matches,
     renderOptions,
@@ -415,6 +454,9 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
 
   return {
     value: `<!DOCTYPE html>${htmlStr}`,
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+    },
     statusCode: 200,
   };
 }
