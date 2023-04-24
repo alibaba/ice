@@ -43,7 +43,7 @@
     "@swc/helpers": "0.4.14",
     "@types/express": "^4.17.14",
     "address": "^1.1.2",
-    "build-scripts": "^2.1.0",
+    "build-scripts": "^2.1.1-0",
     "chalk": "^4.0.0",
     "commander": "^9.0.0",
     "consola": "^2.15.3",
