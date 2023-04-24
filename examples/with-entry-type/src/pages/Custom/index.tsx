@@ -1,4 +1,4 @@
-import { Link, useData, defineDataLoader } from 'ice';
+import { Link, useData } from 'ice';
 
 export default function Custom() {
   const data = useData();
@@ -17,15 +17,3 @@ export function pageConfig() {
     title: 'Custom',
   };
 }
-
-export const dataLoader = defineDataLoader({
-    key: 'List_list_prefetch_key',
-    prefetch_type: 'mtop',
-    api: 'mtop.xxx.xx.xx.xx',
-    v: '2.0',
-    data: {
-      id: 12345,
-      params: '{"refId":"${queryParams.refId}", "namespace":1, "searchTags":true }',
-    },
-    prefetchKey: 'List_list_prefetch_key',
-  });
