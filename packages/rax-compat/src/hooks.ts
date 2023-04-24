@@ -20,8 +20,8 @@ import {
   useState as _useState,
   createContext as _createContext,
 } from 'react';
-import is from './is';
-import { isFunction } from './type';
+import is from './is.js';
+import { isFunction } from './type.js';
 
 /**
  * Compat useState for rax export.

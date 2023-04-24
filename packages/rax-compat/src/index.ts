@@ -1,5 +1,5 @@
-import { createElement } from './create-element';
-import render from './render';
+import { createElement } from './create-element.js';
+import render from './render.js';
 import {
   useState,
   useContext,
@@ -10,12 +10,12 @@ import {
   useMemo,
   useReducer,
   useImperativeHandle,
-} from './hooks';
-import Fragment from './fragment';
-import { forwardRef, createRef } from './ref';
-import { Component, PureComponent, memo } from './component';
-import { createContext } from './context';
-import shared from './shared';
+} from './hooks.js';
+import Fragment from './fragment.js';
+import { forwardRef, createRef } from './ref.js';
+import { Component, PureComponent, memo } from './component.js';
+import { createContext } from './context.js';
+import shared from './shared.js';
 
 // Mocked version for rax.
 const version = '1.2.2-compat';

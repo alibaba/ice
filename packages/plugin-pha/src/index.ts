@@ -34,7 +34,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
     const { template = true, preload = false } = options || {};
     const { command, rootDir } = context;
 
-    const logger = createLogger('PHA');
+    const logger = createLogger('plugin-pha');
 
     // Get variable blows from task config.
     let compiler: Compiler;
