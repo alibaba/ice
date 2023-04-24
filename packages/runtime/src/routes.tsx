@@ -143,7 +143,16 @@ export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
     };
   }
 
-  const { loader, options: loaderOptions } = dataLoaderConfig;
+  let loader;
+  let loaderOptions;
+
+  // Compat dataLoaderConfig not return by defineDataLoader.
+  if (typeof dataLoaderConfig === 'function' || Array.isArray(dataLoaderConfig)) {
+    loader = dataLoaderConfig;
+  } else {
+    loader = dataLoaderConfig.loader;
+    loaderOptions = dataLoaderConfig.options;
+  }
 
   const getData = () => {
     const hasGlobalLoader = typeof window !== 'undefined' && (window as any).__ICE_DATA_LOADER__;

@@ -18,7 +18,14 @@ async function getAppData(appExport: AppExport, requestContext?: RequestContext)
     return null;
   }
 
-  const { loader } = appDataLoaderConfig;
+  let loader;
+
+  if (typeof appDataLoaderConfig === 'function' || Array.isArray(appDataLoaderConfig)) {
+    loader = appDataLoaderConfig;
+  } else {
+    loader = appDataLoaderConfig.loader;
+  }
+
   return await callDataLoader(loader, requestContext);
 }
 
