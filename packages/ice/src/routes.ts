@@ -1,15 +1,19 @@
 import * as path from 'path';
 import { formatNestedRouteManifest, generateRouteManifest } from '@ice/route-manifest';
-import type { NestedRouteManifest } from '@ice/route-manifest';
+import type { NestedRouteManifest, DefineExtraRoutes } from '@ice/route-manifest';
 import type { UserConfig } from './types/userConfig.js';
 import { getFileExports } from './service/analyze.js';
 import formatPath from './utils/formatPath.js';
 
-export async function generateRoutesInfo(rootDir: string, routesConfig: UserConfig['routes'] = {}) {
+export async function generateRoutesInfo(
+  rootDir: string,
+  routesConfig: UserConfig['routes'] = {},
+  routesDefinitions: DefineExtraRoutes[] = [],
+) {
   const routeManifest = generateRouteManifest(
     rootDir,
     routesConfig.ignoreFiles,
-    routesConfig.defineRoutes,
+    [routesConfig.defineRoutes, ...routesDefinitions],
     routesConfig.config,
   );
 
@@ -51,9 +55,9 @@ export default {
   };
 }
 
-export function getRoutesDefination(nestRouteManifest: NestedRouteManifest[], lazy = false, depth = 0) {
+export function getRoutesDefinition(nestRouteManifest: NestedRouteManifest[], lazy = false, depth = 0) {
   const routeImports: string[] = [];
-  const routeDefination = nestRouteManifest.reduce((prev, route, currentIndex) => {
+  const routeDefinition = nestRouteManifest.reduce((prev, route) => {
     const { children, path: routePath, index, componentName, file, id, layout, exports } = route;
 
     const componentPath = id.startsWith('__') ? file : `@/pages/${file}`.replace(new RegExp(`${path.extname(file)}$`), '');
@@ -62,27 +66,47 @@ export function getRoutesDefination(nestRouteManifest: NestedRouteManifest[], la
     if (lazy) {
       loadStatement = `import(/* webpackChunkName: "p_${componentName}" */ '${formatPath(componentPath)}')`;
     } else {
-      const routeSpecifier = `route_${depth}_${currentIndex}`;
+      const routeSpecifier = id.replace(/[./-]/g, '_').replace(/[:*]/, '$');
       routeImports.push(`import * as ${routeSpecifier} from '${formatPath(componentPath)}';`);
       loadStatement = routeSpecifier;
     }
+    const component = `Component: () => WrapRouteComponent({
+          routeId: '${id}',
+          isLayout: ${layout},
+          routeExports: ${lazy ? 'componentModule' : loadStatement},
+        })`;
+    const loader = `loader: createRouteLoader({
+          routeId: '${id}',
+          requestContext,
+          renderMode,
+          module: ${lazy ? 'componentModule' : loadStatement},
+        })`;
     const routeProperties: string[] = [
       `path: '${formatPath(routePath || '')}',`,
-      `load: () => ${loadStatement},`,
+      `async lazy() {
+      ${lazy ? `const componentModule = await ${loadStatement}` : ''};
+      return {
+        ${lazy ? '...componentModule' : `...${loadStatement}`},
+        ${component},
+        ${loader},
+      };
+    },`,
+      // Empty errorElement to avoid default ui provided by react-router.
+      'ErrorBoundary: RouteErrorComponent,',
       `componentName: '${componentName}',`,
       `index: ${index},`,
       `id: '${id}',`,
       'exact: true,',
       `exports: ${JSON.stringify(exports)},`,
-    ];
+    ].filter(Boolean);
 
     if (layout) {
       routeProperties.push('layout: true,');
     }
     if (children) {
-      const res = getRoutesDefination(children, lazy, depth + 1);
+      const res = getRoutesDefinition(children, lazy, depth + 1);
       routeImports.push(...res.routeImports);
-      routeProperties.push(`children: [${res.routeDefination}]`);
+      routeProperties.push(`children: [${res.routeDefinition}]`);
     }
     prev += formatRoutesStr(depth, routeProperties);
     return prev;
@@ -90,7 +114,7 @@ export function getRoutesDefination(nestRouteManifest: NestedRouteManifest[], la
 
   return {
     routeImports,
-    routeDefination,
+    routeDefinition,
   };
 }
 

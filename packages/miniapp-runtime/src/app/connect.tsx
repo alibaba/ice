@@ -1,7 +1,6 @@
 import { EMPTY_OBJ, hooks } from '@ice/shared';
 import React, { createElement } from 'react';
 import * as ReactDOM from 'react-dom';
-import { ConfigProvider, DataProvider } from '@ice/runtime';
 import type { MiniappAppConfig, MiniappLifecycles } from '../types.js';
 import { Current, getPageInstance,
   incrementId, injectPageInstance,
@@ -12,6 +11,7 @@ import type {
   PageLifeCycle, PageProps,
   ReactAppInstance, ReactPageComponent,
 } from '../index.js';
+import { ConfigProvider, DataProvider } from './routeContext.js';
 import enableHtmlRuntime from './html/runtime.js';
 import { reactMeta } from './react-meta.js';
 import { ensureIsArray, HOOKS_APP_ID, isClassComponent, setDefaultDescriptor, setRouterParams } from './utils.js';

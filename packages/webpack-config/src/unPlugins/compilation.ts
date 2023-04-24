@@ -114,23 +114,22 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
           ]);
         }
       }
-
       if (keepExports) {
-        if (isRouteEntry(id)) {
-          swcPlugins.push([
-            swcPluginKeepExport,
-            keepExports,
-          ]);
-        } else if (isAppEntry(id)) {
-          let keepList;
-
-          if (keepExports.indexOf('pageConfig') > -1) {
+        const keepList = Array.isArray(keepExports) ? keepExports : keepExports.value;
+        const customInlcude = !Array.isArray(keepExports) && keepExports?.include;
+        let matchRule = false;
+        if (customInlcude) {
+          matchRule = customInlcude(id);
+        } else {
+          const matchRoute = isRouteEntry(id);
+          const matchEntry = isAppEntry(id);
+          if (matchEntry && keepList.indexOf('pageConfig') > -1) {
             // when build for pageConfig, should keep default, it equals to getAppConfig
-            keepList = keepExports.concat(['default']);
-          } else {
-            keepList = keepExports;
+            keepList.push('default');
           }
-
+          matchRule = matchRoute || matchEntry;
+        }
+        if (matchRule) {
           swcPlugins.push([
             swcPluginKeepExport,
             keepList,

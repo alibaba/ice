@@ -44,7 +44,7 @@ describe('routes config', () => {
 
   it('update routes config', async () => {
     const routesConfig = {
-      home: {
+      pageConfig: {
         title: 'home',
         meta: [
           {
@@ -61,8 +61,7 @@ describe('routes config', () => {
         }],
       },
     };
-    // @ts-ignore
-    await updateRoutesConfig([{ route: { id: 'home' } }], routesConfig);
+    await updateRoutesConfig(routesConfig);
     expect(insertTags.length).toBe(1);
     expect(insertTags[0]?.type).toBe('meta');
     expect(appendTags.length).toBe(2);

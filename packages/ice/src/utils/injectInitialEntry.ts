@@ -18,7 +18,7 @@ function injectInitialEntry(routeManifest: RouteManifest, outputDir: string) {
   const routePaths = routeManifest.getFlattenRoute();
   const routeItems = routeManifest.getNestedRoute();
   routePaths.forEach((routePath) => {
-    const routeAsset = getRouteAsset(routeItems, routePath);
+    const routeAsset = getRouteAsset(routeItems as unknown as RouteItem[], routePath);
     // Inject `initialPath` when router type is memory.
     const routeAssetPath = path.join(outputDir, 'js', routeAsset);
     if (fse.existsSync(routeAssetPath)) {

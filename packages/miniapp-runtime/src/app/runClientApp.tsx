@@ -47,30 +47,15 @@ async function render(
   runtime: Runtime,
 ) {
   const appContext = runtime.getAppContext();
-  const { appData } = appContext;
   const render = runtime.getRender();
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
 
   render(
     document.getElementById('ice-container'),
-    <AppDataProvider value={appData}>
-      <AppRuntimeProvider>
-        <BrowserEntry appContext={appContext} />
-      </AppRuntimeProvider>
-    </AppDataProvider>,
-  );
-}
-
-interface BrowserEntryProps {
-  appContext: AppContext;
-}
-
-function BrowserEntry({
-  appContext,
-}: BrowserEntryProps) {
-  return (
     <AppContextProvider value={appContext}>
-      <App />
-    </AppContextProvider>
+      <AppRuntimeProvider>
+        <App />
+      </AppRuntimeProvider>
+    </AppContextProvider>,
   );
 }

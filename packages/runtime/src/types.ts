@@ -1,8 +1,8 @@
 import type { IncomingMessage, ServerResponse } from 'http';
-import type { Action, InitialEntry, Location } from 'history';
-import type { ComponentType, ReactNode, PropsWithChildren } from 'react';
+import type { InitialEntry, AgnosticRouteObject, Location, History } from '@remix-run/router';
+import type { ComponentType, PropsWithChildren } from 'react';
 import type { HydrationOptions, Root } from 'react-dom/client';
-import type { Navigator, Params, RouteObject } from 'react-router-dom';
+import type { Params, RouteObject } from 'react-router-dom';
 
 type UseConfig = () => RouteConfig<Record<string, any>>;
 type UseData = () => RouteData;
@@ -71,15 +71,24 @@ export interface RoutesData {
   [routeId: string]: RouteData;
 }
 
+export interface LoadersData {
+  [routeId: string]: LoaderData;
+}
+
+export interface LoaderData {
+  data?: RouteData;
+  pageConfig?: RouteConfig;
+}
+
 // useAppContext
 export interface AppContext {
   appConfig: AppConfig;
   appData: any;
   serverData?: any;
   assetsManifest?: AssetsManifest;
-  routesData?: RoutesData;
-  routesConfig?: RoutesConfig;
+  loaderData?: LoadersData;
   routeModules?: RouteModules;
+  RouteWrappers?: RouteWrapperConfig[];
   routePath?: string;
   matches?: RouteMatch[];
   routes?: RouteItem[];
@@ -88,13 +97,14 @@ export interface AppContext {
   appExport?: AppExport;
   basename?: string;
   downgrade?: boolean;
-  renderMode?: string;
+  renderMode?: RenderMode;
   requestContext?: RequestContext;
+  revalidate?: boolean;
 }
 
 export type WindowContext = Pick<
   AppContext,
-  'appData' | 'routesData' | 'routesConfig' | 'routePath' | 'downgrade' | 'matchedIds' | 'documentOnly' | 'renderMode' | 'serverData'
+  'appData' | 'loaderData' | 'routePath' | 'downgrade' | 'matchedIds' | 'documentOnly' | 'renderMode' | 'serverData' | 'revalidate'
 >;
 
 export type Renderer = (
@@ -113,27 +123,23 @@ export interface RequestContext extends ServerContext {
   query: Record<string, any>;
 }
 
-export interface RouteComponent {
-  default: ComponentType<any>;
+export type ComponentModule = {
+  default?: ComponentType<any>;
+  Component?: ComponentType<any>;
   staticDataLoader?: DataLoaderConfig;
   serverDataLoader?: DataLoaderConfig;
   dataLoader?: DataLoaderConfig;
   pageConfig?: PageConfig;
   [key: string]: any;
-}
+};
 
-export interface RouteItem {
-  id: string;
-  path: string;
-  element?: ReactNode;
+export type RouteItem = AgnosticRouteObject & {
   componentName: string;
-  index?: boolean;
-  exact?: boolean;
-  strict?: boolean;
-  load?: () => Promise<RouteComponent>;
-  children?: RouteItem[];
+  Component?: ComponentType<any>;
+  exports?: string[];
   layout?: boolean;
-}
+  children?: RouteItem[];
+};
 
 export type ComponentWithChildren<P = {}> = ComponentType<PropsWithChildren<P>>;
 
@@ -148,15 +154,21 @@ export interface RouteWrapperConfig {
 
 export type AppProvider = ComponentWithChildren<any>;
 export type RouteWrapper = ComponentType<any>;
+export type ResponseHandler = (
+  req: IncomingMessage,
+  res: ServerResponse,
+) => any | Promise<any>;
 
 export type SetAppRouter = (AppRouter: ComponentType<AppRouterProps>) => void;
 export type GetAppRouter = () => AppProvider;
 export type AddProvider = (Provider: AppProvider) => void;
 export type SetRender = (render: Renderer) => void;
 export type AddWrapper = (wrapper: RouteWrapper, forLayout?: boolean) => void;
+export type AddResponseHandler = (handler: ResponseHandler) => void;
+export type GetResponseHandlers = () => ResponseHandler[];
 
 export interface RouteModules {
-  [routeId: string]: RouteComponent;
+  [routeId: string]: ComponentModule;
 }
 
 export interface AssetsManifest {
@@ -177,12 +189,15 @@ export interface RuntimeAPI {
   setAppRouter?: SetAppRouter;
   getAppRouter: GetAppRouter;
   addProvider: AddProvider;
+  addResponseHandler: AddResponseHandler;
+  getResponseHandlers: GetResponseHandlers;
   setRender: SetRender;
   addWrapper: AddWrapper;
   appContext: AppContext;
   useData: UseData;
   useConfig: UseConfig;
   useAppContext: UseAppContext;
+  history: History;
 }
 
 export interface StaticRuntimeAPI {
@@ -215,12 +230,11 @@ export interface RuntimeModules {
 }
 
 export interface AppRouterProps {
-  action: Action;
-  location: Location;
-  navigator: Navigator;
-  routes: RouteObject[];
-  static?: boolean;
-  basename?: string;
+  routes?: RouteObject[];
+  routerContext?: any;
+  location?: Location;
+  Component?: ComponentType<any>;
+  loaderData?: LoaderData;
 }
 
 export interface AppRouteProps {
