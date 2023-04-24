@@ -16,4 +16,5 @@ export default defineConfig({
       locales: ['af'],
     }),
   ],
+  ssg: false,
 });

@@ -342,7 +342,7 @@ export default class Generator {
     const renderExt = '.ejs';
     const realTargetPath = path.isAbsolute(targetPath)
       ? targetPath : path.join(this.rootDir, this.targetDir, targetPath);
-    // example: templatePath = 'routes.ts.ejs'
+    // example: templatePath = 'routes.tsx.ejs'
     const realTemplatePath = path.isAbsolute(templatePath)
       ? templatePath : path.join(this.templateDir, templatePath);
     const { ext } = path.parse(templatePath);

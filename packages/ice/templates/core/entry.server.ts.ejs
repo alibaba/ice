@@ -92,10 +92,13 @@ function mergeOptions(options) {
     routesConfig,
     distType,
     serverData,
-<% if (runtimeOptions.exports) { -%>
     runtimeOptions: {
+    <% if (runtimeOptions.exports) { -%>
       <%- runtimeOptions.exports %>
+    <% } -%>
+    <% if (locals.customRuntimeOptions) { _%>
+    ...<%- JSON.stringify(customRuntimeOptions) %>,
+    <% } _%>
     },
-<% } -%>
   };
 }

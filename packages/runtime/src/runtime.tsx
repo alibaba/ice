@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import type { ComponentType } from 'react';
+import { routerHistory as history } from './history.js';
 import type {
   Renderer,
   AppContext,
@@ -15,6 +16,7 @@ import type {
   SetRender,
   AppRouterProps,
   ComponentWithChildren,
+  ResponseHandler,
 } from './types.js';
 import { useData, useConfig } from './RouteContext.js';
 import { useAppContext } from './AppContext.js';
@@ -32,6 +34,8 @@ class Runtime {
 
   private render: Renderer;
 
+  private responseHandlers: ResponseHandler[];
+
   public constructor(appContext: AppContext, runtimeOptions?: Record<string, any>) {
     this.AppProvider = [];
     this.appContext = appContext;
@@ -42,6 +46,7 @@ class Runtime {
     };
     this.RouteWrappers = [];
     this.runtimeOptions = runtimeOptions;
+    this.responseHandlers = [];
   }
 
   public getAppContext = () => {
@@ -66,6 +71,8 @@ class Runtime {
   public async loadModule(module: RuntimePlugin | StaticRuntimePlugin | CommonJsRuntime) {
     let runtimeAPI: RuntimeAPI = {
       addProvider: this.addProvider,
+      addResponseHandler: this.addResponseHandler,
+      getResponseHandlers: this.getResponseHandlers,
       getAppRouter: this.getAppRouter,
       setRender: this.setRender,
       addWrapper: this.addWrapper,
@@ -74,6 +81,7 @@ class Runtime {
       useData,
       useConfig,
       useAppContext,
+      history,
     };
 
     const runtimeModule = ((module as CommonJsRuntime).default || module) as RuntimePlugin;
@@ -112,6 +120,14 @@ class Runtime {
 
   public setAppRouter: SetAppRouter = (AppRouter) => {
     this.AppRouter = AppRouter;
+  };
+
+  public addResponseHandler = (handler: ResponseHandler) => {
+    this.responseHandlers.push(handler);
+  };
+
+  public getResponseHandlers = () => {
+    return this.responseHandlers;
   };
 }
 

@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'http';
-import type { InitialEntry, AgnosticRouteObject, Location } from '@remix-run/router';
+import type { InitialEntry, AgnosticRouteObject, Location, History } from '@remix-run/router';
 import type { ComponentType, PropsWithChildren } from 'react';
 import type { HydrationOptions, Root } from 'react-dom/client';
 import type { Params, RouteObject } from 'react-router-dom';
@@ -154,12 +154,18 @@ export interface RouteWrapperConfig {
 
 export type AppProvider = ComponentWithChildren<any>;
 export type RouteWrapper = ComponentType<any>;
+export type ResponseHandler = (
+  req: IncomingMessage,
+  res: ServerResponse,
+) => any | Promise<any>;
 
 export type SetAppRouter = (AppRouter: ComponentType<AppRouterProps>) => void;
 export type GetAppRouter = () => AppProvider;
 export type AddProvider = (Provider: AppProvider) => void;
 export type SetRender = (render: Renderer) => void;
 export type AddWrapper = (wrapper: RouteWrapper, forLayout?: boolean) => void;
+export type AddResponseHandler = (handler: ResponseHandler) => void;
+export type GetResponseHandlers = () => ResponseHandler[];
 
 export interface RouteModules {
   [routeId: string]: ComponentModule;
@@ -183,12 +189,15 @@ export interface RuntimeAPI {
   setAppRouter?: SetAppRouter;
   getAppRouter: GetAppRouter;
   addProvider: AddProvider;
+  addResponseHandler: AddResponseHandler;
+  getResponseHandlers: GetResponseHandlers;
   setRender: SetRender;
   addWrapper: AddWrapper;
   appContext: AppContext;
   useData: UseData;
   useConfig: UseConfig;
   useAppContext: UseAppContext;
+  history: History;
 }
 
 export interface StaticRuntimeAPI {
