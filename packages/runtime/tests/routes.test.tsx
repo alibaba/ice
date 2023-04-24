@@ -28,9 +28,9 @@ describe('routes', () => {
   const homeItem = {
     default: () => <></>,
     pageConfig: () => ({ title: 'home' }),
-    dataLoader: [async () => ({ type: 'getData' })],
-    serverDataLoader: [async () => ({ type: 'getServerData' })],
-    staticDataLoader: [async () => ({ type: 'getStaticData' })],
+    dataLoader: { loader: async () => ({ type: 'getData' }) },
+    serverDataLoader: { loader: async () => ({ type: 'getServerData' }) },
+    staticDataLoader: { loader: async () => ({ type: 'getStaticData' }) },
   };
   const aboutItem = {
     default: () => <></>,
@@ -39,7 +39,7 @@ describe('routes', () => {
   const InfoItem = {
     default: () => <></>,
     pageConfig: () => ({ title: 'home' }),
-    dataLoader: [async () => ({ type: 'getAsyncData' }), { defer: true }],
+    dataLoader: { loader: async () => ({ type: 'getAsyncData' }), options: { defer: true } },
   };
 
   const homeLazyItem = {
