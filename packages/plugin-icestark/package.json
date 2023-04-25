@@ -44,8 +44,8 @@
     "@ice/stark-app": "^1.2.0"
   },
   "devDependencies": {
-    "@ice/app": "^3.1.5",
-    "@ice/runtime": "^1.1.5",
+    "@ice/app": "^3.2.0-beta.0",
+    "@ice/runtime": "^1.2.0-beta.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0"
   },

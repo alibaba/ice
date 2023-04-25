@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.4-beta.0
+
+### Patch Changes
+
+- Updated dependencies [5dd3c86e]
+  - @ice/bundles@0.1.9-beta.0
+  - @ice/miniapp-runtime@1.0.3-beta.0
+  - @ice/miniapp-loader@1.0.1-beta.0
+  - @ice/miniapp-react-dom@1.0.2-beta.0
+
 ## 1.0.3
 
 ### Patch Changes

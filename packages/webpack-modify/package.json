@@ -15,7 +15,7 @@
     "consola": "^2.15.3"
   },
   "devDependencies": {
-    "@ice/webpack-config": "^1.0.0",
+    "@ice/webpack-config": "^1.0.13-beta.0",
     "webpack": "^5.76.2"
   },
   "scripts": {

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.1-beta.0
+
+### Patch Changes
+
+- Updated dependencies [3ede3c5a]
+- Updated dependencies [5dd3c86e]
+  - rax-compat@0.2.1-beta.0
+  - @ice/bundles@0.1.9-beta.0
+
 ## 0.2.0
 
 ### Minor Changes
