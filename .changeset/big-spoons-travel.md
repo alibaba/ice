@@ -1,5 +1,5 @@
 ---
-'@ice/bundles': minor
+'@ice/runtime': minor
 '@ice/app': minor
 ---
 
