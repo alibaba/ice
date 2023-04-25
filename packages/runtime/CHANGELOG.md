@@ -1,5 +1,16 @@
 # @ice/runtime
 
+## 1.2.0
+
+### Minor Changes
+
+- f62560f9: feat: refactor runtime about router
+
+### Patch Changes
+
+- 9de09ee8: feat: support version check between @ice/app and @ice/runtime
+- 1c3d3fec: feat: support handler response
+
 ## 1.1.5
 
 ### Patch Changes

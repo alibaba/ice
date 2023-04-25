@@ -1,6 +1,6 @@
 {
   "name": "@ice/webpack-config",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "repository": "alibaba/ice",
   "bugs": "https://github.com/alibaba/ice/issues",
   "homepage": "https://v3.ice.work",
@@ -16,7 +16,7 @@
     "*.d.ts"
   ],
   "dependencies": {
-    "@ice/bundles": "0.1.8",
+    "@ice/bundles": "0.1.9",
     "@rollup/pluginutils": "^4.2.0",
     "browserslist": "^4.19.3",
     "consola": "^2.15.3",

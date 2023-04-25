@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1
+
+### Patch Changes
+
+- 3ede3c5a: feat: add type module
+
 ## 0.2.0
 
 ### Minor Changes

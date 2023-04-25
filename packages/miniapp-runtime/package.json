@@ -1,6 +1,6 @@
 {
   "name": "@ice/miniapp-runtime",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "ice runtime for miniapps.",
   "type": "module",
   "types": "./esm/index.d.ts",
@@ -25,7 +25,7 @@
   "sideEffects": false,
   "dependencies": {
     "@ice/shared": "^1.0.0",
-    "@ice/runtime": "^1.1.2",
+    "@ice/runtime": "^1.2.0",
     "miniapp-history": "^0.1.7"
   },
   "devDependencies": {

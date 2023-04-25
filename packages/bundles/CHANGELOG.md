@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.9
+
+### Patch Changes
+
+- 5dd3c86e: fix: update version of @ice/swc-plugin-keep-export(0.1.4-2)
+
 ## 0.1.8
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.3
+
+### Patch Changes
+
+- b1e89bc7: fix: PHA plugin can only run in web
+- d4f943fb: feat: support downgradeUrl
+- ce94e054: fix: fix frames build err in multiple
+
 ## 2.0.2
 
 ### Patch Changes

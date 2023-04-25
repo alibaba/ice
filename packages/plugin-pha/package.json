@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-pha",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "ice.js plugin for PHA.",
   "license": "MIT",
   "type": "module",
@@ -25,7 +25,7 @@
     "htmlparser2": "^8.0.1"
   },
   "devDependencies": {
-    "@ice/app": "^3.1.5",
+    "@ice/app": "^3.2.0",
     "build-scripts": "^2.1.1-0",
     "esbuild": "^0.17.16",
     "webpack": "^5.76.2",

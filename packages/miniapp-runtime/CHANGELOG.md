@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.1.0
+
+### Minor Changes
+
+- 1ed81fee: feat: refactor runtime api
+
+### Patch Changes
+
+- Updated dependencies [f62560f9]
+- Updated dependencies [9de09ee8]
+- Updated dependencies [1c3d3fec]
+  - @ice/runtime@1.2.0
+
 ## 1.0.2
 
 ### Patch Changes
