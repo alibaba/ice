@@ -31,7 +31,7 @@ export type RouteConfig<T = {}> = T & {
 export interface AppExport {
   default?: AppConfig;
   [key: string]: any;
-  dataLoader?: DataLoader;
+  dataLoader?: DataLoaderConfig;
 }
 
 export type DataLoaderResult = (Promise<RouteData> | RouteData) | RouteData;
@@ -49,7 +49,7 @@ export interface StaticDataLoader {
 // route.defineDataLoader
 // route.defineServerDataLoader
 // route.defineStaticDataLoader
-export type DataLoaderConfig = DataLoader | StaticDataLoader | Array<DataLoader | StaticDataLoader>;
+export type Loader = DataLoader | StaticDataLoader | Array<DataLoader | StaticDataLoader>;
 
 // route.pageConfig
 export type PageConfig = (args: { data?: RouteData }) => RouteConfig;
@@ -69,6 +69,15 @@ export interface RoutesConfig {
 
 export interface RoutesData {
   [routeId: string]: RouteData;
+}
+
+export interface DataLoaderOptions {
+  defer?: boolean;
+}
+
+export interface DataLoaderConfig {
+  loader: Loader;
+  options?: DataLoaderOptions;
 }
 
 export interface LoadersData {
