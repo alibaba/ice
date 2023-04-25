@@ -16,7 +16,7 @@ import type {
   RouteWrapper,
   RenderMode,
   DistType,
-  DataLoaderConfig,
+  Loader,
   RouteWrapperConfig,
 } from './types.js';
 import Runtime from './runtime.js';
@@ -50,7 +50,7 @@ import KeepAliveOutlet from './KeepAliveOutlet.js';
 import ClientOnly from './ClientOnly.js';
 import useMounted from './useMounted.js';
 import { withSuspense, useSuspenseData } from './Suspense.js';
-import { createRouteLoader, WrapRouteComponent, RouteErrorComponent } from './routes.js';
+import { createRouteLoader, WrapRouteComponent, RouteErrorComponent, Await } from './routes.js';
 
 export {
   getAppConfig,
@@ -92,6 +92,8 @@ export {
   withSuspense,
   useSuspenseData,
 
+  Await,
+
   createRouteLoader,
   WrapRouteComponent,
   RouteErrorComponent,
@@ -109,7 +111,7 @@ export type {
   RouteWrapper,
   RenderMode,
   DistType,
-  DataLoaderConfig,
+  Loader,
   RunClientAppOptions,
   MetaType,
   TitleType,

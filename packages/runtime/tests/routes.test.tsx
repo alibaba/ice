@@ -28,14 +28,20 @@ describe('routes', () => {
   const homeItem = {
     default: () => <></>,
     pageConfig: () => ({ title: 'home' }),
-    dataLoader: async () => ({ type: 'getData' }),
-    serverDataLoader: async () => ({ type: 'getServerData' }),
-    staticDataLoader: async () => ({ type: 'getStaticData' }),
+    dataLoader: { loader: async () => ({ type: 'getData' }) },
+    serverDataLoader: { loader: async () => ({ type: 'getServerData' }) },
+    staticDataLoader: { loader: async () => ({ type: 'getStaticData' }) },
   };
   const aboutItem = {
     default: () => <></>,
     pageConfig: () => ({ title: 'about' }),
   };
+  const InfoItem = {
+    default: () => <></>,
+    pageConfig: () => ({ title: 'home' }),
+    dataLoader: { loader: async () => ({ type: 'getAsyncData' }), options: { defer: true } },
+  };
+
   const homeLazyItem = {
     Component: homeItem.default,
     loader: createRouteLoader({
@@ -145,6 +151,19 @@ describe('routes', () => {
     });
   });
 
+  it('load async route', async () => {
+    const { data: deferredResult } = await createRouteLoader({
+      routeId: 'home',
+      module: InfoItem,
+    })();
+
+    const data = await deferredResult.data;
+
+    expect(data).toStrictEqual({
+      type: 'getAsyncData',
+    });
+  });
+
   it('load route data for SSG', async () => {
     const routesDataSSG = await createRouteLoader({
       routeId: 'home',
@@ -226,7 +245,6 @@ describe('routes', () => {
     })();
 
     expect(routesDataCSR).toStrictEqual({
-      data: undefined,
       pageConfig: {
         title: 'about',
       },
