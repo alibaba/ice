@@ -1,5 +1,5 @@
 ---
-'@ice/plugin-rax-compat': patch
+'@ice/plugin-rax-compat': major
 ---
 
-feat: support css modules and global css
+fix: support css modules and global css
