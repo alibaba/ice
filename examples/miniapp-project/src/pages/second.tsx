@@ -15,6 +15,12 @@ export default function Second() {
   usePageLifecycle('onReady', () => {
     console.log('[Second] page onReady');
   });
+  usePageLifecycle('onShow', () => {
+    console.log('[Second] page onShow');
+  });
+  usePageLifecycle('onHide', () => {
+    console.log('[Second] page onHide');
+  });
   usePageLifecycle('onShareAppMessage', (options) => {
     console.log('[Second] onShareAppMessage', options);
     return {

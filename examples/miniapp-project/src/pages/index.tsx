@@ -1,5 +1,5 @@
 import './index.scss';
-import { useAppData, useData, defineDataLoader, history, Link, usePageLifecycle } from 'ice';
+import { useAppData, useData, defineDataLoader, history, Link } from 'ice';
 
 export default function Index() {
   const appData = useAppData();

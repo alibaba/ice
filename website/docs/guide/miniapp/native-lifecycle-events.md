@@ -18,6 +18,7 @@ export const miniappLifecycles = defineMiniappConfig(() => {
     onShow(options) {
       console.log('on show', options);
     }
+  };
 });
 ```
 
