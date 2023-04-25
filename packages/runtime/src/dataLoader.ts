@@ -1,16 +1,18 @@
-import type { RequestContext, RenderMode, DataLoaderConfig, DataLoaderResult, RuntimeModules, AppExport, StaticRuntimePlugin, CommonJsRuntime, StaticDataLoader } from './types.js';
 import getRequestContext from './requestContext.js';
-
+import type {
+  RequestContext, RenderMode, AppExport,
+  RuntimeModules, StaticRuntimePlugin, CommonJsRuntime,
+  Loader, DataLoaderResult, StaticDataLoader, DataLoaderConfig, DataLoaderOptions,
+} from './types.js';
 interface Loaders {
   [routeId: string]: DataLoaderConfig;
 }
 
 interface CachedResult {
   value: any;
-  status: string;
 }
 
-interface LoaderOptions {
+interface Options {
   fetcher: Function;
   runtimeModules: RuntimeModules['statics'];
   appExport: AppExport;
@@ -20,16 +22,24 @@ export interface LoadRoutesDataOptions {
   renderMode: RenderMode;
 }
 
-export function defineDataLoader(dataLoaderConfig: DataLoaderConfig): DataLoaderConfig {
-  return dataLoaderConfig;
+export function defineDataLoader(dataLoader: Loader, options?: DataLoaderOptions): DataLoaderConfig {
+  return {
+    loader: dataLoader,
+    options,
+  };
 }
 
-export function defineServerDataLoader(dataLoaderConfig: DataLoaderConfig): DataLoaderConfig {
-  return dataLoaderConfig;
+export function defineServerDataLoader(dataLoader: Loader, options?: DataLoaderOptions): DataLoaderConfig {
+  return {
+    loader: dataLoader,
+    options,
+  };
 }
 
-export function defineStaticDataLoader(dataLoaderConfig: DataLoaderConfig): DataLoaderConfig {
-  return dataLoaderConfig;
+export function defineStaticDataLoader(dataLoader: Loader): DataLoaderConfig {
+  return {
+    loader: dataLoader,
+  };
 }
 
 /**
@@ -124,12 +134,13 @@ export function loadDataByCustomFetcher(config: StaticDataLoader) {
 /**
  * Handle for different dataLoader.
  */
-export function callDataLoader(dataLoader: DataLoaderConfig, requestContext: RequestContext): DataLoaderResult {
+export function callDataLoader(dataLoader: Loader, requestContext: RequestContext): DataLoaderResult {
   if (Array.isArray(dataLoader)) {
     const loaders = dataLoader.map(loader => {
       return typeof loader === 'object' ? loadDataByCustomFetcher(loader) : loader(requestContext);
     });
-    return Promise.all(loaders);
+
+    return loaders;
   }
 
   if (typeof dataLoader === 'object') {
@@ -156,7 +167,6 @@ function loadInitialDataInClient(loaders: Loaders) {
     if (dataFromSSR) {
       cache.set(renderMode === 'SSG' ? `${id}_ssg` : id, {
         value: dataFromSSR,
-        status: 'RESOLVED',
       });
 
       if (renderMode === 'SSR') {
@@ -164,15 +174,15 @@ function loadInitialDataInClient(loaders: Loaders) {
       }
     }
 
-    const dataLoader = loaders[id];
+    const dataLoaderConfig = loaders[id];
 
-    if (dataLoader) {
+    if (dataLoaderConfig) {
       const requestContext = getRequestContext(window.location);
-      const loader = callDataLoader(dataLoader, requestContext);
+      const { loader } = dataLoaderConfig;
+      const promise = callDataLoader(loader, requestContext);
 
       cache.set(id, {
-        value: loader,
-        status: 'LOADING',
+        value: promise,
       });
     }
   });
@@ -183,7 +193,7 @@ function loadInitialDataInClient(loaders: Loaders) {
  * Load initial data and register global loader.
  * In order to load data, JavaScript modules, CSS and other assets in parallel.
  */
-async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
+async function init(loaders: Loaders, options: Options) {
   const {
     fetcher,
     runtimeModules,
@@ -208,57 +218,39 @@ async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
   }
 
   try {
-    loadInitialDataInClient(dataloaderConfig);
+    loadInitialDataInClient(loaders);
   } catch (error) {
     console.error('Load initial data error: ', error);
   }
 
   (window as any).__ICE_DATA_LOADER__ = {
-    getData: async (id, options: LoadRoutesDataOptions) => {
+    getData: (id, options: LoadRoutesDataOptions) => {
       let result;
 
-      // first render for ssg use data from build time.
-      // second render for ssg will use data from data loader.
+      // First render for ssg use data from build time, second render for ssg will use data from data loader.
       const cacheKey = `${id}${options?.renderMode === 'SSG' ? '_ssg' : ''}`;
+
+      // In CSR, all dataLoader is called by global data loader to avoid bundle dataLoader in page bundle duplicate.
       result = cache.get(cacheKey);
       // Always fetch new data after cache is been used.
       cache.delete(cacheKey);
 
       // Already send data request.
       if (result) {
-        const { status, value } = result;
-
-        if (status === 'RESOLVED') {
-          return result;
-        }
-
-        try {
-          if (Array.isArray(value)) {
-            return await Promise.all(value);
-          }
-
-          return await value;
-        } catch (error) {
-          console.error('DataLoader: getData error.\n', error);
-
-          return {
-            message: 'DataLoader: getData error.',
-            error,
-          };
-        }
+        return result.value;
       }
 
-      const dataLoader = dataloaderConfig[id];
+      const dataLoaderConfig = loaders[id];
 
       // No data loader.
-      if (!dataLoader) {
+      if (!dataLoaderConfig) {
         return null;
       }
 
       // Call dataLoader.
-      // In CSR, all dataLoader is called by global data loader to avoid bundle dataLoader in page bundle duplicate.
       const requestContext = getRequestContext(window.location);
-      return await callDataLoader(dataLoader, requestContext);
+      const { loader } = dataLoaderConfig;
+      return callDataLoader(loader, requestContext);
     },
   };
 }

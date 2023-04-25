@@ -12,15 +12,21 @@ async function getAppData(appExport: AppExport, requestContext?: RequestContext)
     return await globalLoader.getData('__app');
   }
 
-  if (appExport?.dataLoader) {
-    return await appExport.dataLoader(requestContext);
+  const appDataLoaderConfig = appExport?.dataLoader;
+
+  if (!appDataLoaderConfig) {
+    return null;
   }
 
-  const loader = appExport?.dataLoader;
+  let loader;
 
-  if (!loader) return null;
+  if (typeof appDataLoaderConfig === 'function' || Array.isArray(appDataLoaderConfig)) {
+    loader = appDataLoaderConfig;
+  } else {
+    loader = appDataLoaderConfig.loader;
+  }
 
-  await callDataLoader(loader, requestContext);
+  return await callDataLoader(loader, requestContext);
 }
 
 export {

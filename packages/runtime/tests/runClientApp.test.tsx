@@ -92,7 +92,9 @@ describe('run client app', () => {
       );
     },
     pageConfig: () => ({ title: 'home' }),
-    dataLoader: async () => ({ data: 'test' }),
+    dataLoader: {
+      loader: async () => ({ data: 'test' }),
+    },
   };
   const basicRoutes = [
     {
@@ -110,8 +112,10 @@ describe('run client app', () => {
   it('run with static runtime', async () => {
     await runClientApp({
       app: {
-        dataLoader: async () => {
-          return { msg: staticMsg };
+        dataLoader: {
+          loader: async () => {
+            return { msg: staticMsg };
+          },
         },
       },
       // @ts-ignore don't need to pass params in test case.
@@ -261,9 +265,11 @@ describe('run client app', () => {
     let executed = false;
     await runClientApp({
       app: {
-        dataLoader: async () => {
-          executed = true;
-          return { msg: '-getAppData' };
+        dataLoader: {
+          loader: async () => {
+            executed = true;
+            return { msg: '-getAppData' };
+          },
         },
       },
       // @ts-ignore don't need to pass params in test case.
@@ -290,9 +296,11 @@ describe('run client app', () => {
 
     await runClientApp({
       app: {
-        dataLoader: async () => {
-          executed = true;
-          return { msg: 'app' };
+        dataLoader: {
+          loader: async () => {
+            executed = true;
+            return { msg: 'app' };
+          },
         },
       },
       // @ts-ignore don't need to pass params in test case.
