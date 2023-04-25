@@ -140,7 +140,12 @@ export function createServerCompiler(options: Options) {
       redirectImports,
       getRoutesFile,
     }, 'esbuild', { isServer });
+
     const define = getRuntimeDefination(task.config?.define || {}, runtimeDefineVars, transformEnv);
+
+    if (!dev && server.production) {
+      define['process.env.NODE_ENV'] = JSON.stringify('production');
+    }
 
     if (preBundle) {
       preBundleDepsMetadata = await createPreBundleDepsMetadata({
