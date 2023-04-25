@@ -2,7 +2,7 @@ import React from 'react';
 import type {
   AppContext, RunClientAppOptions,
 } from '@ice/runtime';
-import { AppContextProvider, AppDataProvider, getAppData, getAppConfig, Runtime } from '@ice/runtime';
+import { AppContextProvider, getAppData, getAppConfig, Runtime } from '@ice/runtime';
 import { Current } from '../index.js';
 import { eventCenter } from '../emitter/emitter.js';
 import { APP_DATA_READY } from '../constants/index.js';
