@@ -1,7 +1,6 @@
 import { isArray, isFunction, hooks } from '@ice/shared';
 import type { PageLifeCycle } from '../dsl/instance.js';
 import type { Func } from '../interface/index.js';
-import { Current } from '../current.js';
 import {
   getPageInstance,
   injectPageInstance,

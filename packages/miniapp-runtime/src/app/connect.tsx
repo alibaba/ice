@@ -9,7 +9,7 @@ import type {
   MountOptions,
   AppInstance, Instance,
   PageLifeCycle, PageProps,
-  ReactAppInstance, ReactPageComponent,
+  ReactPageComponent,
 } from '../index.js';
 import { ConfigProvider, DataProvider } from './routeContext.js';
 import enableHtmlRuntime from './html/runtime.js';

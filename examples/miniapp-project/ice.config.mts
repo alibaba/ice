@@ -3,7 +3,7 @@ import miniapp from '@ice/plugin-miniapp';
 export default defineConfig({
   ssg: false,
   hash: true,
-  // minify: true,
+  minify: true,
   dropLogLevel: 'trace',
   outputDir: 'build/wechat',
   alias: {

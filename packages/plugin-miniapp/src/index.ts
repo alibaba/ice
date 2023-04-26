@@ -1,16 +1,20 @@
 import path from 'path';
+import { createRequire } from 'module';
 import consola from 'consola';
 import chalk from 'chalk';
 import type { Plugin } from '@ice/app/esm/types';
 import getMiniappTask from './miniapp/index.js';
 import { MINIAPP_TARGETS } from './constant.js';
 
+
 interface MiniappOptions {
   // TODO: specify the config type of native.
   nativeConfig?: Record<string, any>;
 }
 
-const PLUGIN_NAME = '@ice/plugin-miniapp';
+const _require = createRequire(import.meta.url);
+const packageJSON = _require('../package.json');
+const { name: PLUGIN_NAME } = packageJSON;
 
 const plugin: Plugin<MiniappOptions> = (miniappOptions = {}) => ({
   name: PLUGIN_NAME,
@@ -73,7 +77,7 @@ const plugin: Plugin<MiniappOptions> = (miniappOptions = {}) => ({
       });
     }
   },
-  runtime: `${PLUGIN_NAME}/esm/runtime`,
+  runtime: `${PLUGIN_NAME}/runtime`,
 });
 
 export default plugin;
