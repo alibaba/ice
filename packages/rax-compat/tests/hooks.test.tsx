@@ -11,6 +11,7 @@ import {
   useLayoutEffect,
   createContext,
   useContext,
+  useCallback,
   useRef,
 } from '../src/hooks';
 
@@ -131,6 +132,35 @@ describe('hooks', () => {
           <input ref={inputEl} type="text" />
         </>
       );
+    }
+
+    render(<TextInputWithFocusButton />);
+  });
+
+  it('useState x useCallback', () => {
+    function TextInputWithFocusButton() {
+      let count = useRef(0);
+      const [isPassed, setPassed] = useState(false);
+      const setPassedFalse = useCallback(() => {
+        setPassed(false);
+      }, []);
+       useEffect(() => {
+        setPassed(true);
+       }, []);
+
+       useEffect(() => {
+        count.current++;
+        if (count.current < 10) {
+          if (count.current % 2) {
+            expect(isPassed).toBeFalsy();
+            setPassed(true);
+          } else {
+            expect(isPassed).toBeTruthy();
+            setPassedFalse();
+          }
+        }
+       }, [isPassed]);
+      return <div />;
     }
 
     render(<TextInputWithFocusButton />);
