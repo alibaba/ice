@@ -67,9 +67,9 @@ export const getRuntimeDefination = (
   // esbuild only receive the string type of replacement expressions, so we need to transform the boolean to string.
   // link: https://esbuild.github.io/api/#define
   Object.keys(defineVars).forEach((key) => {
-    stringifiedDefine[key] = typeof defineVars[key] === 'boolean'
-      ? JSON.stringify(defineVars[key])
-      : defineVars[key];
+    stringifiedDefine[key] = typeof defineVars[key] === 'string'
+      ? defineVars[key]
+      : JSON.stringify(defineVars[key]);
   });
   // get runtime variable for server build
   Object.keys(process.env).forEach((key) => {
