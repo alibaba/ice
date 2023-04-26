@@ -14,6 +14,7 @@ interface Current {
   app: AppInstance | null;
   router: Router | null;
   page: PageInstance | null;
+  appDataReady?: boolean;
   preloadData?: any;
 }
 
@@ -21,6 +22,7 @@ export const Current: Current = {
   app: null,
   router: null,
   page: null,
+  appDataReady: false,
 };
 
 export const getCurrentInstance = () => Current;

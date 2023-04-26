@@ -49,6 +49,7 @@ import { routerHistory as history } from './history.js';
 import KeepAliveOutlet from './KeepAliveOutlet.js';
 import ClientOnly from './ClientOnly.js';
 import useMounted from './useMounted.js';
+import usePageLifecycle from './usePageLifecycle.js';
 import { withSuspense, useSuspenseData } from './Suspense.js';
 import { createRouteLoader, WrapRouteComponent, RouteErrorComponent, Await } from './routes.js';
 
@@ -87,7 +88,9 @@ export {
   KeepAliveOutlet,
   AppErrorBoundary,
   ClientOnly,
+
   useMounted,
+  usePageLifecycle,
 
   withSuspense,
   useSuspenseData,

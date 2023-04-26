@@ -65,6 +65,7 @@ export const RUNTIME_EXPORTS = [
       'defineDataLoader',
       'defineServerDataLoader',
       'defineStaticDataLoader',
+      'usePageLifecycle',
     ],
     source: '@ice/runtime',
   },
