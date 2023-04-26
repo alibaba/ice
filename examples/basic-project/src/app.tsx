@@ -8,9 +8,18 @@ if (process.env.ICE_CORE_ERROR_BOUNDARY === 'true') {
 console.log('__LOG__');
 console.warn('__WARN__');
 console.error('__ERROR__');
+
+const a = {
+  b: {
+    c: 1,
+  },
+};
 console.log('process.env.HAHA', process.env.HAHA);
 console.log('HAHA', HAHA);
+console.log('I am a, not a.b.c', a);
+console.log('import.meta.env.NODE_ENV', import.meta.env.ICE_ENV);
 console.log('process.env.undefinedEnv', process.env.undefinedEnv);
+console.log('import.meta.target', import.meta.target);
 
 import('./standard-module')
   .then((mod) => {
