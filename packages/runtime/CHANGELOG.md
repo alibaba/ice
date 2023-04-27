@@ -1,5 +1,11 @@
 # @ice/runtime
 
+## 1.1.6
+
+### Patch Changes
+
+- cd7c6c72: fix: encode route path to escape xss
+
 ## 1.1.5
 
 ### Patch Changes
