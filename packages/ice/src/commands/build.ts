@@ -61,6 +61,7 @@ const build = async (
     rootDir,
     // @ts-expect-error fix type error of compiled webpack
     webpack,
+    target,
     runtimeTmpDir: RUNTIME_TMP_DIR,
     userConfigHash,
     getExpandedEnvs,
