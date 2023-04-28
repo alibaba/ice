@@ -60,7 +60,7 @@ export interface CompatRaxOptions {
   cssModule?: boolean;
 }
 
-const plugin: Plugin<CompatRaxOptions> = (options = { cssModule: true }) => ({
+const plugin: Plugin<CompatRaxOptions> = (options) => ({
   name: '@ice/plugin-rax-compat',
   setup: ({ onGetConfig, context }) => {
     const { userConfig } = context;
@@ -202,7 +202,7 @@ function getClassNameToStyleTransformer(syntaxFeatures) {
  */
 const styleSheetLoaderForClient = (config, options) => {
   const { rules } = config.module || {};
-  const { cssModule } = options;
+  const { cssModule = true } = options;
   if (Array.isArray(rules)) {
     for (let i = 0, l = rules.length; i < l; i++) {
       const rule: RuleSetRule | any = rules[i];
@@ -239,7 +239,7 @@ const styleSheetLoaderForClient = (config, options) => {
  * @param config
  */
 function applyStylesheetLoaderForServer(preBuildOptions, options) {
-  const { cssModule } = options;
+  const { cssModule = true } = options;
   return (buildOptions) => {
     const currentOptions = preBuildOptions?.(buildOptions) || buildOptions;
 
