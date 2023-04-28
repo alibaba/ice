@@ -60,7 +60,7 @@ export interface CompatRaxOptions {
   cssModule?: boolean;
 }
 
-const plugin: Plugin<CompatRaxOptions> = (options) => ({
+const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
   name: '@ice/plugin-rax-compat',
   setup: ({ onGetConfig, context }) => {
     const { userConfig } = context;
