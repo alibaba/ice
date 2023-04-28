@@ -144,11 +144,11 @@ describe('hooks', () => {
       const setPassedFalse = useCallback(() => {
         setPassed(false);
       }, []);
-       useEffect(() => {
+      useEffect(() => {
         setPassed(true);
-       }, []);
+      }, []);
 
-       useEffect(() => {
+      useEffect(() => {
         count.current++;
         if (count.current < 10) {
           if (count.current % 2) {
@@ -159,7 +159,7 @@ describe('hooks', () => {
             setPassedFalse();
           }
         }
-       }, [isPassed, setPassedFalse]);
+      }, [isPassed, setPassedFalse]);
       return <div />;
     }
 
