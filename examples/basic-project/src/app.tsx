@@ -17,7 +17,7 @@ const a = {
 console.log('process.env.HAHA', process.env.HAHA);
 console.log('HAHA', HAHA);
 console.log('I am a, not a.b.c', a);
-console.log('import.meta.env.NODE_ENV', import.meta.env.ICE_ENV);
+console.log('process.env.NODE_ENV', process.env.ICE_ENV);
 console.log('process.env.undefinedEnv', process.env.undefinedEnv);
 console.log('import.meta.target', import.meta.target);
 
