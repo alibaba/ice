@@ -18,7 +18,7 @@
     "@swc/core": "1.3.19",
     "@ice/swc-plugin-remove-export": "0.1.2",
     "@ice/swc-plugin-keep-export": "0.1.4",
-    "@ice/swc-plugin-node-transform": "0.1.0-6",
+    "@ice/swc-plugin-node-transform": "0.1.0-8",
     "ansi-html-community": "^0.0.8",
     "html-entities": "^2.3.2",
     "core-js": "3.29.1",

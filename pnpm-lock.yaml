@@ -801,7 +801,7 @@ importers:
   packages/bundles:
     specifiers:
       '@ice/swc-plugin-keep-export': 0.1.4
-      '@ice/swc-plugin-node-transform': 0.1.0-6
+      '@ice/swc-plugin-node-transform': 0.1.0-8
       '@ice/swc-plugin-remove-export': 0.1.2
       '@pmmmwh/react-refresh-webpack-plugin': 0.5.10
       '@swc/core': 1.3.19
@@ -880,7 +880,7 @@ importers:
       ws: ^8.4.2
     dependencies:
       '@ice/swc-plugin-keep-export': 0.1.4
-      '@ice/swc-plugin-node-transform': 0.1.0-6
+      '@ice/swc-plugin-node-transform': 0.1.0-8
       '@ice/swc-plugin-remove-export': 0.1.2
       '@swc/core': 1.3.19
       ansi-html-community: 0.0.8
@@ -5185,8 +5185,8 @@ packages:
     resolution: {integrity: sha512-fOc09KALmL2zJK1xNGTEt/C27mXL7NVn/v1eRjjuM4uer+qmWIxYXIa9dpfTX5ZUn8zXhrKH8lGdczoKHCzyQQ==}
     dev: false
 
-  /@ice/swc-plugin-node-transform/0.1.0-6:
-    resolution: {integrity: sha512-oa3iwBOxDN+A0HdhxxrijP2ctceQIzozZIWo1rXOvtZrlmuIGGdBn5MLNVzibMHahluP5CPrHKlY8BBX1ROOvw==}
+  /@ice/swc-plugin-node-transform/0.1.0-8:
+    resolution: {integrity: sha512-MbvlCk34Mim823VflDdSnlJemeQURpwcSyT4f9mODFufAypmaaLf2/lmhcPfn6C4CvrRD5Qj2XV8FTFV60Q2XQ==}
     dev: false
 
   /@ice/swc-plugin-remove-export/0.1.2:
