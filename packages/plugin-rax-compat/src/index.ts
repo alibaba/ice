@@ -115,12 +115,14 @@ const plugin: Plugin<CompatRaxOptions> = (options) => ({
           warnOnce = true;
         }
 
+        const transformCssModule = options.cssModule == null ? true : options.cssModule;
+
         if (userConfig.ssr || userConfig.ssg) {
-          config.server.buildOptions = applyStylesheetLoaderForServer(config.server.buildOptions, options);
+          config.server.buildOptions = applyStylesheetLoaderForServer(config.server.buildOptions, transformCssModule);
         }
 
         config.configureWebpack ??= [];
-        config.configureWebpack.unshift((config) => styleSheetLoaderForClient(config, options));
+        config.configureWebpack.unshift((config) => styleSheetLoaderForClient(config, transformCssModule));
         config.transforms = [
           ...(config.transforms || []),
           getClassNameToStyleTransformer(userConfig.syntaxFeatures || {}),
@@ -200,15 +202,14 @@ function getClassNameToStyleTransformer(syntaxFeatures) {
  * StyleSheet Loader for CSR.
  * Transform css files to inline style by webpack loader.
  */
-const styleSheetLoaderForClient = (config, options) => {
+const styleSheetLoaderForClient = (config, transformCssModule) => {
   const { rules } = config.module || {};
-  const { cssModule = true } = options;
   if (Array.isArray(rules)) {
     for (let i = 0, l = rules.length; i < l; i++) {
       const rule: RuleSetRule | any = rules[i];
       // Find the css rule, that default to CSS Modules.
       if (rule.test && rule.test instanceof RegExp && rule.test.source.indexOf('.css') > -1) {
-        rule.test = cssModule ? /(\.module|global)\.css$/i : /(\.global)\.css$/i;
+        rule.test = transformCssModule ? /(\.module|global)\.css$/i : /(\.global)\.css$/i;
         rules[i] = {
           test: /\.css$/i,
           oneOf: [
@@ -220,7 +221,7 @@ const styleSheetLoaderForClient = (config, options) => {
 
       // Find and replace the less rule
       if (rule.test && rule.test instanceof RegExp && rule.test.source.indexOf('.less') > -1) {
-        rule.test = cssModule ? /(\.module|global)\.css$/i : /(\.global)\.css$/i;
+        rule.test = transformCssModule ? /(\.module|global)\.css$/i : /(\.global)\.css$/i;
         rules[i] = {
           test: /\.less$/i,
           oneOf: [
@@ -238,8 +239,7 @@ const styleSheetLoaderForClient = (config, options) => {
  * StyleSheet Loader for Server.
  * @param config
  */
-function applyStylesheetLoaderForServer(preBuildOptions, options) {
-  const { cssModule = true } = options;
+function applyStylesheetLoaderForServer(preBuildOptions, transformCssModule) {
   return (buildOptions) => {
     const currentOptions = preBuildOptions?.(buildOptions) || buildOptions;
 
@@ -248,7 +248,7 @@ function applyStylesheetLoaderForServer(preBuildOptions, options) {
     const cssModuleIndex = currentOptions.plugins?.findIndex(({ name }) => name === 'esbuild-css-modules') as number;
 
     // Add custom transform for server compile.
-    currentOptions.plugins?.splice(cssModule ? cssModuleIndex + 1 : cssModuleIndex, 0, inlineStylePlugin());
+    currentOptions.plugins?.splice(transformCssModule ? cssModuleIndex + 1 : cssModuleIndex, 0, inlineStylePlugin());
 
     currentOptions.treeShaking = true;
     return currentOptions;
