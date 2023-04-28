@@ -159,7 +159,7 @@ describe('hooks', () => {
             setPassedFalse();
           }
         }
-       }, [isPassed]);
+       }, [isPassed, setPassedFalse]);
       return <div />;
     }
 
