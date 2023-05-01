@@ -30,33 +30,28 @@ import { isFunction } from './type.js';
  * @returns [ value, dispatch ]
  */
 export function useState<S>(initialState: S | (() => S)): ReturnType<typeof _useState> | any {
+  const eagerState = _useRef(null);
   // If the initial state is the result of an expensive computation,
   // you may provide a function instead for lazy initial state.
   if (isFunction(initialState)) {
     initialState = initialState();
   }
   // The eagerState should be saved for filter shallow-equal value set.
-  const stateHook = _useState({
-    state: initialState,
-    eagerState: initialState,
-  });
+  const stateHook = _useState(initialState);
+  eagerState.current = stateHook[0];
   // @NOTE: Rax will not re-render if set a same value.
   function updateState(newState: S) {
     if (isFunction(newState)) {
-      newState = newState(stateHook[0].eagerState);
+      newState = newState(eagerState.current);
     }
     // Filter shallow-equal value set.
-    if (!is(newState, stateHook[0].eagerState)) {
-      stateHook[1]({
-        state: newState,
-        eagerState: newState,
-      });
+    if (!is(newState, eagerState.current)) {
+      stateHook[1](newState);
     }
-
-    stateHook[0].eagerState = newState;
+    eagerState.current = newState;
   }
 
-  return [stateHook[0].state, updateState, stateHook[0].eagerState];
+  return [stateHook[0], updateState, eagerState.current];
 }
 
 /**
