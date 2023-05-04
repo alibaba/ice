@@ -15,6 +15,9 @@ describe('Get node runtime definition', () => {
       '__process.env.ICE_CORE_ROUTER__': '"true"',
       '__process.env.ICE_CORE_SSG__': '"false"',
       '__process.env.ICE_CORE_SSR__': '"false"',
+      'process.env.ICE_A': '"env"',
+      'process.env.ICE_ENV': '"common"',
+      'process.env.ICE_VERSION': '',
       'process.env.ROUTER_BASE_NAME': '"/"',
       'process.env.WEB_APP': 'true',
     });
