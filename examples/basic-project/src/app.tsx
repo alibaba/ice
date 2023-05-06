@@ -9,17 +9,12 @@ console.log('__LOG__');
 console.warn('__WARN__');
 console.error('__ERROR__');
 
-const a = {
-  b: {
-    c: 1,
-  },
-};
 console.log('process.env.HAHA', process.env.HAHA);
 console.log('HAHA', HAHA);
-console.log('I am a, not a.b.c', a);
 console.log('process.env.NODE_ENV', process.env.ICE_ENV);
 console.log('process.env.undefinedEnv', process.env.undefinedEnv);
 console.log('import.meta.target', import.meta.target);
+console.log('process.env', process.env);
 
 import('./standard-module')
   .then((mod) => {

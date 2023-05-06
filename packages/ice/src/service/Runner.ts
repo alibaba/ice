@@ -65,7 +65,7 @@ class Runner {
   rootDir: string;
   moduleCache: ModuleCacheMap;
   importMeta: Record<string, string>;
-  defineVars: Record<string, string>;
+  contextDefineVars: Record<string, string>;
 
   constructor(public options: RunnerOptions) {
     this.rootDir = options.rootDir;
@@ -75,7 +75,7 @@ class Runner {
       this.getMetaPropertyFromDefineConfig(options.define || {}),
     );
     this.moduleCache = options.moduleCache || new ModuleCacheMap();
-    this.defineVars = this.getContextPropertyFromDefineConfig(options.define || {});
+    this.contextDefineVars = this.getContextDefineVarsFromDefineConfig(options.define || {});
   }
 
   async run(id: string) {
@@ -218,7 +218,7 @@ class Runner {
       __dirname: path.dirname(__filename),
 
       // valid define global expressions
-      ...this.defineVars,
+      ...this.contextDefineVars,
     };
 
     if (transformed[0] === '#') transformed = transformed.replace(/^#!.*/, s => ' '.repeat(s.length));
@@ -274,26 +274,42 @@ class Runner {
 
   private getMetaPropertyFromDefineConfig(defineConfig: Record<string, string>) {
     const metaData = {};
-    Object.keys(defineConfig).forEach((key) => {
-      if (key.startsWith('import.meta.')) {
-        const newKey = key.replace(RegExp('import.meta.'), '');
-        lodash.set(metaData, newKey, defineConfig[key]);
-      }
+    Object.keys(defineConfig)
+      .forEach((key) => {
+        if (key.startsWith('import.meta.')) {
+          const newKey = key.replace(RegExp('import.meta.'), '');
+          // import.meta.env.xxx = 'a' -> env: { xxx: 'a' }
+          lodash.set(metaData, newKey, defineConfig[key]);
+        }
     });
     return metaData;
   }
 
-  private getContextPropertyFromDefineConfig(defineConfig: Record<string, string>) {
+  private getContextDefineVarsFromDefineConfig(defineConfig: Record<string, string>) {
     const newDefineConfig = {};
     Object.keys(defineConfig)
-      .filter(key => !key.startsWith('import.meta.') && !key.includes('process.env.'))
+      // Exclude vars which start with `import.meta.` and `process.env.`
+      .filter(key => !key.startsWith('import.meta'))
       .forEach(key => {
-        newDefineConfig[key] = defineConfig[key];
+        const config = lodash.set(
+          {},
+          key,
+          isJsonString(defineConfig[key]) ? JSON.parse(defineConfig[key]) : defineConfig[key],
+        );
+        lodash.merge(newDefineConfig, config);
       });
     return newDefineConfig;
   }
 }
 
+function isJsonString(str: string) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
 function isPrimitive(v: any) {
   return v !== Object(v);
 }

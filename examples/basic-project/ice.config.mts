@@ -19,7 +19,7 @@ export default defineConfig(() => ({
   define: {
     HAHA: JSON.stringify('HAHA'),
     'process.env.HAHA': JSON.stringify(true),
-    a: 'a.b.c',
+    'process.env': JSON.stringify({}),
   },
   transform: (code, id) => {
     if (id.includes('src/pages') && id.endsWith('.js')) {
