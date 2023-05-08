@@ -988,7 +988,7 @@ importers:
       '@ice/route-manifest': 1.1.1
       '@ice/runtime': ^1.1.5
       '@ice/webpack-config': 1.0.12
-      '@swc/helpers': 0.4.14
+      '@swc/helpers': 0.5.1
       '@types/babel__generator': ^7.6.4
       '@types/babel__traverse': ^7.17.1
       '@types/cross-spawn': ^6.0.2
@@ -1040,7 +1040,7 @@ importers:
       '@ice/route-manifest': link:../route-manifest
       '@ice/runtime': link:../runtime
       '@ice/webpack-config': link:../webpack-config
-      '@swc/helpers': 0.4.14
+      '@swc/helpers': 0.5.1
       '@types/express': 4.17.17
       address: 1.2.2
       build-scripts: 2.1.0
@@ -6503,6 +6503,12 @@ packages:
 
   /@swc/helpers/0.4.14:
     resolution: {integrity: sha512-4C7nX/dvpzB7za4Ql9K81xK3HPxCpHMgwTZVyf+9JQ6VUbn9jjZVN7/Nkdz/Ugzs2CSjqnL/UPXroiVBVHUWUw==}
+    dependencies:
+      tslib: 2.5.0
+    dev: false
+
+  /@swc/helpers/0.5.1:
+    resolution: {integrity: sha512-sJ902EfIzn1Fa+qYmjdQqh8tPsoxyBz+8yBKC2HKUxyezKJFwPGOn7pv4WY6QuQW//ySQi5lJjA/ZT9sNWWNTg==}
     dependencies:
       tslib: 2.5.0
     dev: false
