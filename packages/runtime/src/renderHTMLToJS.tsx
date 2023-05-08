@@ -18,6 +18,8 @@ export async function renderHTMLToJS(html) {
   const dom = htmlparser2.parseDocument(html);
   const sourceMapInfo = {
     sourceMapFileList: [],
+    extraLine: 0,
+    extraColumn: 0,
   };
 
   let headElement;
@@ -51,6 +53,7 @@ export async function renderHTMLToJS(html) {
     if (children) {
       if (name === 'script' && children[0] && children[0].data) {
         extraScript.push(`(function(){${children[0].data}})();`);
+        // The path of sourcemap file.
         if (attribs['data-sourcemap']) {
           sourceMapInfo.sourceMapFileList.push(attribs['data-sourcemap']);
         }
@@ -58,6 +61,15 @@ export async function renderHTMLToJS(html) {
         delete attribs['data-sourcemap'];
       } else {
         resChildren = node.children.map(parse);
+      }
+    }
+
+    if (name === 'meta') {
+      if (attribs['data-extra-line']) {
+        sourceMapInfo.extraLine = parseInt(attribs['data-extra-line'], 10) || 0;
+      }
+      if (attribs['data-extra-column']) {
+        sourceMapInfo.extraColumn = parseInt(attribs['data-extra-column'], 10) || 0;
       }
     }
 
@@ -80,7 +92,7 @@ export async function renderHTMLToJS(html) {
     extraScript,
   });
 
-  // Generate souceMap for entry js.
+  // Generate sourcemap for entry js.
   const sourceMap = await generateSourceMap(sourceMapInfo);
 
   return {

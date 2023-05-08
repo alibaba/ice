@@ -8,6 +8,8 @@ const BASE_COLUMN = 12;
 
 export async function generateSourceMap({
   sourceMapFileList = [],
+  extraLine = 0,
+  extraColumn = 0,
 }) {
   if (sourceMapFileList.length) {
     return '';
@@ -37,8 +39,8 @@ export async function generateSourceMap({
 
             generator.addMapping({
               generated: {
-                line: mapping.generatedLine + BASE_LINE + fileIndex * 2,
-                column: mapping.generatedColumn + BASE_COLUMN,
+                line: mapping.generatedLine + BASE_LINE + extraLine + fileIndex * 2,
+                column: mapping.generatedColumn + BASE_COLUMN + extraColumn,
               },
               original: {
                 line: mapping.originalLine,
