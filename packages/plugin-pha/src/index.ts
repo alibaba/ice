@@ -82,7 +82,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
 
       generator.addRenderFile(path.join(__dirname, '../template/appWorker.ejs'), 'appWorker.ts', {
         appWorkerPath,
-        dynamic: dataLoader.dynamic,
+        dynamic: dataLoader.useAppWorker,
       });
 
       // Need absolute path for pha dev.
