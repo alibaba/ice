@@ -9,13 +9,17 @@ const BASE_COLUMN = 12;
 export async function generateSourceMap({
   sourceMapFileList = [],
 }) {
+  if (sourceMapFileList.length) {
+    return '';
+  }
+
   const generator = new SourceMapGenerator({
     file: '',
     sourceRoot: '',
   });
 
   await Promise.all(sourceMapFileList.map((sourceMapFile, fileIndex) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       if (!fse.existsSync(sourceMapFile)) {
         resolve(true);
       }
