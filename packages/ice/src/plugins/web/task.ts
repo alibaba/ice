@@ -1,7 +1,7 @@
 import * as path from 'path';
 import { createRequire } from 'module';
 import type { Config } from '@ice/webpack-config/types';
-import { CACHE_DIR, RUNTIME_TMP_DIR } from '../../constant.js';
+import { CACHE_DIR, RUNTIME_TMP_DIR, WEB } from '../../constant.js';
 
 const require = createRequire(import.meta.url);
 const getWebTask = ({ rootDir, command, userConfig }): Config => {
@@ -41,6 +41,7 @@ const getWebTask = ({ rootDir, command, userConfig }): Config => {
     minify: command === 'build',
     useDevServer: true,
     useDataLoader: true,
+    target: WEB,
   };
 };
 

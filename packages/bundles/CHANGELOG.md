@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.9
+
+### Patch Changes
+
+- 5d5fb334: fix: bump @ice/swc-plugin-node-transform #6199
+
 ## 0.1.8
 
 ### Patch Changes

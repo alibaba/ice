@@ -57,20 +57,25 @@ const start = async (
   const { commandArgs, rootDir, extendsPluginAPI } = context;
   const { target = WEB } = commandArgs;
   const { getRoutesFile } = extendsPluginAPI;
-  const webpackConfigs = taskConfigs.map(({ config }) => getWebpackConfig({
-    config,
-    rootDir,
-    // @ts-expect-error fix type error of compiled webpack
-    webpack,
-    runtimeTmpDir: RUNTIME_TMP_DIR,
-    userConfigHash,
-    getExpandedEnvs,
-    runtimeDefineVars: {
-      [IMPORT_META_TARGET]: JSON.stringify(target),
-      [IMPORT_META_RENDERER]: JSON.stringify('client'),
-    },
-    getRoutesFile,
-  }));
+  const webpackConfigs = taskConfigs.map(({ config }) => {
+    // If the target in the task config doesn't exit, use the target from cli command option.
+    config.target ||= target;
+
+    return getWebpackConfig({
+      config,
+      rootDir,
+      // @ts-expect-error fix type error of compiled webpack
+      webpack,
+      runtimeTmpDir: RUNTIME_TMP_DIR,
+      userConfigHash,
+      getExpandedEnvs,
+      runtimeDefineVars: {
+        [IMPORT_META_TARGET]: JSON.stringify(target),
+        [IMPORT_META_RENDERER]: JSON.stringify('client'),
+      },
+      getRoutesFile,
+    });
+  });
 
   const hooksAPI = {
     serverCompiler,
