@@ -34,7 +34,6 @@ interface GetWebpackConfigOptions {
   webpack: typeof webpack;
   runtimeTmpDir: string;
   userConfigHash: string;
-  target: string;
   getExpandedEnvs: () => Record<string, string>;
   runtimeDefineVars?: Record<string, any>;
   getRoutesFile?: () => string[];
@@ -134,7 +133,6 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     getExpandedEnvs,
     runtimeDefineVars = {},
     getRoutesFile,
-    target,
   } = options;
 
   const {
@@ -282,7 +280,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
         fs: false,
         path: false,
       },
-      conditionNames: [target, '...'],
+      conditionNames: (config.target ? [config.target] : []).concat(['...']),
     },
     resolveLoader: {
       modules: ['node_modules'],
