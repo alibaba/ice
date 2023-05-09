@@ -94,6 +94,8 @@ describe('run server app', () => {
       assetsManifest,
       runtimeModules: { commons: [] },
       routes: basicRoutes,
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => basicRoutes,
       Document,
       renderMode: 'SSR',
     });
