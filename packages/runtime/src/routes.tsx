@@ -27,7 +27,7 @@ export function getRoutesPath(routes: RouteItem[], parentPath = ''): string[] {
 export async function loadRouteModule(route: RouteModule, routeModulesCache = {}) {
   const { id, lazy } = route;
   if (
-    typeof window !== 'undefined' && // Don't use module cache and should load again in ssr. Ref: https://github.com/ice-lab/ice-next/issues/82
+    import.meta.renderer === 'client' && // Don't use module cache and should load again in ssr. Ref: https://github.com/ice-lab/ice-next/issues/82
     id in routeModulesCache
   ) {
     return routeModulesCache[id];
@@ -206,9 +206,8 @@ export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
       data: routeData,
       pageConfig: routeConfig,
     };
-
-    // CSR and load next route data.
-    if (typeof window !== 'undefined') {
+    // Update routes config when render mode is CSR.
+    if (import.meta.renderer === 'client') {
       await updateRoutesConfig(loaderData);
     }
     return loaderData;
