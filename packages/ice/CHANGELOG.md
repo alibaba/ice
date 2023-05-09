@@ -1,5 +1,23 @@
 # Changelog
 
+## 3.1.7
+
+### Patch Changes
+
+- 28de278f: feat: support match target entry to bundle
+- 0d549779: fix: read the same task target
+- b226e356: fix: bump @swc/helpers to 0.5.1
+- 6e9c822a: fix: server compiler define config
+- Updated dependencies [28de278f]
+- Updated dependencies [6e9c822a]
+- Updated dependencies [b226e356]
+- Updated dependencies [5d5fb334]
+- Updated dependencies [bb07fd91]
+- Updated dependencies [0d549779]
+  - @ice/webpack-config@1.0.13
+  - @ice/bundles@0.1.9
+  - @ice/runtime@1.1.7
+
 ## 3.1.6
 
 ### Patch Changes
