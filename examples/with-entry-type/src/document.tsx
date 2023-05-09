@@ -16,7 +16,6 @@ function Document() {
       <head>
         <meta charSet="utf-8" />
         <meta name="description" content="ICE Demo" />
-        <meta name="sourcemap" data-extra-line="111" data-extra-column="111" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Title />

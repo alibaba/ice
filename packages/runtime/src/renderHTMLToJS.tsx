@@ -59,6 +59,13 @@ export async function renderHTMLToJS(html) {
         }
 
         delete attribs['data-sourcemap'];
+      } if (name === 'style' && children[0] && children[0].data) {
+        // The path of sourcemap file.
+        if (attribs['data-sourcemap']) {
+          sourceMapInfo.sourceMapFileList.push(attribs['data-sourcemap']);
+        }
+
+        delete attribs['data-sourcemap'];
       } else {
         resChildren = node.children.map(parse);
       }
