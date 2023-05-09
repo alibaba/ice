@@ -1,5 +1,19 @@
 # @ice/runtime
 
+## 1.1.7
+
+### Patch Changes
+
+- bb07fd91: fix: parsing url path properly
+- Updated dependencies [25357326]
+  - @ice/jsx-runtime@0.2.1
+
+## 1.1.6
+
+### Patch Changes
+
+- cd7c6c72: fix: encode route path to escape xss
+
 ## 1.1.5
 
 ### Patch Changes

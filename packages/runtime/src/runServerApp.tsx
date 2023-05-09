@@ -1,7 +1,6 @@
 import type { ServerResponse, IncomingMessage } from 'http';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
-import { parsePath } from 'react-router-dom';
 import type { Location } from 'history';
 import type {
   AppContext, RouteItem, ServerContext,
@@ -465,8 +464,9 @@ function renderDocument(options: RenderDocumentOptions): Response {
  * ref: https://github.com/remix-run/react-router/blob/main/packages/react-router-dom/server.tsx
  */
 function getLocation(url: string) {
-  const locationProps = parsePath(url);
-
+  // In case of invalid URL, provide a default base url.
+  const defaultBaseUrl = 'http://localhost';
+  const locationProps = new URL(url, defaultBaseUrl);
   const location: Location = {
     pathname: locationProps.pathname || '/',
     search: locationProps.search || '',

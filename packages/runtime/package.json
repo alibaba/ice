@@ -1,6 +1,6 @@
 {
   "name": "@ice/runtime",
-  "version": "1.1.5",
+  "version": "1.1.7",
   "description": "Runtime module for ice.js",
   "type": "module",
   "types": "./esm/index.d.ts",
@@ -44,7 +44,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@ice/jsx-runtime": "^0.2.0",
+    "@ice/jsx-runtime": "^0.2.1",
     "@remix-run/router": "1.5.0",
     "ejs": "^3.1.6",
     "fs-extra": "^10.0.0",

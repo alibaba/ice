@@ -83,6 +83,25 @@ describe('run server app', () => {
     expect(html?.value?.includes('js/home.js')).toBe(true);
   });
 
+  it('render with full url', async () => {
+    const html = await renderToHTML({
+      // @ts-ignore
+      req: {
+        url: 'http://some.proxy:9988/home?foo=bar',
+      },
+    }, {
+      app: {},
+      assetsManifest,
+      runtimeModules: { commons: [] },
+      routes: basicRoutes,
+      Document,
+      renderMode: 'SSR',
+    });
+    // @ts-ignore
+    expect(html?.statusCode).toBe(200);
+  });
+
+
   it('render to html basename', async () => {
     const html = await renderToHTML({
       // @ts-ignore

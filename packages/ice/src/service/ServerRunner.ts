@@ -108,12 +108,13 @@ class ServerRunner extends Runner {
       },
     }, 'esbuild', { isServer: true });
     const { alias, ignores } = filterAlias(task.config.alias || {});
+    const define = getRuntimeDefination(task.config.define || {});
     const runtimeMeta = new RuntimeMeta({
       rootDir,
       alias,
       ignores,
       external: server.externals || [],
-      define: getRuntimeDefination(task.config.define || {}),
+      define,
     });
 
     const esbuildPlugins = [
@@ -277,6 +278,7 @@ class ServerRunner extends Runner {
           };
         }
       },
+      define,
     });
   }
 

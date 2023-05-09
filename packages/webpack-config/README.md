@@ -12,5 +12,11 @@ const config = { alias: {} };
 const rootDir = process.cwd();
 const runtimeTmpDir = '.ice';   // the path of the asset-manifest.json
 
-const webpackConfig = getWebpackConfig({ rootDir, config, webpack, runtimeTmpDir });
+const webpackConfig = getWebpackConfig({ 
+  rootDir, 
+  config,
+  webpack, 
+  runtimeTmpDir,
+  target: 'web',
+});
 ```

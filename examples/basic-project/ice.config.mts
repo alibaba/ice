@@ -17,8 +17,9 @@ export default defineConfig(() => ({
     '@comp': './src/components',
   },
   define: {
-    HAHA: JSON.stringify(true),
+    HAHA: JSON.stringify('HAHA'),
     'process.env.HAHA': JSON.stringify(true),
+    'process.env': JSON.stringify({}),
   },
   transform: (code, id) => {
     if (id.includes('src/pages') && id.endsWith('.js')) {
