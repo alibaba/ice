@@ -415,7 +415,7 @@ function renderDocument(options: RenderDocumentOptions): RenderResult {
 /**
  * ref: https://github.com/remix-run/react-router/blob/main/packages/react-router-dom/server.tsx
  */
-const REGEXP_WITH_HOSTNAME = /^(https?:\/\/|\/\/)[^\/]+/i;
+const REGEXP_WITH_HOSTNAME = /^https?:\/\/[^\/]+/i;
 function getLocation(url: string) {
   // In case of invalid URL, provide a default base url.
   const locationPath = url.replace(REGEXP_WITH_HOSTNAME, '') || '/';
