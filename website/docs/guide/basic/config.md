@@ -173,6 +173,7 @@ import { defineConfig } from '@ice/app';
 export default defineConfig(() => ({
   externals: {
     react: 'React',
+    'react-dom': 'ReactDOM',
   },
 }));
 ```
@@ -187,7 +188,8 @@ function Document() {
     <html lang="en">
       <body>        
         <Main />
-+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.1/cjs/react.production.min.js"></script>
++       <script crossOrigin="" src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
++       <script crossOrigin="" src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
         <Scripts />
       </body>
     </html>

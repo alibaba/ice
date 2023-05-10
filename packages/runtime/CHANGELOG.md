@@ -1,5 +1,9 @@
 # @ice/runtime
 
+## 1.1.8
+
+- fix: parsing url path without using `new URL`
+
 ## 1.1.7
 
 ### Patch Changes
