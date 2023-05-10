@@ -273,3 +273,15 @@ export interface RouteMatch {
 export type RenderMode = 'SSR' | 'SSG' | 'CSR';
 
 export type DistType = Array<'html' | 'javascript'>;
+
+declare global {
+  interface ImportMeta {
+    // The build target for ice.js
+    // Usually `web` or `node` or `weex`
+    target: string;
+    // The renderer for ice.js
+    renderer: 'client' | 'server';
+    // ice.js defined env variables
+    env: Record<string, string>;
+  }
+}
