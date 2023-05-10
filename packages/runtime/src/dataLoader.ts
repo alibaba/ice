@@ -122,7 +122,7 @@ export function loadDataByCustomFetcher(config: StaticDataLoader) {
   let parsedConfig = config;
   try {
     // Not parse template in SSG/SSR.
-    if (typeof window !== 'undefined') {
+    if (import.meta.renderer === 'client') {
       parsedConfig = parseTemplate(config);
     }
   } catch (error) {
