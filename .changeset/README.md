@@ -34,25 +34,7 @@ Run the following command to publish the beta version:
 $ npm run release:beta
 ```
 
-Then, we need to commit changes to the branch. For example:
-
-```bash
-$ git status
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-        modified:   packages/a/CHANGELOG.md
-        modified:   packages/a/package.json
-        modified:   pnpm-workspace.yaml
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-        .changeset/pre.json
-
-$ git commit -am "chore: beta version"
-
-$ git push
-```
+Then, we need to commit the changes to the branch. 
 
 For more detail, please see this [documentation](https://github.com/changesets/changesets/blob/main/docs/prereleases.md).
 
