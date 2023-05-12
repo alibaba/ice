@@ -10,5 +10,9 @@
   "ignore": [
     "@examples/*",
     "ice-website-v3"
-  ]
+  ],
+  "snapshot": {
+    "useCalculatedVersion": true,
+    "prereleaseTemplate": "{tag}-{commit}-{datetime}"
+  }
 }

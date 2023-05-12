@@ -24,7 +24,7 @@
     "install:frozen": "pnpm install --frozen-lockfile false",
     "release": "changeset publish",
     "release:beta": "changeset pre enter beta && changeset version && pnpm install:frozen && pnpm build && pnpm release && changeset pre exit",
-    "release:snapshot": "changeset version --snapshot canary && pnpm install:frozen && pnpm build && changeset publish --tag canary --no-git-tag --snapshot"
+    "release:snapshot": "changeset version --snapshot canary && pnpm install:frozen && pnpm build && pnpm release --tag canary --no-git-tag --snapshot"
   },
   "devDependencies": {
     "@actions/exec": "^1.1.1",
