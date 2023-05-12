@@ -9,9 +9,14 @@ import { shared } from '../src/index';
 describe('render', () => {
   it('basic', () => {
     console.log('shared.Element', shared);
-    expect(shared.Element).toBe(null);
-    expect(shared.Host).toBe(null);
-    expect(shared.Instance).toBe(null);
+    expect(typeof shared.Element).toBe('function');
+    expect(Object.keys(shared.Host).includes('owner')).toBeTruthy();
+    let node = {};
+    let instance = {
+      test: Math.random(),
+    };
+    shared.Instance.set(node, instance);
+    expect(shared.Instance.get(node).test).toBe(instance.test);
     expect(shared.flattenChildren).instanceOf(Function);
   });
 

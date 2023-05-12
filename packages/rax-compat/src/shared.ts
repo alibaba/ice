@@ -1,33 +1,65 @@
-import type { ReactElement } from 'react';
-
+import react, { ReactElement } from 'react';
+import { unmountComponentAtNode } from 'react-dom';
 type ChildrenElement<T> = ChildrenElement<T>[] | T;
+
+const INSTANCE_KEY = '_r';
+const REACT_ELEMENT_TYPE = Symbol.for('react.element');
+function ReactElement(type: any, key: any, ref: any, self: any, source: any, owner: any, props: any) {
+    const element = {
+      // This tag allows us to uniquely identify this as a React Element
+      $$typeof: REACT_ELEMENT_TYPE,
+
+      // Built-in properties that belong on the element
+      type: type,
+      key: key,
+      ref: ref,
+      props: props,
+
+      // Record the component responsible for creating this element.
+      _owner: owner,
+    };
+    return element;
+}
 
 // Mocked `Rax.shared`.
 const shared = {
-  get Element(): any {
-    warningCompat('shared.Element');
-    return null;
+  get Element() {
+    return function (type: any, key: any, ref: any, props: any, owner: any) {
+        return ReactElement(type, key, ref, /* self */ undefined, /* source */ undefined, owner, props);
+    };
   },
-  get Host(): any {
-    warningCompat('shared.Host');
-    return null;
+  Host: {
+    get owner() {
+        return (react as any).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner.current;
+    },
   },
-  get Instance(): any {
-    warningCompat('shared.Instance');
-    return null;
+  Instance: {
+    get(node: any) {
+        let instance = node[INSTANCE_KEY] || {};
+        return {
+            ...instance,
+            _internal: {
+                ...instance._internal,
+                unmountComponent: () => {
+                    if (node.parentNode?.removeChild) {
+                        node.parentNode.removeChild(node);
+                    }
+                    return unmountComponentAtNode(node);
+                },
+            },
+        };
+    },
+    remove(node: any) {
+        node[INSTANCE_KEY] = null;
+    },
+    set(node: any, instance: any) {
+        if (!node[INSTANCE_KEY]) {
+            node[INSTANCE_KEY] = instance;
+        }
+    },
   },
   flattenChildren,
 };
-
-function warningCompat(message: string) {
-  let stack: string;
-  try {
-    throw new Error(`You are not allowed to use ${message}.`);
-  } catch (error) {
-    stack = error.stack;
-  }
-  console.error(`[RaxCompat] ${stack}`);
-}
 
 function flattenChildren(children: ChildrenElement<ReactElement>) {
   if (children == null) {
