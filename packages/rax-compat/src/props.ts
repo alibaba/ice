@@ -8,7 +8,7 @@ function isEventLikeProp(key: string) {
   return key.indexOf('on') === 0;
 }
 
-function transformProps(props: ComponentProps<JSXElementConstructor<any>>): Object {
+function transformProps(props: ComponentProps<JSXElementConstructor<any>>): Record<string, any> {
   const transformedProps: Record<string, any> = {};
   Object.keys(props).forEach((propKey: string) => {
     let key: string = propKey;
@@ -26,8 +26,8 @@ function transformProps(props: ComponentProps<JSXElementConstructor<any>>): Obje
           key = reactEvent;
         }
       }
-    } else if (Object.prototype.hasOwnProperty.call(possibleStandardNames, lowerCasedPropKey)) {
-      // Transform the event so that it works properly in React.
+    } else if (possibleStandardNames.hasOwnProperty(lowerCasedPropKey)) {
+      // Transform attribute names that make it works properly in React.
       key = possibleStandardNames[lowerCasedPropKey];
     }
 
