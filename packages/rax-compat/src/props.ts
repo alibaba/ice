@@ -26,6 +26,7 @@ function transformProps(props: ComponentProps<JSXElementConstructor<any>>): Reco
           key = reactEvent;
         }
       }
+      // eslint-disable-next-line no-prototype-builtins
     } else if (possibleStandardNames.hasOwnProperty(lowerCasedPropKey)) {
       // Transform attribute names that make it works properly in React.
       key = possibleStandardNames[lowerCasedPropKey];
