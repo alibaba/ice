@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.1.0
+
+### Minor Changes
+
+- cc448339: set default value for miniappLifecycles
+- ddee1c3e: support miniapp native events
+- 1ed81fee: feat: refactor runtime api
+- 57219848: support miniapp native lifecycle events
+
+### Patch Changes
+
+- 4655a76d: update remove expressions for data loader
+- Updated dependencies [f62560f9]
+- Updated dependencies [9de09ee8]
+- Updated dependencies [ddee1c3e]
+- Updated dependencies [57219848]
+- Updated dependencies [1c3d3fec]
+- Updated dependencies [5db5b662]
+- Updated dependencies [57219848]
+  - @ice/runtime@1.2.0
+  - @ice/shared@1.0.1
+
 ## 1.1.0-beta.2
 
 ### Minor Changes
