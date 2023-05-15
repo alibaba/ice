@@ -92,7 +92,7 @@ export function getRoutesDefinition(nestRouteManifest: NestedRouteManifest[], la
       };
     },`,
       // Empty errorElement to avoid default ui provided by react-router.
-      'ErrorBoundary: RouteErrorComponent,',
+      'errorElement: <RouteErrorComponent />,',
       `componentName: '${componentName}',`,
       `index: ${index},`,
       `id: '${id}',`,
