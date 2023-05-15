@@ -1,34 +1,29 @@
 import * as React from 'react';
 import { unmountComponentAtNode } from 'react-dom';
 
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 type ChildrenElement<T> = ChildrenElement<T>[] | T;
 
 // ref: https://github.com/alibaba/rax/blob/master/packages/rax/src/vdom/instance.js#L11
 const INSTANCE_KEY = '_r';
 const REACT_ELEMENT_TYPE = Symbol.for('react.element');
-function ReactElement(type: any, key: any, ref: any, self: any, source: any, owner: any, props: any) {
-  const element = {
-    // This tag allows us to uniquely identify this as a React Element
-    $$typeof: REACT_ELEMENT_TYPE,
-
-    // Built-in properties that belong on the element
-    type: type,
-    key: key,
-    ref: ref,
-    props: props,
-
-    // Record the component responsible for creating this element.
-    _owner: owner,
-  };
-  return element;
-}
 
 // Mocked `Rax.shared`.
 const shared = {
-  get Element() {
-    return function (type: any, key: any, ref: any, props: any, owner: any) {
-      return ReactElement(type, key, ref, /* self */ undefined, /* source */ undefined, owner, props);
+  Element(type: any, key: any, ref: any, props: any, owner: any) {
+    // ref: https://github.com/facebook/react/blob/main/packages/react/src/ReactElement.js#L149-L161
+    return {
+      // This tag allows us to uniquely identify this as a React Element
+      $$typeof: REACT_ELEMENT_TYPE,
+
+      // Built-in properties that belong on the element
+      type: type,
+      key: key,
+      ref: ref,
+      props: props,
+
+      // Record the component responsible for creating this element.
+      _owner: owner,
     };
   },
   Host: {
