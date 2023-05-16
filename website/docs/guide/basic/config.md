@@ -263,6 +263,10 @@ export default defineConfig(() => ({
 }));
 ```
 
+:::caution
+如果 build 阶段仍然需要全量编译，请务必增加环境判断
+:::
+
 如果希望 dev 和 build 阶段均编译 `node_modules`，可以设置为 `true`
 
 ```js
@@ -282,10 +286,6 @@ export default defineConfig(() => ({
   compileDependencies: [/@alifd\/next/, /need-compile/],
 }));
 ```
-
-:::caution
-在没有环境判断的情况下，compileDependencies 自定义配置同时对 dev 和 build 阶段生效
-:::
 
 ### postcss
 
