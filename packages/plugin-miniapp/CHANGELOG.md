@@ -11,13 +11,7 @@
 ### Patch Changes
 
 - 4655a76d: update remove expressions for data loader
-- Updated dependencies [57219848]
-- Updated dependencies [cc448339]
-- Updated dependencies [ddee1c3e]
-- Updated dependencies [1ed81fee]
-- Updated dependencies [4655a76d]
-- Updated dependencies [57219848]
-- Updated dependencies [5dd3c86e]
+- Updated dependencies
   - @ice/bundles@0.1.10
   - @ice/miniapp-runtime@1.1.0
   - @ice/miniapp-loader@1.1.0
