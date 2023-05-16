@@ -137,6 +137,21 @@ export const Scripts: ScriptsType = (props: ScriptsProps) => {
   );
 };
 
+export function useScripts() {
+  const { loaderData, matches, assetsManifest } = useAppContext();
+  const routeScripts = getScripts(matches, loaderData);
+  const pageAssets = getPageAssets(matches, assetsManifest);
+  const entryAssets = getEntryAssets(assetsManifest);
+
+  // Page assets need to be load before entry assets, so when call dynamic import won't cause duplicate js chunk loaded.
+  let scripts = pageAssets.concat(entryAssets).filter(path => path.indexOf('.js') > -1);
+  if (assetsManifest.dataLoader) {
+    scripts.unshift(`${assetsManifest.publicPath}${assetsManifest.dataLoader}`);
+  }
+
+  return [].concat(routeScripts).concat(scripts);
+}
+
 interface DataProps {
   ScriptElement?: React.ComponentType<React.ScriptHTMLAttributes<HTMLScriptElement>> | string;
 }
