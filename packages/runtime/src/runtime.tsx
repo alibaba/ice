@@ -47,6 +47,7 @@ class Runtime {
     this.RouteWrappers = [];
     this.runtimeOptions = runtimeOptions;
     this.responseHandlers = [];
+    this.getAppRouter = this.getAppRouter.bind(this);
   }
 
   public getAppContext = () => {
@@ -64,7 +65,9 @@ class Runtime {
     return this.render;
   };
 
-  public getAppRouter = () => this.AppRouter;
+  public getAppRouter<T>() {
+    return this.AppRouter as ComponentType<T>;
+  }
 
   public getWrappers = () => this.RouteWrappers;
 

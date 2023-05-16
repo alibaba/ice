@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom/client';
 import { createHashHistory, createBrowserHistory, createMemoryHistory } from '@remix-run/router';
 import type { History } from '@remix-run/router';
 import type {
-  AppContext, WindowContext, AppExport, RouteItem, RuntimeModules, AppConfig, AssetsManifest,
+  AppContext, WindowContext, AppExport, RouteItem, RuntimeModules, AppConfig, AssetsManifest, ClientAppRouterProps,
 } from './types.js';
 import { createHistory as createHistorySingle } from './singleRouter.js';
 import { setHistory } from './history.js';
@@ -88,7 +88,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
   };
 
   const runtime = new Runtime(appContext, runtimeOptions);
-  runtime.setAppRouter(ClientRouter);
+  runtime.setAppRouter<ClientAppRouterProps>(ClientRouter);
   // Load static module before getAppData,
   // so we can call request in in getAppData which provide by `plugin-request`.
   if (runtimeModules.statics) {
@@ -141,7 +141,7 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
   const { appConfig, loaderData, routes, basename } = appContext;
   const appRender = runtime.getRender();
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
-  const AppRouter = runtime.getAppRouter();
+  const AppRouter = runtime.getAppRouter<ClientAppRouterProps>();
 
   const rootId = appConfig.app.rootId || 'app';
   let root = document.getElementById(rootId);
@@ -168,11 +168,14 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
       );
     }
   }
-  const routerOptions = {
+  const routerOptions: ClientAppRouterProps['routerContext'] = {
     basename,
     routes,
     history,
     hydrationData,
+    future: {
+      v7_prependBasename: true,
+    },
   };
   let singleComponent = null;
   let routeData = null;
