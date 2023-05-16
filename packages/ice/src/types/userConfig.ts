@@ -69,7 +69,6 @@ export interface UserConfig {
     bundle?: boolean;
     ignores?: IgnorePattern[];
     externals?: string[];
-    production?: boolean;
   };
   optimization?: Optimization;
   mock?: { exclude?: string[] };
