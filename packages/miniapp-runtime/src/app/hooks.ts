@@ -1,7 +1,6 @@
-import { isArray, isFunction } from '@ice/shared';
-import type { AppInstance, PageLifeCycle } from '../dsl/instance.js';
+import { isArray, isFunction, hooks } from '@ice/shared';
+import type { PageLifeCycle } from '../dsl/instance.js';
 import type { Func } from '../interface/index.js';
-import { Current } from '../current.js';
 import {
   getPageInstance,
   injectPageInstance,
@@ -10,7 +9,7 @@ import {
 import { reactMeta } from './react-meta.js';
 import { HOOKS_APP_ID } from './utils.js';
 
-const createIceMiniappHook = (lifecycle: keyof PageLifeCycle | keyof AppInstance) => {
+const createIceMiniappHook = (lifecycle: keyof PageLifeCycle | string) => {
   return (fn: Func) => {
     const { R: React, PageContext } = reactMeta;
     const id = React.useContext(PageContext) || HOOKS_APP_ID;
@@ -18,7 +17,6 @@ const createIceMiniappHook = (lifecycle: keyof PageLifeCycle | keyof AppInstance
     // hold fn ref and keep up to date
     const fnRef = React.useRef(fn);
     if (fnRef.current !== fn) fnRef.current = fn;
-
     React.useLayoutEffect(() => {
       let inst = getPageInstance(id);
       let first = false;
@@ -57,39 +55,14 @@ const createIceMiniappHook = (lifecycle: keyof PageLifeCycle | keyof AppInstance
   };
 };
 
-/** LifeCycle */
-export const useDidHide = createIceMiniappHook('componentDidHide');
-export const useDidShow = createIceMiniappHook('componentDidShow');
+const pageLifecycle = hooks.call('getMiniLifecycleImpl')!.page;
+const pgeLifecycleArray = pageLifecycle.toString().split(',') as Array<keyof PageLifeCycle | string>;
+const pageLifecycleHooks = {};
+pgeLifecycleArray.forEach(lifecycle => {
+  pageLifecycleHooks[lifecycle] = createIceMiniappHook(lifecycle);
+});
 
-/** App */
-export const useError = createIceMiniappHook('onError');
-export const useLaunch = createIceMiniappHook('onLaunch');
-export const usePageNotFound = createIceMiniappHook('onPageNotFound');
-
-/** Page */
-export const useLoad = createIceMiniappHook('onLoad');
-export const usePageScroll = createIceMiniappHook('onPageScroll');
-export const usePullDownRefresh = createIceMiniappHook('onPullDownRefresh');
-export const usePullIntercept = createIceMiniappHook('onPullIntercept');
-export const useReachBottom = createIceMiniappHook('onReachBottom');
-export const useResize = createIceMiniappHook('onResize');
-export const useUnload = createIceMiniappHook('onUnload');
-
-/** Mini-Program */
-export const useAddToFavorites = createIceMiniappHook('onAddToFavorites');
-export const useOptionMenuClick = createIceMiniappHook('onOptionMenuClick');
-export const useSaveExitState = createIceMiniappHook('onSaveExitState');
-export const useShareAppMessage = createIceMiniappHook('onShareAppMessage');
-export const useShareTimeline = createIceMiniappHook('onShareTimeline');
-export const useTitleClick = createIceMiniappHook('onTitleClick');
-
-/** Router */
-export const useReady = createIceMiniappHook('onReady');
-export const useRouter: any = (dynamic = false) => {
-  const React = reactMeta.R;
-  /* eslint-disable-next-line react-hooks/rules-of-hooks */
-  return dynamic ? Current.router : React.useMemo(() => Current.router, []);
+export {
+  pageLifecycleHooks,
+  pgeLifecycleArray,
 };
-export const useTabItemTap = createIceMiniappHook('onTabItemTap');
-
-export const useScope = () => undefined;

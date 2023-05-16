@@ -56,20 +56,25 @@ const build = async (
     warnOnHashRouterEnabled(userConfig);
   }
 
-  const webpackConfigs = taskConfigs.map(({ config }) => getWebpackConfig({
-    config,
-    rootDir,
-    // @ts-expect-error fix type error of compiled webpack
-    webpack,
-    runtimeTmpDir: RUNTIME_TMP_DIR,
-    userConfigHash,
-    getExpandedEnvs,
-    runtimeDefineVars: {
-      [IMPORT_META_TARGET]: JSON.stringify(target),
-      [IMPORT_META_RENDERER]: JSON.stringify('client'),
-    },
-    getRoutesFile,
-  }));
+  const webpackConfigs = taskConfigs.map(({ config }) => {
+    // If the target in the task config doesn't exit, use the target from cli command option.
+    config.target ||= target;
+
+    return getWebpackConfig({
+      config,
+      rootDir,
+      // @ts-expect-error fix type error of compiled webpack
+      webpack,
+      runtimeTmpDir: RUNTIME_TMP_DIR,
+      userConfigHash,
+      getExpandedEnvs,
+      runtimeDefineVars: {
+        [IMPORT_META_TARGET]: JSON.stringify(target),
+        [IMPORT_META_RENDERER]: JSON.stringify('client'),
+      },
+      getRoutesFile,
+    });
+  });
   const outputDir = webpackConfigs[0].output.path;
 
   await emptyDir(outputDir);
@@ -139,27 +144,28 @@ const build = async (
   if (ssg) {
     renderMode = 'SSG';
   }
-  const { serverEntry } = await serverCompileTask.get();
-  serverEntryRef.current = serverEntry;
-  const routeType = appConfig?.router?.type;
-  const {
-    outputPaths = [],
-  } = await generateEntry({
-    rootDir,
-    outputDir,
-    entry: serverEntry,
-    // only ssg need to generate the whole page html when build time.
-    documentOnly: !ssg,
-    renderMode,
-    routeType: appConfig?.router?.type,
-    distType,
-    routeManifest,
-  });
-  // This depends on orders.
-  output.paths = [...outputPaths];
-
-  if (routeType === 'memory' && userConfig?.routes?.injectInitialEntry) {
-    injectInitialEntry(routeManifest, outputDir);
+  const { serverEntry } = await serverCompileTask.get() || {};
+  if (serverEntry) {
+    serverEntryRef.current = serverEntry;
+    const routeType = appConfig?.router?.type;
+    const {
+      outputPaths = [],
+    } = await generateEntry({
+      rootDir,
+      outputDir,
+      entry: serverEntry,
+      // only ssg need to generate the whole page html when build time.
+      documentOnly: !ssg,
+      renderMode,
+      routeType: appConfig?.router?.type,
+      distType,
+      routeManifest,
+    });
+    // This depends on orders.
+    output.paths = [...outputPaths];
+    if (routeType === 'memory' && userConfig?.routes?.injectInitialEntry) {
+      injectInitialEntry(routeManifest, outputDir);
+    }
   }
 
   await applyHook('after.build.compile', {

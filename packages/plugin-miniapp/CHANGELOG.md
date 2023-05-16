@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.1.0-beta.1
+
+### Minor Changes
+
+- set default value for miniappLifecycles
+
+### Patch Changes
+
+- Updated dependencies
+  - @ice/miniapp-runtime@1.1.0-beta.2
+
+## 1.0.4-beta.0
+
+### Patch Changes
+
+- 4655a76d: update remove expressions for data loader
+- Updated dependencies [4655a76d]
+  - @ice/miniapp-runtime@1.1.0-beta.1
+
 ## 1.0.3
 
 ### Patch Changes

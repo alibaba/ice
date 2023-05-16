@@ -45,6 +45,6 @@ describe('transform core js path', () => {
   it('@swc/helpers cjs', async () => {
     const orignalCode = fs.readFileSync(path.join(__dirname, './fixtures/transformImport/swc.js'), 'utf-8');
     expect(await transformImport(orignalCode, coreJsPath))
-      .toBe('var _object_spread = require(\'@swc/helpers/lib/_object_spread.js\').default;module.exports = {};');
+      .toBe('var _object_spread = require(\'@swc/helpers/cjs/_object_spread.cjs\')._;module.exports = {};');
   });
 });

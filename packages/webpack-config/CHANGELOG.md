@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.13
+
+### Patch Changes
+
+- 28de278f: feat: support match target entry to bundle
+- 6e9c822a: chore: remove useless define variables
+- b226e356: fix: use standard cjs module
+- 0d549779: feat: add target field to config
+- Updated dependencies [5d5fb334]
+  - @ice/bundles@0.1.9
+
 ## 1.0.12
 
 ### Patch Changes

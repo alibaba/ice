@@ -21,16 +21,18 @@
     "cov": "vitest run --coverage",
     "test": "vitest",
     "changeset": "changeset",
-    "version": "changeset version && pnpm install --frozen-lockfile false",
+    "install:frozen": "pnpm install --frozen-lockfile false",
+    "version": "changeset version && pnpm install:frozen",
     "release": "changeset publish",
-    "release:beta": "changeset pre enter beta && pnpm run version && pnpm build && pnpm release && changeset pre exit"
+    "release:beta": "changeset pre enter beta && pnpm run version && pnpm build && pnpm release && changeset pre exit",
+    "release:snapshot": "changeset version --snapshot canary && pnpm install:frozen && pnpm build && pnpm release --tag canary --no-git-tag --snapshot"
   },
   "devDependencies": {
     "@actions/exec": "^1.1.1",
     "@applint/spec": "^1.2.3",
     "@changesets/cli": "^2.26.0",
     "@commitlint/cli": "^16.3.0",
-    "@ice/bundles": "workspace:^0.1.0",
+    "@ice/bundles": "workspace:*",
     "@testing-library/react": "^13.3.0",
     "@types/eslint": "^8.4.5",
     "@types/fs-extra": "^9.0.13",

@@ -1,6 +1,6 @@
 // based on https://github.com/remix-run/remix/blob/main/packages/remix-dev/config/routes.ts
 
-import { win32 } from 'path';
+import { win32, join } from 'path';
 
 export interface ConfigRoute {
   /**
@@ -82,8 +82,19 @@ export interface NestedRouteManifest extends ConfigRoute {
   children?: ConfigRoute[];
 }
 
+export interface DefineRoutesOptions {
+  routeManifest: RouteManifest;
+  nestedRouteManifest: NestedRouteManifest[];
+}
+
+export type DefineExtraRoutes = (
+  defineRoute: DefineRouteFunction,
+  options: DefineRoutesOptions,
+) => void;
+
 export function defineRoutes(
-  callback: (defineRoute: DefineRouteFunction) => void,
+  callback: (defineRoute: DefineRouteFunction, options: DefineRoutesOptions) => void,
+  options: DefineRoutesOptions,
 ) {
   const routes: RouteManifest = Object.create(null);
   const parentRoutes: ConfigRoute[] = [];
@@ -108,18 +119,19 @@ export function defineRoutes(
       // route(path, file, options)
       options = optionsOrChildren || {};
     }
+    const parentRoute = parentRoutes.length > 0
+      ? parentRoutes[parentRoutes.length - 1]
+      : undefined;
 
-    const id = createRouteId(file);
+    const id = createRouteId(file, path, parentRoute?.path, options.index);
+
     const route: ConfigRoute = {
       path,
       index: options.index ? true : undefined,
       id,
-      parentId:
-        parentRoutes.length > 0
-          ? parentRoutes[parentRoutes.length - 1].id
-          : undefined,
+      parentId: parentRoute ? parentRoute.id : undefined,
       file,
-      componentName: createComponentName(id),
+      componentName: createComponentName(file),
       layout: id.endsWith('layout'),
     };
 
@@ -132,14 +144,27 @@ export function defineRoutes(
     }
   };
 
-  callback(defineRoute);
+  callback(defineRoute, options);
 
   alreadyReturned = true;
 
   return routes;
 }
 
-export function createRouteId(file: string) {
+export function createRouteId(
+  file: string,
+  path?: string,
+  parentPath?: string,
+  index?: boolean,
+) {
+  return normalizeSlashes(join(
+    parentPath || '',
+    path || (index ? '/' : ''),
+    stripFileExtension(file).endsWith('layout') ? 'layout' : '',
+  ));
+}
+
+export function createFileId(file: string) {
   return normalizeSlashes(stripFileExtension(file));
 }
 
@@ -151,8 +176,21 @@ function stripFileExtension(file: string) {
   return file.replace(/\.[a-z0-9]+$/i, '');
 }
 
-export function createComponentName(id: string) {
-  return id.split('/')
+export function createComponentName(file: string) {
+  return createFileId(file).split('/')
     .map((item: string) => item.toLowerCase())
     .join('-');
+}
+
+/**
+ * remove `/layout` str if the routeId has it
+ *
+ * 'layout' -> ''
+ * 'About/layout' -> 'About'
+ * 'About/layout/index' -> 'About/layout/index'
+ */
+export function removeLastLayoutStrFromId(id?: string) {
+  const layoutStrs = ['/layout', 'layout'];
+  const currentLayoutStr = layoutStrs.find(layoutStr => id?.endsWith(layoutStr));
+  return currentLayoutStr ? id.slice(0, id.length - currentLayoutStr.length) : id;
 }

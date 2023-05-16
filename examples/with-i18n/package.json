@@ -1,0 +1,26 @@
+{
+  "name": "@examples/with-i18n",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "start": "ice start",
+    "build": "ice build",
+    "serve": "tsx server.mts"
+  },
+  "dependencies": {
+    "@ice/runtime": "workspace:*",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-intl": "^6.3.2"
+  },
+  "devDependencies": {
+    "@ice/app": "workspace:*",
+    "@ice/plugin-i18n": "workspace:*",
+    "@types/express": "^4.17.14",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.2",
+    "express": "^4.17.3",
+    "tslib": "^2.5.0",
+    "tsx": "^3.12.1"
+  }
+}

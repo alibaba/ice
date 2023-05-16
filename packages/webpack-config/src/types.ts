@@ -39,7 +39,7 @@ type Experimental = Configuration['experiments'];
 interface SwcOptions {
   removeExportExprs?: string[];
   compilationConfig?: SwcCompilationConfig | ((source: string, id: string) => SwcCompilationConfig);
-  keepExports?: string[];
+  keepExports?: string[] | { value: string[]; include?: (id: string) => boolean };
   nodeTransform?: boolean;
 }
 
@@ -72,6 +72,8 @@ interface TransformPlugin {
 export type ModifyWebpackConfig<T=Configuration, U=typeof webpack> = (config: T, ctx: ConfigurationCtx<U>) => T;
 export type { webpack };
 export interface Config {
+  target?: string;
+
   mode: 'none' | 'development' | 'production';
 
   define?: {
