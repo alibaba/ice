@@ -5,11 +5,7 @@
 ### Patch Changes
 
 - 65680d44: fix: support css modules and global css
-- Updated dependencies [57219848]
-- Updated dependencies [3ede3c5a]
-- Updated dependencies [41be75ff]
-- Updated dependencies [4b280b77]
-- Updated dependencies [5dd3c86e]
+- Updated dependencies
   - @ice/bundles@0.1.10
   - rax-compat@0.2.1
 
