@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.1
+
+### Patch Changes
+
+- 65680d44: fix: support css modules and global css
+- Updated dependencies
+  - @ice/bundles@0.1.10
+  - rax-compat@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes

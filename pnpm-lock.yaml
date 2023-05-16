@@ -1034,10 +1034,10 @@ importers:
 
   packages/ice:
     specifiers:
-      '@ice/bundles': 0.1.9
-      '@ice/route-manifest': 1.1.1
-      '@ice/runtime': ^1.1.7
-      '@ice/webpack-config': 1.0.13
+      '@ice/bundles': 0.1.10
+      '@ice/route-manifest': 1.2.0
+      '@ice/runtime': ^1.2.0
+      '@ice/webpack-config': 1.0.14
       '@swc/helpers': 0.5.1
       '@types/babel__generator': ^7.6.4
       '@types/babel__traverse': ^7.17.1
@@ -1151,7 +1151,7 @@ importers:
 
   packages/miniapp-loader:
     specifiers:
-      '@ice/bundles': ^0.1.0
+      '@ice/bundles': ^0.1.10
       webpack: ^5.80.0
     dependencies:
       '@ice/bundles': link:../bundles
@@ -1175,8 +1175,8 @@ importers:
 
   packages/miniapp-runtime:
     specifiers:
-      '@ice/runtime': ^1.1.2
-      '@ice/shared': ^1.0.0
+      '@ice/runtime': ^1.2.0
+      '@ice/shared': ^1.0.1
       '@types/react': ^18.0.0
       history: ^5.3.0
       miniapp-history: ^0.1.7
@@ -1266,8 +1266,8 @@ importers:
 
   packages/plugin-icestark:
     specifiers:
-      '@ice/app': ^3.1.5
-      '@ice/runtime': ^1.1.5
+      '@ice/app': ^3.2.0
+      '@ice/runtime': ^1.2.0
       '@ice/stark': ^2.7.4
       '@ice/stark-app': ^1.2.0
       '@types/react': ^18.0.0
@@ -1310,13 +1310,13 @@ importers:
 
   packages/plugin-miniapp:
     specifiers:
-      '@ice/app': ^3.1.5
-      '@ice/bundles': ^0.1.7
-      '@ice/miniapp-loader': ^1.0.0
+      '@ice/app': ^3.2.0
+      '@ice/bundles': ^0.1.10
+      '@ice/miniapp-loader': ^1.1.0
       '@ice/miniapp-react-dom': ^1.0.1
-      '@ice/miniapp-runtime': ^1.0.2
-      '@ice/runtime': ^1.1.5
-      '@ice/shared': ^1.0.0
+      '@ice/miniapp-runtime': ^1.1.0
+      '@ice/runtime': ^1.2.0
+      '@ice/shared': ^1.0.1
       acorn-walk: ^8.2.0
       chalk: ^4.0.0
       consola: ^2.15.3
@@ -1351,7 +1351,7 @@ importers:
 
   packages/plugin-pha:
     specifiers:
-      '@ice/app': ^3.1.5
+      '@ice/app': ^3.2.0
       '@remix-run/router': ^1.6.1
       build-scripts: ^2.1.1-0
       chalk: ^4.0.0
@@ -1380,13 +1380,13 @@ importers:
     specifiers:
       '@babel/core': ^7.0.0
       '@babel/plugin-proposal-export-default-from': ^7.18.9
-      '@ice/app': ^3.1.5
-      '@ice/bundles': ^0.1.7
+      '@ice/app': ^3.2.0
+      '@ice/bundles': ^0.1.10
       babel-plugin-transform-jsx-stylesheet: 1.0.6
       consola: ^2.15.3
       css: ^2.2.1
       lodash.merge: ^4.6.2
-      rax-compat: ^0.2.0
+      rax-compat: ^0.2.1
       style-unit: ^3.0.5
       stylesheet-loader: ^0.9.1
       webpack: ^5.80.0
@@ -1531,7 +1531,7 @@ importers:
 
   packages/webpack-config:
     specifiers:
-      '@ice/bundles': 0.1.9
+      '@ice/bundles': 0.1.10
       '@rollup/pluginutils': ^4.2.0
       browserslist: ^4.19.3
       consola: ^2.15.3
