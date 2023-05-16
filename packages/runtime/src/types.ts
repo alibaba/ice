@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'http';
-import type { InitialEntry, AgnosticRouteObject, Location, History } from '@remix-run/router';
+import type { InitialEntry, AgnosticRouteObject, Location, History, RouterInit } from '@remix-run/router';
 import type { ComponentType, PropsWithChildren } from 'react';
 import type { HydrationOptions, Root } from 'react-dom/client';
 import type { Params, RouteObject } from 'react-router-dom';
@@ -240,7 +240,7 @@ export interface RuntimeModules {
 
 export interface AppRouterProps {
   routes?: RouteObject[];
-  routerContext?: any;
+  routerContext?: RouterInit;
   location?: Location;
   Component?: ComponentType<any>;
   loaderData?: LoaderData;

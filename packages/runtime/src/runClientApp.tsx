@@ -1,7 +1,7 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { createHashHistory, createBrowserHistory, createMemoryHistory } from '@remix-run/router';
-import type { History } from '@remix-run/router';
+import type { History, RouterInit } from '@remix-run/router';
 import type {
   AppContext, WindowContext, AppExport, RouteItem, RuntimeModules, AppConfig, AssetsManifest,
 } from './types.js';
@@ -165,11 +165,14 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
       );
     }
   }
-  const routerOptions = {
+  const routerOptions: RouterInit = {
     basename,
     routes,
     history,
     hydrationData,
+    future: {
+      v7_prependBasename: true,
+    },
   };
   let singleComponent = null;
   let routeData = null;
