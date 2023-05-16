@@ -2,7 +2,7 @@ import React from 'react';
 import { StaticRouterProvider, createStaticRouter } from 'react-router-dom/server.mjs';
 import type { RouteObject } from 'react-router-dom';
 import { RouteComponent } from './routes.js';
-import type { AppRouterProps } from './types.js';
+import type { ClientAppRouterProps, ServerAppRouterProps } from './types.js';
 import App from './App.js';
 
 function createServerRoutes(routes: RouteObject[]) {
@@ -26,7 +26,7 @@ function createServerRoutes(routes: RouteObject[]) {
   });
 }
 
-function ServerRouter(props: AppRouterProps) {
+function ServerRouter(props: ServerAppRouterProps) {
   const { routerContext, routes } = props;
   // Server router only be called once.
   const router = createStaticRouter(createServerRoutes(routes), routerContext);

@@ -64,7 +64,9 @@ class Runtime {
     return this.render;
   };
 
-  public getAppRouter = () => this.AppRouter;
+  public getAppRouter<T>() {
+    return this.AppRouter as ComponentType<T>;
+  }
 
   public getWrappers = () => this.RouteWrappers;
 
