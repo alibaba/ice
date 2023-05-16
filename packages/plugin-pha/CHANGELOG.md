@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.4
+
+### Patch Changes
+
+- a878225f: fix: dataLoader is sent repeatedly in PHA
+
 ## 2.0.3
 
 ### Patch Changes

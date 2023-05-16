@@ -1,5 +1,11 @@
 # @ice/runtime
 
+## 1.2.1
+
+### Patch Changes
+
+- a878225f: fix: dataLoader is sent repeatedly in PHA
+
 ## 1.2.0
 
 ### Minor Changes
