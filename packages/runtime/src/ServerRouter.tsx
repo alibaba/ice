@@ -2,7 +2,7 @@ import React from 'react';
 import { StaticRouterProvider, createStaticRouter } from 'react-router-dom/server.mjs';
 import type { RouteObject } from 'react-router-dom';
 import { RouteComponent } from './routes.js';
-import type { ClientAppRouterProps, ServerAppRouterProps } from './types.js';
+import type { ServerAppRouterProps } from './types.js';
 import App from './App.js';
 
 function createServerRoutes(routes: RouteObject[]) {

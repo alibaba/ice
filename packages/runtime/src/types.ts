@@ -246,7 +246,7 @@ export interface AppRouterProps {
 }
 
 export interface ClientAppRouterProps extends AppRouterProps {
-  routerContext?: RouterInit;
+  routerContext?: Omit<RouterInit, 'routes'> & { routes?: RouteObject[] };
 }
 
 export interface ServerAppRouterProps extends AppRouterProps {

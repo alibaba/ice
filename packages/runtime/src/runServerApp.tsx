@@ -3,7 +3,6 @@ import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { parsePath } from 'history';
 import type { Location } from 'history';
-import type { StaticHandlerContext } from '@remix-run/router';
 import type {
   AppContext, RouteItem, ServerContext,
   AppExport, AssetsManifest,
@@ -353,8 +352,8 @@ async function renderServerEntry(
   const { routes, routePath, loaderData, basename } = appContext;
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
   const AppRouter = runtime.getAppRouter<ServerAppRouterProps>();
-  const routerContext: StaticHandlerContext = {
-    // @ts-ignore
+  const routerContext: ServerAppRouterProps['routerContext'] = {
+    // @ts-expect-error matches type should be use `AgnosticDataRouteMatch[]`
     matches,
     basename,
     loaderData,

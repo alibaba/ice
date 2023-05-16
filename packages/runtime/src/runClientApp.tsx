@@ -1,7 +1,7 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { createHashHistory, createBrowserHistory, createMemoryHistory } from '@remix-run/router';
-import type { History, RouterInit } from '@remix-run/router';
+import type { History } from '@remix-run/router';
 import type {
   AppContext, WindowContext, AppExport, RouteItem, RuntimeModules, AppConfig, AssetsManifest, ClientAppRouterProps,
 } from './types.js';
@@ -165,7 +165,7 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
       );
     }
   }
-  const routerOptions: RouterInit = {
+  const routerOptions: ClientAppRouterProps['routerContext'] = {
     basename,
     routes,
     history,

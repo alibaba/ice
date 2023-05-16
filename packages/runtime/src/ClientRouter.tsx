@@ -21,6 +21,7 @@ function ClientRouter(props: ClientAppRouterProps) {
   if (process.env.ICE_CORE_ROUTER === 'true') {
     // Clear router before re-create in case of hot module replacement.
     clearRouter();
+    // @ts-expect-error routes type should be AgnosticBaseRouteObject[]
     router = createRouter(routerContext).initialize();
   }
   useEffect(() => {
