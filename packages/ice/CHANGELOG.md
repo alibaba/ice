@@ -19,6 +19,7 @@
 - 7b04ca7e: fix: remove all exports of components when render mode is csr
 - 57219848: support miniapp native lifecycle events
 - 13770d53: fix: compatible with runtime absolute path on win32 platform
+- a878225f: fix: dataLoader is sent repeatedly in PHA
 - Updated dependencies
   - @ice/runtime@1.2.0
   - @ice/bundles@0.1.10
