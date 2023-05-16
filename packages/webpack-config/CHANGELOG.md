@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.14
+
+### Patch Changes
+
+- 5dd3c86e: refactor: use swc plugin for remove code
+- Updated dependencies [57219848]
+- Updated dependencies [5dd3c86e]
+  - @ice/bundles@0.1.10
+
 ## 1.0.13
 
 ### Patch Changes
