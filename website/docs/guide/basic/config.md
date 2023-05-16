@@ -283,6 +283,10 @@ export default defineConfig(() => ({
 }));
 ```
 
+:::caution
+在没有环境判断的情况下，compileDependencies 自定义配置同时对 dev 和 build 阶段生效
+:::
+
 ### postcss
 
 - 类型：`ProcessOptions & { plugins?: (string | [string, Record<string, any>?])[] };`
