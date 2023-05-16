@@ -8,6 +8,7 @@
 - d4f943fb: feat: support downgradeUrl
 - 922f0700: feat: support config of dataLoader for pha plugin
 - ce94e054: fix: fix frames build err in multiple
+- a878225f: fix: dataLoader is sent repeatedly in PHA
 
 ## 2.0.2
 

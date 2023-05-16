@@ -13,6 +13,7 @@
 - 57219848: add empty usePageLifecycle method
 - 1c3d3fec: feat: support handler response
 - 5db5b662: fix: use import.meta.renderer for client judgement
+- a878225f: fix: dataLoader is sent repeatedly in PHA
 
 ## 1.1.8
 
