@@ -13,11 +13,11 @@ import { getRoutesPath, loadRouteModule } from './routes.js';
 import type { RouteLoaderOptions } from './routes.js';
 import getRequestContext from './requestContext.js';
 import getAppConfig from './appConfig.js';
+import matchRoutes from './matchRoutes.js';
+import { setFetcher, setDecorator } from './dataLoader.js';
 import ClientRouter from './ClientRouter.js';
-import { setFetcher } from './dataLoader.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 import { AppContextProvider } from './AppContext.js';
-import matchRoutes from './matchRoutes.js';
 
 export interface RunClientAppOptions {
   app: AppExport;
@@ -28,6 +28,7 @@ export interface RunClientAppOptions {
   memoryRouter?: boolean;
   runtimeOptions?: Record<string, any>;
   dataLoaderFetcher?: Function;
+  dataLoaderDecorator?: Function;
 }
 
 export default async function runClientApp(options: RunClientAppOptions) {
@@ -40,6 +41,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     memoryRouter,
     runtimeOptions,
     dataLoaderFetcher,
+    dataLoaderDecorator,
   } = options;
 
   const windowContext: WindowContext = (window as any).__ICE_APP_CONTEXT__ || {};
@@ -93,7 +95,8 @@ export default async function runClientApp(options: RunClientAppOptions) {
     await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
   }
 
-  setFetcher(dataLoaderFetcher);
+  dataLoaderFetcher && setFetcher(dataLoaderFetcher);
+  dataLoaderDecorator && setDecorator(dataLoaderDecorator);
 
   if (!appData) {
     appData = await getAppData(app, requestContext);
