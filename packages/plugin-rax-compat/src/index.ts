@@ -81,15 +81,19 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
               },
             };
           }
-          return {
-            jsc: {
-              transform: {
-                react: {
-                  importSource: 'rax-compat/runtime',
+
+          const isRaxComponent = /(from|require\()\s*['"]rax['"]/.test(source);
+          if (isRaxComponent) {
+            return {
+              jsc: {
+                transform: {
+                  react: {
+                    importSource: 'rax-compat/runtime',
+                  },
                 },
               },
-            },
-          };
+            };
+          }
         },
       });
 
