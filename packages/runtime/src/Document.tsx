@@ -152,6 +152,11 @@ export function useScripts() {
   return [].concat(routeScripts).concat(scripts);
 }
 
+export function useRenderMode() {
+  const { renderMode } = useAppContext();
+  return renderMode;
+}
+
 interface DataProps {
   ScriptElement?: React.ComponentType<React.ScriptHTMLAttributes<HTMLScriptElement>> | string;
 }
