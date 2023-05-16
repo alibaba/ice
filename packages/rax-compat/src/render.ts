@@ -2,7 +2,7 @@ import type { RaxElement, RenderOption } from 'rax';
 import type { ReactNode } from 'react';
 import type { RootOptions } from 'react-dom/client';
 import { createRoot } from 'react-dom/client';
-import { isFunction } from './type';
+import { isFunction } from './type.js';
 
 /**
  * Compat render for rax export.

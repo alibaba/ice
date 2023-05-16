@@ -36,6 +36,7 @@ interface GetWebpackConfigOptions {
   userConfigHash: string;
   getExpandedEnvs: () => Record<string, string>;
   runtimeDefineVars?: Record<string, any>;
+  getRoutesFile?: () => string[];
 }
 
 enum JSMinifier {
@@ -81,11 +82,6 @@ function getDefineVars(
   webpack,
 ) {
   const { define = {} } = config;
-  // auto stringify define value
-  const defineVars = {};
-  Object.keys(define).forEach((key) => {
-    defineVars[key] = JSON.stringify(define[key]);
-  });
 
   Object.keys(process.env).filter((key) => {
     return RUNTIME_PREFIX.test(key) || ['NODE_ENV'].includes(key);
@@ -128,7 +124,17 @@ function getImportMetaEnv(getExpandedEnvs: () => Record<string, string>): Record
 }
 
 export function getWebpackConfig(options: GetWebpackConfigOptions): Configuration {
-  const { rootDir, config, webpack, runtimeTmpDir, userConfigHash, getExpandedEnvs, runtimeDefineVars = {} } = options;
+  const {
+    rootDir,
+    config,
+    webpack,
+    runtimeTmpDir,
+    userConfigHash,
+    getExpandedEnvs,
+    runtimeDefineVars = {},
+    getRoutesFile,
+  } = options;
+
   const {
     mode,
     externals = {},
@@ -208,6 +214,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     },
     module: true,
   }, minimizerOptions);
+
   const compilation = compilationPlugin({
     rootDir,
     cacheDir,
@@ -219,6 +226,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     swcOptions,
     polyfill,
     enableEnv: true,
+    getRoutesFile,
   });
   const webpackConfig = {
     mode,
@@ -272,6 +280,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
         fs: false,
         path: false,
       },
+      conditionNames: (config.target ? [config.target] : []).concat(['...']),
     },
     resolveLoader: {
       modules: ['node_modules'],
@@ -371,7 +380,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
       },
       proxy,
       hot: true,
-      compress: true,
+      compress: false,
       webSocketServer: 'ws',
       devMiddleware: {
         publicPath,

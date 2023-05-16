@@ -7,7 +7,12 @@ import type { Config } from '@ice/webpack-config/types';
 import type { AppConfig } from '@ice/runtime/types';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import fg from 'fast-glob';
-import type { DeclarationData, PluginData, ExtendsPluginAPI, TargetDeclarationData } from './types';
+import type {
+  DeclarationData,
+  PluginData,
+  ExtendsPluginAPI,
+  TargetDeclarationData,
+} from './types/index.js';
 import { DeclarationType } from './types/index.js';
 import Generator from './service/runtimeGenerator.js';
 import { createServerCompiler } from './service/serverCompiler.js';
@@ -19,9 +24,9 @@ import test from './commands/test.js';
 import getWatchEvents from './getWatchEvents.js';
 import { setEnv, updateRuntimeEnv, getCoreEnvKeys } from './utils/runtimeEnv.js';
 import getRuntimeModules from './utils/getRuntimeModules.js';
-import { generateRoutesInfo, getRoutesDefination } from './routes.js';
+import { generateRoutesInfo, getRoutesDefinition } from './routes.js';
 import * as config from './config.js';
-import { RUNTIME_TMP_DIR, WEB, RUNTIME_EXPORTS } from './constant.js';
+import { RUNTIME_TMP_DIR, WEB, RUNTIME_EXPORTS, SERVER_ENTRY } from './constant.js';
 import createSpinner from './utils/createSpinner.js';
 import ServerCompileTask from './utils/ServerCompileTask.js';
 import { getAppExportConfig, getRouteExportConfig } from './service/config.js';
@@ -31,6 +36,7 @@ import { getFileHash } from './utils/hash.js';
 import { logger, createLogger } from './utils/logger.js';
 import ServerRunner from './service/ServerRunner.js';
 import RouteManifest from './utils/routeManifest.js';
+import dynamicImport from './utils/dynamicImport.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -109,10 +115,34 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         declarationType: DeclarationType.NORMAL,
       });
     },
+    getExportList: (registerKey: string) => {
+      return generator.getExportList(registerKey);
+    },
     render: generator.render,
   };
-
+  // Store server runner for plugins.
+  let serverRunner: ServerRunner;
   const serverCompileTask = new ServerCompileTask();
+
+  async function excuteServerEntry() {
+    try {
+      if (serverRunner) {
+        return serverRunner.run(SERVER_ENTRY);
+      } else {
+        const { error, serverEntry } = await serverCompileTask.get();
+        if (error) {
+          logger.error('Server compile error:', error);
+          return;
+        }
+        delete require.cache[serverEntry];
+        return await dynamicImport(serverEntry, true);
+      }
+    } catch (err) {
+      // make error clearly, notice typeof err === 'string'
+      logger.error('Excute server entry error:', err);
+      return;
+    }
+  }
 
   const { target = WEB } = commandArgs;
   const plugins = [];
@@ -141,6 +171,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       },
       getRouteManifest: () => routeManifest.getNestedRoute(),
       getFlattenRoutes: () => routeManifest.getFlattenRoute(),
+      getRoutesFile: () => routeManifest.getRoutesFile(),
+      addRoutesDefinition: routeManifest.addRoutesDefinition.bind(routeManifest),
+      excuteServerEntry,
       context: {
         webpack,
       },
@@ -156,7 +189,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   // get plugins include built-in plugins and custom plugins
   const resolvedPlugins = await ctx.resolvePlugins() as PluginData[];
-  const runtimeModules = getRuntimeModules(resolvedPlugins);
+  const runtimeModules = getRuntimeModules(resolvedPlugins, rootDir);
 
   const { getAppConfig, init: initAppConfigCompiler } = getAppExportConfig(rootDir);
   const { getRoutesConfig, getDataloaderConfig, init: initRouteConfigCompiler } = getRouteExportConfig(rootDir);
@@ -185,8 +218,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   const coreEnvKeys = getCoreEnvKeys();
 
-  const routesInfo = await generateRoutesInfo(rootDir, routesConfig);
+  const routesInfo = await generateRoutesInfo(rootDir, routesConfig, routeManifest.getRoutesDefinitions());
   routeManifest.setRoutes(routesInfo.routes);
+
   const hasExportAppData = (await getFileExports({ rootDir, file: 'src/app' })).includes('dataLoader');
   const csr = !userConfig.ssr && !userConfig.ssg;
 
@@ -203,7 +237,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const iceRuntimePath = '@ice/runtime';
   // Only when code splitting use the default strategy or set to `router`, the router will be lazy loaded.
   const lazy = [true, 'chunks', 'page'].includes(userConfig.codeSplitting);
-  const { routeImports, routeDefination } = getRoutesDefination(routesInfo.routes, lazy);
+  const { routeImports, routeDefinition } = getRoutesDefinition(routesInfo.routes, lazy);
   // add render data
   generator.setRenderData({
     ...routesInfo,
@@ -223,21 +257,25 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     jsOutput: distType.includes('javascript'),
     dataLoader: userConfig.dataLoader,
     routeImports,
-    routeDefination,
+    routeDefinition,
   });
   dataCache.set('routes', JSON.stringify(routesInfo));
   dataCache.set('hasExportAppData', hasExportAppData ? 'true' : '');
 
   // Render exports files if route component export dataLoader / pageConfig.
-  renderExportsTemplate({
-    ...routesInfo,
-    hasExportAppData,
-  }, generator.addRenderFile, {
-    rootDir,
-    runtimeDir: RUNTIME_TMP_DIR,
-    templateDir: path.join(templateDir, 'exports'),
-    dataLoader: Boolean(userConfig.dataLoader),
-  });
+  renderExportsTemplate(
+    {
+      ...routesInfo,
+      hasExportAppData,
+    },
+    generator.addRenderFile,
+    {
+      rootDir,
+      runtimeDir: RUNTIME_TMP_DIR,
+      templateDir: path.join(templateDir, 'exports'),
+      dataLoader: Boolean(userConfig.dataLoader),
+    },
+  );
 
   if (typeof userConfig.dataLoader === 'object' && userConfig.dataLoader.fetcher) {
     const {
@@ -261,13 +299,12 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const renderStart = new Date().getTime();
   generator.render();
   logger.debug('template render cost:', new Date().getTime() - renderStart);
-  // Create server runner
-  let serverRunner: ServerRunner;
-  if (server.onDemand) {
+  if (server.onDemand && command === 'start') {
     serverRunner = new ServerRunner({
       rootDir,
       task: platformTaskConfig,
       server,
+      csr,
     });
     addWatchEvent([
       /src\/?[\w*-:.$]+$/,
@@ -285,6 +322,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     command,
     server,
     syntaxFeatures,
+    getRoutesFile: () => routeManifest.getRoutesFile(),
   });
   initAppConfigCompiler(serverCompiler);
   initRouteConfigCompiler(serverCompiler);
@@ -320,11 +358,11 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             getRoutesConfig,
             getDataloaderConfig,
             getAppConfig,
-            serverRunner,
             appConfig,
             devPath: (routePaths[0] || '').replace(/^[/\\]/, ''),
             spinner: buildSpinner,
             userConfigHash,
+            serverRunner,
           });
         } else if (command === 'build') {
           return await build(ctx, {

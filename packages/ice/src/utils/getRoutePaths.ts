@@ -7,7 +7,7 @@ import formatPath from './formatPath.js';
  * @param routes
  * @returns
  */
-function getRoutePaths(routes: NestedRouteManifest[], parentPath = ''): string[] {
+export default function getRoutePaths(routes: NestedRouteManifest[], parentPath = ''): string[] {
   let pathList = [];
 
   routes.forEach(route => {
@@ -21,16 +21,16 @@ function getRoutePaths(routes: NestedRouteManifest[], parentPath = ''): string[]
   return pathList;
 }
 
-export function getRoutePathsFromCache(dataCache: Map<string, string>): string[] {
-  const routes = dataCache.get('routes');
+export function getRoutesFile(routes: NestedRouteManifest[]): string[] {
+  let fileList = [];
 
-  const routeManifest = JSON.parse(routes)?.routeManifest || {};
-  const routeFiles = Object.keys(routeManifest).map((key) => {
-    const { file } = routeManifest[key];
-    return `src/pages/${file}`;
+  routes.forEach(route => {
+    fileList.push(`src/pages/${route.file}`);
+
+    if (route.children) {
+      fileList = fileList.concat(getRoutesFile(route.children));
+    }
   });
 
-  return routeFiles;
+  return fileList;
 }
-
-export default getRoutePaths;

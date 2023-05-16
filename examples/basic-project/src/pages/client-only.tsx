@@ -1,13 +1,13 @@
 import { lazy, Suspense } from 'react';
-import { ClientOnly as ClientOnlyComponent, useMounted } from 'ice';
+import { ClientOnly, useMounted } from 'ice';
 
-export default function ClientOnly() {
+export default function ClientOnlyComponent() {
   const mounted = useMounted();
 
   return (
     <>
       <div id="mounted">{mounted ? 'Client' : 'Server'}</div>
-      <ClientOnlyComponent>
+      <ClientOnly>
         {() => {
           const PageUrl = lazy(() => import('@/components/PageUrl'));
           return (
@@ -16,7 +16,7 @@ export default function ClientOnly() {
             </Suspense>
           );
         }}
-      </ClientOnlyComponent>
+      </ClientOnly>
     </>
   );
 }

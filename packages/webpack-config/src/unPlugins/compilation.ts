@@ -23,6 +23,7 @@ interface Options {
   cacheDir?: string;
   polyfill?: Config['polyfill'];
   enableEnv?: boolean;
+  getRoutesFile?: () => string[];
 }
 
 const formatId = (id: string) => id.split(path.sep).join('/');
@@ -39,16 +40,17 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
     cacheDir,
     polyfill,
     enableEnv,
+    getRoutesFile,
   } = options;
 
-  const { removeExportExprs, compilationConfig, keepExports, getRoutePaths, nodeTransform } = swcOptions;
+  const { removeExportExprs, compilationConfig, keepExports, nodeTransform } = swcOptions;
 
   const compileRegex = compileIncludes.map((includeRule) => {
     return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);
   });
 
   function isRouteEntry(id: string) {
-    const routes = getRoutePaths();
+    const routes = getRoutesFile();
 
     const matched = routes.find(route => {
       return id.indexOf(route) > -1;
@@ -112,23 +114,22 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
           ]);
         }
       }
-
       if (keepExports) {
-        if (isRouteEntry(id)) {
-          swcPlugins.push([
-            swcPluginKeepExport,
-            keepExports,
-          ]);
-        } else if (isAppEntry(id)) {
-          let keepList;
-
-          if (keepExports.indexOf('pageConfig') > -1) {
+        const keepList = Array.isArray(keepExports) ? keepExports : keepExports.value;
+        const customInlcude = !Array.isArray(keepExports) && keepExports?.include;
+        let matchRule = false;
+        if (customInlcude) {
+          matchRule = customInlcude(id);
+        } else {
+          const matchRoute = isRouteEntry(id);
+          const matchEntry = isAppEntry(id);
+          if (matchEntry && keepList.indexOf('pageConfig') > -1) {
             // when build for pageConfig, should keep default, it equals to getAppConfig
-            keepList = keepExports.concat(['default']);
-          } else {
-            keepList = keepExports;
+            keepList.push('default');
           }
-
+          matchRule = matchRoute || matchEntry;
+        }
+        if (matchRule) {
           swcPlugins.push([
             swcPluginKeepExport,
             keepList,
@@ -222,7 +223,7 @@ function getJsxTransformOptions({
       loose: false,
       ...(polyfill ? {
         mode: polyfill,
-        coreJs: '3.26',
+        coreJs: '3.29',
       } : {}),
     };
     const supportBrowsers = getSupportedBrowsers(rootDir, mode === 'development');

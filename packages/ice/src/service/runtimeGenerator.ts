@@ -231,6 +231,18 @@ export default class Generator {
     this.contentRegistration[registerKey].push(...content);
   };
 
+  public getExportList = (registerKey: string, target?: string) => {
+    const exportList = this.contentRegistration[registerKey] || [];
+
+    if (target) {
+      return exportList.filter(exports => {
+        return !(exports.target && exports.target !== target);
+      });
+    } else {
+      return exportList;
+    }
+  };
+
   private getDeclarations: GetDeclarations = (registerKey, dataKeys) => {
     const exportList = this.contentRegistration[registerKey] || [];
     const {
@@ -330,7 +342,7 @@ export default class Generator {
     const renderExt = '.ejs';
     const realTargetPath = path.isAbsolute(targetPath)
       ? targetPath : path.join(this.rootDir, this.targetDir, targetPath);
-    // example: templatePath = 'routes.ts.ejs'
+    // example: templatePath = 'routes.tsx.ejs'
     const realTemplatePath = path.isAbsolute(templatePath)
       ? templatePath : path.join(this.templateDir, templatePath);
     const { ext } = path.parse(templatePath);

@@ -39,24 +39,33 @@ export const TARGETS = [
 
 export const RUNTIME_EXPORTS = [
   {
-    specifier: ['Link', 'Outlet', 'useParams', 'useSearchParams', 'useLocation', 'useNavigate'],
+    specifier: [
+      'Link',
+      'Outlet',
+      'useParams',
+      'useSearchParams',
+      'useLocation',
+      'useData',
+      'useConfig',
+      'useNavigate',
+    ],
     source: '@ice/runtime/router',
   },
   {
     specifier: [
       'defineAppConfig',
       'useAppData',
-      'useData',
-      'useConfig',
       'history',
       'KeepAliveOutlet',
       'useMounted',
       'ClientOnly',
       'withSuspense',
       'useSuspenseData',
+      'Await',
       'defineDataLoader',
       'defineServerDataLoader',
       'defineStaticDataLoader',
+      'usePageLifecycle',
     ],
     source: '@ice/runtime',
   },

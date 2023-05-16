@@ -1,5 +1,38 @@
 # @ice/runtime
 
+## 1.1.8
+
+- fix: parsing url path without using `new URL`
+
+## 1.1.7
+
+### Patch Changes
+
+- bb07fd91: fix: parsing url path properly
+- Updated dependencies [25357326]
+  - @ice/jsx-runtime@0.2.1
+
+## 1.1.6
+
+### Patch Changes
+
+- cd7c6c72: fix: encode route path to escape xss
+
+## 1.1.5
+
+### Patch Changes
+
+- f519338c: fix: parse template should return emply string when can't find
+- ee4141d5: chore: update ts defination for latest react-router
+
+## 1.1.4
+
+### Patch Changes
+
+- dbff4d0b: fix: reload data after navigate
+- 2f4e64b2: fix: getData should not block a reject state request
+- 54868109: fix: add leading slash for basename
+
 ## 1.1.3
 
 ### Patch Changes

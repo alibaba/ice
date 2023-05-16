@@ -1,8 +1,9 @@
 ---
 title: 微前端
+order: 0101
 ---
 
-[icestark](https://micro-frontends.ice.work/) 是飞冰团队针对大型系统提供的微前端解决方案，我们提供了独立插件 `@ice/plugin-icestark` 帮助 icejs 应用快速接入微前端解决方案。
+[icestark](https://micro-frontends.ice.work/) 是飞冰团队针对大型系统提供的微前端解决方案，我们提供了独立插件 `@ice/plugin-icestark` 帮助 ice.js 应用快速接入微前端解决方案。
 
 ## 初始化应用
 

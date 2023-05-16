@@ -1,5 +1,4 @@
 export const PROPERTY_THRESHOLD = 2046;
-export const HOOKS_APP_ID = 'ice-miniapp';
 export const SET_DATA = '小程序 setData';
 export const PAGE_INIT = '页面初始化';
 export const ROOT_STR = 'root';
@@ -43,4 +42,4 @@ export const ON_HIDE = 'onHide';
 export const OPTIONS = 'options';
 export const EXTERNAL_CLASSES = 'externalClasses';
 export const BEHAVIORS = 'behaviors';
-export const APP_READY = 'appReady';
+export const APP_DATA_READY = 'appReady';

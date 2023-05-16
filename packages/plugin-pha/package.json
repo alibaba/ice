@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-pha",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "ice.js plugin for PHA.",
   "license": "MIT",
   "type": "module",
@@ -17,7 +17,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@remix-run/router": "^1.0.3",
+    "@remix-run/router": "^1.6.1",
     "chalk": "^4.0.0",
     "consola": "^2.15.3",
     "humps": "^2.0.1",
@@ -25,10 +25,10 @@
     "htmlparser2": "^8.0.1"
   },
   "devDependencies": {
-    "@ice/app": "^3.1.2",
-    "build-scripts": "^2.1.0",
-    "esbuild": "^0.16.5",
-    "webpack": "^5.73.0",
+    "@ice/app": "^3.1.5",
+    "build-scripts": "^2.1.1-0",
+    "esbuild": "^0.17.16",
+    "webpack": "^5.80.0",
     "webpack-dev-server": "^4.9.2"
   },
   "repository": {

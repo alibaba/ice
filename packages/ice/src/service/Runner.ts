@@ -5,6 +5,7 @@ import { fileURLToPath, pathToFileURL } from 'url';
 import vm from 'vm';
 import { isNodeBuiltin } from 'mlly';
 import consola from 'consola';
+import lodash from '@ice/bundles/compiled/lodash/index.js';
 
 export interface ModuleResult {
   code?: string;
@@ -27,6 +28,7 @@ export interface RunnerOptions {
   }) => Promise<ModuleResult> | ModuleResult;
   resolveId?: (id: string, importer?: string) => Promise<ResolveId> | ResolveId;
   interopDefault?: boolean;
+  define: Record<string, string>;
 }
 
 interface ModuleCache {
@@ -63,11 +65,17 @@ class Runner {
   rootDir: string;
   moduleCache: ModuleCacheMap;
   importMeta: Record<string, string>;
+  contextDefineVars: Record<string, string>;
 
   constructor(public options: RunnerOptions) {
     this.rootDir = options.rootDir;
-    this.importMeta = options.meta || {};
+    this.importMeta = Object.assign(
+      {},
+      options.meta,
+      this.getMetaPropertyFromDefineConfig(options.define || {}),
+    );
     this.moduleCache = options.moduleCache || new ModuleCacheMap();
+    this.contextDefineVars = this.getContextDefineVarsFromDefineConfig(options.define || {});
   }
 
   async run(id: string) {
@@ -149,10 +157,13 @@ class Runner {
     }
 
     const { href } = pathToFileURL(id);
-    const meta = { url: href, ...this.importMeta };
+    const meta = {
+      url: href,
+      ...this.importMeta,
+    };
     const exports = Object.create(null);
 
-    // this prosxy is triggered only on exports.{name} and module.exports access
+    // this proxy is triggered only on exports.{name} and module.exports access
     const cjsExports = new Proxy(exports, {
       set: (_, p, value) => {
         // treat "module.exports =" the same as "exports.default =" to not have nested "default.default",
@@ -205,6 +216,9 @@ class Runner {
       module: moduleProxy,
       __filename,
       __dirname: path.dirname(__filename),
+
+      // valid define global expressions
+      ...this.contextDefineVars,
     };
 
     if (transformed[0] === '#') transformed = transformed.replace(/^#!.*/, s => ' '.repeat(s.length));
@@ -257,8 +271,45 @@ class Runner {
       },
     });
   }
+
+  private getMetaPropertyFromDefineConfig(defineConfig: Record<string, string>) {
+    const metaData = {};
+    Object.keys(defineConfig)
+      .forEach((key) => {
+        if (key.startsWith('import.meta.')) {
+          const newKey = key.replace(RegExp('import.meta.'), '');
+          // import.meta.env.xxx = 'a' -> env: { xxx: 'a' }
+          lodash.set(metaData, newKey, defineConfig[key]);
+        }
+    });
+    return metaData;
+  }
+
+  private getContextDefineVarsFromDefineConfig(defineConfig: Record<string, string>) {
+    const newDefineConfig = {};
+    Object.keys(defineConfig)
+      // Exclude vars which start with `import.meta.` and `process.env.`
+      .filter(key => !key.startsWith('import.meta'))
+      .forEach(key => {
+        const config = lodash.set(
+          {},
+          key,
+          isJsonString(defineConfig[key]) ? JSON.parse(defineConfig[key]) : defineConfig[key],
+        );
+        lodash.merge(newDefineConfig, config);
+      });
+    return newDefineConfig;
+  }
 }
 
+function isJsonString(str: string) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
 function isPrimitive(v: any) {
   return v !== Object(v);
 }

@@ -124,9 +124,9 @@ Use wechat-miniprogram developer tools to open the following folder:
 
 ## 待支持能力
 
-- [ ] 配置小程序原生应用生命周期及事件
-- [ ] 配置小程序原生页面生命周期及事件
-- [ ] 配置原生小程序 project.config.json
+- [x] 配置小程序原生应用生命周期及事件
+- [x] 配置小程序原生页面生命周期及事件
+- [x] 配置原生小程序 project.config.json
 - [ ] 与原生页面、组件、插件混用
 - [ ] 分包加载
 

@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.2.0
+
+### Minor Changes
+
+- 2debc7f7: fix: appear event should not work on component
+
+## 0.1.10
+
+- chore: bump version for npm sync error.
+
+## 0.1.9
+
+### Patch Changes
+
+- 8cfdfd96: Fix: useState parameter initialState can be function, which should be self executed when initilzing
+
 ## 0.1.8
 
 ### Patch Changes

@@ -19,7 +19,7 @@ export interface TargetDeclarationData {
   declarationType?: DeclarationType;
 }
 
-export type RenderData = Record<string, unknown>;
+export type RenderData = Record<string, any>;
 type RenderDataFunction = (renderDataFunction: RenderData) => RenderData;
 export interface TemplateOptions {
   template: string;

@@ -46,7 +46,7 @@ async function webpackCompiler(options: {
   // `commandArgs` doesn't guarantee target exists.
   const { target = WEB } = commandArgs;
   const { serverCompiler, serverRunner } = hooksAPI;
-  const { serverCompileTask, dataCache, watch } = context.extendsPluginAPI;
+  const { serverCompileTask, dataCache, watch, generator } = context.extendsPluginAPI;
 
   await applyHook(`before.${command}.run`, {
     urls,
@@ -78,15 +78,13 @@ async function webpackCompiler(options: {
           rootDir,
           serverEntry: server?.entry,
           outputDir,
-          dataCache,
-          serverCompileTask: command === 'start' ? serverCompileTask : null,
+          serverCompileTask,
           userConfig,
           ensureRoutesConfig,
           runtimeDefineVars: {
             [IMPORT_META_TARGET]: JSON.stringify(target),
             [IMPORT_META_RENDERER]: JSON.stringify('server'),
           },
-          incremental: command === 'start',
         });
         webpackConfig.plugins.push(serverCompilerPlugin);
       }
@@ -105,7 +103,7 @@ async function webpackCompiler(options: {
           }),
         );
         const debounceCompile = debounce(() => {
-          serverCompilerPlugin?.buildResult?.rebuild();
+          serverCompilerPlugin?.buildResult?.context.rebuild();
           console.log('Document updated, try to reload page for latest html content.');
         }, 200);
         watch.addEvent([
@@ -121,7 +119,15 @@ async function webpackCompiler(options: {
 
     // Add webpack plugin of data-loader.
     if (useDataLoader) {
-      webpackConfig.plugins.push(new DataLoaderPlugin({ serverCompiler, target, rootDir, dataCache, getAllPlugin }));
+      const frameworkExports = generator.getExportList('framework', target);
+
+      webpackConfig.plugins.push(new DataLoaderPlugin({
+        serverCompiler,
+        target,
+        rootDir,
+        getAllPlugin,
+        frameworkExports,
+      }));
     }
   }
 

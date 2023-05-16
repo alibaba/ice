@@ -1,6 +1,6 @@
 {
   "name": "rax-compat",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "description": "Rax compatible mode, running rax project on the react runtime.",
   "files": [
     "esm",
@@ -9,6 +9,7 @@
     "dist",
     "build"
   ],
+  "type": "module",
   "main": "esm/index.js",
   "module": "esm/index.js",
   "exports": {

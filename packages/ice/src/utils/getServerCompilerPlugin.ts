@@ -4,15 +4,12 @@ import type { UserConfig } from '../types/userConfig.js';
 import ServerCompilerPlugin from '../webpack/ServerCompilerPlugin.js';
 import { SERVER_OUTPUT_DIR } from '../constant.js';
 import getServerEntry from './getServerEntry.js';
-import { getRoutePathsFromCache } from './getRoutePaths.js';
 
 interface Options {
   rootDir: string;
   userConfig: UserConfig;
   outputDir: string;
   serverEntry: string;
-  incremental: boolean;
-  dataCache: Map<string, string>;
   serverCompileTask: ExtendsPluginAPI['serverCompileTask'];
   ensureRoutesConfig: () => Promise<void>;
   runtimeDefineVars: Record<string, string>;
@@ -24,11 +21,9 @@ function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Option
     rootDir,
     serverEntry,
     userConfig,
-    dataCache,
     serverCompileTask,
     ensureRoutesConfig,
     runtimeDefineVars,
-    incremental,
   } = options;
   const entryPoint = getServerEntry(rootDir, serverEntry);
   const { ssg, ssr, server: { format } } = userConfig;
@@ -46,7 +41,6 @@ function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Option
         outExtension: { '.js': isEsm ? '.mjs' : '.cjs' },
         metafile: true,
         logLevel: 'silent', // The server compiler process will log it in debug.
-        incremental,
       },
       {
         // The server bundle will external all the dependencies when the format type is esm,
@@ -54,9 +48,6 @@ function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Option
         preBundle: format === 'esm' && (ssr || ssg),
         swc: {
           keepExports: (!ssg && !ssr) ? ['pageConfig'] : null,
-          getRoutePaths: () => {
-            return getRoutePathsFromCache(dataCache);
-          },
         },
         removeOutputs: true,
         runtimeDefineVars,

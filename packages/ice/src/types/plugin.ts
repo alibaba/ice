@@ -2,7 +2,7 @@ import type webpack from '@ice/bundles/compiled/webpack';
 import type { _Plugin, CommandArgs, TaskConfig } from 'build-scripts';
 import type { Configuration, Stats, WebpackOptionsNormalized } from '@ice/bundles/compiled/webpack';
 import type { esbuild } from '@ice/bundles';
-import type { NestedRouteManifest } from '@ice/route-manifest';
+import type { DefineExtraRoutes, NestedRouteManifest } from '@ice/route-manifest';
 import type { Config } from '@ice/webpack-config/types';
 import type { AppConfig, AssetsManifest } from '@ice/runtime/types';
 import type ServerCompileTask from '../utils/ServerCompileTask.js';
@@ -16,6 +16,7 @@ type AddTargetExport = (exportData: TargetDeclarationData) => void;
 type AddEntryCode = (callback: (code: string) => string) => void;
 type RemoveExport = (removeSource: string | string[]) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
+type GetExportList = (key: string, target?: string) => (DeclarationData | TargetDeclarationData)[];
 
 type ServerCompilerBuildOptions = Pick<
   esbuild.BuildOptions,
@@ -36,11 +37,14 @@ type ServerCompilerBuildOptions = Pick<
   'plugins' |
   'logLevel' |
   'sourcemap' |
-  'metafile' |
-  'incremental'
+  'metafile'
 >;
 
-export type ServerBuildResult = Partial<esbuild.BuildResult & { serverEntry: string; error: any }>;
+export type ServerBuildResult =
+  Partial<
+    esbuild.BuildResult &
+    { serverEntry: string; error: any; context: esbuild.BuildContext<esbuild.BuildOptions> }
+  >;
 
 export interface CompilerOptions {
   swc?: Config['swcOptions'];
@@ -142,14 +146,22 @@ export interface ExtendsPluginAPI {
     render: Render;
     addDataLoaderImport: AddDataLoaderImport;
     addEntryCode: AddEntryCode;
+    getExportList: GetExportList;
   };
   watch: {
     addEvent?: (watchEvent: WatchEvent) => void;
     removeEvent?: (name: string) => void;
   };
+  excuteServerEntry: () => Promise<any>;
+  /**
+   * @deprecated
+   * Please use `excuteServerEntry` to get server modules.
+   */
   serverCompileTask: ServerCompileTask;
   getRouteManifest: () => Routes;
   getFlattenRoutes: () => string[];
+  getRoutesFile: () => string[];
+  addRoutesDefinition: (defineRoutes: DefineExtraRoutes) => void;
   dataCache: Map<string, string>;
   createLogger: CreateLogger;
 }

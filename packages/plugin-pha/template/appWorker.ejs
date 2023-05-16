@@ -1,5 +1,5 @@
 <% if(appWorkerPath) {-%>import '<%- appWorkerPath %>';<% } -%>
-<% if(!!loaders && !!dataLoader) {-%>
+<% if(!!loaders && !!dataLoader && useAppWorker) {-%>
 import dataloaderConfig from './dataloader-config';
 
 addEventListener('beforepageload', async (pageInfos = {}) => {

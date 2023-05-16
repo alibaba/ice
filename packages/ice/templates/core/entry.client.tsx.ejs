@@ -4,7 +4,7 @@ import { runClientApp, getAppConfig } from '<%- iceRuntimePath %>';
 import { commons, statics } from './runtimeModules';
 import * as app from '@/app';
 <% if (enableRoutes) { -%>
-import routes from './routes';
+import createRoutes from './routes';
 <% } -%>
 <%- runtimeOptions.imports %>
 <% if(dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
@@ -26,26 +26,29 @@ let dataLoaderWrapper = (dataLoader) => {
 }
 <% } -%>
 
-const render = (customOptions = {}) => {
+const render = (customOptions: Record<string, any> = {}) => {
   const appProps = {
     app,
     runtimeModules: {
       commons,
       statics,
     },
-    <% if (enableRoutes) { %>routes,<% } %>
+    <% if (enableRoutes) { %>createRoutes,<% } %>
     basename: getRouterBasename(),
     hydrate: <%- hydrate %>,
     memoryRouter: <%- memoryRouter || false %>,
     dataLoaderFetcher,
     dataLoaderWrapper,
     ...customOptions,
-    <% if (runtimeOptions.exports) { -%>
     runtimeOptions: {
-      <%- runtimeOptions.exports %>
-      ...(customOptions.runtimeOptions || {}),
+  <% if (runtimeOptions.exports) { -%>
+    <%- runtimeOptions.exports %>
+  <% } -%>
+  <% if (locals.customRuntimeOptions) { -%>
+  ...<%- JSON.stringify(customRuntimeOptions) %>,
+  <% } -%>
+      ...customOptions.runtimeOptions,
     },
-    <% } -%>
   };
   return runClientApp(appProps);
 };

@@ -1,6 +1,6 @@
 import type { ServerContext, RequestContext } from './types.js';
 
-interface Location {
+export interface Location {
   pathname: string;
   search: string;
 }
@@ -13,7 +13,7 @@ export default function getRequestContext(location: Location, serverContext: Ser
   const query = parseSearch(search);
 
   const requestContext: RequestContext = {
-    ...serverContext,
+    ...(serverContext || {}),
     pathname,
     query,
   };

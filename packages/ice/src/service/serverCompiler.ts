@@ -35,6 +35,7 @@ interface Options {
   command: string;
   server: UserConfig['server'];
   syntaxFeatures: UserConfig['syntaxFeatures'];
+  getRoutesFile: () => string[];
 }
 
 const { merge, difference } = lodash;
@@ -63,9 +64,12 @@ export const getRuntimeDefination = (
   const runtimeDefineVars = {
     ...runtimeVars,
   };
-  // auto stringify define value
+  // esbuild only receive the string type of replacement expressions, so we need to transform the boolean to string.
+  // link: https://esbuild.github.io/api/#define
   Object.keys(defineVars).forEach((key) => {
-    stringifiedDefine[key] = JSON.stringify(defineVars[key]);
+    stringifiedDefine[key] = typeof defineVars[key] === 'string'
+      ? defineVars[key]
+      : JSON.stringify(defineVars[key]);
   });
   // get runtime variable for server build
   Object.keys(process.env).forEach((key) => {
@@ -90,7 +94,7 @@ export const getRuntimeDefination = (
 };
 
 export function createServerCompiler(options: Options) {
-  const { task, rootDir, command, server, syntaxFeatures } = options;
+  const { task, rootDir, command, server, syntaxFeatures, getRoutesFile } = options;
   const externals = task.config?.externals || {};
   const sourceMap = task.config?.sourceMap;
   const dev = command === 'start';
@@ -137,6 +141,7 @@ export function createServerCompiler(options: Options) {
       polyfill: false,
       swcOptions,
       redirectImports,
+      getRoutesFile,
     }, 'esbuild', { isServer });
     const define = getRuntimeDefination(task.config?.define || {}, runtimeDefineVars, transformEnv);
 
@@ -219,7 +224,14 @@ export function createServerCompiler(options: Options) {
     logger.debug('[esbuild]', `start compile for: ${JSON.stringify(buildOptions.entryPoints)}`);
 
     try {
-      const esbuildResult = await esbuild.build(buildOptions);
+      let esbuildResult: esbuild.BuildResult;
+      let context: esbuild.BuildContext;
+      if (dev) {
+        context = await esbuild.context(buildOptions);
+        esbuildResult = await context.rebuild();
+      } else {
+        esbuildResult = await esbuild.build(buildOptions);
+      }
 
       logger.debug('[esbuild]', `time cost: ${new Date().getTime() - startTime}ms`);
 
@@ -238,6 +250,7 @@ export function createServerCompiler(options: Options) {
 
       return {
         ...esbuildResult,
+        context,
         serverEntry,
       };
     } catch (error) {

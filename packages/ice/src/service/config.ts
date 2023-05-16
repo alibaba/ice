@@ -1,20 +1,20 @@
 import * as path from 'path';
 import fs from 'fs-extra';
 import type { ServerCompiler } from '../types/plugin.js';
-import removeTopLevelCode from '../esbuild/removeTopLevelCode.js';
 import { getCache, setCache } from '../utils/persistentCache.js';
 import { getFileHash } from '../utils/hash.js';
 import dynamicImport from '../utils/dynamicImport.js';
 import formatPath from '../utils/formatPath.js';
 import { RUNTIME_TMP_DIR, CACHE_DIR } from '../constant.js';
 import { createLogger } from '../utils/logger.js';
+import externalBuiltinPlugin from '../esbuild/externalNodeBuiltin.js';
 
 type GetOutfile = (entry: string, exportNames: string[]) => string;
 
 interface CompileConfig {
   entry: string;
   rootDir: string;
-  transformInclude: (id: string) => boolean;
+  transformInclude?: (id: string) => boolean;
   needRecompile?: (entry: string, options: string[]) => Promise<boolean | string>;
   getOutfile?: GetOutfile;
 }
@@ -45,14 +45,21 @@ class Config {
       const { error } = await serverCompiler({
         entryPoints: [entry],
         format: 'esm',
-        platform: 'node',
-        // Don't add banner for config file, it will cause name conflict when bundled by server entry.
-        banner: undefined,
         outfile,
-        plugins: [removeTopLevelCode(keepExports, transformInclude)],
+        plugins: [
+          // External node builtin modules, such as `fs`, it will be imported by weex document.
+          externalBuiltinPlugin(),
+        ].filter(Boolean),
         sourcemap: false,
         logLevel: 'silent', // The main server compiler process will log it.
-      }, {});
+      }, {
+        swc: {
+          keepExports: {
+            value: keepExports,
+            include: transformInclude,
+          },
+        },
+      });
       if (!error) {
         this.status = 'RESOLVED';
         return outfile;
@@ -195,8 +202,6 @@ export const getRouteExportConfig = (rootDir: string) => {
     entry: routeConfigFile,
     rootDir,
     getOutfile: getRouteConfigOutfile,
-    // Only remove top level code for route component file.
-    transformInclude: (id) => id.includes('src/pages'),
     needRecompile: async (entry) => {
       let cached = false;
       try {
@@ -216,8 +221,6 @@ export const getRouteExportConfig = (rootDir: string) => {
     entry: loadersConfigFile,
     rootDir,
     getOutfile: getdataLoadersConfigOutfile,
-    // Only remove top level code for route component file.
-    transformInclude: (id) => id.includes('src/pages'),
     needRecompile: async (entry) => {
       let cached = false;
       const cachedKey = `loader_config_file_${process.env.__ICE_VERSION__}`;
