@@ -14,7 +14,7 @@ import type { RouteLoaderOptions } from './routes.js';
 import getRequestContext from './requestContext.js';
 import getAppConfig from './appConfig.js';
 import matchRoutes from './matchRoutes.js';
-import { setFetcher, setWrapper } from './dataLoader.js';
+import { setFetcher, setDecorator } from './dataLoader.js';
 import ClientRouter from './ClientRouter.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 import { AppContextProvider } from './AppContext.js';
@@ -28,7 +28,7 @@ export interface RunClientAppOptions {
   memoryRouter?: boolean;
   runtimeOptions?: Record<string, any>;
   dataLoaderFetcher?: Function;
-  dataLoaderWrapper?: Function;
+  dataLoaderDecorator?: Function;
 }
 
 export default async function runClientApp(options: RunClientAppOptions) {
@@ -41,7 +41,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     memoryRouter,
     runtimeOptions,
     dataLoaderFetcher,
-    dataLoaderWrapper,
+    dataLoaderDecorator,
   } = options;
 
   const windowContext: WindowContext = (window as any).__ICE_APP_CONTEXT__ || {};
@@ -96,7 +96,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
   }
 
   dataLoaderFetcher && setFetcher(dataLoaderFetcher);
-  dataLoaderWrapper && setWrapper(dataLoaderWrapper);
+  dataLoaderDecorator && setDecorator(dataLoaderDecorator);
 
   if (!appData) {
     appData = await getAppData(app, requestContext);
