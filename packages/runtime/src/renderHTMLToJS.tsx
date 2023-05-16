@@ -13,12 +13,14 @@ if (typeof __dirname === 'string') {
   dirname = path.dirname(fileURLToPath(import.meta.url));
 }
 
-export async function renderHTMLToJS(html) {
+export async function renderHTMLToJS(html, {
+  prependCode = '',
+}) {
   let jsOutput = '';
   const dom = htmlparser2.parseDocument(html);
   const sourceMapInfo = {
     sourceMapFileList: [],
-    extraLine: 0,
+    extraLine: prependCode.split('\n').length,
     extraColumn: 0,
   };
 
@@ -59,24 +61,8 @@ export async function renderHTMLToJS(html) {
         }
 
         delete attribs['data-sourcemap'];
-      } if (name === 'style' && children[0] && children[0].data) {
-        // The path of sourcemap file.
-        if (attribs['data-sourcemap']) {
-          sourceMapInfo.sourceMapFileList.push(attribs['data-sourcemap']);
-        }
-
-        delete attribs['data-sourcemap'];
       } else {
         resChildren = node.children.map(parse);
-      }
-    }
-
-    if (name === 'meta') {
-      if (attribs['data-extra-line']) {
-        sourceMapInfo.extraLine = parseInt(attribs['data-extra-line'], 10) || 0;
-      }
-      if (attribs['data-extra-column']) {
-        sourceMapInfo.extraColumn = parseInt(attribs['data-extra-column'], 10) || 0;
       }
     }
 
@@ -97,6 +83,7 @@ export async function renderHTMLToJS(html) {
     head,
     body,
     extraScript,
+    prependCode,
   });
 
   // Generate sourcemap for entry js.

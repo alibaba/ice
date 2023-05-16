@@ -14,6 +14,7 @@ interface Options {
   routeType: AppConfig['router']['type'];
   renderMode?: RenderMode;
   distType: UserConfig['output']['distType'];
+  prependCode: string;
   routeManifest: RouteManifest;
 }
 
@@ -29,6 +30,7 @@ export default async function generateEntry(options: Options): Promise<EntryResu
     documentOnly,
     renderMode,
     routeType,
+    prependCode = '',
     routeManifest,
   } = options;
 
@@ -51,7 +53,7 @@ export default async function generateEntry(options: Options): Promise<EntryResu
       htmlOutput,
       jsOutput,
       sourceMap,
-    } = await renderEntry({ routePath, serverEntry, documentOnly, renderMode, distType });
+    } = await renderEntry({ routePath, serverEntry, documentOnly, renderMode, distType, prependCode });
     const generateOptions = { rootDir, routePath, outputDir };
     if (htmlOutput) {
       const path = await generateFilePath({ ...generateOptions, type: 'html' });
@@ -123,6 +125,7 @@ async function renderEntry(
     serverEntry,
     documentOnly,
     distType = ['html'],
+    prependCode = '',
     renderMode,
   }: {
     routePath: string;
@@ -130,6 +133,7 @@ async function renderEntry(
     documentOnly: boolean;
     distType?: DistType;
     renderMode?: RenderMode;
+    prependCode?: string;
   },
 ) {
   const serverContext: ServerContext = {
@@ -140,7 +144,6 @@ async function renderEntry(
 
   // renderToEntry exported when disType includes javascript .
   const render = distType.includes('javascript') ? serverEntry.renderToEntry : serverEntry.renderToHTML;
-
   const {
     value,
     jsOutput,
@@ -151,6 +154,7 @@ async function renderEntry(
     routePath,
     serverOnlyBasename: '/',
     distType,
+    prependCode,
   });
 
   return {

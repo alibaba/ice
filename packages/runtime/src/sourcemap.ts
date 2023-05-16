@@ -2,7 +2,7 @@ import fse from 'fs-extra';
 import { SourceMapConsumer, SourceMapGenerator } from 'source-map';
 
 // Starting with extra script, it's a fixed line.
-const BASE_LINE = 27;
+const BASE_LINE = 28;
 // Starting with end of '(function(){', it's a fixed column.
 const BASE_COLUMN = 12;
 
