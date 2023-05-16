@@ -47,6 +47,7 @@ class Runtime {
     this.RouteWrappers = [];
     this.runtimeOptions = runtimeOptions;
     this.responseHandlers = [];
+    this.getAppRouter = this.getAppRouter.bind(this);
   }
 
   public getAppContext = () => {
