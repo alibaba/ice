@@ -268,9 +268,13 @@ export default defineConfig(() => ({
 import { defineConfig } from '@ice/app';
 
 export default defineConfig(() => ({
-  compileDependencies: [/@alifd\/next/, /need-compile/],
+  compileDependencies: process.env.NODE_ENV === 'production' ? true : [/@alifd\/next/, /need-compile/],
 }));
 ```
+
+:::caution
+如果主动配置了 `compileDependencies`，不管是本地开发还是线上构建，将都会以配置的规则为准。需要注意相关兼容性表现。
+:::
 
 ### postcss
 
