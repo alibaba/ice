@@ -55,6 +55,7 @@ export function setFetcher(customFetcher) {
 /**
  * Custom decorator for deal with data loader.
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let dataLoaderDecorator = (dataLoader: Function, id?: number) => {
   return dataLoader;
 };
