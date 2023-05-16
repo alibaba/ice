@@ -4,8 +4,7 @@ import semver from 'semver';
 
 const require = createRequire(import.meta.url);
 // Only change this when you release a version which break the usage of runtime generation.
-// TODO modify valid version to 1.2.0 after version is updated, otherwise it will cause build error.
-const RUNTIME_VALID_VERSION = '>=1.1.0';
+const RUNTIME_VALID_VERSION = '>=1.2.0';
 try {
   // @ice/runtime has defined package.json exports, so we can use require.resolve to get the package.json path.
   const packageJsonPath = require.resolve('@ice/runtime/package.json');
