@@ -19,17 +19,7 @@
 - 7b04ca7e: fix: remove all exports of components when render mode is csr
 - 57219848: support miniapp native lifecycle events
 - 13770d53: fix: compatible with runtime absolute path on win32 platform
-- Updated dependencies [f62560f9]
-- Updated dependencies [57219848]
-- Updated dependencies [1c3d3fec]
-- Updated dependencies [9de09ee8]
-- Updated dependencies [ddee1c3e]
-- Updated dependencies [1c3d3fec]
-- Updated dependencies [57219848]
-- Updated dependencies [1c3d3fec]
-- Updated dependencies [5dd3c86e]
-- Updated dependencies [5db5b662]
-- Updated dependencies [5dd3c86e]
+- Updated dependencies
   - @ice/runtime@1.2.0
   - @ice/bundles@0.1.10
   - @ice/route-manifest@1.2.0
@@ -43,12 +33,7 @@
 - 0d549779: fix: read the same task target
 - b226e356: fix: bump @swc/helpers to 0.5.1
 - 6e9c822a: fix: server compiler define config
-- Updated dependencies [28de278f]
-- Updated dependencies [6e9c822a]
-- Updated dependencies [b226e356]
-- Updated dependencies [5d5fb334]
-- Updated dependencies [bb07fd91]
-- Updated dependencies [0d549779]
+- Updated dependencies
   - @ice/webpack-config@1.0.13
   - @ice/bundles@0.1.9
   - @ice/runtime@1.1.7
