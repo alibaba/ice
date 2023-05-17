@@ -11,7 +11,7 @@ export async function generateSourceMap({
   extraLine = 0,
   extraColumn = 0,
 }) {
-  if (sourceMapFileList.length) {
+  if (!sourceMapFileList.length) {
     return '';
   }
 
