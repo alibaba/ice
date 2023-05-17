@@ -79,17 +79,17 @@ export default defineConfig(() => ({
 ### define
 
 - 类型：`Record<string, string | boolean>`
-- 默认值：`{}`
+- 默认值：`{ 'process.env.NODE_ENV': 'development' | 'production'; 'import.meta.renderer': 'client' | 'server'; 'import.meta.target': string; }`
 
-配置运行时变量。
+在编译时将代码中的全局变量替换成其他值或者表达式。一般用于区分不同环境以执行不同代码逻辑。
 
 ```js
 import { defineConfig } from '@ice/app';
 
 export default defineConfig(() => ({
   define: {
-    ASSETS_VERSION: '0.1.0',
-    'process.env.TEST': true,
+    ASSETS_VERSION: JSON.stringify('0.1.0'),
+    AGE: '11',
   },
 }));
 ```
@@ -98,8 +98,17 @@ export default defineConfig(() => ({
 
 ```js
 console.log(ASSETS_VERSION);
-console.log(process.env.TEST);
+// 最终会被编译成：
+// console.log('0.1.0');
+
+console.log(AGE);
+// 最终会被编译成：
+// console.log(11);
 ```
+
+注意，在编译时，将会对你设置的 `define` 替换值进行类似字符串拼接的方式生成新的代码。因此：
+- 对于引用数据类型（`function` 和 `object`），需要使用 `JSON.stringify()` 方法处理
+- 对于要替换的全局变量是字符串时，需要使用 `JSON.stringify()` 方法处理或者多添加一对引号（如 `"'hello world'"`），否则就是一个标识符，有可能跟预期结果不一致的情况
 
 对于运行时变量，ice.js 更加推荐通过[环境变量](./env.md)的方式注入。
 
@@ -164,6 +173,7 @@ import { defineConfig } from '@ice/app';
 export default defineConfig(() => ({
   externals: {
     react: 'React',
+    'react-dom': 'ReactDOM',
   },
 }));
 ```
@@ -178,7 +188,8 @@ function Document() {
     <html lang="en">
       <body>        
         <Main />
-+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.1/cjs/react.production.min.js"></script>
++       <script crossOrigin="" src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
++       <script crossOrigin="" src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
         <Scripts />
       </body>
     </html>

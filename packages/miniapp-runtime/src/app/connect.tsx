@@ -1,7 +1,7 @@
 import { EMPTY_OBJ, hooks } from '@ice/shared';
 import React, { createElement } from 'react';
 import * as ReactDOM from 'react-dom';
-import type { MiniappAppConfig } from '../types.js';
+import type { MiniappAppConfig, MiniappLifecycles } from '../types.js';
 import { Current, getPageInstance,
   incrementId, injectPageInstance,
 } from '../index.js';
@@ -9,7 +9,7 @@ import type {
   MountOptions,
   AppInstance, Instance,
   PageLifeCycle, PageProps,
-  ReactAppInstance, ReactPageComponent,
+  ReactPageComponent,
 } from '../index.js';
 import { ConfigProvider, DataProvider } from './routeContext.js';
 import enableHtmlRuntime from './html/runtime.js';
@@ -23,11 +23,6 @@ declare const App: any;
 const pageKeyId = incrementId();
 
 export function setReconciler() {
-  hooks.tap('getLifecycle', (instance, lifecycle: string) => {
-    lifecycle = lifecycle.replace(/^on(Show|Hide)$/, 'componentDid$1');
-    return instance[lifecycle];
-  });
-
   hooks.tap('modifyMpEvent', (event) => {
     event.type = event.type.replace(/-/g, '');
   });
@@ -57,7 +52,6 @@ export function connectReactPage(
   id: string,
 ) {
   return (Page: ReactPageComponent, { routeData, routeConfig }): React.ComponentClass<PageProps> => {
-    // eslint-disable-next-line dot-notation
     const isReactComponent = isClassComponent(R, Page);
     const inject = (node?: Instance) => node && injectPageInstance(node, id);
     const refs = isReactComponent ? { ref: inject } : {
@@ -76,20 +70,15 @@ export function connectReactPage(
       };
 
       static getDerivedStateFromError(error: Error) {
-        Current.app?.onError?.(error.message + error.stack);
+        triggerAppHook('onError', error.message + error.stack);
         return { hasError: true };
       }
-      /* TODO:
-        * 3. routeData
-        * 4. routeConfig
-      */
       render() {
         const children = this.state.hasError
         ? []
         : (<DataProvider value={routeData}>
           <ConfigProvider value={routeConfig}>
             <PageContextProvider value={id}>
-              {/* @ts-ignore */}
               <Page {...this.props} {...refs} />
             </PageContextProvider>
           </ConfigProvider>
@@ -115,7 +104,6 @@ class AppComponent extends React.Component<IProps> {
 }
 
 let appWrapper: AppWrapper;
-const appInstanceRef = React.createRef<ReactAppInstance>();
 
 export class AppWrapper extends React.Component {
   // run createElement() inside the render function to make sure that owner is right
@@ -150,7 +138,7 @@ export class AppWrapper extends React.Component {
       elements.push(page());
     }
 
-    const props: React.ComponentProps<any> | null = { ref: appInstanceRef };
+    const props: React.ComponentProps<any> | null = {};
 
     return createElement(
       AppComponent,
@@ -169,14 +157,12 @@ export class AppWrapper extends React.Component {
  */
  export function createMiniApp(
   config: MiniappAppConfig,
+  lifecycles: MiniappLifecycles,
 ) {
   setReconciler();
   enableHtmlRuntime();
-  function getAppInstance(): ReactAppInstance | null {
-    return appInstanceRef.current;
-  }
 
-  const [ONLAUNCH, ONSHOW, ONHIDE] = hooks.call('getMiniLifecycleImpl')!.app;
+  const [ON_LAUNCH, ON_SHOW, ON_HIDE, ON_ERROR, ON_PAGE_NOT_FOUND, ON_UNHANDLED_REJECTION] = hooks.call('getMiniLifecycleImpl')!.app;
 
   const appObj: AppInstance = Object.create({
     render(cb: () => void) {
@@ -196,75 +182,65 @@ export class AppWrapper extends React.Component {
       value: config,
     }),
 
-    [ONLAUNCH]: setDefaultDescriptor({
+    [ON_LAUNCH]: setDefaultDescriptor({
       value(options) {
         setRouterParams(options);
-
-        // 用户编写的入口组件实例
-        const app = getAppInstance();
-        this.$app = app;
-
-        app?.onLaunch?.(options);
         triggerAppHook('onLaunch', options);
       },
     }),
 
-    [ONSHOW]: setDefaultDescriptor({
+    [ON_SHOW]: setDefaultDescriptor({
       value(options) {
         setRouterParams(options);
-
-        /**
-         * trigger lifecycle
-         */
-        const app = getAppInstance();
-        // class component, componentDidShow
-        app?.componentDidShow?.(options);
-        // functional component, useDidShow
         triggerAppHook('onShow', options);
       },
     }),
 
-    [ONHIDE]: setDefaultDescriptor({
+    [ON_HIDE]: setDefaultDescriptor({
       value() {
-        /**
-         * trigger lifecycle
-         */
-        const app = getAppInstance();
-        // class component, componentDidHide
-        app?.componentDidHide?.();
-        // functional component, useDidHide
         triggerAppHook('onHide');
       },
     }),
 
-    onError: setDefaultDescriptor({
+    [ON_ERROR]: setDefaultDescriptor({
       value(error: string) {
-        const app = getAppInstance();
-        app?.onError?.(error);
         triggerAppHook('onError', error);
       },
     }),
 
-    onPageNotFound: setDefaultDescriptor({
+    [ON_PAGE_NOT_FOUND]: setDefaultDescriptor({
       value(res: unknown) {
-        const app = getAppInstance();
-        app?.onPageNotFound?.(res);
         triggerAppHook('onPageNotFound', res);
+      },
+    }),
+
+    [ON_UNHANDLED_REJECTION]: setDefaultDescriptor({
+      value(res: unknown) {
+        triggerAppHook('onUnhandledRejection', res);
       },
     }),
   });
 
-  function triggerAppHook(lifecycle: keyof PageLifeCycle | keyof AppInstance, ...option) {
-    const instance = getPageInstance(HOOKS_APP_ID);
-    if (instance) {
-      const app = getAppInstance();
-      const func = hooks.call('getLifecycle', instance, lifecycle);
-      if (Array.isArray(func)) {
-        func.forEach(cb => cb.apply(app, option));
-      }
-    }
+  if (lifecycles.onShareAppMessage) {
+    // Only works in ali miniapp
+    appObj.onShareAppMessage = function (res) {
+      return triggerAppHook('onShareAppMessage', res);
+    };
   }
 
   Current.app = appObj;
   return App(appObj);
+}
+
+function triggerAppHook(lifecycle: keyof PageLifeCycle | keyof AppInstance, ...option): any {
+  const instance = getPageInstance(HOOKS_APP_ID);
+  if (instance) {
+    const func = hooks.call('getLifecycle', instance, lifecycle);
+    if (Array.isArray(func)) {
+      if (lifecycle === 'onShareAppMessage') {
+        return func[0].apply(null, option);
+      }
+      func.forEach(cb => cb.apply(null, option));
+    }
+  }
 }

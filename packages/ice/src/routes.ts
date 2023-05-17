@@ -66,7 +66,7 @@ export function getRoutesDefinition(nestRouteManifest: NestedRouteManifest[], la
     if (lazy) {
       loadStatement = `import(/* webpackChunkName: "p_${componentName}" */ '${formatPath(componentPath)}')`;
     } else {
-      const routeSpecifier = id.replace(/[./-]/g, '_').replace(/[:*]/, '$');
+      const routeSpecifier = id.replace(/[./-]/g, '_').replace(/[:*]/g, '$');
       routeImports.push(`import * as ${routeSpecifier} from '${formatPath(componentPath)}';`);
       loadStatement = routeSpecifier;
     }
@@ -92,7 +92,7 @@ export function getRoutesDefinition(nestRouteManifest: NestedRouteManifest[], la
       };
     },`,
       // Empty errorElement to avoid default ui provided by react-router.
-      'ErrorBoundary: RouteErrorComponent,',
+      'errorElement: <RouteErrorComponent />,',
       `componentName: '${componentName}',`,
       `index: ${index},`,
       `id: '${id}',`,

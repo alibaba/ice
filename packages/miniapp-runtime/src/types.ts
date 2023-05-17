@@ -399,3 +399,14 @@ export interface MiniappAppConfig {
 }
 
 export interface MiniappConfig extends MiniappPageConfig, MiniappAppConfig {}
+
+export interface MiniappLifecycles {
+  onLaunch?: (options: any) => void;
+  onShow?: (options: any) => void;
+  onHide?: () => void;
+  onError?: (...rest) => void;
+  onPageNotFound?: (options: any) => void;
+  onUnhandledRejection?: (options: any) => void;
+  onShareAppMessage?: (options: any) => Record<string, any>;
+  [key: string]: any;
+}

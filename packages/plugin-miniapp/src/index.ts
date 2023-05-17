@@ -1,17 +1,23 @@
 import path from 'path';
+import { createRequire } from 'module';
 import consola from 'consola';
 import chalk from 'chalk';
 import type { Plugin } from '@ice/app/esm/types';
 import getMiniappTask from './miniapp/index.js';
 import { MINIAPP_TARGETS } from './constant.js';
 
+
 interface MiniappOptions {
   // TODO: specify the config type of native.
   nativeConfig?: Record<string, any>;
 }
 
+const _require = createRequire(import.meta.url);
+const packageJSON = _require('../package.json');
+const { name: PLUGIN_NAME } = packageJSON;
+
 const plugin: Plugin<MiniappOptions> = (miniappOptions = {}) => ({
-  name: '@ice/plugin-miniapp',
+  name: PLUGIN_NAME,
   setup: ({ registerTask, onHook, context, generator }) => {
     const { nativeConfig = {} } = miniappOptions;
     const { commandArgs, rootDir, command } = context;
@@ -33,6 +39,7 @@ const plugin: Plugin<MiniappOptions> = (miniappOptions = {}) => ({
         'useSearchParams',
         'history',
         'defineDataLoader',
+        'usePageLifecycle',
       ];
       generator.addRenderFile('core/entry.client.tsx.ejs', 'entry.miniapp.tsx', {
         iceRuntimePath: miniappRuntime,
@@ -70,6 +77,7 @@ const plugin: Plugin<MiniappOptions> = (miniappOptions = {}) => ({
       });
     }
   },
+  runtime: `${PLUGIN_NAME}/runtime`,
 });
 
 export default plugin;

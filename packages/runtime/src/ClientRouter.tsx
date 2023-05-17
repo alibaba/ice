@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { createRouter } from '@remix-run/router';
-import type { AppRouterProps } from './types.js';
+import type { ClientAppRouterProps } from './types.js';
 import App from './App.js';
 import { DataContextProvider } from './singleRouter.js';
 import { useAppContext } from './AppContext.js';
 
 let router: ReturnType<typeof createRouter> = null;
-function ClientRouter(props: AppRouterProps) {
+function ClientRouter(props: ClientAppRouterProps) {
   const { Component, loaderData, routerContext } = props;
   const { revalidate } = useAppContext();
 
@@ -21,6 +21,7 @@ function ClientRouter(props: AppRouterProps) {
   if (process.env.ICE_CORE_ROUTER === 'true') {
     // Clear router before re-create in case of hot module replacement.
     clearRouter();
+    // @ts-expect-error routes type should be AgnosticBaseRouteObject[]
     router = createRouter(routerContext).initialize();
   }
   useEffect(() => {

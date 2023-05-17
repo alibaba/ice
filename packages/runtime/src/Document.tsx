@@ -152,7 +152,7 @@ export const Data: DataType = (props: DataProps) => {
   } = props;
 
   const matchedIds = matches.map(match => match.route.id);
-  const routePath = getCurrentRoutePath(matches);
+  const routePath = encodeURI(getCurrentRoutePath(matches));
   const windowContext: WindowContext = {
     appData,
     loaderData,

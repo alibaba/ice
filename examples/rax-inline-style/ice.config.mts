@@ -8,5 +8,6 @@ export default defineConfig(() => ({
   })],
   server: {
     bundle: true,
+    format: 'cjs',
   },
 }));

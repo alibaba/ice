@@ -1,19 +1,21 @@
 <% if(appWorkerPath) {-%>import '<%- appWorkerPath %>';<% } -%>
-<% if(!!loaders && !!dataLoader) {-%>
+<% if(!!loaders && !!dataLoader && useAppWorker) {-%>
 import dataloaderConfig from './dataloader-config';
 
-addEventListener('beforepageload', (pageInfos = {}) => {
+addEventListener('beforepageload', async (pageInfos = {}) => {
   const {
     key,
   } = pageInfos.detail || {};
   const config = dataloaderConfig[key];
   if (config) {
     if (typeof config === 'function') {
-      config();
+      const res = await config();
+      pha.postMessage(res, '0');
     } else if (Array.isArray(config)) {
-      config.forEach(item => {
+      config.forEach(async (item, index) => {
         if (typeof item === 'function') {
-          item();
+          const res = await item();
+          pha.postMessage(res, `$index}`);
         }
       });
     }

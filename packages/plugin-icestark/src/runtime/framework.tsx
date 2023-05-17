@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AppRouter, AppRoute } from '@ice/stark';
-import type { RuntimePlugin, AppRouterProps } from '@ice/runtime/types';
+import type { RuntimePlugin, ClientAppRouterProps } from '@ice/runtime/types';
 import type { RouteInfo, AppConfig } from '../types';
 
 const { useState, useEffect } = React;
@@ -11,7 +11,7 @@ const runtime: RuntimePlugin = ({ getAppRouter, setAppRouter, appContext }) => {
   const { layout, getApps, appRouter } = appExport?.icestark || {};
 
   if (getApps) {
-    const FrameworkRouter = (props: AppRouterProps) => {
+    const FrameworkRouter = (props: ClientAppRouterProps) => {
       const [routeInfo, setRouteInfo] = useState<RouteInfo>({});
       const [appEnter, setAppEnter] = useState<AppConfig>({});
       const [appLeave, setAppLeave] = useState<AppConfig>({});

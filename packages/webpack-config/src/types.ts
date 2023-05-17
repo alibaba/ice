@@ -72,6 +72,8 @@ interface TransformPlugin {
 export type ModifyWebpackConfig<T=Configuration, U=typeof webpack> = (config: T, ctx: ConfigurationCtx<U>) => T;
 export type { webpack };
 export interface Config {
+  target?: string;
+
   mode: 'none' | 'development' | 'production';
 
   define?: {

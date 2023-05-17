@@ -14,7 +14,9 @@ describe('run server app', () => {
   const homeItem = {
     default: () => <div>home</div>,
     pageConfig: () => ({ title: 'home' }),
-    dataLoader: async () => ({ data: 'test' }),
+    dataLoader: {
+      loader: async () => ({ data: 'test' }),
+    },
   };
   const basicRoutes = [
     {
@@ -80,6 +82,27 @@ describe('run server app', () => {
     // @ts-ignore
     expect(html?.value?.includes('js/home.js')).toBe(true);
   });
+
+  it('render with full url', async () => {
+    const html = await renderToHTML({
+      // @ts-ignore
+      req: {
+        url: 'http://some.proxy:9988/home?foo=bar',
+      },
+    }, {
+      app: {},
+      assetsManifest,
+      runtimeModules: { commons: [] },
+      routes: basicRoutes,
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => basicRoutes,
+      Document,
+      renderMode: 'SSR',
+    });
+    // @ts-ignore
+    expect(html?.statusCode).toBe(200);
+  });
+
 
   it('render to html basename', async () => {
     const html = await renderToHTML({

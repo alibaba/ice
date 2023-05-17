@@ -75,7 +75,6 @@ export default class StyleTagParser {
       style = style.slice(rb + 1);
       lb = style.indexOf(LEFT_BRACKET);
     }
-    // console.log('res this.styles: ', this.styles)
   }
 
   parseSelector(src: string) {

@@ -36,7 +36,7 @@ export function hijackElementProps(props: { style?: object } | object): object {
       const convertedStyle = {};
       for (const prop in style) {
         // @ts-ignore
-        convertedStyle[prop] = convertUnit(style[prop]);
+        convertedStyle[prop] = typeof style[prop] === 'string' ? convertUnit(style[prop]) : style[prop];
       }
       result['style'] = convertedStyle;
       return result;

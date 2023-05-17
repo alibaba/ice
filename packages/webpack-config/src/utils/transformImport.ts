@@ -43,7 +43,7 @@ const transformImport = async (source: string, coreJsPath: string) => {
         if (matchImport) {
           const [,identifier] = matchImport;
           const replaceModule = `var ${identifier} = require('${targetImport.n.replace(/@swc\/helpers\/src\/(.*).mjs$/,
-            (_, matched) => `@swc/helpers/lib/${matched}.js`)}').default`;
+            (_, matched) => `@swc/helpers/cjs/${matched}.cjs`)}')._`;
           str().overwrite(targetImport.ss, targetImport.se, replaceModule);
         }
       }

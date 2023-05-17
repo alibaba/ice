@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.10
+
+### Patch Changes
+
+- 57219848: update webpack version
+- 5dd3c86e: fix: update version of @ice/swc-plugin-keep-export(0.1.4-2)
+
+## 0.1.9
+
+### Patch Changes
+
+- 5d5fb334: fix: bump @ice/swc-plugin-node-transform #6199
+
 ## 0.1.8
 
 ### Patch Changes

@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'http';
-import type { InitialEntry, AgnosticRouteObject, Location, History } from '@remix-run/router';
+import type { InitialEntry, AgnosticRouteObject, Location, History, RouterInit, StaticHandlerContext } from '@remix-run/router';
 import type { ComponentType, PropsWithChildren } from 'react';
 import type { HydrationOptions, Root } from 'react-dom/client';
 import type { Params, RouteObject } from 'react-router-dom';
@@ -31,7 +31,7 @@ export type RouteConfig<T = {}> = T & {
 export interface AppExport {
   default?: AppConfig;
   [key: string]: any;
-  dataLoader?: DataLoader;
+  dataLoader?: DataLoaderConfig;
 }
 
 export type DataLoaderResult = (Promise<RouteData> | RouteData) | RouteData;
@@ -49,7 +49,7 @@ export interface StaticDataLoader {
 // route.defineDataLoader
 // route.defineServerDataLoader
 // route.defineStaticDataLoader
-export type DataLoaderConfig = DataLoader | StaticDataLoader | Array<DataLoader | StaticDataLoader>;
+export type Loader = DataLoader | StaticDataLoader | Array<DataLoader | StaticDataLoader>;
 
 // route.pageConfig
 export type PageConfig = (args: { data?: RouteData }) => RouteConfig;
@@ -69,6 +69,15 @@ export interface RoutesConfig {
 
 export interface RoutesData {
   [routeId: string]: RouteData;
+}
+
+export interface DataLoaderOptions {
+  defer?: boolean;
+}
+
+export interface DataLoaderConfig {
+  loader: Loader;
+  options?: DataLoaderOptions;
 }
 
 export interface LoadersData {
@@ -159,7 +168,7 @@ export type ResponseHandler = (
   res: ServerResponse,
 ) => any | Promise<any>;
 
-export type SetAppRouter = (AppRouter: ComponentType<AppRouterProps>) => void;
+export type SetAppRouter = <T>(AppRouter: ComponentType<T>) => void;
 export type GetAppRouter = () => AppProvider;
 export type AddProvider = (Provider: AppProvider) => void;
 export type SetRender = (render: Renderer) => void;
@@ -231,10 +240,17 @@ export interface RuntimeModules {
 
 export interface AppRouterProps {
   routes?: RouteObject[];
-  routerContext?: any;
   location?: Location;
   Component?: ComponentType<any>;
   loaderData?: LoaderData;
+}
+
+export interface ClientAppRouterProps extends AppRouterProps {
+  routerContext?: Omit<RouterInit, 'routes'> & { routes?: RouteObject[] };
+}
+
+export interface ServerAppRouterProps extends AppRouterProps {
+  routerContext?: StaticHandlerContext;
 }
 
 export interface AppRouteProps {
@@ -264,3 +280,15 @@ export interface RouteMatch {
 export type RenderMode = 'SSR' | 'SSG' | 'CSR';
 
 export type DistType = Array<'html' | 'javascript'>;
+
+declare global {
+  interface ImportMeta {
+    // The build target for ice.js
+    // Usually `web` or `node` or `weex`
+    target: string;
+    // The renderer for ice.js
+    renderer: 'client' | 'server';
+    // ice.js defined env variables
+    env: Record<string, string>;
+  }
+}

@@ -154,7 +154,6 @@ function format(
       const style = styleTagParser.matchStyle(child.tagName, el, list);
 
       el.setAttribute('style', style + el.style.cssText);
-      // console.log('style, ', style)
 
       format(child.children, document, {
         styleTagParser,

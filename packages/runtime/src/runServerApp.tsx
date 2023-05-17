@@ -1,7 +1,7 @@
 import type { ServerResponse, IncomingMessage } from 'http';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
-import { parsePath } from 'react-router-dom';
+import { parsePath } from 'history';
 import type { Location } from 'history';
 import type {
   AppContext, RouteItem, ServerContext,
@@ -12,6 +12,7 @@ import type {
   DocumentComponent,
   RuntimeModules,
   AppData,
+  ServerAppRouterProps,
 } from './types.js';
 import Runtime from './runtime.js';
 import { AppContextProvider } from './AppContext.js';
@@ -242,7 +243,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     serverData,
   };
   const runtime = new Runtime(appContext, runtimeOptions);
-  runtime.setAppRouter(ServerRouter);
+  runtime.setAppRouter<ServerAppRouterProps>(ServerRouter);
   // Load static module before getAppData.
   if (runtimeModules.statics) {
     await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
@@ -358,9 +359,13 @@ async function renderServerEntry(
   const appContext = runtime.getAppContext();
   const { routes, routePath, loaderData, basename } = appContext;
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
-  const AppRouter = runtime.getAppRouter();
-  const routerContext = {
-    matches, basename, loaderData, location,
+  const AppRouter = runtime.getAppRouter<ServerAppRouterProps>();
+  const routerContext: ServerAppRouterProps['routerContext'] = {
+    // @ts-expect-error matches type should be use `AgnosticDataRouteMatch[]`
+    matches,
+    basename,
+    loaderData,
+    location,
   };
 
   const documentContext = {
@@ -472,9 +477,11 @@ function renderDocument(options: RenderDocumentOptions): Response {
 /**
  * ref: https://github.com/remix-run/react-router/blob/main/packages/react-router-dom/server.tsx
  */
+const REGEXP_WITH_HOSTNAME = /^https?:\/\/[^\/]+/i;
 function getLocation(url: string) {
-  const locationProps = parsePath(url);
-
+  // In case of invalid URL, provide a default base url.
+  const locationPath = url.replace(REGEXP_WITH_HOSTNAME, '') || '/';
+  const locationProps = parsePath(locationPath);
   const location: Location = {
     pathname: locationProps.pathname || '/',
     search: locationProps.search || '',

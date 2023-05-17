@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom/client';
 import { createHashHistory, createBrowserHistory, createMemoryHistory } from '@remix-run/router';
 import type { History } from '@remix-run/router';
 import type {
-  AppContext, WindowContext, AppExport, RouteItem, RuntimeModules, AppConfig, AssetsManifest,
+  AppContext, WindowContext, AppExport, RouteItem, RuntimeModules, AppConfig, AssetsManifest, ClientAppRouterProps,
 } from './types.js';
 import { createHistory as createHistorySingle } from './singleRouter.js';
 import { setHistory } from './history.js';
@@ -13,11 +13,11 @@ import { getRoutesPath, loadRouteModule } from './routes.js';
 import type { RouteLoaderOptions } from './routes.js';
 import getRequestContext from './requestContext.js';
 import getAppConfig from './appConfig.js';
+import matchRoutes from './matchRoutes.js';
+import { setFetcher, setDecorator } from './dataLoader.js';
 import ClientRouter from './ClientRouter.js';
-import { setFetcher } from './dataLoader.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 import { AppContextProvider } from './AppContext.js';
-import matchRoutes from './matchRoutes.js';
 
 export interface RunClientAppOptions {
   app: AppExport;
@@ -28,6 +28,7 @@ export interface RunClientAppOptions {
   memoryRouter?: boolean;
   runtimeOptions?: Record<string, any>;
   dataLoaderFetcher?: Function;
+  dataLoaderDecorator?: Function;
 }
 
 export default async function runClientApp(options: RunClientAppOptions) {
@@ -40,6 +41,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     memoryRouter,
     runtimeOptions,
     dataLoaderFetcher,
+    dataLoaderDecorator,
   } = options;
 
   const windowContext: WindowContext = (window as any).__ICE_APP_CONTEXT__ || {};
@@ -86,14 +88,15 @@ export default async function runClientApp(options: RunClientAppOptions) {
   };
 
   const runtime = new Runtime(appContext, runtimeOptions);
-  runtime.setAppRouter(ClientRouter);
+  runtime.setAppRouter<ClientAppRouterProps>(ClientRouter);
   // Load static module before getAppData,
   // so we can call request in in getAppData which provide by `plugin-request`.
   if (runtimeModules.statics) {
     await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
   }
 
-  setFetcher(dataLoaderFetcher);
+  dataLoaderFetcher && setFetcher(dataLoaderFetcher);
+  dataLoaderDecorator && setDecorator(dataLoaderDecorator);
 
   if (!appData) {
     appData = await getAppData(app, requestContext);
@@ -138,7 +141,7 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
   const { appConfig, loaderData, routes, basename } = appContext;
   const appRender = runtime.getRender();
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
-  const AppRouter = runtime.getAppRouter();
+  const AppRouter = runtime.getAppRouter<ClientAppRouterProps>();
 
   const rootId = appConfig.app.rootId || 'app';
   let root = document.getElementById(rootId);
@@ -165,11 +168,14 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
       );
     }
   }
-  const routerOptions = {
+  const routerOptions: ClientAppRouterProps['routerContext'] = {
     basename,
     routes,
     history,
     hydrationData,
+    future: {
+      v7_prependBasename: true,
+    },
   };
   let singleComponent = null;
   let routeData = null;
