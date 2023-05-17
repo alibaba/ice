@@ -1,5 +1,20 @@
 # @ice/runtime
 
+## 1.2.0
+
+### Minor Changes
+
+- f62560f9: feat: refactor runtime about router
+
+### Patch Changes
+
+- 9de09ee8: feat: support version check between @ice/app and @ice/runtime
+- ddee1c3e: support miniapp native events
+- 57219848: add empty usePageLifecycle method
+- 1c3d3fec: feat: support handler response
+- 5db5b662: fix: use import.meta.renderer for client judgement
+- a878225f: fix: dataLoader is sent repeatedly in PHA
+
 ## 1.1.8
 
 - fix: parsing url path without using `new URL`

@@ -16,16 +16,15 @@ import type {
   RouteWrapper,
   RenderMode,
   DistType,
-  DataLoaderConfig,
+  Loader,
   RouteWrapperConfig,
 } from './types.js';
 import Runtime from './runtime.js';
-import App from './App.js';
 import runClientApp from './runClientApp.js';
 import type { RunClientAppOptions } from './runClientApp.js';
-import { useAppContext, AppContextProvider } from './AppContext.js';
-import { useAppData, AppDataProvider, getAppData } from './AppData.js';
-import { useData, useConfig, DataProvider, ConfigProvider } from './RouteContext.js';
+import { useAppContext, useAppData, AppContextProvider } from './AppContext.js';
+import { getAppData } from './appData.js';
+import { useData, useConfig } from './RouteContext.js';
 import {
   Meta,
   Title,
@@ -42,33 +41,31 @@ import type {
   DataType,
   MainType,
 } from './Document.js';
-import dataLoader, { defineDataLoader, defineServerDataLoader, defineStaticDataLoader } from './dataLoader.js';
-import AppRouter from './AppRouter.js';
+import dataLoader, { defineDataLoader, defineServerDataLoader, defineStaticDataLoader, callDataLoader } from './dataLoader.js';
+import getRequestContext from './requestContext.js';
 import AppErrorBoundary from './AppErrorBoundary.js';
 import getAppConfig, { defineAppConfig } from './appConfig.js';
 import { routerHistory as history } from './history.js';
 import KeepAliveOutlet from './KeepAliveOutlet.js';
 import ClientOnly from './ClientOnly.js';
 import useMounted from './useMounted.js';
+import usePageLifecycle from './usePageLifecycle.js';
 import { withSuspense, useSuspenseData } from './Suspense.js';
+import { createRouteLoader, WrapRouteComponent, RouteErrorComponent, Await } from './routes.js';
 
 export {
   getAppConfig,
   defineAppConfig,
   Runtime,
-  App,
   runClientApp,
   AppContextProvider,
   useAppContext,
-  AppDataProvider,
   useAppData,
   useData,
   getAppData,
   defineDataLoader,
   defineServerDataLoader,
   defineStaticDataLoader,
-  DataProvider,
-  ConfigProvider,
   useConfig,
   Meta,
   Title,
@@ -76,7 +73,10 @@ export {
   Scripts,
   Data,
   Main,
+  // API for data-loader.
   dataLoader,
+  callDataLoader,
+  getRequestContext,
   // react-router-dom API
   Link,
   Outlet,
@@ -86,13 +86,20 @@ export {
   history,
 
   KeepAliveOutlet,
-  AppRouter,
   AppErrorBoundary,
   ClientOnly,
+
   useMounted,
+  usePageLifecycle,
 
   withSuspense,
   useSuspenseData,
+
+  Await,
+
+  createRouteLoader,
+  WrapRouteComponent,
+  RouteErrorComponent,
 };
 
 export type {
@@ -107,7 +114,7 @@ export type {
   RouteWrapper,
   RenderMode,
   DistType,
-  DataLoaderConfig,
+  Loader,
   RunClientAppOptions,
   MetaType,
   TitleType,

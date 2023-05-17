@@ -1,6 +1,6 @@
 {
   "name": "@ice/app",
-  "version": "3.1.7",
+  "version": "3.2.0",
   "description": "provide scripts and configuration used by web framework ice",
   "type": "module",
   "main": "./esm/index.js",
@@ -18,7 +18,8 @@
     "!esm/**/*.map",
     "templates",
     "openChrome.applescript",
-    "*.d.ts"
+    "*.d.ts",
+    "scripts"
   ],
   "engines": {
     "node": ">=14.19.0",
@@ -26,7 +27,8 @@
   },
   "scripts": {
     "watch": "tsc -w",
-    "build": "tsc"
+    "build": "tsc",
+    "postinstall": "node ./scripts/postinstall.mjs"
   },
   "author": "ice-admin",
   "license": "MIT",
@@ -34,18 +36,14 @@
   "bugs": "https://github.com/alibaba/ice/issues",
   "homepage": "https://v3.ice.work",
   "dependencies": {
-    "@babel/generator": "7.18.10",
-    "@babel/parser": "7.18.10",
-    "@babel/traverse": "7.18.10",
-    "@babel/types": "7.18.10",
-    "@ice/bundles": "0.1.9",
-    "@ice/route-manifest": "1.1.1",
-    "@ice/runtime": "^1.1.7",
-    "@ice/webpack-config": "1.0.13",
+    "@ice/bundles": "0.1.10",
+    "@ice/route-manifest": "1.2.0",
+    "@ice/runtime": "^1.2.0",
+    "@ice/webpack-config": "1.0.14",
     "@swc/helpers": "0.5.1",
     "@types/express": "^4.17.14",
     "address": "^1.1.2",
-    "build-scripts": "^2.1.0",
+    "build-scripts": "^2.1.1-0",
     "chalk": "^4.0.0",
     "commander": "^9.0.0",
     "consola": "^2.15.3",
@@ -54,7 +52,6 @@
     "dotenv": "^16.0.0",
     "dotenv-expand": "^8.0.3",
     "ejs": "^3.1.6",
-    "estree-walker": "^3.0.2",
     "fast-glob": "^3.2.11",
     "find-up": "^5.0.0",
     "fs-extra": "^10.0.0",
@@ -79,13 +76,13 @@
     "@types/multer": "^1.4.7",
     "@types/temp": "^0.9.1",
     "chokidar": "^3.5.3",
-    "esbuild": "^0.16.5",
+    "esbuild": "^0.17.16",
     "jest": "^29.0.2",
     "react": "^18.2.0",
-    "react-router": "^6.8.2",
+    "react-router": "6.11.1",
     "sass": "^1.50.0",
     "unplugin": "^0.9.0",
-    "webpack": "^5.76.2",
+    "webpack": "^5.80.0",
     "webpack-dev-server": "^4.7.4"
   },
   "peerDependencies": {

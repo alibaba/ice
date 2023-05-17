@@ -12,16 +12,17 @@
   "dependencies": {
     "@alifd/next": "^1.25.49",
     "@ice/runtime": "workspace:*",
+    "moment": "^2.29.4",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "moment": "^2.29.4"
+    "react-intl": "^6.3.2"
   },
   "devDependencies": {
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.2",
     "@ice/app": "workspace:*",
     "@ice/plugin-css-assets-local": "workspace:*",
     "@ice/plugin-fusion": "workspace:*",
-    "@ice/plugin-moment-locales": "workspace:*"
+    "@ice/plugin-moment-locales": "workspace:*",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.2"
   }
 }

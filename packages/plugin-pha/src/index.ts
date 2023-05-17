@@ -19,6 +19,10 @@ export type Compiler = (options: {
 interface PluginOptions {
   template?: boolean;
   preload?: boolean;
+  dataLoader?: {
+    // Dynamic of dataLoader config will build the dataLoader into the app worker.
+    useAppWorker: boolean;
+  };
 }
 
 function getDevPath(url: string): string {
@@ -31,10 +35,17 @@ const plugin: Plugin<PluginOptions> = (options) => ({
     if (!excuteServerEntry) {
       throw new Error('PHA plugin requires excuteServerEntry, Please upgrade @ice/app to latest version (>= 3.1.5).');
     }
-    const { template = true, preload = false } = options || {};
+    const {
+      template = true,
+      preload = false,
+      dataLoader = {
+        useAppWorker: true,
+      },
+    } = options || {};
+
     const { command, rootDir } = context;
 
-    const logger = createLogger('PHA');
+    const logger = createLogger('plugin-pha');
 
     // Get variable blows from task config.
     let compiler: Compiler;
@@ -56,7 +67,12 @@ const plugin: Plugin<PluginOptions> = (options) => ({
     const routeManifest = path.join(rootDir, '.ice', 'route-manifest.json');
     // Get server compiler by hooks
     onHook(`before.${command as 'start' | 'build'}.run`, async ({ serverCompiler, taskConfigs, urls = {}, ...restAPI }) => {
-      const taskConfig = taskConfigs.find(({ name }) => name === 'web').config;
+      const webTask = taskConfigs.find(({ name }) => name === 'web');
+      if (!webTask) {
+        throw new Error('PHA plugin can only run in web.');
+        return;
+      }
+      const taskConfig = webTask.config;
       outputDir = path.isAbsolute(taskConfig.outputDir)
         ? taskConfig.outputDir : path.join(rootDir, taskConfig.outputDir);
 
@@ -71,6 +87,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
 
       generator.addRenderFile(path.join(__dirname, '../template/appWorker.ejs'), 'appWorker.ts', {
         appWorkerPath,
+        useAppWorker: dataLoader.useAppWorker,
       });
 
       // Need absolute path for pha dev.

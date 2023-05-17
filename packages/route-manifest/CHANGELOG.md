@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 1.2.0
+
+### Minor Changes
+
+- 1c3d3fec: refactor: route id generation
+- 1c3d3fec: feat: support accept one more `defineExtraRoutes` functions
+
 ## 1.1.1
 
 ### Patch Changes

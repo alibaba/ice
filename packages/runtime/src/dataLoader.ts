@@ -1,36 +1,46 @@
-import type { DataLoaderConfig, DataLoaderResult, RuntimeModules, AppExport, StaticRuntimePlugin, CommonJsRuntime, StaticDataLoader } from './types.js';
 import getRequestContext from './requestContext.js';
-
+import type {
+  RequestContext, RenderMode, AppExport,
+  RuntimeModules, StaticRuntimePlugin, CommonJsRuntime,
+  Loader, DataLoaderResult, StaticDataLoader, DataLoaderConfig, DataLoaderOptions,
+} from './types.js';
 interface Loaders {
   [routeId: string]: DataLoaderConfig;
 }
 
 interface CachedResult {
   value: any;
-  status: string;
 }
 
-interface LoaderOptions {
+interface Options {
   fetcher: Function;
+  decorator: Function;
   runtimeModules: RuntimeModules['statics'];
   appExport: AppExport;
 }
 
 export interface LoadRoutesDataOptions {
-  ssg?: boolean;
-  forceRequest?: boolean;
+  renderMode: RenderMode;
 }
 
-export function defineDataLoader(dataLoaderConfig: DataLoaderConfig): DataLoaderConfig {
-  return dataLoaderConfig;
+export function defineDataLoader(dataLoader: Loader, options?: DataLoaderOptions): DataLoaderConfig {
+  return {
+    loader: dataLoader,
+    options,
+  };
 }
 
-export function defineServerDataLoader(dataLoaderConfig: DataLoaderConfig): DataLoaderConfig {
-  return dataLoaderConfig;
+export function defineServerDataLoader(dataLoader: Loader, options?: DataLoaderOptions): DataLoaderConfig {
+  return {
+    loader: dataLoader,
+    options,
+  };
 }
 
-export function defineStaticDataLoader(dataLoaderConfig: DataLoaderConfig): DataLoaderConfig {
-  return dataLoaderConfig;
+export function defineStaticDataLoader(dataLoader: Loader): DataLoaderConfig {
+  return {
+    loader: dataLoader,
+  };
 }
 
 /**
@@ -38,9 +48,19 @@ export function defineStaticDataLoader(dataLoaderConfig: DataLoaderConfig): Data
  * Set globally to avoid passing this fetcher too deep.
  */
 let dataLoaderFetcher;
-
 export function setFetcher(customFetcher) {
   dataLoaderFetcher = customFetcher;
+}
+
+/**
+ * Custom decorator for deal with data loader.
+ */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+let dataLoaderDecorator = (dataLoader: Function, id?: number) => {
+  return dataLoader;
+};
+export function setDecorator(customDecorator) {
+  dataLoaderDecorator = customDecorator;
 }
 
 /**
@@ -113,7 +133,7 @@ export function loadDataByCustomFetcher(config: StaticDataLoader) {
   let parsedConfig = config;
   try {
     // Not parse template in SSG/SSR.
-    if (typeof window !== 'undefined') {
+    if (import.meta.renderer === 'client') {
       parsedConfig = parseTemplate(config);
     }
   } catch (error) {
@@ -125,19 +145,20 @@ export function loadDataByCustomFetcher(config: StaticDataLoader) {
 /**
  * Handle for different dataLoader.
  */
-export function callDataLoader(dataLoader: DataLoaderConfig, requestContext): DataLoaderResult {
+export function callDataLoader(dataLoader: Loader, requestContext: RequestContext): DataLoaderResult {
   if (Array.isArray(dataLoader)) {
-    const loaders = dataLoader.map(loader => {
-      return typeof loader === 'object' ? loadDataByCustomFetcher(loader) : loader(requestContext);
+    const loaders = dataLoader.map((loader, index) => {
+      return typeof loader === 'object' ? loadDataByCustomFetcher(loader) : dataLoaderDecorator(loader, index)(requestContext);
     });
-    return Promise.all(loaders);
+
+    return loaders;
   }
 
   if (typeof dataLoader === 'object') {
     return loadDataByCustomFetcher(dataLoader);
   }
 
-  return dataLoader(requestContext);
+  return dataLoaderDecorator(dataLoader)(requestContext);
 }
 
 const cache = new Map<string, CachedResult>();
@@ -157,7 +178,6 @@ function loadInitialDataInClient(loaders: Loaders) {
     if (dataFromSSR) {
       cache.set(renderMode === 'SSG' ? `${id}_ssg` : id, {
         value: dataFromSSR,
-        status: 'RESOLVED',
       });
 
       if (renderMode === 'SSR') {
@@ -165,15 +185,15 @@ function loadInitialDataInClient(loaders: Loaders) {
       }
     }
 
-    const dataLoader = loaders[id];
+    const dataLoaderConfig = loaders[id];
 
-    if (dataLoader) {
+    if (dataLoaderConfig) {
       const requestContext = getRequestContext(window.location);
-      const loader = callDataLoader(dataLoader, requestContext);
+      const { loader } = dataLoaderConfig;
+      const promise = callDataLoader(loader, requestContext);
 
       cache.set(id, {
-        value: loader,
-        status: 'LOADING',
+        value: promise,
       });
     }
   });
@@ -184,9 +204,10 @@ function loadInitialDataInClient(loaders: Loaders) {
  * Load initial data and register global loader.
  * In order to load data, JavaScript modules, CSS and other assets in parallel.
  */
-async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
+async function init(loaders: Loaders, options: Options) {
   const {
     fetcher,
+    decorator,
     runtimeModules,
     appExport,
   } = options;
@@ -208,59 +229,44 @@ async function init(dataloaderConfig: Loaders, options: LoaderOptions) {
     setFetcher(fetcher);
   }
 
+  if (decorator) {
+    setDecorator(decorator);
+  }
+
   try {
-    loadInitialDataInClient(dataloaderConfig);
+    loadInitialDataInClient(loaders);
   } catch (error) {
     console.error('Load initial data error: ', error);
   }
 
   (window as any).__ICE_DATA_LOADER__ = {
-    getData: async (id, options: LoadRoutesDataOptions) => {
+    getData: (id, options: LoadRoutesDataOptions) => {
       let result;
 
-      // first render for ssg use data from build time.
-      // second render for ssg will use data from data loader.
-      if (options?.ssg) {
-        result = cache.get(`${id}_ssg`);
-      } else {
-        result = cache.get(id);
-      }
+      // First render for ssg use data from build time, second render for ssg will use data from data loader.
+      const cacheKey = `${id}${options?.renderMode === 'SSG' ? '_ssg' : ''}`;
+
+      // In CSR, all dataLoader is called by global data loader to avoid bundle dataLoader in page bundle duplicate.
+      result = cache.get(cacheKey);
+      // Always fetch new data after cache is been used.
+      cache.delete(cacheKey);
 
       // Already send data request.
-      if (result && !options?.forceRequest) {
-        const { status, value } = result;
-
-        if (status === 'RESOLVED') {
-          return result;
-        }
-
-        try {
-          if (Array.isArray(value)) {
-            return await Promise.all(value);
-          }
-
-          return await value;
-        } catch (error) {
-          console.error('DataLoader: getData error.\n', error);
-
-          return {
-            message: 'DataLoader: getData error.',
-            error,
-          };
-        }
+      if (result) {
+        return result.value;
       }
 
-      const dataLoader = dataloaderConfig[id];
+      const dataLoaderConfig = loaders[id];
 
       // No data loader.
-      if (!dataLoader) {
+      if (!dataLoaderConfig) {
         return null;
       }
 
       // Call dataLoader.
-      // In CSR, all dataLoader is called by global data loader to avoid bundle dataLoader in page bundle duplicate.
       const requestContext = getRequestContext(window.location);
-      return await callDataLoader(dataLoader, requestContext);
+      const { loader } = dataLoaderConfig;
+      return callDataLoader(loader, requestContext);
     },
   };
 }

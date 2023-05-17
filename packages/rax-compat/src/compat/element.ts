@@ -1,10 +1,10 @@
 import type { ReactElement } from 'react';
 import { createElement } from 'react';
 import VisibilityChange from '@ice/appear';
-import transformProps from '../props';
-import { compatStyle } from '../style';
-import { isFunction } from '../type';
-import { InputCompat } from './input';
+import transformProps from '../props.js';
+import { compatStyle } from '../style.js';
+import { isFunction } from '../type.js';
+import { InputCompat } from './input.js';
 
 let ElementFactory: (type: any, props: any, ...args: any[]) => ReactElement;
 export function createJSXElementFactory(factory: typeof ElementFactory) {

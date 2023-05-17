@@ -1,10 +1,9 @@
 import { defineConfig } from '@ice/app';
 import miniapp from '@ice/plugin-miniapp';
-console.log('process.env.FOO', process.env.FOO);
 export default defineConfig({
   ssg: false,
   hash: true,
-  // minify: true,
+  minify: true,
   dropLogLevel: 'trace',
   outputDir: 'build/wechat',
   alias: {
@@ -12,11 +11,11 @@ export default defineConfig({
   },
   plugins: [miniapp({
     nativeConfig: {
-      appid: 'tourist'
-    }
+      appid: 'tourist',
+    },
   })],
   // eslint: false,
   define: {
-    ASSETS_VERSION: '1.0.1'
-  }
+    ASSETS_VERSION: JSON.stringify('1.0.1'),
+  },
 });

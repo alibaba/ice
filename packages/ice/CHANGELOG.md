@@ -1,5 +1,31 @@
 # Changelog
 
+## 3.2.0
+
+### Minor Changes
+
+- f62560f9: feat: refactor runtime about router
+
+### Patch Changes
+
+- 8f97e538: chore: bump build-scripts version to unify esbuild version
+- 1c3d3fec: feat: support add routes definition
+- 9de09ee8: feat: support version check between @ice/app and @ice/runtime
+- da7c733c: fix: wrap data loader in function expression to avoid rewrite global scope
+- ddee1c3e: support miniapp native events
+- 5dd3c86e: refactor: use swc plugin for remove code
+- 467dc56b: fix: only create esbuild context when dev
+- 1c3d3fec: fix: routeSpecifier is not unique
+- 7b04ca7e: fix: remove all exports of components when render mode is csr
+- 57219848: support miniapp native lifecycle events
+- 13770d53: fix: compatible with runtime absolute path on win32 platform
+- a878225f: fix: dataLoader is sent repeatedly in PHA
+- Updated dependencies
+  - @ice/runtime@1.2.0
+  - @ice/bundles@0.1.10
+  - @ice/route-manifest@1.2.0
+  - @ice/webpack-config@1.0.14
+
 ## 3.1.7
 
 ### Patch Changes
@@ -8,12 +34,7 @@
 - 0d549779: fix: read the same task target
 - b226e356: fix: bump @swc/helpers to 0.5.1
 - 6e9c822a: fix: server compiler define config
-- Updated dependencies [28de278f]
-- Updated dependencies [6e9c822a]
-- Updated dependencies [b226e356]
-- Updated dependencies [5d5fb334]
-- Updated dependencies [bb07fd91]
-- Updated dependencies [0d549779]
+- Updated dependencies
   - @ice/webpack-config@1.0.13
   - @ice/bundles@0.1.9
   - @ice/runtime@1.1.7
