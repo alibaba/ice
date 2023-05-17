@@ -3,7 +3,7 @@
  */
 
 import { expect, it, describe } from 'vitest';
-import { forwardRef, useRef, useEffect, Fragment } from 'react';
+import React, { forwardRef, useRef, useEffect, Fragment } from 'react';
 import { render } from '@testing-library/react';
 import { shared } from '../src/index';
 import cloneElement from './libs/rax-clone-element';
