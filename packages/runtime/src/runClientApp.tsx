@@ -218,7 +218,7 @@ function createHistory(
   let createHistoryOptions: Parameters<typeof createHistory>[0] = { window, v5Compat: true };
 
   if (routerType === 'memory') {
-    const memoryOptions: Parameters<typeof createMemoryHistory>[0] = {};
+    const memoryOptions: Parameters<typeof createMemoryHistory>[0] = { v5Compat: true };
     memoryOptions.initialEntries = appConfig?.router?.initialEntries || getRoutesPath(routes);
     if (initialEntry) {
       const initialIndex = memoryOptions.initialEntries.findIndex((entry) =>
