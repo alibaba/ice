@@ -7,7 +7,8 @@
     "start:wechat": "ice start --target wechat-miniprogram",
     "start:ali": "ice start --target ali-miniapp",
     "build": "ice build",
-    "build:wechat": "ice build --target wechat-miniprogram"
+    "build:wechat": "ice build --target wechat-miniprogram",
+    "build:ali": "ice build --target ali-miniapp"
   },
   "description": "",
   "author": "",
@@ -27,6 +28,6 @@
     "@types/react-dom": "^18.0.2",
     "browserslist": "^4.19.3",
     "speed-measure-webpack-plugin": "^1.5.0",
-    "webpack": "^5.73.0"
+    "webpack": "^5.80.0"
   }
 }

@@ -71,6 +71,51 @@ export const dataLoader = defineDataLoader(async () => {
 受小程序环境限制，通过 `dataLoader` 定义的应用级数据加载将在 `App` 的 `onLaunch` 生命周期中进行，页面级数据加载则会在 `Page` 的 `onLoad` 生命周期中，二者均会阻塞页面的 UI 渲染。如果这不是你想要的效果，请按照常规方式进行数据请求。（比如在组件首次 `useEffect` 时发起数据请求）
 :::
 
+
+## 异步消费数据
+
+默认情况下，页面会等待数据请求完成后，再开始渲染，在数据接口比较快的情况下，这可以避免页面的二次渲染。
+
+如果数据接口较慢，也可以选择先渲染不依赖于动态数据的部分，待数据回来后，再重新渲染依赖数据的页面内容。
+
+具体做法如下：
+- 1. 在定义 dataLoader 时标记 defer: true
+- 2. 在消费数据时，使用 Await 组件包裹依赖于数据的页面内容
+
+```tsx title="src/pages/index.tsx"
+import { useData, defineDataLoader, Await } from 'ice';
+
+// 页面组件的 UI 实现
+export default function Home() {
+  const data = useData();
+
+  return (
+    <>
+      <div>Hello ICE</div>
+      <Await resolve={data} fallback={<div>loading...</div>} errorElement={<div>Error!</div>} />
+        {
+          (data) => <div>{JSON.stringify(data)}</div>
+        }
+      </Await>
+    </>
+  );
+};
+
+// 在定义 dataLoader 时标记 defer: true
+export const dataLoader = defineDataLoader(async () => {
+  const data = await fetch('https://example.com/api/xxx');
+  return data;
+}, { defer: true });
+```
+
+注意：
+- 当 dataLoader 被声明为异步时，useData 返回的内容不可直接消费，需由 Await 组件处理
+
+Await 组件接收三个参数
+* resolve 数据请求对象
+* fallback  数据加载过程中展示的 UI
+* errorElement 请求失败时展示的 UI
+
 ## 静态 dataLoader
 
 当开发者希望通过统一的发送函数处理静态配置以完成 `dataLoader` 时，可以通过自定义 `fetcher` 以完成发送逻辑的统一封装，在 `dataLoader` 中只需要传递一份配置即可。
@@ -186,13 +231,47 @@ export default function Home(props) {
 import { useData, defineDataLoader } from 'ice';
 
 export default function Home() {
-  const [useInfo, itemInfo] = useData();
+  const [userInfo, itemInfo] = useData();
 
   return (
     <>
       <div>Hello {userInfo?.name}</div>
       <div>{JSON.stringify(itemInfo)}</div>
     </>
+  );
+};
+
+export const dataLoader = defineDataLoader([
+  async () => {
+    const userInfo = await fetch('https://example.com/api/userInfo');
+    return userInfo;
+  },
+  async (ctx) => {
+    const itemInfo = await fetch(`https://example.com/api/itemInfo${ctx?.query?.itemId}`);
+    return itemInfo;
+  },
+]);
+```
+
+多个数据请求的情况下，`useData` 获取的数据也对应的为数组，数组元素和 `dataLoader` 中定义的数据请求的返回值一一对应。
+
+如果 dataLoader 被声明为异步，消费时可以分别 Await 不同的数据，这样可以做到先返回的数据，先渲染。
+
+```tsx
+import { useData, defineDataLoader } from 'ice';
+
+export default function Home() {
+  const [userInfo, itemInfo] = useData();
+
+  return (
+    <>
+      <Await resolve={userInfo}>
+        { (data) => <div>Hello {data?.name}</div> }
+      </Await>
+      <Await resolve={itemInfo}>
+        { (data) => <div>{JSON.stringify(data)}</div> }
+      </Await>
+    </Await>
   );
 };
 
@@ -205,7 +284,5 @@ export const dataLoader = defineDataLoader([
     const itemInfo = await fetch(`https://example.com/api/itemInfo${ctx?.query?.itemId}`);
     return itemInfo;
   },
-]);
+], { defer: true });
 ```
-
-多个数据请求的情况下，`useData` 获取的数据也对应的为数组，数组元素和 `dataLoader` 中定义的数据请求的返回值一一对应。

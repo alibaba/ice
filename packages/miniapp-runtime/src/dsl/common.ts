@@ -4,7 +4,7 @@ import type * as React from 'react';
 import type { MiniappPageConfig } from '../types.js';
 
 import { raf } from '../bom/raf.js';
-import { BEHAVIORS, CUSTOM_WRAPPER, EXTERNAL_CLASSES, ON_HIDE, ON_LOAD, ON_READY, ON_SHOW, OPTIONS, PAGE_INIT, VIEW, APP_READY } from '../constants/index.js';
+import { BEHAVIORS, CUSTOM_WRAPPER, EXTERNAL_CLASSES, ON_HIDE, ON_LOAD, ON_READY, ON_SHOW, OPTIONS, PAGE_INIT, VIEW, APP_DATA_READY } from '../constants/index.js';
 import { Current } from '../current.js';
 import { eventHandler } from '../dom/event.js';
 import type { RootElement } from '../dom/root.js';
@@ -96,7 +96,8 @@ export function createPageConfig(
     ONREADY,
     ONSHOW,
     ONHIDE,
-    LIFECYCLES,
+    LIFECYCLES,,
+    ALI_MINIAPP_EVENTS,
   ] = hooks.call('getMiniLifecycleImpl')!.page;
   let pageElement: RootElement | null = null;
   let unmounting = false;
@@ -118,6 +119,7 @@ export function createPageConfig(
   }
   let loadResolver: (...args: unknown[]) => void;
   let hasLoaded: Promise<void>;
+  const routeConfig = pageConfig?.();
   const config: PageInstance = {
     [ONLOAD](this: MpInstance, options: Readonly<Record<string, unknown>> = {}, cb?: Func) {
       hasLoaded = new Promise(resolve => { loadResolver = resolve; });
@@ -136,7 +138,6 @@ export function createPageConfig(
       }
 
       setCurrentRouter(this);
-      const routeConfig = pageConfig?.();
       if (!dataLoader) {
         // createRoot(render) is asynchronous
         dataLoader = () => new Promise<void>(resolve => setTimeout(resolve, 0));
@@ -156,11 +157,11 @@ export function createPageConfig(
       };
       if (unmounting) {
         prepareMountList.push(mount);
-      } else if (Current.app) {
+      } else if (Current.appDataReady) {
         mount();
       } else {
         // Only when getAppData is ready, the page can be mounted
-        eventCenter.on(APP_READY, () => {
+        eventCenter.on(APP_DATA_READY, () => {
           mount();
         });
       }
@@ -184,11 +185,13 @@ export function createPageConfig(
       });
     },
     [ONREADY]() {
-      // 触发生命周期
-      safeExecute(this.$icePath, ON_READY);
-      // 通过事件触发子组件的生命周期
-      raf(() => eventCenter.trigger(getOnReadyEventKey(id)));
-      this.onReady.called = true;
+      hasLoaded.then(() => {
+        // 触发生命周期
+        safeExecute(this.$icePath, ON_READY);
+        // 通过事件触发子组件的生命周期
+        raf(() => eventCenter.trigger(getOnReadyEventKey(id)));
+        this.onReady.called = true;
+      });
     },
     [ONSHOW](options = {}) {
       hasLoaded.then(() => {
@@ -212,6 +215,8 @@ export function createPageConfig(
       // 通过事件触发子组件的生命周期
       eventCenter.trigger(getOnHideEventKey(id));
     },
+    // For ali miniapp only
+    events: {},
   };
 
   LIFECYCLES.forEach((lifecycle) => {
@@ -220,29 +225,32 @@ export function createPageConfig(
     };
   });
 
-  // onShareAppMessage 和 onShareTimeline 一样，会影响小程序右上方按钮的选项，因此不能默认注册。
-  if (component.onShareAppMessage ||
-      component.prototype?.onShareAppMessage ||
-      component.enableShareAppMessage) {
-    config.onShareAppMessage = function (options) {
-      const target = options?.target;
-      if (target) {
-        const { id } = target;
-        const element = document.getElementById(id);
-        if (element) {
-          target!.dataset = element.dataset;
+  /*
+    onShareAppMessage 和 onShareTimeline 会影响小程序右上方按钮的选项，因此不能默认注册
+    onPageScroll 则因性能问题不能默认注册
+   */
+  const { nativeEvents = [] } = routeConfig || {};
+  nativeEvents.forEach(nativeEvent => {
+    if (ALI_MINIAPP_EVENTS.includes(nativeEvent)) {
+      config.events[nativeEvent] = function (...args) {
+        return safeExecute(this.$icePath, nativeEvent, ...args);
+      };
+    } else {
+      config[nativeEvent] = function (...args) {
+        if (nativeEvent === 'onShareAppMessage') {
+          const target = args?.[0].target;
+          if (target) {
+            const { id } = target;
+            const element = document.getElementById(id);
+            if (element) {
+              target!.dataset = element.dataset;
+            }
+          }
         }
-      }
-      return safeExecute(this.$icePath, 'onShareAppMessage', options);
-    };
-  }
-  if (component.onShareTimeline ||
-      component.prototype?.onShareTimeline ||
-      component.enableShareTimeline) {
-    config.onShareTimeline = function () {
-      return safeExecute(this.$icePath, 'onShareTimeline');
-    };
-  }
+        return safeExecute(this.$icePath, nativeEvent, ...args);
+      };
+    }
+  });
 
   config.eh = eventHandler;
 
@@ -251,7 +259,6 @@ export function createPageConfig(
   }
 
   hooks.call('modifyPageObject', config);
-
   return config;
 }
 

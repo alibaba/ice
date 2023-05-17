@@ -1,0 +1,22 @@
+{
+  "name": "@examples/with-antd5",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "start": "ice start",
+    "build": "ice build"
+  },
+  "dependencies": {
+    "@ice/app": "workspace:*",
+    "@ice/runtime": "workspace:*",
+    "antd": "^5.0.0",
+    "dayjs": "^1.11.7",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-intl": "^6.3.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.2"
+  }
+}

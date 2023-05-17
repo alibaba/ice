@@ -5,7 +5,7 @@ import type {
   ReactNode,
 } from 'react';
 import { createElement as _createElement } from 'react';
-import { createJSXElementFactory } from './compat/element';
+import { createJSXElementFactory } from './compat/element.js';
 
 const jsx = createJSXElementFactory((type: any, props: any, ...children: ReactNode[]) =>
   _createElement(type, props, ...children));

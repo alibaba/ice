@@ -5,23 +5,34 @@ import React from 'react';
 import { expect, it, describe } from 'vitest';
 import { renderToHTML, renderToResponse } from '../src/runServerApp';
 import { Meta, Title, Links, Main, Scripts } from '../src/Document';
+import {
+  createRouteLoader,
+} from '../src/routes.js';
 
 describe('run server app', () => {
   process.env.ICE_CORE_ROUTER = 'true';
+  const homeItem = {
+    default: () => <div>home</div>,
+    pageConfig: () => ({ title: 'home' }),
+    dataLoader: {
+      loader: async () => ({ data: 'test' }),
+    },
+  };
   const basicRoutes = [
     {
       id: 'home',
       path: 'home',
       componentName: 'home',
-      load: async () => ({
-        default: () => {
-          return (
-            <div>home</div>
-          );
-        },
-        pageConfig: () => ({ title: 'home' }),
-        getData: async () => ({ data: 'test' }),
-      }),
+      lazy: () => {
+        return {
+          Component: homeItem.default,
+          loader: createRouteLoader({
+            routeId: 'home',
+            module: homeItem,
+            renderMode: 'SSR',
+          }),
+        };
+      },
     },
   ];
 
@@ -61,7 +72,8 @@ describe('run server app', () => {
       app: {},
       assetsManifest,
       runtimeModules: { commons: [] },
-      routes: basicRoutes,
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => basicRoutes,
       Document,
       renderMode: 'SSR',
     });
@@ -82,6 +94,8 @@ describe('run server app', () => {
       assetsManifest,
       runtimeModules: { commons: [] },
       routes: basicRoutes,
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => basicRoutes,
       Document,
       renderMode: 'SSR',
     });
@@ -100,7 +114,8 @@ describe('run server app', () => {
       app: {},
       assetsManifest,
       runtimeModules: { commons: [] },
-      routes: basicRoutes,
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => basicRoutes,
       Document,
       renderMode: 'SSR',
       basename: '/ice',
@@ -119,7 +134,8 @@ describe('run server app', () => {
       app: {},
       assetsManifest,
       runtimeModules: { commons: [] },
-      routes: basicRoutes,
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => basicRoutes,
       Document,
       renderMode: 'SSR',
       serverOnlyBasename: '/',
@@ -139,7 +155,8 @@ describe('run server app', () => {
       app: {},
       assetsManifest,
       runtimeModules: { commons: [] },
-      routes: basicRoutes,
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => basicRoutes,
       Document,
     });
     // @ts-ignore
@@ -162,7 +179,8 @@ describe('run server app', () => {
       },
       assetsManifest,
       runtimeModules: { commons: [] },
-      routes: basicRoutes,
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => basicRoutes,
       Document,
     });
     // @ts-ignore
@@ -181,18 +199,24 @@ describe('run server app', () => {
       app: {},
       assetsManifest,
       runtimeModules: { commons: [] },
-      routes: [{
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => [{
         id: 'home',
         path: 'home',
         componentName: 'Home',
-        load: async () => ({
-          default: () => {
-            throw new Error('err');
-            return (
-              <div>home</div>
-            );
-          },
-        }),
+        lazy: () => {
+          return {
+            Component: () => {
+              throw new Error('err');
+              return (
+                <div>home</div>
+              );
+            },
+            loader: () => {
+              return { data: {}, pageConfig: {} };
+            },
+          };
+        },
       }],
       Document,
     });
@@ -220,7 +244,8 @@ describe('run server app', () => {
       app: {},
       assetsManifest,
       runtimeModules: { commons: [] },
-      routes: basicRoutes,
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => basicRoutes,
       Document,
       renderMode: 'SSR',
       routePath: '/',

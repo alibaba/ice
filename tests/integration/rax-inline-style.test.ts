@@ -15,10 +15,10 @@ describe(`build ${example}`, () => {
 
     page = res.page;
     browser = res.browser;
-    // inline index.module.less
-    expect((await page.$$attr('img', 'style'))[0]).contain('height:24vw');
-    // inline index.module.css
-    expect((await page.$$attr('span', 'style'))[0]).contain('font-weight:bold');
+    // css module
+    expect((await page.$$attr('img', 'class'))[0]).contain('logo');
+    // css module
+    expect((await page.$$attr('span', 'class'))[0]).contain('title');
     // inline css from node_modules
     expect((await page.$$attr('span', 'style'))[0]).contain('display:block');
     // inline index.css
@@ -41,10 +41,10 @@ describe(`start ${example}`, () => {
     browser = res.browser;
     await page.waitForFunction('document.getElementsByTagName(\'span\').length > 0');
 
-    // inline index.module.less
-    expect((await page.$$attr('img', 'style'))[0]).contain('height:24vw');
-    // inline index.module.css
-    expect((await page.$$attr('span', 'style'))[0]).contain('font-weight:bold');
+    // css module
+    expect((await page.$$attr('img', 'class'))[0]).contain('logo');
+    // css module
+    expect((await page.$$attr('span', 'class'))[0]).contain('title');
     // inline css from node_modules
     expect((await page.$$attr('span', 'style'))[0]).contain('display:block');
     // inline index.css

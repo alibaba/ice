@@ -5,7 +5,7 @@ exports[`generateRouteManifest function > layout-routes 1`] = `
   {
     "componentName": "blog-index",
     "file": "blog/index.tsx",
-    "id": "blog/index",
+    "id": "blog",
     "index": true,
     "layout": false,
     "parentId": undefined,
@@ -14,7 +14,7 @@ exports[`generateRouteManifest function > layout-routes 1`] = `
   {
     "componentName": "blog-$id",
     "file": "blog/$id.tsx",
-    "id": "blog/$id",
+    "id": "blog/:id",
     "index": undefined,
     "layout": false,
     "parentId": undefined,
@@ -32,7 +32,7 @@ exports[`generateRouteManifest function > layout-routes 1`] = `
   {
     "componentName": "index",
     "file": "index.tsx",
-    "id": "index",
+    "id": "/",
     "index": true,
     "layout": false,
     "parentId": undefined,

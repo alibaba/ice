@@ -1,6 +1,6 @@
 {
   "name": "@ice/miniapp-loader",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "webpack loader for miniapps.",
   "main": "./lib/page.js",
   "files": [
@@ -18,10 +18,10 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@ice/bundles": "^0.1.0"
+    "@ice/bundles": "^0.1.10"
   },
   "devDependencies": {
-    "webpack": "^5.76.2"
+    "webpack": "^5.80.0"
   },
   "publishConfig": {
     "access": "public"

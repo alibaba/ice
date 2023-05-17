@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0
+
+### Minor Changes
+
+- 1ed81fee: feat: refactor runtime api
+
 ## 1.0.5
 
 ### Patch Changes

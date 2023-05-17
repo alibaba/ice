@@ -69,6 +69,7 @@ const getMiniappTask = ({
       '@': path.join(rootDir, 'src'),
       // 小程序使用 regenerator-runtime@0.11
       'regenerator-runtime': require.resolve('regenerator-runtime'),
+      '@swc/helpers': path.dirname(require.resolve('@swc/helpers/package.json')),
       '@ice/miniapp-runtime/esm/app': require.resolve('@ice/miniapp-runtime/app'),
       // 开发组件库时 link 到本地调试，runtime 包需要指向本地 node_modules 顶层的 runtime，保证闭包值 Current 一致，shared 也一样
       '@ice/miniapp-runtime': require.resolve('@ice/miniapp-runtime'),
@@ -115,9 +116,10 @@ const getMiniappTask = ({
       maxEntrypointSize: 2 * 1000 * 1000,
     },
     devServer: {}, // No need to use devServer in miniapp
+    useDevServer: false,
     enableCopyPlugin: isPublicDirExist, // Only when public dir exists should copy-webpack-plugin be enabled
     swcOptions: {
-      removeExportExprs: ['getServerData', 'getStaticData'],
+      removeExportExprs: ['serverDataLoader', 'staticDataLoader'],
     },
     cssFilename: `[name]${fileType.style}`,
     cssChunkFilename: `[name]${fileType.style}`,
