@@ -2,9 +2,8 @@
  * @vitest-environment jsdom
  */
 
-import React from 'react';
 import { expect, it, describe } from 'vitest';
-import { forwardRef, useRef, useEffect } from 'react';
+import { forwardRef, useRef, useEffect, Fragment } from 'react';
 import { render } from '@testing-library/react';
 import { shared } from '../src/index';
 import cloneElement from './libs/rax-clone-element';
@@ -80,11 +79,11 @@ describe('shared', () => {
   });
 
   it('flattenChildren common', () => {
-    expect(shared.flattenChildren(<>div</>)).toStrictEqual(<React.Fragment>div</React.Fragment>);
+    expect(shared.flattenChildren(<>div</>)).toStrictEqual(<Fragment>div</Fragment>);
   });
 
   it('flattenChildren array', () => {
     const children = [[[<>div</>]]];
-    expect(shared.flattenChildren(children)).toStrictEqual(<React.Fragment>div</React.Fragment>);
+    expect(shared.flattenChildren(children)).toStrictEqual(<Fragment>div</Fragment>);
   });
 });
