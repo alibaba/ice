@@ -215,7 +215,7 @@ function createHistory(
   const createHistory = process.env.ICE_CORE_ROUTER === 'true'
     ? createRouterHistory(appConfig?.router?.type, memoryRouter)
     : createHistorySingle;
-  let createHistoryOptions: Parameters<typeof createHistory>[0] = { window };
+  let createHistoryOptions: Parameters<typeof createHistory>[0] = { window, v5Compat: true };
 
   if (routerType === 'memory') {
     const memoryOptions: Parameters<typeof createMemoryHistory>[0] = {};
