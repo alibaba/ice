@@ -108,6 +108,12 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     addEntryCode: (callback: (originalCode: string) => string) => {
       entryCode = callback(entryCode);
     },
+    addEntryImportAhead: (declarationData: Pick<DeclarationData, 'source'>) => {
+      generator.addDeclaration('entry', {
+        ...declarationData,
+        declarationType: DeclarationType.NORMAL,
+      });
+    },
     modifyRenderData: generator.modifyRenderData,
     addDataLoaderImport: (declarationData: DeclarationData) => {
       generator.addDeclaration('dataLoaderImport', {

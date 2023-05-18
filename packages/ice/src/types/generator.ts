@@ -4,7 +4,7 @@ export enum DeclarationType {
 }
 
 export interface DeclarationData {
-  specifier: string | string[];
+  specifier?: string | string[];
   source: string;
   type?: boolean;
   alias?: Record<string, string>;

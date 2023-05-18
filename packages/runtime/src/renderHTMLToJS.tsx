@@ -4,6 +4,7 @@ import * as htmlparser2 from 'htmlparser2';
 import ejs from 'ejs';
 import fse from 'fs-extra';
 import __createElement from './domRender.js';
+import { generateSourceMap } from './sourcemap.js';
 
 let dirname;
 if (typeof __dirname === 'string') {
@@ -12,9 +13,16 @@ if (typeof __dirname === 'string') {
   dirname = path.dirname(fileURLToPath(import.meta.url));
 }
 
-export function renderHTMLToJS(html) {
+export async function renderHTMLToJS(html, {
+  prependCode = '',
+}) {
   let jsOutput = '';
   const dom = htmlparser2.parseDocument(html);
+  const sourceMapInfo = {
+    sourceMapFileList: [],
+    extraLine: prependCode.split('\n').length,
+    extraColumn: 0,
+  };
 
   let headElement;
   let bodyElement;
@@ -47,6 +55,12 @@ export function renderHTMLToJS(html) {
     if (children) {
       if (name === 'script' && children[0] && children[0].data) {
         extraScript.push(`(function(){${children[0].data}})();`);
+        // The path of sourcemap file.
+        if (attribs['data-sourcemap']) {
+          sourceMapInfo.sourceMapFileList.push(attribs['data-sourcemap']);
+        }
+
+        delete attribs['data-sourcemap'];
       } else {
         resChildren = node.children.map(parse);
       }
@@ -69,7 +83,14 @@ export function renderHTMLToJS(html) {
     head,
     body,
     extraScript,
+    prependCode,
   });
 
-  return jsOutput;
+  // Generate sourcemap for entry js.
+  const sourceMap = await generateSourceMap(sourceMapInfo);
+
+  return {
+    jsOutput,
+    sourceMap,
+  };
 }

@@ -49,6 +49,7 @@ interface RenderOptions {
   };
   runtimeOptions?: Record<string, any>;
   distType?: Array<'html' | 'javascript'>;
+  prependCode?: string;
   serverData?: any;
 }
 
@@ -74,11 +75,17 @@ export async function renderToEntry(
   const { value } = result;
 
   let jsOutput;
+  let sourceMap;
   const {
     distType = ['html'],
+    prependCode = '',
   } = renderOptions;
   if (value && distType.includes('javascript')) {
-    jsOutput = await renderHTMLToJS(value);
+    const res = await renderHTMLToJS(value, {
+      prependCode,
+    });
+    jsOutput = res.jsOutput;
+    sourceMap = res.sourceMap;
   }
 
   let htmlOutput;
@@ -89,6 +96,7 @@ export async function renderToEntry(
   return {
     ...htmlOutput,
     jsOutput,
+    sourceMap,
   };
 }
 
