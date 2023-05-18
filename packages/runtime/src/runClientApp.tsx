@@ -35,7 +35,10 @@ export interface RunClientAppOptions {
 if (import.meta.renderer === 'client' && window.Request && !window.Request.prototype.hasOwnProperty('signal')) {
   const OriginalRequest = window.Request;
   function Request(input: RequestInfo | URL, init?: RequestInit) {
-    this.signal = init.signal || (function () {
+    if (input instanceof OriginalRequest) {
+      this.signal = input.signal;
+    }
+    this.signal = init.signal || this.signal || (function () {
       if ('AbortController' in window) {
         let ctrl = new AbortController();
         return ctrl.signal;
