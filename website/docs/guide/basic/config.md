@@ -252,7 +252,22 @@ export default defineConfig(() => ({
 - 默认值：`[]`
 
 默认情况下为了保证 dev 开发阶段的体验，`node_modules` 下文件不会进行编译，而考虑到 build 阶段对代码体积的极致优化以及兼容性保证，将会对 `node_modules` 下内容也进行编译。
-如果希望修正默认行为可以进行如下配置，设置为 `true`，不管 dev 还是 build 阶段均编译 `node_modules`：
+
+如果 dev 阶段需要额外编译一些依赖，build 阶段下仍然全量编译，可以参考下面的方式在 dev 阶段通过正则追加一些配置：
+
+```js
+import { defineConfig } from '@ice/app';
+
+export default defineConfig(() => ({
+  compileDependencies: process.env.NODE_ENV === 'development' ? [/@alifd\/next/, /need-compile/] : true,
+}));
+```
+
+:::caution
+如果 build 阶段仍然需要全量编译，请务必增加环境判断
+:::
+
+如果希望 dev 和 build 阶段均编译 `node_modules`，可以设置为 `true`
 
 ```js
 import { defineConfig } from '@ice/app';
@@ -262,7 +277,7 @@ export default defineConfig(() => ({
 }));
 ```
 
-如果明确知道哪些依赖需要进行编译也可以通过正则方式进行设置：
+如果明确知道哪些依赖需要进行编译也可以通过正则方式进行设置：（对 dev 和 build 同时生效）
 
 ```js
 import { defineConfig } from '@ice/app';
