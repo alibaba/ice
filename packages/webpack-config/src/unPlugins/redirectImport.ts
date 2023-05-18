@@ -7,7 +7,7 @@ import { createFilter } from '@rollup/pluginutils';
 import type { Config } from '../types.js';
 
 interface DeclarationData {
-  specifier: string | string[];
+  specifier?: string | string[];
   source: string;
   type?: boolean;
   alias?: Record<string, string>;

@@ -1,4 +1,5 @@
 <% if (importCoreJs) { -%>import 'core-js';<% } %>
+<%- entry.imports %>
 import { createElement, Fragment } from 'react';
 import { runClientApp, getAppConfig } from '<%- iceRuntimePath %>';
 import { commons, statics } from './runtimeModules';
