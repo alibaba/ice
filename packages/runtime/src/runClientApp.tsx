@@ -31,6 +31,24 @@ export interface RunClientAppOptions {
   dataLoaderDecorator?: Function;
 }
 
+// Add polyfill of Request.prototype.signal for some browser compatibility.
+if (import.meta.renderer === 'client' && window.Request && !window.Request.prototype.hasOwnProperty('signal')) {
+  const OriginalRequest = window.Request;
+  function Request(input: RequestInfo | URL, init?: RequestInit) {
+    this.signal = init.signal || (function () {
+      if ('AbortController' in window) {
+        let ctrl = new AbortController();
+        return ctrl.signal;
+      }
+    }());
+    return OriginalRequest.call(this, input, init);
+  }
+  Request.prototype = Object.create(OriginalRequest.prototype);
+  Request.prototype.constructor = Request;
+  // @ts-expect-error for overwrite the original Request.
+  window.Request = Request;
+}
+
 export default async function runClientApp(options: RunClientAppOptions) {
   const {
     app,
