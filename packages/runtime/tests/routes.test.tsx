@@ -219,6 +219,7 @@ describe('routes', () => {
     windowSpy.mockImplementation(() => ({
       __ICE_DATA_LOADER__: {
         getData: async (id) => ({ id: `${id}_data` }),
+        getLoader: () => {},
       },
     }));
     const routesDataCSR = await createRouteLoader({
