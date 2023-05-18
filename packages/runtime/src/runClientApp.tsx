@@ -41,7 +41,7 @@ if (import.meta.renderer === 'client' && window.Request && !window.Request.proto
         return ctrl.signal;
       }
     }());
-    return OriginalRequest.call(this, input, init);
+    OriginalRequest.call(this, input, init);
   }
   Request.prototype = Object.create(OriginalRequest.prototype);
   Request.prototype.constructor = Request;
