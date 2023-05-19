@@ -5,6 +5,7 @@ import useSearchParams from './useSearchParams.js';
 import { routerHistory as history } from './history.js';
 import usePageLifecycle from './usePageLifecycle.js';
 import { useData, useConfig } from './routeContext.js';
+import { withSuspense, useSuspenseData } from './suspense.js';
 
 export {
   runClientApp,
@@ -18,4 +19,6 @@ export {
   history,
   defineDataLoader,
   usePageLifecycle,
+  withSuspense,
+  useSuspenseData,
 };
