@@ -240,6 +240,9 @@ async function init(loaders: Loaders, options: Options) {
   }
 
   (window as any).__ICE_DATA_LOADER__ = {
+    getLoader: (id) => {
+      return loaders[id];
+    },
     getData: (id, options: LoadRoutesDataOptions) => {
       let result;
 
