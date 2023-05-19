@@ -215,7 +215,7 @@ export default Document;
 - 类型：`object`
 - 默认值：`{}`
 
-配置 dev 开发阶段的代理功能
+配置 dev 开发阶段的代理功能。配置项与 Webpack [devServer.proxy](https://webpack.js.org/configuration/dev-server/#devserverproxy) 保持一致。
 
 ```js
 import { defineConfig } from '@ice/app';
