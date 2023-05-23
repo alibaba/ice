@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.2.1
+
+### Patch Changes
+
+- f24b045d: feat: supprot sourmap for distType
+- 8b1b237: feat: support api of addEntryImportAhead
+- Updated dependencies [f24b045d]
+  - @ice/runtime@1.2.1
+
 ## 3.2.0
 
 ### Minor Changes

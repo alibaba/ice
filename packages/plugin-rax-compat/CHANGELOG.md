@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.2
+
+### Patch Changes
+
+- 45cb1c77: fix: auto add jsx comment
+
 ## 0.2.1
 
 ### Patch Changes
