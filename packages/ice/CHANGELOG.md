@@ -5,10 +5,7 @@
 ### Patch Changes
 
 - f24b045d: feat: supprot sourmap for distType
-- Updated dependencies [989e2501]
-- Updated dependencies [f24b045d]
-- Updated dependencies [ab139acc]
-- Updated dependencies [6e639dfe]
+- 8b1b237: feat: support api of addEntryImportAhead
 - Updated dependencies [f24b045d]
   - @ice/runtime@1.2.1
 
