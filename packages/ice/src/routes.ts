@@ -66,7 +66,7 @@ export function getRoutesDefinition(nestRouteManifest: NestedRouteManifest[], la
     if (lazy) {
       loadStatement = `import(/* webpackChunkName: "p_${componentName}" */ '${formatPath(componentPath)}')`;
     } else {
-      const routeSpecifier = id.replace(/[./-]/g, '_').replace(/[:*]/g, '$');
+      const routeSpecifier = formatRouteSpecifier(id);
       routeImports.push(`import * as ${routeSpecifier} from '${formatPath(componentPath)}';`);
       loadStatement = routeSpecifier;
     }
@@ -145,7 +145,7 @@ function generateRouteConfig(
         const componentFile = file.replace(new RegExp(`${fileExtname}$`), '');
         const componentPath = path.isAbsolute(componentFile) ? componentFile : `@/pages/${componentFile}`;
 
-        const loaderName = `${exportKey}_${id}`.replace(/[-/]/g, '_');
+        const loaderName = formatRouteSpecifier(`${exportKey}_${id}`);
         const fullPath = path.join(parentPath, routePath);
         imports.push([id, loaderName, fullPath]);
         str = `import { ${exportKey} as ${loaderName} } from '${componentPath}';\n`;
@@ -161,4 +161,8 @@ function generateRouteConfig(
     }, '');
   }
   return template(importConfig(routes, ''), imports);
+}
+
+function formatRouteSpecifier(routeId: string) {
+  return routeId.replace(/[./-]/g, '_').replace(/[:*]/g, '$');
 }
