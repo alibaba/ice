@@ -125,9 +125,12 @@ type LoaderFunction = () => LoaderData | UNSAFE_DeferredData | Promise<LoaderDat
 export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
   const { dataLoader, pageConfig, staticDataLoader, serverDataLoader } = options.module;
   const { requestContext, renderMode, routeId } = options;
+  const globalLoader = (typeof window !== 'undefined' && (window as any).__ICE_DATA_LOADER__) ? (window as any).__ICE_DATA_LOADER__ : null;
 
   let dataLoaderConfig: DataLoaderConfig;
-  if (renderMode === 'SSG') {
+  if (globalLoader) {
+    dataLoaderConfig = globalLoader.getLoader(routeId);
+  } else if (renderMode === 'SSG') {
     dataLoaderConfig = staticDataLoader;
   } else if (renderMode === 'SSR') {
     dataLoaderConfig = serverDataLoader || dataLoader;
@@ -155,8 +158,6 @@ export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
   }
 
   const getData = () => {
-    const hasGlobalLoader = typeof window !== 'undefined' && (window as any).__ICE_DATA_LOADER__;
-    const globalLoader = hasGlobalLoader ? (window as any).__ICE_DATA_LOADER__ : null;
     let routeData: any;
     if (globalLoader) {
       routeData = globalLoader.getData(routeId, { renderMode });

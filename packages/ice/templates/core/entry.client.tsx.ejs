@@ -1,4 +1,5 @@
 <% if (importCoreJs) { -%>import 'core-js';<% } %>
+<%- entry.imports %>
 import { createElement, Fragment } from 'react';
 import { runClientApp, getAppConfig } from '<%- iceRuntimePath %>';
 import { commons, statics } from './runtimeModules';
@@ -16,6 +17,16 @@ const getRouterBasename = () => {
 // Otherwise chunk of route component will pack @ice/jsx-runtime and depend on framework bundle.
 const App = <></>;
 
+<% if(!dataLoaderImport.imports) {-%>
+let dataLoaderFetcher = (options) => {
+  window.fetch(options.url, options);
+}
+
+let dataLoaderDecorator = (dataLoader) => {
+  return dataLoader;
+}
+<% } -%>
+
 const render = (customOptions: Record<string, any> = {}) => {
   const appProps = {
     app,
@@ -27,7 +38,8 @@ const render = (customOptions: Record<string, any> = {}) => {
     basename: getRouterBasename(),
     hydrate: <%- hydrate %>,
     memoryRouter: <%- memoryRouter || false %>,
-    <% if(dataLoaderImport.imports) {-%>dataLoaderFetcher,<% } -%>
+    dataLoaderFetcher,
+    dataLoaderDecorator,
     ...customOptions,
     runtimeOptions: {
   <% if (runtimeOptions.exports) { -%>

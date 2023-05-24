@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'http';
-import type { InitialEntry, AgnosticRouteObject, Location, History } from '@remix-run/router';
+import type { InitialEntry, AgnosticRouteObject, Location, History, RouterInit, StaticHandlerContext } from '@remix-run/router';
 import type { ComponentType, PropsWithChildren } from 'react';
 import type { HydrationOptions, Root } from 'react-dom/client';
 import type { Params, RouteObject } from 'react-router-dom';
@@ -168,7 +168,7 @@ export type ResponseHandler = (
   res: ServerResponse,
 ) => any | Promise<any>;
 
-export type SetAppRouter = (AppRouter: ComponentType<AppRouterProps>) => void;
+export type SetAppRouter = <T>(AppRouter: ComponentType<T>) => void;
 export type GetAppRouter = () => AppProvider;
 export type AddProvider = (Provider: AppProvider) => void;
 export type SetRender = (render: Renderer) => void;
@@ -240,10 +240,17 @@ export interface RuntimeModules {
 
 export interface AppRouterProps {
   routes?: RouteObject[];
-  routerContext?: any;
   location?: Location;
   Component?: ComponentType<any>;
   loaderData?: LoaderData;
+}
+
+export interface ClientAppRouterProps extends AppRouterProps {
+  routerContext?: Omit<RouterInit, 'routes'> & { routes?: RouteObject[] };
+}
+
+export interface ServerAppRouterProps extends AppRouterProps {
+  routerContext?: StaticHandlerContext;
 }
 
 export interface AppRouteProps {

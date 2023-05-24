@@ -138,6 +138,7 @@ const build = async (
     ssg,
     output: {
       distType,
+      prependCode,
     },
   } = userConfig;
   let renderMode: RenderMode;
@@ -159,6 +160,7 @@ const build = async (
       renderMode,
       routeType: appConfig?.router?.type,
       distType,
+      prependCode,
       routeManifest,
     });
     // This depends on orders.

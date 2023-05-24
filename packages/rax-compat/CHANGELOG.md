@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.2.2
+
+### Patch Changes
+
+- 7a5cd06c: fix: supported shared.Host/Instance/Element
+
+## 0.2.1
+
+### Patch Changes
+
+- 3ede3c5a: feat: add type module
+- 41be75ff: fix: state not update error
+  feat: support defaultProps in forwardRef
+- 4b280b77: refactor: possible standard properties
+
 ## 0.2.0
 
 ### Minor Changes

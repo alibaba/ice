@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## 1.1.1
+
+### Patch Changes
+
+- 5266fedc: fix: import store source before swc compiler
+
+## 1.1.0
+
+### Minor Changes
+
+- 1ed81fee: feat: refactor runtime api
+
 ## 1.0.3
 
 ### Patch Changes

@@ -14,6 +14,7 @@ interface CachedResult {
 
 interface Options {
   fetcher: Function;
+  decorator: Function;
   runtimeModules: RuntimeModules['statics'];
   appExport: AppExport;
 }
@@ -47,9 +48,19 @@ export function defineStaticDataLoader(dataLoader: Loader): DataLoaderConfig {
  * Set globally to avoid passing this fetcher too deep.
  */
 let dataLoaderFetcher;
-
 export function setFetcher(customFetcher) {
   dataLoaderFetcher = customFetcher;
+}
+
+/**
+ * Custom decorator for deal with data loader.
+ */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+let dataLoaderDecorator = (dataLoader: Function, id?: number) => {
+  return dataLoader;
+};
+export function setDecorator(customDecorator) {
+  dataLoaderDecorator = customDecorator;
 }
 
 /**
@@ -136,8 +147,8 @@ export function loadDataByCustomFetcher(config: StaticDataLoader) {
  */
 export function callDataLoader(dataLoader: Loader, requestContext: RequestContext): DataLoaderResult {
   if (Array.isArray(dataLoader)) {
-    const loaders = dataLoader.map(loader => {
-      return typeof loader === 'object' ? loadDataByCustomFetcher(loader) : loader(requestContext);
+    const loaders = dataLoader.map((loader, index) => {
+      return typeof loader === 'object' ? loadDataByCustomFetcher(loader) : dataLoaderDecorator(loader, index)(requestContext);
     });
 
     return loaders;
@@ -147,7 +158,7 @@ export function callDataLoader(dataLoader: Loader, requestContext: RequestContex
     return loadDataByCustomFetcher(dataLoader);
   }
 
-  return dataLoader(requestContext);
+  return dataLoaderDecorator(dataLoader)(requestContext);
 }
 
 const cache = new Map<string, CachedResult>();
@@ -196,6 +207,7 @@ function loadInitialDataInClient(loaders: Loaders) {
 async function init(loaders: Loaders, options: Options) {
   const {
     fetcher,
+    decorator,
     runtimeModules,
     appExport,
   } = options;
@@ -217,6 +229,10 @@ async function init(loaders: Loaders, options: Options) {
     setFetcher(fetcher);
   }
 
+  if (decorator) {
+    setDecorator(decorator);
+  }
+
   try {
     loadInitialDataInClient(loaders);
   } catch (error) {
@@ -224,6 +240,9 @@ async function init(loaders: Loaders, options: Options) {
   }
 
   (window as any).__ICE_DATA_LOADER__ = {
+    getLoader: (id) => {
+      return loaders[id];
+    },
     getData: (id, options: LoadRoutesDataOptions) => {
       let result;
 

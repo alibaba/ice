@@ -14,6 +14,7 @@ interface Options {
   routeType: AppConfig['router']['type'];
   renderMode?: RenderMode;
   distType: UserConfig['output']['distType'];
+  prependCode: string;
   routeManifest: RouteManifest;
 }
 
@@ -29,6 +30,7 @@ export default async function generateEntry(options: Options): Promise<EntryResu
     documentOnly,
     renderMode,
     routeType,
+    prependCode = '',
     routeManifest,
   } = options;
 
@@ -50,13 +52,23 @@ export default async function generateEntry(options: Options): Promise<EntryResu
     const {
       htmlOutput,
       jsOutput,
-    } = await renderEntry({ routePath, serverEntry, documentOnly, renderMode, distType });
+      sourceMap,
+    } = await renderEntry({ routePath, serverEntry, documentOnly, renderMode, distType, prependCode });
     const generateOptions = { rootDir, routePath, outputDir };
     if (htmlOutput) {
       const path = await generateFilePath({ ...generateOptions, type: 'html' });
       await writeFile(
         path,
         htmlOutput,
+      );
+      outputPaths.push(path);
+    }
+
+    if (sourceMap) {
+      const path = await generateFilePath({ ...generateOptions, type: 'js.map' });
+      await writeFile(
+        path,
+        sourceMap,
       );
       outputPaths.push(path);
     }
@@ -81,7 +93,7 @@ const writeFile = async (file: string, content: string) => {
   await fse.writeFile(file, content);
 };
 
-function formatFilePath(routePath: string, type: 'js' | 'html'): string {
+function formatFilePath(routePath: string, type: 'js' | 'html' | 'js.map'): string {
   // Win32 do not support file name start with ':' and '*'.
   return routePath === '/' ? `index.${type}` : `${routePath.replace(/\/(:|\*)/g, '/$')}.${type}`;
 }
@@ -96,7 +108,7 @@ async function generateFilePath(
     rootDir: string;
     routePath: string;
     outputDir: string;
-    type: 'js' | 'html';
+    type: 'js' | 'html' | 'js.map' ;
   },
 ) {
   const fileName = formatFilePath(routePath, type);
@@ -113,6 +125,7 @@ async function renderEntry(
     serverEntry,
     documentOnly,
     distType = ['html'],
+    prependCode = '',
     renderMode,
   }: {
     routePath: string;
@@ -120,6 +133,7 @@ async function renderEntry(
     documentOnly: boolean;
     distType?: DistType;
     renderMode?: RenderMode;
+    prependCode?: string;
   },
 ) {
   const serverContext: ServerContext = {
@@ -130,20 +144,22 @@ async function renderEntry(
 
   // renderToEntry exported when disType includes javascript .
   const render = distType.includes('javascript') ? serverEntry.renderToEntry : serverEntry.renderToHTML;
-
   const {
     value,
     jsOutput,
+    sourceMap,
   } = await render(serverContext, {
     renderMode,
     documentOnly,
     routePath,
     serverOnlyBasename: '/',
     distType,
+    prependCode,
   });
 
   return {
     htmlOutput: value,
     jsOutput,
+    sourceMap,
   };
 }

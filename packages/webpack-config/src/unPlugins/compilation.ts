@@ -115,7 +115,8 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
         }
       }
       if (keepExports) {
-        const keepList = Array.isArray(keepExports) ? keepExports : keepExports.value;
+        // Make a copy of keepExports, otherwise it will be modified by side effects operation such as push.
+        const keepList = [...(Array.isArray(keepExports) ? keepExports : keepExports.value)];
         const customInlcude = !Array.isArray(keepExports) && keepExports?.include;
         let matchRule = false;
         if (customInlcude) {

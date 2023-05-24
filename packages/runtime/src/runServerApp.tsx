@@ -12,6 +12,7 @@ import type {
   DocumentComponent,
   RuntimeModules,
   AppData,
+  ServerAppRouterProps,
 } from './types.js';
 import Runtime from './runtime.js';
 import { AppContextProvider } from './AppContext.js';
@@ -48,6 +49,7 @@ interface RenderOptions {
   };
   runtimeOptions?: Record<string, any>;
   distType?: Array<'html' | 'javascript'>;
+  prependCode?: string;
   serverData?: any;
 }
 
@@ -73,11 +75,17 @@ export async function renderToEntry(
   const { value } = result;
 
   let jsOutput;
+  let sourceMap;
   const {
     distType = ['html'],
+    prependCode = '',
   } = renderOptions;
   if (value && distType.includes('javascript')) {
-    jsOutput = await renderHTMLToJS(value);
+    const res = await renderHTMLToJS(value, {
+      prependCode,
+    });
+    jsOutput = res.jsOutput;
+    sourceMap = res.sourceMap;
   }
 
   let htmlOutput;
@@ -88,6 +96,7 @@ export async function renderToEntry(
   return {
     ...htmlOutput,
     jsOutput,
+    sourceMap,
   };
 }
 
@@ -234,7 +243,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     serverData,
   };
   const runtime = new Runtime(appContext, runtimeOptions);
-  runtime.setAppRouter(ServerRouter);
+  runtime.setAppRouter<ServerAppRouterProps>(ServerRouter);
   // Load static module before getAppData.
   if (runtimeModules.statics) {
     await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
@@ -350,9 +359,13 @@ async function renderServerEntry(
   const appContext = runtime.getAppContext();
   const { routes, routePath, loaderData, basename } = appContext;
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
-  const AppRouter = runtime.getAppRouter();
-  const routerContext = {
-    matches, basename, loaderData, location,
+  const AppRouter = runtime.getAppRouter<ServerAppRouterProps>();
+  const routerContext: ServerAppRouterProps['routerContext'] = {
+    // @ts-expect-error matches type should be use `AgnosticDataRouteMatch[]`
+    matches,
+    basename,
+    loaderData,
+    location,
   };
 
   const documentContext = {

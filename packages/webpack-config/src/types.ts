@@ -44,7 +44,7 @@ interface SwcOptions {
 }
 
 interface ImportDeclaration {
-  specifier: string | string[];
+  specifier?: string | string[];
   source: string;
   type?: boolean;
   alias?: Record<string, string>;
