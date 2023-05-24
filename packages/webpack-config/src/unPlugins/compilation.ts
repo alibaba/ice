@@ -201,7 +201,7 @@ function getJsxTransformOptions({
     development: mode === 'development',
     refresh: fastRefresh,
     runtime: 'automatic',
-    importSource: '@ice/runtime', // The exact import source is '@ice/runtime/jsx-runtime'
+    importSource: '@ice/jsx-runtime', // The exact import source is '@ice/runtime/jsx-runtime'
   };
 
   const commonOptions: SwcConfig = {

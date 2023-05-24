@@ -65,11 +65,11 @@ async function transformJsxRuntime(source: string) {
     }
     // JSX runtime is added after swc plugins
     // use es-module-lexer to replace the import statement.
-    if (imp.n === '@ice/runtime/jsx-dev-runtime') {
+    if (imp.n === '@ice/jsx-runtime/jsx-dev-runtime') {
       str().overwrite(
         imp.ss,
         imp.se,
-        'const __ice_import_runtime__ = await __ice_import__("@ice/runtime/jsx-dev-runtime");' +
+        'const __ice_import_runtime__ = await __ice_import__("@ice/jsx-runtime/jsx-dev-runtime");' +
         'const _jsxDEV = __ice_import_runtime__.jsxDEV;' +
         'const _Fragment = __ice_import_runtime__.Fragment',
       );
