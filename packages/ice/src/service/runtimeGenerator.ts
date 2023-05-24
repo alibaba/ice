@@ -85,17 +85,21 @@ export function generateDeclaration(exportList: Array<TargetDeclarationData | De
       const specifiers = isDefaultImport ? [specifier] : specifier;
       const symbol = type ? ';' : ',';
 
-      importDeclarations.push(`import ${type ? 'type ' : ''}${isDefaultImport ? specifier : `{ ${specifiers.map(specifierStr => ((alias && alias[specifierStr]) ? `${specifierStr} as ${alias[specifierStr]}` : specifierStr)).join(', ')} }`} from '${source}';`);
+      if (specifier) {
+        importDeclarations.push(`import ${type ? 'type ' : ''}${isDefaultImport ? specifier : `{ ${specifiers.map(specifierStr => ((alias && alias[specifierStr]) ? `${specifierStr} as ${alias[specifierStr]}` : specifierStr)).join(', ')} }`} from '${source}';`);
 
-      specifiers.forEach((specifierStr) => {
-        if (alias && alias[specifierStr]) {
-          exportDeclarations.push(`${alias[specifierStr]}: ${specifierStr}${symbol}`);
-          exportNames.push(alias[specifierStr]);
-        } else {
-          exportDeclarations.push(`${specifierStr}${symbol}`);
-          exportNames.push(specifierStr);
-        }
-      });
+        specifiers.forEach((specifierStr) => {
+          if (alias && alias[specifierStr]) {
+            exportDeclarations.push(`${alias[specifierStr]}: ${specifierStr}${symbol}`);
+            exportNames.push(alias[specifierStr]);
+          } else {
+            exportDeclarations.push(`${specifierStr}${symbol}`);
+            exportNames.push(specifierStr);
+          }
+        });
+      } else {
+        importDeclarations.push(`import '${source}';`);
+      }
     }
   });
 
@@ -187,7 +191,7 @@ export default class Generator {
     this.rerender = false;
     this.renderTemplates = [];
     this.renderDataRegistration = [];
-    this.contentTypes = ['framework', 'frameworkTypes', 'routeConfigTypes', 'dataLoaderImport', 'runtimeOptions'];
+    this.contentTypes = ['framework', 'frameworkTypes', 'routeConfigTypes', 'dataLoaderImport', 'runtimeOptions', 'entry'];
     // empty .ice before render
     fse.emptyDirSync(path.join(rootDir, targetDir));
     // add initial templates

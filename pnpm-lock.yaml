@@ -551,6 +551,27 @@ importers:
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
 
+  examples/with-entry-type:
+    specifiers:
+      '@ice/app': workspace:*
+      '@ice/runtime': workspace:*
+      '@types/react': ^18.0.0
+      '@types/react-dom': ^18.0.2
+      fs-extra: ^10.0.0
+      react: ^18.0.0
+      react-dom: ^18.0.0
+      webpack: ^5.73.0
+    dependencies:
+      '@ice/app': link:../../packages/ice
+      '@ice/runtime': link:../../packages/runtime
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    devDependencies:
+      '@types/react': 18.0.34
+      '@types/react-dom': 18.0.11
+      fs-extra: 10.1.0
+      webpack: 5.80.0
+
   examples/with-fusion:
     specifiers:
       '@alifd/next': ^1.25.49
@@ -1036,7 +1057,7 @@ importers:
     specifiers:
       '@ice/bundles': 0.1.10
       '@ice/route-manifest': 1.2.0
-      '@ice/runtime': ^1.2.0
+      '@ice/runtime': ^1.2.1
       '@ice/webpack-config': 1.0.14
       '@swc/helpers': 0.5.1
       '@types/babel__generator': ^7.6.4
@@ -1380,7 +1401,7 @@ importers:
     specifiers:
       '@babel/core': ^7.0.0
       '@babel/plugin-proposal-export-default-from': ^7.18.9
-      '@ice/app': ^3.2.0
+      '@ice/app': ^3.2.1
       '@ice/bundles': ^0.1.10
       babel-plugin-transform-jsx-stylesheet: 1.0.6
       consola: ^2.15.3
@@ -1498,6 +1519,7 @@ importers:
       react-router-dom: 6.11.1
       regenerator-runtime: ^0.13.9
       semver: ^7.4.0
+      source-map: ^0.7.4
     dependencies:
       '@ice/jsx-runtime': link:../jsx-runtime
       '@remix-run/router': 1.6.1
@@ -1507,6 +1529,7 @@ importers:
       htmlparser2: 8.0.1
       react-router-dom: 6.11.1_biqbaboplfbrettd7655fr4n2y
       semver: 7.4.0
+      source-map: 0.7.4
     devDependencies:
       '@remix-run/web-fetch': 4.3.3
       '@types/react': 18.0.28
@@ -19923,7 +19946,6 @@ packages:
   /source-map/0.7.4:
     resolution: {integrity: sha512-l3BikUxvPOcn5E74dZiq5BGsTb5yEwhaTSzccU6t4sDOH8NWJCstKO5QT2CvtFoK6F0saL7p9xHAqHOlCPJygA==}
     engines: {node: '>= 8'}
-    dev: true
 
   /source-map/0.8.0-beta.0:
     resolution: {integrity: sha512-2ymg6oRBpebeZi9UUNsgQ89bhx01TcTkmNTGnNO88imTmbSgy4nfujrgVEFKWpMTEGA11EDkTt7mqObTPdigIA==}

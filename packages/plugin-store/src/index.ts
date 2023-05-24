@@ -70,7 +70,7 @@ const formatId = (id: string) => id.split(path.sep).join('/');
 function exportStoreProviderPlugin({ pageDir, resetPageState }: { pageDir: string; resetPageState: boolean }): Config['transformPlugins'][0] {
   return {
     name: 'export-store-provider',
-    enforce: 'post',
+    enforce: 'pre',
     transformInclude: (id) => {
       return (
         /\.[jt]sx?$/i.test(id) &&
