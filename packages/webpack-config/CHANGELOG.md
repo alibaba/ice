@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.15
+
+### Patch Changes
+
+- a4b85144: fix: compatible with code has import.meta
+
 ## 1.0.14
 
 ### Patch Changes
