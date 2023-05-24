@@ -47,4 +47,9 @@ describe('transform core js path', () => {
     expect(await transformImport(orignalCode, coreJsPath))
       .toBe('var _object_spread = require(\'@swc/helpers/cjs/_object_spread.cjs\')._;module.exports = {};');
   });
+  it('with import.meta', async () => {
+    const orignalCode = fs.readFileSync(path.join(__dirname, './fixtures/transformImport/importMeta.js'), 'utf-8');
+    expect(await transformImport(orignalCode, coreJsPath))
+      .toBe('if (import.meta.rerender === \'client\') console.log(true);\n');
+  });
 });
