@@ -1,5 +1,15 @@
 # @ice/runtime
 
+## 1.2.1
+
+### Patch Changes
+
+- 989e2501: fix: compatible with hmr when data get undefined
+- f24b045d: feat: supprot sourmap for distType
+- ab139acc: fix: add v5Compat for use history to navigate
+- 6e639dfe: fix: get data loader with code remove
+- f24b045d: feat: supprot sourmap for distType
+
 ## 1.2.0
 
 ### Minor Changes

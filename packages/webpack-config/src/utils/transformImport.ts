@@ -12,7 +12,8 @@ const transformImport = async (source: string, coreJsPath: string) => {
   const str = () => s || (s = new MagicString(source));
   const isESM = exports.length > 0 || imports.some((targetImport) => {
     const importString = targetImport.n;
-    return !importString.includes('core-js') && !importString.includes('@swc/helpers');
+    // `targetImport.n` get undefined when code has `import.meta.*`.
+    return importString && !importString.includes('core-js') && !importString.includes('@swc/helpers');
   });
   imports.forEach((targetImport) => {
     if (!targetImport.n) {
