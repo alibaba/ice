@@ -50,6 +50,6 @@ describe('transform core js path', () => {
   it('with import.meta', async () => {
     const orignalCode = fs.readFileSync(path.join(__dirname, './fixtures/transformImport/importMeta.js'), 'utf-8');
     expect(await transformImport(orignalCode, coreJsPath))
-      .toBe('if (import.meta.rerender === \'client\') console.log(true);\n');
+      .toBe('if (import.meta.rerender === \'client\') console.log(true);');
   });
 });
