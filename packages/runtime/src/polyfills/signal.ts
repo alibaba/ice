@@ -1,4 +1,5 @@
 // Add polyfill of Request.prototype.signal for some browser compatibility.
+// eslint-disable-next-line
 if (import.meta.renderer === 'client' && window.Request && !window.Request.prototype.hasOwnProperty('signal')) {
   (function (self) {
       const OriginalRequest = window.Request;
