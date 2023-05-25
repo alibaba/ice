@@ -162,6 +162,10 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   RUNTIME_EXPORTS.forEach(exports => {
     generatorAPI.addExport(exports);
   });
+  // Add polyfills.
+  generatorAPI.addEntryImportAhead({
+    source: '@ice/runtime/polyfills/signal',
+  });
   const routeManifest = new RouteManifest();
   const ctx = new Context<Config, ExtendsPluginAPI>({
     rootDir,
