@@ -1,9 +1,5 @@
 # Changelog
 
-## 3.2.3
-
-- fix: pass `getRoutesFile` for onDemand server runner.
-
 ## 3.2.2
 
 ### Patch Changes
