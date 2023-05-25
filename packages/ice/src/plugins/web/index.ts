@@ -18,8 +18,6 @@ const plugin: Plugin = () => ({
         'Scripts',
         'Data',
         'Main',
-        'useScripts',
-        'useRenderMode',
       ],
       types: [
         'MetaType',
