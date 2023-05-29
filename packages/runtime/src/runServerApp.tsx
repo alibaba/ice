@@ -160,6 +160,7 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
         onShellError: async (err) => {
           if (renderOptions.disableFallback) {
             reject(err);
+            return;
           }
 
           // downgrade to CSR.
