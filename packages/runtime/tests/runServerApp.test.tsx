@@ -60,7 +60,7 @@ describe('run server app', () => {
         <Scripts />
       </body>
     </html>
-    );
+  );
 
   it('render to html', async () => {
     const html = await renderToHTML({

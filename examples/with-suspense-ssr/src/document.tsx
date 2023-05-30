@@ -1,9 +1,6 @@
-import { Meta, Title, Links, Main, Scripts, useScripts } from 'ice';
+import { Meta, Title, Links, Main, Scripts } from 'ice';
 
 function Document() {
-  const scripts = useScripts();
-  console.log(scripts);
-
   return (
     <html>
       <head>
