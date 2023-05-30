@@ -64,7 +64,9 @@ const scanPlugin = (options: Options): Plugin => {
       pkgNameCache.set(resolved, result);
       return result;
     } catch (err) {
-      logger.error(`cant resolve package of path: ${resolved}`, err);
+      logger.error(`Can't resolve package of path: ${resolved}`);
+      // Scan error doesn't affect the build process.
+      logger.error(err);
     }
   };
 
