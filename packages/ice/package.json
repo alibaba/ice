@@ -1,6 +1,6 @@
 {
   "name": "@ice/app",
-  "version": "3.2.3-alpha.3",
+  "version": "3.2.3",
   "description": "provide scripts and configuration used by web framework ice",
   "type": "module",
   "main": "./esm/index.js",
@@ -38,7 +38,7 @@
   "dependencies": {
     "@ice/bundles": "0.1.10",
     "@ice/route-manifest": "1.2.0",
-    "@ice/runtime": "1.2.2-alpha.3",
+    "@ice/runtime": "^1.2.1",
     "@ice/webpack-config": "1.0.15",
     "@swc/helpers": "0.5.1",
     "@types/express": "^4.17.14",
