@@ -43,6 +43,9 @@ interface RenderOptions {
   publicPath?: string;
   serverData?: any;
   onShellReady?: Function;
+  onShellError?: Function;
+  onError?: Function;
+  onAllReady?: Function;
 }
 
 export async function renderToHTML(requestContext, options: RenderOptions = {}) {
@@ -72,29 +75,22 @@ export async function renderToEntry(requestContext, options: RenderOptions = {})
 <% } -%>
 
 function mergeOptions(options) {
-  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback, distType, prependCode, serverData, publicPath, onShellReady } = options;
+  const { renderMode = 'SSR', basename, publicPath } = options;
 
   if (publicPath) {
     assetsManifest.publicPath = publicPath;
   }
 
   return {
+    ...options,
     app,
     assetsManifest,
     createRoutes,
     runtimeModules,
     Document,
-    serverOnlyBasename,
     basename: basename || getRouterBasename(),
-    documentOnly,
     renderMode,
-    routePath,
-    disableFallback,
     routesConfig,
-    distType,
-    prependCode,
-    serverData,
-    onShellReady,
     runtimeOptions: {
     <% if (runtimeOptions.exports) { -%>
       <%- runtimeOptions.exports %>

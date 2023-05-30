@@ -52,6 +52,9 @@ interface RenderOptions {
   prependCode?: string;
   serverData?: any;
   onShellReady?: Function;
+  onShellError?: Function;
+  onError?: Function;
+  onAllReady?: Function;
 }
 
 interface Piper {
@@ -155,15 +158,17 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
+    const { onShellReady, onShellError, onError, onAllReady } = renderOptions;
+
     return new Promise<void>((resolve, reject) => {
       // Send stream result to ServerResponse.
       pipe(res, {
         onShellReady: () => {
-          if (renderOptions.onShellReady) {
-            renderOptions.onShellReady();
-          }
+          onShellReady && onShellReady();
         },
         onShellError: async (err) => {
+          onShellError && onShellError();
+
           if (renderOptions.disableFallback) {
             reject(err);
             return;
@@ -177,12 +182,14 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
           resolve();
         },
         onError: async (err) => {
+          onError && onError();
           // onError triggered after shell ready, should not downgrade to csr
           // and should not be throw to break the render process
           console.error('PipeToResponse error.');
           console.error(err);
         },
         onAllReady: () => {
+          onAllReady && onAllReady();
           resolve();
         },
       });

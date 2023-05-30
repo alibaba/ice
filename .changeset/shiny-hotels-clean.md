@@ -3,4 +3,4 @@
 '@ice/app': patch
 ---
 
-feat: support listen onShellReady
+feat: hooks for server render
