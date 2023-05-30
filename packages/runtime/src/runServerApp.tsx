@@ -51,6 +51,7 @@ interface RenderOptions {
   distType?: Array<'html' | 'javascript'>;
   prependCode?: string;
   serverData?: any;
+  onShellReady?: Function;
 }
 
 interface Piper {
@@ -157,6 +158,11 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
     return new Promise<void>((resolve, reject) => {
       // Send stream result to ServerResponse.
       pipe(res, {
+        onShellReady: () => {
+          if (renderOptions.onShellReady) {
+            renderOptions.onShellReady();
+          }
+        },
         onShellError: async (err) => {
           if (renderOptions.disableFallback) {
             reject(err);
