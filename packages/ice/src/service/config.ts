@@ -137,7 +137,6 @@ export const getAppExportConfig = (rootDir: string) => {
     needRecompile: async (entry, keepExports) => {
       const cachedKey = `app_${keepExports.join('_')}_${process.env.__ICE_VERSION__}`;
       const cached = await getCache(rootDir, cachedKey);
-
       const fileHash = await getFileHash(appEntry);
       if (!cached || fileHash !== cached) {
         await setCache(rootDir, cachedKey, fileHash);
@@ -151,7 +150,7 @@ export const getAppExportConfig = (rootDir: string) => {
     try {
       return (await config.getConfig(exportNames || ['default', 'defineAppConfig'])) || {};
     } catch (error) {
-      logger.warn('Failed to get app config.');
+      logger.error('Failed to get app config.');
       logger.debug(error);
     }
   };
@@ -206,7 +205,7 @@ export const getRouteExportConfig = (rootDir: string) => {
         // Always use cached file path while `routes-config` trigger re-compile by webpack plugin.
         return entry;
       } else {
-        setCache(rootDir, cachedKey, 'true');
+        await setCache(rootDir, cachedKey, 'true');
         return false;
       }
     },
@@ -223,7 +222,7 @@ export const getRouteExportConfig = (rootDir: string) => {
         // Always use cached file path while `routes-config` trigger re-compile by webpack plugin.
         return entry;
       } else {
-        setCache(rootDir, cachedKey, 'true');
+        await setCache(rootDir, cachedKey, 'true');
         return false;
       }
     },
@@ -251,7 +250,7 @@ export const getRouteExportConfig = (rootDir: string) => {
   const ensureRoutesConfig = async () => {
     const configFile = await routeConfig.getConfigFile(['pageConfig']);
     if (!configFile) {
-      setCache(rootDir, cachedKey, '');
+      await setCache(rootDir, cachedKey, '');
     }
   };
 
