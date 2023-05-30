@@ -43,7 +43,9 @@
     "regenerator-runtime": "^0.13.9",
     "@remix-run/web-fetch": "^4.3.3"
   },
-  "sideEffects": false,
+  "sideEffects": [
+    "./esm/polyfills/signal.js"
+  ],
   "dependencies": {
     "@ice/jsx-runtime": "^0.2.1",
     "@remix-run/router": "1.6.1",

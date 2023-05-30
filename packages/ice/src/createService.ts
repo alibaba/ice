@@ -315,6 +315,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       task: platformTaskConfig,
       server,
       csr,
+      getRoutesFile: () => routeManifest.getRoutesFile(),
     });
     addWatchEvent([
       /src\/?[\w*-:.$]+$/,
