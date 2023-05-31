@@ -6,6 +6,7 @@ import { commons, statics } from './runtimeModules';
 import * as app from '@/app';
 import Document from '@/document';
 import type { RenderMode, DistType } from '@ice/runtime';
+import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 // @ts-ignore
 import assetsManifest from 'virtual:assets-manifest.json';
 import createRoutes from './routes';
@@ -32,7 +33,7 @@ const setRuntimeEnv = (renderMode) => {
   }
 }
 
-interface RenderOptions {
+interface RenderOptions extends RenderToPipeableStreamOptions {
   documentOnly?: boolean;
   renderMode?: RenderMode;
   basename?: string;
@@ -42,10 +43,6 @@ interface RenderOptions {
   distType?: DistType;
   publicPath?: string;
   serverData?: any;
-  onShellReady?: Function;
-  onShellError?: Function;
-  onError?: Function;
-  onAllReady?: Function;
 }
 
 export async function renderToHTML(requestContext, options: RenderOptions = {}) {

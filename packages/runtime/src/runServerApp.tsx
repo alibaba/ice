@@ -3,6 +3,7 @@ import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { parsePath } from 'history';
 import type { Location } from 'history';
+import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 import type {
   AppContext, RouteItem, ServerContext,
   AppExport, AssetsManifest,
@@ -30,7 +31,7 @@ import ServerRouter from './ServerRouter.js';
 import { renderHTMLToJS } from './renderHTMLToJS.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 
-interface RenderOptions {
+interface RenderOptions extends RenderToPipeableStreamOptions {
   app: AppExport;
   assetsManifest: AssetsManifest;
   createRoutes: (options: Pick<RouteLoaderOptions, 'requestContext' | 'renderMode'>) => RouteItem[];
@@ -51,10 +52,6 @@ interface RenderOptions {
   distType?: Array<'html' | 'javascript'>;
   prependCode?: string;
   serverData?: any;
-  onShellReady?: Function;
-  onShellError?: Function;
-  onError?: Function;
-  onAllReady?: Function;
 }
 
 interface Piper {
@@ -167,7 +164,7 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
           onShellReady && onShellReady();
         },
         onShellError: async (err) => {
-          onShellError && onShellError();
+          onShellError && onShellError(err);
 
           if (renderOptions.disableFallback) {
             reject(err);
@@ -182,7 +179,7 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
           resolve();
         },
         onError: async (err) => {
-          onError && onError();
+          onError && onError(err);
           // onError triggered after shell ready, should not downgrade to csr
           // and should not be throw to break the render process
           console.error('PipeToResponse error.');
