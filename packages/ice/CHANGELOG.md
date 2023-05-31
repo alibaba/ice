@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.2.3
+
+### Patch Changes
+
+- 94e7dff2: fix: pass `getRoutesFile` for onDemand server runner.
+- 51411c4e: feat: hooks for server render
+- 71f32f9c: fix: add default polyfill for signal
+- Updated dependencies [d1df9ffa]
+- Updated dependencies [51411c4e]
+- Updated dependencies [71f32f9c]
+  - @ice/runtime@1.2.2
+
 ## 3.2.2
 
 ### Patch Changes
