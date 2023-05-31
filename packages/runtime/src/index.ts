@@ -98,7 +98,6 @@ export {
   Data,
   Main,
   useScripts,
-  useRenderMode,
   // API for data-loader.
   dataLoader,
   callDataLoader,
