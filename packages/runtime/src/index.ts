@@ -55,7 +55,7 @@ import usePageLifecycle from './usePageLifecycle.js';
 import { withSuspense, useSuspenseData } from './Suspense.js';
 import { createRouteLoader, WrapRouteComponent, RouteErrorComponent, Await } from './routes.js';
 
-function useAppContext(): AppContext {
+function useAppContext() {
   const context = internalUseAppContext();
 
   const {
