@@ -8,6 +8,7 @@ import {
 import type {
   RuntimePlugin,
   AppContext,
+  PublicAppContext,
   AppConfig,
   RouteConfig,
   RouteItem,
@@ -55,7 +56,7 @@ import usePageLifecycle from './usePageLifecycle.js';
 import { withSuspense, useSuspenseData } from './Suspense.js';
 import { createRouteLoader, WrapRouteComponent, RouteErrorComponent, Await } from './routes.js';
 
-function useAppContext() {
+function useAppContext(): PublicAppContext {
   const context = useInternalAppContext();
 
   const {
@@ -64,7 +65,6 @@ function useAppContext() {
     downgrade,
     documentOnly,
     renderMode,
-    serverData,
     assetsManifest,
   } = context;
 
@@ -74,7 +74,6 @@ function useAppContext() {
     downgrade,
     documentOnly,
     renderMode,
-    serverData,
     assetsManifest,
   };
 }

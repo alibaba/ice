@@ -1,7 +1,7 @@
 import * as React from 'react';
-import type { InternalAppContext } from './types.js';
+import type { AppContext } from './types.js';
 
-const Context = React.createContext<InternalAppContext | undefined>(undefined);
+const Context = React.createContext<AppContext | undefined>(undefined);
 
 Context.displayName = 'AppContext';
 

@@ -4,7 +4,7 @@ import * as ReactDOMServer from 'react-dom/server';
 import { parsePath } from 'history';
 import type { Location } from 'history';
 import type {
-  InternalAppContext, RouteItem, ServerContext,
+  AppContext, RouteItem, ServerContext,
   AppExport, AssetsManifest,
   RouteMatch,
   PageConfig,
@@ -230,7 +230,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     renderMode,
   });
   let appData: AppData;
-  const appContext: InternalAppContext = {
+  const appContext: AppContext = {
     appExport: app,
     routes,
     appConfig,
@@ -440,7 +440,7 @@ function renderDocument(options: RenderDocumentOptions): Response {
     };
   });
 
-  const appContext: InternalAppContext = {
+  const appContext: AppContext = {
     assetsManifest,
     appConfig,
     appData,
