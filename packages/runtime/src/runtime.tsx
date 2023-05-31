@@ -4,7 +4,7 @@ import type { ComponentType } from 'react';
 import { routerHistory as history } from './history.js';
 import type {
   Renderer,
-  AppContext,
+  InternalAppContext,
   StaticRuntimePlugin,
   RuntimePlugin,
   CommonJsRuntime,
@@ -22,7 +22,7 @@ import { useData, useConfig } from './RouteContext.js';
 import { useAppContext } from './AppContext.js';
 
 class Runtime {
-  private appContext: AppContext;
+  private appContext: InternalAppContext;
 
   private runtimeOptions?: Record<string, any>;
 
@@ -36,7 +36,7 @@ class Runtime {
 
   private responseHandlers: ResponseHandler[];
 
-  public constructor(appContext: AppContext, runtimeOptions?: Record<string, any>) {
+  public constructor(appContext: InternalAppContext, runtimeOptions?: Record<string, any>) {
     this.AppProvider = [];
     this.appContext = appContext;
     this.render = (container, element) => {
@@ -57,7 +57,7 @@ class Runtime {
     };
   };
 
-  public setAppContext = (appContext: AppContext) => {
+  public setAppContext = (appContext: InternalAppContext) => {
     this.appContext = appContext;
   };
 
