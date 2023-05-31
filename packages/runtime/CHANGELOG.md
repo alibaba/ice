@@ -1,5 +1,13 @@
 # @ice/runtime
 
+## 1.2.2
+
+### Patch Changes
+
+- d1df9ffa: fix: should return after reject error
+- 51411c4e: feat: hooks for server render
+- 71f32f9c: fix: add default polyfill for signal
+
 ## 1.2.1
 
 ### Patch Changes
