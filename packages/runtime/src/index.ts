@@ -33,7 +33,7 @@ import {
   Scripts,
   Main,
   Data,
-  useScripts,
+  usePageAssets,
 } from './Document.js';
 import type {
   MetaType,
@@ -97,7 +97,7 @@ export {
   Scripts,
   Data,
   Main,
-  useScripts,
+  usePageAssets,
   // API for data-loader.
   dataLoader,
   callDataLoader,

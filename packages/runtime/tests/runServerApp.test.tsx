@@ -4,7 +4,7 @@
 import React from 'react';
 import { expect, it, describe } from 'vitest';
 import { renderToHTML, renderToResponse } from '../src/runServerApp';
-import { Meta, Title, Links, Main, Scripts, useScripts } from '../src/Document';
+import { Meta, Title, Links, Main, Scripts, usePageAssets } from '../src/Document';
 import { useAppContext } from '../src/';
 import {
   createRouteLoader,
@@ -261,7 +261,7 @@ describe('run server app', () => {
     let renderMode;
 
     const Document = () => {
-      scripts = useScripts();
+      scripts = usePageAssets();
       const context = useAppContext();
       renderMode = context.renderMode;
 
