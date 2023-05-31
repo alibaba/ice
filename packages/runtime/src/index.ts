@@ -22,7 +22,7 @@ import type {
 import Runtime from './runtime.js';
 import runClientApp from './runClientApp.js';
 import type { RunClientAppOptions } from './runClientApp.js';
-import { useAppContext, useAppData, AppContextProvider } from './AppContext.js';
+import { useAppContext as internalUseAppContext, useAppData, AppContextProvider } from './AppContext.js';
 import { getAppData } from './appData.js';
 import { useData, useConfig } from './RouteContext.js';
 import {
@@ -54,6 +54,30 @@ import useMounted from './useMounted.js';
 import usePageLifecycle from './usePageLifecycle.js';
 import { withSuspense, useSuspenseData } from './Suspense.js';
 import { createRouteLoader, WrapRouteComponent, RouteErrorComponent, Await } from './routes.js';
+
+function useAppContext(): AppContext {
+  const context = internalUseAppContext();
+
+  const {
+    routePath,
+    matchedIds,
+    downgrade,
+    documentOnly,
+    renderMode,
+    serverData,
+    assetsManifest,
+  } = context;
+
+  return {
+    routePath,
+    matchedIds,
+    downgrade,
+    documentOnly,
+    renderMode,
+    serverData,
+    assetsManifest,
+  };
+}
 
 export {
   getAppConfig,

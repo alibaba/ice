@@ -90,7 +90,7 @@ export interface LoaderData {
 }
 
 // useAppContext
-export interface AppContext {
+export interface InternalAppContext {
   appConfig: AppConfig;
   appData: any;
   serverData?: any;
@@ -111,8 +111,13 @@ export interface AppContext {
   revalidate?: boolean;
 }
 
+export type AppContext = Pick<
+InternalAppContext,
+ 'routePath' | 'matchedIds' | 'downgrade' | 'documentOnly' | 'renderMode' | 'serverData' | 'assetsManifest'
+>;
+
 export type WindowContext = Pick<
-  AppContext,
+InternalAppContext,
   'appData' | 'loaderData' | 'routePath' | 'downgrade' | 'matchedIds' | 'documentOnly' | 'renderMode' | 'serverData' | 'revalidate'
 >;
 
