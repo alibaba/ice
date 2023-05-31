@@ -27,6 +27,7 @@ interface InitOptions {
   server: UserConfig['server'];
   csr: boolean;
   task: TaskConfig<Config>;
+  getRoutesFile: () => string[];
 }
 
 type ResolveCallback = Parameters<PluginBuild['onResolve']>[1];
@@ -88,12 +89,14 @@ class ServerRunner extends Runner {
     server,
     rootDir,
     csr,
+    getRoutesFile,
   }: InitOptions) {
     const transformPlugins = getCompilerPlugins(rootDir, {
       ...task.config,
       fastRefresh: false,
       enableEnv: false,
       polyfill: false,
+      getRoutesFile,
       swcOptions: {
         nodeTransform: true,
         // Remove all exports except pageConfig when ssr and ssg both are false.

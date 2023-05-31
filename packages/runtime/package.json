@@ -1,6 +1,6 @@
 {
   "name": "@ice/runtime",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Runtime module for ice.js",
   "type": "module",
   "types": "./esm/index.d.ts",
@@ -15,7 +15,8 @@
     "./router": "./esm/router.js",
     "./single-router": "./esm/singleRouter.js",
     "./types": "./esm/types.js",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./polyfills/signal": "./esm/polyfills/signal.js"
   },
   "files": [
     "esm",
@@ -42,7 +43,9 @@
     "regenerator-runtime": "^0.13.9",
     "@remix-run/web-fetch": "^4.3.3"
   },
-  "sideEffects": false,
+  "sideEffects": [
+    "./esm/polyfills/signal.js"
+  ],
   "dependencies": {
     "@ice/jsx-runtime": "^0.2.1",
     "@remix-run/router": "1.6.1",
