@@ -3,6 +3,7 @@ import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { parsePath } from 'history';
 import type { Location } from 'history';
+import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 import type {
   AppContext, RouteItem, ServerContext,
   AppExport, AssetsManifest,
@@ -51,6 +52,7 @@ interface RenderOptions {
   distType?: Array<'html' | 'javascript'>;
   prependCode?: string;
   serverData?: any;
+  streamOptions?: RenderToPipeableStreamOptions;
 }
 
 interface Piper {
@@ -154,10 +156,18 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
+    const { streamOptions = {} } = renderOptions;
+    const { onShellReady, onShellError, onError, onAllReady } = streamOptions;
+
     return new Promise<void>((resolve, reject) => {
       // Send stream result to ServerResponse.
       pipe(res, {
+        onShellReady: () => {
+          onShellReady && onShellReady();
+        },
         onShellError: async (err) => {
+          onShellError && onShellError(err);
+
           if (renderOptions.disableFallback) {
             reject(err);
             return;
@@ -171,12 +181,14 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
           resolve();
         },
         onError: async (err) => {
+          onError && onError(err);
           // onError triggered after shell ready, should not downgrade to csr
           // and should not be throw to break the render process
           console.error('PipeToResponse error.');
           console.error(err);
         },
         onAllReady: () => {
+          onAllReady && onAllReady();
           resolve();
         },
       });
