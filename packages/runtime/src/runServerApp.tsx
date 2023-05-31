@@ -31,7 +31,7 @@ import ServerRouter from './ServerRouter.js';
 import { renderHTMLToJS } from './renderHTMLToJS.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 
-interface RenderOptions extends RenderToPipeableStreamOptions {
+interface RenderOptions {
   app: AppExport;
   assetsManifest: AssetsManifest;
   createRoutes: (options: Pick<RouteLoaderOptions, 'requestContext' | 'renderMode'>) => RouteItem[];
@@ -52,6 +52,7 @@ interface RenderOptions extends RenderToPipeableStreamOptions {
   distType?: Array<'html' | 'javascript'>;
   prependCode?: string;
   serverData?: any;
+  streamOptions?: RenderToPipeableStreamOptions;
 }
 
 interface Piper {
@@ -155,7 +156,8 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
-    const { onShellReady, onShellError, onError, onAllReady } = renderOptions;
+    const { streamOptions = {} } = renderOptions;
+    const { onShellReady, onShellError, onError, onAllReady } = streamOptions;
 
     return new Promise<void>((resolve, reject) => {
       // Send stream result to ServerResponse.

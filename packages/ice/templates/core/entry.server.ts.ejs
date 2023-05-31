@@ -33,7 +33,7 @@ const setRuntimeEnv = (renderMode) => {
   }
 }
 
-interface RenderOptions extends RenderToPipeableStreamOptions {
+interface RenderOptions {
   documentOnly?: boolean;
   renderMode?: RenderMode;
   basename?: string;
@@ -43,6 +43,7 @@ interface RenderOptions extends RenderToPipeableStreamOptions {
   distType?: DistType;
   publicPath?: string;
   serverData?: any;
+  streamOptions?: RenderToPipeableStreamOptions;
 }
 
 export async function renderToHTML(requestContext, options: RenderOptions = {}) {
