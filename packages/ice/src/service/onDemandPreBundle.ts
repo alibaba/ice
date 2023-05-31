@@ -3,6 +3,7 @@ import { createRequire } from 'module';
 import fse from 'fs-extra';
 import findUp from 'find-up';
 import type { Plugin } from 'esbuild';
+import type { Config } from '@ice/webpack-config/types';
 import { logger } from '../utils/logger.js';
 import { CACHE_DIR } from '../constant.js';
 import { bundleDeps, resolvePackageESEntry, getDepsCacheDir } from './preBundleDeps.js';
@@ -24,6 +25,7 @@ interface PreBundleOptions {
   plugins?: Plugin[];
   external?: string[];
   define?: Record<string, string>;
+  taskConfig?: Config;
 }
 
 export class RuntimeMeta {
@@ -35,6 +37,7 @@ export class RuntimeMeta {
   private cachePath: string;
   private external: string[];
   private define: Record<string, string>;
+  private taskConfig: Config;
 
   constructor(options: Omit<PreBundleOptions, 'pkgName' | 'resolveId'>) {
     this.rootDir = options.rootDir;
@@ -44,6 +47,7 @@ export class RuntimeMeta {
     this.external = options.external;
     this.define = options.define;
     this.cachePath = path.join(getDepsCacheDir(path.join(this.rootDir, CACHE_DIR)), 'metadata.json');
+    this.taskConfig = options.taskConfig;
   }
 
   async getDepsCache() {
@@ -97,6 +101,7 @@ export class RuntimeMeta {
         define: this.define,
         pkgName: pkgName,
         resolveId,
+        taskConfig: this.taskConfig,
       });
       await this.setDepsCache(pkgName, resolveId, bundlePath);
       return bundlePath;
@@ -107,7 +112,7 @@ export class RuntimeMeta {
 }
 
 export default async function preBundleDeps(options: PreBundleOptions): Promise<PreBundleResult> {
-  const { rootDir, pkgName, alias, ignores, plugins, resolveId, external, define } = options;
+  const { rootDir, pkgName, alias, ignores, plugins, resolveId, external, define, taskConfig } = options;
   const depsCacheDir = getDepsCacheDir(path.join(rootDir, CACHE_DIR));
   try {
     await bundleDeps({
@@ -118,6 +123,7 @@ export default async function preBundleDeps(options: PreBundleOptions): Promise<
       plugins: plugins || [],
       external,
       define,
+      taskConfig,
     });
   } catch (err) {
     logger.error('Failed to bundle dependencies.');

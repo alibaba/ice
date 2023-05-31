@@ -103,6 +103,7 @@ export default async function preBundleDeps(
       alias,
       external,
       define,
+      taskConfig,
     });
 
     await fse.writeJSON(metadataJSONPath, metadata, { spaces: 2 });
@@ -126,8 +127,9 @@ export async function bundleDeps(options:
     plugins: Plugin[];
     external: string[];
     define: BuildOptions['define'];
+    taskConfig: Config;
   }) {
-  const { entryPoints, outdir, alias, ignores, plugins, external, define } = options;
+  const { entryPoints, outdir, alias, ignores, plugins, external, define, taskConfig } = options;
   return await esbuild.build({
     absWorkingDir: process.cwd(),
     entryPoints,
@@ -154,7 +156,7 @@ export async function bundleDeps(options:
         extract: false,
         generateLocalIdentName: function (name: string, filename: string) {
           // Compatible with webpack css-loader.
-          return escapeLocalIdent(getCSSModuleLocalIdent(filename, name));
+          return escapeLocalIdent(getCSSModuleLocalIdent(filename, name, taskConfig.cssModules?.hashOnly));
         },
       }),
       ...plugins,

@@ -1,6 +1,6 @@
 import { createHash } from 'crypto';
 
-export function getCSSModuleLocalIdent(filename: string, localName: string) {
+export function getCSSModuleLocalIdent(filename: string, localName: string, hashOnly: boolean): string {
   const hash = createHash('md5');
   hash.update(Buffer.from(filename + localName, 'utf8'));
   const localIdentHash = hash.digest('base64')
@@ -11,5 +11,10 @@ export function getCSSModuleLocalIdent(filename: string, localName: string) {
     // Remove everything that is not an alphanumeric or underscore
     .replace(/[^A-Za-z0-9_]+/g, '')
     .slice(0, 8);
+
+  if (hashOnly) {
+    return localIdentHash;
+  }
+
   return `${localName}--${localIdentHash}`;
 }

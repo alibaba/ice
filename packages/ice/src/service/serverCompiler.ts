@@ -200,7 +200,7 @@ export function createServerCompiler(options: Options) {
           extract: false,
           generateLocalIdentName: function (name: string, filename: string) {
             // Compatible with webpack css-loader.
-            return escapeLocalIdent(getCSSModuleLocalIdent(filename, name));
+            return escapeLocalIdent(getCSSModuleLocalIdent(filename, name, task.config.cssModules?.hashOnly));
           },
         }),
         compilationInfo && createAssetsPlugin(compilationInfo, rootDir),

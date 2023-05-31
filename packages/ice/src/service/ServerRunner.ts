@@ -110,14 +110,16 @@ class ServerRunner extends Runner {
         },
       },
     }, 'esbuild', { isServer: true });
-    const { alias, ignores } = filterAlias(task.config.alias || {});
-    const define = getRuntimeDefination(task.config.define || {});
+    const taskConfig = task.config;
+    const { alias, ignores } = filterAlias(taskConfig.alias || {});
+    const define = getRuntimeDefination(taskConfig.define || {});
     const runtimeMeta = new RuntimeMeta({
       rootDir,
       alias,
       ignores,
       external: server.externals || [],
       define,
+      taskConfig,
     });
 
     const esbuildPlugins = [
@@ -133,7 +135,7 @@ class ServerRunner extends Runner {
         extract: false,
         generateLocalIdentName: function (name: string, filename: string) {
           // Compatible with webpack css-loader.
-          return escapeLocalIdent(getCSSModuleLocalIdent(filename, name));
+          return escapeLocalIdent(getCSSModuleLocalIdent(filename, name, taskConfig.cssModules?.hashOnly));
         },
       }),
       createAssetsPlugin(() => {

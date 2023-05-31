@@ -49,6 +49,7 @@ export interface UserConfig {
   filename?: string;
   webpack?: ModifyWebpackConfig;
   postcss?: ProcessOptions & { plugins?: (string | [string, Record<string, any>?])[] };
+  cssModules?: Config['cssModules'];
   routes?: {
     ignoreFiles?: string[];
     defineRoutes?: (defineRoute: DefineRouteFunction) => void;

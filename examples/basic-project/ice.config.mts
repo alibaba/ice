@@ -38,4 +38,7 @@ export default defineConfig(() => ({
     customPlugin(),
   ],
   eslint: true,
+  cssModules: {
+    hashOnly: true,
+  },
 }));
