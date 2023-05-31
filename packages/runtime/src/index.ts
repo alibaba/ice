@@ -59,6 +59,7 @@ function useAppContext(): PublicAppContext {
   const context = useInternalAppContext();
 
   const {
+    appConfig,
     routePath,
     matchedIds,
     downgrade,
@@ -68,6 +69,7 @@ function useAppContext(): PublicAppContext {
   } = context;
 
   return {
+    appConfig,
     routePath,
     matchedIds,
     downgrade,
