@@ -22,7 +22,7 @@ import type {
 import Runtime from './runtime.js';
 import runClientApp from './runClientApp.js';
 import type { RunClientAppOptions } from './runClientApp.js';
-import { useAppContext as internalUseAppContext, useAppData, AppContextProvider } from './AppContext.js';
+import { useAppContext as useInternalAppContext, useAppData, AppContextProvider } from './AppContext.js';
 import { getAppData } from './appData.js';
 import { useData, useConfig } from './RouteContext.js';
 import {
@@ -56,7 +56,7 @@ import { withSuspense, useSuspenseData } from './Suspense.js';
 import { createRouteLoader, WrapRouteComponent, RouteErrorComponent, Await } from './routes.js';
 
 function useAppContext() {
-  const context = internalUseAppContext();
+  const context = useInternalAppContext();
 
   const {
     routePath,
