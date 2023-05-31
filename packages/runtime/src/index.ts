@@ -34,7 +34,6 @@ import {
   Main,
   Data,
   useScripts,
-  useRenderMode,
 } from './Document.js';
 import type {
   MetaType,

@@ -4,7 +4,8 @@
 import React from 'react';
 import { expect, it, describe } from 'vitest';
 import { renderToHTML, renderToResponse } from '../src/runServerApp';
-import { Meta, Title, Links, Main, Scripts, useRenderMode, useScripts } from '../src/Document';
+import { Meta, Title, Links, Main, Scripts, useScripts } from '../src/Document';
+import { useAppContext } from '../src/';
 import {
   createRouteLoader,
 } from '../src/routes.js';
@@ -261,7 +262,8 @@ describe('run server app', () => {
 
     const Document = () => {
       scripts = useScripts();
-      renderMode = useRenderMode();
+      const context = useAppContext();
+      renderMode = context.renderMode;
 
       return (
         <html>

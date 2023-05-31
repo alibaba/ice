@@ -63,7 +63,6 @@ export const RUNTIME_EXPORTS = [
       'useSuspenseData',
       'useScripts',
       'useAppContext',
-      'useRenderMode',
       'Await',
       'defineDataLoader',
       'defineServerDataLoader',
