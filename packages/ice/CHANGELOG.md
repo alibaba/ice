@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.2.4
+
+### Patch Changes
+
+- Updated dependencies [b21ab5cd]
+  - @ice/webpack-config@1.0.16
+
 ## 3.2.3
 
 ### Patch Changes

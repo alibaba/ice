@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.16
+
+### Patch Changes
+
+- b21ab5cd: fix: compile @remix-run/router when minify is swc
+
 ## 1.0.15
 
 ### Patch Changes

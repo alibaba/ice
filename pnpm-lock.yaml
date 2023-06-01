@@ -1058,7 +1058,7 @@ importers:
       '@ice/bundles': 0.1.10
       '@ice/route-manifest': 1.2.0
       '@ice/runtime': ^1.2.2
-      '@ice/webpack-config': 1.0.15
+      '@ice/webpack-config': 1.0.16
       '@swc/helpers': 0.5.1
       '@types/babel__generator': ^7.6.4
       '@types/babel__traverse': ^7.17.1
@@ -1419,7 +1419,7 @@ importers:
       consola: 2.15.3
       css: 2.2.4
       lodash.merge: 4.6.2
-      rax-compat: 0.2.3
+      rax-compat: link:../rax-compat
       style-unit: 3.0.5
       stylesheet-loader: 0.9.1
     devDependencies:
@@ -5323,13 +5323,6 @@ packages:
   /@humanwhocodes/object-schema/1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
-
-  /@ice/appear/0.1.5:
-    resolution: {integrity: sha512-wChA3UYu9NHe9E9igDtRgNQ9vWmwNGpLyBrD4YAlqOvvRikwTO11by5yDUFtKjXlDoebQqKM6Jma6titdvGbPQ==}
-    peerDependencies:
-      react: ^18
-      react-dom: ^18
-    dev: false
 
   /@ice/pkg-plugin-component/1.0.0:
     resolution: {integrity: sha512-Mff6Em1RwY2NOZgciQyy2NXL65u9ebHV2Jqb5746vUVEh0l7Xpokb+3djV1pKcgED4wU8pSuSQ6jj+hXd9Ht1Q==}
@@ -17707,18 +17700,6 @@ packages:
     dependencies:
       rax: 1.2.3
       rax-is-valid-element: 1.0.1
-    dev: false
-
-  /rax-compat/0.2.3:
-    resolution: {integrity: sha512-59l8lNIv53pDroiDqArnl1HKuviroOP6kn1Y/ohjadMFgVXD6nbgohZfUmrViNH91BEbsDqNx+pN0DrezaRqjw==}
-    peerDependencies:
-      react: ^18
-      react-dom: ^18
-    dependencies:
-      '@ice/appear': 0.1.5
-      '@swc/helpers': 0.4.14
-      create-react-class: 15.7.0
-      style-unit: 3.0.5
     dev: false
 
   /rax-create-factory/1.0.0_rax@1.2.3:
