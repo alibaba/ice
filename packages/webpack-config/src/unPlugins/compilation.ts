@@ -44,8 +44,8 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
   } = options;
 
   const { removeExportExprs, compilationConfig, keepExports, nodeTransform } = swcOptions;
-
-  const compileRegex = compileIncludes.map((includeRule) => {
+  const COMPILE_DEPS = ['@remix-run/router'];
+  const compileRegex = [...compileIncludes, ...COMPILE_DEPS].map((includeRule) => {
     return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);
   });
 
