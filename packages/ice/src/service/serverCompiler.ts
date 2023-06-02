@@ -128,8 +128,7 @@ export function createServerCompiler(options: Options) {
       return (source: string, id: string) => {
         return {
           ...getConfig(source, id),
-          // Force inline when use swc as a transformer.
-          sourceMaps: sourceMap && 'inline',
+          sourceMaps: !!sourceMap,
         };
       };
     }

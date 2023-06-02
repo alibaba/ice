@@ -32,14 +32,7 @@ const transformImportPlugin = (preBundleDepsMetadata: PreBundleDepsMetaData, ser
     async transform(source: string, id: string) {
       await init;
       let imports: readonly ImportSpecifier[] = [];
-      // es-module-lexer do not support parse jsx syntax, so we first transform the source by esbuild.
-      const transformed = await transformWithESBuild(
-        source,
-        id,
-      );
-      source = transformed.code;
-
-      imports = parse(transformed.code)[0];
+      imports = parse(source)[0];
       const str = new MagicString(source);
       for (let index = 0; index < imports.length; index++) {
         const {
