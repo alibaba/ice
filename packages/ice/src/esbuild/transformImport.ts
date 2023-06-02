@@ -54,30 +54,4 @@ const transformImportPlugin = (preBundleDepsMetadata: PreBundleDepsMetaData, ser
   };
 };
 
-// Fork from https://github.com/vitejs/vite/blob/d98c8a710b8f0804120c05e5bd3eb403f17e7b30/packages/vite/src/node/plugins/esbuild.ts#L60
-async function transformWithESBuild(
-  input: string,
-  filePath: string,
-  options: TransformOptions = {},
-) {
-  let loader = options?.loader as TransformOptions['loader'];
-  if (!loader) {
-    const extname = path.extname(filePath).slice(1);
-    if (extname === 'mjs' || extname === 'cjs' || extname === 'js') {
-      loader = 'jsx';
-    } else {
-      loader = extname as TransformOptions['loader'];
-    }
-  }
-
-  const transformOptions = {
-    sourcemap: true,
-    sourcefile: filePath,
-    ...options,
-    loader,
-  } as TransformOptions;
-
-  return await esbuild.transform(input, transformOptions);
-}
-
 export default transformImportPlugin;
