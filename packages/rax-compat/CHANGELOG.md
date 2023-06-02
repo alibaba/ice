@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.4
+
+### Patch Changes
+
+- 4a8dcc02: fix: rax compat style
+
+## 0.2.3
+
+### Patch Changes
+
+- 18dccde4: fix: not transform non-string value.
+
 ## 0.2.2
 
 ### Patch Changes

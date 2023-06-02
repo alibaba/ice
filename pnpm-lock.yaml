@@ -1057,8 +1057,8 @@ importers:
     specifiers:
       '@ice/bundles': 0.1.10
       '@ice/route-manifest': 1.2.0
-      '@ice/runtime': ^1.2.1
-      '@ice/webpack-config': 1.0.15
+      '@ice/runtime': ^1.2.2
+      '@ice/webpack-config': 1.0.16
       '@swc/helpers': 0.5.1
       '@types/babel__generator': ^7.6.4
       '@types/babel__traverse': ^7.17.1

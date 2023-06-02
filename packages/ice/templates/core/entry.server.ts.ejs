@@ -6,6 +6,7 @@ import { commons, statics } from './runtimeModules';
 import * as app from '@/app';
 import Document from '@/document';
 import type { RenderMode, DistType } from '@ice/runtime';
+import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 // @ts-ignore
 import assetsManifest from 'virtual:assets-manifest.json';
 import createRoutes from './routes';
@@ -42,6 +43,7 @@ interface RenderOptions {
   distType?: DistType;
   publicPath?: string;
   serverData?: any;
+  streamOptions?: RenderToPipeableStreamOptions;
 }
 
 export async function renderToHTML(requestContext, options: RenderOptions = {}) {
@@ -71,28 +73,22 @@ export async function renderToEntry(requestContext, options: RenderOptions = {})
 <% } -%>
 
 function mergeOptions(options) {
-  const { documentOnly, renderMode = 'SSR', basename, serverOnlyBasename, routePath, disableFallback, distType, prependCode, serverData, publicPath } = options;
+  const { renderMode = 'SSR', basename, publicPath } = options;
 
   if (publicPath) {
     assetsManifest.publicPath = publicPath;
   }
 
   return {
+    ...options,
     app,
     assetsManifest,
     createRoutes,
     runtimeModules,
     Document,
-    serverOnlyBasename,
     basename: basename || getRouterBasename(),
-    documentOnly,
     renderMode,
-    routePath,
-    disableFallback,
     routesConfig,
-    distType,
-    prependCode,
-    serverData,
     runtimeOptions: {
     <% if (runtimeOptions.exports) { -%>
       <%- runtimeOptions.exports %>
