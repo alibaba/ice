@@ -1,13 +1,8 @@
-import { Meta, Title, Links, Main, Scripts, useAppData, useAppContext, usePageAssets } from 'ice';
+import { Meta, Title, Links, Main, Scripts, useAppData } from 'ice';
 import type { AppData } from '@/types';
 
 function Document() {
   const appData = useAppData<AppData>();
-  const appContext = useAppContext();
-  console.log(appContext);
-
-  const assets = usePageAssets();
-  console.log(assets);
 
   return (
     <html>
