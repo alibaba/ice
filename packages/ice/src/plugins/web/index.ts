@@ -18,6 +18,7 @@ const plugin: Plugin = () => ({
         'Scripts',
         'Data',
         'Main',
+        'usePageAssets',
       ],
       types: [
         'MetaType',

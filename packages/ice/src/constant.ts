@@ -61,7 +61,6 @@ export const RUNTIME_EXPORTS = [
       'ClientOnly',
       'withSuspense',
       'useSuspenseData',
-      'usePageAssets',
       'useAppContext',
       'Await',
       'defineDataLoader',

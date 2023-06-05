@@ -61,21 +61,17 @@ function useAppContext(): PublicAppContext {
   const {
     appConfig,
     routePath,
-    matchedIds,
     downgrade,
     documentOnly,
     renderMode,
-    assetsManifest,
   } = context;
 
   return {
     appConfig,
     routePath,
-    matchedIds,
     downgrade,
     documentOnly,
     renderMode,
-    assetsManifest,
   };
 }
 

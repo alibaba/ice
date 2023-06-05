@@ -113,7 +113,7 @@ export interface AppContext {
 
 export type PublicAppContext = Pick<
 AppContext,
- 'appConfig' | 'routePath' | 'matchedIds' | 'downgrade' | 'documentOnly' | 'renderMode' | 'assetsManifest'
+ 'appConfig' | 'routePath' | 'downgrade' | 'documentOnly' | 'renderMode'
 >;
 
 export type WindowContext = Pick<
