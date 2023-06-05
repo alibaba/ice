@@ -460,6 +460,7 @@ function renderDocument(options: RenderDocumentOptions): Response {
     matches,
     routes,
     documentOnly: true,
+    renderMode: 'CSR',
     routePath,
     basename,
     downgrade,

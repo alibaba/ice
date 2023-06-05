@@ -4,7 +4,8 @@
 import React from 'react';
 import { expect, it, describe } from 'vitest';
 import { renderToHTML, renderToResponse } from '../src/runServerApp';
-import { Meta, Title, Links, Main, Scripts } from '../src/Document';
+import { Meta, Title, Links, Main, Scripts, usePageAssets } from '../src/Document';
+import { useAppContext } from '../src/';
 import {
   createRouteLoader,
 } from '../src/routes.js';
@@ -253,5 +254,55 @@ describe('run server app', () => {
     });
     expect(!!htmlContent).toBe(true);
     expect(htmlContent.includes('<div>home</div')).toBe(false);
+  });
+
+  it('render with use scripts', async () => {
+    let scripts;
+    let renderMode;
+
+    const Document = () => {
+      scripts = usePageAssets();
+      const context = useAppContext();
+      renderMode = context.renderMode;
+
+      return (
+        <html>
+          <head>
+            <meta charSet="utf-8" />
+            <meta name="description" content="ICE 3.0 Demo" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <Meta />
+            <Title />
+            <Links />
+          </head>
+          <body>
+            <Main />
+            <Scripts />
+          </body>
+        </html>
+      );
+    };
+
+    const html = await renderToHTML({
+      // @ts-ignore
+      req: {
+        url: '/home',
+      },
+    }, {
+      app: {},
+      assetsManifest,
+      runtimeModules: { commons: [] },
+      // @ts-ignore don't need to pass params in test case.
+      createRoutes: () => basicRoutes,
+      Document,
+      renderMode: 'SSR',
+    });
+    // @ts-ignore
+    expect(html?.value?.includes('<div>home</div>')).toBe(true);
+    // @ts-ignore
+    expect(html?.value?.includes('js/home.js')).toBe(true);
+
+    expect(scripts).toStrictEqual(['/js/home.js']);
+    expect(renderMode).toBe('SSR');
   });
 });

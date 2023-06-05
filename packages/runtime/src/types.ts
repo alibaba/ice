@@ -111,8 +111,13 @@ export interface AppContext {
   revalidate?: boolean;
 }
 
+export type PublicAppContext = Pick<
+AppContext,
+ 'appConfig' | 'routePath' | 'downgrade' | 'documentOnly' | 'renderMode'
+>;
+
 export type WindowContext = Pick<
-  AppContext,
+AppContext,
   'appData' | 'loaderData' | 'routePath' | 'downgrade' | 'matchedIds' | 'documentOnly' | 'renderMode' | 'serverData' | 'revalidate'
 >;
 
