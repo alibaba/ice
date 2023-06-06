@@ -13,7 +13,7 @@ export default function addPolyfills(
   if (!isAbortControllerSupported && featurePolyfill?.abortcontroller !== false) {
     generatorAPI.addEntryImportAhead({
       source: typeof featurePolyfill?.abortcontroller === 'string'
-        ? featurePolyfill?.abortcontroller : 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only',
+        ? featurePolyfill?.abortcontroller : '@ice/runtime/polyfills/abortcontroller',
     });
   }
   // Add default polyfills for signal.

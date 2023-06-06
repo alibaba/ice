@@ -16,7 +16,8 @@
     "./single-router": "./esm/singleRouter.js",
     "./types": "./esm/types.js",
     "./package.json": "./package.json",
-    "./polyfills/signal": "./esm/polyfills/signal.js"
+    "./polyfills/signal": "./esm/polyfills/signal.js",
+    "./polyfills/abortcontroller": "./esm/polyfills/abortcontroller.js"
   },
   "files": [
     "esm",
@@ -44,11 +45,13 @@
     "@remix-run/web-fetch": "^4.3.3"
   },
   "sideEffects": [
-    "./esm/polyfills/signal.js"
+    "./esm/polyfills/signal.js",
+    "./esm/polyfills/abortcontroller.js"
   ],
   "dependencies": {
     "@ice/jsx-runtime": "^0.2.1",
     "@remix-run/router": "1.6.1",
+    "abortcontroller-polyfill": "1.7.5",
     "ejs": "^3.1.6",
     "fs-extra": "^10.0.0",
     "history": "^5.3.0",

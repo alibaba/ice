@@ -1069,7 +1069,6 @@ importers:
       '@types/micromatch': ^4.0.2
       '@types/multer': ^1.4.7
       '@types/temp': ^0.9.1
-      abortcontroller-polyfill: 1.7.5
       address: ^1.1.2
       build-scripts: ^2.1.1-0
       chalk: ^4.0.0
@@ -1109,7 +1108,6 @@ importers:
       '@ice/webpack-config': link:../webpack-config
       '@swc/helpers': 0.5.1
       '@types/express': 4.17.17
-      abortcontroller-polyfill: 1.7.5
       address: 1.2.2
       build-scripts: 2.1.1-0
       chalk: 4.1.2
@@ -1512,6 +1510,7 @@ importers:
       '@remix-run/web-fetch': ^4.3.3
       '@types/react': ^18.0.8
       '@types/react-dom': ^18.0.3
+      abortcontroller-polyfill: 1.7.5
       ejs: ^3.1.6
       fs-extra: ^10.0.0
       history: ^5.3.0
@@ -1525,6 +1524,7 @@ importers:
     dependencies:
       '@ice/jsx-runtime': link:../jsx-runtime
       '@remix-run/router': 1.6.1
+      abortcontroller-polyfill: 1.7.5
       ejs: 3.1.8
       fs-extra: 10.1.0
       history: 5.3.0
