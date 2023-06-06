@@ -1069,6 +1069,7 @@ importers:
       '@types/micromatch': ^4.0.2
       '@types/multer': ^1.4.7
       '@types/temp': ^0.9.1
+      abortcontroller-polyfill: 1.7.5
       address: ^1.1.2
       build-scripts: ^2.1.1-0
       chalk: ^4.0.0
@@ -1108,6 +1109,7 @@ importers:
       '@ice/webpack-config': link:../webpack-config
       '@swc/helpers': 0.5.1
       '@types/express': 4.17.17
+      abortcontroller-polyfill: 1.7.5
       address: 1.2.2
       build-scripts: 2.1.1-0
       chalk: 4.1.2
@@ -7923,6 +7925,10 @@ packages:
     dependencies:
       event-target-shim: 5.0.1
     dev: true
+
+  /abortcontroller-polyfill/1.7.5:
+    resolution: {integrity: sha512-JMJ5soJWP18htbbxJjG7bG6yuI6pRhgJ0scHHTfkUjf6wjP912xZWvM+A4sJK3gqd9E8fcPbDnOefbA9Th/FIQ==}
+    dev: false
 
   /accept-language-parser/1.5.0:
     resolution: {integrity: sha512-QhyTbMLYo0BBGg1aWbeMG4ekWtds/31BrEU+DONOg/7ax23vxpL03Pb7/zBmha2v7vdD3AyzZVWBVGEZxKOXWw==}

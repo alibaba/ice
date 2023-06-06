@@ -1,5 +1,5 @@
 import path from 'path';
-import { swc, swcPluginRemoveExport, swcPluginKeepExport, swcPluginNodeTransform, coreJsPath } from '@ice/bundles';
+import { swc, swcPluginRemoveExport, swcPluginKeepExport, swcPluginNodeTransform, coreJsPath, caniuseLite } from '@ice/bundles';
 import browserslist from 'browserslist';
 import consola from 'consola';
 import type { SwcConfig, ReactConfig } from '@ice/bundles';
@@ -287,5 +287,27 @@ function getSupportedBrowsers(
   }
   return browsers;
 }
+
+export function isSupportedFeature(feature: string, rootDir = process.cwd(), isDevelopment = false) {
+  const browsers = getSupportedBrowsers(rootDir, isDevelopment);
+  // Do not check supported feature when browsers is undefined.
+  if (!browsers) {
+    return true;
+  }
+  const supportedBrowsers = browserslist(browsers);
+  const supportStats = caniuseLite.feature(caniuseLite.features[feature])?.stats;
+  let notSupported = false;
+  if (supportStats && supportedBrowsers && supportedBrowsers.length > 0) {
+    notSupported = supportedBrowsers.some((browser) => {
+      const [browserName, browserVersion] = browser.split(' ');
+      if (supportStats[browserName]) {
+        const support = supportStats[browserName]?.[browserVersion];
+        return support && support === 'n';
+      }
+    });
+  }
+  return !notSupported;
+}
+
 
 export default compilationPlugin;
