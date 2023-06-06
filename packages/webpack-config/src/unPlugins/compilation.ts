@@ -300,11 +300,8 @@ export function isSupportedFeature(feature: string, rootDir = process.cwd(), isD
   if (supportStats && supportedBrowsers && supportedBrowsers.length > 0) {
     notSupported = supportedBrowsers.some((browser) => {
       const [browserName, browserVersion] = browser.split(' ');
-      if (supportStats[browserName]) {
-        const support = supportStats[browserName]?.[browserVersion];
-        return support && support === 'n';
-      }
-      return false;
+      const support = supportStats[browserName]?.[browserVersion];
+      return support && support === 'n';
     });
   }
   return !notSupported;
