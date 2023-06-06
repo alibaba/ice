@@ -304,6 +304,7 @@ export function isSupportedFeature(feature: string, rootDir = process.cwd(), isD
         const support = supportStats[browserName]?.[browserVersion];
         return support && support === 'n';
       }
+      return false;
     });
   }
   return !notSupported;
