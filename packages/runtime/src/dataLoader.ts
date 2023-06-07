@@ -169,12 +169,12 @@ const cache = new Map<string, CachedResult>();
 function loadInitialDataInClient(loaders: Loaders) {
   const context = (window as any).__ICE_APP_CONTEXT__ || {};
   const matchedIds = context.matchedIds || [];
-  const routesData = context.routesData || {};
+  const loaderData = context.loaderData || {};
   const { renderMode } = context;
 
   const ids = ['_app'].concat(matchedIds);
   ids.forEach(id => {
-    const dataFromSSR = routesData[id];
+    const dataFromSSR = loaderData[id]?.data;
     if (dataFromSSR) {
       cache.set(renderMode === 'SSG' ? `${id}_ssg` : id, {
         value: dataFromSSR,
