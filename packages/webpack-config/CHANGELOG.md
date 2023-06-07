@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.17
+
+### Patch Changes
+
+- ed4ed7ee: fix: auto polyfill for abortcontroller
+- Updated dependencies [ed4ed7ee]
+  - @ice/bundles@0.1.11
+
 ## 1.0.16
 
 ### Patch Changes

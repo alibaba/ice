@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.11
+
+### Patch Changes
+
+- ed4ed7ee: fix: auto polyfill for abortcontroller
+
 ## 0.1.10
 
 ### Patch Changes
