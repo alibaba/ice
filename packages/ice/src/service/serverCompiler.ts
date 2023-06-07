@@ -253,13 +253,11 @@ export function createServerCompiler(options: Options) {
         serverEntry,
       };
     } catch (error) {
-      logger.error(
+      logger.briefError(
         'Server compiled with errors.',
         `\nEntryPoints: ${JSON.stringify(buildOptions.entryPoints)}`,
         `\n${error.message}`,
       );
-      // TODO: Log esbuild options with namespace.
-      // logger.debug('esbuild options: ', buildOptions);
       logger.debug(error.stack);
       return {
         error: error as Error,

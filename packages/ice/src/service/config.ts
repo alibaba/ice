@@ -150,7 +150,7 @@ export const getAppExportConfig = (rootDir: string) => {
     try {
       return (await config.getConfig(exportNames || ['default', 'defineAppConfig'])) || {};
     } catch (error) {
-      logger.error('Failed to get app config.');
+      logger.briefError('Failed to get app config.');
       logger.debug(error);
     }
   };
@@ -160,7 +160,7 @@ export const getAppExportConfig = (rootDir: string) => {
       try {
         config.setCompiler(serverCompiler);
       } catch (error) {
-        logger.error('Failed to compile app config.');
+        logger.briefError('Failed to compile app config.');
         logger.debug(error);
       }
     },
@@ -260,13 +260,13 @@ export const getRouteExportConfig = (rootDir: string) => {
       try {
         routeConfig.setCompiler(serverCompiler);
       } catch (error) {
-        routeConfigLogger.error('Failed to get route config.');
+        routeConfigLogger.briefError('Failed to get route config.');
         routeConfigLogger.debug(error);
       }
       try {
         dataloaderConfig.setCompiler(serverCompiler);
       } catch (error) {
-        dataLoaderConfigLogger.error('Failed to get dataLoader config.');
+        dataLoaderConfigLogger.briefError('Failed to get dataLoader config.');
         dataLoaderConfigLogger.debug(error);
       }
     },
