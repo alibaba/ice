@@ -37,6 +37,7 @@ import { logger, createLogger } from './utils/logger.js';
 import ServerRunner from './service/ServerRunner.js';
 import RouteManifest from './utils/routeManifest.js';
 import dynamicImport from './utils/dynamicImport.js';
+import addPolyfills from './utils/runtimePolyfill.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -162,10 +163,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   RUNTIME_EXPORTS.forEach(exports => {
     generatorAPI.addExport(exports);
   });
-  // Add polyfills.
-  generatorAPI.addEntryImportAhead({
-    source: '@ice/runtime/polyfills/signal',
-  });
   const routeManifest = new RouteManifest();
   const ctx = new Context<Config, ExtendsPluginAPI>({
     rootDir,
@@ -240,6 +237,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     logger.info('`optimization.router` is enabled and only have one route, ice build will remove react-router and history which is unnecessary.');
     taskAlias['@ice/runtime/router'] = path.join(require.resolve('@ice/runtime'), '../single-router.js');
   }
+
+  addPolyfills(generatorAPI, userConfig.featurePolyfill, rootDir, command === 'start');
 
   // Get first task config as default platform config.
   const platformTaskConfig = taskConfigs[0];

@@ -4,16 +4,19 @@ if (import.meta.renderer === 'client' && window.Request && !window.Request.proto
   (function (self) {
       const OriginalRequest = window.Request;
       function Request(input: RequestInfo | URL, init?: RequestInit) {
+        const request = new OriginalRequest(input, init);
         if (input instanceof OriginalRequest) {
-          this.signal = input.signal;
+          // @ts-ignore overwrite signal because singal is readonly in type Request.
+          request.signal = input.signal;
         }
-        this.signal = init.signal || this.signal || (function () {
+        // @ts-ignore overwrite signal because singal is readonly in type Request.
+        request.signal = init.signal || request.signal || (function () {
           if ('AbortController' in window) {
             let ctrl = new AbortController();
             return ctrl.signal;
           }
         }());
-        OriginalRequest.call(this, input, init);
+        return request;
       }
       Request.prototype = Object.create(OriginalRequest.prototype);
       Request.prototype.constructor = Request;

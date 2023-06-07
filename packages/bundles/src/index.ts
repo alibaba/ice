@@ -5,6 +5,7 @@ import less from 'less';
 import sass from 'sass';
 import swc from '@swc/core';
 import esbuild from 'esbuild';
+import * as caniuseLite from 'caniuse-lite';
 
 const require = createRequire(import.meta.url);
 const swcPluginRemoveExport = require.resolve('@ice/swc-plugin-remove-export');
@@ -24,6 +25,7 @@ export {
   coreJsPath,
 
   esbuild,
+  caniuseLite,
 };
 
 export type { ProcessOptions } from 'postcss';

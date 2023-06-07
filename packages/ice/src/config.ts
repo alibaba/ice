@@ -384,6 +384,11 @@ const userConfig = [
       });
     },
   },
+  {
+    name: 'featurePolyfill',
+    validation: 'object',
+    defaultValue: {},
+  },
 ];
 
 const cliOption = [

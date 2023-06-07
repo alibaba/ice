@@ -33,6 +33,9 @@ interface Fetcher {
 }
 
 export interface UserConfig {
+  featurePolyfill?: {
+    abortcontroller?: boolean | string;
+  };
   output?: {
     distType: Array<DistType> | DistType;
     prependCode?: string;
