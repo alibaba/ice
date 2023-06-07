@@ -238,7 +238,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const disableRouter = userConfig?.optimization?.router && routesInfo.routesCount <= 1;
   if (disableRouter) {
     logger.info('`optimization.router` is enabled and only have one route, ice build will remove react-router and history which is unnecessary.');
-    mergeTaskConfig(taskConfigs, {
+    taskConfigs = mergeTaskConfig(taskConfigs, {
       alias: {
         '@ice/runtime/router': '@ice/runtime/single-router',
       },
