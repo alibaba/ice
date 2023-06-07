@@ -1,5 +1,12 @@
 # @ice/runtime
 
+## 1.2.3
+
+### Patch Changes
+
+- af0a6d7a: fix: bump react-router version to fix https://github.com/remix-run/react-router/issues/10469
+- ed4ed7ee: fix: auto polyfill for abortcontroller
+
 ## 1.2.2
 
 ### Patch Changes

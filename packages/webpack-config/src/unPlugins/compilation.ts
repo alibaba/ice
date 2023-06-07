@@ -1,5 +1,5 @@
 import path from 'path';
-import { swc, swcPluginRemoveExport, swcPluginKeepExport, swcPluginNodeTransform, coreJsPath } from '@ice/bundles';
+import { swc, swcPluginRemoveExport, swcPluginKeepExport, swcPluginNodeTransform, coreJsPath, caniuseLite } from '@ice/bundles';
 import browserslist from 'browserslist';
 import consola from 'consola';
 import type { SwcConfig, ReactConfig } from '@ice/bundles';
@@ -28,6 +28,9 @@ interface Options {
 
 const formatId = (id: string) => id.split(path.sep).join('/');
 
+// HACK: swc minify will hang on when '@remix-run/router' is not compiled.
+// It may be a bug of swc, so we add it to compile deps when @swc/core is update to latest version.
+const COMPILE_DEPS = ['@remix-run/router'];
 const compilationPlugin = (options: Options): UnpluginOptions => {
   const {
     rootDir,
@@ -44,8 +47,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
   } = options;
 
   const { removeExportExprs, compilationConfig, keepExports, nodeTransform } = swcOptions;
-
-  const compileRegex = compileIncludes.map((includeRule) => {
+  const compileRegex = [...compileIncludes, ...COMPILE_DEPS].map((includeRule) => {
     return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);
   });
 
@@ -285,5 +287,25 @@ function getSupportedBrowsers(
   }
   return browsers;
 }
+
+export function isSupportedFeature(feature: string, rootDir = process.cwd(), isDevelopment = false) {
+  const browsers = getSupportedBrowsers(rootDir, isDevelopment);
+  // Do not check supported feature when browsers is undefined.
+  if (!browsers) {
+    return true;
+  }
+  const supportedBrowsers = browserslist(browsers);
+  const supportStats = caniuseLite.feature(caniuseLite.features[feature])?.stats;
+  let notSupported = false;
+  if (supportStats && supportedBrowsers && supportedBrowsers.length > 0) {
+    notSupported = supportedBrowsers.some((browser) => {
+      const [browserName, browserVersion] = browser.split(' ');
+      const support = supportStats[browserName]?.[browserVersion];
+      return support && support === 'n';
+    });
+  }
+  return !notSupported;
+}
+
 
 export default compilationPlugin;

@@ -137,11 +137,11 @@ export function checkExportData(
       if (isTargetDeclarationData(item)) return;
 
       if (isDeclarationData(item)) {
-        const { specifier, alias } = item;
+        const { specifier, alias, source } = item;
 
         // check exportName and specifier
         const currentExportNames = (Array.isArray(specifier) ? specifier : [specifier]).map((specifierStr) => {
-          return alias?.[specifierStr] || specifierStr;
+          return alias?.[specifierStr] || specifierStr || source;
         });
 
         if (currentExportNames.some((name) => exportNames.includes(name))) {

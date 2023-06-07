@@ -31,6 +31,8 @@ export function compatStyle<S = object>(style?: S): S | void {
         result[key] = convertUnit(`${value}rpx`);
       } else if (isString(value)) { // Not transform non-string value.
         result[key] = convertUnit(value);
+      } else {
+        result[key] = value;
       }
     }
     return result;

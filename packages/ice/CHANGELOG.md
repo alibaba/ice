@@ -1,5 +1,24 @@
 # Changelog
 
+## 3.2.5
+
+### Patch Changes
+
+- af0a6d7a: fix: bump react-router version to fix https://github.com/remix-run/react-router/issues/10469
+- ed4ed7ee: fix: auto polyfill for abortcontroller
+- Updated dependencies [af0a6d7a]
+- Updated dependencies [ed4ed7ee]
+  - @ice/runtime@1.2.3
+  - @ice/webpack-config@1.0.17
+  - @ice/bundles@0.1.11
+
+## 3.2.4
+
+### Patch Changes
+
+- Updated dependencies [b21ab5cd]
+  - @ice/webpack-config@1.0.16
+
 ## 3.2.3
 
 ### Patch Changes
