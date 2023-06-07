@@ -37,6 +37,7 @@ import { logger, createLogger } from './utils/logger.js';
 import ServerRunner from './service/ServerRunner.js';
 import RouteManifest from './utils/routeManifest.js';
 import dynamicImport from './utils/dynamicImport.js';
+import mergeTaskConfig from './utils/mergeTaskConfig.js';
 import addPolyfills from './utils/runtimePolyfill.js';
 
 const require = createRequire(import.meta.url);
@@ -232,10 +233,13 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const csr = !userConfig.ssr && !userConfig.ssg;
 
   const disableRouter = userConfig?.optimization?.router && routesInfo.routesCount <= 1;
-  let taskAlias = {};
   if (disableRouter) {
     logger.info('`optimization.router` is enabled and only have one route, ice build will remove react-router and history which is unnecessary.');
-    taskAlias['@ice/runtime/router'] = path.join(require.resolve('@ice/runtime'), '../single-router.js');
+    taskConfigs = mergeTaskConfig(taskConfigs, {
+      alias: {
+        '@ice/runtime/router': '@ice/runtime/single-router',
+      },
+    });
   }
 
   addPolyfills(generatorAPI, userConfig.featurePolyfill, rootDir, command === 'start');
