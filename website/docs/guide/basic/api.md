@@ -241,6 +241,33 @@ const Home = () => {
 };
 ```
 
+### useAppContext
+
+获取应用级 Context, 包含字段为：
+* appConfig object, 通过 defineAppConfig 定义的 appConfig
+* renderMode string, 渲染模式，'CSR'|'SSR'|'SSG'
+* documentOnly boolean, 是否指定为 CSR
+* downgrade boolean, 是否为 SSR 降级
+
+```ts title="src/document.ts"
+import { useAppContext } from 'ice';
+
+function Document() {
+  const { renderMode } = useAppContext();
+  console.log(renderMode);
+
+  return (
+    <html>
+      <head>
+      </head>
+      <body>
+        <Main />
+      </body>
+    </html>
+  );
+}
+```
+
 ### `<ClientOnly />`
 
 :::caution
