@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { createRouter } from '@remix-run/router';
+import type { Router } from '@remix-run/router';
 import type { ClientAppRouterProps } from './types.js';
 import App from './App.js';
 import { DataContextProvider } from './singleRouter.js';
 import { useAppContext } from './AppContext.js';
 
-let router: ReturnType<typeof createRouter> = null;
+let router: Router = null;
 function ClientRouter(props: ClientAppRouterProps) {
   const { Component, loaderData, routerContext } = props;
   const { revalidate } = useAppContext();

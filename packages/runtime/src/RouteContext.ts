@@ -2,13 +2,15 @@ import { useLoaderData } from 'react-router-dom';
 import type { RouteConfig } from './types.js';
 
 function useData<T = any>(): T {
-  const data = useLoaderData();
-  return (data as any)?.data;
+  return process.env.ICE_CORE_ROUTER === 'true' || import.meta.renderer !== 'client'
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+    ? (useLoaderData() as any)?.data : undefined;
 }
 
 function useConfig<T = {}>(): RouteConfig<T> {
-  const data = useLoaderData();
-  return (data as any)?.pageConfig;
+  return process.env.ICE_CORE_ROUTER === 'true' || import.meta.renderer !== 'client'
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+    ? (useLoaderData() as any)?.pageConfig : undefined;
 }
 
 export {
