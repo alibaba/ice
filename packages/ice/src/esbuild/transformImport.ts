@@ -1,6 +1,4 @@
 import path from 'path';
-import type { TransformOptions } from 'esbuild';
-import { esbuild } from '@ice/bundles';
 import MagicString from '@ice/bundles/compiled/magic-string/index.js';
 import esModuleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
 import type { ImportSpecifier } from '@ice/bundles/compiled/es-module-lexer/index.js';
@@ -29,7 +27,7 @@ const transformImportPlugin = (preBundleDepsMetadata: PreBundleDepsMetaData, ser
     transformInclude(id: string) {
       return /\.(js|jsx|ts|tsx)$/.test(id);
     },
-    async transform(source: string, id: string) {
+    async transform(source: string) {
       await init;
       let imports: readonly ImportSpecifier[] = [];
       imports = parse(source)[0];

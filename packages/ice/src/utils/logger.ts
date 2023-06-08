@@ -2,6 +2,7 @@ import type { Consola, ConsolaLogObject } from 'consola';
 import consola from 'consola';
 
 // In ice.js, we use DEBUG_TAG instead of DEBUG to avoid other libs which use `DEBUG` as their flag log debug info.
+// eslint-disable-next-line camelcase
 const { DEBUG_TAG, npm_lifecycle_event } = process.env;
 
 function getEnableAndDisabledNamespaces(namespaces?: string) {
@@ -59,6 +60,7 @@ export const createLogger: CreateLogger = (namespace) => {
   function briefError(message: ConsolaLogObject | any, ...args: any[]) {
     consola.error(message, ...args);
     if (!DEBUG_TAG) {
+      // eslint-disable-next-line camelcase
       consola.log(`run \`DEBUG_TAG=${namespace || '*'} npm run ${npm_lifecycle_event || 'start'}\` to view error details`);
     }
   }

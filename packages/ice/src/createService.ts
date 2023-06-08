@@ -145,7 +145,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       }
     } catch (error) {
       // make error clearly, notice typeof err === 'string'
-      logger.error('Excute server entry error:', error);
+      logger.error('Execute server entry error:', error);
       return;
     }
   }
