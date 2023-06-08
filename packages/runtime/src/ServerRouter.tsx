@@ -30,7 +30,7 @@ function ServerRouter(props: ServerAppRouterProps) {
   const { routerContext, routes } = props;
   // Server router only be called once.
   const router = createStaticRouter(createServerRoutes(routes), routerContext);
-  console.log('ServerRouter', 'router', router, routerContext);
+
   return (
     <App>
       <StaticRouterProvider
