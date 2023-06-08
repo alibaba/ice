@@ -135,7 +135,7 @@ export async function analyzeImports(files: string[], options: Options) {
         })();
       }));
     } catch (err) {
-      logger.error('[ERROR]', `optimize runtime failed when analyze ${filePath}`);
+      logger.briefError(`Optimize runtime failed when analyze ${filePath}`);
       logger.debug(err);
       throw err;
     }
@@ -151,8 +151,7 @@ export async function analyzeImports(files: string[], options: Options) {
       }));
     }
     return importSet;
-  } catch (err) {
-    logger.debug(err);
+  } catch (_) {
     return false;
   }
 }
@@ -199,8 +198,8 @@ export async function scanImports(entries: string[], options?: ScanOptions) {
     );
     logger.debug(`Scan completed in ${(performance.now() - start).toFixed(2)}ms:`, deps);
   } catch (error) {
-    logger.error('Failed to scan module imports.', `\n${error.message}`);
-    logger.debug(error.stack);
+    logger.briefError('Failed to scan module imports.');
+    logger.debug(error);
   }
   return orderedDependencies(deps);
 }
@@ -256,8 +255,8 @@ export async function getFileExports(options: FileOptions): Promise<CachedRouteE
         }
       }
     } catch (error) {
-      logger.error(`Failed to get route ${filePath} exports.`, `\n${error.message}`);
-      logger.debug(error.stack);
+      logger.briefError(`Failed to get route ${filePath} exports.`);
+      logger.debug(error);
       cached = {
         exports: [],
         hash: fileHash,

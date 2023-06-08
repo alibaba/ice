@@ -13,7 +13,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const alias = { '@': path.join(__dirname, './fixtures/scan') };
 const rootDir = path.join(__dirname, './fixtures/scan');
 const cacheDir = path.join(rootDir, '.cache');
-const appEntry = path.join(__dirname, './fixtures/scan/app.ts');
+const appEntry = path.join(__dirname, './fixtures/scan/import.js');
 const outdir = path.join(rootDir, 'build');
 
 it('transform module import', async () => {
@@ -35,7 +35,7 @@ it('transform module import', async () => {
       transformImportPlugin(),
     ],
   });
-  const buildContent = await fse.readFile(path.join(outdir, 'app.js'));
+  const buildContent = await fse.readFile(path.join(outdir, 'import.js'), 'utf-8');
   expect(buildContent.includes('../../.cache/deps/@ice_runtime_client.mjs')).toBeTruthy();
   expect(buildContent.includes('../../.cache/deps/@ice_runtime.mjs')).toBeTruthy();
 });

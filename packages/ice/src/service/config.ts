@@ -135,11 +135,8 @@ export const getAppExportConfig = (rootDir: string) => {
     transformInclude: (id) => id.includes('src/app') || id.includes('.ice'),
     getOutfile,
     needRecompile: async (entry, keepExports) => {
-      let cached = null;
       const cachedKey = `app_${keepExports.join('_')}_${process.env.__ICE_VERSION__}`;
-      try {
-        cached = await getCache(rootDir, cachedKey);
-      } catch (err) { }
+      const cached = await getCache(rootDir, cachedKey);
       const fileHash = await getFileHash(appEntry);
       if (!cached || fileHash !== cached) {
         await setCache(rootDir, cachedKey, fileHash);
@@ -153,8 +150,8 @@ export const getAppExportConfig = (rootDir: string) => {
     try {
       return (await config.getConfig(exportNames || ['default', 'defineAppConfig'])) || {};
     } catch (error) {
-      logger.warn('Failed to get app config.', `\n${error.message}`);
-      logger.debug(error.stack);
+      logger.briefError('Failed to get app config.');
+      logger.debug(error);
     }
   };
 
@@ -163,8 +160,8 @@ export const getAppExportConfig = (rootDir: string) => {
       try {
         config.setCompiler(serverCompiler);
       } catch (error) {
-        logger.error('Failed to compile app config.', `\n${error.message}`);
-        logger.debug(error.stack);
+        logger.briefError('Failed to compile app config.');
+        logger.debug(error);
       }
     },
     getAppConfig,
@@ -203,15 +200,12 @@ export const getRouteExportConfig = (rootDir: string) => {
     rootDir,
     getOutfile: getRouteConfigOutfile,
     needRecompile: async (entry) => {
-      let cached = false;
-      try {
-        cached = await getCache(rootDir, cachedKey);
-      } catch (err) { }
+      const cached = await getCache(rootDir, cachedKey);
       if (cached) {
         // Always use cached file path while `routes-config` trigger re-compile by webpack plugin.
         return entry;
       } else {
-        setCache(rootDir, cachedKey, 'true');
+        await setCache(rootDir, cachedKey, 'true');
         return false;
       }
     },
@@ -222,16 +216,13 @@ export const getRouteExportConfig = (rootDir: string) => {
     rootDir,
     getOutfile: getdataLoadersConfigOutfile,
     needRecompile: async (entry) => {
-      let cached = false;
       const cachedKey = `loader_config_file_${process.env.__ICE_VERSION__}`;
-      try {
-        cached = await getCache(rootDir, cachedKey);
-      } catch (err) { }
+      const cached = await getCache(rootDir, cachedKey);
       if (cached) {
         // Always use cached file path while `routes-config` trigger re-compile by webpack plugin.
         return entry;
       } else {
-        setCache(rootDir, cachedKey, 'true');
+        await setCache(rootDir, cachedKey, 'true');
         return false;
       }
     },
@@ -259,7 +250,7 @@ export const getRouteExportConfig = (rootDir: string) => {
   const ensureRoutesConfig = async () => {
     const configFile = await routeConfig.getConfigFile(['pageConfig']);
     if (!configFile) {
-      setCache(rootDir, cachedKey, '');
+      await setCache(rootDir, cachedKey, '');
     }
   };
 
@@ -269,14 +260,14 @@ export const getRouteExportConfig = (rootDir: string) => {
       try {
         routeConfig.setCompiler(serverCompiler);
       } catch (error) {
-        routeConfigLogger.error('Failed to get route config.', `\n${error.message}`);
-        routeConfigLogger.debug(error.stack);
+        routeConfigLogger.briefError('Failed to get route config.');
+        routeConfigLogger.debug(error);
       }
       try {
         dataloaderConfig.setCompiler(serverCompiler);
       } catch (error) {
-        dataLoaderConfigLogger.error('Failed to get dataLoader config.', `\n${error.message}`);
-        dataLoaderConfigLogger.debug(error.stack);
+        dataLoaderConfigLogger.briefError('Failed to get dataLoader config.');
+        dataLoaderConfigLogger.debug(error);
       }
     },
     getRoutesConfig,
