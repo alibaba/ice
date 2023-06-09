@@ -40,6 +40,8 @@ const plugin: Plugin<MiniappOptions> = (miniappOptions = {}) => ({
         'history',
         'defineDataLoader',
         'usePageLifecycle',
+        'withSuspense',
+        'useSuspenseData',
       ];
       generator.addRenderFile('core/entry.client.tsx.ejs', 'entry.miniapp.tsx', {
         iceRuntimePath: miniappRuntime,
