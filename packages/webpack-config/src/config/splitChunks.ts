@@ -11,6 +11,9 @@ interface NameModule {
   libIdent?: Function;
   type: string;
   updateHash: (hash: crypto.Hash) => void;
+  buildInfo?: {
+    hash?: string;
+  };
 }
 const require = createRequire(import.meta.url);
 
@@ -94,7 +97,12 @@ export const getChunksStrategy = (rootDir: string): SplitChunksConfig => {
         name(module: NameModule) {
           const hash = crypto.createHash('sha1');
           if (isModuleCSS(module)) {
-            module.updateHash(hash);
+            if (module?.buildInfo?.hash) {
+              // Use exsiting hash instead of recalculating.
+              return module?.buildInfo?.hash.substring(0, 8);
+            } else {
+              module.updateHash(hash);
+            }
           } else {
             if (!module.libIdent) {
               throw new Error(

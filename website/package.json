@@ -36,7 +36,7 @@
     "glob": "^7.2.3",
     "gray-matter": "^4.0.3",
     "typescript": "^4.9.5",
-    "webpack": "^5.84.1"
+    "webpack": "^5.86.0"
   },
   "browserslist": {
     "production": [

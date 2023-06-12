@@ -82,7 +82,7 @@
     "react-router": "6.11.2",
     "sass": "^1.50.0",
     "unplugin": "^0.9.0",
-    "webpack": "^5.84.1",
+    "webpack": "^5.86.0",
     "webpack-dev-server": "^4.7.4"
   },
   "peerDependencies": {
