@@ -145,9 +145,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         delete require.cache[serverEntry];
         return await dynamicImport(serverEntry, true);
       }
-    } catch (err) {
+    } catch (error) {
       // make error clearly, notice typeof err === 'string'
-      logger.error('Excute server entry error:', err);
+      logger.error('Execute server entry error:', error);
       return;
     }
   }
@@ -398,9 +398,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             spinner: buildSpinner,
           });
         }
-      } catch (err) {
+      } catch (error) {
         buildSpinner.stop();
-        throw err;
+        throw error;
       }
     },
   };

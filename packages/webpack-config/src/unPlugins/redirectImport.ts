@@ -94,8 +94,9 @@ export async function redirectImport(code: string, options: Options): Promise<st
   let imports: readonly ImportSpecifier[] = [];
   try {
     imports = parse(code)[0];
-  } catch (e) {
-    consola.debug('[parse error]', e);
+  } catch (error) {
+    consola.error('Parse error when redirect import.');
+    consola.error(error);
   }
   if (!imports.length) {
     return code;
