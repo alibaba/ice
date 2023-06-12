@@ -18,6 +18,7 @@ import { setFetcher, setDecorator } from './dataLoader.js';
 import ClientRouter from './ClientRouter.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 import { AppContextProvider } from './AppContext.js';
+import { deprecatedHistory } from './utils/deprecatedHistory.js';
 
 export interface RunClientAppOptions {
   app: AppExport;
@@ -68,7 +69,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     initialEntry: routePath,
     routes,
   };
-  const history = createHistory(appConfig, historyOptions);
+  const history = deprecatedHistory(createHistory(appConfig, historyOptions));
   // Set history for import it from ice.
   setHistory(history);
 
