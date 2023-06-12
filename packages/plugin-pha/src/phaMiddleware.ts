@@ -38,7 +38,8 @@ const createPHAMiddleware = ({
         // dataLoader may have side effect code.
         dataloaderConfig = await getDataloaderConfig();
       } catch (err) {
-        logger.briefError('GetDataloaderConfig failed.');
+        // @ts-expect-error remove after @ice/app update.
+        logger?.briefError('GetDataloaderConfig failed.');
         logger.debug(err);
       }
 
