@@ -2,7 +2,7 @@ import React, { isValidElement } from 'react';
 import useMounted from './useMounted.js';
 
 const ClientOnly: React.FC<{
-  fallback: React.ReactElement;
+  fallback?: React.ReactElement;
   children: () => React.ReactNode;
 }> = ({ children, fallback }) => {
   const mounted = useMounted();
