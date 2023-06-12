@@ -62,8 +62,7 @@ export default async function generateManifest({
     // dataLoader may have side effect code.
     dataloaderConfig = await getDataloaderConfig();
   } catch (err) {
-    // @ts-expect-error remove after @ice/app update.
-    logger?.briefError('GetDataloaderConfig failed.');
+    logger.briefError('GetDataloaderConfig failed.');
     logger.debug(err);
   }
 
