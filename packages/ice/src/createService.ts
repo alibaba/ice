@@ -240,9 +240,10 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         '@ice/runtime/router': '@ice/runtime/single-router',
       },
     });
+  } else {
+    // Only when router is enabled, we will add router polyfills.
+    addPolyfills(generatorAPI, userConfig.featurePolyfill, rootDir, command === 'start');
   }
-
-  addPolyfills(generatorAPI, userConfig.featurePolyfill, rootDir, command === 'start');
 
   // Get first task config as default platform config.
   const platformTaskConfig = taskConfigs[0];

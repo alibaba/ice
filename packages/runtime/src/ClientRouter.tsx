@@ -22,7 +22,7 @@ function createRouterHistory(history: History, router: Router) {
   return routerHistory;
 }
 
-let router: ReturnType<typeof createRouter> = null;
+let router: Router = null;
 function ClientRouter(props: ClientAppRouterProps) {
   const { Component, loaderData, routerContext } = props;
   const { revalidate } = useAppContext();

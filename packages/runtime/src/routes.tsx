@@ -82,7 +82,7 @@ export function RouteComponent({ id }: { id: string }) {
   return <Component />;
 }
 
-export function RouteErrorComponent() {
+function ErrorComponentWithRouter() {
   const error = useRouteError();
   if (error) {
     // Re-throws the error so it can be caught by App Error Boundary.
@@ -91,8 +91,12 @@ export function RouteErrorComponent() {
   return <></>;
 }
 
+export function RouteErrorComponent() {
+  return process.env.ICE_CORE_ROUTER === 'true' ? <ErrorComponentWithRouter /> : <></>;
+}
+
 export function Await(props) {
-  return (
+  return process.env.ICE_CORE_ROUTER === 'true' ? (
     <Suspense fallback={props.fallback}>
       <ReactRouterAwait
         resolve={props.resolve}
@@ -101,7 +105,7 @@ export function Await(props) {
         {props.children}
       </ReactRouterAwait>
     </Suspense>
-  );
+  ) : <>{props.children}</>;
 }
 
 /**
@@ -169,17 +173,20 @@ export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
 
   // Async dataLoader.
   if (loaderOptions?.defer) {
-    return async () => {
-      const promise = getData();
+    if (process.env.ICE_CORE_ROUTER === 'true') {
+      return async () => {
+        const promise = getData();
 
-      return defer({
-        data: promise,
-        // Call pageConfig without data.
-        pageConfig: pageConfig ? pageConfig({}) : {},
-      });
-    };
+        return defer({
+          data: promise,
+          // Call pageConfig without data.
+          pageConfig: pageConfig ? pageConfig({}) : {},
+        });
+      };
+    } else {
+      throw new Error('DataLoader: defer is not supported in single router mode.');
+    }
   }
-
   // Await dataLoader before render.
   return async () => {
     const result = getData();
