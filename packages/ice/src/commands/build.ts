@@ -20,6 +20,8 @@ import { logger } from '../utils/logger.js';
 import { getExpandedEnvs } from '../utils/runtimeEnv.js';
 import type RouteManifest from '../utils/routeManifest.js';
 import injectInitialEntry from '../utils/injectInitialEntry.js';
+// Enable source map support when build.
+import 'source-map-support/register.js';
 
 const build = async (
   context: Context<Config, ExtendsPluginAPI>,
