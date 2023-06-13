@@ -5,6 +5,8 @@ import type { UserConfig } from '../types/userConfig.js';
 import dynamicImport from './dynamicImport.js';
 import { logger } from './logger.js';
 import type RouteManifest from './routeManifest.js';
+// Enable source map support when build.
+import 'source-map-support/register.js';
 
 interface Options {
   rootDir: string;
