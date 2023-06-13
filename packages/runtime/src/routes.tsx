@@ -194,12 +194,16 @@ export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
         routeData = result;
       }
     } catch (error) {
-      console.error('DataLoader: getData error.\n', error);
-
-      routeData = {
-        message: 'DataLoader: getData error.',
-        error,
-      };
+      if (import.meta.renderer === 'client') {
+        console.error('DataLoader: getData error.\n', error);
+        routeData = {
+          message: 'DataLoader: getData error.',
+          error,
+        };
+      } else {
+        // Throw to trigger downgrade.
+        throw error;
+      }
     }
 
     const routeConfig = pageConfig ? pageConfig({ data: routeData }) : {};

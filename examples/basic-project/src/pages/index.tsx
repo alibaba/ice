@@ -73,6 +73,7 @@ export const dataLoader = defineDataLoader(({ pathname, query }) => {
         count: 100,
         pathname,
         query,
+        from: 'client',
       });
     }, 1 * 100);
   });
