@@ -1,5 +1,31 @@
 # Changelog
 
+## 3.2.6
+
+### Patch Changes
+
+- 94dac52e: chore: add return for default dataLoaderFetcher
+- 474e1935: feat: support usePageAssets
+  feat: export useAppContext
+- c70c7737: fix: refactor error handling
+- abdd49de: fix: modified task alias not be used
+- b10d9cb8: fix: support source map for stack traces in node
+- c4f625a2: fix: optimize single router
+- Updated dependencies [f839c67d]
+- Updated dependencies [137d6b1c]
+- Updated dependencies [f95bbc2e]
+- Updated dependencies [474e1935]
+- Updated dependencies [c68c5da3]
+- Updated dependencies [f95bbc2e]
+- Updated dependencies [c70c7737]
+- Updated dependencies [c70c7737]
+- Updated dependencies [1171475d]
+- Updated dependencies [9eec33ad]
+- Updated dependencies [c4f625a2]
+  - @ice/runtime@1.2.4
+  - @ice/bundles@0.1.12
+  - @ice/webpack-config@1.0.18
+
 ## 3.2.5
 
 ### Patch Changes

@@ -1,5 +1,18 @@
 # @ice/runtime
 
+## 1.2.4
+
+### Patch Changes
+
+- f839c67d: fix: loadRouteModule error when only has one router
+- 137d6b1c: fix: should downgrade to csr when server data loader error
+  fix: fallback should be optional
+- 474e1935: feat: support usePageAssets
+  feat: export useAppContext
+- c68c5da3: fix: replace history methods by router navigate for backwards compatibility
+- 9eec33ad: feat: support weex sourcemap when start
+- c4f625a2: fix: optimize single router
+
 ## 1.2.3
 
 ### Patch Changes
