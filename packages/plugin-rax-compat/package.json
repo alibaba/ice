@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@ice/app": "^3.2.1",
-    "webpack": "^5.84.1"
+    "webpack": "^5.86.0"
   },
   "repository": {
     "type": "http",
