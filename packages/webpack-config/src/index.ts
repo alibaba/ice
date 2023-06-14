@@ -392,7 +392,18 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
         },
       },
       client: {
-        overlay: true,
+        overlay: {
+          errors: true,
+          warnings: false,
+          runtimeErrors: (error) => {
+            // Ignore hydration error in webpack-dev-server overlay.
+            // FIXME when hydration error is not occurred in HMR.
+            if (['Hydration failed', 'server-rendered HTML', 'Text content did not match', 'There was an error while hydrating'].some((text) => error.message.includes(text))) {
+              return false;
+            }
+            return true;
+          },
+        },
         logging: 'info',
       },
       setupMiddlewares: middlewares,
