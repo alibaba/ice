@@ -55,7 +55,12 @@ import usePageLifecycle from './usePageLifecycle.js';
 import { withSuspense, useSuspenseData } from './Suspense.js';
 import { createRouteLoader, WrapRouteComponent, RouteErrorComponent, Await } from './routes.js';
 
-function useAppContext(): PublicAppContext {
+function useAppContext() {
+  console.warn('import { useAppContext } from \'@ice/runtime\'; is deprecated, please use import { useAppContext } from \'ice\'; instead.');
+  return useInternalAppContext();
+}
+
+function usePublicAppContext(): PublicAppContext {
   const context = useInternalAppContext();
 
   const {
@@ -81,7 +86,12 @@ export {
   Runtime,
   runClientApp,
   AppContextProvider,
+  /**
+   * @deprecated
+   * Please use import { useAppContext } from \'ice\'; instead.
+   */
   useAppContext,
+  usePublicAppContext,
   useAppData,
   useData,
   getAppData,

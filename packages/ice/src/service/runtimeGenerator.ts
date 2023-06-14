@@ -90,7 +90,7 @@ export function generateDeclaration(exportList: Array<TargetDeclarationData | De
 
         specifiers.forEach((specifierStr) => {
           if (alias && alias[specifierStr]) {
-            exportDeclarations.push(`${alias[specifierStr]}: ${specifierStr}${symbol}`);
+            exportDeclarations.push(`${alias[specifierStr]}${symbol}`);
             exportNames.push(alias[specifierStr]);
           } else {
             exportDeclarations.push(`${specifierStr}${symbol}`);
