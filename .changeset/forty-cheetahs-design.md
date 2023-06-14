@@ -2,4 +2,4 @@
 '@ice/plugin-pha': major
 ---
 
-feat: support isPHAAppWorker
+feat: the target of PHA worker should be appWorker.
