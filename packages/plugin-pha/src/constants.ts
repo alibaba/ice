@@ -116,7 +116,7 @@ export const getCompilerConfig = (options: {
     }],
     // Replace env vars.
     runtimeDefineVars: {
-      'import.meta.target': JSON.stringify('web'),
+      'import.meta.target': JSON.stringify('appWorker'),
       'import.meta.renderer': JSON.stringify('client'),
     },
   };
