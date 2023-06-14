@@ -1096,6 +1096,7 @@ importers:
       resolve.exports: ^1.1.0
       sass: ^1.50.0
       semver: ^7.3.5
+      source-map-support: ^0.5.21
       temp: ^0.9.4
       unplugin: ^0.9.0
       webpack: ^5.84.1
@@ -1129,6 +1130,7 @@ importers:
       regenerator-runtime: 0.13.11
       resolve.exports: 1.1.1
       semver: 7.4.0
+      source-map-support: 0.5.21
       temp: 0.9.4
       yargs-parser: 21.1.1
     devDependencies:

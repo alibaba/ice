@@ -63,6 +63,7 @@
     "regenerator-runtime": "^0.13.0",
     "resolve.exports": "^1.1.0",
     "semver": "^7.3.5",
+    "source-map-support": "^0.5.21",
     "temp": "^0.9.4",
     "yargs-parser": "^21.1.1"
   },
