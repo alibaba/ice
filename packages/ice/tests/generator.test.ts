@@ -46,7 +46,7 @@ describe('generateDeclaration', () => {
       declarationType: DeclarationType.NORMAL,
     }]);
     expect(importStr).toBe('import Helmet from \'react-helmet\';');
-    expect(exportStr).toBe('Head: Helmet,');
+    expect(exportStr).toBe('Helmet as Head,');
   });
 });
 
