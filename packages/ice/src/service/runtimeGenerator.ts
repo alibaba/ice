@@ -86,11 +86,11 @@ export function generateDeclaration(exportList: Array<TargetDeclarationData | De
       const symbol = type ? ';' : ',';
 
       if (specifier) {
-        importDeclarations.push(`import ${type ? 'type ' : ''}${isDefaultImport ? specifier : `{ ${specifiers.map(specifierStr => ((alias && alias[specifierStr]) ? `${specifierStr} as ${alias[specifierStr]}` : specifierStr)).join(', ')} }`} from '${source}';`);
+        importDeclarations.push(`import ${type ? 'type ' : ''}${isDefaultImport ? specifier : `{ ${specifiers.map(specifierStr => (specifierStr)).join(', ')} }`} from '${source}';`);
 
         specifiers.forEach((specifierStr) => {
           if (alias && alias[specifierStr]) {
-            exportDeclarations.push(`${alias[specifierStr]}${symbol}`);
+            exportDeclarations.push(`${specifierStr} as ${alias[specifierStr]}${symbol}`);
             exportNames.push(alias[specifierStr]);
           } else {
             exportDeclarations.push(`${specifierStr}${symbol}`);
