@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.1.1
+
+### Patch Changes
+
+- 098cb37c: fix: add export of streaming api
+- Updated dependencies [f839c67d]
+- Updated dependencies [137d6b1c]
+- Updated dependencies [474e1935]
+- Updated dependencies [c68c5da3]
+- Updated dependencies [9eec33ad]
+- Updated dependencies [c4f625a2]
+  - @ice/runtime@1.2.4
+
 ## 1.1.0
 
 ### Minor Changes
