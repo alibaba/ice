@@ -19,6 +19,7 @@ import type {
   ResponseHandler,
 } from './types.js';
 import { useData, useConfig } from './RouteContext.js';
+import { useData as useSingleRouterData, useConfig as useSingleRouterConfig } from './singleRouter.js';
 import { useAppContext } from './AppContext.js';
 
 class Runtime {
@@ -81,8 +82,8 @@ class Runtime {
       addWrapper: this.addWrapper,
       appContext: this.appContext,
       setAppRouter: this.setAppRouter,
-      useData,
-      useConfig,
+      useData: process.env.ICE_CORE_ROUTER === 'true' ? useData : useSingleRouterData,
+      useConfig: process.env.ICE_CORE_ROUTER === 'true' ? useConfig : useSingleRouterConfig,
       useAppContext,
       history,
     };

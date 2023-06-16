@@ -8,6 +8,7 @@ import {
 import type {
   RuntimePlugin,
   AppContext,
+  PublicAppContext,
   AppConfig,
   RouteConfig,
   RouteItem,
@@ -22,7 +23,7 @@ import type {
 import Runtime from './runtime.js';
 import runClientApp from './runClientApp.js';
 import type { RunClientAppOptions } from './runClientApp.js';
-import { useAppContext, useAppData, AppContextProvider } from './AppContext.js';
+import { useAppContext as useInternalAppContext, useAppData, AppContextProvider } from './AppContext.js';
 import { getAppData } from './appData.js';
 import { useData, useConfig } from './RouteContext.js';
 import {
@@ -32,6 +33,7 @@ import {
   Scripts,
   Main,
   Data,
+  usePageAssets,
 } from './Document.js';
 import type {
   MetaType,
@@ -53,13 +55,43 @@ import usePageLifecycle from './usePageLifecycle.js';
 import { withSuspense, useSuspenseData } from './Suspense.js';
 import { createRouteLoader, WrapRouteComponent, RouteErrorComponent, Await } from './routes.js';
 
+function useAppContext() {
+  console.warn('import { useAppContext } from \'@ice/runtime\'; is deprecated, please use import { useAppContext } from \'ice\'; instead.');
+  return useInternalAppContext();
+}
+
+function usePublicAppContext(): PublicAppContext {
+  const context = useInternalAppContext();
+
+  const {
+    appConfig,
+    routePath,
+    downgrade,
+    documentOnly,
+    renderMode,
+  } = context;
+
+  return {
+    appConfig,
+    routePath,
+    downgrade,
+    documentOnly,
+    renderMode,
+  };
+}
+
 export {
   getAppConfig,
   defineAppConfig,
   Runtime,
   runClientApp,
   AppContextProvider,
+  /**
+   * @deprecated
+   * Please use import { useAppContext } from \'ice\'; instead.
+   */
   useAppContext,
+  usePublicAppContext,
   useAppData,
   useData,
   getAppData,
@@ -73,6 +105,7 @@ export {
   Scripts,
   Data,
   Main,
+  usePageAssets,
   // API for data-loader.
   dataLoader,
   callDataLoader,

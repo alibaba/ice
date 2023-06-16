@@ -18,6 +18,7 @@ import { setFetcher, setDecorator } from './dataLoader.js';
 import ClientRouter from './ClientRouter.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 import { AppContextProvider } from './AppContext.js';
+import { deprecatedHistory } from './utils/deprecatedHistory.js';
 
 export interface RunClientAppOptions {
   app: AppExport;
@@ -68,7 +69,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     initialEntry: routePath,
     routes,
   };
-  const history = createHistory(appConfig, historyOptions);
+  const history = deprecatedHistory(createHistory(appConfig, historyOptions));
   // Set history for import it from ice.
   setHistory(history);
 
@@ -152,6 +153,7 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
     console.warn(`Root node #${rootId} is not found, current root is automatically created by the framework.`);
   }
   const hydrationData = needHydrate ? { loaderData } : undefined;
+  const routeModuleCache = {};
   if (needHydrate) {
     const lazyMatches = matchRoutes(routes, history.location, basename).filter((m) => m.route.lazy);
     if (lazyMatches?.length > 0) {
@@ -159,7 +161,7 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
       // so we can hydrate the SSR-rendered content synchronously.
       await Promise.all(
         lazyMatches.map(async (m) => {
-          let routeModule = await m.route.lazy();
+          let routeModule = await loadRouteModule(m.route, routeModuleCache);
           Object.assign(m.route, {
             ...routeModule,
             lazy: undefined,
@@ -180,7 +182,7 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
   let singleComponent = null;
   let routeData = null;
   if (process.env.ICE_CORE_ROUTER !== 'true') {
-    const { Component, loader } = await loadRouteModule(routes[0]);
+    const { Component, loader } = await loadRouteModule(routes[0], routeModuleCache);
     singleComponent = Component || routes[0].Component;
     routeData = loader && await loader();
   }

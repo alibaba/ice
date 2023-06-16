@@ -61,12 +61,16 @@ export const RUNTIME_EXPORTS = [
       'ClientOnly',
       'withSuspense',
       'useSuspenseData',
+      'usePublicAppContext',
       'Await',
       'defineDataLoader',
       'defineServerDataLoader',
       'defineStaticDataLoader',
       'usePageLifecycle',
     ],
+    alias: {
+      usePublicAppContext: 'useAppContext',
+    },
     source: '@ice/runtime',
   },
 ];

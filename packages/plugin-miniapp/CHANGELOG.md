@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.1.1
+
+### Patch Changes
+
+- 098cb37c: fix: add export of streaming api
+- Updated dependencies [f95bbc2e]
+- Updated dependencies [098cb37c]
+- Updated dependencies [c70c7737]
+  - @ice/bundles@0.1.12
+  - @ice/miniapp-runtime@1.1.1
+
 ## 1.1.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.0
+
+### Major Changes
+
+- 583c29b3: feat: the target of PHA worker should be appWorker.
+
 ## 2.0.3
 
 ### Patch Changes

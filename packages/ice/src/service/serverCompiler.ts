@@ -128,8 +128,7 @@ export function createServerCompiler(options: Options) {
       return (source: string, id: string) => {
         return {
           ...getConfig(source, id),
-          // Force inline when use swc as a transformer.
-          sourceMaps: sourceMap && 'inline',
+          sourceMaps: !!sourceMap,
         };
       };
     }
@@ -254,13 +253,11 @@ export function createServerCompiler(options: Options) {
         serverEntry,
       };
     } catch (error) {
-      logger.error(
+      logger.briefError(
         'Server compiled with errors.',
         `\nEntryPoints: ${JSON.stringify(buildOptions.entryPoints)}`,
         `\n${error.message}`,
       );
-      // TODO: Log esbuild options with namespace.
-      // logger.debug('esbuild options: ', buildOptions);
       logger.debug(error.stack);
       return {
         error: error as Error,

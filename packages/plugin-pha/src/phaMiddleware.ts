@@ -38,7 +38,7 @@ const createPHAMiddleware = ({
         // dataLoader may have side effect code.
         dataloaderConfig = await getDataloaderConfig();
       } catch (err) {
-        logger.debug('GetDataloaderConfig failed.');
+        logger.briefError('GetDataloaderConfig failed.');
         logger.debug(err);
       }
 

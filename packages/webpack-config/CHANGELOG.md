@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.18
+
+### Patch Changes
+
+- f95bbc2e: fix: optimize deprecation warning of webpack
+- c70c7737: fix: refactor error handling
+- 1171475d: fix: ignore hydration error in dev server overly
+- Updated dependencies [f95bbc2e]
+- Updated dependencies [c70c7737]
+  - @ice/bundles@0.1.12
+
 ## 1.0.17
 
 ### Patch Changes

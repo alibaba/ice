@@ -20,7 +20,7 @@ export async function generateSourceMap({
     sourceRoot: '',
   });
 
-  await Promise.all(sourceMapFileList.map((sourceMapFile, fileIndex) => {
+  await Promise.all(sourceMapFileList.map((sourceMapFile) => {
     return new Promise((resolve) => {
       if (!fse.existsSync(sourceMapFile)) {
         resolve(true);
@@ -39,7 +39,7 @@ export async function generateSourceMap({
 
             generator.addMapping({
               generated: {
-                line: mapping.generatedLine + BASE_LINE + extraLine + fileIndex * 2,
+                line: mapping.generatedLine + BASE_LINE + extraLine + content.split('\n').length,
                 column: mapping.generatedColumn + BASE_COLUMN + extraColumn,
               },
               original: {

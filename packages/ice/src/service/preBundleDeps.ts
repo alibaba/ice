@@ -111,7 +111,7 @@ export default async function preBundleDeps(
       metadata,
     };
   } catch (error) {
-    logger.error('Failed to bundle dependencies.');
+    logger.briefError('Failed to bundle dependencies.');
     logger.debug(error);
     return {};
   }

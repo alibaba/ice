@@ -1,12 +1,28 @@
 import React, { useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { createRouter } from '@remix-run/router';
+import type { To, History, Router } from '@remix-run/router';
 import type { ClientAppRouterProps } from './types.js';
 import App from './App.js';
 import { DataContextProvider } from './singleRouter.js';
 import { useAppContext } from './AppContext.js';
+import { setHistory } from './history.js';
 
-let router: ReturnType<typeof createRouter> = null;
+function createRouterHistory(history: History, router: Router) {
+  const routerHistory = history;
+  routerHistory.push = (to: To, state) => {
+    router.navigate(to, { replace: false, state });
+  };
+  routerHistory.replace = (to: To, state) => {
+    router.navigate(to, { replace: true, state });
+  };
+  routerHistory.go = (delta: number) => {
+    router.navigate(delta);
+  };
+  return routerHistory;
+}
+
+let router: Router = null;
 function ClientRouter(props: ClientAppRouterProps) {
   const { Component, loaderData, routerContext } = props;
   const { revalidate } = useAppContext();
@@ -23,6 +39,8 @@ function ClientRouter(props: ClientAppRouterProps) {
     clearRouter();
     // @ts-expect-error routes type should be AgnosticBaseRouteObject[]
     router = createRouter(routerContext).initialize();
+    // Replace history methods by router navigate for backwards compatibility.
+    setHistory(createRouterHistory({ ...routerContext.history }, router));
   }
   useEffect(() => {
     if (revalidate) {
