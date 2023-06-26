@@ -3,7 +3,7 @@ import { createRequire } from 'module';
 import type { Plugin } from '@ice/app/types';
 import type { RuleSetRule } from 'webpack';
 import consola from 'consola';
-import merge from 'lodash.merge';
+import { merge, cloneDeep } from 'lodash-es';
 import { transformSync } from '@babel/core';
 import styleSheetLoader from './transform-styles.js';
 
@@ -66,12 +66,18 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
     const { userConfig } = context;
 
     onGetConfig((config) => {
+      // Clone config object to avoid Maximum call stack size exceeded error.
+      const originalCompilationConfig = cloneDeep(config.swcOptions?.compilationConfig || {});
+      const originalCompilationConfigFunc = typeof originalCompilationConfig === 'function'
+        ? originalCompilationConfig
+        : () => originalCompilationConfig;
       // Reset jsc.transform.react.runtime to classic.
       config.swcOptions = merge(config.swcOptions || {}, {
-        compilationConfig: (source: string) => {
+        compilationConfig: (source: string, id: string) => {
+          let swcCompilationConfig = {};
           const hasJSXComment = source.indexOf('@jsx createElement') !== -1;
           if (hasJSXComment) {
-            return {
+            swcCompilationConfig = {
               jsc: {
                 transform: {
                   react: {
@@ -84,7 +90,7 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
 
           const isRaxComponent = /(from|require\()\s*['"]rax['"]/.test(source);
           if (isRaxComponent) {
-            return {
+            swcCompilationConfig = {
               jsc: {
                 transform: {
                   react: {
@@ -94,6 +100,8 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
               },
             };
           }
+
+          return merge(cloneDeep(originalCompilationConfigFunc(source, id)), swcCompilationConfig);
         },
       });
 
