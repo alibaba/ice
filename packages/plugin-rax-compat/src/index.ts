@@ -76,6 +76,8 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
         compilationConfig: (source: string, id: string) => {
           let swcCompilationConfig = {};
           const hasJSXComment = source.indexOf('@jsx createElement') !== -1;
+          const isRaxComponent = /(from|require\()\s*['"]rax['"]/.test(source);
+
           if (hasJSXComment) {
             swcCompilationConfig = {
               jsc: {
@@ -86,10 +88,7 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
                 },
               },
             };
-          }
-
-          const isRaxComponent = /(from|require\()\s*['"]rax['"]/.test(source);
-          if (isRaxComponent) {
+          } else if (isRaxComponent) {
             swcCompilationConfig = {
               jsc: {
                 transform: {
