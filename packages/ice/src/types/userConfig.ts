@@ -62,6 +62,10 @@ export interface UserConfig {
   dropLogLevel?: 'trace' | 'debug' | 'log' | 'info' | 'warn' | 'error';
   minify?: boolean | 'swc' | MinifyOptions;
   compileDependencies?: boolean | string[] | RegExp[];
+  /**
+   * HTML will not be generated when build, If it is false.
+   * @see https://v3.ice.work/docs/guide/basic/config#htmlgenerating
+   */
   htmlGenerating?: boolean;
   sourceMap?: string | boolean;
   tsChecker?: boolean;
