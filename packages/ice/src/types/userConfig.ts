@@ -62,6 +62,7 @@ export interface UserConfig {
   dropLogLevel?: 'trace' | 'debug' | 'log' | 'info' | 'warn' | 'error';
   minify?: boolean | 'swc' | MinifyOptions;
   compileDependencies?: boolean | string[] | RegExp[];
+  htmlGenerating?: boolean;
   sourceMap?: string | boolean;
   tsChecker?: boolean;
   eslint?: Config['eslintOptions'] | boolean;

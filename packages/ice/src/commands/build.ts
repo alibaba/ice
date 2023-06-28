@@ -142,13 +142,14 @@ const build = async (
       distType,
       prependCode,
     },
+    htmlGenerating,
   } = userConfig;
   let renderMode: RenderMode;
   if (ssg) {
     renderMode = 'SSG';
   }
   const { serverEntry } = await serverCompileTask.get() || {};
-  if (serverEntry) {
+  if (serverEntry && htmlGenerating) {
     serverEntryRef.current = serverEntry;
     const routeType = appConfig?.router?.type;
     const {
