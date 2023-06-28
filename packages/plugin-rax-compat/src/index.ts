@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { createRequire } from 'module';
-import type { Plugin } from '@ice/app/types';
+import path from 'path';
+import type { Plugin } from '@ice/app/src/types/plugin.js';
 import type { RuleSetRule } from 'webpack';
 import consola from 'consola';
 import merge from 'lodash.merge';
@@ -62,8 +63,19 @@ export interface CompatRaxOptions {
 
 const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
   name: '@ice/plugin-rax-compat',
-  setup: ({ onGetConfig, context }) => {
+  setup: ({ onGetConfig, context, generator }) => {
     const { userConfig } = context;
+
+    // Inject rax-compat type fix in .ice/rax-compat-type-fix.d.ts
+    generator.addRenderFile(path.join(__dirname, './templates/rax-compat.d.ts.ejs'), 'rax-compat-type-fix.d.ts', {});
+    // Produce: import { type __UNUSED_TYPE_FOR_IMPORT_EFFECT_ONLY__ } from './rax-compat-type-fix.d';
+    generator.addExport({
+      // Avoid value import to cause Webpack compilation error:
+      // 'Export assignment cannot be used when targeting ECMAScript modules.'
+      specifier: ['type __UNUSED_TYPE_FOR_IMPORT_EFFECT_ONLY__'],
+      source: './rax-compat-type-fix.d',
+      type: false,
+    });
 
     onGetConfig((config) => {
       // Reset jsc.transform.react.runtime to classic.
@@ -112,7 +124,9 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
 
       if (options.inlineStyle) {
         if (!warnOnce) {
-          consola.warn('Enabling inline style is not recommended.\n       It is recommended to use CSS modules (as default). Only allow old projects to migrate and use.');
+          consola.warn(
+            'Enabling inline style is not recommended.\n       It is recommended to use CSS modules (as default). Only allow old projects to migrate and use.',
+          );
           warnOnce = true;
         }
 
@@ -142,10 +156,13 @@ function getClassNameToStyleTransformer(syntaxFeatures) {
   const { exportDefaultFrom } = syntaxFeatures;
 
   const plugins: (string | Array<string | object>)[] = [
-    [require.resolve('babel-plugin-transform-jsx-stylesheet'), {
-      retainClassName: true,
-      forceEnableCSS: true,
-    }],
+    [
+      require.resolve('babel-plugin-transform-jsx-stylesheet'),
+      {
+        retainClassName: true,
+        forceEnableCSS: true,
+      },
+    ],
   ];
 
   if (exportDefaultFrom) {
@@ -159,13 +176,7 @@ function getClassNameToStyleTransformer(syntaxFeatures) {
     }
 
     if (jsRegex.test(id)) {
-      const parserPlugins = [
-        'jsx',
-        'importMeta',
-        'topLevelAwait',
-        'classProperties',
-        'classPrivateMethods',
-      ];
+      const parserPlugins = ['jsx', 'importMeta', 'topLevelAwait', 'classProperties', 'classPrivateMethods'];
 
       if (/\.tsx?$/.test(id)) {
         // when routes file is a typescript file,
@@ -213,10 +224,7 @@ const styleSheetLoaderForClient = (config, transformCssModule) => {
         rule.test = transformCssModule ? /(\.module|global)\.css$/i : /(\.global)\.css$/i;
         rules[i] = {
           test: /\.css$/i,
-          oneOf: [
-            rule,
-            ruleSetStylesheet,
-          ],
+          oneOf: [rule, ruleSetStylesheet],
         };
       }
 
@@ -225,10 +233,7 @@ const styleSheetLoaderForClient = (config, transformCssModule) => {
         rule.test = transformCssModule ? /(\.module|global)\.css$/i : /(\.global)\.css$/i;
         rules[i] = {
           test: /\.less$/i,
-          oneOf: [
-            rule,
-            ruleSetStylesheetForLess,
-          ],
+          oneOf: [rule, ruleSetStylesheetForLess],
         };
       }
     }
