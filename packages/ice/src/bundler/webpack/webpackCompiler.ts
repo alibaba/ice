@@ -4,17 +4,17 @@ import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { TaskConfig, Context } from 'build-scripts';
 import type { Config } from '@ice/webpack-config/types';
 import type webpack from 'webpack';
-import type { Urls, ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI, GetDataloaderConfig } from '../types/plugin.js';
-import formatWebpackMessages from '../utils/formatWebpackMessages.js';
-import type ServerCompilerPlugin from '../webpack/ServerCompilerPlugin';
-import { IMPORT_META_RENDERER, IMPORT_META_TARGET, WEB } from '../constant.js';
-import getServerCompilerPlugin from '../utils/getServerCompilerPlugin.js';
-import DataLoaderPlugin from '../webpack/DataLoaderPlugin.js';
-import ReCompilePlugin from '../webpack/ReCompilePlugin.js';
-import ServerRunnerPlugin from '../webpack/ServerRunnerPlugin.js';
-import { logger } from '../utils/logger.js';
-import type ServerRunner from './ServerRunner.js';
-import { getRouteExportConfig } from './config.js';
+import type { Urls, ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI, GetDataloaderConfig } from '../../types/plugin.js';
+import formatWebpackMessages from '../../utils/formatWebpackMessages.js';
+import type ServerCompilerPlugin from '../../webpack/ServerCompilerPlugin.js';
+import { IMPORT_META_RENDERER, IMPORT_META_TARGET, WEB } from '../../constant.js';
+import getServerCompilerPlugin from '../../utils/getServerCompilerPlugin.js';
+import DataLoaderPlugin from '../../webpack/DataLoaderPlugin.js';
+import ReCompilePlugin from '../../webpack/ReCompilePlugin.js';
+import ServerRunnerPlugin from '../../webpack/ServerRunnerPlugin.js';
+import { logger } from '../../utils/logger.js';
+import type ServerRunner from '../../service/ServerRunner.js';
+import { getRouteExportConfig } from '../../service/config.js';
 
 const { debounce } = lodash;
 

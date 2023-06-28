@@ -9,7 +9,7 @@ import type ora from '@ice/bundles/compiled/ora/index.js';
 import type { AppConfig } from '@ice/runtime/types';
 import type { RenderMode } from '@ice/runtime';
 import type { ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI, GetDataloaderConfig } from '../types/plugin.js';
-import webpackCompiler from '../service/webpackCompiler.js';
+import webpackCompiler from '../bundler/webpack/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR, SERVER_OUTPUT_DIR, WEB } from '../constant.js';
 import emptyDir from '../utils/emptyDir.js';

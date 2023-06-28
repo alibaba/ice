@@ -12,7 +12,7 @@ import lodash from '@ice/bundles/compiled/lodash/index.js';
 import { getWebpackConfig } from '@ice/webpack-config';
 import type { ExtendsPluginAPI, ServerCompiler, GetAppConfig, GetRoutesConfig, GetDataloaderConfig } from '../types';
 import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR, WEB, DEFAULT_HOST, DEFAULT_PORT } from '../constant.js';
-import webpackCompiler from '../service/webpackCompiler.js';
+import webpackCompiler from '../bundler/webpack/webpackCompiler.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import prepareURLs from '../utils/prepareURLs.js';
 import createRenderMiddleware from '../middlewares/renderMiddleware.js';
