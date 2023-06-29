@@ -73,7 +73,8 @@ export interface UserConfig {
    */
   hash?: boolean | string;
   /**
-   * Configure externals to prevent bundling certain imported packages and instead retrieve these external dependencies at runtime.
+   * Configure externals to prevent bundling certain imported packages and
+   * instead retrieve these external dependencies at runtime.
    * @see https://v3.ice.work/docs/guide/basic/config#externals
    */
   externals?: Config['externals'];
