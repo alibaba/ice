@@ -1,6 +1,7 @@
 import * as React from 'react';
 import type { ReactNode } from 'react';
 import { useAppContext } from './AppContext.js';
+import proxyData from './proxyData.js';
 import type { RequestContext } from './types.js';
 
 const LOADER = '__ICE_SUSPENSE_LOADER__';
@@ -38,6 +39,10 @@ export function useSuspenseData(request?: Request) {
 
   // 3. If request is done, return data.
   if (done) {
+    if (process.env.NODE_ENV === 'development' && typeof data === 'object') {
+      return proxyData(data);
+    }
+
     return data;
   }
 
