@@ -206,7 +206,11 @@ const userConfig = [
             },
           });
         } else {
-          logger.warn(`dropLogLevel support [${Object.keys(levels).join(',')}]`);
+          logger.warn(
+            `If you use a string as the attribute value of dropLogLevel you should enter one of the following strings [${Object.keys(
+              levels,
+            ).join(',')}]`,
+          );
         }
       } else if (dropLogLevel === true) {
         return mergeDefaultValue(config, 'minimizerOptions', {
@@ -222,7 +226,7 @@ const userConfig = [
           },
         });
       } else if (dropLogLevel !== false) {
-        logger.warn('dropLogLevel support boolean and array');
+        logger.warn('dropLogLevel support boolean, array and string');
       }
     },
   },
