@@ -243,7 +243,7 @@ export default defineConfig(() => ({
 - 类型：`boolean | DropType[] | DropType`
 - 默认值：`false`，不移除任何 console 代码
 
-压缩代码时移除 console.* 相关代码，为true时，移除所有console.*相关代码。当想移除部分console代码，例如想要移除console.log和console.error时，可以配置为
+压缩代码时移除 console.* 相关代码，配置为true时，移除所有console.*相关代码。当想移除部分console代码，例如想要移除console.log和console.error时，可以配置为
 ```js
 import { defineConfig } from '@ice/app';
 
