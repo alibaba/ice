@@ -27,6 +27,8 @@ interface IgnorePattern {
 
 type DistType = 'javascript' | 'html';
 
+type DropType = 'trace' | 'debug' | 'log' | 'info' | 'warn' | 'error';
+
 interface Fetcher {
   packageName: string;
   method?: string;
@@ -59,7 +61,7 @@ export interface UserConfig {
     injectInitialEntry?: boolean;
   };
   plugins?: PluginList<Config, OverwritePluginAPI>;
-  dropLogLevel?: 'trace' | 'debug' | 'log' | 'info' | 'warn' | 'error';
+  dropLogLevel?: DropType[] | DropType | boolean;
   minify?: boolean | 'swc' | MinifyOptions;
   compileDependencies?: boolean | string[] | RegExp[];
   sourceMap?: string | boolean;
@@ -85,8 +87,10 @@ export interface UserConfig {
    */
   splitChunks?: boolean;
   codeSplitting?: 'page' | 'vendors' | boolean;
-  dataLoader?: {
-    fetcher?: Fetcher;
-  } | Boolean;
+  dataLoader?:
+    | {
+        fetcher?: Fetcher;
+      }
+    | Boolean;
   crossOriginLoading?: Config['output']['crossOriginLoading'];
 }
