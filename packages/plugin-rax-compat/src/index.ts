@@ -124,7 +124,7 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
 
       if (options.inlineStyle) {
         if (!warnOnce) {
-         consola.warn('Enabling inline style is not recommended.\n       It is recommended to use CSS modules (as default). Only allow old projects to migrate and use.');
+          consola.warn('Enabling inline style is not recommended.\n       It is recommended to use CSS modules (as default). Only allow old projects to migrate and use.');
           warnOnce = true;
         }
 
@@ -238,7 +238,8 @@ const styleSheetLoaderForClient = (config, transformCssModule) => {
         rules[i] = {
           test: /\.less$/i,
           oneOf: [
-            rule, ruleSetStylesheetForLess,
+            rule,
+            ruleSetStylesheetForLess,
           ],
         };
       }
