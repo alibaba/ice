@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-rax-compat",
-  "version": "0.2.2",
+  "version": "0.2.3-canary-a86dfca6-20230703091910",
   "description": "Provide rax compat support for ice.js",
   "license": "MIT",
   "type": "module",

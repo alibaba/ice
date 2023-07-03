@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.3-canary-a86dfca6-20230703091910
+
+### Patch Changes
+
+- a86dfca6: remove server buildOptions
+
 ## 0.2.2
 
 ### Patch Changes

@@ -1,3 +1,4 @@
+// @ts-check
 import { Children, useRef, useEffect, useCallback } from 'react';
 import type { Ref } from 'react';
 import { isFunction } from './type';
