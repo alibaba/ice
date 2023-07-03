@@ -1,6 +1,8 @@
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
-import type { Plugin } from '@ice/app/types';
+import type { Plugin } from '@ice/app/src/types/plugin.js';
 import type { RuleSetRule } from 'webpack';
 import consola from 'consola';
 import merge from 'lodash.merge';
@@ -8,6 +10,8 @@ import { transformSync } from '@babel/core';
 import styleSheetLoader from './transform-styles.js';
 
 const require = createRequire(import.meta.url);
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const jsRegex = /\.(jsx?|tsx?|mjs)$/;
 
@@ -62,10 +66,21 @@ export interface CompatRaxOptions {
 
 const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
   name: '@ice/plugin-rax-compat',
-  setup: ({ onGetConfig, context }) => {
+  setup: ({ onGetConfig, context, generator }) => {
     const { userConfig } = context;
 
     onGetConfig((config) => {
+      // Inject rax-compat type fix in .ice/rax-compat.d.ts
+      // Produce: import { type __UNUSED_TYPE_FOR_IMPORT_EFFECT_ONLY__ } from './rax-compat-type-fix.d';
+      generator.addRenderFile(path.join(__dirname, './templates/rax-compat.d.ts'), 'rax-compat.d.ts', {});
+      generator.addExport({
+        // Avoid value import to cause Webpack compilation error:
+        // 'Export assignment cannot be used when targeting ECMAScript modules.'
+        specifier: ['type __UNUSED_TYPE_FOR_IMPORT_EFFECT_ONLY__'],
+        source: './rax-compat.d',
+        type: false,
+      });
+
       // Reset jsc.transform.react.runtime to classic.
       config.swcOptions = merge(config.swcOptions || {}, {
         compilationConfig: (source: string) => {
