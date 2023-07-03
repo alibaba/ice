@@ -53,3 +53,5 @@ declare namespace Rax {
 }
 export = Rax;
 export as namespace Rax;
+
+export type __UNUSED_TYPE_FOR_IMPORT_EFFECT_ONLY__ = unknown;
