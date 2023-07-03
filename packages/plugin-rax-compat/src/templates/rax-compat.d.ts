@@ -21,6 +21,7 @@ declare namespace Rax {
   > = React.ForwardRefRenderFunction<P>;
   export type FC<P = {}> = React.FunctionComponent<P>;
   export type VoidFunctionComponent<P = {}> = React.VoidFunctionComponent<P>;
+  export type ForwardRefExoticComponent<P> = React.ForwardRefExoticComponent<P>
 
   export type JSXElementConstructor<P> =
     | ((
