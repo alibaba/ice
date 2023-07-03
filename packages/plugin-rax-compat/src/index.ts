@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 import type { Plugin } from '@ice/app/src/types/plugin.js';
 import type { RuleSetRule } from 'webpack';
@@ -9,6 +10,8 @@ import { transformSync } from '@babel/core';
 import styleSheetLoader from './transform-styles.js';
 
 const require = createRequire(import.meta.url);
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const jsRegex = /\.(jsx?|tsx?|mjs)$/;
 
