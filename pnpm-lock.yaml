@@ -134,6 +134,27 @@ importers:
       speed-measure-webpack-plugin: 1.5.0_webpack@5.86.0
       webpack: 5.86.0
 
+  examples/cavans-project:
+    specifiers:
+      '@ice/app': workspace:*
+      '@ice/plugin-canvas': workspace:*
+      '@ice/runtime': workspace:*
+      '@types/react': ^18.0.0
+      '@types/react-dom': ^18.0.0
+      react: ^18.0.0
+      react-dom: ^18.0.0
+      webpack: ^5.86.0
+    dependencies:
+      '@ice/app': link:../../packages/ice
+      '@ice/plugin-canvas': link:../../packages/plugin-cavans
+      '@ice/runtime': link:../../packages/runtime
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    devDependencies:
+      '@types/react': 18.0.34
+      '@types/react-dom': 18.0.11
+      webpack: 5.86.0
+
   examples/csr-project:
     specifiers:
       '@ice/app': workspace:*
@@ -1237,6 +1258,37 @@ importers:
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
       regenerator-runtime: 0.13.11
+
+  packages/plugin-cavans:
+    specifiers:
+      '@babel/core': ^7.0.0
+      '@babel/plugin-proposal-export-default-from': ^7.18.9
+      '@ice/app': ^3.2.1
+      '@ice/bundles': ^0.1.10
+      '@ice/runtime': ^1.2.4
+      babel-plugin-transform-jsx-stylesheet: 1.0.6
+      consola: ^2.15.3
+      css: ^2.2.1
+      lodash.merge: ^4.6.2
+      rax-compat: ^0.2.1
+      style-unit: ^3.0.5
+      stylesheet-loader: ^0.9.1
+      webpack: ^5.86.0
+    dependencies:
+      '@babel/core': 7.21.0
+      '@babel/plugin-proposal-export-default-from': 7.18.10_@babel+core@7.21.0
+      '@ice/bundles': link:../bundles
+      '@ice/runtime': link:../runtime
+      babel-plugin-transform-jsx-stylesheet: 1.0.6
+      consola: 2.15.3
+      css: 2.2.4
+      lodash.merge: 4.6.2
+      rax-compat: link:../rax-compat
+      style-unit: 3.0.5
+      stylesheet-loader: 0.9.1
+    devDependencies:
+      '@ice/app': link:../ice
+      webpack: 5.86.0
 
   packages/plugin-css-assets-local:
     specifiers:
@@ -9662,8 +9714,8 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
-      JSONStream: 1.3.5
       is-text-path: 1.0.1
+      JSONStream: 1.3.5
       lodash: 4.17.21
       meow: 8.1.2
       split2: 3.2.2
@@ -18664,12 +18716,6 @@ packages:
   /react-dev-utils/12.0.1_y75l3d5in5mgvug53qfq62ncxu:
     resolution: {integrity: sha512-84Ivxmr17KjUupyqzFode6xKhjwuEJDROWKJy/BthkL7Wn6NJ8h4WE6k/exAv6ImS+0oZLRRW5j/aINMHyeGeQ==}
     engines: {node: '>=14'}
-    peerDependencies:
-      typescript: '>=2.7'
-      webpack: '>=4'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
     dependencies:
       '@babel/code-frame': 7.18.6
       address: 1.2.2
@@ -18700,7 +18746,9 @@ packages:
     transitivePeerDependencies:
       - eslint
       - supports-color
+      - typescript
       - vue-template-compiler
+      - webpack
 
   /react-dom/17.0.2_react@17.0.2:
     resolution: {integrity: sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==}
