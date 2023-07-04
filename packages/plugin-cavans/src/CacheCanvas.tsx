@@ -45,8 +45,8 @@ export function CacheCanvas(props) {
         renderCanvas
           ? <canvas id={id} {...rest} />
         : <>
-          <canvas style={{ display: 'none' }} id={id} {...rest} />
-          <img src="" id={`canvas-img-${id}`} />
+          {/* <canvas id={id} {...rest} /> */}
+          <img src={localStorage.getItem('${cacheKey}') || ''} id={`canvas-img-${id}`} />
           <script
             dangerouslySetInnerHTML={{
               __html: `
