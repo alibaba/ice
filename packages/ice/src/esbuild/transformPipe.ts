@@ -100,8 +100,8 @@ const transformPipe = (options: PluginOptions = {}): Plugin => {
         const resolveDir = path.dirname(args.path);
         const loader = guessLoader(id);
 
-        // If file extension is not recognized, return it to esbuild.
-        if (!loader) {
+        // If file extension is not recognized and load path is relative, return it to esbuild.
+        if (!loader || !path.isAbsolute(id)) {
           return;
         }
 
