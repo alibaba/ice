@@ -2,6 +2,15 @@ import { useEffect, useState } from 'react';
 import * as React from 'react';
 import { useMounted } from '@ice/runtime';
 
+declare global {
+  interface Window {
+    WindVane: {
+      call: Function;
+    };
+    _windvane_backControl: Function | null;
+  }
+}
+
 export function CacheCanvas(props) {
   const {
     id,
