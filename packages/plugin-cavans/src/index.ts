@@ -10,7 +10,6 @@ const plugin: Plugin = () => ({
       specifier: ['CacheCanvas'],
     });
   },
-  // runtime: `${PLUGIN_NAME}/runtime`,
 });
 
 export default plugin;
