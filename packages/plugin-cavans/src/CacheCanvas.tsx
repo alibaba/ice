@@ -17,17 +17,23 @@ export function CacheCanvas(props) {
   const cacheCanvasFunc = () => {
     // Cache base64 string of canvas.
     const canvas: HTMLCanvasElement | null = document.getElementById(id) as HTMLCanvasElement;
-    console.log('canvas=', canvas);
     const strBase64 = canvas.toDataURL();
-    console.log('strBase64=', strBase64);
     localStorage.setItem(cacheKey, strBase64);
   };
 
   useEffect(() => {
+    window.WindVane.call('WebAppInterface', 'enableHookNativeBack', {});
+    window._windvane_backControl = () => {
+      cacheCanvasFunc();
+      return 'true';
+    };
+    document.addEventListener('wvBackClickEvent', cacheCanvasFunc, false);
     window.addEventListener('beforeunload', cacheCanvasFunc);
 
     return () => {
       window.removeEventListener('beforeunload', cacheCanvasFunc);
+      window.removeEventListener('wvBackClickEvent', cacheCanvasFunc);
+      window._windvane_backControl = null;
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
