@@ -8,6 +8,7 @@ export interface DeclarationData {
   source: string;
   type?: boolean;
   alias?: Record<string, string>;
+  importAlias?: Record<string, string>;
   declarationType?: DeclarationType;
 }
 
@@ -38,7 +39,10 @@ export type SetPlugins = (plugins: any) => void;
 export type AddDeclaration = (registerKey: string, declarationData: DeclarationData | DeclarationData[]) => void;
 export type RemoveDeclaration = (registerKey: string, removeSource: string | string[]) => void;
 export type AddContent = (apiName: string, ...args: any) => void;
-export type GetDeclarations = (registerKey: string, dataKeys: string[]) => {
+export type GetDeclarations = (
+  registerKey: string,
+  dataKeys: string[],
+) => {
   imports?: string;
   exports?: string;
   exportNames?: string[];

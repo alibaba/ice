@@ -59,6 +59,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
     generator.addRouteTypes({
       specifier: ['PageConfig'],
       alias: { PageConfig: 'PHAPageConfig' },
+      importAlias: { PageConfig: 'PHAPageConfig' },
       type: true,
       source: '@ice/plugin-pha/types',
     });

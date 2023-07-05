@@ -80,13 +80,23 @@ export function generateDeclaration(exportList: Array<TargetDeclarationData | De
         }
       });
     } else if (isDeclarationData(data)) {
-      const { specifier, source, alias, type } = data;
+      const { specifier, source, alias, type, importAlias } = data;
       const isDefaultImport = !Array.isArray(specifier);
       const specifiers = isDefaultImport ? [specifier] : specifier;
       const symbol = type ? ';' : ',';
 
       if (specifier) {
-        importDeclarations.push(`import ${type ? 'type ' : ''}${isDefaultImport ? specifier : `{ ${specifiers.map(specifierStr => (specifierStr)).join(', ')} }`} from '${source}';`);
+        importDeclarations.push(
+          `import ${type ? 'type ' : ''}${
+            isDefaultImport
+              ? specifier
+              : `{ ${specifiers
+                  .map((specifierStr) =>
+                    (importAlias?.[specifierStr] ? `${specifierStr} as ${importAlias[specifierStr]}` : specifierStr),
+                  )
+                  .join(', ')} }`
+          } from '${source}';\n`,
+        );
 
         specifiers.forEach((specifierStr) => {
           if (alias && alias[specifierStr]) {
