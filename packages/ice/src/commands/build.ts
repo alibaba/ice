@@ -148,7 +148,7 @@ const build = async (
   if (ssg) {
     renderMode = 'SSG';
     if (!htmlGenerating) {
-      logger.warn('ssg depens on htmlGenerating, ssg will not work when htmlGenerating is set to false.');
+      logger.warn('SSG depends on htmlGenerating, ssg will not work when htmlGenerating is set to false.');
     }
   }
   const { serverEntry } = await serverCompileTask.get() || {};
