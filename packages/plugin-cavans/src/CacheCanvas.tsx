@@ -22,18 +22,22 @@ export function CacheCanvas(props) {
   };
 
   useEffect(() => {
-    window.WindVane.call('WebAppInterface', 'enableHookNativeBack', {});
-    window._windvane_backControl = () => {
-      cacheCanvasFunc();
-      return 'true';
-    };
+    if (window.WindVane) {
+      window.WindVane.call('WebAppInterface', 'enableHookNativeBack', {});
+      window._windvane_backControl = () => {
+        cacheCanvasFunc();
+        return 'true';
+      };
+    }
     document.addEventListener('wvBackClickEvent', cacheCanvasFunc, false);
     window.addEventListener('beforeunload', cacheCanvasFunc);
 
     return () => {
       window.removeEventListener('beforeunload', cacheCanvasFunc);
       window.removeEventListener('wvBackClickEvent', cacheCanvasFunc);
-      window._windvane_backControl = null;
+      if (window._windvane_backControl) {
+        window._windvane_backControl = null;
+      }
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
