@@ -9,7 +9,7 @@ export function CacheCanvas(props) {
     useCache,
     ...rest
   } = props;
-  const [renderCanvas, setRenderCanvas] = useState(useCache);
+  const [renderedCanvas, setRenderedCanvas] = useState(useCache);
   const cacheKey = `cache-canvas-${id}`;
 
   const mounted = useMounted();
@@ -17,7 +17,9 @@ export function CacheCanvas(props) {
   const cacheCanvasFunc = () => {
     // Cache base64 string of canvas.
     const canvas: HTMLCanvasElement | null = document.getElementById(id) as HTMLCanvasElement;
+    console.log('canvas=', canvas);
     const strBase64 = canvas.toDataURL();
+    console.log('strBase64=', strBase64);
     localStorage.setItem(cacheKey, strBase64);
   };
 
@@ -35,19 +37,17 @@ export function CacheCanvas(props) {
       const res = init();
       if (res instanceof Promise) {
         res.then(() => {
-          setRenderCanvas(true);
+          setRenderedCanvas(true);
         });
       }
     }
   }, [mounted, init]);
-console.log('cacheKey=', cacheKey);
+
   return (
     <>
+      <canvas style={{ display: renderedCanvas ? '' : 'none' }} id={id} {...rest} />
       {
-        renderCanvas
-          ? <canvas id={id} {...rest} />
-        : <>
-          {/* <canvas id={id} {...rest} /> */}
+        !renderedCanvas && (<>
           <img src={localStorage.getItem(cacheKey) || ''} id={`canvas-img-${id}`} />
           <script
             dangerouslySetInnerHTML={{
@@ -62,7 +62,7 @@ console.log('cacheKey=', cacheKey);
                 `,
               }}
           />
-        </>
+        </>)
       }
     </>
   );

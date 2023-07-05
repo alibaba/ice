@@ -16,7 +16,7 @@ export default function Home() {
       }
 
       setTimeout(() => {
-        console.log('canvas ready!');
+        console.log('canvas paint ready!');
         resolve(true);
       }, 5000);
     });
