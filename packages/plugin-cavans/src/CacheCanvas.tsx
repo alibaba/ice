@@ -14,18 +14,20 @@ export function CacheCanvas(props) {
 
   const mounted = useMounted();
 
+  const cacheCanvasFunc = () => {
+    // Cache base64 string of canvas.
+    const canvas: HTMLCanvasElement | null = document.getElementById(id) as HTMLCanvasElement;
+    const strBase64 = canvas.toDataURL();
+    localStorage.setItem(cacheKey, strBase64);
+  };
+
   useEffect(() => {
-    const cacheCanvasFunc = () => {
-      // Cache base64 string of canvas.
-      const canvas: HTMLCanvasElement | null = document.getElementById(id) as HTMLCanvasElement;
-      const strBase64 = canvas.toDataURL();
-      localStorage.setItem(cacheKey, strBase64);
-    };
     window.addEventListener('beforeunload', cacheCanvasFunc);
 
     return () => {
       window.removeEventListener('beforeunload', cacheCanvasFunc);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -37,8 +39,8 @@ export function CacheCanvas(props) {
         });
       }
     }
-  }, [mounted, init, id]);
-
+  }, [mounted, init]);
+console.log('cacheKey=', cacheKey);
   return (
     <>
       {
@@ -46,7 +48,7 @@ export function CacheCanvas(props) {
           ? <canvas id={id} {...rest} />
         : <>
           {/* <canvas id={id} {...rest} /> */}
-          <img src={localStorage.getItem('${cacheKey}') || ''} id={`canvas-img-${id}`} />
+          <img src={localStorage.getItem(cacheKey) || ''} id={`canvas-img-${id}`} />
           <script
             dangerouslySetInnerHTML={{
               __html: `
