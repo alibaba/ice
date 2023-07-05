@@ -5,7 +5,7 @@ import { createRequire } from 'module';
 import type { Plugin } from '@ice/app/src/types/plugin.js';
 import type { RuleSetRule } from 'webpack';
 import consola from 'consola';
-import merge from 'lodash.merge';
+import { merge, cloneDeep } from 'lodash-es';
 import { transformSync } from '@babel/core';
 import styleSheetLoader from './transform-styles.js';
 
@@ -81,12 +81,19 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
         type: false,
       });
 
+      const compilationConfigFunc = typeof config.swcOptions?.compilationConfig === 'function'
+        ? config.swcOptions?.compilationConfig
+        : () => config.swcOptions?.compilationConfig;
+
       // Reset jsc.transform.react.runtime to classic.
       config.swcOptions = merge(config.swcOptions || {}, {
-        compilationConfig: (source: string) => {
+        compilationConfig: (source: string, id: string) => {
+          let swcCompilationConfig = {};
           const hasJSXComment = source.indexOf('@jsx createElement') !== -1;
+          const isRaxComponent = /(from|require\()\s*['"]rax['"]/.test(source);
+
           if (hasJSXComment) {
-            return {
+            swcCompilationConfig = {
               jsc: {
                 transform: {
                   react: {
@@ -95,11 +102,8 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
                 },
               },
             };
-          }
-
-          const isRaxComponent = /(from|require\()\s*['"]rax['"]/.test(source);
-          if (isRaxComponent) {
-            return {
+          } else if (isRaxComponent) {
+            swcCompilationConfig = {
               jsc: {
                 transform: {
                   react: {
@@ -109,6 +113,12 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
               },
             };
           }
+
+          return merge(
+            // Clone config object to avoid Maximum call stack size exceeded error.
+            cloneDeep(compilationConfigFunc(source, id)),
+            swcCompilationConfig,
+          );
         },
       });
 
