@@ -1,5 +1,5 @@
-<%- routeConfigTypes.imports -%>
 import type { AppConfig, RouteConfig as DefaultRouteConfig } from '@ice/runtime';
+<%- routeConfigTypes.imports -%>
 
 <% if (routeConfigTypes.imports) {-%>
 type ExtendsRouteConfig = <% if (routeConfigTypes.imports) { %><%- routeConfigTypes.exportNames.join(' & ') %><% } %>;
