@@ -66,11 +66,9 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
     const { userConfig } = context;
 
     onGetConfig((config) => {
-      // Clone config object to avoid Maximum call stack size exceeded error.
-      const originalCompilationConfig = cloneDeep(config.swcOptions?.compilationConfig || {});
-      const originalCompilationConfigFunc = typeof originalCompilationConfig === 'function'
-        ? originalCompilationConfig
-        : () => originalCompilationConfig;
+      const compilationConfigFunc = typeof config.swcOptions?.compilationConfig === 'function'
+        ? config.swcOptions?.compilationConfig
+        : () => config.swcOptions?.compilationConfig;
       // Reset jsc.transform.react.runtime to classic.
       config.swcOptions = merge(config.swcOptions || {}, {
         compilationConfig: (source: string, id: string) => {
@@ -100,7 +98,11 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
             };
           }
 
-          return merge(cloneDeep(originalCompilationConfigFunc(source, id)), swcCompilationConfig);
+          return merge(
+            // Clone config object to avoid Maximum call stack size exceeded error.
+            cloneDeep(compilationConfigFunc(source, id)),
+            swcCompilationConfig,
+          );
         },
       });
 
