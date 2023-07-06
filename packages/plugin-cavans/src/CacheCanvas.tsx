@@ -1,4 +1,4 @@
-import { useEffect, useState, useImperativeHandle, forwardRef } from 'react';
+import { useEffect, useState, useImperativeHandle, forwardRef, useCallback } from 'react';
 import * as React from 'react';
 import { useMounted } from '@ice/runtime';
 
@@ -10,6 +10,10 @@ declare global {
     _windvane_backControl: Function | null;
   }
 }
+
+export type RefCacheCanvas = {
+  cacheCanvasToStorage: () => void;
+};
 
 export const CacheCanvas = forwardRef((props, ref) => {
   const {
@@ -23,12 +27,12 @@ export const CacheCanvas = forwardRef((props, ref) => {
 
   const mounted = useMounted();
 
-  const cacheCanvasFunc = () => {
+  const cacheCanvasFunc = useCallback(() => {
     // Cache base64 string of canvas.
     const canvas: HTMLCanvasElement | null = document.getElementById(id) as HTMLCanvasElement;
     const strBase64 = canvas.toDataURL();
     localStorage.setItem(cacheKey, strBase64);
-  };
+  });
 
   useImperativeHandle(ref, () => ({
     cacheCanvasToStorage: cacheCanvasFunc,
@@ -52,8 +56,7 @@ export const CacheCanvas = forwardRef((props, ref) => {
         window._windvane_backControl = null;
       }
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [cacheCanvasFunc]);
 
   useEffect(() => {
     if (mounted && typeof init === 'function') {
@@ -68,7 +71,7 @@ export const CacheCanvas = forwardRef((props, ref) => {
 
   return (
     <>
-      <canvas style={{ display: renderedCanvas ? '' : 'none' }} id={id} {...rest} />
+      <canvas {...rest} style={renderedCanvas ? {} : { display: 'none' }} id={id} />
       {
         !renderedCanvas && (<>
           <img src={localStorage.getItem(cacheKey) || ''} id={`canvas-img-${id}`} />

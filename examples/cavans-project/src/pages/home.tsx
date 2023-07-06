@@ -2,10 +2,14 @@ import { definePageConfig, CacheCanvas } from 'ice';
 import { useRef } from 'react';
 import styles from './index.module.css';
 
+export type RefCacheCanvas = {
+  cacheCanvasToStorage: () => void;
+};
+
 const GAME_CANVAS_ID = 'canvas-id';
 
 export default function Home() {
-  const childRef = useRef();
+  const childRef = useRef<RefCacheCanvas>();
   const initFunc = () => {
     return new Promise((resolve) => {
       const canvas: HTMLCanvasElement | null = document.getElementById(GAME_CANVAS_ID) as HTMLCanvasElement;
@@ -28,6 +32,7 @@ export default function Home() {
       <h2 className={styles.title}>Home Page</h2>
       <CacheCanvas ref={childRef} id={GAME_CANVAS_ID} init={initFunc} />
       <button onClick={() => {
+        console.log('active cache!');
         childRef.current?.cacheCanvasToStorage();
       }}
       >cache canvas</button>
