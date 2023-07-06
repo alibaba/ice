@@ -6,7 +6,6 @@ import type { CommandArgs, CommandName } from 'build-scripts';
 import type { Config } from '@ice/webpack-config/types';
 import type { AppConfig } from '@ice/runtime/types';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
-import fg from 'fast-glob';
 import type {
   DeclarationData,
   PluginData,
@@ -17,8 +16,6 @@ import { DeclarationType } from './types/index.js';
 import Generator from './service/runtimeGenerator.js';
 import { createServerCompiler } from './service/serverCompiler.js';
 import createWatch from './service/watchSource.js';
-import start from './commands/start.js';
-import build from './commands/build.js';
 import pluginWeb from './plugins/web/index.js';
 import test from './commands/test.js';
 import getWatchEvents from './getWatchEvents.js';
@@ -32,7 +29,6 @@ import ServerCompileTask from './utils/ServerCompileTask.js';
 import { getAppExportConfig, getRouteExportConfig } from './service/config.js';
 import renderExportsTemplate from './utils/renderExportsTemplate.js';
 import { getFileExports } from './service/analyze.js';
-import { getFileHash } from './utils/hash.js';
 import { logger, createLogger } from './utils/logger.js';
 import ServerRunner from './service/ServerRunner.js';
 import RouteManifest from './utils/routeManifest.js';
@@ -223,7 +219,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   // get userConfig after setup because of userConfig maybe modified by plugins
   const { userConfig } = ctx;
   const { routes: routesConfig, server, syntaxFeatures, polyfill, output: { distType } } = userConfig;
-  const userConfigHash = await getFileHash(path.join(rootDir, fg.sync(configFile, { cwd: rootDir })[0]));
 
   const coreEnvKeys = getCoreEnvKeys();
 
@@ -377,31 +372,13 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         configFile,
       };
       try {
-        if (command === 'start') {
-          const routePaths = routeManifest.getFlattenRoute()
-            .sort((a, b) =>
-              // Sort by length, shortest path first.
-              a.split('/').filter(Boolean).length - b.split('/').filter(Boolean).length);
-          return await start(ctx, {
-            routeManifest,
-            taskConfigs,
-            serverCompiler,
-            getRoutesConfig,
-            getDataloaderConfig,
-            getAppConfig,
-            appConfig,
-            devPath: (routePaths[0] || '').replace(/^[/\\]/, ''),
-            spinner: buildSpinner,
-            userConfigHash,
-            serverRunner,
-          });
-        } else if (command === 'build') {
-          return await webpackBundler(ctx, bundlerConfig);
-        } else if (command === 'test') {
+        if (command === 'test') {
           return test(ctx, {
             taskConfigs,
             spinner: buildSpinner,
           });
+        } else {
+          return await webpackBundler(ctx, bundlerConfig);
         }
       } catch (error) {
         buildSpinner.stop();
