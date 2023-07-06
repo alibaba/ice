@@ -1057,7 +1057,7 @@ importers:
     specifiers:
       '@ice/bundles': 0.1.12
       '@ice/route-manifest': 1.2.0
-      '@ice/runtime': ^1.2.4
+      '@ice/runtime': ^1.2.5
       '@ice/webpack-config': 1.0.18
       '@swc/helpers': 0.5.1
       '@types/babel__generator': ^7.6.4
@@ -1374,7 +1374,7 @@ importers:
 
   packages/plugin-pha:
     specifiers:
-      '@ice/app': ^3.2.6
+      '@ice/app': ^3.2.7
       '@remix-run/router': ^1.6.1
       build-scripts: ^2.1.1-0
       chalk: ^4.0.0
@@ -1403,7 +1403,7 @@ importers:
     specifiers:
       '@babel/core': ^7.0.0
       '@babel/plugin-proposal-export-default-from': ^7.18.9
-      '@ice/app': ^3.2.1
+      '@ice/app': ^3.2.7
       '@ice/bundles': ^0.1.10
       '@types/lodash-es': ^4.17.7
       babel-plugin-transform-jsx-stylesheet: 1.0.6

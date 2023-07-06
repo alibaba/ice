@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.3
+
+### Patch Changes
+
+- dd297f96: fix: compilation config not extend
+- 7f718c5f: fix: fix Rax namespace typing compat with React v18
+- bf8af99d: remove server options setter
+
 ## 0.2.2
 
 ### Patch Changes
