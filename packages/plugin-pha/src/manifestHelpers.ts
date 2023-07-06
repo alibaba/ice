@@ -183,9 +183,8 @@ async function getPageManifest(page: string | Page, options: ParseOptions): Prom
       key: page,
       ...rest,
     };
-    const html = await renderPageDocument(page, excuteServerEntry);
     if (template && !Array.isArray(pageConfig.frames)) {
-      pageManifest.document = html;
+      pageManifest.document = await renderPageDocument(page, excuteServerEntry);
     }
 
     if (preload) {
