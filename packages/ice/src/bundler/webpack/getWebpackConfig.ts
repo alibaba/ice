@@ -3,11 +3,9 @@ import fg from 'fast-glob';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import { getWebpackConfig as getDefaultWebpackConfig } from '@ice/webpack-config';
-import type { Context, TaskConfig } from 'build-scripts';
+import type { Context } from 'build-scripts';
 import type { Config } from '@ice/webpack-config/types';
-import type { AppConfig } from '@ice/runtime/types';
 import type { Configuration } from 'webpack';
-import type ora from '@ice/bundles/compiled/ora/index.js';
 import { getExpandedEnvs } from '../../utils/runtimeEnv.js';
 import { getRouteExportConfig } from '../../service/config.js';
 import { getFileHash } from '../../utils/hash.js';
@@ -15,31 +13,17 @@ import ServerRunnerPlugin from '../../webpack/ServerRunnerPlugin.js';
 import ReCompilePlugin from '../../webpack/ReCompilePlugin.js';
 import getServerCompilerPlugin from '../../utils/getServerCompilerPlugin.js';
 import DataLoaderPlugin from '../../webpack/DataLoaderPlugin.js';
-import type { ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI, GetDataloaderConfig } from '../../types/plugin.js';
-import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR, SERVER_OUTPUT_DIR, WEB } from '../../constant.js';
-import type RouteManifest from '../../utils/routeManifest.js';
-import type { UserConfig } from '../../types/userConfig.js';
+import type { ExtendsPluginAPI } from '../../types/plugin.js';
+import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR, WEB } from '../../constant.js';
 import type ServerRunner from '../../service/ServerRunner.js';
 import type ServerCompilerPlugin from '../../webpack/ServerCompilerPlugin.js';
+import type { BundlerOptions } from './types.js';
 
 const { debounce } = lodash;
 
-interface GetWebpackConfigOptions {
-  serverCompiler: ServerCompiler;
-  spinner: ora.Ora;
-  appConfig: AppConfig;
-  getRoutesConfig: GetRoutesConfig;
-  getDataloaderConfig: GetDataloaderConfig;
-  configFile: string;
-  userConfig: UserConfig;
-  routeManifest: RouteManifest;
-  serverRunner?: ServerRunner;
-}
-
 type GetWebpackConfig = (
   context: Context<Config, ExtendsPluginAPI>,
-  taskConfigs: TaskConfig<Config>[],
-  options: GetWebpackConfigOptions
+  options: BundlerOptions
 ) => Promise<Configuration[]>;
 
 interface DevOptions {
@@ -86,8 +70,8 @@ const addDevPlugins = (webpackConfig: Configuration, options: DevOptions) => {
   ]);
 };
 
-const getWebpackConfig: GetWebpackConfig = async (context, taskConfigs, options) => {
-  const { configFile, serverRunner, serverCompiler } = options;
+const getWebpackConfig: GetWebpackConfig = async (context, options) => {
+  const { configFile, hooksAPI: { serverRunner, serverCompiler }, spinner, taskConfigs } = options;
   const {
     rootDir,
     command,
@@ -155,6 +139,17 @@ const getWebpackConfig: GetWebpackConfig = async (context, taskConfigs, options)
         frameworkExports,
       }));
     }
+
+    // Add spinner for webpack task.
+    webpackConfig.plugins.push((compiler: webpack.Compiler) => {
+      compiler.hooks.beforeCompile.tap('spinner', () => {
+        spinner.text = `Compiling task ${webpackConfig.name || 'web'}...\n`;
+      });
+      compiler.hooks.afterEmit.tap('spinner', () => {
+        spinner.stop();
+      });
+    });
+
     return webpackConfig;
   });
 

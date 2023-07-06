@@ -241,6 +241,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     entry: entry || (() => getEntry(rootDir, runtimeTmpDir)),
     externals,
     output: {
+      clean: true,
       publicPath,
       path: absoluteOutputDir,
       filename: `js/${hashKey ? `[name]-[${hashKey}].js` : '[name].js'}`,

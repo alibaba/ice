@@ -39,6 +39,7 @@ import RouteManifest from './utils/routeManifest.js';
 import dynamicImport from './utils/dynamicImport.js';
 import mergeTaskConfig from './utils/mergeTaskConfig.js';
 import addPolyfills from './utils/runtimePolyfill.js';
+import webpackBundler from './bundler/webpack/index.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -360,6 +361,21 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   return {
     run: async () => {
+      const bundlerConfig = {
+        taskConfigs,
+        spinner: buildSpinner,
+        routeManifest,
+        appConfig,
+        hooksAPI: {
+          getAppConfig,
+          getRoutesConfig,
+          getDataloaderConfig,
+          serverRunner,
+          serverCompiler,
+        },
+        userConfig,
+        configFile,
+      };
       try {
         if (command === 'start') {
           const routePaths = routeManifest.getFlattenRoute()
@@ -380,18 +396,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             serverRunner,
           });
         } else if (command === 'build') {
-          return await build(ctx, {
-            routeManifest,
-            getRoutesConfig,
-            getDataloaderConfig,
-            getAppConfig,
-            appConfig,
-            taskConfigs,
-            serverCompiler,
-            spinner: buildSpinner,
-            userConfigHash,
-            userConfig,
-          });
+          return await webpackBundler(ctx, bundlerConfig);
         } else if (command === 'test') {
           return test(ctx, {
             taskConfigs,
