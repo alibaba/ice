@@ -142,13 +142,17 @@ const build = async (
       distType,
       prependCode,
     },
+    htmlGenerating,
   } = userConfig;
   let renderMode: RenderMode;
   if (ssg) {
     renderMode = 'SSG';
+    if (!htmlGenerating) {
+      logger.warn('SSG depends on htmlGenerating, SSG will not work when htmlGenerating is set to false.');
+    }
   }
   const { serverEntry } = await serverCompileTask.get() || {};
-  if (serverEntry) {
+  if (serverEntry && htmlGenerating) {
     serverEntryRef.current = serverEntry;
     const routeType = appConfig?.router?.type;
     const {

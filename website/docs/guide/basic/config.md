@@ -642,6 +642,13 @@ export default defineConfig(() => ({
 }));
 ```
 
+### htmlGenerating
+
+- 类型：`boolean`
+- 默认值：`true`
+
+如果产物不想生成 html，可以设置为 `false`，在 SSG 开启的情况下，强制关闭 html 生成，将导致 SSG 失效。
+
 ### plugins
 
 - 类型：`PluginList<Config, OverwritePluginAPI>`

@@ -152,6 +152,11 @@ export interface UserConfig {
    */
   compileDependencies?: boolean | string[] | RegExp[];
   /**
+   * HTML will not be generated when build, If it is false.
+   * @see https://v3.ice.work/docs/guide/basic/config#htmlgenerating
+   */
+  htmlGenerating?: boolean;
+  /**
    * Choose a style of souce mapping to enhance the debugging process.
    * @see https://v3.ice.work/docs/guide/basic/config#sourcemap
    */
