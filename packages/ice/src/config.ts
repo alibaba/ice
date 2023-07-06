@@ -389,6 +389,11 @@ const userConfig = [
     validation: 'object',
     defaultValue: {},
   },
+  {
+    name: 'htmlGenerating',
+    validation: 'boolean',
+    defaultValue: true,
+  },
 ];
 
 const cliOption = [
