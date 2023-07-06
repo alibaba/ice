@@ -35,7 +35,6 @@ export async function startDevServer(
     appConfig,
   } = options;
   const { ssg, ssr } = userConfig;
-
   const routePaths = routeManifest.getFlattenRoute().sort((a, b) =>
     // Sort by length, shortest path first.
     a.split('/').filter(Boolean).length - b.split('/').filter(Boolean).length);
@@ -51,7 +50,6 @@ export async function startDevServer(
     commandArgs.port ||
     webpackConfigs[0].devServer?.port ||
     await detectPort(DEFAULT_PORT);
-
 
   let devServerConfig: DevServerConfiguration = {
     port,
@@ -104,7 +102,6 @@ export async function startDevServer(
     urlPathname.endsWith('/') ? urlPathname : `${urlPathname}/`,
     enabledHashRouter,
   );
-  let devPath = (routePaths[0] || '').replace(/^[/\\]/, '');
   let isFirstCompile = true;
   compiler.hooks.done.tap('done', async stats => {
     const statsData = stats.toJson({
@@ -136,7 +133,7 @@ export async function startDevServer(
       isFirstCompile,
       urls,
       devUrlInfo: {
-        devPath,
+        devPath: (routePaths[0] || '').replace(/^[/\\]/, ''),
       },
       messages,
       taskConfigs,
