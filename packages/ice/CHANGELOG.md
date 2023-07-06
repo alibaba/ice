@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.2.7
+
+### Patch Changes
+
+- 429a2a83: fix: relative id in pipe transform
+- c7aad4eb: chore: add user config comments
+- d8f4520f: fix: alias for type declaration
+- 110b282b: feat: support user config htmlGenerating to control the generation of html
+- Updated dependencies [29ad1b52]
+  - @ice/runtime@1.2.5
+
 ## 3.2.6
 
 ### Patch Changes
