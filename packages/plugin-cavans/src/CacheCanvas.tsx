@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useImperativeHandle, forwardRef } from 'react';
 import * as React from 'react';
 import { useMounted } from '@ice/runtime';
 
@@ -11,7 +11,7 @@ declare global {
   }
 }
 
-export function CacheCanvas(props) {
+export const CacheCanvas = forwardRef((props, ref) => {
   const {
     id,
     init,
@@ -29,6 +29,10 @@ export function CacheCanvas(props) {
     const strBase64 = canvas.toDataURL();
     localStorage.setItem(cacheKey, strBase64);
   };
+
+  useImperativeHandle(ref, () => ({
+    cacheCanvasToStorage: cacheCanvasFunc,
+ }));
 
   useEffect(() => {
     if (window.WindVane) {
@@ -85,4 +89,4 @@ export function CacheCanvas(props) {
       }
     </>
   );
-}
+});
