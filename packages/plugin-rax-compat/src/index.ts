@@ -106,17 +106,6 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
         },
       });
 
-      if (!config.server) {
-        config.server = {};
-      }
-      const originalOptions = config.server.buildOptions;
-      config.server.buildOptions = (options) => ({
-        ...(originalOptions ? originalOptions(options) : options),
-        jsx: 'transform',
-        jsxFactory: 'createElement',
-        jsxFragment: 'Fragment',
-      });
-
       Object.assign(config.alias, alias);
 
       if (options.inlineStyle) {
@@ -128,6 +117,7 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
         const transformCssModule = options.cssModule == null ? true : options.cssModule;
 
         if (userConfig.ssr || userConfig.ssg) {
+          config.server ??= {};
           config.server.buildOptions = applyStylesheetLoaderForServer(config.server.buildOptions, transformCssModule);
         }
 
@@ -251,7 +241,7 @@ const styleSheetLoaderForClient = (config, transformCssModule) => {
  */
 function applyStylesheetLoaderForServer(preBuildOptions, transformCssModule) {
   return (buildOptions) => {
-    const currentOptions = preBuildOptions?.(buildOptions) || buildOptions;
+    const currentOptions = preBuildOptions?.(buildOptions) ?? buildOptions ?? {};
 
     // Remove esbuild-empty-css while use inline style.
     currentOptions.plugins = currentOptions.plugins?.filter(({ name }) => name !== 'esbuild-empty-css');
