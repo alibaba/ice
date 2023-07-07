@@ -30,6 +30,8 @@ interface IgnorePattern {
 
 type DistType = 'javascript' | 'html';
 
+type DropType = 'trace' | 'debug' | 'log' | 'info' | 'warn' | 'error';
+
 interface Fetcher {
   packageName: string;
   method?: string;
@@ -140,7 +142,7 @@ export interface UserConfig {
    * `console.*` will be dropped when build.
    * @see https://v3.ice.work/docs/guide/basic/config#droploglevel
    */
-  dropLogLevel?: 'trace' | 'debug' | 'log' | 'info' | 'warn' | 'error';
+  dropLogLevel?: DropType[] | DropType | boolean;
   /**
    * Minify build output, it only works in prod mode by default.
    * @see https://v3.ice.work/docs/guide/basic/config#minify
@@ -248,9 +250,11 @@ export interface UserConfig {
    * generate additional assets for request data, default is true
    * @see https://v3.ice.work/docs/guide/basic/config#dataloader
    */
-  dataLoader?: {
-    fetcher?: Fetcher;
-  } | Boolean;
+  dataLoader?:
+    | {
+        fetcher?: Fetcher;
+      }
+    | Boolean;
   /**
    * Enable cross-origin loading of chunks.
    * @see https://v3.ice.work/docs/guide/basic/config#crossoriginloading
