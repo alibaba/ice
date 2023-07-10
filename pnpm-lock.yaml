@@ -1070,7 +1070,7 @@ importers:
       '@types/multer': ^1.4.7
       '@types/temp': ^0.9.1
       address: ^1.1.2
-      build-scripts: ^2.1.1-0
+      build-scripts: ^2.1.2-0
       chalk: ^4.0.0
       chokidar: ^3.5.3
       commander: ^9.0.0
@@ -1110,7 +1110,7 @@ importers:
       '@swc/helpers': 0.5.1
       '@types/express': 4.17.17
       address: 1.2.2
-      build-scripts: 2.1.1-0
+      build-scripts: 2.1.2-0
       chalk: 4.1.2
       commander: 9.5.0
       consola: 2.15.3
@@ -1376,7 +1376,7 @@ importers:
     specifiers:
       '@ice/app': ^3.2.7
       '@remix-run/router': ^1.6.1
-      build-scripts: ^2.1.1-0
+      build-scripts: ^2.1.2-0
       chalk: ^4.0.0
       consola: ^2.15.3
       esbuild: ^0.17.16
@@ -1394,7 +1394,7 @@ importers:
       lodash.clonedeep: 4.5.0
     devDependencies:
       '@ice/app': link:../ice
-      build-scripts: 2.1.1-0
+      build-scripts: 2.1.2-0
       esbuild: 0.17.16
       webpack: 5.86.0_esbuild@0.17.16
       webpack-dev-server: 4.11.1_webpack@5.86.0
@@ -9045,8 +9045,8 @@ packages:
       semver: 7.4.0
     dev: true
 
-  /build-scripts/2.1.1-0:
-    resolution: {integrity: sha512-rsJ2uPLbwDDyEY0QWqmH6hiRJLPFtn5jcoCt9EsV4qb+sS+pY/b1Pan9twmEtHEdoBc27c4GhjkJJppyAtr27g==}
+  /build-scripts/2.1.2-0:
+    resolution: {integrity: sha512-Sk+5saWFgh4ELpWwMe4ZsSRs75cy1a5YjUydpmDYI/W6d0ucyPE70vjRTVQi1Gm3mqXSQdnhVLq8EILrY0/+1w==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       camelcase: 5.3.1
@@ -22354,7 +22354,7 @@ packages:
   /wide-align/1.1.5:
     resolution: {integrity: sha512-eDMORYaPNZ4sQIuuYPDHdQvf4gyCF9rEEV/yPxGfwPkRodwEgiMUUXTx/dex+Me0wxx53S+NgUHaP7y3MGlDmg==}
     dependencies:
-      string-width: 1.0.2
+      string-width: 4.2.3
 
   /widest-line/3.1.0:
     resolution: {integrity: sha512-NsmoXalsWVDMGupxZ5R08ka9flZjjiLvHVAWYOKtiKM8ujtZWr9cRffak+uSE48+Ob8ObalXpwyeUiyDD6QFgg==}

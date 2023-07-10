@@ -78,6 +78,7 @@ const getWebpackConfig: GetWebpackConfig = async (context, options) => {
     commandArgs,
     userConfig,
     getAllPlugin,
+    configFilePath,
     extendsPluginAPI: {
       serverCompileTask,
       getRoutesFile,
@@ -85,8 +86,7 @@ const getWebpackConfig: GetWebpackConfig = async (context, options) => {
     },
   } = context;
   const { target = WEB } = commandArgs;
-  // TODO: read config file form build-scripts context.
-  const userConfigHash = await getFileHash(path.join(rootDir, fg.sync(configFile, { cwd: rootDir })[0]));
+  const userConfigHash = await getFileHash(configFilePath);
 
   const webpackConfigs = taskConfigs.map(({ config }) => {
     const { useDevServer, useDataLoader, server } = config;
