@@ -81,10 +81,9 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
         type: false,
       });
 
-      const compilationConfigFunc =
-        typeof config.swcOptions?.compilationConfig === 'function'
-          ? config.swcOptions?.compilationConfig
-          : () => config.swcOptions?.compilationConfig;
+      const compilationConfigFunc = typeof config.swcOptions?.compilationConfig === 'function'
+        ? config.swcOptions?.compilationConfig
+        : () => config.swcOptions?.compilationConfig;
 
       // Reset jsc.transform.react.runtime to classic.
       config.swcOptions = merge(config.swcOptions || {}, {
@@ -127,9 +126,7 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
 
       if (options.inlineStyle) {
         if (!warnOnce) {
-          consola.warn(
-            'Enabling inline style is not recommended.\n       It is recommended to use CSS modules (as default). Only allow old projects to migrate and use.',
-          );
+          consola.warn('Enabling inline style is not recommended.\n       It is recommended to use CSS modules (as default). Only allow old projects to migrate and use.');
           warnOnce = true;
         }
 
@@ -166,13 +163,10 @@ function getClassNameToStyleTransformer(syntaxFeatures) {
   const { exportDefaultFrom } = syntaxFeatures;
 
   const plugins: (string | Array<string | object>)[] = [
-    [
-      require.resolve('babel-plugin-transform-jsx-stylesheet'),
-      {
-        retainClassName: true,
-        forceEnableCSS: true,
-      },
-    ],
+    [require.resolve('babel-plugin-transform-jsx-stylesheet'), {
+      retainClassName: true,
+      forceEnableCSS: true,
+    }],
   ];
 
   if (exportDefaultFrom) {
@@ -186,7 +180,13 @@ function getClassNameToStyleTransformer(syntaxFeatures) {
     }
 
     if (jsRegex.test(id)) {
-      const parserPlugins = ['jsx', 'importMeta', 'topLevelAwait', 'classProperties', 'classPrivateMethods'];
+      const parserPlugins = [
+        'jsx',
+        'importMeta',
+        'topLevelAwait',
+        'classProperties',
+        'classPrivateMethods',
+      ];
 
       if (/\.tsx?$/.test(id)) {
         // when routes file is a typescript file,
@@ -245,7 +245,10 @@ const styleSheetLoaderForClient = (config, transformCssModule, inlineStyleFiler:
         };
         rules[i] = {
           test: /\.css$/i,
-          oneOf: [rule, ruleSetStylesheet],
+          oneOf: [
+            rule,
+            ruleSetStylesheet,
+          ],
         };
       }
 
@@ -254,7 +257,10 @@ const styleSheetLoaderForClient = (config, transformCssModule, inlineStyleFiler:
         rule.test = transformCssModule ? /(\.module|global)\.css$/i : /(\.global)\.css$/i;
         rules[i] = {
           test: /\.less$/i,
-          oneOf: [rule, ruleSetStylesheetForLess],
+          oneOf: [
+            rule,
+            ruleSetStylesheetForLess,
+          ],
         };
       }
     }
