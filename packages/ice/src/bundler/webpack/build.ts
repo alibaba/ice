@@ -61,7 +61,12 @@ async function build(
     const outputDir = webpackConfigs[0].output.path;
     const { serverEntry } = await extendsPluginAPI.serverCompileTask.get() || {};
     let outputPaths: string[] = [];
-    if (serverEntry) {
+    if (userConfig.ssg) {
+      if (!userConfig.htmlGenerating) {
+        logger.warn('SSG depends on htmlGenerating, SSG will not work when htmlGenerating is set to false.');
+      }
+    }
+    if (serverEntry && userConfig.htmlGenerating) {
       outputPaths = await buildCustomOuputs(rootDir, outputDir, serverEntry, options);
     }
     await applyHook('after.build.compile', {
