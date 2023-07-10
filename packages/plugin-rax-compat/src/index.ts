@@ -60,7 +60,7 @@ const ruleSetStylesheetForLess = {
 let warnOnce = false;
 
 export interface CompatRaxOptions {
-  inlineStyle?: boolean;
+  inlineStyle?: boolean | ((id: string) => boolean);
   cssModule?: boolean;
 }
 
@@ -81,9 +81,10 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
         type: false,
       });
 
-      const compilationConfigFunc = typeof config.swcOptions?.compilationConfig === 'function'
-        ? config.swcOptions?.compilationConfig
-        : () => config.swcOptions?.compilationConfig;
+      const compilationConfigFunc =
+        typeof config.swcOptions?.compilationConfig === 'function'
+          ? config.swcOptions?.compilationConfig
+          : () => config.swcOptions?.compilationConfig;
 
       // Reset jsc.transform.react.runtime to classic.
       config.swcOptions = merge(config.swcOptions || {}, {
@@ -126,7 +127,9 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
 
       if (options.inlineStyle) {
         if (!warnOnce) {
-          consola.warn('Enabling inline style is not recommended.\n       It is recommended to use CSS modules (as default). Only allow old projects to migrate and use.');
+          consola.warn(
+            'Enabling inline style is not recommended.\n       It is recommended to use CSS modules (as default). Only allow old projects to migrate and use.',
+          );
           warnOnce = true;
         }
 
@@ -138,7 +141,13 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
         }
 
         config.configureWebpack ??= [];
-        config.configureWebpack.unshift((config) => styleSheetLoaderForClient(config, transformCssModule));
+
+        // enable inlineStyle only when filter returns true explicitly.
+        const inlineStyleFilter = typeof options.inlineStyle === 'function' ? options.inlineStyle : () => false;
+
+        config.configureWebpack.unshift((config) =>
+          styleSheetLoaderForClient(config, transformCssModule, inlineStyleFilter),
+        );
         config.transforms = [
           ...(config.transforms || []),
           getClassNameToStyleTransformer(userConfig.syntaxFeatures || {}),
@@ -157,10 +166,13 @@ function getClassNameToStyleTransformer(syntaxFeatures) {
   const { exportDefaultFrom } = syntaxFeatures;
 
   const plugins: (string | Array<string | object>)[] = [
-    [require.resolve('babel-plugin-transform-jsx-stylesheet'), {
-      retainClassName: true,
-      forceEnableCSS: true,
-    }],
+    [
+      require.resolve('babel-plugin-transform-jsx-stylesheet'),
+      {
+        retainClassName: true,
+        forceEnableCSS: true,
+      },
+    ],
   ];
 
   if (exportDefaultFrom) {
@@ -174,13 +186,7 @@ function getClassNameToStyleTransformer(syntaxFeatures) {
     }
 
     if (jsRegex.test(id)) {
-      const parserPlugins = [
-        'jsx',
-        'importMeta',
-        'topLevelAwait',
-        'classProperties',
-        'classPrivateMethods',
-      ];
+      const parserPlugins = ['jsx', 'importMeta', 'topLevelAwait', 'classProperties', 'classPrivateMethods'];
 
       if (/\.tsx?$/.test(id)) {
         // when routes file is a typescript file,
@@ -218,20 +224,28 @@ function getClassNameToStyleTransformer(syntaxFeatures) {
  * StyleSheet Loader for CSR.
  * Transform css files to inline style by webpack loader.
  */
-const styleSheetLoaderForClient = (config, transformCssModule) => {
+const styleSheetLoaderForClient = (config, transformCssModule, inlineStyleFiler: (id: string) => boolean) => {
   const { rules } = config.module || {};
   if (Array.isArray(rules)) {
     for (let i = 0, l = rules.length; i < l; i++) {
-      const rule: RuleSetRule | any = rules[i];
+      const rule: RuleSetRule = rules[i];
       // Find the css rule, that default to CSS Modules.
       if (rule.test && rule.test instanceof RegExp && rule.test.source.indexOf('.css') > -1) {
-        rule.test = transformCssModule ? /(\.module|global)\.css$/i : /(\.global)\.css$/i;
+        rule.test = (id: string) => {
+          const inlineStyleFilterEnabled = inlineStyleFiler(id) === true;
+
+          inlineStyleFilterEnabled && consola.warn(`InlineStyle enabled for current css file: ${id}`);
+
+          const matched =
+            (transformCssModule ? /(\.module|global)\.css$/i : /(\.global)\.css$/i).test(id) &&
+            // if filter returns true, bypass the resource to stylesheet-loader
+            !inlineStyleFilterEnabled;
+
+          return matched;
+        };
         rules[i] = {
           test: /\.css$/i,
-          oneOf: [
-            rule,
-            ruleSetStylesheet,
-          ],
+          oneOf: [rule, ruleSetStylesheet],
         };
       }
 
@@ -240,10 +254,7 @@ const styleSheetLoaderForClient = (config, transformCssModule) => {
         rule.test = transformCssModule ? /(\.module|global)\.css$/i : /(\.global)\.css$/i;
         rules[i] = {
           test: /\.less$/i,
-          oneOf: [
-            rule,
-            ruleSetStylesheetForLess,
-          ],
+          oneOf: [rule, ruleSetStylesheetForLess],
         };
       }
     }
