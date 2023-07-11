@@ -1,5 +1,4 @@
-import { definePageConfig } from 'ice';
-import { CacheCanvas } from '@ice/cache-canvas';
+import { definePageConfig, CacheCanvas } from 'ice';
 import { useRef } from 'react';
 import styles from './index.module.css';
 
