@@ -139,9 +139,8 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
 
         config.configureWebpack ??= [];
 
-        // when code enters here, options.inlineStyle is either `true` or filter function
-        // if user provide `true`, use a filter which always return true
-        // else, use the filter
+        // When code enters here, options.inlineStyle is either `true` or filter function.
+        // If user provide `true`, use a filter which always return true, or, use the filter.
         const inlineStyleFilter = options.inlineStyle === true ? () => true : options.inlineStyle;
 
         config.configureWebpack.unshift((config) =>
@@ -240,7 +239,7 @@ const styleSheetLoaderForClient = (config, transformCssModule, inlineStyleFiler:
 
           const matched =
             (transformCssModule ? /(\.module|global)\.css$/i : /(\.global)\.css$/i).test(id) &&
-            // if filter returns true, bypass the resource to stylesheet-loader
+            // If filter returns true, bypass the resource to stylesheet-loader.
             !inlineStyleFilterEnabled;
 
           return matched;
@@ -248,9 +247,9 @@ const styleSheetLoaderForClient = (config, transformCssModule, inlineStyleFiler:
         rules[i] = {
           test: /\.css$/i,
           oneOf: [
-            // handle project css and those module can only work under inlineStyle disabled
+            // Handle project css and those module can only work under inlineStyle disabled.
             rule,
-            // handle those module can only work under inlineStyle enabled
+            // Handle those module can only work under inlineStyle enabled.
             ruleSetStylesheet,
           ],
         };
