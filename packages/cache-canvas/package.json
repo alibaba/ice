@@ -1,0 +1,28 @@
+{
+  "name": "@ice/cache-canvas",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
+  "scripts": {
+    "watch": "tsc -w",
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "@ice/runtime": "workspace:^"
+  },
+  "peerDependencies": {
+    "react": "^18",
+    "react-dom": "^18",
+    "@ice/runtime": "^1.2.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,6 +1,7 @@
 import { useEffect, useState, useImperativeHandle, forwardRef, useCallback } from 'react';
 import * as React from 'react';
 import { useMounted } from '@ice/runtime';
+import { Storage } from './storage';
 
 declare global {
   interface Window {
@@ -12,6 +13,7 @@ declare global {
 }
 
 export type RefCacheCanvas = {
+  // Call the API to store the canvas in storage.
   cacheCanvasToStorage: () => void;
 };
 
@@ -31,7 +33,7 @@ export const CacheCanvas = forwardRef((props, ref) => {
     // Cache base64 string of canvas.
     const canvas: HTMLCanvasElement | null = document.getElementById(id) as HTMLCanvasElement;
     const strBase64 = canvas.toDataURL();
-    localStorage.setItem(cacheKey, strBase64);
+    Storage.setItem(cacheKey, strBase64);
   });
 
   useImperativeHandle(ref, () => ({
@@ -74,7 +76,7 @@ export const CacheCanvas = forwardRef((props, ref) => {
       <canvas {...rest} style={renderedCanvas ? {} : { display: 'none' }} id={id} />
       {
         !renderedCanvas && (<>
-          <img src={localStorage.getItem(cacheKey) || ''} id={`canvas-img-${id}`} />
+          <img src={Storage.getItem(cacheKey) || ''} id={`canvas-img-${id}`} />
           <script
             dangerouslySetInnerHTML={{
               __html: `

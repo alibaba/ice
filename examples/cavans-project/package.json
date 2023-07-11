@@ -14,7 +14,8 @@
     "@ice/plugin-canvas": "workspace:*",
     "@ice/runtime": "workspace:*",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "@ice/cache-canvas": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",

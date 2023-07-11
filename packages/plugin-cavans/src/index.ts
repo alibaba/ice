@@ -6,7 +6,7 @@ const plugin: Plugin = () => ({
   name: PLUGIN_NAME,
   setup: async ({ generator }) => {
     generator.addExport({
-      source: '@ice/plugin-canvas/CacheCanvas',
+      source: '@ice/cache-canvas',
       specifier: ['CacheCanvas'],
     });
   },

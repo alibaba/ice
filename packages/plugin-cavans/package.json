@@ -28,17 +28,8 @@
     "!esm/**/*.map"
   ],
   "dependencies": {
-    "@ice/runtime": "^1.2.4",
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-proposal-export-default-from": "^7.18.9",
-    "@ice/bundles": "^0.1.10",
-    "babel-plugin-transform-jsx-stylesheet": "1.0.6",
-    "consola": "^2.15.3",
-    "css": "^2.2.1",
-    "lodash.merge": "^4.6.2",
-    "rax-compat": "^0.2.1",
-    "style-unit": "^3.0.5",
-    "stylesheet-loader": "^0.9.1"
+    "@ice/cache-canvas": "workspace:*",
+    "@ice/runtime": "^1.2.4"
   },
   "devDependencies": {
     "@ice/app": "^3.2.1",
