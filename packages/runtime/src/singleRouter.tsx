@@ -42,15 +42,29 @@ export const createHistory = (): History => {
   };
 };
 
-export const matchRoutes = (routes: any[]) => {
-  return routes.map(item => {
-    return {
-      params: {},
-      pathname: '',
-      pathnameBase: '',
-      route: item,
-    };
+const stripString = (str: string) => {
+  const regexForSlash = /^\/|\/$/g;
+  return str.replace(regexForSlash, '');
+};
+
+export const matchRoutes = (routes: any[], location: Partial<Location> | string, basename: string) => {
+  const stripedBasename = stripString(basename);
+  let pathname = stripString(typeof location === 'string' ? location : location.pathname);
+  if (stripedBasename) {
+    pathname = pathname.replace(new RegExp(`^${stripedBasename}/`), '');
+  }
+  const route = routes.length === 0 ? routes[0] : routes.find(item => {
+    return stripString(item.path || '') === pathname;
   });
+  if (!route) {
+    throw new Error(`No route matched pathname: ${pathname}`);
+  }
+  return [{
+    route,
+    params: {},
+    pathname,
+    pathnameBase: '',
+  }];
 };
 
 export const Link = () => null;
