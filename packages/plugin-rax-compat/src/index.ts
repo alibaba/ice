@@ -232,6 +232,8 @@ const styleSheetLoaderForClient = (config, transformCssModule, inlineStyleFiler:
       const rule: RuleSetRule = rules[i];
       // Find the css rule, that default to CSS Modules.
       if (rule.test && rule.test instanceof RegExp && rule.test.source.indexOf('.css') > -1) {
+        // Apply inlineStyle here as original rule got higher priority,
+        // the resource doesnot match the filter will be bypassed to stylesheet-loader.
         rule.test = (id: string) => {
           const inlineStyleFilterEnabled = inlineStyleFiler(id) === true;
 
