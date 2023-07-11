@@ -1,13 +1,17 @@
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 import type { Plugin } from '@ice/app/types';
 import type { RuleSetRule } from 'webpack';
 import consola from 'consola';
-import merge from 'lodash.merge';
+import { merge, cloneDeep } from 'lodash-es';
 import { transformSync } from '@babel/core';
 import styleSheetLoader from './transform-styles.js';
 
 const require = createRequire(import.meta.url);
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const jsRegex = /\.(jsx?|tsx?|mjs)$/;
 
@@ -62,16 +66,34 @@ export interface CompatRaxOptions {
 
 const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
   name: '@ice/plugin-rax-compat',
-  setup: ({ onGetConfig, context }) => {
+  setup: ({ onGetConfig, context, generator }) => {
     const { userConfig } = context;
 
     onGetConfig((config) => {
+      // Inject rax-compat type fix in .ice/rax-compat.d.ts
+      // Produce: import { type __UNUSED_TYPE_FOR_IMPORT_EFFECT_ONLY__ } from './rax-compat.d';
+      generator.addRenderFile(path.join(__dirname, './rax-compat.d.ts'), 'rax-compat.d.ts', {});
+      generator.addExport({
+        // Avoid value import to cause Webpack compilation error:
+        // 'Export assignment cannot be used when targeting ECMAScript modules.'
+        specifier: ['type __UNUSED_TYPE_FOR_IMPORT_EFFECT_ONLY__'],
+        source: './rax-compat.d',
+        type: false,
+      });
+
+      const compilationConfigFunc = typeof config.swcOptions?.compilationConfig === 'function'
+        ? config.swcOptions?.compilationConfig
+        : () => config.swcOptions?.compilationConfig;
+
       // Reset jsc.transform.react.runtime to classic.
       config.swcOptions = merge(config.swcOptions || {}, {
-        compilationConfig: (source: string) => {
+        compilationConfig: (source: string, id: string) => {
+          let swcCompilationConfig = {};
           const hasJSXComment = source.indexOf('@jsx createElement') !== -1;
+          const isRaxComponent = /(from|require\()\s*['"]rax['"]/.test(source);
+
           if (hasJSXComment) {
-            return {
+            swcCompilationConfig = {
               jsc: {
                 transform: {
                   react: {
@@ -80,11 +102,8 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
                 },
               },
             };
-          }
-
-          const isRaxComponent = /(from|require\()\s*['"]rax['"]/.test(source);
-          if (isRaxComponent) {
-            return {
+          } else if (isRaxComponent) {
+            swcCompilationConfig = {
               jsc: {
                 transform: {
                   react: {
@@ -94,18 +113,13 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
               },
             };
           }
-        },
-      });
 
-      if (!config.server) {
-        config.server = {};
-      }
-      const originalOptions = config.server.buildOptions;
-      config.server.buildOptions = (options) => ({
-        ...(originalOptions ? originalOptions(options) : options),
-        jsx: 'transform',
-        jsxFactory: 'createElement',
-        jsxFragment: 'Fragment',
+          return merge(
+            // Clone config object to avoid Maximum call stack size exceeded error.
+            cloneDeep(compilationConfigFunc(source, id)),
+            swcCompilationConfig,
+          );
+        },
       });
 
       Object.assign(config.alias, alias);
@@ -119,6 +133,7 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
         const transformCssModule = options.cssModule == null ? true : options.cssModule;
 
         if (userConfig.ssr || userConfig.ssg) {
+          config.server ??= {};
           config.server.buildOptions = applyStylesheetLoaderForServer(config.server.buildOptions, transformCssModule);
         }
 
@@ -242,7 +257,7 @@ const styleSheetLoaderForClient = (config, transformCssModule) => {
  */
 function applyStylesheetLoaderForServer(preBuildOptions, transformCssModule) {
   return (buildOptions) => {
-    const currentOptions = preBuildOptions?.(buildOptions) || buildOptions;
+    const currentOptions = preBuildOptions?.(buildOptions) ?? buildOptions ?? {};
 
     // Remove esbuild-empty-css while use inline style.
     currentOptions.plugins = currentOptions.plugins?.filter(({ name }) => name !== 'esbuild-empty-css');

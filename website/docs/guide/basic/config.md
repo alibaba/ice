@@ -240,11 +240,27 @@ export default defineConfig(() => ({
 
 ### dropLogLevel
 
-- 类型：`'trace' | 'debug' | 'log' | 'warn' | 'error'`
-- 默认值：`null`，不移除任何 console 代码
+- 类型：`boolean | DropType[] | DropType`
+- 默认值：`false`，不移除任何 console 代码
 
-压缩代码时移除 console.* 相关代码，比如配置了 log 则会移除 console.trace
-、console.debug、console.log 代码。
+压缩代码时移除 console.* 相关代码，配置为true时，移除所有console.*相关代码。当想移除部分console代码，例如想要移除console.log和console.error时，可以配置为
+```js
+import { defineConfig } from '@ice/app';
+
+export default defineConfig(() => ({
+   dropLog: ['error', 'log'],
+}));
+```
+也可以根据console等级来进行移除
+```js
+// console 等级为 trace < debug < log < info < warn < error
+// 例如想要移除trace、debug、log时可以像下面这样配置
+import { defineConfig } from '@ice/app';
+
+export default defineConfig(() => ({
+   dropLog: 'log',
+}));
+```
 
 ### compileDependencies
 
@@ -641,6 +657,13 @@ export default defineConfig(() => ({
   },
 }));
 ```
+
+### htmlGenerating
+
+- 类型：`boolean`
+- 默认值：`true`
+
+如果产物不想生成 html，可以设置为 `false`，在 SSG 开启的情况下，强制关闭 html 生成，将导致 SSG 失效。
 
 ### plugins
 

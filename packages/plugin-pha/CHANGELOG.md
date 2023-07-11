@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.1
+
+### Patch Changes
+
+- 110b282b: fix: do not render document when template is set to false
+
 ## 3.0.0
 
 ### Major Changes

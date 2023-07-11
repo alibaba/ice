@@ -1,5 +1,11 @@
 # @ice/runtime
 
+## 1.2.5
+
+### Patch Changes
+
+- 29ad1b52: fix: add warning log for mutate suspense data directly
+
 ## 1.2.4
 
 ### Patch Changes
