@@ -33,7 +33,7 @@ export const CacheCanvas = forwardRef((props, ref) => {
     const canvas: HTMLCanvasElement | null = document.getElementById(id) as HTMLCanvasElement;
     const strBase64 = canvas.toDataURL();
     Storage.setItem(cacheKey, strBase64);
-  });
+  }, [id, cacheKey]);
 
   useImperativeHandle(ref, () => ({
     cacheCanvasToStorage: cacheCanvasFunc,
