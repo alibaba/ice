@@ -389,7 +389,7 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
           titleIds.forEach((titleId) => {
             if (dataloaderConfig && dataloaderConfig[titleId] && dataloaderConfig[titleId].loader) {
               const staticDataLoaders = [];
-              const { loader } = dataloaderConfig[title];
+              const { loader } = dataloaderConfig[titleId];
               if (Array.isArray(loader)) {
                 loader.forEach(item => {
                   if (typeof item === 'object') {
