@@ -49,12 +49,13 @@ const stripString = (str: string) => {
 
 export const matchRoutes = (routes: any[], location: Partial<Location> | string, basename: string) => {
   const stripedBasename = stripString(basename);
-  let pathname = stripString(typeof location === 'string' ? location : location.pathname);
+  const pathname = typeof location === 'string' ? location : location.pathname;
+  let stripedPathname = stripString(pathname);
   if (stripedBasename) {
-    pathname = pathname.replace(new RegExp(`^${stripedBasename}/`), '');
+    stripedPathname = stripedPathname.replace(new RegExp(`^${stripedBasename}/`), '');
   }
-  const route = routes.length === 0 ? routes[0] : routes.find(item => {
-    return stripString(item.path || '') === pathname;
+  const route = routes.length === 1 ? routes[0] : routes.find(item => {
+    return stripString(item.path || '') === stripedPathname;
   });
   if (!route) {
     throw new Error(`No route matched pathname: ${pathname}`);
