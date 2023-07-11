@@ -14,13 +14,11 @@
   "license": "ISC",
   "devDependencies": {
     "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "@ice/runtime": "workspace:^"
+    "react-dom": "^18.0.0"
   },
   "peerDependencies": {
     "react": "^18",
-    "react-dom": "^18",
-    "@ice/runtime": "^1.2.4"
+    "react-dom": "^18"
   },
   "publishConfig": {
     "access": "public"

@@ -1,6 +1,5 @@
 import { useEffect, useState, useImperativeHandle, forwardRef, useCallback } from 'react';
 import * as React from 'react';
-import { useMounted } from '@ice/runtime';
 import { Storage } from './storage';
 
 declare global {
@@ -25,9 +24,9 @@ export const CacheCanvas = forwardRef((props, ref) => {
     ...rest
   } = props;
   const [renderedCanvas, setRenderedCanvas] = useState(useCache);
-  const cacheKey = `cache-canvas-${id}`;
+  const [mounted, setMounted] = useState(false);
 
-  const mounted = useMounted();
+  const cacheKey = `cache-canvas-${id}`;
 
   const cacheCanvasFunc = useCallback(() => {
     // Cache base64 string of canvas.
@@ -39,6 +38,10 @@ export const CacheCanvas = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     cacheCanvasToStorage: cacheCanvasFunc,
  }));
+
+ useEffect(() => {
+  setMounted(true);
+}, []);
 
   useEffect(() => {
     if (window.WindVane) {
