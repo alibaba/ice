@@ -21,6 +21,7 @@ export const CacheCanvas = forwardRef((props, ref) => {
     id,
     init,
     useCache,
+    getSnapshot,
     ...rest
   } = props;
   const [renderedCanvas, setRenderedCanvas] = useState(useCache);
@@ -31,12 +32,17 @@ export const CacheCanvas = forwardRef((props, ref) => {
   const cacheCanvasFunc = useCallback(() => {
     // Cache base64 string of canvas.
     const canvas: HTMLCanvasElement | null = document.getElementById(id) as HTMLCanvasElement;
-    const strBase64 = canvas.toDataURL();
+    let strBase64;
+    if (typeof getSnapshot === 'function') {
+      strBase64 = getSnapshot();
+    } else {
+      strBase64 = canvas.toDataURL();
+    }
     // Cache base64 string when canvas rendered.
     if (renderedCanvas && strBase64) {
       Storage.setItem(cacheKey, strBase64);
     }
-  }, [id, cacheKey]);
+  }, [id, renderedCanvas, cacheKey, getSnapshot]);
 
   useImperativeHandle(ref, () => ({
     cacheCanvasToStorage: cacheCanvasFunc,

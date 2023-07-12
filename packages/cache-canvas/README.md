@@ -11,11 +11,11 @@ npm i @ice/cache-canvas -S
 ```jsx
 import MainGame from './game'; // eva.js 的封装
 
-const GAMECANVAS = 'game-canvas';
+const GAME_CANVAS = 'game-canvas';
 
 export default (props) => {
   useEffect(() => {
-    const gameEl = document.getElementById(GAMECANVAS);
+    const gameEl = document.getElementById(GAME_CANVAS);
     new MainGame(gameEl, getGameHeight());
   }, []);
 
@@ -39,7 +39,7 @@ export default (props) => {
 
   return (
     <>
-       <CanvasCache id={GAMECANVAS} useCache={false} init={init} />
+       <CanvasCache id={GAME_CANVAS} useCache={false} init={init} />
     </>
   );
 };
