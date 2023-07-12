@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   publicPath: '/',
   ssr: false,
   ssg: false,
-  codeSplitting: 'page',
+  codeSplitting: 'page-vendors',
   routes: {
     injectInitialEntry: true,
   }
