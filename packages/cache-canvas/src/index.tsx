@@ -48,6 +48,7 @@ export const CacheCanvas = forwardRef((props, ref) => {
       window.WindVane.call('WebAppInterface', 'enableHookNativeBack', {});
       window._windvane_backControl = () => {
         cacheCanvasFunc();
+        // Windvane must return a string value of true for it to work properly.
         return 'true';
       };
     }
