@@ -32,7 +32,10 @@ export const CacheCanvas = forwardRef((props, ref) => {
     // Cache base64 string of canvas.
     const canvas: HTMLCanvasElement | null = document.getElementById(id) as HTMLCanvasElement;
     const strBase64 = canvas.toDataURL();
-    Storage.setItem(cacheKey, strBase64);
+    // Cache base64 string when canvas rendered.
+    if (renderedCanvas && strBase64) {
+      Storage.setItem(cacheKey, strBase64);
+    }
   }, [id, cacheKey]);
 
   useImperativeHandle(ref, () => ({
