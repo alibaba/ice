@@ -722,18 +722,20 @@ describe('parse manifest', async () => {
     const manifest = await parseManifest(phaManifest, {
       ...options,
       dataloaderConfig: {
-        home: [
-          () => {
-            return new Promise((resolve) => {
-              setTimeout(() => {
-                resolve({
-                  name: 'About',
-                });
-              }, 1 * 100);
-            });
-          },
-          staticDataloader,
-        ],
+        home: {
+          loader: [
+            () => {
+              return new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve({
+                    name: 'About',
+                  });
+                }, 1 * 100);
+              });
+            },
+            staticDataloader,
+          ],
+        },
       },
     });
 
@@ -774,18 +776,20 @@ describe('parse manifest', async () => {
     const manifest = await parseManifest(phaManifest, {
       ...options,
       dataloaderConfig: {
-        home: [
-          () => {
-            return new Promise((resolve) => {
-              setTimeout(() => {
-                resolve({
-                  name: 'About',
-                });
-              }, 1 * 100);
-            });
-          },
-          staticDataloader,
-        ],
+        home: {
+          loader: [
+            () => {
+              return new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve({
+                    name: 'About',
+                  });
+                }, 1 * 100);
+              });
+            },
+            staticDataloader,
+          ],
+        },
       },
     });
 
