@@ -1,10 +1,17 @@
 import { useEffect, useState, useImperativeHandle, forwardRef, useCallback } from 'react';
 import * as React from 'react';
 import { Storage } from './storage';
-
-const isServer = import.meta.renderer === 'server';
-
 declare global {
+  interface ImportMeta {
+    // The build target for ice.js
+    // Usually `web` or `node` or `weex`
+    target: string;
+    // The renderer for ice.js
+    renderer: 'client' | 'server';
+    // ice.js defined env variables
+    env: Record<string, string>;
+  }
+
   interface Window {
     WindVane: {
       call: Function;
@@ -12,6 +19,8 @@ declare global {
     _windvane_backControl: Function | null;
   }
 }
+
+const isServer = import.meta.renderer === 'server';
 
 export type RefCacheCanvas = {
   // Call the API to store the canvas in storage.
