@@ -30,11 +30,18 @@ export default function Home() {
   return (
     <>
       <h2 className={styles.title}>Home Page</h2>
-      <CacheCanvas ref={childRef} id={GAME_CANVAS_ID} init={initFunc} />
-      <button onClick={() => {
-        console.log('active cache!');
-        childRef.current?.cacheCanvasToStorage();
-      }}
+      <CacheCanvas
+        ref={childRef}
+        id={GAME_CANVAS_ID}
+        init={initFunc}
+        fallback={() => <div>fallback</div>}
+      />
+      <button
+        style={{ display: 'block' }}
+        onClick={() => {
+          console.log('active cache!');
+          childRef.current?.cacheCanvasToStorage();
+        }}
       >cache canvas</button>
     </>
   );

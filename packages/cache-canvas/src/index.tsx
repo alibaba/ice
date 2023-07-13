@@ -2,6 +2,8 @@ import { useEffect, useState, useImperativeHandle, forwardRef, useCallback } fro
 import * as React from 'react';
 import { Storage } from './storage';
 
+const isServer = import.meta.renderer === 'server';
+
 declare global {
   interface Window {
     WindVane: {
@@ -20,11 +22,15 @@ export const CacheCanvas = forwardRef((props, ref) => {
   const {
     id,
     init,
-    useCache,
+    useCache = true,
     getSnapshot,
+    fallback,
+    style,
+    className,
     ...rest
   } = props;
-  const [renderedCanvas, setRenderedCanvas] = useState(useCache);
+
+  const [renderedCanvas, setRenderedCanvas] = useState(!useCache);
   const [mounted, setMounted] = useState(false);
 
   const cacheKey = `cache-canvas-${id}`;
@@ -46,11 +52,11 @@ export const CacheCanvas = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     cacheCanvasToStorage: cacheCanvasFunc,
- }));
+  }));
 
- useEffect(() => {
-  setMounted(true);
-}, []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (window.WindVane) {
@@ -86,19 +92,41 @@ export const CacheCanvas = forwardRef((props, ref) => {
 
   return (
     <>
-      <canvas {...rest} style={renderedCanvas ? {} : { display: 'none' }} id={id} />
+      <canvas
+        {...rest}
+        className={className}
+        style={renderedCanvas ? style : { ...style, display: 'none' }}
+        id={id}
+      />
       {
         !renderedCanvas && (<>
-          <img src={Storage.getItem(cacheKey) || ''} id={`canvas-img-${id}`} />
+          <img
+            className={className}
+            style={style}
+            src={Storage.getItem(cacheKey) || ''}
+            id={`canvas-img-${id}`}
+          />
+          {
+            (typeof fallback === 'function') && (<div
+              id={`fallback-${id}`}
+              style={isServer || Storage.getItem(cacheKey) ? { display: 'none' } : { display: 'block' }}
+            >
+              {
+                fallback()
+              }
+            </div>)
+          }
           <script
             dangerouslySetInnerHTML={{
               __html: `
                   const base64Data = localStorage.getItem('${cacheKey}');
+                  const fallback = document.getElementById('fallback-${id}');
                   if (base64Data) {
-                    const ele = document.getElementById('canvas-img-${id}')
-                    if (ele) {
-                      ele.src = base64Data;
-                    }
+                    const img = document.getElementById('canvas-img-${id}');
+                    img && (img.src = base64Data);
+                    fallback && (fallback.style.display = 'none');
+                  } else {
+                    fallback && (fallback.style.display = 'block');
                   }
                 `,
               }}
