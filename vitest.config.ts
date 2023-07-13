@@ -14,7 +14,8 @@ export default defineConfig({
     testTimeout: 120000,
     // To avoid error `Segmentation fault (core dumped)` in CI environment, disable threads
     // ref: https://github.com/vitest-dev/vitest/issues/317
-    threads: false,
+    // node14 segfaults often with threads
+    threads: !process.versions.node.startsWith('14'),
     exclude: [
       '**/node_modules/**',
       '**/esm/**',
