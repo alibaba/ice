@@ -1061,6 +1061,9 @@ importers:
     specifiers:
       react: ^18.0.0
       react-dom: ^18.0.0
+      universal-env: ^3.3.3
+    dependencies:
+      universal-env: 3.3.3
     devDependencies:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0

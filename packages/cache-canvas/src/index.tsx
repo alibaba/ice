@@ -1,6 +1,12 @@
 import { useEffect, useState, useImperativeHandle, forwardRef, useCallback } from 'react';
+import type {
+  HTMLAttributes,
+  ReactElement,
+} from 'react';
 import * as React from 'react';
+import { isNode } from 'universal-env';
 import { Storage } from './storage';
+
 declare global {
   interface ImportMeta {
     // The build target for ice.js
@@ -20,14 +26,22 @@ declare global {
   }
 }
 
-const isServer = import.meta.renderer === 'server';
-
 export type RefCacheCanvas = {
   // Call the API to store the canvas in storage.
   cacheCanvasToStorage: () => void;
 };
 
-export const CacheCanvas = forwardRef((props, ref) => {
+export type CacheCanvasProps = {
+  id: string;
+  init: () => Promise<any>;
+  useCache?: Boolean;
+  getSnapshot?: () => String;
+  fallback?: ReactElement;
+  style?: HTMLAttributes;
+  className?: HTMLAttributes;
+};
+
+export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
   const {
     id,
     init,
@@ -118,7 +132,7 @@ export const CacheCanvas = forwardRef((props, ref) => {
           {
             (typeof fallback === 'function') && (<div
               id={`fallback-${id}`}
-              style={isServer || Storage.getItem(cacheKey) ? { display: 'none' } : { display: 'block' }}
+              style={isNode || Storage.getItem(cacheKey) ? { display: 'none' } : { display: 'block' }}
             >
               {
                 fallback()

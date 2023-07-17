@@ -1,6 +1,6 @@
 {
   "name": "@ice/cache-canvas",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "description": "",
   "main": "./esm/index.js",
   "types": "./esm/index.d.ts",
@@ -15,6 +15,9 @@
   "devDependencies": {
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
+  },
+  "dependencies": {
+    "universal-env": "^3.3.3"
   },
   "peerDependencies": {
     "react": "^18",
