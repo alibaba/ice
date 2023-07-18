@@ -13,9 +13,15 @@ interface SyntaxFeatures {
 
 interface Optimization {
   /**
-   * Optimize code by remove react-router dependencies when set to true.
+   * Optimize code by remove react-router dependencies when set to true,
+   * it only works when route count is 1.
    */
   router?: boolean;
+  /**
+   * @private
+   * Remove react-router dependencies by force, even if route count is greater than 1.
+   */
+  disableRouter?: boolean;
 }
 
 interface MinifyOptions {

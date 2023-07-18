@@ -139,7 +139,7 @@ interface RenderOptions {
 
 async function render({ history, runtime, needHydrate }: RenderOptions) {
   const appContext = runtime.getAppContext();
-  const { appConfig, loaderData, routes, basename } = appContext;
+  const { appConfig, loaderData, routes, basename, routePath } = appContext;
   const appRender = runtime.getRender();
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
   const AppRouter = runtime.getAppRouter<ClientAppRouterProps>();
@@ -154,8 +154,9 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
   }
   const hydrationData = needHydrate ? { loaderData } : undefined;
   const routeModuleCache = {};
+  const location = history.location ? history.location : { pathname: routePath || window.location.pathname };
   if (needHydrate) {
-    const lazyMatches = matchRoutes(routes, history.location, basename).filter((m) => m.route.lazy);
+    const lazyMatches = matchRoutes(routes, location, basename).filter((m) => m.route.lazy);
     if (lazyMatches?.length > 0) {
       // Load the lazy matches and update the routes before creating your router
       // so we can hydrate the SSR-rendered content synchronously.
@@ -182,8 +183,9 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
   let singleComponent = null;
   let routeData = null;
   if (process.env.ICE_CORE_ROUTER !== 'true') {
-    const { Component, loader } = await loadRouteModule(routes[0], routeModuleCache);
-    singleComponent = Component || routes[0].Component;
+    const singleRoute = matchRoutes(routes, location, basename)[0];
+    const { Component, loader } = await loadRouteModule(singleRoute.route, routeModuleCache);
+    singleComponent = Component || singleRoute.route.Component;
     routeData = loader && await loader();
   }
   const renderRoot = appRender(
