@@ -3,13 +3,13 @@ import type * as React from 'react';
 export interface AppearProps {
   children: React.ReactElement;
   /**
-   * 元素进入可视区域触发的事件
+   * Triggered when the element enters the visible area.
    * @param {CustomEvent} e
    * @returns {void}
    */
   onAppear?: (e: CustomEvent) => void;
   /**
-   * 元素离开可视区域触发的事件
+   * Triggered when the element leaves the visible area.
    * @param {CustomEvent} e
    * @returns {void}
    */
