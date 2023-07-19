@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.2
+
+### Patch Changes
+
+- 39c92e5b: fix: format of dataLoaderConfig loader changed.
+
 ## 3.0.1
 
 ### Patch Changes
