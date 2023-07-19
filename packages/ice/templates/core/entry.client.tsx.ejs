@@ -9,6 +9,8 @@ import createRoutes from './routes';
 <% } -%>
 <%- runtimeOptions.imports %>
 <% if(dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
+import type { RunClientAppOptions } from '@ice/runtime';
+
 const getRouterBasename = () => {
   const appConfig = getAppConfig(app);
   return appConfig?.router?.basename ?? <%- basename %> ?? '';
@@ -27,31 +29,35 @@ let dataLoaderDecorator = (dataLoader) => {
 }
 <% } -%>
 
+const renderOptions: RunClientAppOptions = {
+  app,
+  runtimeModules: {
+    commons,
+    statics,
+  },
+  <% if (enableRoutes) { %>createRoutes,<% } %>
+  basename: getRouterBasename(),
+  hydrate: <%- hydrate %>,
+  memoryRouter: <%- memoryRouter || false %>,
+  dataLoaderFetcher,
+  dataLoaderDecorator,
+  runtimeOptions: {
+<% if (runtimeOptions.exports) { -%>
+  <%- runtimeOptions.exports %>
+<% } -%>
+<% if (locals.customRuntimeOptions) { -%>...<%- JSON.stringify(customRuntimeOptions) %>,<% } -%>
+  },
+};
+
 const render = (customOptions: Record<string, any> = {}) => {
-  const appProps = {
-    app,
-    runtimeModules: {
-      commons,
-      statics,
-    },
-    <% if (enableRoutes) { %>createRoutes,<% } %>
-    basename: getRouterBasename(),
-    hydrate: <%- hydrate %>,
-    memoryRouter: <%- memoryRouter || false %>,
-    dataLoaderFetcher,
-    dataLoaderDecorator,
+  return runClientApp({
+    ...renderOptions,
     ...customOptions,
     runtimeOptions: {
-  <% if (runtimeOptions.exports) { -%>
-    <%- runtimeOptions.exports %>
-  <% } -%>
-  <% if (locals.customRuntimeOptions) { -%>
-  ...<%- JSON.stringify(customRuntimeOptions) %>,
-  <% } -%>
+      ...(renderOptions.runtimeOptions || {}),
       ...customOptions.runtimeOptions,
     },
-  };
-  return runClientApp(appProps);
+  });
 };
 
 <%- entryCode %>

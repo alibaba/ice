@@ -20,10 +20,12 @@ import addLeadingSlash from './utils/addLeadingSlash.js';
 import { AppContextProvider } from './AppContext.js';
 import { deprecatedHistory } from './utils/deprecatedHistory.js';
 
+export type CreateRoutes = (options: Pick<RouteLoaderOptions, 'renderMode' | 'requestContext'>) => RouteItem[];
+
 export interface RunClientAppOptions {
   app: AppExport;
   runtimeModules: RuntimeModules;
-  createRoutes?: (options: Pick<RouteLoaderOptions, 'renderMode' | 'requestContext'>) => RouteItem[];
+  createRoutes?: CreateRoutes;
   hydrate?: boolean;
   basename?: string;
   memoryRouter?: boolean;
