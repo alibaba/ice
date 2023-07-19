@@ -23,6 +23,9 @@ declare global {
       call: Function;
     };
     _windvane_backControl: Function | null;
+    __megability_bridge__: {
+      syncCall: Function;
+    };
   }
 }
 
