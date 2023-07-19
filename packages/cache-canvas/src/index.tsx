@@ -144,8 +144,29 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
           }
           <script
             dangerouslySetInnerHTML={{
-              __html: `
-                  const base64Data = localStorage.getItem('${cacheKey}');
+                  __html: `
+                  let base64Data = '';
+                  if (
+                    window.__megability_bridge__ &&
+                    window.__megability_bridge__.syncCall
+                  ) {
+                    const canIUse = window.__megability_bridge__.syncCall('ability', 'available', {
+                      ability: 'KVStorage',
+                      api: 'getItem',
+                    });
+            
+                    if (canIUse) {
+                      const res = window.__megability_bridge__.syncCall('KVStorage', 'getItem', { key: '${cacheKey}' });
+                      if (res && res.statusCode === 0 && res.data) {
+                        base64Data = res.data;
+                      }
+                    }
+                  }
+                  
+                  if (!base64Data) {
+                    localStorage.getItem('${cacheKey}');
+                  }
+                  
                   const fallback = document.getElementById('fallback-${id}');
                   if (base64Data) {
                     const img = document.getElementById('canvas-img-${id}');
