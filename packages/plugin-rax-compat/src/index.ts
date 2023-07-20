@@ -155,12 +155,8 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
 
         config.configureWebpack ??= [];
 
-        // When code enters here, options.inlineStyle is either `true` or filter function.
-        // If user provide `true`, use a filter which always return true, or, use the filter.
-        const inlineStyleFilter = options.inlineStyle === true ? () => true : options.inlineStyle;
-
         config.configureWebpack.unshift((config) =>
-          styleSheetLoaderForClient(config, transformCssModule, inlineStyleFilter),
+          styleSheetLoaderForClient(config, transformCssModule, options.inlineStyle),
         );
         config.transforms = [
           ...(config.transforms || []),
@@ -241,7 +237,7 @@ function getClassNameToStyleTransformer(syntaxFeatures) {
  * StyleSheet Loader for CSR.
  * Transform css files to inline style by webpack loader.
  */
-const styleSheetLoaderForClient = (config, transformCssModule, inlineStyleFiler: (id: string) => boolean) => {
+const styleSheetLoaderForClient = (config, transformCssModule, inlineStyleFiler: CompatRaxOptions['inlineStyle']) => {
   const { rules } = config.module || {};
   if (Array.isArray(rules)) {
     for (let i = 0, l = rules.length; i < l; i++) {
@@ -251,14 +247,15 @@ const styleSheetLoaderForClient = (config, transformCssModule, inlineStyleFiler:
         // Apply inlineStyle here as original rule got higher priority,
         // the resource doesnot match the filter will be bypassed to stylesheet-loader.
         rule.test = (id: string) => {
-          const inlineStyleFilterEnabled = inlineStyleFiler(id) === true;
-
-          inlineStyleFilterEnabled && consola.warn(`InlineStyle enabled for current css file: ${id}`);
+          const inlineStyleDisabled = typeof inlineStyleFiler === 'function'
+            // The tester returns false, means user want this file to be handled by ExternalStyleLoader.
+            ? inlineStyleFiler(id) === false
+            // inlineStyle: true, use the next InlineStyleLoader just like before.
+            : false;
 
           const matched =
-            (transformCssModule ? /(\.module|global)\.css$/i : /(\.global)\.css$/i).test(id) &&
-            // If filter returns true, bypass the resource to stylesheet-loader.
-            !inlineStyleFilterEnabled;
+            (transformCssModule ? /(\.module|global)\.css$/i : /(\.global)\.css$/i).test(id) ||
+            inlineStyleDisabled;
 
           return matched;
         };
