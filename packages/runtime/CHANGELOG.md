@@ -1,5 +1,11 @@
 # @ice/runtime
 
+## 1.2.6
+
+### Patch Changes
+
+- b691b9e9: feat: support remove router even if route count is greater than 1
+
 ## 1.2.5
 
 ### Patch Changes
