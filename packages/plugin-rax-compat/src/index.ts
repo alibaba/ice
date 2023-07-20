@@ -248,13 +248,16 @@ const styleSheetLoaderForClient = (config, transformCssModule, inlineStyleFiler:
         // the resource doesnot match the filter will be bypassed to stylesheet-loader.
         rule.test = (id: string) => {
           const inlineStyleDisabled = typeof inlineStyleFiler === 'function'
+            // The tester returns true, means this file should still be handled by InlineStyleLoader.
             // The tester returns false, means user want this file to be handled by ExternalStyleLoader.
             ? inlineStyleFiler(id) === false
-            // inlineStyle: true, use the next InlineStyleLoader just like before.
+            // Means `inlineStyle: true`, use the next InlineStyleLoader just like before.
             : false;
 
           const matched =
+            // Default test matcher.
             (transformCssModule ? /(\.module|global)\.css$/i : /(\.global)\.css$/i).test(id) ||
+            // CSS styles which was marked `inlineStyle: false` explicitly.
             inlineStyleDisabled;
 
           return matched;
