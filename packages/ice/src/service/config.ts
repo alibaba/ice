@@ -53,6 +53,8 @@ class Config {
         sourcemap: false,
         logLevel: 'silent', // The main server compiler process will log it.
       }, {
+        // Always external dependencies when get config.
+        externalDependencies: true,
         swc: {
           keepExports: {
             value: keepExports,

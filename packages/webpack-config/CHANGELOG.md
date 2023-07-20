@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.19
+
+### Patch Changes
+
+- cf8a78e3: feat: support code splitting strategy of page-vendors
+- 92ec144f: fix: do not compile runtime library of tslib
+
 ## 1.0.18
 
 ### Patch Changes

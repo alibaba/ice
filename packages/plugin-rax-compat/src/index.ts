@@ -60,7 +60,23 @@ const ruleSetStylesheetForLess = {
 let warnOnce = false;
 
 export interface CompatRaxOptions {
-  inlineStyle?: boolean;
+  /**
+   * Enable inline style transform.
+   *
+   * @default false
+   *
+   * @example
+   * ```js
+   * inlineStyle: true;
+   * inlineStyle: (id) => id.includes('feeds_module');
+   * ```
+   */
+  inlineStyle?: boolean | ((id: string) => boolean);
+  /**
+   * Enable css module transform.
+   *
+   * @default true
+   */
   cssModule?: boolean;
 }
 
@@ -138,7 +154,14 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
         }
 
         config.configureWebpack ??= [];
-        config.configureWebpack.unshift((config) => styleSheetLoaderForClient(config, transformCssModule));
+
+        // When code enters here, options.inlineStyle is either `true` or filter function.
+        // If user provide `true`, use a filter which always return true, or, use the filter.
+        const inlineStyleFilter = options.inlineStyle === true ? () => true : options.inlineStyle;
+
+        config.configureWebpack.unshift((config) =>
+          styleSheetLoaderForClient(config, transformCssModule, inlineStyleFilter),
+        );
         config.transforms = [
           ...(config.transforms || []),
           getClassNameToStyleTransformer(userConfig.syntaxFeatures || {}),
@@ -218,18 +241,33 @@ function getClassNameToStyleTransformer(syntaxFeatures) {
  * StyleSheet Loader for CSR.
  * Transform css files to inline style by webpack loader.
  */
-const styleSheetLoaderForClient = (config, transformCssModule) => {
+const styleSheetLoaderForClient = (config, transformCssModule, inlineStyleFiler: (id: string) => boolean) => {
   const { rules } = config.module || {};
   if (Array.isArray(rules)) {
     for (let i = 0, l = rules.length; i < l; i++) {
-      const rule: RuleSetRule | any = rules[i];
+      const rule: RuleSetRule = rules[i];
       // Find the css rule, that default to CSS Modules.
       if (rule.test && rule.test instanceof RegExp && rule.test.source.indexOf('.css') > -1) {
-        rule.test = transformCssModule ? /(\.module|global)\.css$/i : /(\.global)\.css$/i;
+        // Apply inlineStyle here as original rule got higher priority,
+        // the resource doesnot match the filter will be bypassed to stylesheet-loader.
+        rule.test = (id: string) => {
+          const inlineStyleFilterEnabled = inlineStyleFiler(id) === true;
+
+          inlineStyleFilterEnabled && consola.warn(`InlineStyle enabled for current css file: ${id}`);
+
+          const matched =
+            (transformCssModule ? /(\.module|global)\.css$/i : /(\.global)\.css$/i).test(id) &&
+            // If filter returns true, bypass the resource to stylesheet-loader.
+            !inlineStyleFilterEnabled;
+
+          return matched;
+        };
         rules[i] = {
           test: /\.css$/i,
           oneOf: [
+            // Handle project css and those module can only work under inlineStyle disabled.
             rule,
+            // Handle those module can only work under inlineStyle enabled.
             ruleSetStylesheet,
           ],
         };
