@@ -42,3 +42,13 @@ export const dataLoader = defineDataLoader(() => {
     });
   });
 });
+
+export const documentData = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        data: 'documentData',
+      });
+    }, 1000);
+  });
+};

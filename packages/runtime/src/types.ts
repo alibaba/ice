@@ -32,6 +32,7 @@ export interface AppExport {
   default?: AppConfig;
   [key: string]: any;
   dataLoader?: DataLoaderConfig;
+  documentData: (requestContext: RequestContext) => Promise<any>;
 }
 
 export type DataLoaderResult = (Promise<RouteData> | RouteData) | RouteData;
@@ -93,6 +94,7 @@ export interface LoaderData {
 export interface AppContext {
   appConfig: AppConfig;
   appData: any;
+  documentData?: any;
   serverData?: any;
   assetsManifest?: AssetsManifest;
   loaderData?: LoadersData;
