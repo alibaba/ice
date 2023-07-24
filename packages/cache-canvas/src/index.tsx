@@ -164,7 +164,7 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
                   }
                   
                   if (!base64Data) {
-                    localStorage.getItem('${cacheKey}');
+                    base64Data = localStorage.getItem(${JSON.stringify(cacheKey)});
                   }
                   
                   const fallback = document.getElementById('fallback-${id}');
