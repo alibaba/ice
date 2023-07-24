@@ -20,7 +20,6 @@ export const defaultOnRecoverableError = typeof reportError === 'function'
 
 const reportRecoverableError = (error: unknown, errorStack: ErrorStack, options?: ErrorOptions) => {
   const ignoreError = options?.ignoreRuntimeWarning && isRuntimeWarning(error);
-  defaultOnRecoverableError(error);
   if (!ignoreError) {
     if (process.env.NODE_ENV === 'production') {
       // Report error stack in production by default.
