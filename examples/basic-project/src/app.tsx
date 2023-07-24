@@ -46,3 +46,12 @@ export const dataLoader = defineDataLoader(() => {
 export const runApp = (render) => {
   render();
 };
+export const unstable_documentData = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        data: 'documentData',
+      });
+    }, 1000);
+  });
+};

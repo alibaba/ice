@@ -67,6 +67,7 @@ export const RUNTIME_EXPORTS = [
       'defineServerDataLoader',
       'defineStaticDataLoader',
       'usePageLifecycle',
+      'useDocumentData',
     ],
     alias: {
       usePublicAppContext: 'useAppContext',

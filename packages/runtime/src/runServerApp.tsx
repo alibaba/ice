@@ -262,6 +262,11 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
   }
 
+  let documentData: any;
+  if (app?.documentData) {
+    documentData = await app.documentData(requestContext);
+    appContext.documentData = documentData;
+  }
   // don't need to execute getAppData in CSR
   if (!documentOnly) {
     try {
@@ -273,13 +278,13 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
 
   // HashRouter loads route modules by the CSR.
   if (appConfig?.router?.type === 'hash') {
-    return renderDocument({ matches: [], routes, renderOptions });
+    return renderDocument({ matches: [], routes, renderOptions, documentData });
   }
 
   const matches = matchRoutes(routes, location, finalBasename);
   const routePath = getCurrentRoutePath(matches);
   if (documentOnly) {
-    return renderDocument({ matches, routePath, routes, renderOptions });
+    return renderDocument({ matches, routePath, routes, renderOptions, documentData });
   } else if (!matches.length) {
     return handleNotFoundResponse();
   }
@@ -339,7 +344,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
       throw err;
     }
     console.error('Warning: render server entry error, downgrade to csr.', err);
-    return renderDocument({ matches, routePath, renderOptions, routes, downgrade: true });
+    return renderDocument({ matches, routePath, renderOptions, routes, downgrade: true, documentData });
   }
 }
 
@@ -399,7 +404,7 @@ async function renderServerEntry(
   const pipe = renderToNodeStream(element);
 
   const fallback = () => {
-    return renderDocument({ matches, routePath, renderOptions, routes, downgrade: true });
+    return renderDocument({ matches, routePath, renderOptions, routes, downgrade: true, documentData: appContext.documentData });
   };
 
   return {
@@ -414,6 +419,7 @@ interface RenderDocumentOptions {
   matches: RouteMatch[];
   renderOptions: RenderOptions;
   routes: RouteItem[];
+  documentData: any;
   routePath?: string;
   downgrade?: boolean;
 }
@@ -428,6 +434,7 @@ function renderDocument(options: RenderDocumentOptions): Response {
     routePath,
     downgrade,
     routes,
+    documentData,
   }: RenderDocumentOptions = options;
 
   const {
@@ -465,6 +472,7 @@ function renderDocument(options: RenderDocumentOptions): Response {
     basename,
     downgrade,
     serverData,
+    documentData,
   };
 
   const documentContext = {
