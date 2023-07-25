@@ -149,7 +149,7 @@ export interface Config {
     [key: string]: string;
   };
 
-  splitChunks?: boolean | 'vendors' | 'chunks' | webpack.Configuration['optimization']['splitChunks'];
+  splitChunks?: boolean | 'vendors' | 'chunks' | 'page-vendors' | webpack.Configuration['optimization']['splitChunks'];
 
   optimization?: Optimization;
 

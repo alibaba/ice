@@ -600,13 +600,14 @@ export default defineConfig({
 
 ### codeSplitting
 
-- 类型：`boolean | 'vendors' | 'page' | 'chunks'`
+- 类型：`boolean | 'vendors' | 'page' | 'chunks' | 'page-vendors'`
 - 默认值：`true`
 
 框架内置了三种分包策略分别为 `chunks`（默认策略，无需额外设置），`page` 和 `vendors`。
 
 - `vendors` 策略：将异步 chunks 里的三方依赖统一打入到 vendor.js 中，避免重复，在依赖不变的情况下有效利用缓存。缺陷是如果项目过大会导致单文件尺寸过大。
 - `page` 策略：所有路由级别组件按需加载，如果需保留原 `splitChunks: false` 的效果，配置该策略 。
+- `page-vendors` 策略：在 `page` 策略的基础上，将异步 chunks 里的三方依赖统一打入到 vendor.js 中，以达到有效利用缓存的结果。
 - `chunks` 策略：在路由级别组件按需加载的基础上，根据模块体积大小自动拆分 chunks，为框架默认推荐策略。
 
 如果存在特殊场景期望关闭分包能力，可以设置成 `false`。

@@ -13,9 +13,15 @@ interface SyntaxFeatures {
 
 interface Optimization {
   /**
-   * Optimize code by remove react-router dependencies when set to true.
+   * Optimize code by remove react-router dependencies when set to true,
+   * it only works when route count is 1.
    */
   router?: boolean;
+  /**
+   * @private
+   * Remove react-router dependencies by force, even if route count is greater than 1.
+   */
+  disableRouter?: boolean;
 }
 
 interface MinifyOptions {
@@ -245,7 +251,7 @@ export interface UserConfig {
    * Code splitting strategy, support page and vendors, default value is true (built-in strategy).
    * @see https://v3.ice.work/docs/guide/basic/config#codesplitting
    */
-  codeSplitting?: 'page' | 'vendors' | boolean;
+  codeSplitting?: 'page' | 'vendors' | 'page-vendors' | boolean;
   /**
    * generate additional assets for request data, default is true
    * @see https://v3.ice.work/docs/guide/basic/config#dataloader

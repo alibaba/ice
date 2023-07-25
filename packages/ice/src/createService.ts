@@ -228,9 +228,10 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const hasExportAppData = (await getFileExports({ rootDir, file: 'src/app' })).includes('dataLoader');
   const csr = !userConfig.ssr && !userConfig.ssg;
 
-  const disableRouter = userConfig?.optimization?.router && routesInfo.routesCount <= 1;
+  const disableRouter = (userConfig?.optimization?.router && routesInfo.routesCount <= 1) ||
+    userConfig?.optimization?.disableRouter;
   if (disableRouter) {
-    logger.info('`optimization.router` is enabled and only have one route, ice build will remove react-router and history which is unnecessary.');
+    logger.info('`optimization.router` is enabled, ice build will remove react-router and history which is unnecessary.');
     taskConfigs = mergeTaskConfig(taskConfigs, {
       alias: {
         '@ice/runtime/router': '@ice/runtime/single-router',
@@ -246,7 +247,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   const iceRuntimePath = '@ice/runtime';
   // Only when code splitting use the default strategy or set to `router`, the router will be lazy loaded.
-  const lazy = [true, 'chunks', 'page'].includes(userConfig.codeSplitting);
+  const lazy = [true, 'chunks', 'page', 'page-vendors'].includes(userConfig.codeSplitting);
   const { routeImports, routeDefinition } = getRoutesDefinition(routesInfo.routes, lazy);
   // add render data
   generator.setRenderData({
