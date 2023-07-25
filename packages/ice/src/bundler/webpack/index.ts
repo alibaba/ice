@@ -5,8 +5,8 @@ import type { Context } from 'build-scripts';
 import type { Config } from '@ice/webpack-config/types';
 import { logger } from '../../utils/logger.js';
 import type { ExtendsPluginAPI } from '../../types/plugin.js';
+import type { BundlerOptions } from '../types.js';
 import getWebpackConfig from './getWebpackConfig.js';
-import type { BundlerOptions } from './types.js';
 import build from './build.js';
 import { startDevServer, invokeCompilerWatch } from './start.js';
 

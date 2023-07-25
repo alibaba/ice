@@ -17,7 +17,7 @@ import type { ExtendsPluginAPI } from '../../types/plugin.js';
 import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR, WEB } from '../../constant.js';
 import type ServerRunner from '../../service/ServerRunner.js';
 import type ServerCompilerPlugin from '../../webpack/ServerCompilerPlugin.js';
-import type { BundlerOptions } from './types.js';
+import type { BundlerOptions } from '../types.js';
 
 const { debounce } = lodash;
 

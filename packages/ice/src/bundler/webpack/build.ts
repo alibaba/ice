@@ -10,7 +10,7 @@ import { SERVER_OUTPUT_DIR } from '../../constant.js';
 import { logger } from '../../utils/logger.js';
 import formatWebpackMessages from '../../utils/formatWebpackMessages.js';
 import type { ExtendsPluginAPI } from '../../types/plugin.js';
-import type { BundlerOptions, CompileResults } from './types.js';
+import type { BundlerOptions, CompileResults } from '../types.js';
 // Enable source map support when build.
 import 'source-map-support/register.js';
 

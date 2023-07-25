@@ -16,7 +16,7 @@ import createRenderMiddleware from '../../middlewares/renderMiddleware.js';
 import createMockMiddleware from '../../middlewares/mock/createMiddleware.js';
 import getRouterBasename from '../../utils/getRouterBasename.js';
 import type { ExtendsPluginAPI } from '../../types/plugin.js';
-import type { BundlerOptions } from './types.js';
+import type { BundlerOptions } from '../types.js';
 
 const { merge } = lodash;
 
