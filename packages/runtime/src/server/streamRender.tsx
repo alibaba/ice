@@ -22,8 +22,8 @@ export function renderToNodeStream(
       onShellError(error) {
         options?.onShellError && options?.onShellError(error);
       },
-      onError(error) {
-        options?.onError && options?.onError(error);
+      onError(error, errInfo) {
+        options?.onError && options?.onError(error, errInfo);
       },
       onAllReady() {
         options?.onAllReady && options?.onAllReady();
