@@ -4,6 +4,7 @@ import { createHashHistory, createBrowserHistory, createMemoryHistory } from '@r
 import type { History } from '@remix-run/router';
 import type {
   AppContext, WindowContext, AppExport, RouteItem, RuntimeModules, AppConfig, AssetsManifest, ClientAppRouterProps,
+  ErrorStack,
 } from './types.js';
 import { createHistory as createHistorySingle } from './singleRouter.js';
 import { setHistory } from './history.js';
@@ -20,7 +21,6 @@ import addLeadingSlash from './utils/addLeadingSlash.js';
 import { AppContextProvider } from './AppContext.js';
 import { deprecatedHistory } from './utils/deprecatedHistory.js';
 import reportRecoverableError from './reportRecoverableError.js';
-import type { ErrorStack } from './types.js';
 
 export interface RunClientAppOptions {
   app: AppExport;
