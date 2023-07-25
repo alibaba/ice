@@ -69,9 +69,9 @@ export default async function runClientApp(options: RunClientAppOptions) {
     initialEntry: routePath,
     routes,
   };
-  const history = deprecatedHistory(createHistory(appConfig, historyOptions));
+  const history = createHistory(appConfig, historyOptions);
   // Set history for import it from ice.
-  setHistory(history);
+  setHistory(deprecatedHistory(history));
 
   const appContext: AppContext = {
     appExport: app,
@@ -219,10 +219,10 @@ function createHistory(
   const createHistory = process.env.ICE_CORE_ROUTER === 'true'
     ? createRouterHistory(appConfig?.router?.type, memoryRouter)
     : createHistorySingle;
-  let createHistoryOptions: Parameters<typeof createHistory>[0] = { window, v5Compat: true };
+  let createHistoryOptions: Parameters<typeof createHistory>[0] = { window };
 
   if (routerType === 'memory') {
-    const memoryOptions: Parameters<typeof createMemoryHistory>[0] = { v5Compat: true };
+    const memoryOptions: Parameters<typeof createMemoryHistory>[0] = {};
     memoryOptions.initialEntries = appConfig?.router?.initialEntries || getRoutesPath(routes);
     if (initialEntry) {
       const initialIndex = memoryOptions.initialEntries.findIndex((entry) =>
