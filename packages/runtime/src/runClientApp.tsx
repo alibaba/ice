@@ -4,6 +4,7 @@ import { createHashHistory, createBrowserHistory, createMemoryHistory } from '@r
 import type { History } from '@remix-run/router';
 import type {
   AppContext, WindowContext, AppExport, RouteItem, RuntimeModules, AppConfig, AssetsManifest, ClientAppRouterProps,
+  ErrorStack,
 } from './types.js';
 import { createHistory as createHistorySingle } from './singleRouter.js';
 import { setHistory } from './history.js';
@@ -19,6 +20,7 @@ import ClientRouter from './ClientRouter.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 import { AppContextProvider } from './AppContext.js';
 import { deprecatedHistory } from './utils/deprecatedHistory.js';
+import reportRecoverableError from './reportRecoverableError.js';
 
 export interface RunClientAppOptions {
   app: AppExport;
@@ -31,6 +33,7 @@ export interface RunClientAppOptions {
   dataLoaderFetcher?: Function;
   dataLoaderDecorator?: Function;
 }
+
 
 export default async function runClientApp(options: RunClientAppOptions) {
   const {
@@ -105,20 +108,14 @@ export default async function runClientApp(options: RunClientAppOptions) {
 
   const needHydrate = hydrate && !downgrade && !documentOnly;
   if (needHydrate) {
-    const defaultOnRecoverableError = typeof reportError === 'function' ? reportError
-      : function (error: unknown) {
-        console['error'](error);
-      };
     runtime.setRender((container, element) => {
-      const hydrateOptions = revalidate
-        ? {
-          onRecoverableError(error: unknown) {
-            // Ignore this error caused by router.revalidate
-            if ((error as Error)?.message?.indexOf('This Suspense boundary received an update before it finished hydrating.') == -1) {
-              defaultOnRecoverableError(error);
-            }
-          },
-        } : {};
+      const hydrateOptions: ReactDOM.HydrationOptions = {
+        // @ts-ignore react-dom do not define the type of second argument of onRecoverableError.
+        onRecoverableError: appConfig?.app?.onRecoverableError ||
+        ((error: unknown, errorInfo: ErrorStack) => {
+          reportRecoverableError(error, errorInfo, { ignoreRuntimeWarning: revalidate });
+        }),
+      };
       return ReactDOM.hydrateRoot(container, element, hydrateOptions);
     });
   }
