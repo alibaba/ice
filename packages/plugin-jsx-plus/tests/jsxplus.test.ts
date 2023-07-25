@@ -18,17 +18,27 @@ describe('JSX Plus Plugin', () => {
     });
 
     it('exclude', () => {
-      expect(idFilter({
-        exclude: ['foo'],
-        include: [/bar/],
-        extensions: ['.jsx', '.tsx'],
-      }, '/foo/bar/a.tsx')).toBeFalsy();
+      expect(
+        idFilter(
+          {
+            exclude: ['foo'],
+            include: [/bar/],
+            extensions: ['.jsx', '.tsx'],
+          },
+          '/foo/bar/a.tsx',
+        ),
+      ).toBeFalsy();
 
-      expect(idFilter({
-        exclude: [/foo/],
-        include: [/bar/],
-        extensions: ['.jsx', '.tsx'],
-      }, '/foo/bar/a.tsx')).toBeFalsy();
+      expect(
+        idFilter(
+          {
+            exclude: [/foo/],
+            include: [/bar/],
+            extensions: ['.jsx', '.tsx'],
+          },
+          '/foo/bar/a.tsx',
+        ),
+      ).toBeFalsy();
     });
 
     it('extensions', () => {
@@ -80,6 +90,7 @@ describe('JSX Plus Plugin', () => {
       expect(ret.code).toBe(`import { createCondition as __create_condition__ } from "babel-runtime-jsx-plus";
 __create_condition__([[() => false, () => <div />]]);`);
     });
+
     it('transformer w/ parent element is a <></>', () => {
       const plugin = jsxPlus({
         include: ['foo'],
