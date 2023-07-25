@@ -21,6 +21,8 @@ $ npm i @ice/plugin-rax-compat --save-dev
 export default defineConfig(() => ({
   plugins: [
 +    compatRax({ inlineStyle: true }), // 是否开启内联样式，这里是开启
++    // 也可以使用函数形式，根据文件名来判断是否开启内联样式
++    compatRax({ inlineStyle: (id) => id.includes('some-module') }),
   ],
 }));
 ```
@@ -78,6 +80,41 @@ console.log(styles); // { foo: { color: 'red' } }
 ```
 
 此外，当 `width` 等属性没有单位时，如 `width: 300`，在 `inlineStyle` 模式下会自动补齐 `rpx` 单位并最终转化成 `vw`，同理，写了 `rpx` 单位的值也一样会被转化成 `vw`。
+
+### 兼容 rax-swiper
+
+由于 [rax-swiper](https://rax.alibaba-inc.com/docs/components/swiper) 仅支持在非内联模式下使用，如果你启用了 `inlineStyle`，则需要在项目的全局 CSS 中新增对其样式的导入：
+
+```diff title="global.css"
++ @import url('swiper/swiper-bundle.min.css');
+```
+
+或者你也可以使用函数形式的 lineStyle，将引用了 `rax-swiper` 的模块排除出内联样式的处理流程：
+
+```diff title="ice.config.mts"
+import compatRax from '@ice/plugin-rax-compat';
+
+export default defineConfig(() => ({
+  plugins: [
++    compatRax({ inlineStyle: (id) => !id.includes('feeds-module') }), 
+  ],
+}));
+```
+
+
+### 兼容使用内联样式构建的模块
+
+Rax 的 inlineStyle 模式是具有传染性的，因此，如果你的项目中存在使用内联样式构建的模块，在 rax-compat 模式下需要确保这些模块也使用内联样式处理，否则会出现样式丢失的问题。此时你可以使用函数形式的 inlineStyle：
+
+```diff title="ice.config.mts"
+import compatRax from '@ice/plugin-rax-compat';
+
+export default defineConfig(() => ({
+  plugins: [
++    compatRax({ inlineStyle: (id) => id.includes('inline-style-module') }), 
+  ],
+}));
+```
 
 ### DOM 属性差异
 

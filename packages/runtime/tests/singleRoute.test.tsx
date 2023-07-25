@@ -37,8 +37,54 @@ describe('single route api', () => {
     expect(createHistory().location).toBe('');
   });
 
-  it('matchRoutes', () => {
-    expect(matchRoutes([{}])[0].pathname).toBe('');
+  it('matchRoutes - single route', () => {
+    const routes = [
+      {
+        path: 'users',
+        element: <div>user</div>,
+      },
+    ];
+    const location = {
+      pathname: '/test',
+    };
+    const matchedRoutes = matchRoutes(routes, location, '/');
+    expect(matchedRoutes).toHaveLength(1);
+    expect(matchedRoutes[0].route.path).toBe('users');
+  });
+
+  it('matchRoutes - mutiple route', () => {
+    const routes = [
+      {
+        path: 'users',
+        element: <div>user</div>,
+      },
+      {
+        path: 'posts',
+        element: <div>post</div>,
+      },
+    ];
+    const location = {
+      pathname: '/posts',
+    };
+    const matchedRoutes = matchRoutes(routes, location, '/');
+    expect(matchedRoutes).toHaveLength(1);
+    expect(matchedRoutes[0].route.path).toBe('posts');
+  });
+
+  it('matchRoutes - basename', () => {
+    const routes = [
+      {
+        path: 'users',
+        element: <div>user</div>,
+      },
+      {
+        path: 'posts',
+        element: <div>post</div>,
+      },
+    ];
+    const matchedRoutes = matchRoutes(routes, '/basename/posts', '/basename');
+    expect(matchedRoutes).toHaveLength(1);
+    expect(matchedRoutes[0].route.path).toBe('posts');
   });
 
   it('Link', () => {

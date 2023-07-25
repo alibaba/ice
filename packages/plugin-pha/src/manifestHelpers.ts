@@ -362,17 +362,18 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
 
       // Set static dataloader to data_prefetch of page.
       pageIds.forEach((pageId) => {
-        if (typeof page === 'string' && dataloaderConfig && dataloaderConfig[pageId]) {
+        if (typeof page === 'string' && dataloaderConfig && dataloaderConfig[pageId] && dataloaderConfig[pageId].loader) {
           const staticDataLoaders = [];
-          if (Array.isArray(dataloaderConfig[pageId])) {
-            dataloaderConfig[pageId].forEach(item => {
+          const { loader } = dataloaderConfig[pageId];
+          if (Array.isArray(loader)) {
+            dataloaderConfig[pageId].loader.forEach(item => {
               if (typeof item === 'object') {
                 staticDataLoaders.push(item);
               }
             });
-          } else if (typeof dataloaderConfig[pageId] === 'object') {
+          } else if (typeof loader === 'object') {
             // Single prefetch loader config.
-            staticDataLoaders.push(dataloaderConfig[pageId]);
+            staticDataLoaders.push(loader);
           }
           pageManifest.dataPrefetch = [...(pageManifest.dataPrefetch || []), ...staticDataLoaders];
         }
@@ -386,17 +387,18 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
           const title = frame.title || '';
           const titleIds = getRouteIdByPage(routeManifest, title);
           titleIds.forEach((titleId) => {
-            if (dataloaderConfig && dataloaderConfig[titleId]) {
+            if (dataloaderConfig && dataloaderConfig[titleId] && dataloaderConfig[titleId].loader) {
               const staticDataLoaders = [];
-              if (Array.isArray(dataloaderConfig[title])) {
-                dataloaderConfig[title].forEach(item => {
+              const { loader } = dataloaderConfig[titleId];
+              if (Array.isArray(loader)) {
+                loader.forEach(item => {
                   if (typeof item === 'object') {
                     staticDataLoaders.push(item);
                   }
                 });
-              } else if (typeof dataloaderConfig[title] === 'object') {
+              } else if (typeof loader === 'object') {
                 // Single prefetch loader config.
-                staticDataLoaders.push(dataloaderConfig[title]);
+                staticDataLoaders.push(loader);
               }
 
               frame.dataPrefetch = [...(frame.dataPrefetch || []), ...staticDataLoaders];
