@@ -18,27 +18,17 @@ describe('JSX Plus Plugin', () => {
     });
 
     it('exclude', () => {
-      expect(
-        idFilter(
-          {
-            exclude: ['foo'],
-            include: [/bar/],
-            extensions: ['.jsx', '.tsx'],
-          },
-          '/foo/bar/a.tsx',
-        ),
-      ).toBeFalsy();
+      expect(idFilter({
+        exclude: ['foo'],
+        include: [/bar/],
+        extensions: ['.jsx', '.tsx'],
+      }, '/foo/bar/a.tsx')).toBeFalsy();
 
-      expect(
-        idFilter(
-          {
-            exclude: [/foo/],
-            include: [/bar/],
-            extensions: ['.jsx', '.tsx'],
-          },
-          '/foo/bar/a.tsx',
-        ),
-      ).toBeFalsy();
+      expect(idFilter({
+        exclude: [/foo/],
+        include: [/bar/],
+        extensions: ['.jsx', '.tsx'],
+      }, '/foo/bar/a.tsx')).toBeFalsy();
     });
 
     it('extensions', () => {
