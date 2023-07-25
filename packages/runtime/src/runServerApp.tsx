@@ -180,8 +180,8 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
           sendResponse(req, res, result);
           resolve();
         },
-        onError: async (err) => {
-          onError && onError(err);
+        onError: (err, errInfo) => {
+          onError && onError(err, errInfo);
           // onError triggered after shell ready, should not downgrade to csr
           // and should not be throw to break the render process
           console.error('PipeToResponse error.');
