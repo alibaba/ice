@@ -3,7 +3,9 @@ import { useEffect, useRef, forwardRef, cloneElement, Children } from 'react';
 import type { AppearProps } from '../typings';
 
 const WeexAppear = forwardRef<any, AppearProps>((props, ref) => {
-  const childrenRef: ForwardedRef<HTMLDivElement> = ref ?? useRef<HTMLDivElement>(null);
+  const internalRef = useRef<HTMLDivElement>(null);
+  const childrenRef: ForwardedRef<HTMLDivElement> = ref ?? internalRef;
+
   const { children, onAppear, onDisappear } = props;
 
   useEffect(() => {
@@ -16,7 +18,7 @@ const WeexAppear = forwardRef<any, AppearProps>((props, ref) => {
     return () => {
       onAppear && nodeRef?.removeEventListener('appear', (e: CustomEvent) => onAppear(e));
     };
-  }, []);
+  }, [childrenRef, onAppear]);
 
   useEffect(() => {
     const nodeRef = typeof childrenRef === 'object' ? childrenRef.current : null;
@@ -26,7 +28,7 @@ const WeexAppear = forwardRef<any, AppearProps>((props, ref) => {
     return () => {
       onDisappear && nodeRef?.removeEventListener('disappear', (e: CustomEvent) => onDisappear(e));
     };
-  }, []);
+  }, [childrenRef, onDisappear]);
 
   return cloneElement(Children.only(children), { ref: childrenRef });
 });
