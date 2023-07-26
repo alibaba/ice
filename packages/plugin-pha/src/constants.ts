@@ -47,6 +47,7 @@ export const decamelizeKeys = [
   'cacheQueryParams',
   'customDataSource',
   'enableExpiredManifest',
+  'bounces',
 ];
 
 // Do not decamelize list.
@@ -81,6 +82,7 @@ export const validPageConfigKeys = [
   'pullRefresh',
   'queryParamsPassIgnoreKeys',
   'downgradeUrl',
+  'bounces',
 ];
 
 // The manifest configuration is the default value for the page configuration

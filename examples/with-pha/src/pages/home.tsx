@@ -15,6 +15,7 @@ export const pageConfig = definePageConfig(() => {
       'source',
       'disableNav',
     ],
+    bounces: true,
     title: 'Home',
   };
 });
