@@ -60,7 +60,23 @@ const ruleSetStylesheetForLess = {
 let warnOnce = false;
 
 export interface CompatRaxOptions {
+  /**
+   * Enable inline style transform.
+   *
+   * @default false
+   *
+   * @example
+   * ```js
+   * inlineStyle: true;
+   * inlineStyle: (id) => id.includes('feeds_module');
+   * ```
+   */
   inlineStyle?: boolean | ((id: string) => boolean);
+  /**
+   * Enable css module transform.
+   *
+   * @default true
+   */
   cssModule?: boolean;
 }
 

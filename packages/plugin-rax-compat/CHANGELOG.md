@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.4
+
+### Patch Changes
+
+- b58d38a1: inlineStyle filter support
+
 ## 0.2.3
 
 ### Patch Changes
