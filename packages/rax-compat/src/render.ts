@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import type { RootOptions } from 'react-dom/client';
 import { createRoot } from 'react-dom/client';
 import { isFunction } from './type.js';
+import { containerRootMap } from './container-root-map.js';
 
 /**
  * Compat render for rax export.
@@ -26,6 +27,10 @@ export default function render(
 
   const root = createRoot(container, options as RootOptions);
   root.render(element as ReactNode);
+
+  // Save container and root relation.
+  container && containerRootMap.set(container, root);
+
   if (isFunction(callback)) {
     callback.call(element);
   }
