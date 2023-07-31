@@ -73,9 +73,18 @@ export function useSuspenseData(request?: Request) {
     });
   });
 
-  update({
-    promise: thenable,
-  });
+  React.useEffect(() => {
+    // Update state in useEffect, otherwise it will cause bad setState warning.
+    update({
+      promise: thenable,
+    });
+  }, []);
+
+  if (!isClient) {
+    update({
+      promise: thenable,
+    });
+  }
 
   throw thenable;
 }
@@ -100,8 +109,13 @@ export function withSuspense(Component) {
     });
 
     function update(value) {
-      // For SSR, setState is not working, so here we need to update the state manually.
-      const newState = Object.assign(suspenseState, value);
+      let newState: any;
+      if (isClient) {
+        newState = Object.assign({}, suspenseState, value);
+      } else {
+        // For SSR, setState is not working, so here we need to update the state manually.
+        newState = Object.assign(suspenseState, value);
+      }
       // For CSR.
       updateSuspenseData(newState);
     }
