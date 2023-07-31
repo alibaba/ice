@@ -8,11 +8,7 @@ interface Node {
 }
 
 function VisibilityChange(props: any) {
-  const {
-    onAppear,
-    onDisappear,
-    children,
-  } = props;
+  const { onAppear, onDisappear, children } = props;
 
   const defaultRef: Ref<Node> = useRef<Node>();
 
@@ -28,26 +24,27 @@ function VisibilityChange(props: any) {
     }
   }, [ref, children]);
 
-  const listen = useCallback((eventName: string, handler: Function) => {
-    const { current } = ref;
-    // Rax components will set custom ref by useImperativeHandle.
-    // So We should get eventTarget by _nativeNode.
-    // https://github.com/raxjs/rax-components/blob/master/packages/rax-textinput/src/index.tsx#L151
-    if (current && isFunction(handler)) {
-      const eventTarget = current._nativeNode || current;
-      observerElement(eventTarget as Element);
-      // @ts-expect-error Typings from @types/rax doesnot provide complete typings but break the global typings.
-      eventTarget.addEventListener(eventName, handler);
-    }
-    return () => {
+  const listen = useCallback(
+    (eventName: string, handler: EventListenerOrEventListenerObject) => {
       const { current } = ref;
-      if (current) {
+      // Rax components will set custom ref by useImperativeHandle.
+      // So We should get eventTarget by _nativeNode.
+      // https://github.com/raxjs/rax-components/blob/master/packages/rax-textinput/src/index.tsx#L151
+      if (current && isFunction(handler)) {
         const eventTarget = current._nativeNode || current;
-        // @ts-expect-error Typings from @types/rax doesnot provide complete typings but break the global typings.
-        eventTarget.removeEventListener(eventName, handler);
+        observerElement(eventTarget as Element);
+        eventTarget.addEventListener(eventName, handler);
       }
-    };
-  }, [ref]);
+      return () => {
+        const { current } = ref;
+        if (current) {
+          const eventTarget = current._nativeNode || current;
+          eventTarget.removeEventListener(eventName, handler);
+        }
+      };
+    },
+    [ref],
+  );
 
   useEffect(() => listen(VisibilityChangeEvent.appear, onAppear), [ref, onAppear, listen]);
   useEffect(() => listen(VisibilityChangeEvent.disappear, onDisappear), [ref, onDisappear, listen]);
