@@ -1,7 +1,11 @@
 import { Children, useRef, useEffect, useCallback } from 'react';
-import type { Ref } from 'react';
+import type { Ref, RefObject } from 'react';
 import { isFunction } from './type';
 import { observerElement, VisibilityChangeEvent } from './visibility';
+
+interface Node {
+  _nativeNode?: Node;
+}
 
 function VisibilityChange(props: any) {
   const {
@@ -11,7 +15,18 @@ function VisibilityChange(props: any) {
   } = props;
 
   const defaultRef: Ref<Node> = useRef<Node>();
-  const ref: Ref<Node> = (children && children.ref) ? children.ref : defaultRef;
+
+  const ref: RefObject<Node> = children.ref
+    ? typeof children.ref === 'object'
+      ? children.ref
+      : defaultRef
+    : defaultRef;
+
+  useEffect(() => {
+    if (typeof children.ref === 'function') {
+      children.ref(ref.current);
+    }
+  }, [ref, children]);
 
   const listen = useCallback((eventName: string, handler: Function) => {
     const { current } = ref;
@@ -21,12 +36,14 @@ function VisibilityChange(props: any) {
     if (current && isFunction(handler)) {
       const eventTarget = current._nativeNode || current;
       observerElement(eventTarget as Element);
+      // @ts-expect-error Typings from @types/rax doesnot provide complete typings but break the global typings.
       eventTarget.addEventListener(eventName, handler);
     }
     return () => {
       const { current } = ref;
       if (current) {
         const eventTarget = current._nativeNode || current;
+        // @ts-expect-error Typings from @types/rax doesnot provide complete typings but break the global typings.
         eventTarget.removeEventListener(eventName, handler);
       }
     };
