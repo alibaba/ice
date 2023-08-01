@@ -32,7 +32,10 @@ export default function render(
  */
 export default function render(
   element: RaxElement,
-  container: Element | DocumentFragment | null,
+  // Doesnot provide overload like `render(<Container />, callback))`,
+  // should use `render(<Container />, null, callback))` instead,
+  // as rendering without specified container is NOT RECOMMENDED.
+  container?: Element | DocumentFragment | null,
   optionsOrCallback?: RenderOption | Function,
   callback?: Function,
 ): RaxElement {
@@ -42,12 +45,12 @@ export default function render(
   }
 
   /**
-   * Compat for rax driver-dom behavior, which use body as container for nullish container.
+   * Compat for rax driver-dom behavior, which use body as container for non-specified container.
    * ref: https://github.com/alibaba/rax/blob/13d80a491f18c74034aa9b05c36ac922ff8c3357/packages/rax/src/vdom/instance.js#L44
    * ref: https://github.com/alibaba/rax/blob/13d80a491f18c74034aa9b05c36ac922ff8c3357/packages/driver-dom/src/index.js#L75
    */
-  if (container === null) {
-    container = document.querySelector('body')!;
+  if (!container) {
+    container = document.body;
   }
 
   const root = createRoot(container, optionsOrCallback as RootOptions);
