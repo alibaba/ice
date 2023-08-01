@@ -53,7 +53,7 @@ export function useSuspenseData(request?: Request) {
         promise: thenable,
       });
     }
-  }, [thenable]);
+  }, [thenable, update]);
 
   // 1. Use data from server side directly when hydrate.
   if (hasHydrateData) {
