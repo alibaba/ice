@@ -7,6 +7,12 @@ import type { RequestContext } from './types.js';
 const LOADER = '__ICE_SUSPENSE_LOADER__';
 const isClient = typeof window !== 'undefined' && 'onload' in window;
 
+declare global {
+  interface Window {
+    [LOADER]: Map<string, any>;
+  }
+}
+
 interface SuspenseState {
   id: string;
   data?: any;
@@ -20,13 +26,25 @@ type Request = (ctx: RequestContext) => Promise<any>;
 
 const SuspenseContext = React.createContext<SuspenseState | undefined>(undefined);
 
+const getHydrateData = (id: string) => {
+  let data = null;
+  const hasHydrateData = isClient && window[LOADER] && window[LOADER].has(id);
+  if (hasHydrateData) {
+    data = window[LOADER].get(id);
+  }
+  return {
+    hasHydrateData,
+    data,
+  };
+};
+
 export function useSuspenseData(request?: Request) {
   const appContext = useAppContext();
   const { requestContext } = appContext;
   const suspenseState = React.useContext(SuspenseContext);
 
   const { data, done, promise, update, error, id } = suspenseState;
-  const hasHydrateData = isClient && (window[LOADER] as Map<string, any>) && window[LOADER].has(id);
+  const { hasHydrateData, data: hydrateData } = getHydrateData(id);
 
   let thenable: Promise<any> = null;
   if (!hasHydrateData && !error && !done && !promise && request) {
@@ -57,7 +75,7 @@ export function useSuspenseData(request?: Request) {
 
   // 1. Use data from server side directly when hydrate.
   if (hasHydrateData) {
-    return window[LOADER].get(id);
+    return hydrateData;
   }
 
   // 2. Check data request error, if error throw it to react.
