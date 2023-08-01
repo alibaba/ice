@@ -182,7 +182,6 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
   };
   let singleComponent = null;
   let routeData = null;
-  console.log('process.env.ICE_CORE_ROUTER', process.env.ICE_CORE_ROUTER);
   if (process.env.ICE_CORE_ROUTER !== 'true') {
     const singleRoute = matchRoutes(routes, location, basename)[0];
     const { Component, loader } = await loadRouteModule(singleRoute.route, routeModuleCache);
