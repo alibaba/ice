@@ -26,9 +26,37 @@ export function useSuspenseData(request?: Request) {
   const suspenseState = React.useContext(SuspenseContext);
 
   const { data, done, promise, update, error, id } = suspenseState;
+  const hasHydrateData = isClient && (window[LOADER] as Map<string, any>) && window[LOADER].has(id);
+
+  let thenable: Promise<any> = null;
+  if (!hasHydrateData && !error && !done && !promise && request) {
+    thenable = request(requestContext);
+    thenable.then((response) => {
+      update({
+        done: true,
+        data: response,
+        promise: null,
+      });
+    }).catch(e => {
+      update({
+        done: true,
+        error: e,
+        promise: null,
+      });
+    });
+  }
+
+  React.useEffect(() => {
+    // Update state in useEffect, otherwise it will cause bad setState warning.
+    if (thenable) {
+      update({
+        promise: thenable,
+      });
+    }
+  }, [thenable]);
 
   // 1. Use data from server side directly when hydrate.
-  if (isClient && (window[LOADER] as Map<string, any>) && window[LOADER].has(id)) {
+  if (hasHydrateData) {
     return window[LOADER].get(id);
   }
 
@@ -56,36 +84,12 @@ export function useSuspenseData(request?: Request) {
     return null;
   }
 
-  // 6. Create a promise for the request and throw it to react.
-  const thenable = request(requestContext);
-
-  thenable.then((response) => {
-    update({
-      done: true,
-      data: response,
-      promise: null,
-    });
-  }).catch(e => {
-    update({
-      done: true,
-      error: e,
-      promise: null,
-    });
-  });
-
-  React.useEffect(() => {
-    // Update state in useEffect, otherwise it will cause bad setState warning.
-    update({
-      promise: thenable,
-    });
-  }, []);
-
   if (!isClient) {
+    // 6. Create a promise for the request and throw it to react.
     update({
       promise: thenable,
     });
   }
-
   throw thenable;
 }
 
