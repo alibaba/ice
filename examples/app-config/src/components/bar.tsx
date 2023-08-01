@@ -1,3 +1,3 @@
 export default function Bar() {
-  return <div>bar</div>;
+  return <div>bar2</div>;
 }

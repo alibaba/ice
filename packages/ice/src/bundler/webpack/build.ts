@@ -2,22 +2,19 @@ import * as path from 'path';
 import fse from 'fs-extra';
 import type webpack from '@ice/bundles/compiled/webpack/index.js';
 import type { StatsCompilation, StatsError, Configuration } from 'webpack';
-import type { Context } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/types';
 import generateEntry from '../../utils/generateEntry.js';
 import injectInitialEntry from '../../utils/injectInitialEntry.js';
 import { SERVER_OUTPUT_DIR } from '../../constant.js';
 import { logger } from '../../utils/logger.js';
 import formatWebpackMessages from '../../utils/formatWebpackMessages.js';
-import type { ExtendsPluginAPI } from '../../types/plugin.js';
-import type { BundlerOptions, CompileResults } from '../types.js';
+import type { BundlerOptions, CompileResults, Context } from '../types.js';
 // Enable source map support when build.
 import 'source-map-support/register.js';
 
 async function build(
   compiler: webpack.Compiler,
   webpackConfigs: Configuration[],
-  context: Context<Config, ExtendsPluginAPI>,
+  context: Context,
   options: BundlerOptions,
 ) {
   const { rootDir, extendsPluginAPI, applyHook } = context;

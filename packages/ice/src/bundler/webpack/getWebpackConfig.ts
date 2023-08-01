@@ -1,61 +1,41 @@
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import { getWebpackConfig as getDefaultWebpackConfig } from '@ice/webpack-config';
-import type { Context } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/types';
 import type { Configuration } from 'webpack';
 import { getExpandedEnvs } from '../../utils/runtimeEnv.js';
 import { getRouteExportConfig } from '../../service/config.js';
 import { getFileHash } from '../../utils/hash.js';
-import ServerRunnerPlugin from '../../webpack/ServerRunnerPlugin.js';
-import ReCompilePlugin from '../../webpack/ReCompilePlugin.js';
-import getServerCompilerPlugin from '../../utils/getServerCompilerPlugin.js';
+import type ServerRunnerPlugin from '../../webpack/ServerRunnerPlugin.js';
 import DataLoaderPlugin from '../../webpack/DataLoaderPlugin.js';
-import type { ExtendsPluginAPI } from '../../types/plugin.js';
 import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR, WEB } from '../../constant.js';
-import type ServerRunner from '../../service/ServerRunner.js';
+import { getReCompilePlugin, getServerPlugin, getSpinnerPlugin } from '../config/plugins.js';
+import type RouteManifest from '../../utils/routeManifest.js';
 import type ServerCompilerPlugin from '../../webpack/ServerCompilerPlugin.js';
-import type { BundlerOptions } from '../types.js';
+import type { BundlerOptions, Context } from '../types.js';
 
 const { debounce } = lodash;
 
 type GetWebpackConfig = (
-  context: Context<Config, ExtendsPluginAPI>,
+  context: Context,
   options: BundlerOptions
 ) => Promise<Configuration[]>;
 
 interface DevOptions {
-  context: Context<Config, ExtendsPluginAPI>;
-  serverRunner?: ServerRunner;
-  ensureRoutesConfig: () => Promise<void>;
+  context: Context;
+  routeManifest: RouteManifest;
   reCompile: (taskKey: string) => void;
-  serverCompilerPlugin?: ServerCompilerPlugin;
+  serverCompilerPlugin?: ServerCompilerPlugin | ServerRunnerPlugin;
 }
 
 const addDevPlugins = (webpackConfig: Configuration, options: DevOptions) => {
-  const { serverRunner, ensureRoutesConfig, reCompile, context, serverCompilerPlugin } = options;
-  const { dataCache, watch } = context.extendsPluginAPI;
-  if (serverRunner) {
-    webpackConfig.plugins.push(new ServerRunnerPlugin(
-      serverRunner,
-      ensureRoutesConfig,
-    ));
-  }
-
+  const { reCompile, context, routeManifest, serverCompilerPlugin } = options;
+  const { watch } = context.extendsPluginAPI;
   // Add re-compile plugin
   webpackConfig.plugins.push(
-    new ReCompilePlugin(reCompile, (files) => {
-      // Only when routes file changed.
-      const routeManifest = JSON.parse(dataCache.get('routes'))?.routeManifest || {};
-      const routeFiles = Object.keys(routeManifest).map((key) => {
-        const { file } = routeManifest[key];
-        return `src/pages/${file}`;
-      });
-      return files.some((filePath) => routeFiles.some(routeFile => filePath.includes(routeFile)));
-    }),
+    getReCompilePlugin(reCompile, routeManifest),
   );
   const debounceCompile = debounce(() => {
-    serverCompilerPlugin?.buildResult?.context.rebuild();
+    (serverCompilerPlugin as ServerCompilerPlugin)?.buildResult?.context.rebuild();
     console.log('Document updated, try to reload page for latest html content.');
   }, 200);
   watch.addEvent([
@@ -69,7 +49,7 @@ const addDevPlugins = (webpackConfig: Configuration, options: DevOptions) => {
 };
 
 const getWebpackConfig: GetWebpackConfig = async (context, options) => {
-  const { configFile, hooksAPI: { serverRunner, serverCompiler }, spinner, taskConfigs } = options;
+  const { hooksAPI: { serverRunner, serverCompiler }, spinner, taskConfigs, routeManifest } = options;
   const {
     rootDir,
     command,
@@ -105,30 +85,27 @@ const getWebpackConfig: GetWebpackConfig = async (context, options) => {
       getRoutesFile,
     });
     const { reCompile, ensureRoutesConfig } = getRouteExportConfig(rootDir);
-    let serverCompilerPlugin: ServerCompilerPlugin;
-    if (useDevServer && !serverRunner) {
-      // If serverRunner is not provided, fallback to serverCompilerPlugin.
-      const outputDir = webpackConfig.output.path;
-      serverCompilerPlugin = getServerCompilerPlugin(serverCompiler, {
-        rootDir,
-        serverEntry: server?.entry,
-        outputDir,
-        serverCompileTask,
-        userConfig,
-        ensureRoutesConfig,
-        runtimeDefineVars: {
-          [IMPORT_META_TARGET]: JSON.stringify(target),
-          [IMPORT_META_RENDERER]: JSON.stringify('server'),
-        },
-      });
+    const outputDir = webpackConfig.output.path;
+    const serverCompilerPlugin = useDevServer && getServerPlugin({
+      serverRunner,
+      ensureRoutesConfig,
+      serverCompiler,
+      target,
+      rootDir,
+      serverEntry: server?.entry,
+      outputDir,
+      serverCompileTask,
+      userConfig,
+    });
+    if (serverCompilerPlugin) {
       webpackConfig.plugins.push(serverCompilerPlugin);
     }
+
     if (command === 'start') {
-      addDevPlugins(webpackConfig, { serverRunner, ensureRoutesConfig, reCompile, context, serverCompilerPlugin });
+      addDevPlugins(webpackConfig, { routeManifest, reCompile, context, serverCompilerPlugin });
     }
     if (useDataLoader) {
       const frameworkExports = generator.getExportList('framework', target);
-
       webpackConfig.plugins.push(new DataLoaderPlugin({
         serverCompiler,
         target,
@@ -137,16 +114,8 @@ const getWebpackConfig: GetWebpackConfig = async (context, options) => {
         frameworkExports,
       }));
     }
-
     // Add spinner for webpack task.
-    webpackConfig.plugins.push((compiler: webpack.Compiler) => {
-      compiler.hooks.beforeCompile.tap('spinner', () => {
-        spinner.text = `Compiling task ${webpackConfig.name || 'web'}...\n`;
-      });
-      compiler.hooks.afterEmit.tap('spinner', () => {
-        spinner.stop();
-      });
-    });
+    webpackConfig.plugins.push(getSpinnerPlugin(spinner));
 
     return webpackConfig;
   });

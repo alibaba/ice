@@ -1,21 +1,20 @@
 import * as path from 'path';
-import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 import { compilationPlugin, compileExcludes } from '@ice/webpack-config';
-import type { Context } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/types';
-import type { Configuration, Compiler } from '@rspack/core';
+import type { Configuration } from '@rspack/core';
 import { getRouteExportConfig } from '../../service/config.js';
-import ServerRunnerPlugin from '../../webpack/ServerRunnerPlugin.js';
-import ReCompilePlugin from '../../webpack/ReCompilePlugin.js';
-import getServerCompilerPlugin from '../../utils/getServerCompilerPlugin.js';
-import type { ExtendsPluginAPI } from '../../types/plugin.js';
-import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR, WEB } from '../../constant.js';
-import type { BundlerOptions } from '../types.js';
+import { RUNTIME_TMP_DIR, IMPORT_META_TARGET, IMPORT_META_RENDERER } from '../../constant.js';
+import { getReCompilePlugin, getServerPlugin, getSpinnerPlugin } from '../config/plugins.js';
+import type { BundlerOptions, Context } from '../types.js';
+import { getExpandedEnvs } from '../../utils/runtimeEnv.js';
 import AssetManifest from './plugins/AssetManifest.js';
+import getSplitChunks from './splitChunks.js';
+import getDefine from './getDefine.js';
+import getAssetsRule from './assetsRule.js';
+import getCssRules from './cssRules.js';
 
 type GetConfig = (
-  context: Context<Config, ExtendsPluginAPI>,
+  context: Context,
   options: BundlerOptions
 ) => Promise<Configuration[]>;
 
@@ -25,6 +24,7 @@ const getConfig: GetConfig = async (context, options) => {
   const {
     taskConfigs,
     spinner,
+    routeManifest,
     hooksAPI: {
       serverRunner,
       serverCompiler,
@@ -39,184 +39,150 @@ const getConfig: GetConfig = async (context, options) => {
     },
   } = context;
 
-  // TODO: consider multiple tasks.
-  const {
-    mode,
-    publicPath = '/',
-    cacheDir,
-    outputDir,
-    sourceMap,
-    externals = {},
-    alias = {},
-    compileIncludes,
-    polyfill,
-    swcOptions,
-    hash,
-    define = {},
-    server,
-  } = taskConfigs[0]?.config || {};
-  const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
-  // const dev = mode !== 'production';
-  const hashKey = hash === true ? 'hash:8' : (hash || '');
-  const compilation = compilationPlugin({
-    rootDir,
-    cacheDir,
-    sourceMap,
-    fastRefresh: false,
-    mode,
-    compileIncludes,
-    compileExcludes,
-    swcOptions,
-    polyfill,
-    enableEnv: true,
-    getRoutesFile,
-  });
+  return taskConfigs.map((taskConfig) => {
+    const {
+      mode,
+      publicPath = '/',
+      cacheDir,
+      outputDir,
+      sourceMap,
+      externals = {},
+      alias = {},
+      compileIncludes,
+      polyfill,
+      swcOptions,
+      hash,
+      define = {},
+      server,
+      splitChunks,
+      target,
+      enableRpx2Vw = true,
+      postcss,
+      proxy,
+      devServer = {},
+    } = taskConfig?.config || {};
+    const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
+    const dev = mode !== 'production';
+    const hashKey = hash === true ? 'hash:8' : (hash || '');
+    const compilation = compilationPlugin({
+      rootDir,
+      cacheDir,
+      sourceMap,
+      fastRefresh: false,
+      mode,
+      compileIncludes,
+      compileExcludes,
+      swcOptions,
+      polyfill,
+      enableEnv: true,
+      getRoutesFile,
+    });
 
-  const { reCompile, ensureRoutesConfig } = getRouteExportConfig(rootDir);
+    const { reCompile, ensureRoutesConfig } = getRouteExportConfig(rootDir);
 
-  const config: Configuration = {
-    entry: {
-      main: [path.join(rootDir, RUNTIME_TMP_DIR, 'entry.client.tsx')],
-    },
-    name: 'web',
-    mode: 'development',
-    externals,
-    output: {
-      clean: true,
-      publicPath,
-      path: absoluteOutputDir,
-      filename: `js/${hashKey ? `[name]-[${hashKey}].js` : '[name].js'}`,
-      assetModuleFilename: 'assets/[name].[hash:8][ext]',
-    },
-    context: rootDir,
-    module: {
-      rules: [
-        // Compliation rules for js / ts.
-        {
-          test: compilation.transformInclude,
-          use: [{
-            loader: require.resolve('@ice/webpack-config/compilation-loader'),
-            options: {
-              transform: compilation.transform,
-            },
-          }],
-        },
-        // TODO: Rules for assets.
-        {
-          resourceQuery: /raw/,
-          type: 'asset/source',
-        },
-        {
-          resourceQuery: /url/,
-          type: 'asset/resource',
-        },
-        // TODO: Rules for css.
-        {
-          test: /\.css$/,
-          use: [
-            {
-              loader: require.resolve('@ice/bundles/compiled/postcss-loader'),
+    const config: Configuration = {
+      entry: {
+        main: [path.join(rootDir, RUNTIME_TMP_DIR, 'entry.client.tsx')],
+      },
+      name: 'web',
+      mode: 'development',
+      externals,
+      output: {
+        clean: true,
+        publicPath,
+        path: absoluteOutputDir,
+        filename: `js/${hashKey ? `[name]-[${hashKey}].js` : '[name].js'}`,
+        assetModuleFilename: 'assets/[name].[hash:8][ext]',
+      },
+      context: rootDir,
+      module: {
+        rules: [
+          // Compliation rules for js / ts.
+          {
+            test: compilation.transformInclude,
+            use: [{
+              loader: require.resolve('@ice/webpack-config/compilation-loader'),
               options: {
-                postcssOptions: {
-                  // TODO: postcss options.
-                },
+                transform: compilation.transform,
               },
-            },
-          ],
-          type: 'css',
-        },
-      ],
-    },
-    resolve: {
-      alias,
-      // TODO: conditionNames.
-    },
-    watchOptions: {
-      ignored: /node_modules/,
-      aggregateTimeout: 100,
-    },
-    optimization: {
-      // TODO: config optimization.
-      splitChunks: {
-        chunks: 'all',
-        cacheGroups: {
-          framework: {
-            name: 'framework',
-            test: /react|react-dom/,
-            priority: 40,
-            enforce: true,
+            }],
           },
-          lib: {
-            test: /node_modules[/\\]/,
-            name: false,
-            priority: 30,
-            minChunks: 1,
-            reuseExistingChunk: true,
-          },
-        },
-        maxInitialRequests: 25,
-        minSize: 20000,
+          ...getAssetsRule(),
+          ...getCssRules({
+            rootDir,
+            enableRpx2Vw,
+            postcssOptions: postcss,
+          }),
+        ],
       },
-    },
-    // TODO: config devtools.
-    // devtool: dev ? 'cheap-module-source-map' : false,
-    plugins: [
-      // TODO: assets manifest plugin.
-      new AssetManifest({
-        fileName: 'assets-manifest.json',
-      }),
-      // Add spinner for webpack task.
-      (compiler: Compiler) => {
-        compiler.hooks.beforeCompile.tap('spinner', () => {
-          spinner.text = 'Compiling task web...\n';
-        });
-        compiler.hooks.afterEmit.tap('spinner', () => {
-          spinner.stop();
-        });
+      resolve: {
+        alias,
       },
-      // Add Server runner plugin.
-      // TODO: some logic with webpack.
-      serverRunner ? new ServerRunnerPlugin(serverRunner, ensureRoutesConfig)
-        : getServerCompilerPlugin(serverCompiler, {
+      watchOptions: {
+        ignored: /node_modules/,
+        aggregateTimeout: 100,
+      },
+      optimization: {
+        splitChunks: typeof splitChunks == 'object'
+          ? splitChunks
+          : getSplitChunks(rootDir, splitChunks),
+      },
+      plugins: [
+        new AssetManifest({
+          fileName: 'assets-manifest.json',
+        }),
+        // Add spinner for webpack task.
+        getSpinnerPlugin(spinner),
+        // Add Server runner plugin.
+        getServerPlugin({
+          serverRunner,
+          ensureRoutesConfig,
+          serverCompiler,
+          target,
           rootDir,
           serverEntry: server?.entry,
-          outputDir: absoluteOutputDir,
+          outputDir,
           serverCompileTask,
           userConfig,
-          ensureRoutesConfig,
-          runtimeDefineVars: {
-            [IMPORT_META_TARGET]: JSON.stringify(WEB),
-            [IMPORT_META_RENDERER]: JSON.stringify('server'),
-          },
         }),
-      // TODO: some logic with webpack.
-      new ReCompilePlugin(reCompile, (files) => {
-        console.log('xxx changed files', files);
-        return false;
-      }),
-    ].filter(Boolean),
-    builtins: {
-      define: {
-        ...define,
-        'process.env.ICE_CORE_ROUTER': JSON.stringify('true'),
-        'process.env.ICE_CORE_SSR': 'false',
-        'process.env.ICE_CORE_SSG': 'false',
+        // Add ReCompile plugin when routes config changed.
+        getReCompilePlugin(reCompile, routeManifest),
+      ].filter(Boolean),
+      builtins: {
+        define: getDefine(define, {
+          [IMPORT_META_TARGET]: JSON.stringify(target),
+          [IMPORT_META_RENDERER]: JSON.stringify('client'),
+        }, getExpandedEnvs),
+        provide: {
+          process: [require.resolve('process/browser')],
+        },
       },
-      provide: {
-        process: [require.resolve('process/browser')],
+      stats: 'none',
+      infrastructureLogging: {
+        level: 'warn',
       },
-    },
-    devServer: {
-      allowedHosts: 'all',
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': '*',
-        'Access-Control-Allow-Headers': '*',
+      devServer: {
+        allowedHosts: 'all',
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': '*',
+          'Access-Control-Allow-Headers': '*',
+        },
+        // @ts-expect-error devServer.hot in rspack only support boolean.
+        hot: true,
+        compress: false,
+        proxy,
+        devMiddleware: {
+          publicPath,
+        },
+        client: {
+          logging: 'info',
+        },
+        ...devServer,
       },
-      hot: true,
-    },
-  };
-  return [config];
+    };
+    return config;
+  });
 };
 
 

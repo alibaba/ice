@@ -1,0 +1,33 @@
+import type { TaskConfig } from 'build-scripts';
+import type { Config } from '@ice/webpack-config/types';
+import type { AppConfig } from '@ice/runtime/types';
+import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
+import getRouterBasename from '../../utils/getRouterBasename.js';
+import prepareURLs from '../../utils/prepareURLs.js';
+
+interface Options {
+  taskConfig: TaskConfig<Config>;
+  appConfig: AppConfig;
+  devServerConfig: DevServerConfiguration;
+}
+
+const getUrls = ({
+  taskConfig,
+  appConfig,
+  devServerConfig,
+}: Options) => {
+  const urlPathname = getRouterBasename(taskConfig, appConfig) || '/';
+  const protocol = devServerConfig.https ? 'https' : 'http';
+  const enabledHashRouter = appConfig.router?.type === 'hash';
+  const urls = prepareURLs(
+    protocol,
+    devServerConfig.host,
+    devServerConfig.port as number,
+    urlPathname.endsWith('/') ? urlPathname : `${urlPathname}/`,
+    enabledHashRouter,
+  );
+
+  return urls;
+};
+
+export default getUrls;

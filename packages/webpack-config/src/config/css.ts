@@ -95,7 +95,7 @@ const css: ModifyWebpackConfig<Configuration, typeof webpack> = (config, ctx) =>
   return config;
 };
 
-function getPostcssOpts({
+export function getPostcssOpts({
   rootDir,
   userPostcssOptions,
   enableRpx2Vw,
@@ -103,7 +103,7 @@ function getPostcssOpts({
   rootDir: string;
   userPostcssOptions: Options['postcssOptions'];
   enableRpx2Vw: boolean;
-}) {
+}): Options['postcssOptions'] & { implementation?: typeof postcss } {
   const postcssConfigPath = path.join(rootDir, 'postcss.config.js');
   const defaultPostcssOpts = {
     // lock postcss version

@@ -1,16 +1,13 @@
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type WebpackDevServer from '@ice/bundles/compiled/webpack-dev-server/lib/Server.js';
-import type { Context } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/types';
 import { logger } from '../../utils/logger.js';
-import type { ExtendsPluginAPI } from '../../types/plugin.js';
-import type { BundlerOptions } from '../types.js';
+import type { BundlerOptions, Context } from '../types.js';
 import getWebpackConfig from './getWebpackConfig.js';
 import build from './build.js';
 import { startDevServer, invokeCompilerWatch } from './start.js';
 
 async function bundler(
-  context: Context<Config, ExtendsPluginAPI>,
+  context: Context,
   options: BundlerOptions,
 ) {
   const { command, applyHook, commandArgs } = context;

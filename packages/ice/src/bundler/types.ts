@@ -3,10 +3,14 @@ import type { Config } from '@ice/webpack-config/types';
 import type ora from '@ice/bundles/compiled/ora/index.js';
 import type { Stats as WebpackStats } from '@ice/bundles/compiled/webpack/index.js';
 import type { AppConfig } from '@ice/runtime/types';
-import type { ServerCompiler, GetAppConfig, GetRoutesConfig, GetDataloaderConfig } from '../types/plugin.js';
+import type { Context as DefaultContext } from 'build-scripts';
+import type { ServerCompiler, GetAppConfig, GetRoutesConfig, GetDataloaderConfig, ExtendsPluginAPI } from '../types/plugin.js';
 import type { UserConfig } from '../types/userConfig.js';
 import type RouteManifest from '../utils/routeManifest.js';
 import type ServerRunner from '../service/ServerRunner.js';
+
+
+export type Context = DefaultContext<Config, ExtendsPluginAPI>;
 
 export interface BundlerOptions {
   taskConfigs: TaskConfig<Config>[];

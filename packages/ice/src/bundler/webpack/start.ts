@@ -2,28 +2,22 @@ import * as path from 'path';
 import type webpack from '@ice/bundles/compiled/webpack/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import WebpackDevServer from '@ice/bundles/compiled/webpack-dev-server/lib/Server.js';
-import detectPort from 'detect-port';
-import type { RenderMode } from '@ice/runtime';
 import type { StatsError, Configuration } from 'webpack';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
-import type { Context } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/types';
 import formatWebpackMessages from '../../utils/formatWebpackMessages.js';
 import { logger } from '../../utils/logger.js';
-import { WEB, DEFAULT_HOST, DEFAULT_PORT } from '../../constant.js';
-import prepareURLs from '../../utils/prepareURLs.js';
-import createRenderMiddleware from '../../middlewares/renderMiddleware.js';
-import createMockMiddleware from '../../middlewares/mock/createMiddleware.js';
-import getRouterBasename from '../../utils/getRouterBasename.js';
-import type { ExtendsPluginAPI } from '../../types/plugin.js';
-import type { BundlerOptions } from '../types.js';
+import { WEB } from '../../constant.js';
+import getMiddlewares from '../config/middlewares.js';
+import type { BundlerOptions, Context } from '../types.js';
+import getDefaultServerConfig from '../config/defaultServerConfig.js';
+import getUrls from '../config/getUrls.js';
 
 const { merge } = lodash;
 
 export async function startDevServer(
   compiler: webpack.Compiler,
   webpackConfigs: Configuration[],
-  context: Context<Config, ExtendsPluginAPI>,
+  context: Context,
   options: BundlerOptions,
 ) {
   const { rootDir, applyHook, commandArgs, extendsPluginAPI: { excuteServerEntry } } = context;
@@ -34,74 +28,34 @@ export async function startDevServer(
     userConfig,
     appConfig,
   } = options;
-  const { ssg, ssr } = userConfig;
   const routePaths = routeManifest.getFlattenRoute().sort((a, b) =>
     // Sort by length, shortest path first.
     a.split('/').filter(Boolean).length - b.split('/').filter(Boolean).length);
   const webTaskConfig = taskConfigs.find(({ name }) => name === WEB);
   const customMiddlewares = webpackConfigs[0].devServer?.setupMiddlewares;
-  // Get the value of the host and port from the command line, environment variables, and webpack config.
-  // Value priority: process.env.PORT > commandArgs > webpackConfig > DEFAULT.
-  const host = process.env.HOST ||
-    commandArgs.host ||
-    webpackConfigs[0].devServer?.host ||
-    DEFAULT_HOST;
-  const port = process.env.PORT ||
-    commandArgs.port ||
-    webpackConfigs[0].devServer?.port ||
-    await detectPort(DEFAULT_PORT);
-
+  const defaultDevServerConfig = await getDefaultServerConfig(webpackConfigs[0].devServer, commandArgs);
   let devServerConfig: DevServerConfiguration = {
-    port,
-    host,
+    ...defaultDevServerConfig,
     setupMiddlewares: (middlewares, devServer) => {
-      let renderMode: RenderMode;
-      // If ssr is set to true, use ssr for preview.
-      if (ssr) {
-        renderMode = 'SSR';
-      } else if (ssg) {
-        renderMode = 'SSG';
-      }
-      // both ssr and ssg, should render the whole page in dev mode.
-      const documentOnly = !ssr && !ssg;
-      const middlewareOptions = {
-        documentOnly,
-        renderMode,
-        getAppConfig: hooksAPI.getAppConfig,
-        taskConfig: webTaskConfig,
+      const builtInMiddlewares = getMiddlewares(middlewares, {
         userConfig,
         routeManifest,
-      };
-      const serverRenderMiddleware = createRenderMiddleware({
-        ...middlewareOptions,
+        getAppConfig: hooksAPI.getAppConfig,
+        taskConfig: webTaskConfig,
         excuteServerEntry,
+        mock: commandArgs.mock,
+        rootDir,
       });
-      // @ts-ignore
-      const insertIndex = middlewares.findIndex(({ name }) => name === 'serve-index');
-      middlewares.splice(
-        insertIndex, 0,
-        serverRenderMiddleware,
-      );
-
-      if (commandArgs.mock) {
-        const mockMiddleware = createMockMiddleware({ rootDir, exclude: userConfig?.mock?.exclude });
-        middlewares.splice(insertIndex, 0, mockMiddleware);
-      }
-      return customMiddlewares ? customMiddlewares(middlewares, devServer) : middlewares;
+      return customMiddlewares ? customMiddlewares(builtInMiddlewares, devServer) : builtInMiddlewares;
     },
   };
   // merge devServerConfig with webpackConfig.devServer
   devServerConfig = merge(webpackConfigs[0].devServer, devServerConfig);
-  const protocol = devServerConfig.https ? 'https' : 'http';
-  let urlPathname = getRouterBasename(webTaskConfig, appConfig) || '/';
-  const enabledHashRouter = appConfig.router?.type === 'hash';
-  const urls = prepareURLs(
-    protocol,
-    devServerConfig.host,
-    devServerConfig.port as number,
-    urlPathname.endsWith('/') ? urlPathname : `${urlPathname}/`,
-    enabledHashRouter,
-  );
+  const urls = getUrls({
+    taskConfig: webTaskConfig,
+    devServerConfig,
+    appConfig,
+  });
   let isFirstCompile = true;
   compiler.hooks.done.tap('done', async stats => {
     const statsData = stats.toJson({
@@ -158,7 +112,7 @@ export async function startDevServer(
 
 export async function invokeCompilerWatch(
   compiler: webpack.Compiler,
-  context: Context<Config, ExtendsPluginAPI>,
+  context: Context,
 ) {
   const { userConfig, rootDir } = context;
   const { outputDir } = userConfig;

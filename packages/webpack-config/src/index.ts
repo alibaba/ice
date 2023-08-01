@@ -13,7 +13,7 @@ import type { NormalModule, Compiler, Configuration } from 'webpack';
 import type webpack from 'webpack';
 import type { Config, ModifyWebpackConfig } from './types.js';
 import configAssets from './config/assets.js';
-import configCss from './config/css.js';
+import configCss, { getPostcssOpts } from './config/css.js';
 import AssetsManifestPlugin from './webpackPlugins/AssetsManifestPlugin.js';
 import EnvReplacementPlugin from './webpackPlugins/EnvReplacementPlugin.js';
 import getCompilerPlugins from './getCompilerPlugins.js';
@@ -501,4 +501,6 @@ export {
   getCompilerPlugins,
   compilationPlugin,
   compileExcludes,
+  getImportMetaEnv,
+  getPostcssOpts,
 };
