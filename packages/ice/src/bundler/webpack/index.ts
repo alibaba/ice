@@ -1,4 +1,3 @@
-
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type WebpackDevServer from '@ice/bundles/compiled/webpack-dev-server/lib/Server.js';
 import type { Context } from 'build-scripts';

@@ -36,6 +36,7 @@ import dynamicImport from './utils/dynamicImport.js';
 import mergeTaskConfig from './utils/mergeTaskConfig.js';
 import addPolyfills from './utils/runtimePolyfill.js';
 import webpackBundler from './bundler/webpack/index.js';
+import rspackBundler from './bundler/rspack/index.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -379,7 +380,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             spinner: buildSpinner,
           });
         } else {
-          return await webpackBundler(ctx, bundlerConfig);
+          return commandArgs.speedup ? await rspackBundler(ctx, bundlerConfig) : await webpackBundler(ctx, bundlerConfig);
         }
       } catch (error) {
         buildSpinner.stop();

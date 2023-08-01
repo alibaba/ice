@@ -65,7 +65,7 @@ function getEntry(rootDir: string, runtimeTmpDir: string) {
 }
 
 // format alias
-function getAliasWithRoot(rootDir: string, alias?: Record<string, string | boolean>) {
+export function getAliasWithRoot(rootDir: string, alias?: Record<string, string | boolean>) {
   const aliasWithRoot = {};
   Object.keys(alias).forEach((key) => {
     const aliasValue = alias[key];
@@ -76,7 +76,7 @@ function getAliasWithRoot(rootDir: string, alias?: Record<string, string | boole
 
 const RUNTIME_PREFIX = /^ICE_/i;
 
-function getDefineVars(
+export function getDefineVars(
   config: Config,
   runtimeDefineVars: Record<string, any>,
   getExpandedEnvs: () => Record<string, string>,
@@ -497,4 +497,8 @@ function getDevtoolValue(sourceMap: Config['sourceMap']) {
   return 'source-map';
 }
 
-export { getCompilerPlugins };
+export {
+  getCompilerPlugins,
+  compilationPlugin,
+  compileExcludes,
+};

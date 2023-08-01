@@ -1,5 +1,3 @@
-import * as path from 'path';
-import fg from 'fast-glob';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import { getWebpackConfig as getDefaultWebpackConfig } from '@ice/webpack-config';

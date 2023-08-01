@@ -8,6 +8,5 @@ export default defineAppConfig(() => ({
   },
   router: {
     type: 'browser',
-    basename: '/ice',
   },
 }));

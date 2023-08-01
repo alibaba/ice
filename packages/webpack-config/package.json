@@ -8,6 +8,7 @@
   "main": "./esm/index.js",
   "exports": {
     ".": "./esm/index.js",
+    "./compilation-loader": "./esm/webpackLoaders/compilationLoader.cjs",
     "./types": "./esm/types.js"
   },
   "files": [

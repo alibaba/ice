@@ -1,7 +1,8 @@
 import { useSuspenseData, withSuspense } from 'ice';
 
 function Comments() {
-  const comments = useSuspenseData(getData);
+  console.log('before ==>');
+  const comments = useSuspenseData(async () => {}) || [];
 
   console.log('Render: Comments');
 
