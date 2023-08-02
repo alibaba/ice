@@ -1,7 +1,7 @@
 const cache = {};
 
 export const Storage = {
-  setItem: (key, value) => {
+  setItem: (key, value, { bizID = '' }) => {
     try {
       if (
         typeof window !== 'undefined' &&
@@ -17,6 +17,7 @@ export const Storage = {
           const res = window.__megability_bridge__.syncCall('userKVStorage', 'setItem', {
             key,
             value,
+            bizID,
           });
           if (res && res.statusCode === 0) {
             return;
@@ -33,7 +34,7 @@ export const Storage = {
       console.error('Storage setItem error:', e);
     }
   },
-  getItem: (key) => {
+  getItem: (key, { bizID = '' }) => {
     try {
       if (
         typeof window !== 'undefined' &&
@@ -46,7 +47,13 @@ export const Storage = {
         });
 
         if (canIUse) {
-          const res = window.__megability_bridge__.syncCall('userKVStorage', 'getItem', { key });
+          const res = window.__megability_bridge__.syncCall(
+            'userKVStorage',
+            'getItem',
+            {
+              key,
+              bizID,
+            });
           if (res && res.statusCode === 0 && res.data && res.data.result) {
             return res.data.result;
           }

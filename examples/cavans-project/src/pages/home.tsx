@@ -24,13 +24,15 @@ export default function Home() {
       setTimeout(() => {
         console.log('canvas paint ready!');
         resolve(true);
-      }, 5000);
+      }, 10000);
     });
   };
+
   return (
     <>
       <h2 className={styles.title}>Home Page</h2>
       <CacheCanvas
+        bizID={'test'}
         ref={childRef}
         id={GAME_CANVAS_ID}
         init={initFunc}

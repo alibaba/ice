@@ -36,6 +36,7 @@ export type RefCacheCanvas = {
 
 export type CacheCanvasProps = {
   id: string;
+  bizID: string;
   init: () => Promise<any>;
   useCache?: Boolean;
   getSnapshot?: () => String;
@@ -53,6 +54,7 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
     fallback,
     style,
     className,
+    bizID = '',
     ...rest
   } = props;
 
@@ -72,9 +74,11 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
     }
     // Cache base64 string when canvas rendered.
     if (renderedCanvas && strBase64) {
-      Storage.setItem(cacheKey, strBase64);
+      Storage.setItem(cacheKey, strBase64, {
+        bizID,
+      });
     }
-  }, [id, renderedCanvas, cacheKey, getSnapshot]);
+  }, [id, renderedCanvas, cacheKey, getSnapshot, bizID]);
 
   useImperativeHandle(ref, () => ({
     cacheCanvasToStorage: cacheCanvasFunc,
@@ -129,13 +133,13 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
           <img
             className={className}
             style={style}
-            src={Storage.getItem(cacheKey) || ''}
+            src={Storage.getItem(cacheKey, { bizID }) || ''}
             id={`canvas-img-${id}`}
           />
           {
             (typeof fallback === 'function') && (<div
               id={`fallback-${id}`}
-              style={isNode || Storage.getItem(cacheKey) ? { display: 'none' } : { display: 'block' }}
+              style={isNode || Storage.getItem(cacheKey, { bizID }) ? { display: 'none' } : { display: 'block' }}
             >
               {
                 fallback()
@@ -156,7 +160,7 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
                     });
             
                     if (canIUse) {
-                      const res = window.__megability_bridge__.syncCall('userKVStorage', 'getItem', { key: '${cacheKey}' });
+                      const res = window.__megability_bridge__.syncCall('userKVStorage', 'getItem', { key: '${cacheKey}',  bizID: '${bizID}' });
                       if (res && res.statusCode === 0 && res.data && res.data.result) {
                         base64Data = res.data.result;
                       }
