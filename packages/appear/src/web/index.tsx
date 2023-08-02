@@ -1,20 +1,31 @@
 import { Children, useRef, useEffect, useCallback } from 'react';
-import type { MutableRefObject } from 'react';
-
+import type { Ref, RefObject } from 'react';
+import { isFunction } from './type';
 import { observerElement, VisibilityChangeEvent } from './visibility';
 
-export function isFunction(obj: any): obj is Function {
-  return typeof obj === 'function';
+interface Node {
+  _nativeNode?: Node;
 }
 
-function VisibilityChange(props: any) {
+export default function VisibilityChange(props: any) {
   const { onAppear, onDisappear, children } = props;
 
-  const defaultRef: MutableRefObject<Node> = useRef<Node>();
-  const ref: MutableRefObject<Node> = children && children.ref ? children.ref : defaultRef;
+  const defaultRef: Ref<Node> = useRef<Node>();
+
+  const ref: RefObject<Node> = children.ref
+    ? typeof children.ref === 'object'
+      ? children.ref
+      : defaultRef
+    : defaultRef;
+
+  useEffect(() => {
+    if (typeof children.ref === 'function') {
+      children.ref(ref.current);
+    }
+  }, [ref, children]);
 
   const listen = useCallback(
-    (eventName: string, handler: () => {}) => {
+    (eventName: string, handler: EventListenerOrEventListenerObject) => {
       const { current } = ref;
       // Rax components will set custom ref by useImperativeHandle.
       // So We should get eventTarget by _nativeNode.
@@ -40,5 +51,3 @@ function VisibilityChange(props: any) {
 
   return Children.only({ ...children, ref });
 }
-
-export default VisibilityChange;
