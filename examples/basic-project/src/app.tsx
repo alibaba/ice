@@ -42,3 +42,7 @@ export const dataLoader = defineDataLoader(() => {
     });
   });
 });
+
+export const runApp = (render) => {
+  render();
+};
