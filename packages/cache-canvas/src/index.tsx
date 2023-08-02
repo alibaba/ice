@@ -151,12 +151,12 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
                     window.__megability_bridge__.syncCall
                   ) {
                     const canIUse = window.__megability_bridge__.syncCall('ability', 'available', {
-                      ability: 'KVStorage',
+                      ability: 'userKVStorage',
                       api: 'getItem',
                     });
             
                     if (canIUse) {
-                      const res = window.__megability_bridge__.syncCall('KVStorage', 'getItem', { key: '${cacheKey}' });
+                      const res = window.__megability_bridge__.syncCall('userKVStorage', 'getItem', { key: '${cacheKey}' });
                       if (res && res.statusCode === 0 && res.data) {
                         base64Data = res.data;
                       }
