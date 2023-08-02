@@ -47,8 +47,8 @@ export const Storage = {
 
         if (canIUse) {
           const res = window.__megability_bridge__.syncCall('userKVStorage', 'getItem', { key });
-          if (res && res.statusCode === 0 && res.data) {
-            return res.data;
+          if (res && res.statusCode === 0 && res.data && res.data.result) {
+            return res.data.result;
           }
         }
       }
