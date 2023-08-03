@@ -49,7 +49,7 @@ const getCssRules = ({
           options: { ...defailtOpts, ...options },
         },
       ].filter(Boolean),
-      type: 'css',
+      type: 'css/auto',
     };
   });
   return cssRules;

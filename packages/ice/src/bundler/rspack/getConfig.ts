@@ -5,8 +5,8 @@ import type { Configuration } from '@rspack/core';
 import { getRouteExportConfig } from '../../service/config.js';
 import { RUNTIME_TMP_DIR, IMPORT_META_TARGET, IMPORT_META_RENDERER } from '../../constant.js';
 import { getReCompilePlugin, getServerPlugin, getSpinnerPlugin } from '../config/plugins.js';
-import type { BundlerOptions, Context } from '../types.js';
 import { getExpandedEnvs } from '../../utils/runtimeEnv.js';
+import type { BundlerOptions, Context } from '../types.js';
 import AssetManifest from './plugins/AssetManifest.js';
 import getSplitChunks from './splitChunks.js';
 import getDefine from './getDefine.js';
@@ -156,6 +156,7 @@ const getConfig: GetConfig = async (context, options) => {
         provide: {
           process: [require.resolve('process/browser')],
         },
+        devFriendlySplitChunks: true,
       },
       stats: 'none',
       infrastructureLogging: {
