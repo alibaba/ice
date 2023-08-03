@@ -38,8 +38,9 @@
   "dependencies": {
     "@ice/bundles": "0.1.12",
     "@ice/route-manifest": "1.2.0",
-    "@rspack/core": "0.2.9",
-    "@rspack/dev-server": "0.2.9",
+    "@rspack/core": "0.2.10",
+    "@rspack/dev-server": "0.2.10",
+    "@ice/css-modules-hash": "0.0.5",
     "@ice/runtime": "^1.2.6",
     "@ice/webpack-config": "1.0.19",
     "@swc/helpers": "0.5.1",
