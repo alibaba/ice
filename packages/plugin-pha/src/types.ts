@@ -191,6 +191,7 @@ export type Manifest = Partial<{
   routes: Page[];
   enableExpiredManifest: boolean;
   pullRefresh?: PullRefresh;
+  bounces: boolean;
 }> & WindowConfig & Record<string, any>;
 
 export type PHAManifest = Partial<{
@@ -213,4 +214,5 @@ export type PHAManifest = Partial<{
   max_age: number;
   package_resources: Record<string, string>;
   resource_prefetch: ResourcePrefetch;
+  bounces: boolean;
 }>;

@@ -1,5 +1,14 @@
 # @ice/runtime
 
+## 1.2.7
+
+### Patch Changes
+
+- a96af97b: fix: render twice when navigate and bump react-router to 6.14.2
+- d33f3e65: feat: report detail recoverable error
+- 11dd752b: fix: side effect of update suspense data may cause mulit time call
+- 67eae5c1: feat: support app config of runApp
+
 ## 1.2.6
 
 ### Patch Changes

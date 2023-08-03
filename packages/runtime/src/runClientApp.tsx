@@ -4,6 +4,7 @@ import { createHashHistory, createBrowserHistory, createMemoryHistory } from '@r
 import type { History } from '@remix-run/router';
 import type {
   AppContext, WindowContext, AppExport, RouteItem, RuntimeModules, AppConfig, AssetsManifest, ClientAppRouterProps,
+  ErrorStack,
 } from './types.js';
 import { createHistory as createHistorySingle } from './singleRouter.js';
 import { setHistory } from './history.js';
@@ -19,11 +20,14 @@ import ClientRouter from './ClientRouter.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 import { AppContextProvider } from './AppContext.js';
 import { deprecatedHistory } from './utils/deprecatedHistory.js';
+import reportRecoverableError from './reportRecoverableError.js';
+
+export type CreateRoutes = (options: Pick<RouteLoaderOptions, 'renderMode' | 'requestContext'>) => RouteItem[];
 
 export interface RunClientAppOptions {
   app: AppExport;
   runtimeModules: RuntimeModules;
-  createRoutes?: (options: Pick<RouteLoaderOptions, 'renderMode' | 'requestContext'>) => RouteItem[];
+  createRoutes?: CreateRoutes;
   hydrate?: boolean;
   basename?: string;
   memoryRouter?: boolean;
@@ -31,6 +35,7 @@ export interface RunClientAppOptions {
   dataLoaderFetcher?: Function;
   dataLoaderDecorator?: Function;
 }
+
 
 export default async function runClientApp(options: RunClientAppOptions) {
   const {
@@ -69,9 +74,9 @@ export default async function runClientApp(options: RunClientAppOptions) {
     initialEntry: routePath,
     routes,
   };
-  const history = deprecatedHistory(createHistory(appConfig, historyOptions));
+  const history = createHistory(appConfig, historyOptions);
   // Set history for import it from ice.
-  setHistory(history);
+  setHistory(deprecatedHistory(history));
 
   const appContext: AppContext = {
     appExport: app,
@@ -105,20 +110,14 @@ export default async function runClientApp(options: RunClientAppOptions) {
 
   const needHydrate = hydrate && !downgrade && !documentOnly;
   if (needHydrate) {
-    const defaultOnRecoverableError = typeof reportError === 'function' ? reportError
-      : function (error: unknown) {
-        console['error'](error);
-      };
     runtime.setRender((container, element) => {
-      const hydrateOptions = revalidate
-        ? {
-          onRecoverableError(error: unknown) {
-            // Ignore this error caused by router.revalidate
-            if ((error as Error)?.message?.indexOf('This Suspense boundary received an update before it finished hydrating.') == -1) {
-              defaultOnRecoverableError(error);
-            }
-          },
-        } : {};
+      const hydrateOptions: ReactDOM.HydrationOptions = {
+        // @ts-ignore react-dom do not define the type of second argument of onRecoverableError.
+        onRecoverableError: appConfig?.app?.onRecoverableError ||
+        ((error: unknown, errorInfo: ErrorStack) => {
+          reportRecoverableError(error, errorInfo, { ignoreRuntimeWarning: revalidate });
+        }),
+      };
       return ReactDOM.hydrateRoot(container, element, hydrateOptions);
     });
   }
@@ -219,10 +218,10 @@ function createHistory(
   const createHistory = process.env.ICE_CORE_ROUTER === 'true'
     ? createRouterHistory(appConfig?.router?.type, memoryRouter)
     : createHistorySingle;
-  let createHistoryOptions: Parameters<typeof createHistory>[0] = { window, v5Compat: true };
+  let createHistoryOptions: Parameters<typeof createHistory>[0] = { window };
 
   if (routerType === 'memory') {
-    const memoryOptions: Parameters<typeof createMemoryHistory>[0] = { v5Compat: true };
+    const memoryOptions: Parameters<typeof createMemoryHistory>[0] = {};
     memoryOptions.initialEntries = appConfig?.router?.initialEntries || getRoutesPath(routes);
     if (initialEntry) {
       const initialIndex = memoryOptions.initialEntries.findIndex((entry) =>

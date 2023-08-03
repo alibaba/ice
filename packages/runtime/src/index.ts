@@ -22,7 +22,7 @@ import type {
 } from './types.js';
 import Runtime from './runtime.js';
 import runClientApp from './runClientApp.js';
-import type { RunClientAppOptions } from './runClientApp.js';
+import type { RunClientAppOptions, CreateRoutes } from './runClientApp.js';
 import { useAppContext as useInternalAppContext, useAppData, AppContextProvider } from './AppContext.js';
 import { getAppData } from './appData.js';
 import { useData, useConfig } from './RouteContext.js';
@@ -155,4 +155,5 @@ export type {
   ScriptsType,
   DataType,
   MainType,
+  CreateRoutes,
 };
