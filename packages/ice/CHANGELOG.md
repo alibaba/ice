@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.2.9
+
+### Patch Changes
+
+- a96af97b: fix: render twice when navigate and bump react-router to 6.14.2
+- 67eae5c1: feat: support app config of runApp
+- Updated dependencies [a96af97b]
+- Updated dependencies [d33f3e65]
+- Updated dependencies [11dd752b]
+- Updated dependencies [67eae5c1]
+  - @ice/runtime@1.2.7
+
 ## 3.2.8
 
 ### Patch Changes

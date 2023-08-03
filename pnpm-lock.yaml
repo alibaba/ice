@@ -1091,7 +1091,7 @@ importers:
     specifiers:
       '@ice/bundles': 0.1.12
       '@ice/route-manifest': 1.2.0
-      '@ice/runtime': ^1.2.6
+      '@ice/runtime': ^1.2.7
       '@ice/webpack-config': 1.0.19
       '@swc/helpers': 0.5.1
       '@types/babel__generator': ^7.6.4
@@ -1125,7 +1125,7 @@ importers:
       open: ^8.4.0
       path-to-regexp: ^6.2.0
       react: ^18.2.0
-      react-router: 6.11.2
+      react-router: 6.14.2
       regenerator-runtime: ^0.13.0
       resolve.exports: ^1.1.0
       sass: ^1.50.0
@@ -1180,7 +1180,7 @@ importers:
       esbuild: 0.17.16
       jest: 29.5.0
       react: 18.2.0
-      react-router: 6.11.2_react@18.2.0
+      react-router: 6.14.2_react@18.2.0
       sass: 1.50.0
       unplugin: 0.9.5_3d2sldnof75occqqtyfzznb47i
       webpack: 5.86.0_esbuild@0.17.16
@@ -1421,7 +1421,7 @@ importers:
 
   packages/plugin-pha:
     specifiers:
-      '@ice/app': ^3.2.8
+      '@ice/app': ^3.2.9
       '@remix-run/router': ^1.6.1
       build-scripts: ^2.1.1-0
       chalk: ^4.0.0
@@ -1525,7 +1525,7 @@ importers:
 
   packages/rax-compat:
     specifiers:
-      '@ice/appear': ^0.1.3
+      '@ice/appear': ^0.2.0
       '@ice/pkg': 1.1.2-0
       '@swc/helpers': ^0.4.3
       '@types/rax': ^1.0.8
@@ -1557,7 +1557,7 @@ importers:
   packages/runtime:
     specifiers:
       '@ice/jsx-runtime': ^0.2.1
-      '@remix-run/router': 1.6.2
+      '@remix-run/router': 1.7.2
       '@remix-run/web-fetch': ^4.3.3
       '@types/react': ^18.0.8
       '@types/react-dom': ^18.0.3
@@ -1568,19 +1568,19 @@ importers:
       htmlparser2: ^8.0.1
       react: ^18.0.0
       react-dom: ^18.0.0
-      react-router-dom: 6.11.2
+      react-router-dom: 6.14.2
       regenerator-runtime: ^0.13.9
       semver: ^7.4.0
       source-map: ^0.7.4
     dependencies:
       '@ice/jsx-runtime': link:../jsx-runtime
-      '@remix-run/router': 1.6.2
+      '@remix-run/router': 1.7.2
       abortcontroller-polyfill: 1.7.5
       ejs: 3.1.8
       fs-extra: 10.1.0
       history: 5.3.0
       htmlparser2: 8.0.1
-      react-router-dom: 6.11.2_biqbaboplfbrettd7655fr4n2y
+      react-router-dom: 6.14.2_biqbaboplfbrettd7655fr4n2y
       semver: 7.4.0
       source-map: 0.7.4
     devDependencies:
@@ -6443,8 +6443,8 @@ packages:
     resolution: {integrity: sha512-YUkWj+xs0oOzBe74OgErsuR3wVn+efrFhXBWrit50kOiED+pvQe2r6MWY0iJMQU/mSVKxvNzL4ZaYvjdX+G7ZA==}
     engines: {node: '>=14'}
 
-  /@remix-run/router/1.6.2:
-    resolution: {integrity: sha512-LzqpSrMK/3JBAVBI9u3NWtOhWNw5AMQfrUFYB0+bDHTSw17z++WJLsPsxAuK+oSddsxk4d7F/JcdDPM1M5YAhA==}
+  /@remix-run/router/1.7.2:
+    resolution: {integrity: sha512-7Lcn7IqGMV+vizMPoEl5F0XDshcdDYtMI6uJLQdQz5CfZAwy3vvGKYSUk789qndt5dEC4HfSjviSYlSoHGL2+A==}
     engines: {node: '>=14'}
 
   /@remix-run/web-blob/3.0.4:
@@ -19034,17 +19034,17 @@ packages:
       tiny-invariant: 1.3.1
       tiny-warning: 1.0.3
 
-  /react-router-dom/6.11.2_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-JNbKtAeh1VSJQnH6RvBDNhxNwemRj7KxCzc5jb7zvDSKRnPWIFj9pO+eXqjM69gQJ0r46hSz1x4l9y0651DKWw==}
+  /react-router-dom/6.14.2_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-5pWX0jdKR48XFZBuJqHosX3AAHjRAzygouMTyimnBPOLdY3WjzUSKhus2FVMihUFWzeLebDgr4r8UeQFAct7Bg==}
     engines: {node: '>=14'}
     peerDependencies:
       react: '>=16.8'
       react-dom: '>=16.8'
     dependencies:
-      '@remix-run/router': 1.6.2
+      '@remix-run/router': 1.7.2
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      react-router: 6.11.2_react@18.2.0
+      react-router: 6.14.2_react@18.2.0
     dev: false
 
   /react-router/5.3.4_react@17.0.2:
@@ -19063,13 +19063,13 @@ packages:
       tiny-invariant: 1.3.1
       tiny-warning: 1.0.3
 
-  /react-router/6.11.2_react@18.2.0:
-    resolution: {integrity: sha512-74z9xUSaSX07t3LM+pS6Un0T55ibUE/79CzfZpy5wsPDZaea1F8QkrsiyRnA2YQ7LwE/umaydzXZV80iDCPkMg==}
+  /react-router/6.14.2_react@18.2.0:
+    resolution: {integrity: sha512-09Zss2dE2z+T1D03IheqAFtK4UzQyX8nFPWx6jkwdYzGLXd5ie06A6ezS2fO6zJfEb/SpG6UocN2O1hfD+2urQ==}
     engines: {node: '>=14'}
     peerDependencies:
       react: '>=16.8'
     dependencies:
-      '@remix-run/router': 1.6.2
+      '@remix-run/router': 1.7.2
       react: 18.2.0
 
   /react-textarea-autosize/8.4.0_h7fc2el62uaa77gho3xhys6ola:
