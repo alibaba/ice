@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.5
+
+### Patch Changes
+
+- Updated dependencies [8af84529]
+- Updated dependencies [f0d79065]
+  - @ice/appear@0.2.0
+
 ## 0.2.4
 
 ### Patch Changes
