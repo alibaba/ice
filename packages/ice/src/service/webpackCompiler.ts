@@ -174,6 +174,7 @@ async function webpackCompiler(options: {
       return;
     } else if (messages.warnings.length) {
       logger.warn('Client compiled with warnings.');
+      logger.warn(statsData);
       logger.warn(messages.warnings.join('\n'));
     }
     if (command === 'start') {

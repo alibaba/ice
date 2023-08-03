@@ -69,11 +69,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     command,
   });
 
-  let entryCode = `if (app.runApp) {
-  app.runApp(render, renderOptions);
-} else {
-  render();
-}`;
+  let entryCode = 'render(app);';
 
   const generatorAPI = {
     addExport: (declarationData: Omit<DeclarationData, 'declarationType'>) => {
