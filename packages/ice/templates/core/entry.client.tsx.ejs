@@ -49,7 +49,7 @@ const renderOptions: RunClientAppOptions = {
   },
 };
 
-const render = (customOptions: Record<string, any> = {}) => {
+const defaultRender = (customOptions: Partial<RunClientAppOptions> = {}) => {
   return runClientApp({
     ...renderOptions,
     ...customOptions,
@@ -58,6 +58,18 @@ const render = (customOptions: Record<string, any> = {}) => {
       ...customOptions.runtimeOptions,
     },
   });
+};
+
+const renderApp = (appExport: any, customOptions: Partial<RunClientAppOptions>) => {
+  if (appExport.runApp) {
+    return appExport.runApp(defaultRender, renderOptions);
+  } else {
+    return defaultRender(customOptions);
+  }
+};
+
+const render = (customOptions: Partial<RunClientAppOptions> = {}) => {
+  renderApp(app, customOptions);
 };
 
 <%- entryCode %>
