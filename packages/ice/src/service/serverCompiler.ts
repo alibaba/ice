@@ -5,10 +5,9 @@ import fg from 'fast-glob';
 import type { Config } from '@ice/webpack-config/types';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { TaskConfig } from 'build-scripts';
-import { getCompilerPlugins, getCSSModuleLocalIdent } from '@ice/webpack-config';
+import { getCompilerPlugins } from '@ice/webpack-config';
 import type { ServerCompiler } from '../types/plugin.js';
 import type { UserConfig } from '../types/userConfig.js';
-import escapeLocalIdent from '../utils/escapeLocalIdent.js';
 import cssModulesPlugin from '../esbuild/cssModules.js';
 import externalPlugin from '../esbuild/external.js';
 import ignorePlugin from '../esbuild/ignore.js';
@@ -23,6 +22,7 @@ import type { DepScanData } from '../esbuild/scan.js';
 import formatPath from '../utils/formatPath.js';
 import { createLogger } from '../utils/logger.js';
 import { getExpandedEnvs } from '../utils/runtimeEnv.js';
+import getCSSModuleIdent from '../utils/getCSSModuleIdent.js';
 import { scanImports } from './analyze.js';
 import type { PreBundleDepsMetaData } from './preBundleDeps.js';
 import preBundleDeps from './preBundleDeps.js';
@@ -36,6 +36,7 @@ interface Options {
   server: UserConfig['server'];
   syntaxFeatures: UserConfig['syntaxFeatures'];
   getRoutesFile: () => string[];
+  speedup: boolean;
 }
 
 const { merge, difference } = lodash;
@@ -94,7 +95,7 @@ export const getRuntimeDefination = (
 };
 
 export function createServerCompiler(options: Options) {
-  const { task, rootDir, command, server, syntaxFeatures, getRoutesFile } = options;
+  const { task, rootDir, command, speedup, server, syntaxFeatures, getRoutesFile } = options;
   const externals = task.config?.externals || {};
   const sourceMap = task.config?.sourceMap;
   const dev = command === 'start';
@@ -151,6 +152,7 @@ export function createServerCompiler(options: Options) {
         ignores,
         rootDir,
         define,
+        speedup,
         external: Object.keys(externals),
         // Pass transformPlugins only if syntaxFeatures is enabled
         plugins: enableSyntaxFeatures ? [
@@ -197,9 +199,15 @@ export function createServerCompiler(options: Options) {
         server?.ignores && ignorePlugin(server.ignores),
         cssModulesPlugin({
           extract: false,
-          generateLocalIdentName: function (name: string, filename: string) {
+          generateLocalIdentName: function (name: string, fileName: string) {
             // Compatible with webpack css-loader.
-            return escapeLocalIdent(getCSSModuleLocalIdent(filename, name));
+            return getCSSModuleIdent({
+              rootDir,
+              mode: dev ? 'development' : 'production',
+              fileName,
+              localIdentName: name,
+              rule: speedup ? 'native' : 'loader',
+            });
           },
         }),
         compilationInfo && createAssetsPlugin(compilationInfo, rootDir),
@@ -275,12 +283,13 @@ interface CreateDepsMetadataOptions {
   ignores: string[];
   define: esbuild.BuildOptions['define'];
   external: esbuild.BuildOptions['external'];
+  speedup: boolean;
 }
 /**
  *  Create dependencies metadata only when server entry is bundled to esm.
  */
 async function createPreBundleDepsMetadata(
-  { rootDir, task, plugins, alias, ignores, define, external }: CreateDepsMetadataOptions,
+  { rootDir, task, plugins, alias, ignores, define, external, speedup }: CreateDepsMetadataOptions,
 ) {
   const serverEntry = getServerEntry(rootDir, task.config?.server?.entry);
   const deps = await scanImports([serverEntry], {
@@ -312,6 +321,7 @@ async function createPreBundleDepsMetadata(
     plugins,
     define,
     external,
+    speedup,
   });
 
   return ret.metadata;

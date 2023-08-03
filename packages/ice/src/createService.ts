@@ -313,6 +313,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   logger.debug('template render cost:', new Date().getTime() - renderStart);
   if (server.onDemand && command === 'start') {
     serverRunner = new ServerRunner({
+      speedup: commandArgs.speedup,
       rootDir,
       task: platformTaskConfig,
       server,
@@ -333,6 +334,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     rootDir,
     task: platformTaskConfig,
     command,
+    speedup: commandArgs.speedup,
     server,
     syntaxFeatures,
     getRoutesFile: () => routeManifest.getRoutesFile(),
