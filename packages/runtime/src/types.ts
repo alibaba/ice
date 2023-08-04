@@ -303,3 +303,19 @@ declare global {
     env: Record<string, string>;
   }
 }
+
+export type APIConfig = {
+  api: string;
+  params?: Object;
+};
+
+export type APIContext = Array<APIConfig>;
+
+export type APIContextOptions = {
+  timeout?: number;
+};
+
+export type APIContextConfig = {
+  apiContext: APIContext;
+  timeout: number;
+};

@@ -19,6 +19,8 @@ import type {
   DistType,
   Loader,
   RouteWrapperConfig,
+  APIConfig,
+  APIContext,
 } from './types.js';
 import Runtime from './runtime.js';
 import runClientApp from './runClientApp.js';
@@ -44,9 +46,11 @@ import type {
   MainType,
 } from './Document.js';
 import dataLoader, { defineDataLoader, defineServerDataLoader, defineStaticDataLoader, callDataLoader } from './dataLoader.js';
+
 import getRequestContext from './requestContext.js';
 import AppErrorBoundary from './AppErrorBoundary.js';
 import getAppConfig, { defineAppConfig } from './appConfig.js';
+import { defineAPIContext } from './apiContext.js';
 import { routerHistory as history } from './history.js';
 import KeepAliveOutlet from './KeepAliveOutlet.js';
 import ClientOnly from './ClientOnly.js';
@@ -133,6 +137,8 @@ export {
   createRouteLoader,
   WrapRouteComponent,
   RouteErrorComponent,
+
+  defineAPIContext,
 };
 
 export type {
@@ -156,4 +162,6 @@ export type {
   DataType,
   MainType,
   CreateRoutes,
+  APIConfig,
+  APIContext,
 };
