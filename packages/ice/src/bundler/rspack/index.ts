@@ -4,6 +4,7 @@ import { logger } from '../../utils/logger.js';
 import type { BundlerOptions, Context } from '../types.js';
 import getConfig from './getConfig.js';
 import start from './start.js';
+import build from './build.js';
 
 async function bundler(
   context: Context,
@@ -33,19 +34,19 @@ async function bundler(
     logger.error('Webpack compile error.');
     logger.error(error);
   }
-
+  const buildOptions = {
+    context,
+    compiler,
+    routeManifest,
+    appConfig,
+    hooksAPI,
+    taskConfigs,
+    rspackConfigs,
+  };
   if (command === 'start') {
-    devServer = await start({
-      context,
-      compiler,
-      routeManifest,
-      appConfig,
-      hooksAPI,
-      taskConfigs,
-      rspackConfigs,
-    });
+    devServer = await start(buildOptions);
   } else if (command === 'build') {
-    // Not support yet.
+    await build(buildOptions);
   }
   return { compiler, devServer };
 }

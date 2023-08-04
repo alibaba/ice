@@ -62,7 +62,6 @@ const getConfig: GetConfig = async (context, options) => {
       devServer = {},
     } = taskConfig?.config || {};
     const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
-    const dev = mode !== 'production';
     const hashKey = hash === true ? 'hash:8' : (hash || '');
     const compilation = compilationPlugin({
       rootDir,
@@ -85,7 +84,7 @@ const getConfig: GetConfig = async (context, options) => {
         main: [path.join(rootDir, RUNTIME_TMP_DIR, 'entry.client.tsx')],
       },
       name: 'web',
-      mode: 'development',
+      mode,
       externals,
       output: {
         clean: true,

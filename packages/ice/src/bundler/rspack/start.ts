@@ -1,22 +1,11 @@
-import type { Configuration, MultiCompiler } from '@rspack/core';
 import type { Configuration as DevServerConfiguration } from '@rspack/dev-server';
 import getDefaultServerConfig from '../config/defaultServerConfig.js';
 import getMiddlewares from '../config/middlewares.js';
 import { logger } from '../../utils/logger.js';
 import getUrls from '../config/getUrls.js';
 import { WEB } from '../../constant.js';
-import type { BundlerOptions, Context } from '../types';
+import type { BuildOptions } from '../types.js';
 import formatStats from './formatStats.js';
-
-interface StartOptions {
-  context: Context;
-  rspackConfigs: Configuration[];
-  routeManifest: BundlerOptions['routeManifest'];
-  compiler: MultiCompiler;
-  appConfig: BundlerOptions['appConfig'];
-  hooksAPI: BundlerOptions['hooksAPI'];
-  taskConfigs: BundlerOptions['taskConfigs'];
-}
 
 const start = async ({
   context,
@@ -26,7 +15,7 @@ const start = async ({
   compiler,
   appConfig,
   hooksAPI,
-}: StartOptions) => {
+}: BuildOptions) => {
   const { rootDir, applyHook, commandArgs, userConfig, extendsPluginAPI: { excuteServerEntry } } = context;
   const customMiddlewares = rspackConfigs[0].devServer?.setupMiddlewares;
   const defaultConfig = await getDefaultServerConfig(rspackConfigs[0].devServer, commandArgs);

@@ -1,10 +1,6 @@
-import * as path from 'path';
-import fse from 'fs-extra';
 import type webpack from '@ice/bundles/compiled/webpack/index.js';
 import type { StatsCompilation, StatsError, Configuration } from 'webpack';
-import generateEntry from '../../utils/generateEntry.js';
-import injectInitialEntry from '../../utils/injectInitialEntry.js';
-import { SERVER_OUTPUT_DIR } from '../../constant.js';
+import { getOutputPaths, removeServerOutput } from '../config/outputPaths.js';
 import { logger } from '../../utils/logger.js';
 import formatWebpackMessages from '../../utils/formatWebpackMessages.js';
 import type { BundlerOptions, CompileResults, Context } from '../types.js';
@@ -18,7 +14,7 @@ async function build(
   options: BundlerOptions,
 ) {
   const { rootDir, extendsPluginAPI, applyHook } = context;
-  const { hooksAPI, taskConfigs, appConfig, userConfig } = options;
+  const { hooksAPI, taskConfigs, appConfig, userConfig, routeManifest } = options;
   // Run webpack compiler.
   const { stats, isSuccessful, messages } = await new Promise<CompileResults>((resolve, reject) => {
     let messages: { errors: string[]; warnings: string[] };
@@ -57,15 +53,16 @@ async function build(
     // Generate html when SSG.
     const outputDir = webpackConfigs[0].output.path;
     const { serverEntry } = await extendsPluginAPI.serverCompileTask.get() || {};
-    let outputPaths: string[] = [];
-    if (userConfig.ssg) {
-      if (!userConfig.htmlGenerating) {
-        logger.warn('SSG depends on htmlGenerating, SSG will not work when htmlGenerating is set to false.');
-      }
-    }
-    if (serverEntry && userConfig.htmlGenerating) {
-      outputPaths = await buildCustomOuputs(rootDir, outputDir, serverEntry, options);
-    }
+    const outputPaths = await getOutputPaths({
+      rootDir,
+      serverEntry,
+      outputDir,
+      bundleOptions: {
+        userConfig,
+        appConfig,
+        routeManifest,
+      },
+    });
     await applyHook('after.build.compile', {
       ...hooksAPI,
       stats,
@@ -79,41 +76,6 @@ async function build(
     });
     await removeServerOutput(outputDir, userConfig.ssr);
   }
-}
-
-async function removeServerOutput(outputDir: string, ssr: boolean) {
-  if (!ssr) {
-    await fse.remove(path.join(outputDir, SERVER_OUTPUT_DIR));
-  }
-}
-// Build custom outputs such html and js file for weex.
-async function buildCustomOuputs(
-  rootDir: string,
-  outputDir: string,
-  serverEntry: string,
-  bundleOptions: BundlerOptions,
-) {
-  const { userConfig, appConfig, routeManifest } = bundleOptions;
-  const { ssg, output: { distType, prependCode } } = userConfig;
-  const routeType = appConfig?.router?.type;
-  const {
-    outputPaths = [],
-  } = await generateEntry({
-    rootDir,
-    outputDir,
-    entry: serverEntry,
-    // only ssg need to generate the whole page html when build time.
-    documentOnly: !ssg,
-    renderMode: ssg ? 'SSG' : undefined,
-    routeType: appConfig?.router?.type,
-    distType,
-    prependCode,
-    routeManifest,
-  });
-  if (routeType === 'memory' && userConfig?.routes?.injectInitialEntry) {
-    injectInitialEntry(routeManifest, outputDir);
-  }
-  return outputPaths;
 }
 
 export default build;
