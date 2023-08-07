@@ -2,8 +2,8 @@ import type { Configuration as DevServerConfiguration } from 'webpack-dev-server
 import type { TaskConfig } from 'build-scripts';
 import type { RenderMode } from '@ice/runtime';
 import type { Config } from '@ice/webpack-config/types';
-import createRenderMiddleware from '../../middlewares/renderMiddleware.js';
 import createMockMiddleware from '../../middlewares/mock/createMiddleware.js';
+import createRenderMiddleware from '../../middlewares/renderMiddleware.js';
 import type { UserConfig } from '../../types/userConfig.js';
 import type RouteManifest from '../../utils/routeManifest.js';
 import type { GetAppConfig } from '../../types/plugin.js';

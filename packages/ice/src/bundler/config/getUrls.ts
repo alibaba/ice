@@ -2,8 +2,8 @@ import type { TaskConfig } from 'build-scripts';
 import type { Config } from '@ice/webpack-config/types';
 import type { AppConfig } from '@ice/runtime/types';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
-import getRouterBasename from '../../utils/getRouterBasename.js';
 import prepareURLs from '../../utils/prepareURLs.js';
+import getRouterBasename from '../../utils/getRouterBasename.js';
 
 interface Options {
   taskConfig: TaskConfig<Config>;

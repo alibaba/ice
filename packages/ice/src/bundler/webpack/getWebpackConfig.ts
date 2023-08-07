@@ -5,11 +5,11 @@ import type { Configuration } from 'webpack';
 import { getExpandedEnvs } from '../../utils/runtimeEnv.js';
 import { getRouteExportConfig } from '../../service/config.js';
 import { getFileHash } from '../../utils/hash.js';
-import type ServerRunnerPlugin from '../../webpack/ServerRunnerPlugin.js';
 import DataLoaderPlugin from '../../webpack/DataLoaderPlugin.js';
 import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR, WEB } from '../../constant.js';
 import { getReCompilePlugin, getServerPlugin, getSpinnerPlugin } from '../config/plugins.js';
 import type RouteManifest from '../../utils/routeManifest.js';
+import type ServerRunnerPlugin from '../../webpack/ServerRunnerPlugin.js';
 import type ServerCompilerPlugin from '../../webpack/ServerCompilerPlugin.js';
 import type { BundlerOptions, Context } from '../types.js';
 

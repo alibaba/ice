@@ -1,16 +1,16 @@
 import * as path from 'path';
-import type webpack from '@ice/bundles/compiled/webpack/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import WebpackDevServer from '@ice/bundles/compiled/webpack-dev-server/lib/Server.js';
 import type { StatsError, Configuration } from 'webpack';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
+import type webpack from '@ice/bundles/compiled/webpack/index.js';
 import formatWebpackMessages from '../../utils/formatWebpackMessages.js';
 import { logger } from '../../utils/logger.js';
 import { WEB } from '../../constant.js';
 import getMiddlewares from '../config/middlewares.js';
-import type { BundlerOptions, Context } from '../types.js';
 import getDefaultServerConfig from '../config/defaultServerConfig.js';
 import getUrls from '../config/getUrls.js';
+import type { BundlerOptions, Context } from '../types.js';
 
 const { merge } = lodash;
 
