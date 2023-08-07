@@ -38,7 +38,11 @@ export default class AssetManifest implements RspackPluginInstance {
             });
             entries[entryName] = entryPointFiles;
           });
-          [...compilation.chunks].filter(({ entry, initial }) => !entry && !initial).forEach((chunk) => {
+          const stats = compilation.getStats().toJson({
+            all: false,
+            chunks: true,
+          });
+          stats.chunks.filter(({ entry, initial }) => !entry && !initial).forEach((chunk) => {
             const chunkName = chunk.id;
 
             if (chunkName) {
