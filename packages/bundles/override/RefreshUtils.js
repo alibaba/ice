@@ -14,7 +14,7 @@ function getModuleExports(moduleId) {
     // These are likely runtime or dynamically generated modules.
     return {};
   }
-
+  // eslint-disable-next-line
   let maybeModule = __webpack_require__.c[moduleId];
   if (typeof maybeModule === 'undefined') {
     // `moduleId` is available but the module in cache is unavailable,
@@ -237,7 +237,7 @@ function executeRuntime(moduleExports, moduleId, webpackHot, refreshOverlay, isT
               window.onHotAcceptError(error.message);
             }
           }
-
+          // eslint-disable-next-line
           __webpack_require__.c[moduleId].hot.accept(hotErrorHandler);
         },
       );
