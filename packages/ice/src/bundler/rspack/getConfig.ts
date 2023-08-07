@@ -78,7 +78,7 @@ const getConfig: GetConfig = async (context, options) => {
     });
 
     const { reCompile, ensureRoutesConfig } = getRouteExportConfig(rootDir);
-
+    const cssFilename = `css/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`;
     const config: Configuration = {
       entry: {
         main: [path.join(rootDir, RUNTIME_TMP_DIR, 'entry.client.tsx')],
@@ -91,6 +91,8 @@ const getConfig: GetConfig = async (context, options) => {
         publicPath,
         path: absoluteOutputDir,
         filename: `js/${hashKey ? `[name]-[${hashKey}].js` : '[name].js'}`,
+        cssFilename,
+        cssChunkFilename: cssFilename,
         assetModuleFilename: 'assets/[name].[hash:8][ext]',
       },
       context: rootDir,
@@ -156,6 +158,11 @@ const getConfig: GetConfig = async (context, options) => {
           process: [require.resolve('process/browser')],
         },
         devFriendlySplitChunks: true,
+        css: {
+          modules: {
+            localIdentName: '[local]_[hash:8]',
+          },
+        },
       },
       stats: 'none',
       infrastructureLogging: {

@@ -43,7 +43,7 @@ export default class AssetManifest implements RspackPluginInstance {
 
             if (chunkName) {
               pages[chunkName.replace(/^p_/, '')] = chunk.files.filter((file: string) => {
-                return file.endsWith('.js');
+                return file.endsWith('.js') || file.endsWith('.css');
               });
             }
           });

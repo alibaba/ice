@@ -40,7 +40,7 @@
     "@ice/route-manifest": "1.2.0",
     "@rspack/core": "0.2.10",
     "@rspack/dev-server": "0.2.10",
-    "@ice/css-modules-hash": "0.0.5",
+    "@ice/css-modules-hash": "0.0.6",
     "@ice/runtime": "^1.2.7",
     "@ice/webpack-config": "1.0.19",
     "@swc/helpers": "0.5.1",

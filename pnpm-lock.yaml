@@ -1090,7 +1090,7 @@ importers:
   packages/ice:
     specifiers:
       '@ice/bundles': 0.1.12
-      '@ice/css-modules-hash': 0.0.5
+      '@ice/css-modules-hash': 0.0.6
       '@ice/route-manifest': 1.2.0
       '@ice/runtime': ^1.2.7
       '@ice/webpack-config': 1.0.19
@@ -1141,7 +1141,7 @@ importers:
       yargs-parser: ^21.1.1
     dependencies:
       '@ice/bundles': link:../bundles
-      '@ice/css-modules-hash': 0.0.5
+      '@ice/css-modules-hash': 0.0.6
       '@ice/route-manifest': link:../route-manifest
       '@ice/runtime': link:../runtime
       '@ice/webpack-config': link:../webpack-config
@@ -5406,8 +5406,8 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@ice/css-modules-hash-darwin-arm64/0.0.5:
-    resolution: {integrity: sha512-smqLv2PQ5R19Y2PAFOb20LqYr5W7xS74/Hr3Wh9lg9/mbC2Y5IU/RfARMTdsjnxRBbeUattnWEpP5QgErxT4xw==}
+  /@ice/css-modules-hash-darwin-arm64/0.0.6:
+    resolution: {integrity: sha512-5QWZl3+biY5U/kRhymH+6X/kAk3Imvkqu9QpV+LTDxhoXEkdhzZd2sCO5ZNfrsODFuHy78iKzh6gEweADPwYkQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
@@ -5415,16 +5415,16 @@ packages:
     dev: false
     optional: true
 
-  /@ice/css-modules-hash-darwin-universal/0.0.5:
-    resolution: {integrity: sha512-pRb3im3PqUTfgByZVK9B+u7k3HcZb6BCC9fHw8h0swOOh0BeVsh/NM7VBAocvKERL2I1ip02zHloSmYzPFmgTw==}
+  /@ice/css-modules-hash-darwin-universal/0.0.6:
+    resolution: {integrity: sha512-PLmDCFZHvpNysvMhUa363QWvgCMIwr6vYwEkHkC/AF9NZvl25r2R9mfdExHw8sZHu9fMHVINwWEBcMiYbZd/cg==}
     engines: {node: '>= 10'}
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@ice/css-modules-hash-darwin-x64/0.0.5:
-    resolution: {integrity: sha512-CUdDV3Ky+zC2nd35BuLlJ0KZNu3EDPp1amjYhVkCMwl7APgZyTF1ythIoP1lqr2DgWTBeaEdNpf4R3aPNNcK5w==}
+  /@ice/css-modules-hash-darwin-x64/0.0.6:
+    resolution: {integrity: sha512-HOmh+Yiw6rH9VJD2XBN7sZmigo+jwi7qAD/J12pbxVrMJ//aIsv3BwpgFhfGO8eqKeyVqNXac3S/vC2hq8t8jw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
@@ -5432,8 +5432,8 @@ packages:
     dev: false
     optional: true
 
-  /@ice/css-modules-hash-linux-x64-gnu/0.0.5:
-    resolution: {integrity: sha512-RzK9nsmlFWAm/F9r3x+VeWqT4wrq3MKXAWPUK8WRixxqqrsCT6gNMp30/4oTdtD/MJTYdbke2W3VJv7AxGLjrg==}
+  /@ice/css-modules-hash-linux-x64-gnu/0.0.6:
+    resolution: {integrity: sha512-PS7lTINETFqzbU0nbgLgxXJOp+BU51VvNeNEF1h6Xz6soR23yqFht6d8xuNC1auBnPHZM+RDiQYzwi9MCBTvgA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -5441,8 +5441,8 @@ packages:
     dev: false
     optional: true
 
-  /@ice/css-modules-hash-linux-x64-musl/0.0.5:
-    resolution: {integrity: sha512-SfQH3z5ozDjPnfb6M9j6MCdJww1xRUUq2hkNbcHmCamoe04v2N7iNLU0RnIl05tIMnTjhlIMEEiAi/FIE+FPSw==}
+  /@ice/css-modules-hash-linux-x64-musl/0.0.6:
+    resolution: {integrity: sha512-UiDg8KpoDGmQrBt9z5lqjr+OAG2S2xQi00Unt2yali1dvhS1tpcN16isiBA2yO3JOy2b0Y0VtlmpJKxpMDsFcg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -5450,8 +5450,8 @@ packages:
     dev: false
     optional: true
 
-  /@ice/css-modules-hash-win32-arm64-msvc/0.0.5:
-    resolution: {integrity: sha512-Gtts21baSTcZ1d48570KXlsRQ1SJHsNO7kxEwuO2lwHaZSs6y5UWJrUqXaOW4xNLRqLu6uk0XeLLgjv2g2xsoQ==}
+  /@ice/css-modules-hash-win32-arm64-msvc/0.0.6:
+    resolution: {integrity: sha512-7rF1gX9QyhhGUo4JKZUQ6DSJs/xJiJlrKC9D91dkTHs81e0G6IQLv9EnIaX2OPF3/SPnqp7CAGxr7TOtDYsyAw==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
@@ -5459,8 +5459,8 @@ packages:
     dev: false
     optional: true
 
-  /@ice/css-modules-hash-win32-x64-msvc/0.0.5:
-    resolution: {integrity: sha512-BJioKo6VIvaunoH+kxhgzr8Jrdnn79ik6IRhOu3S74rSKC6sVmr3yAc+95S+fwVmaYfQeC9KxEqFMOlQMO1CnA==}
+  /@ice/css-modules-hash-win32-x64-msvc/0.0.6:
+    resolution: {integrity: sha512-on3tYfhvBW6XQ6tkE0KKZvFK0JB/iwBrvUiRo/Di3ceJPPwD619PJNNQnn78kqcrZIVdQZ41HMdyuEnz8UHVpQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -5468,17 +5468,17 @@ packages:
     dev: false
     optional: true
 
-  /@ice/css-modules-hash/0.0.5:
-    resolution: {integrity: sha512-Zfm5omEReN7YXEKPtwpnDRl9xbjyaI6wJw/oG3lxtdTNPfjL18zhSIAUS9u02VUHlbt7LNyOouTKI2SEIu6KQw==}
+  /@ice/css-modules-hash/0.0.6:
+    resolution: {integrity: sha512-UbYq2Ldw+hamc9HoIfKTZORmmYCaGnP6f361XdB/7PQZHZ5hAak6TePdcVQekLHGEg/+zIccN33mflJqucC1Aw==}
     engines: {node: '>= 10'}
     optionalDependencies:
-      '@ice/css-modules-hash-darwin-arm64': 0.0.5
-      '@ice/css-modules-hash-darwin-universal': 0.0.5
-      '@ice/css-modules-hash-darwin-x64': 0.0.5
-      '@ice/css-modules-hash-linux-x64-gnu': 0.0.5
-      '@ice/css-modules-hash-linux-x64-musl': 0.0.5
-      '@ice/css-modules-hash-win32-arm64-msvc': 0.0.5
-      '@ice/css-modules-hash-win32-x64-msvc': 0.0.5
+      '@ice/css-modules-hash-darwin-arm64': 0.0.6
+      '@ice/css-modules-hash-darwin-universal': 0.0.6
+      '@ice/css-modules-hash-darwin-x64': 0.0.6
+      '@ice/css-modules-hash-linux-x64-gnu': 0.0.6
+      '@ice/css-modules-hash-linux-x64-musl': 0.0.6
+      '@ice/css-modules-hash-win32-arm64-msvc': 0.0.6
+      '@ice/css-modules-hash-win32-x64-msvc': 0.0.6
     dev: false
 
   /@ice/pkg-plugin-component/1.0.0:
