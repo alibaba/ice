@@ -275,7 +275,7 @@ const styleSheetLoaderForClient = (config, transformCssModule, inlineStyleFiler:
 
       // Find and replace the less rule
       if (rule.test && rule.test instanceof RegExp && rule.test.source.indexOf('.less') > -1) {
-        rule.test = transformCssModule ? /(\.module|global)\.css$/i : /(\.global)\.css$/i;
+        rule.test = transformCssModule ? /(\.module|global)\.less$/i : /(\.global)\.less$/i;
         rules[i] = {
           test: /\.less$/i,
           oneOf: [
