@@ -23,6 +23,9 @@ declare global {
       call: Function;
     };
     _windvane_backControl: Function | null;
+    __megability_bridge__: {
+      syncCall: Function;
+    };
   }
 }
 
@@ -33,6 +36,7 @@ export type RefCacheCanvas = {
 
 export type CacheCanvasProps = {
   id: string;
+  bizID: string;
   init: () => Promise<any>;
   useCache?: Boolean;
   getSnapshot?: () => String;
@@ -50,6 +54,7 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
     fallback,
     style,
     className,
+    bizID = '',
     ...rest
   } = props;
 
@@ -69,9 +74,11 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
     }
     // Cache base64 string when canvas rendered.
     if (renderedCanvas && strBase64) {
-      Storage.setItem(cacheKey, strBase64);
+      Storage.setItem(cacheKey, strBase64, {
+        bizID,
+      });
     }
-  }, [id, renderedCanvas, cacheKey, getSnapshot]);
+  }, [id, renderedCanvas, cacheKey, getSnapshot, bizID]);
 
   useImperativeHandle(ref, () => ({
     cacheCanvasToStorage: cacheCanvasFunc,
@@ -126,13 +133,13 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
           <img
             className={className}
             style={style}
-            src={Storage.getItem(cacheKey) || ''}
+            src={Storage.getItem(cacheKey, { bizID }) || ''}
             id={`canvas-img-${id}`}
           />
           {
             (typeof fallback === 'function') && (<div
               id={`fallback-${id}`}
-              style={isNode || Storage.getItem(cacheKey) ? { display: 'none' } : { display: 'block' }}
+              style={isNode || Storage.getItem(cacheKey, { bizID }) ? { display: 'none' } : { display: 'block' }}
             >
               {
                 fallback()
@@ -141,8 +148,29 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
           }
           <script
             dangerouslySetInnerHTML={{
-              __html: `
-                  const base64Data = localStorage.getItem('${cacheKey}');
+                  __html: `
+                  let base64Data = '';
+                  if (
+                    window.__megability_bridge__ &&
+                    window.__megability_bridge__.syncCall
+                  ) {
+                    const canIUse = window.__megability_bridge__.syncCall('ability', 'available', {
+                      ability: 'userKVStorage',
+                      api: 'getItem',
+                    });
+            
+                    if (canIUse) {
+                      const res = window.__megability_bridge__.syncCall('userKVStorage', 'getItem', { key: '${cacheKey}',  bizID: '${bizID}' });
+                      if (res && res.statusCode === 0 && res.data && res.data.result) {
+                        base64Data = res.data.result;
+                      }
+                    }
+                  }
+                  
+                  if (!base64Data) {
+                    base64Data = localStorage.getItem(${JSON.stringify(cacheKey)});
+                  }
+                  
                   const fallback = document.getElementById('fallback-${id}');
                   if (base64Data) {
                     const img = document.getElementById('canvas-img-${id}');
