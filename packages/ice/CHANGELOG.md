@@ -1,5 +1,30 @@
 # Changelog
 
+## 3.2.9
+
+### Patch Changes
+
+- a96af97b: fix: render twice when navigate and bump react-router to 6.14.2
+- 67eae5c1: feat: support app config of runApp
+- Updated dependencies [a96af97b]
+- Updated dependencies [d33f3e65]
+- Updated dependencies [11dd752b]
+- Updated dependencies [67eae5c1]
+  - @ice/runtime@1.2.7
+
+## 3.2.8
+
+### Patch Changes
+
+- 27a72536: fix: always external dependencies when get config
+- cf8a78e3: feat: support code splitting strategy of page-vendors
+- b691b9e9: feat: support remove router even if route count is greater than 1
+- Updated dependencies [cf8a78e3]
+- Updated dependencies [b691b9e9]
+- Updated dependencies [92ec144f]
+  - @ice/webpack-config@1.0.19
+  - @ice/runtime@1.2.6
+
 ## 3.2.7
 
 ### Patch Changes

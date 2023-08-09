@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.0.3
+
+### Patch Changes
+
+- e40a7cb2: fix: add `bounces` attr
+
+## 3.0.2
+
+### Patch Changes
+
+- 39c92e5b: fix: format of dataLoaderConfig loader changed.
+
 ## 3.0.1
 
 ### Patch Changes

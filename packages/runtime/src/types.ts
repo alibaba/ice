@@ -14,7 +14,13 @@ type App = Partial<{
   rootId: string;
   strict: boolean;
   errorBoundary: boolean;
+  onRecoverableError: (error: unknown, errorInfo: ErrorStack) => void;
 } & Record<AppLifecycle, VoidFunction>>;
+
+export interface ErrorStack {
+  componentStack?: string;
+  digest?: string;
+}
 
 export type AppData = any;
 export type RouteData = any;
