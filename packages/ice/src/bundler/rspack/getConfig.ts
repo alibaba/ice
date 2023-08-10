@@ -156,6 +156,7 @@ const getConfig: GetConfig = async (context, options) => {
         }, getExpandedEnvs),
         provide: {
           process: [require.resolve('process/browser')],
+          $ReactRefreshRuntime$: [require.resolve('./client/reactRefresh.cjs')],
         },
         devFriendlySplitChunks: true,
         css: {

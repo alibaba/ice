@@ -1128,6 +1128,7 @@ importers:
       open: ^8.4.0
       path-to-regexp: ^6.2.0
       react: ^18.2.0
+      react-refresh: 0.14.0
       react-router: 6.14.2
       regenerator-runtime: ^0.13.0
       resolve.exports: ^1.1.0
@@ -1146,7 +1147,7 @@ importers:
       '@ice/runtime': link:../runtime
       '@ice/webpack-config': link:../webpack-config
       '@rspack/core': 0.2.10_qdqx3npcqtb2xiqbiduy5olvie
-      '@rspack/dev-server': 0.2.10_xlchjyjrxfiampwavajvxzi5ce
+      '@rspack/dev-server': 0.2.10_fofh2yuv7kqysoham46xhh7hzq
       '@swc/helpers': 0.5.1
       '@types/express': 4.17.17
       address: 1.2.2
@@ -1167,6 +1168,7 @@ importers:
       mrmime: 1.0.1
       open: 8.4.2
       path-to-regexp: 6.2.1
+      react-refresh: 0.14.0
       regenerator-runtime: 0.13.11
       resolve.exports: 1.1.1
       semver: 7.4.0
@@ -6342,7 +6344,7 @@ packages:
       semver: 7.4.0
     dev: true
 
-  /@pmmmwh/react-refresh-webpack-plugin/0.5.10_p44l2xjftguod6ctnkuod3jp7e:
+  /@pmmmwh/react-refresh-webpack-plugin/0.5.10_4p7fys4vpjth4wnvvzaxfza3hm:
     resolution: {integrity: sha512-j0Ya0hCFZPd4x40qLzbhGsh9TMtdb+CJQiso+WxLOPNasohq9cc5SNUcwsZaRH6++Xh91Xkm/xHCkuIiIu0LUA==}
     engines: {node: '>= 10.13'}
     peerDependencies:
@@ -6375,6 +6377,7 @@ packages:
       find-up: 5.0.0
       html-entities: 2.3.3
       loader-utils: 2.0.4
+      react-refresh: 0.14.0
       schema-utils: 3.1.1
       source-map: 0.7.4
       webpack: 5.76.0_esbuild@0.17.16
@@ -6866,7 +6869,7 @@ packages:
       - webpack-plugin-serve
     dev: false
 
-  /@rspack/dev-client/0.2.10_p44l2xjftguod6ctnkuod3jp7e:
+  /@rspack/dev-client/0.2.10_4p7fys4vpjth4wnvvzaxfza3hm:
     resolution: {integrity: sha512-Yyl7Ytu4/VW4pO8i1FydZdzXTxAN+fztev8bGLRCKc++aOFm6F0fSGAqf5Nmi5qj4VY/SaBVUB7ii4NB7CiObg==}
     peerDependencies:
       react-refresh: '>=0.10.0 <1.0.0'
@@ -6874,7 +6877,8 @@ packages:
       react-refresh:
         optional: true
     dependencies:
-      '@pmmmwh/react-refresh-webpack-plugin': 0.5.10_p44l2xjftguod6ctnkuod3jp7e
+      '@pmmmwh/react-refresh-webpack-plugin': 0.5.10_4p7fys4vpjth4wnvvzaxfza3hm
+      react-refresh: 0.14.0
     transitivePeerDependencies:
       - '@types/webpack'
       - sockjs-client
@@ -6905,13 +6909,13 @@ packages:
       - webpack-plugin-serve
     dev: false
 
-  /@rspack/dev-server/0.2.10_xlchjyjrxfiampwavajvxzi5ce:
+  /@rspack/dev-server/0.2.10_fofh2yuv7kqysoham46xhh7hzq:
     resolution: {integrity: sha512-a6b7DuuCSVo7MeHnXe9UQkqQBh+2QcvP5VidijgkTf32bQyZ9eeiQpqWV6qJpiP8lChW9xzi9ZObLUzE3KvTwQ==}
     peerDependencies:
       '@rspack/core': '*'
     dependencies:
       '@rspack/core': 0.2.10_qdqx3npcqtb2xiqbiduy5olvie
-      '@rspack/dev-client': 0.2.10_p44l2xjftguod6ctnkuod3jp7e
+      '@rspack/dev-client': 0.2.10_4p7fys4vpjth4wnvvzaxfza3hm
       chokidar: 3.5.3
       connect-history-api-fallback: 2.0.0
       express: 4.18.1
