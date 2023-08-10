@@ -1,7 +1,7 @@
 import * as path from 'path';
 import fse from 'fs-extra';
 import fg from 'fast-glob';
-import { getCompilerPlugins, getCSSModuleLocalIdent } from '@ice/webpack-config';
+import { getCompilerPlugins } from '@ice/webpack-config';
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
 import MagicString from '@ice/bundles/compiled/magic-string/index.js';
 import type { TaskConfig } from 'build-scripts';
@@ -12,7 +12,6 @@ import ignorePlugin from '../esbuild/ignore.js';
 import cssModulesPlugin from '../esbuild/cssModules.js';
 import createAssetsPlugin from '../esbuild/assets.js';
 import externalPlugin from '../esbuild/external.js';
-import escapeLocalIdent from '../utils/escapeLocalIdent.js';
 import transformPipePlugin from '../esbuild/transformPipe.js';
 import type { CompilerOptions } from '../types/plugin.js';
 import type { UserConfig } from '../types/userConfig.js';

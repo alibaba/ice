@@ -7,7 +7,6 @@ import { resolve as resolveExports, legacy as resolveLegacy } from 'resolve.expo
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
 import type { Config } from '@ice/webpack-config/types';
 import type { TaskConfig } from 'build-scripts';
-import { getCSSModuleLocalIdent } from '@ice/webpack-config';
 import flattenId from '../utils/flattenId.js';
 import formatPath from '../utils/formatPath.js';
 import { BUILDIN_CJS_DEPS, BUILDIN_ESM_DEPS } from '../constant.js';
@@ -15,7 +14,6 @@ import type { DepScanData } from '../esbuild/scan.js';
 import externalPlugin from '../esbuild/external.js';
 import emptyCSSPlugin from '../esbuild/emptyCSS.js';
 import cssModulesPlugin from '../esbuild/cssModules.js';
-import escapeLocalIdent from '../utils/escapeLocalIdent.js';
 import { createLogger } from '../utils/logger.js';
 import getCSSModuleIdent from '../utils/getCSSModuleIdent.js';
 

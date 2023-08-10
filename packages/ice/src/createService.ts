@@ -382,7 +382,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
             spinner: buildSpinner,
           });
         } else {
-          return commandArgs.speedup ? await rspackBundler(ctx, bundlerConfig) : await webpackBundler(ctx, bundlerConfig);
+          return commandArgs.speedup
+            ? await rspackBundler(ctx, bundlerConfig)
+            : await webpackBundler(ctx, bundlerConfig);
         }
       } catch (error) {
         buildSpinner.stop();
