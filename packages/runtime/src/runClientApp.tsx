@@ -19,12 +19,14 @@ import ClientRouter from './ClientRouter.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 import { AppContextProvider } from './AppContext.js';
 import { deprecatedHistory } from './utils/deprecatedHistory.js';
+import { RSCRouter } from './rsc-router.js';
 
 export interface RunClientAppOptions {
   app: AppExport;
   runtimeModules: RuntimeModules;
   createRoutes?: (options: Pick<RouteLoaderOptions, 'renderMode' | 'requestContext'>) => RouteItem[];
   hydrate?: boolean;
+  rsc?: boolean;
   basename?: string;
   memoryRouter?: boolean;
   runtimeOptions?: Record<string, any>;
@@ -39,11 +41,14 @@ export default async function runClientApp(options: RunClientAppOptions) {
     runtimeModules,
     basename,
     hydrate,
+    rsc,
     memoryRouter,
     runtimeOptions,
     dataLoaderFetcher,
     dataLoaderDecorator,
   } = options;
+
+  console.log('rsc: ', rsc);
 
   const windowContext: WindowContext = (window as any).__ICE_APP_CONTEXT__ || {};
   const assetsManifest: AssetsManifest = (window as any).__ICE_ASSETS_MANIFEST__ || {};
@@ -128,16 +133,17 @@ export default async function runClientApp(options: RunClientAppOptions) {
     await Promise.all(runtimeModules.commons.map(m => runtime.loadModule(m)).filter(Boolean));
   }
 
-  return render({ runtime, history, needHydrate });
+  return render({ runtime, history, needHydrate, useRsc: rsc });
 }
 
 interface RenderOptions {
   history: History;
   runtime: Runtime;
   needHydrate: boolean;
+  useRsc: boolean; //  TODO: 后续放到更好的地方判断是否使用 rsc
 }
 
-async function render({ history, runtime, needHydrate }: RenderOptions) {
+async function render({ history, runtime, needHydrate, useRsc }: RenderOptions) {
   const appContext = runtime.getAppContext();
   const { appConfig, loaderData, routes, basename } = appContext;
   const appRender = runtime.getRender();
@@ -188,7 +194,14 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
   }
   const renderRoot = appRender(
     root,
-    <AppContextProvider value={appContext}>
+    useRsc
+    ? <RSCRouter />
+    // <AppContextProvider value={appContext}>
+    //   <AppRuntimeProvider>
+    //     <RSCRouter />
+    //   </AppRuntimeProvider>
+    // </AppContextProvider>
+    : <AppContextProvider value={appContext}>
       <AppRuntimeProvider>
         <AppRouter
           routerContext={routerOptions}

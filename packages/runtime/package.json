@@ -37,12 +37,13 @@
     "postinstall": "node ./scripts/postinstall.mjs"
   },
   "devDependencies": {
+    "@remix-run/web-fetch": "^4.3.3",
     "@types/react": "^18.0.8",
     "@types/react-dom": "^18.0.3",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "regenerator-runtime": "^0.13.9",
-    "@remix-run/web-fetch": "^4.3.3"
+    "react": "^18.3.0-canary-1cea38448-20230530",
+    "react-dom": "^18.3.0-canary-1cea38448-20230530",
+    "react-server-dom-webpack": "^18.3.0-canary-1cea38448-20230530",
+    "regenerator-runtime": "^0.13.9"
   },
   "sideEffects": [
     "./esm/polyfills/signal.js",
@@ -56,6 +57,7 @@
     "fs-extra": "^10.0.0",
     "history": "^5.3.0",
     "htmlparser2": "^8.0.1",
+    "path": "^0.12.7",
     "react-router-dom": "6.11.2",
     "semver": "^7.4.0",
     "source-map": "^0.7.4"

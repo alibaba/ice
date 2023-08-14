@@ -1,16 +1,17 @@
-import { Suspense, lazy } from 'react';
-import { Link, useData, useConfig, definePageConfig, defineDataLoader, useAppContext } from 'ice';
+'use client';
+import { Suspense } from 'react';
+import { Link, useData, useConfig, definePageConfig, defineDataLoader } from 'ice';
 // Not recommended but works.
-import { Button } from 'antd-mobile';
 import styles from './index.module.css';
+// import { Button } from 'antd-mobile';
 
-const Bar = lazy(() => import('../components/bar'));
+// const Bar = lazy(() => import('../components/bar'));
 
-export default function Home(props) {
-  console.log('render Home', props);
+export default function Home() {
+  // console.log('render Home', props);
 
-  const appContext = useAppContext();
-  console.log('get AppContext', appContext);
+  // const appContext = useAppContext();
+  // console.log('get AppContext', appContext);
 
   const data = useData();
   const config = useConfig();
@@ -22,8 +23,8 @@ export default function Home(props) {
       <h2 className={styles.title}>Home Page</h2>
       <Link to="/about">about</Link>
       <Suspense fallback={<div>hello</div>}>
-        <Bar />
-        <Button onClick={() => alert('Hello ICE.')}>Click Me</Button>
+        {/* <Bar /> */}
+        {/* <Button onClick={() => alert('Hello ICE.')}>Click Me</Button> */}
       </Suspense>
     </>
   );

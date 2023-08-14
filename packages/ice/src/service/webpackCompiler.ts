@@ -4,6 +4,7 @@ import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { TaskConfig, Context } from 'build-scripts';
 import type { Config } from '@ice/webpack-config/types';
 import type webpack from 'webpack';
+import ReactServerWebpackPlugin from 'react-server-dom-webpack/plugin';
 import type { Urls, ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI, GetDataloaderConfig } from '../types/plugin.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
 import type ServerCompilerPlugin from '../webpack/ServerCompilerPlugin';
@@ -67,6 +68,8 @@ async function webpackCompiler(options: {
     if (useDevServer) {
       const outputDir = webpackConfig.output.path;
 
+      console.log('output dir', outputDir);
+
       if (command === 'start' && serverRunner) {
         // Add server runner plugin
         webpackConfig.plugins.push(new ServerRunnerPlugin(
@@ -87,6 +90,22 @@ async function webpackCompiler(options: {
           },
         });
         webpackConfig.plugins.push(serverCompilerPlugin);
+
+        if (userConfig.rsc) {
+          console.log('rsc plugin');
+          webpackConfig.plugins.push(new ReactServerWebpackPlugin({
+            isServer: false,
+            clientReferences: [{
+              directory: `${rootDir}/src`,
+              recursive: true,
+              include: /\.(js|ts|jsx|tsx)$/,
+              exclude: /types.ts|.d.ts/,
+            }],
+            clientManifestFilename: 'rsc-client-manifest.json',
+            // clientManifestFilename: `${rootDir}/rsc-folder/rsc-client-manifest.json`,
+            // ssrManifestFilename: `$react-ssr-manifest.json`,
+          }));
+        }
       }
 
       // Add re-compile plugin

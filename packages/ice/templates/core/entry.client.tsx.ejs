@@ -37,6 +37,7 @@ const render = (customOptions: Record<string, any> = {}) => {
     <% if (enableRoutes) { %>createRoutes,<% } %>
     basename: getRouterBasename(),
     hydrate: <%- hydrate %>,
+    rsc: <%- rsc -%>,
     memoryRouter: <%- memoryRouter || false %>,
     dataLoaderFetcher,
     dataLoaderDecorator,

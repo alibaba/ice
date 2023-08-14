@@ -70,6 +70,7 @@ export function WrapRouteComponent(options: {
 export function RouteComponent({ id }: { id: string }) {
   // get current route component from latest routeModules
   const { routeModules } = useAppContext();
+  console.log('useAppContext', useAppContext());
   const { Component } = routeModules[id] || {};
   if (process.env.NODE_ENV === 'development') {
     if (!Component) {

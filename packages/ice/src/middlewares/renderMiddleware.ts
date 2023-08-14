@@ -49,6 +49,7 @@ export default function createRenderMiddleware(options: Options): Middleware {
         serverModule.renderToResponse(requestContext, {
           renderMode,
           documentOnly,
+          useRsc: userConfig.rsc,
         });
       }
     } else {

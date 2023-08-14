@@ -1,3 +1,4 @@
+'use client';
 import { defineAppConfig } from 'ice';
 import { defineAuthConfig } from '@ice/plugin-auth/types';
 

@@ -26,7 +26,7 @@ function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Option
     runtimeDefineVars,
   } = options;
   const entryPoint = getServerEntry(rootDir, serverEntry);
-  const { ssg, ssr, server: { format } } = userConfig;
+  const { ssg, ssr, rsc, server: { format } } = userConfig;
   const isEsm = userConfig?.server?.format === 'esm';
   return new ServerCompilerPlugin(
     serverCompiler,

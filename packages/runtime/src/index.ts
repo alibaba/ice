@@ -1,3 +1,4 @@
+import path from 'path';
 import {
   Link,
   Outlet,
@@ -26,6 +27,7 @@ import type { RunClientAppOptions } from './runClientApp.js';
 import { useAppContext as useInternalAppContext, useAppData, AppContextProvider } from './AppContext.js';
 import { getAppData } from './appData.js';
 import { useData, useConfig } from './RouteContext.js';
+import App from './App.js';
 import {
   Meta,
   Title,
@@ -54,6 +56,7 @@ import useMounted from './useMounted.js';
 import usePageLifecycle from './usePageLifecycle.js';
 import { withSuspense, useSuspenseData } from './Suspense.js';
 import { createRouteLoader, WrapRouteComponent, RouteErrorComponent, Await } from './routes.js';
+import { createServerRoutes } from './ServerRouter.js';
 
 function useAppContext() {
   console.warn('import { useAppContext } from \'@ice/runtime\'; is deprecated, please use import { useAppContext } from \'ice\'; instead.');
@@ -106,6 +109,9 @@ export {
   Data,
   Main,
   usePageAssets,
+  path,
+  App,
+  createServerRoutes,
   // API for data-loader.
   dataLoader,
   callDataLoader,

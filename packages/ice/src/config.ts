@@ -132,6 +132,14 @@ const userConfig = [
     defaultValue: false,
   },
   {
+    name: 'rsc',
+    validation: 'boolean',
+    defaultValue: false,
+    setConfig: (config: Config, rsc: UserConfig['rsc']) => {
+      return mergeDefaultValue(config, 'rsc', rsc);
+    },
+  },
+  {
     name: 'server',
     validation: 'object',
     defaultValue: {

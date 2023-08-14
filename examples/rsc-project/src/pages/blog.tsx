@@ -1,3 +1,4 @@
+'use client';
 import { Link, useData, useConfig, definePageConfig } from 'ice';
 
 interface Data {

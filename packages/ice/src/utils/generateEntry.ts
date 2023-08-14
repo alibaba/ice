@@ -127,6 +127,7 @@ async function renderEntry(
     distType = ['html'],
     prependCode = '',
     renderMode,
+    useRsc,
   }: {
     routePath: string;
     serverEntry: any;
@@ -134,6 +135,7 @@ async function renderEntry(
     distType?: DistType;
     renderMode?: RenderMode;
     prependCode?: string;
+    useRsc?: boolean; //  暂时这么写，或许可以合到 distType 中？
   },
 ) {
   const serverContext: ServerContext = {
@@ -155,6 +157,7 @@ async function renderEntry(
     serverOnlyBasename: '/',
     distType,
     prependCode,
+    useRsc,
   });
 
   return {

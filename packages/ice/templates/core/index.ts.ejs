@@ -2,6 +2,8 @@
 import '<%= globalStyle %>'
 <% } -%>
 import type { PageConfig, PageConfigDefinition } from './types';
+import path from 'path';
+import routeManifest from './route-manifest.json';
 <%- framework.imports %>
 
 <%- framework.variablesStr %>
@@ -16,6 +18,8 @@ function definePageConfig(pageConfig: PageConfig | PageConfigDefinition): PageCo
 }
 
 export {
+  path,
+  routeManifest,
   definePageConfig,
   <% if (framework.exports) { -%><%- framework.exports %><% } -%>
 

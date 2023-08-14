@@ -258,6 +258,12 @@ export interface ServerAppRouterProps extends AppRouterProps {
   routerContext?: StaticHandlerContext;
 }
 
+export interface RscServerAppRouterProps extends AppRouterProps {
+  routerContext?: StaticHandlerContext;
+  renderMode?: RenderMode;
+  requestContext?: RequestContext;
+}
+
 export interface AppRouteProps {
   routes: RouteItem[];
 }

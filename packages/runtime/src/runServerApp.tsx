@@ -1,9 +1,12 @@
 import type { ServerResponse, IncomingMessage } from 'http';
+import path from 'path';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { parsePath } from 'history';
 import type { Location } from 'history';
 import type { RenderToPipeableStreamOptions } from 'react-dom/server';
+import * as ReactServerDomWebpack from 'react-server-dom-webpack/server.node';
+import fsPkg from 'fs-extra';
 import type {
   AppContext, RouteItem, ServerContext,
   AppExport, AssetsManifest,
@@ -14,6 +17,7 @@ import type {
   RuntimeModules,
   AppData,
   ServerAppRouterProps,
+  RscServerAppRouterProps,
 } from './types.js';
 import Runtime from './runtime.js';
 import { AppContextProvider } from './AppContext.js';
@@ -30,6 +34,7 @@ import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
 import ServerRouter from './ServerRouter.js';
 import { renderHTMLToJS } from './renderHTMLToJS.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
+const { readFileSync } = fsPkg;
 
 interface RenderOptions {
   app: AppExport;
@@ -37,6 +42,7 @@ interface RenderOptions {
   createRoutes: (options: Pick<RouteLoaderOptions, 'requestContext' | 'renderMode'>) => RouteItem[];
   runtimeModules: RuntimeModules;
   Document: DocumentComponent;
+  RscServerRouter: any;
   documentOnly?: boolean;
   renderMode?: RenderMode;
   // basename is used both for server and client, once set, it will be sync to client.
@@ -53,6 +59,17 @@ interface RenderOptions {
   prependCode?: string;
   serverData?: any;
   streamOptions?: RenderToPipeableStreamOptions;
+  useRsc?: boolean;
+  routeManifest?: Array<RouteManifest>;
+}
+
+interface RouteManifest {
+  id: string;
+  file: string;
+  componentname: string;
+  layout: boolean;
+  export: string[];
+  children: any[];
 }
 
 interface Piper {
@@ -160,6 +177,13 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
     const { onShellReady, onShellError, onError, onAllReady } = streamOptions;
 
     return new Promise<void>((resolve, reject) => {
+      if (renderOptions.useRsc) {
+        console.log('render RSC and sendResponse');
+        pipe(res);
+        // sendResponse(req, res, result);
+        resolve();
+        return;
+      }
       // Send stream result to ServerResponse.
       pipe(res, {
         onShellReady: () => {
@@ -231,6 +255,9 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     renderMode,
     runtimeOptions,
     serverData,
+    useRsc,
+    routeManifest,
+    RscServerRouter,
   } = renderOptions;
   const finalBasename = addLeadingSlash(serverOnlyBasename || basename);
   const location = getLocation(req.url);
@@ -256,7 +283,11 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     serverData,
   };
   const runtime = new Runtime(appContext, runtimeOptions);
-  runtime.setAppRouter<ServerAppRouterProps>(ServerRouter);
+  if (useRsc) {
+    runtime.setAppRouter<RscServerAppRouterProps>(RscServerRouter);
+  } else {
+    runtime.setAppRouter<ServerAppRouterProps>(ServerRouter);
+  }
   // Load static module before getAppData.
   if (runtimeModules.statics) {
     await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
@@ -265,7 +296,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
   // don't need to execute getAppData in CSR
   if (!documentOnly) {
     try {
-      appData = await getAppData(app, requestContext);
+      appData = await getAppData(app, requestContext); //  在 SSR 下请求数据
     } catch (err) {
       console.error('Error: get app data error when SSR.', err);
     }
@@ -278,6 +309,31 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
 
   const matches = matchRoutes(routes, location, finalBasename);
   const routePath = getCurrentRoutePath(matches);
+
+  console.log('server use RSC', useRsc);
+  if (useRsc && location.pathname === '/rsc') {
+    // const routeModules = await loadRouteModules(matches.map(({ route: { id, lazy } }) => ({ id, lazy })));
+    // const loaderData = {};
+    // for (const routeId in routeModules) {
+    //   const { loader } = routeModules[routeId];
+    //   if (loader) {
+    //     const { data, pageConfig } = await loader();
+    //     loaderData[routeId] = {
+    //       data,
+    //       pageConfig,
+    //     };
+    //   }
+    // }
+    // const revalidate = renderMode === 'SSG' && needRevalidate(matches);
+    // runtime.setAppContext({ ...appContext, revalidate, routeModules, loaderData, routePath, matches, appData });
+    return renderRsc(requestContext, routeManifest, {
+      runtime,
+      matches,
+      location,
+      renderOptions,
+    });
+  }
+
   if (documentOnly) {
     return renderDocument({ matches, routePath, routes, renderOptions });
   } else if (!matches.length) {
@@ -487,6 +543,113 @@ function renderDocument(options: RenderDocumentOptions): Response {
     statusCode: 200,
   };
 }
+
+//  函数位置可能要改
+export function renderReactTree(ReactServerApp, props): Response { //  props 是根 RSC 组件的 props
+  // await waitForWebpack();
+  const manifest = readFileSync(
+    path.resolve('./build/rsc-client-manifest.json'),
+    'utf8',
+  );
+  const moduleMap = JSON.parse(manifest);
+  console.log('reactserverAPp', React.createElement(ReactServerApp));
+  const { pipe, abort } = ReactServerDomWebpack.renderToPipeableStream(
+    React.createElement(ReactServerApp),
+    moduleMap,
+  );
+  return {
+    value: {
+      pipe,
+      fallback: abort,
+    },
+  };
+}
+
+/**
+ * Render and send the result to ServerResponse.
+ */
+export async function renderRsc( // renderToRscFlow
+  requestContext,
+  routeManifest,
+  {
+    runtime,
+    matches,
+    location,
+    renderOptions,
+  }: RenderServerEntry,
+) {
+  const appContext = runtime.getAppContext();
+  // console.log('appconfig', appContext.routes)
+  const { routes, routePath, loaderData, basename } = appContext;
+  const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
+  const AppRouter = runtime.getAppRouter<RscServerAppRouterProps>();
+  const routerContext: ServerAppRouterProps['routerContext'] = {
+    // @ts-expect-error matches type should be use `AgnosticDataRouteMatch[]`
+    matches,
+    basename,
+    loaderData,
+    location,
+  };
+
+  const { Document, renderMode, RscServerRouter } = renderOptions;
+  console.log('routerContext', routerContext);
+
+  // function eraseFunction(object) {
+  //   if(!object) {
+  //     return;
+  //   }
+  //   for (let key in object) {
+  //     if (typeof object[key] === 'function' && key === 'lazy') {
+  //       delete object[key];
+  //     } else if (typeof object[key] === 'object') {
+  //       eraseFunction(object[key]);
+  //     }
+  //   }
+  // }
+  // eraseFunction(routes)
+
+  const documentContext = {
+    main: (
+      <AppRouter routes={routeManifest} routerContext={routerContext} renderMode={renderMode} />
+    ),
+  };
+
+  // function isPlainObject(obj) {
+  //   if (typeof obj !== 'object' || obj === null) return false
+
+  //   let proto = obj
+  //   while (Object.getPrototypeOf(proto) !== null) {
+  //     proto = Object.getPrototypeOf(proto)
+  //   }
+
+  //   return Object.getPrototypeOf(obj) === proto
+  // }
+
+  // console.log('route is plain', isPlainObject(routes))
+  // console.log('routeManifest is plain', isPlainObject(routeManifest))
+  // console.log('routerContext is plain', isPlainObject(routerContext))
+  // console.log('routeManifest\n', routeManifest)
+  // console.log('requestContext', requestContext)
+
+  const ReactServerApp = () => {
+    return (
+      <div>
+        <AppContextProvider value={{ ...appContext, routes: null, requestContext: null }}>
+          {/* <RscServerRouter routes={routeManifest} routerContext={routerContext} renderMode={renderMode}></RscServerRouter> */}
+          <RscServerRouter />
+          {/* <DocumentContextProvider value={documentContext}> */}
+          {/* <Document routerContext={routerContext} renderMode={renderMode} pagePath={routePath} /> */}
+          {/* <div>runServerApp</div> */}
+          {/* <AppRouter routes={routeManifest} routerContext={routerContext} renderMode={renderMode}/> */}
+          {/* </DocumentContextProvider> */}
+        </AppContextProvider>
+      </div>
+    );
+  };
+
+  return renderReactTree(ReactServerApp, {});
+}
+
 
 /**
  * ref: https://github.com/remix-run/react-router/blob/main/packages/react-router-dom/server.tsx

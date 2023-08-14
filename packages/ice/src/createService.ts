@@ -231,6 +231,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   const hasExportAppData = (await getFileExports({ rootDir, file: 'src/app' })).includes('dataLoader');
   const csr = !userConfig.ssr && !userConfig.ssg;
+  const { rsc } = userConfig;
+
+  console.log('userConfig.rsc', rsc);
 
   const disableRouter = userConfig?.optimization?.router && routesInfo.routesCount <= 1;
   if (disableRouter) {
@@ -272,6 +275,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     dataLoader: userConfig.dataLoader,
     routeImports,
     routeDefinition,
+    rsc,
   });
   dataCache.set('routes', JSON.stringify(routesInfo));
   dataCache.set('hasExportAppData', hasExportAppData ? 'true' : '');

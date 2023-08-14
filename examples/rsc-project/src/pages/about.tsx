@@ -1,3 +1,4 @@
+'use client';
 // @ts-expect-error
 import { Link, useData, useConfig, definePageConfig, defineDataLoader } from 'ice';
 import url from './ice.png';

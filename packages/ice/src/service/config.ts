@@ -107,6 +107,7 @@ class Config {
   };
 
   public getConfig = async (keepExports: string[]) => {
+    console.log('log: getConfig');
     const targetFile = await this.getConfigFile(keepExports);
     if (targetFile) return await dynamicImport(targetFile, true);
   };

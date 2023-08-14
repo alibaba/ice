@@ -5,7 +5,7 @@ import { RouteComponent } from './routes.js';
 import type { ServerAppRouterProps } from './types.js';
 import App from './App.js';
 
-function createServerRoutes(routes: RouteObject[]) {
+export function createServerRoutes(routes: RouteObject[]) {
   return routes.map((route) => {
     let dataRoute = {
       // Static Router need element or Component when matched.
@@ -30,6 +30,7 @@ function ServerRouter(props: ServerAppRouterProps) {
   const { routerContext, routes } = props;
   // Server router only be called once.
   const router = createStaticRouter(createServerRoutes(routes), routerContext);
+  console.log('serverRouter router', router);
 
   return (
     <App>

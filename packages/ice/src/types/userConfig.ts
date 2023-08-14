@@ -67,6 +67,7 @@ export interface UserConfig {
   eslint?: Config['eslintOptions'] | boolean;
   ssr?: boolean;
   ssg?: boolean;
+  rsc?: boolean;
   server?: {
     onDemand?: boolean;
     format?: 'esm' | 'cjs';
