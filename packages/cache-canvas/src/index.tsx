@@ -94,7 +94,7 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
       window._windvane_backControl = () => {
         cacheCanvasFunc();
         // Windvane must return a string value of true for it to work properly.
-        return 'true';
+        return 'false';
       };
     }
     document.addEventListener('wvBackClickEvent', cacheCanvasFunc, false);
