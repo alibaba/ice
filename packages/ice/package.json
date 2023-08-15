@@ -38,9 +38,6 @@
   "dependencies": {
     "@ice/bundles": "0.1.12",
     "@ice/route-manifest": "1.2.0",
-    "@rspack/core": "0.2.10",
-    "@rspack/dev-server": "0.2.10",
-    "@ice/css-modules-hash": "0.0.6",
     "@ice/runtime": "^1.2.7",
     "@ice/webpack-config": "1.0.19",
     "@swc/helpers": "0.5.1",
@@ -88,7 +85,9 @@
     "sass": "^1.50.0",
     "unplugin": "^0.9.0",
     "webpack": "^5.86.0",
-    "webpack-dev-server": "^4.7.4"
+    "webpack-dev-server": "^4.7.4",
+    "@rspack/core": "0.2.12",
+    "@rspack/dev-server": "0.2.12"
   },
   "peerDependencies": {
     "react": ">=18.0.0",

@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { getCSSModuleLocalIdent } from '@ice/webpack-config';
-import { getCssModulesLocalIdent as getIdentByRust } from '@ice/css-modules-hash';
+import { getCssModulesLocalIdent as getIdentByRust } from '@ice/bundles';
 import { CSS_MODULES_LOCAL_IDENT_NAME, CSS_MODULES_LOCAL_IDENT_NAME_DEV } from '../constant.js';
 import escapeLocalIdent from '../utils/escapeLocalIdent.js';
 

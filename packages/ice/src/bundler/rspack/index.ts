@@ -28,7 +28,7 @@ async function bundler(
   let compiler: MultiCompiler;
   let devServer: RspackDevServer;
   try {
-    const { rspack } = await import('@rspack/core');
+    const { rspack } = await import('@ice/bundles/esm/rspack.js');
     compiler = rspack(rspackConfigs);
   } catch (error) {
     logger.error('Webpack compile error.');

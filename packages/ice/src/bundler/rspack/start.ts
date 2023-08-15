@@ -46,7 +46,7 @@ const start = async ({
     devServerConfig,
   });
 
-  const { RspackDevServer } = await import('@rspack/dev-server');
+  const { RspackDevServer } = await import('@ice/bundles/esm/dev-server.js');
   const devServer = new RspackDevServer(devServerConfig, compiler);
 
   compiler.hooks.done.tap('done', async stats => {
