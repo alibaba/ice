@@ -3,9 +3,16 @@ import { createRequire } from 'module';
 import { compilationPlugin, compileExcludes } from '@ice/webpack-config';
 import type { Configuration } from '@rspack/core';
 import { getRouteExportConfig } from '../../service/config.js';
-import { RUNTIME_TMP_DIR, IMPORT_META_TARGET, IMPORT_META_RENDERER } from '../../constant.js';
+import {
+  RUNTIME_TMP_DIR,
+  IMPORT_META_TARGET,
+  IMPORT_META_RENDERER,
+  CSS_MODULES_LOCAL_IDENT_NAME,
+  CSS_MODULES_LOCAL_IDENT_NAME_DEV,
+} from '../../constant.js';
 import { getReCompilePlugin, getServerPlugin, getSpinnerPlugin } from '../config/plugins.js';
 import { getExpandedEnvs } from '../../utils/runtimeEnv.js';
+import DataLoaderPlugin from '../../webpack/DataLoaderPlugin.js';
 import type { BundlerOptions, Context } from '../types.js';
 import AssetManifest from './plugins/AssetManifest.js';
 import getSplitChunks from './splitChunks.js';
@@ -33,9 +40,11 @@ const getConfig: GetConfig = async (context, options) => {
   const {
     rootDir,
     userConfig,
+    getAllPlugin,
     extendsPluginAPI: {
       serverCompileTask,
       getRoutesFile,
+      generator,
     },
   } = context;
 
@@ -60,6 +69,7 @@ const getConfig: GetConfig = async (context, options) => {
       postcss,
       proxy,
       devServer = {},
+      useDataLoader,
     } = taskConfig?.config || {};
     const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
     const hashKey = hash === true ? 'hash:8' : (hash || '');
@@ -131,6 +141,7 @@ const getConfig: GetConfig = async (context, options) => {
       plugins: [
         new AssetManifest({
           fileName: 'assets-manifest.json',
+          outputDir: path.join(rootDir, RUNTIME_TMP_DIR),
         }),
         // Add spinner for webpack task.
         getSpinnerPlugin(spinner),
@@ -148,6 +159,14 @@ const getConfig: GetConfig = async (context, options) => {
         }),
         // Add ReCompile plugin when routes config changed.
         getReCompilePlugin(reCompile, routeManifest),
+        // Add DataLoader plugin.
+        useDataLoader && new DataLoaderPlugin({
+          serverCompiler,
+          target,
+          rootDir,
+          getAllPlugin,
+          frameworkExports: generator.getExportList('framework', target),
+        }),
       ].filter(Boolean),
       builtins: {
         define: getDefine(define, {
@@ -161,7 +180,9 @@ const getConfig: GetConfig = async (context, options) => {
         devFriendlySplitChunks: true,
         css: {
           modules: {
-            localIdentName: '[local]_[hash:8]',
+            localIdentName: mode === 'development'
+              ? CSS_MODULES_LOCAL_IDENT_NAME_DEV
+              : CSS_MODULES_LOCAL_IDENT_NAME,
           },
         },
       },

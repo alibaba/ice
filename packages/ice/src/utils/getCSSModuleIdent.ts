@@ -1,6 +1,7 @@
 import * as path from 'path';
 import { getCSSModuleLocalIdent } from '@ice/webpack-config';
 import { getCssModulesLocalIdent as getIdentByRust } from '@ice/css-modules-hash';
+import { CSS_MODULES_LOCAL_IDENT_NAME, CSS_MODULES_LOCAL_IDENT_NAME_DEV } from '../constant.js';
 import escapeLocalIdent from '../utils/escapeLocalIdent.js';
 
 interface Options {
@@ -14,7 +15,7 @@ interface Options {
 const getCSSModuleIdent = (options: Options) => {
   const { rootDir, fileName, localIdentName, rule, mode } = options;
   if (rule === 'native') {
-    const template = mode === 'development' ? '[path][name][ext]__[local]' : '[hash]';
+    const template = mode === 'development' ? CSS_MODULES_LOCAL_IDENT_NAME_DEV : CSS_MODULES_LOCAL_IDENT_NAME;
     const relativePath = path.isAbsolute(fileName) ? path.relative(rootDir, fileName) : fileName;
     return getIdentByRust(relativePath, localIdentName, template);
   } else {

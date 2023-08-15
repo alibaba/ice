@@ -1,3 +1,5 @@
+import { existsSync } from 'fs';
+import { resolve } from 'path';
 import type { Compiler, Compilation, RspackPluginInstance } from '@rspack/core';
 
 export default class AssetManifest implements RspackPluginInstance {
@@ -57,6 +59,12 @@ export default class AssetManifest implements RspackPluginInstance {
             pages,
             assets,
           };
+
+          const dataLoader = resolve(this.outputDir, './data-loader.ts');
+          if (existsSync(dataLoader)) {
+            manifest['dataLoader'] = 'js/data-loader.js';
+          }
+
           const output = JSON.stringify(manifest, null, 2);
           // Emit asset manifest for server compile.
           compilation.emitAsset(this.fileName, new compiler.webpack.sources.RawSource(output));
