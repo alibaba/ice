@@ -1133,7 +1133,6 @@ importers:
       open: ^8.4.0
       path-to-regexp: ^6.2.0
       react: ^18.2.0
-      react-refresh: 0.14.0
       react-router: 6.14.2
       regenerator-runtime: ^0.13.0
       resolve.exports: ^1.1.0
@@ -1170,7 +1169,6 @@ importers:
       mrmime: 1.0.1
       open: 8.4.2
       path-to-regexp: 6.2.1
-      react-refresh: 0.14.0
       regenerator-runtime: 0.13.11
       resolve.exports: 1.1.1
       semver: 7.4.0
@@ -1179,7 +1177,7 @@ importers:
       yargs-parser: 21.1.1
     devDependencies:
       '@rspack/core': 0.2.12_qdqx3npcqtb2xiqbiduy5olvie
-      '@rspack/dev-server': 0.2.12_5tsa6lqen55ug6p3bebmrpjbzy
+      '@rspack/dev-server': 0.2.12_47whzdhzq5y53rbotb3d4jbbju
       '@types/babel__generator': 7.6.4
       '@types/babel__traverse': 7.18.3
       '@types/cross-spawn': 6.0.2
@@ -6393,6 +6391,46 @@ packages:
       source-map: 0.7.4
       webpack: 5.76.0_w34or7orauknzckzea4nxxqrru
       webpack-dev-server: 4.13.1_webpack@5.76.0
+    dev: false
+
+  /@pmmmwh/react-refresh-webpack-plugin/0.5.10_p44l2xjftguod6ctnkuod3jp7e:
+    resolution: {integrity: sha512-j0Ya0hCFZPd4x40qLzbhGsh9TMtdb+CJQiso+WxLOPNasohq9cc5SNUcwsZaRH6++Xh91Xkm/xHCkuIiIu0LUA==}
+    engines: {node: '>= 10.13'}
+    peerDependencies:
+      '@types/webpack': 4.x || 5.x
+      react-refresh: '>=0.10.0 <1.0.0'
+      sockjs-client: ^1.4.0
+      type-fest: '>=0.17.0 <4.0.0'
+      webpack: '>=4.43.0 <6.0.0'
+      webpack-dev-server: 3.x || 4.x
+      webpack-hot-middleware: 2.x
+      webpack-plugin-serve: 0.x || 1.x
+    peerDependenciesMeta:
+      '@types/webpack':
+        optional: true
+      sockjs-client:
+        optional: true
+      type-fest:
+        optional: true
+      webpack-dev-server:
+        optional: true
+      webpack-hot-middleware:
+        optional: true
+      webpack-plugin-serve:
+        optional: true
+    dependencies:
+      ansi-html-community: 0.0.8
+      common-path-prefix: 3.0.0
+      core-js-pure: 3.29.0
+      error-stack-parser: 2.1.4
+      find-up: 5.0.0
+      html-entities: 2.3.3
+      loader-utils: 2.0.4
+      schema-utils: 3.1.1
+      source-map: 0.7.4
+      webpack: 5.76.0_esbuild@0.17.16
+      webpack-dev-server: 4.13.1_webpack@5.76.0
+    dev: true
 
   /@pmmmwh/react-refresh-webpack-plugin/0.5.10_pwyhrrf3f3zqdpdfqfqifp24z4:
     resolution: {integrity: sha512-j0Ya0hCFZPd4x40qLzbhGsh9TMtdb+CJQiso+WxLOPNasohq9cc5SNUcwsZaRH6++Xh91Xkm/xHCkuIiIu0LUA==}
@@ -6915,6 +6953,26 @@ packages:
       - webpack-dev-server
       - webpack-hot-middleware
       - webpack-plugin-serve
+    dev: false
+
+  /@rspack/dev-client/0.2.12_p44l2xjftguod6ctnkuod3jp7e:
+    resolution: {integrity: sha512-EeovUu3iItItbSKcZH3eNoGvvFiqUfFEHg22jJQTGeV3I5sZWvgfQA7+JQq44HI50Rq1EI8R9rB5X1rXwrhv/w==}
+    peerDependencies:
+      react-refresh: '>=0.10.0 <1.0.0'
+    peerDependenciesMeta:
+      react-refresh:
+        optional: true
+    dependencies:
+      '@pmmmwh/react-refresh-webpack-plugin': 0.5.10_p44l2xjftguod6ctnkuod3jp7e
+    transitivePeerDependencies:
+      - '@types/webpack'
+      - sockjs-client
+      - type-fest
+      - webpack
+      - webpack-dev-server
+      - webpack-hot-middleware
+      - webpack-plugin-serve
+    dev: true
 
   /@rspack/dev-client/0.2.12_pwyhrrf3f3zqdpdfqfqifp24z4:
     resolution: {integrity: sha512-EeovUu3iItItbSKcZH3eNoGvvFiqUfFEHg22jJQTGeV3I5sZWvgfQA7+JQq44HI50Rq1EI8R9rB5X1rXwrhv/w==}
@@ -6956,13 +7014,13 @@ packages:
       - webpack-plugin-serve
     dev: false
 
-  /@rspack/dev-server/0.2.12_5tsa6lqen55ug6p3bebmrpjbzy:
+  /@rspack/dev-server/0.2.12_47whzdhzq5y53rbotb3d4jbbju:
     resolution: {integrity: sha512-z69w6lvRR1ZVJmdSWzs/bc9w29ZhSU1bz1GPDSdHPJ05fesvEtMrEYwg8YOO69lAKHGVQHoevHILO32cwMtKQQ==}
     peerDependencies:
       '@rspack/core': '*'
     dependencies:
       '@rspack/core': 0.2.12_qdqx3npcqtb2xiqbiduy5olvie
-      '@rspack/dev-client': 0.2.12_4p7fys4vpjth4wnvvzaxfza3hm
+      '@rspack/dev-client': 0.2.12_p44l2xjftguod6ctnkuod3jp7e
       chokidar: 3.5.3
       connect-history-api-fallback: 2.0.0
       express: 4.18.1

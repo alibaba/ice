@@ -60,7 +60,6 @@
     "mrmime": "^1.0.0",
     "open": "^8.4.0",
     "path-to-regexp": "^6.2.0",
-    "react-refresh": "0.14.0",
     "regenerator-runtime": "^0.13.0",
     "resolve.exports": "^1.1.0",
     "semver": "^7.3.5",
