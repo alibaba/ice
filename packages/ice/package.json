@@ -7,7 +7,8 @@
   "exports": {
     ".": "./esm/index.js",
     "./types": "./esm/types/index.js",
-    "./analyze": "./esm/service/analyze.js"
+    "./analyze": "./esm/service/analyze.js",
+    "./service": "./esm/createService.js"
   },
   "bin": {
     "ice": "./bin/ice-cli.mjs"
