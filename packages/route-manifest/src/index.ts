@@ -83,6 +83,7 @@ export function generateRouteManifest(
     defineExtraRoutesQueue.forEach((defineExtraRoutes) => {
       if (defineExtraRoutes) {
         const extraRoutes = defineRoutes(
+          rootDir,
           defineExtraRoutes,
           {
             routeManifest,
@@ -244,7 +245,7 @@ function defineConventionalRoutes(
     }
   }
 
-  return defineRoutes(defineNestedRoutes, options);
+  return defineRoutes(rootDir, defineNestedRoutes, options);
 }
 
 const escapeStart = '[';

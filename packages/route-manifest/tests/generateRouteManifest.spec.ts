@@ -52,6 +52,18 @@ describe('generateRouteManifest function', () => {
     expect(routeManifest).toMatchSnapshot();
   });
 
+  test('define-absolute-route', () => {
+    const rootDir = path.join(fixturesDir, 'define-absolute-route');
+    const routeManifest = generateRouteManifest(
+      rootDir,
+      ['About/index.tsx'],
+      [(defineRoute) => {
+        defineRoute('/about-me', path.join(rootDir, 'src/index.tsx'));
+      }],
+    );
+    expect(routeManifest).toMatchSnapshot();
+  });
+
   test('escape-routes', () => {
     const routeManifest = generateRouteManifest(
       path.join(fixturesDir, 'escape-routes'),
