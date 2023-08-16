@@ -50,20 +50,6 @@ exports[`generateRouteManifest function > basic-routes 1`] = `
 }
 `;
 
-exports[`generateRouteManifest function > define-absolute-route 1`] = `
-{
-  "/about-me": {
-    "componentName": "src-index",
-    "file": "/Users/clark/develop/ice/packages/route-manifest/tests/fixtures/define-absolute-route/src/index.tsx",
-    "id": "/about-me",
-    "index": undefined,
-    "layout": false,
-    "parentId": undefined,
-    "path": "/about-me",
-  },
-}
-`;
-
 exports[`generateRouteManifest function > define-extra-routes 1`] = `
 {
   "/": {

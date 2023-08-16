@@ -61,7 +61,8 @@ describe('generateRouteManifest function', () => {
         defineRoute('/about-me', path.join(rootDir, 'src/index.tsx'));
       }],
     );
-    expect(routeManifest).toMatchSnapshot();
+    expect(path.isAbsolute(routeManifest['/about-me'].file)).toBeTruthy();
+    expect(routeManifest['/about-me'].componentName).toBe('src-index');
   });
 
   test('escape-routes', () => {
