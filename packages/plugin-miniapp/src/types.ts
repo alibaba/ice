@@ -44,4 +44,7 @@ export interface MiniappWebpackOptions {
   nativeConfig: Record<string, any>;
 }
 
-export type MiniappWebpackConfig = Pick<webpack.Configuration, 'plugins' | 'module'>;
+export interface MiniappWebpackConfig {
+  plugins: Config['plugins'];
+  module: webpack.Configuration['module'];
+}

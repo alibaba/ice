@@ -46,7 +46,7 @@
     "url-join": "^5.0.0"
   },
   "devDependencies": {
-    "@ice/pkg": "^1.0.0",
+    "@ice/pkg": "^1.5.0",
     "@ice/app": "workspace:^",
     "@ice/runtime": "workspace:^",
     "@remix-run/router": "^1.6.1",

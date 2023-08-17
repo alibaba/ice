@@ -19,6 +19,6 @@
   "devDependencies": {
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.2",
-    "webpack": "^5.86.0"
+    "webpack": "^5.88.0"
   }
 }
