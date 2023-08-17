@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.6
+
+### Patch Changes
+
+- 32dfaacc: fix: fix unmountComponentAtNode compat
+
 ## 0.2.5
 
 ### Patch Changes
