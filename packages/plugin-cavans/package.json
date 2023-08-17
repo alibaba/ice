@@ -28,12 +28,12 @@
     "!esm/**/*.map"
   ],
   "dependencies": {
-    "@ice/cache-canvas": "workspace:*",
-    "@ice/runtime": "^1.2.6"
+    "@ice/cache-canvas": "workspace:*"
   },
   "devDependencies": {
     "@ice/app": "^3.2.8",
-    "webpack": "^5.86.0"
+    "webpack": "^5.86.0",
+    "@ice/runtime": "^1.2.5"
   },
   "repository": {
     "type": "http",
