@@ -916,7 +916,7 @@ importers:
       compression: ^1.7.4
       connect-history-api-fallback: ^1.6.0
       copy-webpack-plugin: 10.2.4
-      core-js: 3.29.1
+      core-js: 3.32.0
       core-js-pure: ^3.8.1
       css-loader: 6.7.1
       css-minimizer-webpack-plugin: 3.4.1
@@ -984,7 +984,7 @@ importers:
       ansi-html-community: 0.0.8
       caniuse-lite: 1.0.30001462
       chokidar: 3.5.3
-      core-js: 3.29.1
+      core-js: 3.32.0
       core-js-pure: 3.29.0
       error-stack-parser: 2.1.4
       esbuild: 0.17.16
@@ -3949,7 +3949,7 @@ packages:
       combine-promises: 1.1.0
       commander: 5.1.0
       copy-webpack-plugin: 11.0.0_webpack@5.88.2
-      core-js: 3.29.1
+      core-js: 3.32.0
       css-loader: 6.7.3_webpack@5.88.2
       css-minimizer-webpack-plugin: 4.2.2_ltzhhs6ml74uoexipkdt2pgtmi
       cssnano: 5.1.15_postcss@8.4.21
@@ -4049,7 +4049,7 @@ packages:
       combine-promises: 1.1.0
       commander: 5.1.0
       copy-webpack-plugin: 11.0.0_webpack@5.88.2
-      core-js: 3.29.1
+      core-js: 3.32.0
       css-loader: 6.7.3_webpack@5.88.2
       css-minimizer-webpack-plugin: 4.2.2_ltzhhs6ml74uoexipkdt2pgtmi
       cssnano: 5.1.15_postcss@8.4.21
@@ -9764,8 +9764,8 @@ packages:
     requiresBuild: true
     dev: false
 
-  /core-js/3.29.1:
-    resolution: {integrity: sha512-+jwgnhg6cQxKYIIjGtAHq2nwUOolo9eoFZ4sHfUH09BLXBgxnH4gA0zEd+t+BO2cNB8idaBtZFcFTRjQJRJmAw==}
+  /core-js/3.32.0:
+    resolution: {integrity: sha512-rd4rYZNlF3WuoYuRIDEmbR/ga9CeuWX9U05umAvgrrZoHY4Z++cp/xwPQMvUpBB4Ag6J8KfD80G0zwCyaSxDww==}
     requiresBuild: true
 
   /core-util-is/1.0.2:
