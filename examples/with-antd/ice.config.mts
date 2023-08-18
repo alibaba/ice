@@ -3,6 +3,10 @@ import antd from '@ice/plugin-antd';
 import moment from '@ice/plugin-moment-locales';
 
 export default defineConfig(() => ({
+  server: {
+    onDemand: true,
+    format: 'esm',
+  },
   plugins: [
     antd({
       importStyle: true,

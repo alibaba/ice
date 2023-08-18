@@ -4,6 +4,7 @@ import Text from 'rax-text';
 import Logo from '@/components/Logo';
 import Title from '@/components/Title';
 import HybridReactComponent from '@/components/HybridReactComponent';
+import InlineLess from '@/components/InlineLess';
 import './index.css';
 
 export default function Home() {
@@ -27,6 +28,7 @@ export default function Home() {
       <Text className="homeInfo">More information about Rax</Text>
       <Text className="homeInfo">Visit https://rax.js.org</Text>
       <HybridReactComponent />
+      <InlineLess />
     </View>
   );
 }
