@@ -11,18 +11,13 @@ import ESlintPlugin from '@ice/bundles/compiled/eslint-webpack-plugin/index.js';
 import CopyPlugin from '@ice/bundles/compiled/copy-webpack-plugin/index.js';
 import type { NormalModule, Compiler, Configuration } from 'webpack';
 import type webpack from 'webpack';
-import type { Config, ModifyWebpackConfig } from './types.js';
+import { compilationPlugin, compileExcludes, getCompilerPlugins, getDefineVars } from '@ice/shared-config';
+import type { Config, ModifyWebpackConfig } from '@ice/shared-config/types.js';
 import configAssets from './config/assets.js';
-import configCss, { getPostcssOpts } from './config/css.js';
+import configCss from './config/css.js';
 import AssetsManifestPlugin from './webpackPlugins/AssetsManifestPlugin.js';
 import EnvReplacementPlugin from './webpackPlugins/EnvReplacementPlugin.js';
-import getCompilerPlugins from './getCompilerPlugins.js';
 import getSplitChunksConfig, { FRAMEWORK_BUNDLES } from './config/splitChunks.js';
-import compilationPlugin from './unPlugins/compilation.js';
-import compileExcludes from './compileExcludes.js';
-
-export { isSupportedFeature } from './unPlugins/compilation.js';
-export { getCSSModuleLocalIdent } from './utils/getCSSModuleLocalIdent.js';
 
 const require = createRequire(import.meta.url);
 const { merge } = lodash;
@@ -72,56 +67,6 @@ export function getAliasWithRoot(rootDir: string, alias?: Record<string, string 
     aliasWithRoot[key] = (aliasValue && typeof aliasValue === 'string' && aliasValue.startsWith('.')) ? path.join(rootDir, aliasValue) : aliasValue;
   });
   return aliasWithRoot;
-}
-
-const RUNTIME_PREFIX = /^ICE_/i;
-
-export function getDefineVars(
-  config: Config,
-  runtimeDefineVars: Record<string, any>,
-  getExpandedEnvs: () => Record<string, string>,
-  webpack,
-) {
-  const { define = {} } = config;
-
-  Object.keys(process.env).filter((key) => {
-    return RUNTIME_PREFIX.test(key) || ['NODE_ENV'].includes(key);
-  }).forEach((key) => {
-    runtimeDefineVars[`process.env.${key}`] =
-      /^ICE_CORE_/i.test(key)
-        // ICE_CORE_* will be updated dynamically, so we need to make it effectively
-        ? webpack.DefinePlugin.runtimeValue(() => JSON.stringify(process.env[key]), true)
-        : JSON.stringify(process.env[key]);
-  });
-  // ImportMeta.env is ice defined env variables.
-  runtimeDefineVars['import.meta.env'] = getImportMetaEnv(getExpandedEnvs);
-
-  return {
-    ...define,
-    ...runtimeDefineVars,
-    // Make sure ICE_CORE_SSR and ICE_CORE_SSG is always false in csr mode.
-    'process.env.ICE_CORE_SSR': 'false',
-    'process.env.ICE_CORE_SSG': 'false',
-  };
-}
-
-function getImportMetaEnv(getExpandedEnvs: () => Record<string, string>): Record<string, string> {
-  const env = {};
-  const validEnvKeys = ['NODE_ENV'];
-
-  Object.keys(process.env)
-    .filter((key) => RUNTIME_PREFIX.test(key) || validEnvKeys.includes(key))
-    .forEach((key) => {
-      env[key] = JSON.stringify(process.env[key]);
-    });
-
-  // User defined envs at `.env` series files.
-  const expandedEnvs = getExpandedEnvs();
-  for (const [key, value] of Object.entries(expandedEnvs)) {
-    env[`import.meta.env.${key}`] = JSON.stringify(value);
-  }
-
-  return env;
 }
 
 export function getWebpackConfig(options: GetWebpackConfigOptions): Configuration {
@@ -179,7 +124,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
   const hashKey = hash === true ? 'hash:8' : (hash || '');
 
   const aliasWithRoot = getAliasWithRoot(rootDir, alias);
-  const defineVars = getDefineVars(config, runtimeDefineVars, getExpandedEnvs, webpack);
+  const defineVars = getDefineVars(config.define, runtimeDefineVars, getExpandedEnvs, webpack);
 
   const lazyCompilationConfig = dev && experimental?.lazyCompilation ? {
     lazyCompilation: {
@@ -262,7 +207,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
         {
           test: compilation.transformInclude,
           use: {
-            loader: require.resolve('./webpackLoaders/compilationLoader.cjs'),
+            loader: require.resolve('@ice/shared-config/compilation-loader'),
             options: {
               transform: compilation.transform,
             },
@@ -496,11 +441,3 @@ function getDevtoolValue(sourceMap: Config['sourceMap']) {
 
   return 'source-map';
 }
-
-export {
-  getCompilerPlugins,
-  compilationPlugin,
-  compileExcludes,
-  getImportMetaEnv,
-  getPostcssOpts,
-};

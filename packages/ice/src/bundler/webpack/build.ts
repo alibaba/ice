@@ -1,6 +1,6 @@
 import type webpack from '@ice/bundles/compiled/webpack/index.js';
 import type { StatsCompilation, StatsError, Configuration } from 'webpack';
-import { getOutputPaths, removeServerOutput } from '../config/outputPaths.js';
+import { getOutputPaths, removeServerOutput } from '../config/output.js';
 import { logger } from '../../utils/logger.js';
 import formatWebpackMessages from '../../utils/formatWebpackMessages.js';
 import type { BundlerOptions, CompileResults, Context } from '../types.js';

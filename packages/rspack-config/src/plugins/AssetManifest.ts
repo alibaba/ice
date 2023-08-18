@@ -3,7 +3,6 @@ import { resolve } from 'path';
 import type { Compiler, Compilation, RspackPluginInstance } from '@rspack/core';
 
 export default class AssetManifest implements RspackPluginInstance {
-  name = 'AssetManifest';
   private fileName: string;
   private outputDir: string;
 
@@ -13,10 +12,10 @@ export default class AssetManifest implements RspackPluginInstance {
   }
 
   apply(compiler: Compiler) {
-    compiler.hooks.thisCompilation.tap(this.name, (compilation) => {
+    compiler.hooks.thisCompilation.tap(this.constructor.name, (compilation) => {
       compilation.hooks.processAssets.tapAsync(
         {
-          name: this.name,
+          name: this.constructor.name,
           stage: compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_INLINE,
         },
         (_: Compilation['assets'], callback) => {

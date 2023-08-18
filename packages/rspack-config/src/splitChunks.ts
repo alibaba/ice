@@ -59,6 +59,7 @@ const getChunksStrategy = (rootDir: string) => {
   };
 };
 
+// @ts-expect-error
 export const getVendorStrategy = (options: Configuration['splitChunks']) => {
   return {
     ...options,

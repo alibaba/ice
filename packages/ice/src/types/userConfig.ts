@@ -2,7 +2,7 @@ import type { DefineRouteFunction, RouteItem } from '@ice/route-manifest';
 import type { PluginList } from 'build-scripts';
 import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import type { ProcessOptions } from '@ice/bundles';
-import type { Config, ModifyWebpackConfig, MinimizerOptions } from '@ice/webpack-config/types';
+import type { Config, ModifyWebpackConfig, MinimizerOptions } from '@ice/shared-config/types';
 import type { OverwritePluginAPI } from './plugin';
 
 interface SyntaxFeatures {

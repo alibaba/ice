@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 import { Context } from 'build-scripts';
 import type { CommandArgs, CommandName } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/types';
+import type { Config } from '@ice/shared-config/types';
 import type { AppConfig } from '@ice/runtime/types';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type {

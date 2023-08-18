@@ -1,5 +1,5 @@
 import { logger } from '../../utils/logger.js';
-import { getOutputPaths, removeServerOutput } from '../config/outputPaths.js';
+import { getOutputPaths, removeServerOutput } from '../config/output.js';
 import type { BuildOptions, CompileResults, MultiStats } from '../types.js';
 import formatStats from './formatStats.js';
 

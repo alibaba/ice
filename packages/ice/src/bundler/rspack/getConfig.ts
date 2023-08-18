@@ -1,7 +1,6 @@
-import * as path from 'path';
-import { createRequire } from 'module';
-import { compilationPlugin, compileExcludes } from '@ice/webpack-config';
+import getRspackConfig from '@ice/rspack-config';
 import type { Configuration } from '@rspack/core';
+import type { Config } from '@ice/shared-config/types';
 import { getRouteExportConfig } from '../../service/config.js';
 import {
   RUNTIME_TMP_DIR,
@@ -14,18 +13,11 @@ import { getReCompilePlugin, getServerPlugin, getSpinnerPlugin } from '../config
 import { getExpandedEnvs } from '../../utils/runtimeEnv.js';
 import DataLoaderPlugin from '../../webpack/DataLoaderPlugin.js';
 import type { BundlerOptions, Context } from '../types.js';
-import AssetManifest from './plugins/AssetManifest.js';
-import getSplitChunks from './splitChunks.js';
-import getDefine from './getDefine.js';
-import getAssetsRule from './assetsRule.js';
-import getCssRules from './cssRules.js';
 
 type GetConfig = (
   context: Context,
   options: BundlerOptions
 ) => Promise<Configuration[]>;
-
-const require = createRequire(import.meta.url);
 
 const getConfig: GetConfig = async (context, options) => {
   const {
@@ -47,170 +39,53 @@ const getConfig: GetConfig = async (context, options) => {
       generator,
     },
   } = context;
-
-  return taskConfigs.map((taskConfig) => {
-    const {
-      mode,
-      publicPath = '/',
-      cacheDir,
-      outputDir,
-      sourceMap,
-      externals = {},
-      alias = {},
-      compileIncludes,
-      polyfill,
-      swcOptions,
-      hash,
-      define = {},
-      server,
-      splitChunks,
-      target,
-      enableRpx2Vw = true,
-      postcss,
-      proxy,
-      devServer = {},
-      useDataLoader,
-    } = taskConfig?.config || {};
-    const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
-    const hashKey = hash === true ? 'hash:8' : (hash || '');
-    const compilation = compilationPlugin({
+  const { reCompile, ensureRoutesConfig } = getRouteExportConfig(rootDir);
+  const getPlugins = (taskConfig: Config): Configuration['plugins'] => {
+    const { target, outputDir, useDataLoader, server } = taskConfig;
+    return [
+      // Add spinner for webpack task.
+      getSpinnerPlugin(spinner),
+      // Add Server runner plugin.
+      getServerPlugin({
+        serverRunner,
+        ensureRoutesConfig,
+        serverCompiler,
+        target,
+        rootDir,
+        serverEntry: server?.entry,
+        outputDir,
+        serverCompileTask,
+        userConfig,
+      }),
+      // Add ReCompile plugin when routes config changed.
+      getReCompilePlugin(reCompile, routeManifest),
+      // Add DataLoader plugin.
+      useDataLoader && new DataLoaderPlugin({
+        serverCompiler,
+        target,
+        rootDir,
+        getAllPlugin,
+        frameworkExports: generator.getExportList('framework', target),
+      }),
+    ].filter(Boolean);
+  };
+  return taskConfigs.map(({ config }) => {
+    const plugins = getPlugins(config);
+    return getRspackConfig({
       rootDir,
-      cacheDir,
-      sourceMap,
-      fastRefresh: false,
-      mode,
-      compileIncludes,
-      compileExcludes,
-      swcOptions,
-      polyfill,
-      enableEnv: true,
+      runtimeTmpDir: RUNTIME_TMP_DIR,
+      runtimeDefineVars: {
+        [IMPORT_META_TARGET]: JSON.stringify(config.target),
+        [IMPORT_META_RENDERER]: JSON.stringify('client'),
+      },
       getRoutesFile,
+      getExpandedEnvs,
+      localIdentName: config.mode === 'development' ? CSS_MODULES_LOCAL_IDENT_NAME_DEV : CSS_MODULES_LOCAL_IDENT_NAME,
+      taskConfig: {
+        ...config,
+        plugins: (config.plugins || []).concat(plugins),
+      },
     });
-
-    const { reCompile, ensureRoutesConfig } = getRouteExportConfig(rootDir);
-    const cssFilename = `css/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`;
-    const config: Configuration = {
-      entry: {
-        main: [path.join(rootDir, RUNTIME_TMP_DIR, 'entry.client.tsx')],
-      },
-      name: 'web',
-      mode,
-      externals,
-      output: {
-        clean: true,
-        publicPath,
-        path: absoluteOutputDir,
-        filename: `js/${hashKey ? `[name]-[${hashKey}].js` : '[name].js'}`,
-        cssFilename,
-        cssChunkFilename: cssFilename,
-        assetModuleFilename: 'assets/[name].[hash:8][ext]',
-      },
-      context: rootDir,
-      module: {
-        rules: [
-          // Compliation rules for js / ts.
-          {
-            test: compilation.transformInclude,
-            use: [{
-              loader: require.resolve('@ice/webpack-config/compilation-loader'),
-              options: {
-                transform: compilation.transform,
-              },
-            }],
-          },
-          ...getAssetsRule(),
-          ...getCssRules({
-            rootDir,
-            enableRpx2Vw,
-            postcssOptions: postcss,
-          }),
-        ],
-      },
-      resolve: {
-        alias,
-      },
-      watchOptions: {
-        ignored: /node_modules/,
-        aggregateTimeout: 100,
-      },
-      optimization: {
-        splitChunks: typeof splitChunks == 'object'
-          ? splitChunks
-          : getSplitChunks(rootDir, splitChunks),
-      },
-      plugins: [
-        new AssetManifest({
-          fileName: 'assets-manifest.json',
-          outputDir: path.join(rootDir, RUNTIME_TMP_DIR),
-        }),
-        // Add spinner for webpack task.
-        getSpinnerPlugin(spinner),
-        // Add Server runner plugin.
-        getServerPlugin({
-          serverRunner,
-          ensureRoutesConfig,
-          serverCompiler,
-          target,
-          rootDir,
-          serverEntry: server?.entry,
-          outputDir,
-          serverCompileTask,
-          userConfig,
-        }),
-        // Add ReCompile plugin when routes config changed.
-        getReCompilePlugin(reCompile, routeManifest),
-        // Add DataLoader plugin.
-        useDataLoader && new DataLoaderPlugin({
-          serverCompiler,
-          target,
-          rootDir,
-          getAllPlugin,
-          frameworkExports: generator.getExportList('framework', target),
-        }),
-      ].filter(Boolean),
-      builtins: {
-        define: getDefine(define, {
-          [IMPORT_META_TARGET]: JSON.stringify(target),
-          [IMPORT_META_RENDERER]: JSON.stringify('client'),
-        }, getExpandedEnvs),
-        provide: {
-          process: [require.resolve('process/browser')],
-          $ReactRefreshRuntime$: [require.resolve('./client/reactRefresh.cjs')],
-        },
-        devFriendlySplitChunks: true,
-        css: {
-          modules: {
-            localIdentName: mode === 'development'
-              ? CSS_MODULES_LOCAL_IDENT_NAME_DEV
-              : CSS_MODULES_LOCAL_IDENT_NAME,
-          },
-        },
-      },
-      stats: 'none',
-      infrastructureLogging: {
-        level: 'warn',
-      },
-      devServer: {
-        allowedHosts: 'all',
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': '*',
-          'Access-Control-Allow-Headers': '*',
-        },
-        // @ts-expect-error devServer.hot in rspack only support boolean.
-        hot: true,
-        compress: false,
-        proxy,
-        devMiddleware: {
-          publicPath,
-        },
-        client: {
-          logging: 'info',
-        },
-        ...devServer,
-      },
-    };
-    return config;
   });
 };
 

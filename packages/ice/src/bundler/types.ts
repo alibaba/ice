@@ -1,4 +1,4 @@
-import type { Config } from '@ice/webpack-config/types';
+import type { Config } from '@ice/shared-config/types';
 import type ora from '@ice/bundles/compiled/ora/index.js';
 import type { Stats as WebpackStats } from '@ice/bundles/compiled/webpack/index.js';
 import type { AppConfig } from '@ice/runtime/types';
@@ -20,7 +20,6 @@ export interface BuildOptions {
   hooksAPI: BundlerOptions['hooksAPI'];
   taskConfigs: BundlerOptions['taskConfigs'];
 }
-
 
 export interface BundlerOptions {
   taskConfigs: TaskConfig<Config>[];

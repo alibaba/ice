@@ -1,7 +1,7 @@
 import { createRequire } from 'module';
 import { sass, less } from '@ice/bundles';
-import { getPostcssOpts } from '@ice/webpack-config';
-import type { Config } from '@ice/webpack-config/types';
+import { getPostcssOpts } from '@ice/shared-config';
+import type { Config } from '@ice/shared-config/types';
 import type { Configuration } from '@rspack/core';
 
 const require = createRequire(import.meta.url);
