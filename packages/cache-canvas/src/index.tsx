@@ -99,8 +99,10 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
     }
     document.addEventListener('wvBackClickEvent', cacheCanvasFunc, false);
     window.addEventListener('beforeunload', cacheCanvasFunc);
+    document.addEventListener('WV.Event.APP.Background', cacheCanvasFunc, false);
 
     return () => {
+      document.removeEventListener('WV.Event.APP.Background', cacheCanvasFunc);
       window.removeEventListener('beforeunload', cacheCanvasFunc);
       window.removeEventListener('wvBackClickEvent', cacheCanvasFunc);
       if (window._windvane_backControl) {
