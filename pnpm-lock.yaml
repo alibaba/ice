@@ -1469,7 +1469,7 @@ importers:
       consola: 2.15.3
       css: 2.2.4
       lodash-es: 4.17.21
-      rax-compat: 0.2.6
+      rax-compat: link:../rax-compat
       style-unit: 3.0.5
       stylesheet-loader: 0.9.1
     devDependencies:
@@ -5399,13 +5399,6 @@ packages:
   /@humanwhocodes/object-schema/1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
-
-  /@ice/appear/0.2.0:
-    resolution: {integrity: sha512-2PjCeOvrHiSuDE5C1ybMh4oj7pRzOk05bH+W1ICnUAH1ZxpPkdp1Wn3vJLSj74PGJro9fwIG1r9zDLY1nW6kOw==}
-    peerDependencies:
-      react: ^18
-      react-dom: ^18
-    dev: false
 
   /@ice/pkg-plugin-component/1.0.0:
     resolution: {integrity: sha512-Mff6Em1RwY2NOZgciQyy2NXL65u9ebHV2Jqb5746vUVEh0l7Xpokb+3djV1pKcgED4wU8pSuSQ6jj+hXd9Ht1Q==}
@@ -18088,18 +18081,6 @@ packages:
     dependencies:
       rax: 1.2.3
       rax-is-valid-element: 1.0.1
-    dev: false
-
-  /rax-compat/0.2.6:
-    resolution: {integrity: sha512-ewGDk3F8a5Wi5/EjIYkG4GEaOhnHxzbaNgd7Nak1UWdqVVF5IcId46LqGcAemFZgLExmDoOfj4JQB/6LcOloEQ==}
-    peerDependencies:
-      react: ^18
-      react-dom: ^18
-    dependencies:
-      '@ice/appear': 0.2.0
-      '@swc/helpers': 0.4.14
-      create-react-class: 15.7.0
-      style-unit: 3.0.5
     dev: false
 
   /rax-create-factory/1.0.0_rax@1.2.3:
