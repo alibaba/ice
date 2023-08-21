@@ -1,5 +1,5 @@
-import type { BuildOptions } from 'esbuild';
 import unplugin from '@ice/bundles/compiled/unplugin/index.js';
+import type { BuildOptions } from 'esbuild';
 import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import type { Config } from './types.js';
 import compilationPlugin from './unPlugins/compilation.js';

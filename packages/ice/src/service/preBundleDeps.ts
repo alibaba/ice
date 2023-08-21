@@ -5,9 +5,8 @@ import { esbuild } from '@ice/bundles';
 import type { Plugin, BuildOptions } from 'esbuild';
 import { resolve as resolveExports, legacy as resolveLegacy } from 'resolve.exports';
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
-import type { Config } from '@ice/webpack-config/types';
+import type { Config } from '@ice/shared-config/types';
 import type { TaskConfig } from 'build-scripts';
-import { getCSSModuleLocalIdent } from '@ice/webpack-config';
 import flattenId from '../utils/flattenId.js';
 import formatPath from '../utils/formatPath.js';
 import { BUILDIN_CJS_DEPS, BUILDIN_ESM_DEPS } from '../constant.js';
@@ -15,8 +14,8 @@ import type { DepScanData } from '../esbuild/scan.js';
 import externalPlugin from '../esbuild/external.js';
 import emptyCSSPlugin from '../esbuild/emptyCSS.js';
 import cssModulesPlugin from '../esbuild/cssModules.js';
-import escapeLocalIdent from '../utils/escapeLocalIdent.js';
 import { createLogger } from '../utils/logger.js';
+import getCSSModuleIdent from '../utils/getCSSModuleIdent.js';
 
 const logger = createLogger('pre-bundle-deps');
 
@@ -43,6 +42,7 @@ interface PreBundleDepsOptions {
   plugins?: Plugin[];
   define?: esbuild.BuildOptions['define'];
   external?: esbuild.BuildOptions['external'];
+  speedup?: boolean;
 }
 
 /**
@@ -55,7 +55,7 @@ export default async function preBundleDeps(
   depsInfo: Record<string, DepScanData>,
   options: PreBundleDepsOptions,
 ): Promise<PreBundleDepsResult> {
-  const { cacheDir, taskConfig, plugins = [], alias, ignores, define, external = [] } = options;
+  const { cacheDir, taskConfig, plugins = [], alias, ignores, define, external = [], rootDir, speedup } = options;
   const metadata = createDepsMetadata(depsInfo, taskConfig);
 
   if (!Object.keys(depsInfo)) {
@@ -96,6 +96,7 @@ export default async function preBundleDeps(
 
   try {
     await bundleDeps({
+      rootDir,
       entryPoints: flatIdDeps,
       outdir: depsCacheDir,
       plugins,
@@ -103,6 +104,7 @@ export default async function preBundleDeps(
       alias,
       external,
       define,
+      speedup,
     });
 
     await fse.writeJSON(metadataJSONPath, metadata, { spaces: 2 });
@@ -119,6 +121,7 @@ export default async function preBundleDeps(
 
 export async function bundleDeps(options:
   {
+    rootDir: string;
     entryPoints: BuildOptions['entryPoints'];
     outdir: BuildOptions['outdir'];
     alias: BuildOptions['alias'];
@@ -126,8 +129,9 @@ export async function bundleDeps(options:
     plugins: Plugin[];
     external: string[];
     define: BuildOptions['define'];
+    speedup?: boolean;
   }) {
-  const { entryPoints, outdir, alias, ignores, plugins, external, define } = options;
+  const { entryPoints, outdir, alias, ignores, plugins, external, define, speedup, rootDir } = options;
   return await esbuild.build({
     absWorkingDir: process.cwd(),
     entryPoints,
@@ -152,9 +156,15 @@ export async function bundleDeps(options:
       externalPlugin({ ignores, format: 'esm', externalDependencies: false }),
       cssModulesPlugin({
         extract: false,
-        generateLocalIdentName: function (name: string, filename: string) {
-          // Compatible with webpack css-loader.
-          return escapeLocalIdent(getCSSModuleLocalIdent(filename, name));
+        generateLocalIdentName: function (name: string, fileName: string) {
+          return getCSSModuleIdent({
+            rootDir,
+            // Prebundle only works in development mode.
+            mode: 'development',
+            fileName,
+            localIdentName: name,
+            rule: speedup ? 'native' : 'loader',
+          });
         },
       }),
       ...plugins,

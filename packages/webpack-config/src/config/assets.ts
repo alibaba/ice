@@ -1,6 +1,6 @@
 import type webpack from 'webpack';
 import type { Configuration } from 'webpack';
-import type { ModifyWebpackConfig } from '../types.js';
+import type { ModifyWebpackConfig } from '@ice/shared-config/types';
 
 type AssetRuleConfig = [RegExp, Record<string, any>?, boolean?];
 

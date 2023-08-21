@@ -24,6 +24,7 @@ interface PreBundleOptions {
   plugins?: Plugin[];
   external?: string[];
   define?: Record<string, string>;
+  speedup?: boolean;
 }
 
 export class RuntimeMeta {
@@ -35,6 +36,7 @@ export class RuntimeMeta {
   private cachePath: string;
   private external: string[];
   private define: Record<string, string>;
+  private speedup: boolean;
 
   constructor(options: Omit<PreBundleOptions, 'pkgName' | 'resolveId'>) {
     this.rootDir = options.rootDir;
@@ -43,6 +45,7 @@ export class RuntimeMeta {
     this.plugins = options.plugins;
     this.external = options.external;
     this.define = options.define;
+    this.speedup = options.speedup;
     this.cachePath = path.join(getDepsCacheDir(path.join(this.rootDir, CACHE_DIR)), 'metadata.json');
   }
 
@@ -97,6 +100,7 @@ export class RuntimeMeta {
         define: this.define,
         pkgName: pkgName,
         resolveId,
+        speedup: this.speedup,
       });
       await this.setDepsCache(pkgName, resolveId, bundlePath);
       return bundlePath;
@@ -107,7 +111,7 @@ export class RuntimeMeta {
 }
 
 export default async function preBundleDeps(options: PreBundleOptions): Promise<PreBundleResult> {
-  const { rootDir, pkgName, alias, ignores, plugins, resolveId, external, define } = options;
+  const { rootDir, pkgName, alias, ignores, plugins, resolveId, external, define, speedup } = options;
   const depsCacheDir = getDepsCacheDir(path.join(rootDir, CACHE_DIR));
   try {
     await bundleDeps({
@@ -118,6 +122,8 @@ export default async function preBundleDeps(options: PreBundleOptions): Promise<
       plugins: plugins || [],
       external,
       define,
+      speedup,
+      rootDir,
     });
   } catch (err) {
     logger.error('Failed to bundle dependencies.');

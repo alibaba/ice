@@ -3,7 +3,7 @@ import type { _Plugin, CommandArgs, TaskConfig } from 'build-scripts';
 import type { Configuration, Stats, WebpackOptionsNormalized } from '@ice/bundles/compiled/webpack';
 import type { esbuild } from '@ice/bundles';
 import type { DefineExtraRoutes, NestedRouteManifest } from '@ice/route-manifest';
-import type { Config } from '@ice/webpack-config/types';
+import type { Config } from '@ice/shared-config/types';
 import type { AppConfig, AssetsManifest } from '@ice/runtime/types';
 import type ServerCompileTask from '../utils/ServerCompileTask.js';
 import type { CreateLogger } from '../utils/logger.js';

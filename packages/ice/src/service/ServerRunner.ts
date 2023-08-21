@@ -1,22 +1,22 @@
 import * as path from 'path';
 import fse from 'fs-extra';
 import fg from 'fast-glob';
-import { getCompilerPlugins, getCSSModuleLocalIdent } from '@ice/webpack-config';
+import { getCompilerPlugins } from '@ice/shared-config';
 import moduleLexer from '@ice/bundles/compiled/es-module-lexer/index.js';
 import MagicString from '@ice/bundles/compiled/magic-string/index.js';
 import type { TaskConfig } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/types';
+import type { Config } from '@ice/shared-config/types';
 import type { PluginBuild, OnResolveOptions, Plugin, OnLoadResult, OnResolveResult } from 'esbuild';
 import emptyCSSPlugin from '../esbuild/emptyCSS.js';
 import ignorePlugin from '../esbuild/ignore.js';
 import cssModulesPlugin from '../esbuild/cssModules.js';
 import createAssetsPlugin from '../esbuild/assets.js';
 import externalPlugin from '../esbuild/external.js';
-import escapeLocalIdent from '../utils/escapeLocalIdent.js';
 import transformPipePlugin from '../esbuild/transformPipe.js';
 import type { CompilerOptions } from '../types/plugin.js';
 import type { UserConfig } from '../types/userConfig.js';
 import { logger } from '../utils/logger.js';
+import getCSSModuleIdent from '../utils/getCSSModuleIdent.js';
 import { resolveId as resolveWithAlias } from './analyze.js';
 import Runner from './Runner.js';
 import { RuntimeMeta } from './onDemandPreBundle.js';
@@ -28,6 +28,7 @@ interface InitOptions {
   csr: boolean;
   task: TaskConfig<Config>;
   getRoutesFile: () => string[];
+  speedup: boolean;
 }
 
 type ResolveCallback = Parameters<PluginBuild['onResolve']>[1];
@@ -90,6 +91,7 @@ class ServerRunner extends Runner {
     rootDir,
     csr,
     getRoutesFile,
+    speedup,
   }: InitOptions) {
     const transformPlugins = getCompilerPlugins(rootDir, {
       ...task.config,
@@ -118,6 +120,7 @@ class ServerRunner extends Runner {
       ignores,
       external: server.externals || [],
       define,
+      speedup,
     });
 
     const esbuildPlugins = [
@@ -131,9 +134,15 @@ class ServerRunner extends Runner {
       server?.ignores && ignorePlugin(server.ignores),
       cssModulesPlugin({
         extract: false,
-        generateLocalIdentName: function (name: string, filename: string) {
-          // Compatible with webpack css-loader.
-          return escapeLocalIdent(getCSSModuleLocalIdent(filename, name));
+        generateLocalIdentName: function (name: string, fileName: string) {
+          return getCSSModuleIdent({
+            rootDir,
+            // ServerRunner only works in development mode.
+            mode: 'development',
+            fileName,
+            localIdentName: name,
+            rule: speedup ? 'native' : 'loader',
+          });
         },
       }),
       createAssetsPlugin(() => {

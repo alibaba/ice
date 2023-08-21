@@ -7,8 +7,7 @@
   "type": "module",
   "main": "./esm/index.js",
   "exports": {
-    ".": "./esm/index.js",
-    "./types": "./esm/types.js"
+    ".": "./esm/index.js"
   },
   "files": [
     "esm",
@@ -16,18 +15,13 @@
     "*.d.ts"
   ],
   "dependencies": {
+    "@ice/shared-config": "1.0.0",
     "@ice/bundles": "0.1.13",
-    "@rollup/pluginutils": "^4.2.0",
-    "browserslist": "^4.19.3",
-    "consola": "^2.15.3",
     "fast-glob": "^3.2.11",
     "process": "^0.11.10"
   },
   "devDependencies": {
-    "esbuild": "^0.17.16",
-    "postcss": "^8.4.18",
-    "webpack": "^5.88.0",
-    "webpack-dev-server": "^4.7.4"
+    "webpack": "^5.88.0"
   },
   "scripts": {
     "watch": "tsc -w",

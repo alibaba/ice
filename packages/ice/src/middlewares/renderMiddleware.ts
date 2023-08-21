@@ -2,7 +2,7 @@ import type { ExpressRequestHandler, Middleware } from 'webpack-dev-server';
 import type { ServerContext, RenderMode } from '@ice/runtime';
 import matchRoutes from '@ice/runtime/matchRoutes';
 import type { TaskConfig } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/types';
+import type { Config } from '@ice/shared-config/types';
 import type { ExtendsPluginAPI } from '../types/plugin.js';
 import getRouterBasename from '../utils/getRouterBasename.js';
 import warnOnHashRouterEnabled from '../utils/warnOnHashRouterEnabled.js';

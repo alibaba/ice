@@ -74,3 +74,6 @@ export const RUNTIME_EXPORTS = [
     source: '@ice/runtime',
   },
 ];
+
+export const CSS_MODULES_LOCAL_IDENT_NAME = '[local]_[hash:8]';
+export const CSS_MODULES_LOCAL_IDENT_NAME_DEV = '[path][name][ext]__[local]';
