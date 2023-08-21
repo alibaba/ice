@@ -1,13 +1,14 @@
 {
   "name": "@ice/app",
-  "version": "3.2.9",
+  "version": "3.2.10",
   "description": "provide scripts and configuration used by web framework ice",
   "type": "module",
   "main": "./esm/index.js",
   "exports": {
     ".": "./esm/index.js",
     "./types": "./esm/types/index.js",
-    "./analyze": "./esm/service/analyze.js"
+    "./analyze": "./esm/service/analyze.js",
+    "./service": "./esm/createService.js"
   },
   "bin": {
     "ice": "./bin/ice-cli.mjs"
@@ -36,11 +37,11 @@
   "bugs": "https://github.com/alibaba/ice/issues",
   "homepage": "https://v3.ice.work",
   "dependencies": {
-    "@ice/bundles": "0.1.12",
-    "@ice/route-manifest": "1.2.0",
+    "@ice/bundles": "0.1.13",
+    "@ice/route-manifest": "1.2.1",
     "@ice/runtime": "^1.2.7",
     "@ice/shared-config": "1.0.0",
-    "@ice/webpack-config": "1.0.19",
+    "@ice/webpack-config": "1.0.20",
     "@ice/rspack-config": "1.0.0",
     "@swc/helpers": "0.5.1",
     "@types/express": "^4.17.14",

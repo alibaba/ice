@@ -1095,12 +1095,12 @@ importers:
 
   packages/ice:
     specifiers:
-      '@ice/bundles': 0.1.12
-      '@ice/route-manifest': 1.2.0
+      '@ice/bundles': 0.1.13
+      '@ice/route-manifest': 1.2.1
       '@ice/rspack-config': 1.0.0
       '@ice/runtime': ^1.2.7
       '@ice/shared-config': 1.0.0
-      '@ice/webpack-config': 1.0.19
+      '@ice/webpack-config': 1.0.20
       '@rspack/core': 0.2.12
       '@rspack/dev-server': 0.2.12
       '@swc/helpers': 0.5.1
@@ -1288,15 +1288,15 @@ importers:
 
   packages/plugin-cavans:
     specifiers:
-      '@ice/app': ^3.2.8
+      '@ice/app': ^3.2.10
       '@ice/cache-canvas': workspace:*
-      '@ice/runtime': ^1.2.6
+      '@ice/runtime': ^1.2.5
       webpack: ^5.86.0
     dependencies:
       '@ice/cache-canvas': link:../cache-canvas
-      '@ice/runtime': link:../runtime
     devDependencies:
       '@ice/app': link:../ice
+      '@ice/runtime': link:../runtime
       webpack: 5.86.0
 
   packages/plugin-css-assets-local:
@@ -1483,7 +1483,7 @@ importers:
       consola: 2.15.3
       css: 2.2.4
       lodash-es: 4.17.21
-      rax-compat: 0.2.6
+      rax-compat: link:../rax-compat
       style-unit: 3.0.5
       stylesheet-loader: 0.9.1
     devDependencies:
@@ -1574,7 +1574,7 @@ importers:
       '@ice/shared-config': 1.0.0
       '@rspack/core': ^0.2.12
     dependencies:
-      '@ice/bundles': link:../bundles
+      '@ice/bundles': 0.1.12
       '@ice/shared-config': link:../shared-config
     devDependencies:
       '@rspack/core': 0.2.12
@@ -1635,7 +1635,7 @@ importers:
       webpack: ^5.86.0
       webpack-dev-server: ^4.7.4
     dependencies:
-      '@ice/bundles': link:../bundles
+      '@ice/bundles': 0.1.12
       '@rollup/pluginutils': 4.2.1
       browserslist: 4.21.5
       consola: 2.15.3
@@ -1657,7 +1657,7 @@ importers:
 
   packages/webpack-config:
     specifiers:
-      '@ice/bundles': 0.1.12
+      '@ice/bundles': 0.1.13
       '@ice/shared-config': 1.0.0
       fast-glob: ^3.2.11
       process: ^0.11.10
@@ -5440,11 +5440,29 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@ice/appear/0.2.0:
-    resolution: {integrity: sha512-2PjCeOvrHiSuDE5C1ybMh4oj7pRzOk05bH+W1ICnUAH1ZxpPkdp1Wn3vJLSj74PGJro9fwIG1r9zDLY1nW6kOw==}
-    peerDependencies:
-      react: ^18
-      react-dom: ^18
+  /@ice/bundles/0.1.12:
+    resolution: {integrity: sha512-oQwGZ/oXQR96vOp9qm4zMiZaLLb3bbKbUSly+xJ+GIgRvtgn18shItNQ31YvjICUQS0ABKtQJ7v5zsNoPk5EAg==}
+    dependencies:
+      '@ice/swc-plugin-keep-export': 0.1.4-2
+      '@ice/swc-plugin-node-transform': 0.1.0-8
+      '@ice/swc-plugin-remove-export': 0.1.2
+      '@swc/core': 1.3.19
+      ansi-html-community: 0.0.8
+      caniuse-lite: 1.0.30001462
+      chokidar: 3.5.3
+      core-js: 3.29.1
+      core-js-pure: 3.29.0
+      error-stack-parser: 2.1.4
+      esbuild: 0.17.16
+      events: 3.3.0
+      html-entities: 2.3.3
+      jest-worker: 27.5.1
+      less: 4.1.2
+      postcss: 8.4.12
+      react-refresh: 0.14.0
+      sass: 1.50.0
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /@ice/css-modules-hash-darwin-arm64/0.0.6:
@@ -19063,18 +19081,6 @@ packages:
     dependencies:
       rax: 1.2.3
       rax-is-valid-element: 1.0.1
-    dev: false
-
-  /rax-compat/0.2.6:
-    resolution: {integrity: sha512-ewGDk3F8a5Wi5/EjIYkG4GEaOhnHxzbaNgd7Nak1UWdqVVF5IcId46LqGcAemFZgLExmDoOfj4JQB/6LcOloEQ==}
-    peerDependencies:
-      react: ^18
-      react-dom: ^18
-    dependencies:
-      '@ice/appear': 0.2.0
-      '@swc/helpers': 0.4.14
-      create-react-class: 15.7.0
-      style-unit: 3.0.5
     dev: false
 
   /rax-create-factory/1.0.0_rax@1.2.3:

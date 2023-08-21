@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.6
+
+### Patch Changes
+
+- 372699db: hotfix: less support inline style
+
 ## 0.2.5
 
 ### Patch Changes
