@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.13
+
+### Patch Changes
+
+- 2e22ce4e: fix: hmr failed when export pageConfg or dataLoader in page routes
+
 ## 0.1.12
 
 ### Patch Changes

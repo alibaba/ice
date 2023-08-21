@@ -6,6 +6,7 @@ import vm from 'vm';
 import { isNodeBuiltin } from 'mlly';
 import consola from 'consola';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
+import dynamicImport from '../utils/dynamicImport.js';
 
 export interface ModuleResult {
   code?: string;
@@ -244,7 +245,9 @@ class Runner {
   }
 
   async interopedImport(id: string) {
-    const importedModule = await import(id);
+    // If dependency is pre bundled, it will returned as an absolute path,
+    // use dynamic import to get the module otherwise it will cause error of URL scheme in Win32.
+    const importedModule = path.isAbsolute(id) ? await dynamicImport(id) : await import(id);
     if (!this.shouldInterop(id, importedModule)) {
       return importedModule;
     }

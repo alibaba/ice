@@ -182,6 +182,8 @@ const tasks = [
           fs.copyFileSync(sourcePath, targetPath);
         }
       });
+      // Overwrite RefreshUtils.js which is customized for ice.js.
+      fs.copyFileSync(path.join(__dirname, '../override/RefreshUtils.js'), path.join(pkgPath, 'lib/runtime/RefreshUtils.js'));
     },
   },
   {
