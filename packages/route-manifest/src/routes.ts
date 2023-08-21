@@ -1,6 +1,6 @@
 // based on https://github.com/remix-run/remix/blob/main/packages/remix-dev/config/routes.ts
 
-import { win32, join } from 'path';
+import { win32, join, isAbsolute, relative, sep } from 'path';
 
 export interface ConfigRoute {
   /**
@@ -92,14 +92,19 @@ export type DefineExtraRoutes = (
   options: DefineRoutesOptions,
 ) => void;
 
+
+export function formatPath(pathStr: string): string {
+  return process.platform === 'win32' ? pathStr.split(sep).join('/') : pathStr;
+}
+
 export function defineRoutes(
+  rootDir: string,
   callback: (defineRoute: DefineRouteFunction, options: DefineRoutesOptions) => void,
   options: DefineRoutesOptions,
 ) {
   const routes: RouteManifest = Object.create(null);
   const parentRoutes: ConfigRoute[] = [];
   let alreadyReturned = false;
-
   const defineRoute: DefineRouteFunction = (path, file, optionsOrChildren, children) => {
     if (alreadyReturned) {
       throw new Error(
@@ -131,7 +136,7 @@ export function defineRoutes(
       id,
       parentId: parentRoute ? parentRoute.id : undefined,
       file,
-      componentName: createComponentName(file),
+      componentName: createComponentName(isAbsolute(file) ? formatPath(relative(rootDir, file)) : file),
       layout: id.endsWith('layout'),
     };
 

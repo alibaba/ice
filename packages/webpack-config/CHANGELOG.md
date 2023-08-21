@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.20
+
+### Patch Changes
+
+- Updated dependencies [2e22ce4e]
+  - @ice/bundles@0.1.13
+
 ## 1.0.19
 
 ### Patch Changes

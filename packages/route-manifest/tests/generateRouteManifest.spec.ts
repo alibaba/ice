@@ -52,6 +52,19 @@ describe('generateRouteManifest function', () => {
     expect(routeManifest).toMatchSnapshot();
   });
 
+  test('define-absolute-route', () => {
+    const rootDir = path.join(fixturesDir, 'define-absolute-route');
+    const routeManifest = generateRouteManifest(
+      rootDir,
+      ['About/index.tsx'],
+      [(defineRoute) => {
+        defineRoute('/about-me', path.join(rootDir, 'src/index.tsx'));
+      }],
+    );
+    expect(path.isAbsolute(routeManifest['/about-me'].file)).toBeTruthy();
+    expect(routeManifest['/about-me'].componentName).toBe('src-index');
+  });
+
   test('escape-routes', () => {
     const routeManifest = generateRouteManifest(
       path.join(fixturesDir, 'escape-routes'),
