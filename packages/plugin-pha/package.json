@@ -28,7 +28,7 @@
     "@ice/app": "^3.2.9",
     "build-scripts": "^2.1.1-0",
     "esbuild": "^0.17.16",
-    "webpack": "^5.86.0",
+    "webpack": "^5.88.0",
     "webpack-dev-server": "^4.9.2"
   },
   "repository": {
