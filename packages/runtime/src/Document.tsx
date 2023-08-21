@@ -187,7 +187,7 @@ export const Data: DataType = (props: DataProps) => {
     // Should merge global context when there are multiple <Data />.
     <ScriptElement
       suppressHydrationWarning={documentOnly}
-      dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=Object.assign(${JSON.stringify(windowContext)}, window.__ICE_APP_CONTEXT__ || {});` }}
+      dangerouslySetInnerHTML={{ __html: `!(function () {window.__ICE_APP_CONTEXT__ = window.__ICE_APP_CONTEXT__ || {};var context = ${JSON.stringify(windowContext)};for (var key in context) {window.__ICE_APP_CONTEXT__[key] = context[key]}})();` }}
     />
   );
 };
