@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import type { GetAppConfig, GetDataloaderConfig, GetRoutesConfig, CreateLoggerReturnType } from '@ice/app/types';
+import type { GetAppConfig, GetDataloaderConfig, GetRoutesConfig, CreateLoggerReturnType, Config, OverwritePluginAPI } from '@ice/app/types';
 import type { Context } from 'build-scripts';
 import { parseManifest, rewriteAppWorker, getAppWorkerUrl, getMultipleManifest, type ParseOptions } from './manifestHelpers.js';
 import { getCompilerConfig } from './constants.js';
@@ -14,7 +14,7 @@ export interface Options {
   getAppConfig: GetAppConfig;
   getRoutesConfig: GetRoutesConfig;
   getDataloaderConfig: GetDataloaderConfig;
-  getAllPlugin: Context['getAllPlugin'];
+  getAllPlugin: Context<Config, OverwritePluginAPI>['getAllPlugin'];
   logger?: CreateLoggerReturnType;
 }
 
