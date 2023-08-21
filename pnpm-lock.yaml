@@ -1089,10 +1089,10 @@ importers:
 
   packages/ice:
     specifiers:
-      '@ice/bundles': 0.1.12
-      '@ice/route-manifest': 1.2.0
+      '@ice/bundles': 0.1.13
+      '@ice/route-manifest': 1.2.1
       '@ice/runtime': ^1.2.7
-      '@ice/webpack-config': 1.0.19
+      '@ice/webpack-config': 1.0.20
       '@swc/helpers': 0.5.1
       '@types/babel__generator': ^7.6.4
       '@types/babel__traverse': ^7.17.1
@@ -1274,7 +1274,7 @@ importers:
 
   packages/plugin-cavans:
     specifiers:
-      '@ice/app': ^3.2.8
+      '@ice/app': ^3.2.10
       '@ice/cache-canvas': workspace:*
       '@ice/runtime': ^1.2.5
       webpack: ^5.86.0
@@ -1607,7 +1607,7 @@ importers:
 
   packages/webpack-config:
     specifiers:
-      '@ice/bundles': 0.1.12
+      '@ice/bundles': 0.1.13
       '@rollup/pluginutils': ^4.2.0
       browserslist: ^4.19.3
       consola: ^2.15.3

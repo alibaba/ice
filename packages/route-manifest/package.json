@@ -1,6 +1,6 @@
 {
   "name": "@ice/route-manifest",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Generate route manifest",
   "type": "module",
   "main": "./esm/index.js",
