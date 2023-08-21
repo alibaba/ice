@@ -22,7 +22,7 @@ export async function generateRoutesInfo(
     // add exports filed for route manifest
     routeItem.exports = await getFileExports({
       rootDir,
-      file: formatPath(path.join('./src/pages', routeItem.file)),
+      file: formatPath(path.isAbsolute(routeItem.file) ? routeItem.file : path.join('./src/pages', routeItem.file)),
     });
   });
   await Promise.all(analyzeTasks);
@@ -55,12 +55,15 @@ export default {
   };
 }
 
+function getFilePath(file: string) {
+  return formatPath(path.isAbsolute(file) ? file : `@/pages/${file}`.replace(new RegExp(`${path.extname(file)}$`), ''));
+}
+
 export function getRoutesDefinition(nestRouteManifest: NestedRouteManifest[], lazy = false, depth = 0) {
   const routeImports: string[] = [];
   const routeDefinition = nestRouteManifest.reduce((prev, route) => {
     const { children, path: routePath, index, componentName, file, id, layout, exports } = route;
-
-    const componentPath = id.startsWith('__') ? file : `@/pages/${file}`.replace(new RegExp(`${path.extname(file)}$`), '');
+    const componentPath = id.startsWith('__') ? file : getFilePath(file);
 
     let loadStatement = '';
     if (lazy) {
