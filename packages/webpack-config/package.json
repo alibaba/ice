@@ -21,7 +21,7 @@
     "process": "^0.11.10"
   },
   "devDependencies": {
-    "webpack": "^5.86.0"
+    "webpack": "^5.88.0"
   },
   "scripts": {
     "watch": "tsc -w",

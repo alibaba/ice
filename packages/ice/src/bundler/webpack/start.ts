@@ -33,7 +33,6 @@ export async function startDevServer(
     a.split('/').filter(Boolean).length - b.split('/').filter(Boolean).length);
   const webTaskConfig = taskConfigs.find(({ name }) => name === WEB);
   const customMiddlewares = webpackConfigs[0].devServer?.setupMiddlewares;
-  // @ts-expect-error
   const defaultDevServerConfig = await getDefaultServerConfig(webpackConfigs[0].devServer, commandArgs);
   let devServerConfig: DevServerConfiguration = {
     ...defaultDevServerConfig,
@@ -47,7 +46,6 @@ export async function startDevServer(
         mock: commandArgs.mock,
         rootDir,
       });
-      // @ts-expect-error
       return customMiddlewares ? customMiddlewares(builtInMiddlewares, devServer) : builtInMiddlewares;
     },
   };

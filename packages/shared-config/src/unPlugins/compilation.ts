@@ -226,7 +226,7 @@ function getJsxTransformOptions({
       loose: false,
       ...(polyfill ? {
         mode: polyfill,
-        coreJs: '3.29',
+        coreJs: '3.32',
       } : {}),
     };
     const supportBrowsers = getSupportedBrowsers(rootDir, mode === 'development');

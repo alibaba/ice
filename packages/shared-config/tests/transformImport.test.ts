@@ -40,7 +40,7 @@ describe('transform core js path', () => {
   it('@swc/helpers esm', async () => {
     const orignalCode = fs.readFileSync(path.join(__dirname, './fixtures/transformImport/swc-esm.js'), 'utf-8');
     expect(await transformImport(orignalCode, coreJsPath))
-      .toBe('import _object_spread from \'@swc/helpers/src/_object_spread.mjs\';import \'react\';');
+      .toBe('import { _ as _object_spread } from \'@swc/helpers/_/_object_spread\';import \'react\';');
   });
   it('@swc/helpers cjs', async () => {
     const orignalCode = fs.readFileSync(path.join(__dirname, './fixtures/transformImport/swc.js'), 'utf-8');

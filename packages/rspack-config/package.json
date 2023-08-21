@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "@ice/shared-config": "1.0.0",
-    "@ice/bundles": "0.1.12"
+    "@ice/bundles": "0.1.13"
   },
   "devDependencies": {
     "@rspack/core": "^0.2.12"
