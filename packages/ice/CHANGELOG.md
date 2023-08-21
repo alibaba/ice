@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.2.10
+
+### Patch Changes
+
+- 5fbf49a8: fix: compatible with Win32 when enable onDemand request
+- 3d721315: feat: support define route with absolute path
+- 669a801f: fix: add exports of service for node api
+- Updated dependencies [3d721315]
+- Updated dependencies [2e22ce4e]
+  - @ice/route-manifest@1.2.1
+  - @ice/bundles@0.1.13
+  - @ice/webpack-config@1.0.20
+
 ## 3.2.9
 
 ### Patch Changes
