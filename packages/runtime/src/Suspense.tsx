@@ -36,7 +36,7 @@ const getHydrateData = (id: string) => {
       hasHydrateData = loaderData.has(id);
       data = window[LOADER].get(id);
     } else {
-      hasHydrateData = loaderData.hasOwnProperty(id);
+      hasHydrateData = Object.prototype.hasOwnProperty.call(loaderData, id);
       // If hasHydrateData is false, data will be undefined.
       data = window[LOADER][id];
     }
