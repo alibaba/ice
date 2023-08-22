@@ -1,7 +1,6 @@
-import type { BuildOptions } from 'esbuild';
 import unplugin from '@ice/bundles/compiled/unplugin/index.js';
+import type { BuildOptions } from 'esbuild';
 import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
-import type { Configuration } from 'webpack';
 import type { Config } from './types.js';
 import compilationPlugin from './unPlugins/compilation.js';
 import redirectImportPlugin from './unPlugins/redirectImport.js';
@@ -32,7 +31,7 @@ function transformInclude(id: string) {
   return !!id.match(/\.(js|jsx|ts|tsx|mjs|mts|css|less|scss)$/);
 }
 
-function getCompilerPlugins(rootDir: string, config: Config, compiler: 'webpack', transformOptions: TransformOptions): Configuration['plugins'];
+function getCompilerPlugins(rootDir: string, config: Config, compiler: 'webpack', transformOptions: TransformOptions): Config['plugins'];
 function getCompilerPlugins(rootDir: string, config: Config, compiler: 'esbuild', transformOptions: TransformOptions): BuildOptions['plugins'];
 function getCompilerPlugins(rootDir: string, config: Config, compiler: Compiler, transformOptions: TransformOptions) {
   const {
@@ -91,7 +90,7 @@ function getCompilerPlugins(rootDir: string, config: Config, compiler: Compiler,
     // Plugins will be transformed as webpack loader, the execute order of webpack loader is reversed.
     ? compilerPlugins
         .reverse()
-        .map((plugin) => createUnplugin(() => getPluginTransform(plugin, transformOptions)).webpack())
+        .map((plugin) => createUnplugin(() => getPluginTransform(plugin, transformOptions)).webpack()) as Config['plugins']
     : compilerPlugins.map(plugin => getPluginTransform(plugin, transformOptions));
 }
 

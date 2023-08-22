@@ -96,7 +96,7 @@ export interface Config {
 
   publicPath?: string;
 
-  loaders?: (RuleSetRule | '...')[];
+  loaders?: (undefined | null | false | '' | 0 | RuleSetRule | '...')[];
 
   plugins?: (
     | ((this: Compiler, compiler: Compiler) => void)

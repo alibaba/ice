@@ -1,16 +1,11 @@
 import { createRequire } from 'module';
-import * as path from 'path';
-import * as fs from 'fs';
 // FIXME when resolve mini-css-extract-plugin symbol in test
 import MiniCssExtractPlugin from '@ice/bundles/compiled/mini-css-extract-plugin/dist/index.js';
-import { sass, less, postcss } from '@ice/bundles';
+import { sass, less } from '@ice/bundles';
 import type webpack from 'webpack';
+import { getPostcssOpts, getCSSModuleLocalIdent } from '@ice/shared-config';
 import type { LoaderContext, Configuration } from 'webpack';
-import lodash from '@ice/bundles/compiled/lodash/index.js';
-import { getCSSModuleLocalIdent } from '../utils/getCSSModuleLocalIdent.js';
-import type { ModifyWebpackConfig, Config } from '../types.js';
-
-const { mergeWith, isArray } = lodash;
+import type { ModifyWebpackConfig, Config } from '@ice/shared-config/types';
 
 type CSSRuleConfig = [string, string?, Record<string, any>?];
 interface Options {
@@ -94,58 +89,5 @@ const css: ModifyWebpackConfig<Configuration, typeof webpack> = (config, ctx) =>
 
   return config;
 };
-
-function getPostcssOpts({
-  rootDir,
-  userPostcssOptions,
-  enableRpx2Vw,
-}: {
-  rootDir: string;
-  userPostcssOptions: Options['postcssOptions'];
-  enableRpx2Vw: boolean;
-}) {
-  const postcssConfigPath = path.join(rootDir, 'postcss.config.js');
-  const defaultPostcssOpts = {
-    // lock postcss version
-    implementation: postcss,
-  };
-  if (fs.existsSync(postcssConfigPath)) {
-    return defaultPostcssOpts;
-  } else {
-    const defaultPostcssPlugins = [
-      ['@ice/bundles/compiled/postcss-nested'],
-      ['@ice/bundles/compiled/postcss-preset-env', {
-        // Without any configuration options, PostCSS Preset Env enables Stage 2 features.
-        stage: 3,
-        autoprefixer: {
-          // Disable legacy flexbox support
-          flexbox: 'no-2009',
-        },
-        features: {
-          'custom-properties': false,
-        },
-      }],
-    ];
-    if (enableRpx2Vw) {
-      defaultPostcssPlugins.push(['@ice/bundles/compiled/postcss-plugin-rpx2vw']);
-    }
-    const postcssOpts = mergeWith(
-      {
-        ...defaultPostcssOpts,
-        postcssOptions: {
-          config: false,
-          plugins: defaultPostcssPlugins,
-        },
-      },
-      { postcssOptions: userPostcssOptions },
-      (objValue, srcValue) => {
-        if (isArray(objValue)) {
-          return objValue.concat(srcValue);
-        }
-      },
-    );
-    return postcssOpts;
-  }
-}
 
 export default css;

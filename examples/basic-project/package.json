@@ -23,6 +23,6 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.2",
     "speed-measure-webpack-plugin": "^1.5.0",
-    "webpack": "^5.86.0"
+    "webpack": "^5.88.0"
   }
 }

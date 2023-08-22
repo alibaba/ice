@@ -2,7 +2,7 @@ import webpackBundler from '@ice/bundles/compiled/webpack/index.js';
 import type ora from '@ice/bundles/compiled/ora/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { TaskConfig, Context } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/types';
+import type { Config } from '@ice/shared-config/types';
 import type webpack from 'webpack';
 import type { Urls, ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI, GetDataloaderConfig } from '../types/plugin.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';

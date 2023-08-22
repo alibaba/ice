@@ -1,4 +1,4 @@
-import type { PluginData } from '@ice/app/types';
+import type { Config, OverwritePluginAPI, PluginData } from '@ice/app/types';
 import type { Context } from 'build-scripts';
 
 // Keys of appConfig  need transform to manifest.
@@ -91,7 +91,7 @@ export const pageDefaultValueKeys = [
 ];
 
 export const getCompilerConfig = (options: {
-  getAllPlugin: Context['getAllPlugin'];
+  getAllPlugin: Context<Config, OverwritePluginAPI>['getAllPlugin'];
 }) => {
   const {
     getAllPlugin,

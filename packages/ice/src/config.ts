@@ -1,7 +1,7 @@
 import { createRequire } from 'module';
 import trustCert from '@ice/bundles/compiled/trusted-cert/index.js';
 import fse from 'fs-extra';
-import type { Config } from '@ice/webpack-config/types';
+import type { Config } from '@ice/shared-config/types';
 import type { UserConfigContext } from 'build-scripts';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { UserConfig } from './types/userConfig.js';
@@ -432,6 +432,10 @@ const cliOption = [
   {
     name: 'open',
     commands: ['start'],
+  },
+  {
+    name: 'speedup',
+    commands: ['start', 'build'],
   },
   {
     name: 'mode',

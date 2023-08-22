@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.1.0
+
+### Minor Changes
+
+- f5d155b5: feat: support build by rust tools
+
+### Patch Changes
+
+- Updated dependencies [1dbcfa51]
+  - @ice/bundles@0.1.14
+  - @ice/shared-config@1.0.1
+
 ## 1.0.20
 
 ### Patch Changes

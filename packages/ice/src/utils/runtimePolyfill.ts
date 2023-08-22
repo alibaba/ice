@@ -1,4 +1,4 @@
-import { isSupportedFeature } from '@ice/webpack-config';
+import { isSupportedFeature } from '@ice/shared-config';
 import type { ExtendsPluginAPI } from '../types/plugin.js';
 import type { UserConfig } from '../types/userConfig.js';
 

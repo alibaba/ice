@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.14
+
+### Patch Changes
+
+- 1dbcfa51: fix: bump @swc/core, webpack, swc plugins, core-js version
+
 ## 0.1.13
 
 ### Patch Changes

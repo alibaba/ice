@@ -60,6 +60,7 @@ export default class ServerCompilerPlugin {
     compiler.hooks.watchRun.tap(pluginName, () => {
       this.isCompiling = true;
     });
+    // @ts-expect-error webpack hooks type not match.
     compiler.hooks.emit.tapPromise(pluginName, async (compilation: Compilation) => {
       this.isCompiling = false;
       await this.compileTask(compilation);

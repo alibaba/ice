@@ -79,7 +79,7 @@ const getMiniappTask = ({
     // FIXME: enable cache will cause error, disable it temporarily
     enableCache: false,
     plugins,
-    loaders: module.rules,
+    loaders: module?.rules,
     optimization: {
       sideEffects: true,
       usedExports: true,
