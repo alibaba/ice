@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.3.0
+
+### Minor Changes
+
+- f5d155b5: feat: support build by rust tools
+
+### Patch Changes
+
+- Updated dependencies [f5d155b5]
+- Updated dependencies [1dbcfa51]
+  - @ice/webpack-config@1.1.0
+  - @ice/bundles@0.1.14
+  - @ice/rspack-config@1.0.1
+  - @ice/shared-config@1.0.1
+
 ## 3.2.10
 
 ### Patch Changes
