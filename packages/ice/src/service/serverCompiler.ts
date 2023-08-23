@@ -10,6 +10,7 @@ import type { ServerCompiler } from '../types/plugin.js';
 import type { UserConfig } from '../types/userConfig.js';
 import escapeLocalIdent from '../utils/escapeLocalIdent.js';
 import cssModulesPlugin from '../esbuild/cssModules.js';
+import rscServerRegister from '../esbuild/rscServerRegister.js';
 import externalPlugin from '../esbuild/external.js';
 import ignorePlugin from '../esbuild/ignore.js';
 import createAssetsPlugin from '../esbuild/assets.js';
@@ -195,6 +196,7 @@ export function createServerCompiler(options: Options) {
           externals: server.externals,
         }),
         server?.ignores && ignorePlugin(server.ignores),
+        rscServerRegister(),
         cssModulesPlugin({
           extract: false,
           generateLocalIdentName: function (name: string, filename: string) {

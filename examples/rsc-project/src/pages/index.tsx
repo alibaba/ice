@@ -1,4 +1,4 @@
-'use client';
+// 'use /client';
 import { Suspense } from 'react';
 import { Link, useData, useConfig, definePageConfig, defineDataLoader } from 'ice';
 // Not recommended but works.
@@ -47,12 +47,12 @@ export const pageConfig = definePageConfig(() => {
   };
 });
 
-export const dataLoader = defineDataLoader(() => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        name: 'Home',
-      });
-    }, 1 * 100);
-  });
-});
+// export const dataLoader = defineDataLoader(() => {
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       resolve({
+//         name: 'Home',
+//       });
+//     }, 1 * 100);
+//   });
+// });

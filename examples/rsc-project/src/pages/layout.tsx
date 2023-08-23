@@ -1,4 +1,4 @@
-'use client';
+// 'use /client';
 import { Outlet, useData, useConfig, definePageConfig, defineDataLoader } from 'ice';
 
 export default () => {
@@ -28,12 +28,12 @@ export const pageConfig = definePageConfig(() => {
   };
 });
 
-export const dataLoader = defineDataLoader(() => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        layout: true,
-      });
-    }, 1 * 100);
-  });
-});
+// export const dataLoader = defineDataLoader(() => {
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       resolve({
+//         layout: true,
+//       });
+//     }, 1 * 100);
+//   });
+// });

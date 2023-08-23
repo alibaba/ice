@@ -502,10 +502,11 @@ function renderDocument(options: RenderDocumentOptions): Response {
   matches.forEach(async (match) => {
     const { id } = match.route;
     const pageConfig = routesConfig[id];
-
-    loaderData[id] = {
-      pageConfig: pageConfig ? pageConfig({}) : {},
-    };
+    if (!pageConfig['$$id']) { //  rsc文件编译转换后，变成proxy对象而不是函数，应该也不需要执行这里的逻辑，暂时特判解决
+      loaderData[id] = {
+        pageConfig: pageConfig ? pageConfig({}) : {},
+      };
+    }
   });
 
   const appContext: AppContext = {
@@ -552,9 +553,9 @@ export function renderReactTree(ReactServerApp, props): Response { //  props 是
     'utf8',
   );
   const moduleMap = JSON.parse(manifest);
-  console.log('reactserverAPp', React.createElement(ReactServerApp));
+  const App = React.createElement(ReactServerApp, null, null);
   const { pipe, abort } = ReactServerDomWebpack.renderToPipeableStream(
-    React.createElement(ReactServerApp),
+    App,
     moduleMap,
   );
   return {
@@ -631,18 +632,20 @@ export async function renderRsc( // renderToRscFlow
   // console.log('routeManifest\n', routeManifest)
   // console.log('requestContext', requestContext)
 
+  console.log('RscServerRouter', RscServerRouter);
+
   const ReactServerApp = () => {
     return (
       <div>
-        <AppContextProvider value={{ ...appContext, routes: null, requestContext: null }}>
-          {/* <RscServerRouter routes={routeManifest} routerContext={routerContext} renderMode={renderMode}></RscServerRouter> */}
-          <RscServerRouter />
-          {/* <DocumentContextProvider value={documentContext}> */}
-          {/* <Document routerContext={routerContext} renderMode={renderMode} pagePath={routePath} /> */}
-          {/* <div>runServerApp</div> */}
-          {/* <AppRouter routes={routeManifest} routerContext={routerContext} renderMode={renderMode}/> */}
-          {/* </DocumentContextProvider> */}
-        </AppContextProvider>
+        {/* <AppContextProvider value={{ ...appContext, routes: null, requestContext: null }}> */}
+        {/* <RscServerRouter routes={routeManifest} routerContext={routerContext} renderMode={renderMode}></RscServerRouter> */}
+        <RscServerRouter />
+        {/* <DocumentContextProvider value={documentContext}> */}
+        {/* <Document routerContext={routerContext} renderMode={renderMode} pagePath={routePath} /> */}
+        <div>runServerApp</div>
+        {/* <AppRouter routes={routeManifest} routerContext={routerContext} renderMode={renderMode}/> */}
+        {/* </DocumentContextProvider> */}
+        {/* </AppContextProvider> */}
       </div>
     );
   };

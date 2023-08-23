@@ -2,8 +2,10 @@
 import '<%= globalStyle %>'
 <% } -%>
 import type { PageConfig, PageConfigDefinition } from './types';
-import path from 'path';
+//import path from 'path';
 import routeManifest from './route-manifest.json';
+import {createClientModuleProxy} from '@ice/runtime';
+import {registerServerReference} from '@ice/runtime';
 <%- framework.imports %>
 
 <%- framework.variablesStr %>
@@ -18,8 +20,10 @@ function definePageConfig(pageConfig: PageConfig | PageConfigDefinition): PageCo
 }
 
 export {
-  path,
+  //path,
   routeManifest,
+  createClientModuleProxy,
+  registerServerReference,
   definePageConfig,
   <% if (framework.exports) { -%><%- framework.exports %><% } -%>
 

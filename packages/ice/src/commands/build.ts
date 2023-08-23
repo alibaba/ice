@@ -187,13 +187,13 @@ const build = async (
     appConfig,
   });
 
-  await removeServerOutput(outputDir, userConfig.ssr);
+  await removeServerOutput(outputDir, userConfig.ssr || userConfig.rsc);
 
   return { compiler };
 };
 
-async function removeServerOutput(outputDir: string, ssr: boolean) {
-  if (!ssr) {
+async function removeServerOutput(outputDir: string, retainBuild: boolean) {
+  if (!retainBuild) {
     await fse.remove(path.join(outputDir, SERVER_OUTPUT_DIR));
   }
 }

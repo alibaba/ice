@@ -1,21 +1,25 @@
-'use client';
-
-import { DocumentClientBody, DocumentClientHead } from './documentClient';
+// import { DocumentClientBody, DocumentClientHead } from './documentClient';
+import { Meta, Title, Links, Main, Scripts } from 'ice';
 // import RscServerRouter from './rscServerRouter';
 
 // import { Meta, Title, Links, Main, Scripts } from 'ice';
 
-function Document(props) {
+function Document() {
   return (
     <html>
       <head>
         <meta charSet="utf-8" />
         <meta name="description" content="ICE Demo" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <DocumentClientHead />
+        {/* <DocumentClientHead /> */}
+        <Meta />
+        <Title />
+        <Links />
       </head>
       <body>
-        <DocumentClientBody />
+        {/* <DocumentClientBody /> */}
+        <Main />
+        <Scripts />
       </body>
     </html>
     // <>

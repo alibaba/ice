@@ -1,3 +1,4 @@
+'use client';
 import * as React from 'react';
 import type { WindowContext, RouteMatch, AssetsManifest } from './types.js';
 import { useAppContext, useAppData } from './AppContext.js';

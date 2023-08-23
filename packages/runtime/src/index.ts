@@ -45,6 +45,7 @@ import type {
   DataType,
   MainType,
 } from './Document.js';
+import { createClientModuleProxy, registerServerReference } from './reactFlightWebpackReference.js';
 import dataLoader, { defineDataLoader, defineServerDataLoader, defineStaticDataLoader, callDataLoader } from './dataLoader.js';
 import getRequestContext from './requestContext.js';
 import AppErrorBoundary from './AppErrorBoundary.js';
@@ -111,6 +112,8 @@ export {
   usePageAssets,
   path,
   App,
+  createClientModuleProxy,
+  registerServerReference,
   createServerRoutes,
   // API for data-loader.
   dataLoader,

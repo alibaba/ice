@@ -18,15 +18,15 @@
     "compression": "^1.7.4",
     "react": "^18.3.0-canary-1cea38448-20230530",
     "react-dom": "^18.3.0-canary-1cea38448-20230530",
-    "react-server-dom-webpack": "^18.3.0-canary-1cea38448-20230530",
-    "react-router-dom": "6.11.2"
+    "react-router-dom": "6.11.2",
+    "react-server-dom-webpack": "18.3.0-canary-1cea38448-20230530"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "speed-measure-webpack-plugin": "^1.5.0",
-    "webpack": "^5.86.0",
     "tslib": "^2.5.0",
-    "tsx": "^3.12.1"
+    "tsx": "^3.12.1",
+    "webpack": "^5.86.0"
   }
 }

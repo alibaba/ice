@@ -1,15 +1,16 @@
-'use client';
+// 'use /server';
 import { Link, useData, useConfig, definePageConfig } from 'ice';
 
-interface Data {
-  name: string;
-}
+// interface Data {
+//   name: string;
+// }
 
 export default function Blog() {
-  const data = useData<Data>();
-  const config = useConfig();
+  // const data = useData<Data>();
+  // const data = useData();
+  // const config = useConfig();
 
-  console.log('render Blog', 'data', data, 'config', config);
+  // console.log('render Blog', 'data', data, 'config', config);
 
   return (
     <>
