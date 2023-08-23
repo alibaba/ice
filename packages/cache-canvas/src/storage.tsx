@@ -14,14 +14,12 @@ export const Storage = {
         });
 
         if (canIUse) {
-          const res = window.__megability_bridge__.syncCall('userKVStorage', 'setItem', {
+          // The base64 of canvans may be too large, and the syncCall will block the thread.
+          window.__megability_bridge__.asyncCall('userKVStorage', 'setItem', {
             key,
             value,
             bizID,
           });
-          if (res && res.statusCode === 0) {
-            return;
-          }
         }
       }
 
