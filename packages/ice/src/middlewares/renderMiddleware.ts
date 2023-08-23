@@ -39,7 +39,9 @@ export default function createRenderMiddleware(options: Options): Middleware {
     const matches = matchRoutes(routes, req.path, basename);
     const isStaticResources = /\.(js|mjs|map|json|png|jpg|jpeg|gif|svg|eot|woff2|ttf)$/;
     // When documentOnly is true, it means that the app is CSR and it should return the html.
-    if (matches.length || documentOnly || !isStaticResources) {
+    if ((matches.length || documentOnly) &&
+      // Ignore static resources.
+      !isStaticResources.test(req.path)) {
       const serverModule = await excuteServerEntry();
       if (serverModule) {
         const requestContext: ServerContext = {
