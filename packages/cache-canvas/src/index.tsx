@@ -75,7 +75,7 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
     }
     // Cache base64 string when canvas rendered.
     if (renderedCanvas && strBase64) {
-      Storage.setItem(cacheKey, strBase64, {
+      return Storage.setItem(cacheKey, strBase64, {
         bizID,
       });
     }
