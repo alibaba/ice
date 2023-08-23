@@ -29,7 +29,7 @@ const SuspenseContext = React.createContext<SuspenseState | undefined>(undefined
 const getHydrateData = (id: string) => {
   let data = null;
   const loaderData = isClient && window[LOADER];
-  let hasHydrateData: any;
+  let hasHydrateData: boolean;
   if (loaderData) {
     // Compatible with the old version which use Map to store data.
     if (loaderData.has) {
@@ -166,6 +166,6 @@ function Data(props) {
   const data = useSuspenseData();
 
   return (
-    <script dangerouslySetInnerHTML={{ __html: `!function(){if (!window.${LOADER}) { window['${LOADER}'] = {};} window['${LOADER}']['${props.id}'] = ${JSON.stringify(data)}}();` }} />
+    <script dangerouslySetInnerHTML={{ __html: `!function(){var d = window['${LOADER}'] || {};d['${props.id}'] = ${JSON.stringify(data)}}();` }} />
   );
 }
