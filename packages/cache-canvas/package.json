@@ -1,6 +1,6 @@
 {
   "name": "@ice/cache-canvas",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "",
   "main": "./esm/index.js",
   "types": "./esm/index.d.ts",
