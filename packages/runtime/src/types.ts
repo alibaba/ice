@@ -100,7 +100,7 @@ export interface LoaderData {
 export interface AppContext {
   appConfig: AppConfig;
   appData: any;
-  documentData?: any;
+  unstable_documentData?: any;
   serverData?: any;
   assetsManifest?: AssetsManifest;
   loaderData?: LoadersData;

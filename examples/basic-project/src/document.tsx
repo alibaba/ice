@@ -1,10 +1,10 @@
-import { Meta, Title, Links, Main, Scripts, useAppData, useDocumentData } from 'ice';
+import { Meta, Title, Links, Main, Scripts, useAppData, unstable_useDocumentData } from 'ice';
 import type { AppData } from '@/types';
 
 function Document() {
   const appData = useAppData<AppData>();
   // Get document data when fallback to document only.
-  const data = useDocumentData();
+  const data = unstable_useDocumentData();
 
   console.log('document data', data);
 

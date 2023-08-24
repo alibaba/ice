@@ -82,8 +82,11 @@ function usePublicAppContext(): PublicAppContext {
 
 function useDocumentData() {
   const context = useInternalAppContext();
-  return context.documentData;
+  return context.unstable_documentData;
 }
+
+// @TODO: remove unstable prefix or refactor.
+export const unstable_useDocumentData = useDocumentData;
 
 export {
   getAppConfig,
@@ -97,7 +100,6 @@ export {
    */
   useAppContext,
   usePublicAppContext,
-  useDocumentData,
   useAppData,
   useData,
   getAppData,
