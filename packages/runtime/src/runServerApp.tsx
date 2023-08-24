@@ -1,9 +1,10 @@
 import type { ServerResponse, IncomingMessage } from 'http';
 import * as React from 'react';
-import * as ReactDOMServer from 'react-dom/server';
-import { parsePath } from 'history';
-import type { Location } from 'history';
 import type { RenderToPipeableStreamOptions } from 'react-dom/server';
+import * as ReactDOMServer from 'react-dom/server';
+import type { Location } from 'history';
+import { parsePath } from 'history';
+import { isFunction } from '@ice/shared';
 import type {
   AppContext, RouteItem, ServerContext,
   AppExport, AssetsManifest,
@@ -13,7 +14,7 @@ import type {
   DocumentComponent,
   RuntimeModules,
   AppData,
-  ServerAppRouterProps,
+  ServerAppRouterProps, DataLoaderConfig,
 } from './types.js';
 import Runtime from './runtime.js';
 import { AppContextProvider } from './AppContext.js';
@@ -31,11 +32,13 @@ import ServerRouter from './ServerRouter.js';
 import { renderHTMLToJS } from './renderHTMLToJS.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 
+
 interface RenderOptions {
   app: AppExport;
   assetsManifest: AssetsManifest;
   createRoutes: (options: Pick<RouteLoaderOptions, 'requestContext' | 'renderMode'>) => RouteItem[];
   runtimeModules: RuntimeModules;
+  documentDataLoader?: DataLoaderConfig;
   Document: DocumentComponent;
   documentOnly?: boolean;
   renderMode?: RenderMode;
@@ -262,12 +265,20 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
   }
 
+  // Execute document dataLoader.
   let documentData: any;
-  if (app?.documentData) {
-    documentData = await app.documentData(requestContext);
-    appContext.documentData = documentData;
+  if (renderOptions.documentDataLoader) {
+    const { loader } = renderOptions.documentDataLoader;
+    if (isFunction(loader)) {
+      documentData = await loader(requestContext);
+      // @TODO: document should have it's own context, not shared with app.
+      appContext.documentData = documentData;
+    } else {
+      console.warn('Document dataLoader only accepts function.');
+    }
   }
-  // don't need to execute getAppData in CSR
+
+  // Not to execute [getAppData] when CSR.
   if (!documentOnly) {
     try {
       appData = await getAppData(app, requestContext);

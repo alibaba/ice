@@ -82,7 +82,7 @@ function usePublicAppContext(): PublicAppContext {
 
 function useDocumentData() {
   const context = useInternalAppContext();
-  return context.unstable_documentData;
+  return context.documentData;
 }
 
 // @TODO: remove unstable prefix or refactor.

@@ -1582,6 +1582,7 @@ importers:
   packages/runtime:
     specifiers:
       '@ice/jsx-runtime': ^0.2.1
+      '@ice/shared': ^1.0.1
       '@remix-run/router': 1.7.2
       '@remix-run/web-fetch': ^4.3.3
       '@types/react': ^18.0.8
@@ -1599,6 +1600,7 @@ importers:
       source-map: ^0.7.4
     dependencies:
       '@ice/jsx-runtime': link:../jsx-runtime
+      '@ice/shared': link:../shared
       '@remix-run/router': 1.7.2
       abortcontroller-polyfill: 1.7.5
       ejs: 3.1.8
