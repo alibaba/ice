@@ -34,22 +34,23 @@ export async function generateSourceMap({
           generator.setSourceContent(source, consumer.sourceContentFor(source));
         });
 
-        // Get each map from script,and set it to new map.
+        // Get each map from script, and set it to the new map.
         consumer.eachMapping((mapping) => {
-            if (!mapping.name) return;
+          // No need to add mapping if no name and no line or no column.
+          if (!mapping.name) return;
 
-            generator.addMapping({
-              generated: {
-                line: mapping.generatedLine + BASE_LINE + extraLine + contentLines,
-                column: mapping.generatedColumn + BASE_COLUMN + extraColumn,
-              },
-              original: {
-                line: mapping.originalLine,
-                column: mapping.originalColumn,
-              },
-              source: mapping.source,
-              name: mapping.name,
-            });
+          generator.addMapping({
+            generated: {
+              line: mapping.generatedLine + BASE_LINE + extraLine + contentLines,
+              column: mapping.generatedColumn + BASE_COLUMN + extraColumn,
+            },
+            original: {
+              line: mapping.originalLine,
+              column: mapping.originalColumn,
+            },
+            source: mapping.source,
+            name: mapping.name,
+          });
         });
 
         resolve(true);
