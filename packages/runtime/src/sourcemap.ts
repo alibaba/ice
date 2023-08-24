@@ -27,6 +27,7 @@ export async function generateSourceMap({
       }
 
       const content = fse.readFileSync(sourceMapFile, 'utf-8');
+      const contentLines = content.split('\n').length;
       SourceMapConsumer.with(content, null, consumer => {
         // Set content by source.
         consumer.sources.forEach((source) => {
@@ -39,7 +40,7 @@ export async function generateSourceMap({
 
             generator.addMapping({
               generated: {
-                line: mapping.generatedLine + BASE_LINE + extraLine + content.split('\n').length,
+                line: mapping.generatedLine + BASE_LINE + extraLine + contentLines,
                 column: mapping.generatedColumn + BASE_COLUMN + extraColumn,
               },
               original: {
