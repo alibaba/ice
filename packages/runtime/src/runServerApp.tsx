@@ -180,7 +180,7 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
           sendResponse(req, res, result);
           resolve();
         },
-        onError: async (err) => {
+        onError: (err) => {
           onError && onError(err);
           // onError triggered after shell ready, should not downgrade to csr
           // and should not be throw to break the render process

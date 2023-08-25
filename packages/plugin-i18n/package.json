@@ -40,7 +40,7 @@
   ],
   "dependencies": {
     "@ice/jsx-runtime": "^0.2.0",
-    "@swc/helpers": "^0.4.14",
+    "@swc/helpers": "^0.5.1",
     "accept-language-parser": "^1.5.0",
     "universal-cookie": "^4.0.4",
     "url-join": "^5.0.0"
@@ -50,8 +50,8 @@
     "@ice/app": "workspace:^",
     "@ice/runtime": "workspace:^",
     "@remix-run/router": "^1.6.1",
-    "@types/react": "^18.0.33",
     "@types/accept-language-parser": "^1.5.3",
+    "@types/react": "^18.0.33",
     "webpack-dev-server": "^4.13.2"
   },
   "peerDependencies": {
