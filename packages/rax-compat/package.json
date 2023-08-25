@@ -48,10 +48,9 @@
     "compat"
   ],
   "dependencies": {
-    "@swc/helpers": "^0.4.3",
-    "style-unit": "^3.0.5",
-    "create-react-class": "^15.7.0",
-    "@ice/appear": "^0.2.0"
+    "@ice/appear": "^0.2.0",
+    "@swc/helpers": "^0.5.1",
+    "style-unit": "^3.0.5"
   },
   "devDependencies": {
     "@ice/pkg": "^1.5.0",
