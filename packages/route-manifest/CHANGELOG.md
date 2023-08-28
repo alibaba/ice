@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.2.1
+
+### Patch Changes
+
+- 3d721315: feat: support define route with absolute path
+
 ## 1.2.0
 
 ### Minor Changes

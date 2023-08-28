@@ -1,5 +1,54 @@
 # @ice/runtime
 
+## 1.2.7
+
+### Patch Changes
+
+- a96af97b: fix: render twice when navigate and bump react-router to 6.14.2
+- d33f3e65: feat: report detail recoverable error
+- 11dd752b: fix: side effect of update suspense data may cause mulit time call
+- 67eae5c1: feat: support app config of runApp
+
+## 1.2.6
+
+### Patch Changes
+
+- b691b9e9: feat: support remove router even if route count is greater than 1
+
+## 1.2.5
+
+### Patch Changes
+
+- 29ad1b52: fix: add warning log for mutate suspense data directly
+
+## 1.2.4
+
+### Patch Changes
+
+- f839c67d: fix: loadRouteModule error when only has one router
+- 137d6b1c: fix: should downgrade to csr when server data loader error
+  fix: fallback should be optional
+- 474e1935: feat: support usePageAssets
+  feat: export useAppContext
+- c68c5da3: fix: replace history methods by router navigate for backwards compatibility
+- 9eec33ad: feat: support weex sourcemap when start
+- c4f625a2: fix: optimize single router
+
+## 1.2.3
+
+### Patch Changes
+
+- af0a6d7a: fix: bump react-router version to fix https://github.com/remix-run/react-router/issues/10469
+- ed4ed7ee: fix: auto polyfill for abortcontroller
+
+## 1.2.2
+
+### Patch Changes
+
+- d1df9ffa: fix: should return after reject error
+- 51411c4e: feat: hooks for server render
+- 71f32f9c: fix: add default polyfill for signal
+
 ## 1.2.1
 
 ### Patch Changes

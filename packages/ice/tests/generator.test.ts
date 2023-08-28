@@ -39,14 +39,14 @@ describe('generateDeclaration', () => {
   it('aliased exports', () => {
     const { importStr, exportStr } = generateDeclaration([{
       source: 'react-helmet',
-      specifier: 'Helmet',
+      specifier: ['Helmet'],
       alias: {
         Helmet: 'Head',
       },
       declarationType: DeclarationType.NORMAL,
     }]);
-    expect(importStr).toBe('import Helmet from \'react-helmet\';');
-    expect(exportStr).toBe('Head: Helmet,');
+    expect(importStr).toBe('import { Helmet as Head } from \'react-helmet\';');
+    expect(exportStr).toBe('Head,');
   });
 });
 

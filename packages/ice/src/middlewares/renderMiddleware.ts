@@ -2,7 +2,7 @@ import type { ExpressRequestHandler, Middleware } from 'webpack-dev-server';
 import type { ServerContext, RenderMode } from '@ice/runtime';
 import matchRoutes from '@ice/runtime/matchRoutes';
 import type { TaskConfig } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/types';
+import type { Config } from '@ice/shared-config/types';
 import type { ExtendsPluginAPI } from '../types/plugin.js';
 import getRouterBasename from '../utils/getRouterBasename.js';
 import warnOnHashRouterEnabled from '../utils/warnOnHashRouterEnabled.js';
@@ -39,7 +39,9 @@ export default function createRenderMiddleware(options: Options): Middleware {
     const matches = matchRoutes(routes, req.path, basename);
     const isStaticResources = /\.(js|mjs|map|json|png|jpg|jpeg|gif|svg|eot|woff2|ttf)$/;
     // When documentOnly is true, it means that the app is CSR and it should return the html.
-    if (matches.length || documentOnly || !isStaticResources) {
+    if ((matches.length || documentOnly) &&
+      // Ignore static resources.
+      !isStaticResources.test(req.path)) {
       const serverModule = await excuteServerEntry();
       if (serverModule) {
         const requestContext: ServerContext = {

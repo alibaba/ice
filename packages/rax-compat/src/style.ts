@@ -1,5 +1,5 @@
 import { cached, convertUnit } from 'style-unit';
-import { isNumber, isObject } from './type.js';
+import { isNumber, isObject, isString } from './type.js';
 
 // https://github.com/alibaba/rax/blob/master/packages/driver-dom/src/index.js
 // opacity -> opa
@@ -29,8 +29,10 @@ export function compatStyle<S = object>(style?: S): S | void {
       if (isNumber(value) && isDimensionalProp(key)) {
         // Transform rpx to vw.
         result[key] = convertUnit(`${value}rpx`);
-      } else {
+      } else if (isString(value)) { // Not transform non-string value.
         result[key] = convertUnit(value);
+      } else {
+        result[key] = value;
       }
     }
     return result;

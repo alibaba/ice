@@ -2,7 +2,7 @@ import webpackBundler from '@ice/bundles/compiled/webpack/index.js';
 import type ora from '@ice/bundles/compiled/ora/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { TaskConfig, Context } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/types';
+import type { Config } from '@ice/shared-config/types';
 import type webpack from 'webpack';
 import type { Urls, ServerCompiler, GetAppConfig, GetRoutesConfig, ExtendsPluginAPI, GetDataloaderConfig } from '../types/plugin.js';
 import formatWebpackMessages from '../utils/formatWebpackMessages.js';
@@ -136,7 +136,7 @@ async function webpackCompiler(options: {
   const firstWebpackConfig = webpackConfigs[0];
   firstWebpackConfig.plugins.push((compiler: webpack.Compiler) => {
     compiler.hooks.beforeCompile.tap('spinner', () => {
-      spinner.text = 'compiling...\n';
+      spinner.text = 'Compiling...\n';
     });
     compiler.hooks.afterEmit.tap('spinner', () => {
       spinner.stop();
@@ -146,9 +146,9 @@ async function webpackCompiler(options: {
   try {
     // @ts-ignore
     compiler = webpackBundler(webpackConfigs);
-  } catch (err) {
+  } catch (error) {
     logger.error('Webpack compile error.');
-    logger.error(err.message || err);
+    logger.error(error);
   }
 
   let isFirstCompile = true;

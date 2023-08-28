@@ -9,6 +9,8 @@ import createRoutes from './routes';
 <% } -%>
 <%- runtimeOptions.imports %>
 <% if(dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
+import type { RunClientAppOptions } from '@ice/runtime';
+
 const getRouterBasename = () => {
   const appConfig = getAppConfig(app);
   return appConfig?.router?.basename ?? <%- basename %> ?? '';
@@ -19,7 +21,7 @@ const App = <></>;
 
 <% if(!dataLoaderImport.imports) {-%>
 let dataLoaderFetcher = (options) => {
-  window.fetch(options.url, options);
+  return window.fetch(options.url, options);
 }
 
 let dataLoaderDecorator = (dataLoader) => {
@@ -27,31 +29,47 @@ let dataLoaderDecorator = (dataLoader) => {
 }
 <% } -%>
 
-const render = (customOptions: Record<string, any> = {}) => {
-  const appProps = {
-    app,
-    runtimeModules: {
-      commons,
-      statics,
-    },
-    <% if (enableRoutes) { %>createRoutes,<% } %>
-    basename: getRouterBasename(),
-    hydrate: <%- hydrate %>,
-    memoryRouter: <%- memoryRouter || false %>,
-    dataLoaderFetcher,
-    dataLoaderDecorator,
+const renderOptions: RunClientAppOptions = {
+  app,
+  runtimeModules: {
+    commons,
+    statics,
+  },
+  <% if (enableRoutes) { %>createRoutes,<% } %>
+  basename: getRouterBasename(),
+  hydrate: <%- hydrate %>,
+  memoryRouter: <%- memoryRouter || false %>,
+  dataLoaderFetcher,
+  dataLoaderDecorator,
+  runtimeOptions: {
+<% if (runtimeOptions.exports) { -%>
+  <%- runtimeOptions.exports %>
+<% } -%>
+<% if (locals.customRuntimeOptions) { -%>...<%- JSON.stringify(customRuntimeOptions) %>,<% } -%>
+  },
+};
+
+const defaultRender = (customOptions: Partial<RunClientAppOptions> = {}) => {
+  return runClientApp({
+    ...renderOptions,
     ...customOptions,
     runtimeOptions: {
-  <% if (runtimeOptions.exports) { -%>
-    <%- runtimeOptions.exports %>
-  <% } -%>
-  <% if (locals.customRuntimeOptions) { -%>
-  ...<%- JSON.stringify(customRuntimeOptions) %>,
-  <% } -%>
+      ...(renderOptions.runtimeOptions || {}),
       ...customOptions.runtimeOptions,
     },
-  };
-  return runClientApp(appProps);
+  });
+};
+
+const renderApp = (appExport: any, customOptions: Partial<RunClientAppOptions>) => {
+  if (appExport.runApp) {
+    return appExport.runApp(defaultRender, renderOptions);
+  } else {
+    return defaultRender(customOptions);
+  }
+};
+
+const render = (customOptions: Partial<RunClientAppOptions> = {}) => {
+  renderApp(app, customOptions);
 };
 
 <%- entryCode %>

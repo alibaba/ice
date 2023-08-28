@@ -1,5 +1,5 @@
 import type { TaskConfig } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/types';
+import type { Config } from '@ice/shared-config/types';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 
 const { mergeWith } = lodash;

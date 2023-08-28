@@ -1,7 +1,7 @@
 import { createRequire } from 'module';
 import trustCert from '@ice/bundles/compiled/trusted-cert/index.js';
 import fse from 'fs-extra';
-import type { Config } from '@ice/webpack-config/types';
+import type { Config } from '@ice/shared-config/types';
 import type { UserConfigContext } from 'build-scripts';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { UserConfig } from './types/userConfig.js';
@@ -193,7 +193,7 @@ const userConfig = [
   },
   {
     name: 'dropLogLevel',
-    validation: 'string',
+    validation: 'boolean|array|string',
     setConfig: (config: Config, dropLogLevel: UserConfig['dropLogLevel']) => {
       const levels = {
         trace: 0,
@@ -203,17 +203,38 @@ const userConfig = [
         warn: 3,
         error: 4,
       };
-      const level = levels[dropLogLevel];
-      if (typeof level === 'number') {
+      if (typeof dropLogLevel === 'string') {
+        const level = levels[dropLogLevel];
+        if (typeof level === 'number') {
+          return mergeDefaultValue(config, 'minimizerOptions', {
+            compress: {
+              pure_funcs: Object.keys(levels)
+                .filter((methodName) => levels[methodName] <= level)
+                .map((methodName) => `console.${methodName}`),
+            },
+          });
+        } else {
+          logger.warn(
+            `If you use a string as the attribute value of dropLogLevel you should enter one of the following strings [${Object.keys(
+              levels,
+            ).join(',')}]`,
+          );
+        }
+      } else if (dropLogLevel === true) {
         return mergeDefaultValue(config, 'minimizerOptions', {
           compress: {
-            pure_funcs: Object.keys(levels)
-              .filter((methodName) => levels[methodName] <= level)
-              .map(methodName => `console.${methodName}`),
+            drop_console: true,
           },
         });
-      } else {
-        logger.warn(`dropLogLevel only support [${Object.keys(levels).join(',')}]`);
+      } else if (Array.isArray(dropLogLevel)) {
+        const pureFuncs = dropLogLevel.map((method) => `console.${method}`);
+        return mergeDefaultValue(config, 'minimizerOptions', {
+          compress: {
+            pure_funcs: pureFuncs,
+          },
+        });
+      } else if (dropLogLevel !== false) {
+        logger.warn('dropLogLevel support boolean, array and string');
       }
     },
   },
@@ -226,16 +247,21 @@ const userConfig = [
       if (customValue === true) {
         compileRegex = /node_modules\/*/;
       } else if (customValue && customValue.length > 0) {
-        compileRegex = new RegExp(customValue.map((dep: string | RegExp) => {
-          if (dep instanceof RegExp) {
-            return dep.source;
-          } else if (typeof dep === 'string') {
-            // add default prefix of node_modules
-            const matchStr = `node_modules/?.+${dep}/`;
-            return matchStr;
-          }
-          return false;
-        }).filter(Boolean).join('|'));
+        compileRegex = new RegExp(
+          customValue
+            .map((dep: string | RegExp) => {
+              if (dep instanceof RegExp) {
+                return dep.source;
+              } else if (typeof dep === 'string') {
+                // add default prefix of node_modules
+                const matchStr = `node_modules/?.+${dep}/`;
+                return matchStr;
+              }
+              return false;
+            })
+            .filter(Boolean)
+            .join('|'),
+        );
       }
       if (compileRegex) {
         config.compileIncludes = [compileRegex];
@@ -371,7 +397,9 @@ const userConfig = [
     setConfig: (config: Config, codeSplitting: UserConfig['codeSplitting'], context: UserConfigContext) => {
       const { originalUserConfig } = context;
       if ('splitChunks' in originalUserConfig) {
-        logger.warn('splitChunks is deprecated, please use codeSplitting instead.https://ice.work/docs/guide/basic/config#codesplitting');
+        logger.warn(
+          'splitChunks is deprecated, please use codeSplitting instead.https://ice.work/docs/guide/basic/config#codesplitting',
+        );
       } else {
         // When codeSplitting is set to false / router, do not config splitChunks.
         if (codeSplitting === false || codeSplitting === 'page') {
@@ -392,6 +420,16 @@ const userConfig = [
       });
     },
   },
+  {
+    name: 'featurePolyfill',
+    validation: 'object',
+    defaultValue: {},
+  },
+  {
+    name: 'htmlGenerating',
+    validation: 'boolean',
+    defaultValue: true,
+  },
 ];
 
 const cliOption = [
@@ -402,6 +440,10 @@ const cliOption = [
   {
     name: 'open',
     commands: ['start'],
+  },
+  {
+    name: 'speedup',
+    commands: ['start', 'build'],
   },
   {
     name: 'mode',
@@ -464,8 +506,4 @@ function defineConfig(config: UserConfig | (() => UserConfig)) {
   return config || defaultUserConfig;
 }
 
-export {
-  defineConfig,
-  userConfig,
-  cliOption,
-};
+export { defineConfig, userConfig, cliOption };

@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.1.14
+
+### Patch Changes
+
+- 1dbcfa51: fix: bump @swc/core, webpack, swc plugins, core-js version
+
+## 0.1.13
+
+### Patch Changes
+
+- 2e22ce4e: fix: hmr failed when export pageConfg or dataLoader in page routes
+
+## 0.1.12
+
+### Patch Changes
+
+- f95bbc2e: chore: bump webpack version(5.86.0)
+- c70c7737: fix: bump webpack(5.84.1) and webpack-dev-server(4.15.0)
+
+## 0.1.11
+
+### Patch Changes
+
+- ed4ed7ee: fix: auto polyfill for abortcontroller
+
 ## 0.1.10
 
 ### Patch Changes

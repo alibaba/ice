@@ -9,6 +9,9 @@ export default defineConfig(() => ({
   syntaxFeatures: {
     exportDefaultFrom: true,
   },
+  featurePolyfill: {
+    abortcontroller: false,
+  },
   server: {
     onDemand: true,
     format: 'esm',

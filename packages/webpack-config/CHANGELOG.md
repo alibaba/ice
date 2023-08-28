@@ -1,5 +1,56 @@
 # Changelog
 
+## 1.1.0
+
+### Minor Changes
+
+- f5d155b5: feat: support build by rust tools
+
+### Patch Changes
+
+- Updated dependencies [1dbcfa51]
+  - @ice/bundles@0.1.14
+  - @ice/shared-config@1.0.1
+
+## 1.0.20
+
+### Patch Changes
+
+- Updated dependencies [2e22ce4e]
+  - @ice/bundles@0.1.13
+
+## 1.0.19
+
+### Patch Changes
+
+- cf8a78e3: feat: support code splitting strategy of page-vendors
+- 92ec144f: fix: do not compile runtime library of tslib
+
+## 1.0.18
+
+### Patch Changes
+
+- f95bbc2e: fix: optimize deprecation warning of webpack
+- c70c7737: fix: refactor error handling
+- 1171475d: fix: ignore hydration error in dev server overly
+- Updated dependencies [f95bbc2e]
+- Updated dependencies [c70c7737]
+  - @ice/bundles@0.1.12
+
+## 1.0.17
+
+### Patch Changes
+
+- ed4ed7ee: fix: auto polyfill for abortcontroller
+- Updated dependencies [ed4ed7ee]
+  - @ice/bundles@0.1.11
+
+## 1.0.16
+
+### Patch Changes
+
+- b21ab5cd: fix: compile @remix-run/router when minify is swc
+
 ## 1.0.15
 
 ### Patch Changes

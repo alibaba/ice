@@ -199,3 +199,28 @@ function Document() {
   );
 }
 ```
+
+### usePageAssets
+
+获取当前页面的所有 Assets 资源，包含 CSS 和 JS。
+
+```ts title="src/document.ts"
+import { usePageAssets } from 'ice';
+
+function Document() {
+  const pageAssets = usePageAssets();
+  const pageScripts = pageAssets.filter(src => src.indexOf('.js') > -1);
+
+  console.log(pageScripts);
+
+  return (
+    <html>
+      <head>
+      </head>
+      <body>
+        <Main />
+      </body>
+    </html>
+  );
+}
+```

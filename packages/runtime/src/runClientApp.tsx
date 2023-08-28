@@ -4,6 +4,7 @@ import { createHashHistory, createBrowserHistory, createMemoryHistory } from '@r
 import type { History } from '@remix-run/router';
 import type {
   AppContext, WindowContext, AppExport, RouteItem, RuntimeModules, AppConfig, AssetsManifest, ClientAppRouterProps,
+  ErrorStack,
 } from './types.js';
 import { createHistory as createHistorySingle } from './singleRouter.js';
 import { setHistory } from './history.js';
@@ -18,11 +19,15 @@ import { setFetcher, setDecorator } from './dataLoader.js';
 import ClientRouter from './ClientRouter.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 import { AppContextProvider } from './AppContext.js';
+import { deprecatedHistory } from './utils/deprecatedHistory.js';
+import reportRecoverableError from './reportRecoverableError.js';
+
+export type CreateRoutes = (options: Pick<RouteLoaderOptions, 'renderMode' | 'requestContext'>) => RouteItem[];
 
 export interface RunClientAppOptions {
   app: AppExport;
   runtimeModules: RuntimeModules;
-  createRoutes?: (options: Pick<RouteLoaderOptions, 'renderMode' | 'requestContext'>) => RouteItem[];
+  createRoutes?: CreateRoutes;
   hydrate?: boolean;
   basename?: string;
   memoryRouter?: boolean;
@@ -30,6 +35,7 @@ export interface RunClientAppOptions {
   dataLoaderFetcher?: Function;
   dataLoaderDecorator?: Function;
 }
+
 
 export default async function runClientApp(options: RunClientAppOptions) {
   const {
@@ -70,7 +76,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
   };
   const history = createHistory(appConfig, historyOptions);
   // Set history for import it from ice.
-  setHistory(history);
+  setHistory(deprecatedHistory(history));
 
   const appContext: AppContext = {
     appExport: app,
@@ -104,20 +110,14 @@ export default async function runClientApp(options: RunClientAppOptions) {
 
   const needHydrate = hydrate && !downgrade && !documentOnly;
   if (needHydrate) {
-    const defaultOnRecoverableError = typeof reportError === 'function' ? reportError
-      : function (error: unknown) {
-        console['error'](error);
-      };
     runtime.setRender((container, element) => {
-      const hydrateOptions = revalidate
-        ? {
-          onRecoverableError(error: unknown) {
-            // Ignore this error caused by router.revalidate
-            if ((error as Error)?.message?.indexOf('This Suspense boundary received an update before it finished hydrating.') == -1) {
-              defaultOnRecoverableError(error);
-            }
-          },
-        } : {};
+      const hydrateOptions: ReactDOM.HydrationOptions = {
+        // @ts-ignore react-dom do not define the type of second argument of onRecoverableError.
+        onRecoverableError: appConfig?.app?.onRecoverableError ||
+        ((error: unknown, errorInfo: ErrorStack) => {
+          reportRecoverableError(error, errorInfo, { ignoreRuntimeWarning: revalidate });
+        }),
+      };
       return ReactDOM.hydrateRoot(container, element, hydrateOptions);
     });
   }
@@ -138,7 +138,7 @@ interface RenderOptions {
 
 async function render({ history, runtime, needHydrate }: RenderOptions) {
   const appContext = runtime.getAppContext();
-  const { appConfig, loaderData, routes, basename } = appContext;
+  const { appConfig, loaderData, routes, basename, routePath } = appContext;
   const appRender = runtime.getRender();
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
   const AppRouter = runtime.getAppRouter<ClientAppRouterProps>();
@@ -152,14 +152,16 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
     console.warn(`Root node #${rootId} is not found, current root is automatically created by the framework.`);
   }
   const hydrationData = needHydrate ? { loaderData } : undefined;
+  const routeModuleCache = {};
+  const location = history.location ? history.location : { pathname: routePath || window.location.pathname };
   if (needHydrate) {
-    const lazyMatches = matchRoutes(routes, history.location, basename).filter((m) => m.route.lazy);
+    const lazyMatches = matchRoutes(routes, location, basename).filter((m) => m.route.lazy);
     if (lazyMatches?.length > 0) {
       // Load the lazy matches and update the routes before creating your router
       // so we can hydrate the SSR-rendered content synchronously.
       await Promise.all(
         lazyMatches.map(async (m) => {
-          let routeModule = await m.route.lazy();
+          let routeModule = await loadRouteModule(m.route, routeModuleCache);
           Object.assign(m.route, {
             ...routeModule,
             lazy: undefined,
@@ -180,8 +182,9 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
   let singleComponent = null;
   let routeData = null;
   if (process.env.ICE_CORE_ROUTER !== 'true') {
-    const { Component, loader } = await loadRouteModule(routes[0]);
-    singleComponent = Component || routes[0].Component;
+    const singleRoute = matchRoutes(routes, location, basename)[0];
+    const { Component, loader } = await loadRouteModule(singleRoute.route, routeModuleCache);
+    singleComponent = Component || singleRoute.route.Component;
     routeData = loader && await loader();
   }
   const renderRoot = appRender(
@@ -215,10 +218,10 @@ function createHistory(
   const createHistory = process.env.ICE_CORE_ROUTER === 'true'
     ? createRouterHistory(appConfig?.router?.type, memoryRouter)
     : createHistorySingle;
-  let createHistoryOptions: Parameters<typeof createHistory>[0] = { window, v5Compat: true };
+  let createHistoryOptions: Parameters<typeof createHistory>[0] = { window };
 
   if (routerType === 'memory') {
-    const memoryOptions: Parameters<typeof createMemoryHistory>[0] = { v5Compat: true };
+    const memoryOptions: Parameters<typeof createMemoryHistory>[0] = {};
     memoryOptions.initialEntries = appConfig?.router?.initialEntries || getRoutesPath(routes);
     if (initialEntry) {
       const initialIndex = memoryOptions.initialEntries.findIndex((entry) =>

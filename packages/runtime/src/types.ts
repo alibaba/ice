@@ -14,7 +14,13 @@ type App = Partial<{
   rootId: string;
   strict: boolean;
   errorBoundary: boolean;
+  onRecoverableError: (error: unknown, errorInfo: ErrorStack) => void;
 } & Record<AppLifecycle, VoidFunction>>;
+
+export interface ErrorStack {
+  componentStack?: string;
+  digest?: string;
+}
 
 export type AppData = any;
 export type RouteData = any;
@@ -111,8 +117,13 @@ export interface AppContext {
   revalidate?: boolean;
 }
 
+export type PublicAppContext = Pick<
+AppContext,
+ 'appConfig' | 'routePath' | 'downgrade' | 'documentOnly' | 'renderMode'
+>;
+
 export type WindowContext = Pick<
-  AppContext,
+AppContext,
   'appData' | 'loaderData' | 'routePath' | 'downgrade' | 'matchedIds' | 'documentOnly' | 'renderMode' | 'serverData' | 'revalidate'
 >;
 

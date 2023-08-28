@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { createRequire } from 'module';
-import type { Config } from '@ice/webpack-config/types';
+import type { Config } from '@ice/shared-config/types';
 import { CACHE_DIR, RUNTIME_TMP_DIR, WEB } from '../../constant.js';
 
 const require = createRequire(import.meta.url);

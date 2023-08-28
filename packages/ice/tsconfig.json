@@ -3,7 +3,8 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "esm",
-    "preserveSymlinks": true
+    "preserveSymlinks": true,
+    "moduleDetection": "legacy"
   },
   "include": ["src"],
   "exclude": ["src/shims/*"]

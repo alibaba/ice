@@ -1,5 +1,126 @@
 # Changelog
 
+## 3.3.0
+
+### Minor Changes
+
+- f5d155b5: feat: support build by rust tools
+
+### Patch Changes
+
+- Updated dependencies [f5d155b5]
+- Updated dependencies [1dbcfa51]
+  - @ice/webpack-config@1.1.0
+  - @ice/bundles@0.1.14
+  - @ice/rspack-config@1.0.1
+  - @ice/shared-config@1.0.1
+
+## 3.2.10
+
+### Patch Changes
+
+- 5fbf49a8: fix: compatible with Win32 when enable onDemand request
+- 3d721315: feat: support define route with absolute path
+- 669a801f: fix: add exports of service for node api
+- Updated dependencies [3d721315]
+- Updated dependencies [2e22ce4e]
+  - @ice/route-manifest@1.2.1
+  - @ice/bundles@0.1.13
+  - @ice/webpack-config@1.0.20
+
+## 3.2.9
+
+### Patch Changes
+
+- a96af97b: fix: render twice when navigate and bump react-router to 6.14.2
+- 67eae5c1: feat: support app config of runApp
+- Updated dependencies [a96af97b]
+- Updated dependencies [d33f3e65]
+- Updated dependencies [11dd752b]
+- Updated dependencies [67eae5c1]
+  - @ice/runtime@1.2.7
+
+## 3.2.8
+
+### Patch Changes
+
+- 27a72536: fix: always external dependencies when get config
+- cf8a78e3: feat: support code splitting strategy of page-vendors
+- b691b9e9: feat: support remove router even if route count is greater than 1
+- Updated dependencies [cf8a78e3]
+- Updated dependencies [b691b9e9]
+- Updated dependencies [92ec144f]
+  - @ice/webpack-config@1.0.19
+  - @ice/runtime@1.2.6
+
+## 3.2.7
+
+### Patch Changes
+
+- 429a2a83: fix: relative id in pipe transform
+- c7aad4eb: chore: add user config comments
+- d8f4520f: fix: alias for type declaration
+- 110b282b: feat: support user config htmlGenerating to control the generation of html
+- Updated dependencies [29ad1b52]
+  - @ice/runtime@1.2.5
+
+## 3.2.6
+
+### Patch Changes
+
+- 94dac52e: chore: add return for default dataLoaderFetcher
+- 474e1935: feat: support usePageAssets
+  feat: export useAppContext
+- c70c7737: fix: refactor error handling
+- abdd49de: fix: modified task alias not be used
+- b10d9cb8: fix: support source map for stack traces in node
+- c4f625a2: fix: optimize single router
+- Updated dependencies [f839c67d]
+- Updated dependencies [137d6b1c]
+- Updated dependencies [f95bbc2e]
+- Updated dependencies [474e1935]
+- Updated dependencies [c68c5da3]
+- Updated dependencies [f95bbc2e]
+- Updated dependencies [c70c7737]
+- Updated dependencies [c70c7737]
+- Updated dependencies [1171475d]
+- Updated dependencies [9eec33ad]
+- Updated dependencies [c4f625a2]
+  - @ice/runtime@1.2.4
+  - @ice/bundles@0.1.12
+  - @ice/webpack-config@1.0.18
+
+## 3.2.5
+
+### Patch Changes
+
+- af0a6d7a: fix: bump react-router version to fix https://github.com/remix-run/react-router/issues/10469
+- ed4ed7ee: fix: auto polyfill for abortcontroller
+- Updated dependencies [af0a6d7a]
+- Updated dependencies [ed4ed7ee]
+  - @ice/runtime@1.2.3
+  - @ice/webpack-config@1.0.17
+  - @ice/bundles@0.1.11
+
+## 3.2.4
+
+### Patch Changes
+
+- Updated dependencies [b21ab5cd]
+  - @ice/webpack-config@1.0.16
+
+## 3.2.3
+
+### Patch Changes
+
+- 94e7dff2: fix: pass `getRoutesFile` for onDemand server runner.
+- 51411c4e: feat: hooks for server render
+- 71f32f9c: fix: add default polyfill for signal
+- Updated dependencies [d1df9ffa]
+- Updated dependencies [51411c4e]
+- Updated dependencies [71f32f9c]
+  - @ice/runtime@1.2.2
+
 ## 3.2.2
 
 ### Patch Changes

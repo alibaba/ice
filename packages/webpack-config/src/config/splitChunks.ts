@@ -11,6 +11,9 @@ interface NameModule {
   libIdent?: Function;
   type: string;
   updateHash: (hash: crypto.Hash) => void;
+  buildInfo?: {
+    hash?: string;
+  };
 }
 const require = createRequire(import.meta.url);
 
@@ -32,14 +35,15 @@ const isModuleCSS = (module: { type: string }): boolean => {
 type SplitChunksConfig = webpack.Configuration['optimization']['splitChunks'];
 
 // Split all node_modules into a single vendors chunk.
-export const getVendorStrategy = (): SplitChunksConfig => {
+export const getVendorStrategy = (options: SplitChunksConfig = {}): SplitChunksConfig => {
   return {
+    ...options,
     cacheGroups: {
       vendors: {
         test: /[\\/]node_modules[\\/]/,
         priority: 10,
         name: 'vendors',
-        chunks: 'async',
+        reuseExistingChunk: true,
       },
     },
   };
@@ -94,7 +98,12 @@ export const getChunksStrategy = (rootDir: string): SplitChunksConfig => {
         name(module: NameModule) {
           const hash = crypto.createHash('sha1');
           if (isModuleCSS(module)) {
-            module.updateHash(hash);
+            if (module?.buildInfo?.hash) {
+              // Use exsiting hash instead of recalculating.
+              return module?.buildInfo?.hash.substring(0, 8);
+            } else {
+              module.updateHash(hash);
+            }
           } else {
             if (!module.libIdent) {
               throw new Error(
@@ -118,8 +127,9 @@ export const getChunksStrategy = (rootDir: string): SplitChunksConfig => {
 const getSplitChunksConfig = (rootDir: string, strategy: string | boolean): SplitChunksConfig => {
   if (strategy === false) {
     return { minChunks: Infinity, cacheGroups: { default: false } };
-  } else if (strategy === 'vendors') {
-    return getVendorStrategy();
+  } else if (typeof strategy === 'string' && ['page-vendors', 'vendors'].includes(strategy)) {
+    const splitChunksOptions: SplitChunksConfig = strategy === 'page-vendors' ? { chunks: 'all' } : {};
+    return getVendorStrategy(splitChunksOptions);
   }
   // Default to chunks strategy.
   return getChunksStrategy(rootDir);

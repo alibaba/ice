@@ -137,6 +137,23 @@ export const Scripts: ScriptsType = (props: ScriptsProps) => {
   );
 };
 
+export function usePageAssets() {
+  const { loaderData, matches, assetsManifest } = useAppContext();
+  const routeLinks = getLinks(matches, loaderData);
+  const routeScripts = getScripts(matches, loaderData);
+  const pageAssets = getPageAssets(matches, assetsManifest);
+  const entryAssets = getEntryAssets(assetsManifest);
+
+  // Page assets need to be load before entry assets, so when call dynamic import won't cause duplicate js chunk loaded.
+  const assets = [].concat(routeLinks).concat(routeScripts).concat(pageAssets).concat(entryAssets);
+
+  if (assetsManifest.dataLoader) {
+    assets.unshift(`${assetsManifest.publicPath}${assetsManifest.dataLoader}`);
+  }
+
+  return assets;
+}
+
 interface DataProps {
   ScriptElement?: React.ComponentType<React.ScriptHTMLAttributes<HTMLScriptElement>> | string;
 }
@@ -170,7 +187,7 @@ export const Data: DataType = (props: DataProps) => {
     // Should merge global context when there are multiple <Data />.
     <ScriptElement
       suppressHydrationWarning={documentOnly}
-      dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=Object.assign(${JSON.stringify(windowContext)}, window.__ICE_APP_CONTEXT__ || {});` }}
+      dangerouslySetInnerHTML={{ __html: `!(function () {var a = window.__ICE_APP_CONTEXT__ || {};var b = ${JSON.stringify(windowContext)};for (var k in a) {b[k] = a[k]}window.__ICE_APP_CONTEXT__=b;})();` }}
     />
   );
 };

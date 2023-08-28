@@ -3,10 +3,9 @@ import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 import { Context } from 'build-scripts';
 import type { CommandArgs, CommandName } from 'build-scripts';
-import type { Config } from '@ice/webpack-config/types';
+import type { Config } from '@ice/shared-config/types';
 import type { AppConfig } from '@ice/runtime/types';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
-import fg from 'fast-glob';
 import type {
   DeclarationData,
   PluginData,
@@ -17,8 +16,6 @@ import { DeclarationType } from './types/index.js';
 import Generator from './service/runtimeGenerator.js';
 import { createServerCompiler } from './service/serverCompiler.js';
 import createWatch from './service/watchSource.js';
-import start from './commands/start.js';
-import build from './commands/build.js';
 import pluginWeb from './plugins/web/index.js';
 import test from './commands/test.js';
 import getWatchEvents from './getWatchEvents.js';
@@ -32,11 +29,14 @@ import ServerCompileTask from './utils/ServerCompileTask.js';
 import { getAppExportConfig, getRouteExportConfig } from './service/config.js';
 import renderExportsTemplate from './utils/renderExportsTemplate.js';
 import { getFileExports } from './service/analyze.js';
-import { getFileHash } from './utils/hash.js';
 import { logger, createLogger } from './utils/logger.js';
 import ServerRunner from './service/ServerRunner.js';
 import RouteManifest from './utils/routeManifest.js';
 import dynamicImport from './utils/dynamicImport.js';
+import mergeTaskConfig from './utils/mergeTaskConfig.js';
+import addPolyfills from './utils/runtimePolyfill.js';
+import webpackBundler from './bundler/webpack/index.js';
+import rspackBundler from './bundler/rspack/index.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -143,9 +143,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         delete require.cache[serverEntry];
         return await dynamicImport(serverEntry, true);
       }
-    } catch (err) {
+    } catch (error) {
       // make error clearly, notice typeof err === 'string'
-      logger.error('Excute server entry error:', err);
+      logger.error('Execute server entry error:', error);
       return;
     }
   }
@@ -161,10 +161,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   // Register framework level API.
   RUNTIME_EXPORTS.forEach(exports => {
     generatorAPI.addExport(exports);
-  });
-  // Add polyfills.
-  generatorAPI.addEntryImportAhead({
-    source: '@ice/runtime/polyfills/signal',
   });
   const routeManifest = new RouteManifest();
   const ctx = new Context<Config, ExtendsPluginAPI>({
@@ -224,7 +220,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   // get userConfig after setup because of userConfig maybe modified by plugins
   const { userConfig } = ctx;
   const { routes: routesConfig, server, syntaxFeatures, polyfill, output: { distType } } = userConfig;
-  const userConfigHash = await getFileHash(path.join(rootDir, fg.sync(configFile, { cwd: rootDir })[0]));
 
   const coreEnvKeys = getCoreEnvKeys();
 
@@ -234,11 +229,18 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const hasExportAppData = (await getFileExports({ rootDir, file: 'src/app' })).includes('dataLoader');
   const csr = !userConfig.ssr && !userConfig.ssg;
 
-  const disableRouter = userConfig?.optimization?.router && routesInfo.routesCount <= 1;
-  let taskAlias = {};
+  const disableRouter = (userConfig?.optimization?.router && routesInfo.routesCount <= 1) ||
+    userConfig?.optimization?.disableRouter;
   if (disableRouter) {
-    logger.info('`optimization.router` is enabled and only have one route, ice build will remove react-router and history which is unnecessary.');
-    taskAlias['@ice/runtime/router'] = path.join(require.resolve('@ice/runtime'), '../single-router.js');
+    logger.info('`optimization.router` is enabled, ice build will remove react-router and history which is unnecessary.');
+    taskConfigs = mergeTaskConfig(taskConfigs, {
+      alias: {
+        '@ice/runtime/router': '@ice/runtime/single-router',
+      },
+    });
+  } else {
+    // Only when router is enabled, we will add router polyfills.
+    addPolyfills(generatorAPI, userConfig.featurePolyfill, rootDir, command === 'start');
   }
 
   // Get first task config as default platform config.
@@ -246,7 +248,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   const iceRuntimePath = '@ice/runtime';
   // Only when code splitting use the default strategy or set to `router`, the router will be lazy loaded.
-  const lazy = [true, 'chunks', 'page'].includes(userConfig.codeSplitting);
+  const lazy = [true, 'chunks', 'page', 'page-vendors'].includes(userConfig.codeSplitting);
   const { routeImports, routeDefinition } = getRoutesDefinition(routesInfo.routes, lazy);
   // add render data
   generator.setRenderData({
@@ -311,6 +313,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   logger.debug('template render cost:', new Date().getTime() - renderStart);
   if (server.onDemand && command === 'start') {
     serverRunner = new ServerRunner({
+      speedup: commandArgs.speedup,
       rootDir,
       task: platformTaskConfig,
       server,
@@ -331,6 +334,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     rootDir,
     task: platformTaskConfig,
     command,
+    speedup: commandArgs.speedup,
     server,
     syntaxFeatures,
     getRoutesFile: () => routeManifest.getRoutesFile(),
@@ -356,47 +360,35 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   return {
     run: async () => {
+      const bundlerConfig = {
+        taskConfigs,
+        spinner: buildSpinner,
+        routeManifest,
+        appConfig,
+        hooksAPI: {
+          getAppConfig,
+          getRoutesConfig,
+          getDataloaderConfig,
+          serverRunner,
+          serverCompiler,
+        },
+        userConfig,
+        configFile,
+      };
       try {
-        if (command === 'start') {
-          const routePaths = routeManifest.getFlattenRoute()
-            .sort((a, b) =>
-              // Sort by length, shortest path first.
-              a.split('/').filter(Boolean).length - b.split('/').filter(Boolean).length);
-          return await start(ctx, {
-            routeManifest,
-            taskConfigs,
-            serverCompiler,
-            getRoutesConfig,
-            getDataloaderConfig,
-            getAppConfig,
-            appConfig,
-            devPath: (routePaths[0] || '').replace(/^[/\\]/, ''),
-            spinner: buildSpinner,
-            userConfigHash,
-            serverRunner,
-          });
-        } else if (command === 'build') {
-          return await build(ctx, {
-            routeManifest,
-            getRoutesConfig,
-            getDataloaderConfig,
-            getAppConfig,
-            appConfig,
-            taskConfigs,
-            serverCompiler,
-            spinner: buildSpinner,
-            userConfigHash,
-            userConfig,
-          });
-        } else if (command === 'test') {
+        if (command === 'test') {
           return test(ctx, {
             taskConfigs,
             spinner: buildSpinner,
           });
+        } else {
+          return commandArgs.speedup
+            ? await rspackBundler(ctx, bundlerConfig)
+            : await webpackBundler(ctx, bundlerConfig);
         }
-      } catch (err) {
+      } catch (error) {
         buildSpinner.stop();
-        throw err;
+        throw error;
       }
     },
   };

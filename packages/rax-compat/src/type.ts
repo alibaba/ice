@@ -13,3 +13,7 @@ export function isObject(obj: any): obj is object {
 export function isNumber(num: any): num is number {
   return typeof num === 'number';
 }
+
+export function isString(obj: any): obj is string {
+  return typeof obj === 'string';
+}

@@ -1,10 +1,17 @@
 import * as React from 'react';
 import type { ReactNode } from 'react';
 import { useAppContext } from './AppContext.js';
+import proxyData from './proxyData.js';
 import type { RequestContext } from './types.js';
 
 const LOADER = '__ICE_SUSPENSE_LOADER__';
 const isClient = typeof window !== 'undefined' && 'onload' in window;
+
+declare global {
+  interface Window {
+    [LOADER]: Map<string, any>;
+  }
+}
 
 interface SuspenseState {
   id: string;
@@ -19,16 +26,65 @@ type Request = (ctx: RequestContext) => Promise<any>;
 
 const SuspenseContext = React.createContext<SuspenseState | undefined>(undefined);
 
+const getHydrateData = (id: string) => {
+  let data = null;
+  const loaderData = isClient && window[LOADER];
+  let hasHydrateData: boolean;
+  if (loaderData) {
+    // Compatible with the old version which use Map to store data.
+    if (loaderData.has) {
+      hasHydrateData = loaderData.has(id);
+      data = window[LOADER].get(id);
+    } else {
+      hasHydrateData = Object.prototype.hasOwnProperty.call(loaderData, id);
+      // If hasHydrateData is false, data will be undefined.
+      data = window[LOADER][id];
+    }
+  }
+  return {
+    hasHydrateData,
+    data,
+  };
+};
+
 export function useSuspenseData(request?: Request) {
   const appContext = useAppContext();
   const { requestContext } = appContext;
   const suspenseState = React.useContext(SuspenseContext);
 
   const { data, done, promise, update, error, id } = suspenseState;
+  const { hasHydrateData, data: hydrateData } = getHydrateData(id);
+
+  let thenable: Promise<any> = null;
+  if (!hasHydrateData && !error && !done && !promise && request) {
+    thenable = request(requestContext);
+    thenable.then((response) => {
+      update({
+        done: true,
+        data: response,
+        promise: null,
+      });
+    }).catch(e => {
+      update({
+        done: true,
+        error: e,
+        promise: null,
+      });
+    });
+  }
+
+  React.useEffect(() => {
+    // Update state in useEffect, otherwise it will cause bad setState warning.
+    if (thenable) {
+      update({
+        promise: thenable,
+      });
+    }
+  }, [thenable, update]);
 
   // 1. Use data from server side directly when hydrate.
-  if (isClient && (window[LOADER] as Map<string, any>) && window[LOADER].has(id)) {
-    return window[LOADER].get(id);
+  if (hasHydrateData) {
+    return hydrateData;
   }
 
   // 2. Check data request error, if error throw it to react.
@@ -38,6 +94,10 @@ export function useSuspenseData(request?: Request) {
 
   // 3. If request is done, return data.
   if (done) {
+    if (process.env.NODE_ENV === 'development' && typeof data === 'object') {
+      return proxyData(data);
+    }
+
     return data;
   }
 
@@ -51,27 +111,12 @@ export function useSuspenseData(request?: Request) {
     return null;
   }
 
-  // 6. Create a promise for the request and throw it to react.
-  const thenable = request(requestContext);
-
-  thenable.then((response) => {
+  if (!isClient) {
+    // 6. Create a promise for the request and throw it to react.
     update({
-      done: true,
-      data: response,
-      promise: null,
+      promise: thenable,
     });
-  }).catch(e => {
-    update({
-      done: true,
-      error: e,
-      promise: null,
-    });
-  });
-
-  update({
-    promise: thenable,
-  });
-
+  }
   throw thenable;
 }
 
@@ -95,8 +140,13 @@ export function withSuspense(Component) {
     });
 
     function update(value) {
-      // For SSR, setState is not working, so here we need to update the state manually.
-      const newState = Object.assign(suspenseState, value);
+      let newState: any;
+      if (isClient) {
+        newState = Object.assign({}, suspenseState, value);
+      } else {
+        // For SSR, setState is not working, so here we need to update the state manually.
+        newState = Object.assign(suspenseState, value);
+      }
       // For CSR.
       updateSuspenseData(newState);
     }
@@ -116,6 +166,6 @@ function Data(props) {
   const data = useSuspenseData();
 
   return (
-    <script dangerouslySetInnerHTML={{ __html: `if (!window.${LOADER}) { window.${LOADER} = new Map();} window.${LOADER}.set('${props.id}', ${JSON.stringify(data)})` }} />
+    <script dangerouslySetInnerHTML={{ __html: `!function(){window['${LOADER}'] = window['${LOADER}'] || {};window['${LOADER}']['${props.id}'] = ${JSON.stringify(data)}}();` }} />
   );
 }

@@ -83,12 +83,12 @@ function decodeParam(val: any) {
   }
   try {
     return decodeURIComponent(val);
-  } catch (err) {
-    if (err instanceof URIError) {
-      err.message = `Failed to decode param ' ${val} '`;
-      (err as any).status = 400;
-      (err as any).statusCode = 400;
+  } catch (error) {
+    if (error instanceof URIError) {
+      error.message = `Failed to decode param ' ${val} '`;
+      (error as any).status = 400;
+      (error as any).statusCode = 400;
     }
-    throw err;
+    throw error;
   }
 }

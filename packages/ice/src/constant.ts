@@ -61,12 +61,19 @@ export const RUNTIME_EXPORTS = [
       'ClientOnly',
       'withSuspense',
       'useSuspenseData',
+      'usePublicAppContext',
       'Await',
       'defineDataLoader',
       'defineServerDataLoader',
       'defineStaticDataLoader',
       'usePageLifecycle',
     ],
+    alias: {
+      usePublicAppContext: 'useAppContext',
+    },
     source: '@ice/runtime',
   },
 ];
+
+export const CSS_MODULES_LOCAL_IDENT_NAME = '[local]_[hash:8]';
+export const CSS_MODULES_LOCAL_IDENT_NAME_DEV = '[path][name][ext]__[local]';

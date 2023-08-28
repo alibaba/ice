@@ -1,0 +1,49 @@
+{
+  "name": "@ice/plugin-canvas",
+  "version": "0.0.4",
+  "description": "Provide canvas render support for ice.js",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "default": "./esm/index.js"
+    },
+    "./CacheCanvas": {
+      "types": "./esm/CacheCanvas.d.ts",
+      "import": "./esm/CacheCanvas.js",
+      "default": "./esm/CacheCanvas.js"
+    },
+    "./runtime": {
+      "types": "./esm/runtime.d.ts",
+      "import": "./esm/runtime.js",
+      "default": "./esm/runtime.js"
+    },
+    "./*": "./*"
+  },
+  "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
+  "files": [
+    "esm",
+    "!esm/**/*.map"
+  ],
+  "dependencies": {
+    "@ice/cache-canvas": "workspace:*"
+  },
+  "devDependencies": {
+    "@ice/app": "^3.2.10",
+    "webpack": "^5.88.0",
+    "@ice/runtime": "^1.2.5"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-canvas"
+  },
+  "scripts": {
+    "watch": "tsc -w",
+    "build": "tsc"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

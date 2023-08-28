@@ -1,5 +1,29 @@
 # Changelog
 
+## 3.0.3
+
+### Patch Changes
+
+- e40a7cb2: fix: add `bounces` attr
+
+## 3.0.2
+
+### Patch Changes
+
+- 39c92e5b: fix: format of dataLoaderConfig loader changed.
+
+## 3.0.1
+
+### Patch Changes
+
+- 110b282b: fix: do not render document when template is set to false
+
+## 3.0.0
+
+### Major Changes
+
+- 583c29b3: feat: the target of PHA worker should be appWorker.
+
 ## 2.0.3
 
 ### Patch Changes

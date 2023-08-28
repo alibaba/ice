@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.2.6
+
+### Patch Changes
+
+- 32dfaacc: fix: fix unmountComponentAtNode compat
+
+## 0.2.5
+
+### Patch Changes
+
+- Updated dependencies [8af84529]
+- Updated dependencies [f0d79065]
+  - @ice/appear@0.2.0
+
+## 0.2.4
+
+### Patch Changes
+
+- 4a8dcc02: fix: rax compat style
+
+## 0.2.3
+
+### Patch Changes
+
+- 18dccde4: fix: not transform non-string value.
+
 ## 0.2.2
 
 ### Patch Changes

@@ -90,7 +90,7 @@ export function generateDeclaration(exportList: Array<TargetDeclarationData | De
 
         specifiers.forEach((specifierStr) => {
           if (alias && alias[specifierStr]) {
-            exportDeclarations.push(`${alias[specifierStr]}: ${specifierStr}${symbol}`);
+            exportDeclarations.push(`${alias[specifierStr]}${symbol}`);
             exportNames.push(alias[specifierStr]);
           } else {
             exportDeclarations.push(`${specifierStr}${symbol}`);
@@ -137,11 +137,11 @@ export function checkExportData(
       if (isTargetDeclarationData(item)) return;
 
       if (isDeclarationData(item)) {
-        const { specifier, alias } = item;
+        const { specifier, alias, source } = item;
 
         // check exportName and specifier
         const currentExportNames = (Array.isArray(specifier) ? specifier : [specifier]).map((specifierStr) => {
-          return alias?.[specifierStr] || specifierStr;
+          return alias?.[specifierStr] || specifierStr || source;
         });
 
         if (currentExportNames.some((name) => exportNames.includes(name))) {

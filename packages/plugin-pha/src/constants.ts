@@ -1,4 +1,4 @@
-import type { PluginData } from '@ice/app/types';
+import type { Config, OverwritePluginAPI, PluginData } from '@ice/app/types';
 import type { Context } from 'build-scripts';
 
 // Keys of appConfig  need transform to manifest.
@@ -47,6 +47,7 @@ export const decamelizeKeys = [
   'cacheQueryParams',
   'customDataSource',
   'enableExpiredManifest',
+  'bounces',
 ];
 
 // Do not decamelize list.
@@ -81,6 +82,7 @@ export const validPageConfigKeys = [
   'pullRefresh',
   'queryParamsPassIgnoreKeys',
   'downgradeUrl',
+  'bounces',
 ];
 
 // The manifest configuration is the default value for the page configuration
@@ -89,7 +91,7 @@ export const pageDefaultValueKeys = [
 ];
 
 export const getCompilerConfig = (options: {
-  getAllPlugin: Context['getAllPlugin'];
+  getAllPlugin: Context<Config, OverwritePluginAPI>['getAllPlugin'];
 }) => {
   const {
     getAllPlugin,
@@ -116,7 +118,7 @@ export const getCompilerConfig = (options: {
     }],
     // Replace env vars.
     runtimeDefineVars: {
-      'import.meta.target': JSON.stringify('web'),
+      'import.meta.target': JSON.stringify('appWorker'),
       'import.meta.renderer': JSON.stringify('client'),
     },
   };

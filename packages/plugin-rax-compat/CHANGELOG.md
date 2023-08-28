@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.2.6
+
+### Patch Changes
+
+- 372699db: hotfix: less support inline style
+
+## 0.2.5
+
+### Patch Changes
+
+- 984979a3: fix inlineStyle filter function check
+
+## 0.2.4
+
+### Patch Changes
+
+- b58d38a1: inlineStyle filter support
+
+## 0.2.3
+
+### Patch Changes
+
+- dd297f96: fix: compilation config not extend
+- 7f718c5f: fix: fix Rax namespace typing compat with React v18
+- bf8af99d: remove server options setter
+
 ## 0.2.2
 
 ### Patch Changes

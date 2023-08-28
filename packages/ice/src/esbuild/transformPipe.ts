@@ -36,19 +36,17 @@ function guessLoader(id: string): Loader {
  * but esbuild needs them, we fix the two methods.
  */
 export function fixSourceMap(map: any) {
-  if (!('toString' in map)) {
-    Object.defineProperty(map, 'toString', {
-      enumerable: false,
-      value: function toString() {
-        return JSON.stringify(this);
-      },
-    });
-  }
+  Object.defineProperty(map, 'toMapString', {
+    enumerable: false,
+    value: function toString() {
+      return JSON.stringify(this);
+    },
+  });
   if (!('toUrl' in map)) {
     Object.defineProperty(map, 'toUrl', {
       enumerable: false,
       value: function toUrl() {
-        return `data:application/json;charset=utf-8;base64,${Buffer.from(this.toString()).toString('base64')}`;
+        return `data:application/json;charset=utf-8;base64,${Buffer.from(this.toMapString()).toString('base64')}`;
       },
     });
   }
@@ -102,8 +100,8 @@ const transformPipe = (options: PluginOptions = {}): Plugin => {
         const resolveDir = path.dirname(args.path);
         const loader = guessLoader(id);
 
-        // If file extension is not recognized, return it to esbuild.
-        if (!loader) {
+        // If file extension is not recognized and load path is relative, return it to esbuild.
+        if (!loader || !path.isAbsolute(id)) {
           return;
         }
 
@@ -135,13 +133,15 @@ const transformPipe = (options: PluginOptions = {}): Plugin => {
                 sourceCode = result;
               } else if (typeof result === 'object' && result !== null) {
                 sourceCode = result.code;
-                sourceMap = result.map;
+                sourceMap = typeof result.map === 'string' ? JSON.parse(result.map) : result.map;
               }
             }
             if (sourceMap && typeof sourceMap !== 'string') {
               if (!sourceMap.sourcesContent || sourceMap.sourcesContent.length === 0) {
                 sourceMap.sourcesContent = [sourceCode];
               }
+              // Use relative path to make sure the source map is correct.
+              sourceMap.sources = [path.relative(resolveDir, id)];
               sourceMap = fixSourceMap(sourceMap);
               sourceCode += `\n//# sourceMappingURL=${sourceMap.toUrl()}`;
             }

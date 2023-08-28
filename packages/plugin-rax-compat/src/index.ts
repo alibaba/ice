@@ -1,13 +1,17 @@
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 import type { Plugin } from '@ice/app/types';
 import type { RuleSetRule } from 'webpack';
 import consola from 'consola';
-import merge from 'lodash.merge';
+import { merge, cloneDeep } from 'lodash-es';
 import { transformSync } from '@babel/core';
 import styleSheetLoader from './transform-styles.js';
 
 const require = createRequire(import.meta.url);
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const jsRegex = /\.(jsx?|tsx?|mjs)$/;
 
@@ -56,22 +60,56 @@ const ruleSetStylesheetForLess = {
 let warnOnce = false;
 
 export interface CompatRaxOptions {
-  inlineStyle?: boolean;
+  /**
+   * Enable inline style transform.
+   *
+   * @default false
+   *
+   * @example
+   * ```js
+   * inlineStyle: true;
+   * inlineStyle: (id) => id.includes('feeds_module');
+   * ```
+   */
+  inlineStyle?: boolean | ((id: string) => boolean);
+  /**
+   * Enable css module transform.
+   *
+   * @default true
+   */
   cssModule?: boolean;
 }
 
 const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
   name: '@ice/plugin-rax-compat',
-  setup: ({ onGetConfig, context }) => {
+  setup: ({ onGetConfig, context, generator }) => {
     const { userConfig } = context;
 
     onGetConfig((config) => {
+      // Inject rax-compat type fix in .ice/rax-compat.d.ts
+      // Produce: import { type __UNUSED_TYPE_FOR_IMPORT_EFFECT_ONLY__ } from './rax-compat.d';
+      generator.addRenderFile(path.join(__dirname, './rax-compat.d.ts'), 'rax-compat.d.ts', {});
+      generator.addExport({
+        // Avoid value import to cause Webpack compilation error:
+        // 'Export assignment cannot be used when targeting ECMAScript modules.'
+        specifier: ['type __UNUSED_TYPE_FOR_IMPORT_EFFECT_ONLY__'],
+        source: './rax-compat.d',
+        type: false,
+      });
+
+      const compilationConfigFunc = typeof config.swcOptions?.compilationConfig === 'function'
+        ? config.swcOptions?.compilationConfig
+        : () => config.swcOptions?.compilationConfig;
+
       // Reset jsc.transform.react.runtime to classic.
       config.swcOptions = merge(config.swcOptions || {}, {
-        compilationConfig: (source: string) => {
+        compilationConfig: (source: string, id: string) => {
+          let swcCompilationConfig = {};
           const hasJSXComment = source.indexOf('@jsx createElement') !== -1;
+          const isRaxComponent = /(from|require\()\s*['"]rax['"]/.test(source);
+
           if (hasJSXComment) {
-            return {
+            swcCompilationConfig = {
               jsc: {
                 transform: {
                   react: {
@@ -80,11 +118,8 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
                 },
               },
             };
-          }
-
-          const isRaxComponent = /(from|require\()\s*['"]rax['"]/.test(source);
-          if (isRaxComponent) {
-            return {
+          } else if (isRaxComponent) {
+            swcCompilationConfig = {
               jsc: {
                 transform: {
                   react: {
@@ -94,18 +129,13 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
               },
             };
           }
-        },
-      });
 
-      if (!config.server) {
-        config.server = {};
-      }
-      const originalOptions = config.server.buildOptions;
-      config.server.buildOptions = (options) => ({
-        ...(originalOptions ? originalOptions(options) : options),
-        jsx: 'transform',
-        jsxFactory: 'createElement',
-        jsxFragment: 'Fragment',
+          return merge(
+            // Clone config object to avoid Maximum call stack size exceeded error.
+            cloneDeep(compilationConfigFunc(source, id)),
+            swcCompilationConfig,
+          );
+        },
       });
 
       Object.assign(config.alias, alias);
@@ -119,11 +149,15 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
         const transformCssModule = options.cssModule == null ? true : options.cssModule;
 
         if (userConfig.ssr || userConfig.ssg) {
+          config.server ??= {};
           config.server.buildOptions = applyStylesheetLoaderForServer(config.server.buildOptions, transformCssModule);
         }
 
         config.configureWebpack ??= [];
-        config.configureWebpack.unshift((config) => styleSheetLoaderForClient(config, transformCssModule));
+
+        config.configureWebpack.unshift((config) =>
+          styleSheetLoaderForClient(config, transformCssModule, options.inlineStyle),
+        );
         config.transforms = [
           ...(config.transforms || []),
           getClassNameToStyleTransformer(userConfig.syntaxFeatures || {}),
@@ -203,18 +237,37 @@ function getClassNameToStyleTransformer(syntaxFeatures) {
  * StyleSheet Loader for CSR.
  * Transform css files to inline style by webpack loader.
  */
-const styleSheetLoaderForClient = (config, transformCssModule) => {
+const styleSheetLoaderForClient = (config, transformCssModule, inlineStyleFiler: CompatRaxOptions['inlineStyle']) => {
   const { rules } = config.module || {};
   if (Array.isArray(rules)) {
     for (let i = 0, l = rules.length; i < l; i++) {
-      const rule: RuleSetRule | any = rules[i];
+      const rule: RuleSetRule = rules[i];
       // Find the css rule, that default to CSS Modules.
       if (rule.test && rule.test instanceof RegExp && rule.test.source.indexOf('.css') > -1) {
-        rule.test = transformCssModule ? /(\.module|global)\.css$/i : /(\.global)\.css$/i;
+        // Apply inlineStyle here as original rule got higher priority,
+        // the resource doesnot match the filter will be bypassed to stylesheet-loader.
+        rule.test = (id: string) => {
+          const inlineStyleDisabled = typeof inlineStyleFiler === 'function'
+            // The tester returns true, means this file should still be handled by InlineStyleLoader.
+            // The tester returns false, means user want this file to be handled by ExternalStyleLoader.
+            ? inlineStyleFiler(id) === false
+            // Means `inlineStyle: true`, use the next InlineStyleLoader just like before.
+            : false;
+
+          const matched =
+            // Default test matcher.
+            (transformCssModule ? /(\.module|global)\.css$/i : /(\.global)\.css$/i).test(id) ||
+            // CSS styles which was marked `inlineStyle: false` explicitly.
+            inlineStyleDisabled;
+
+          return matched;
+        };
         rules[i] = {
           test: /\.css$/i,
           oneOf: [
+            // Handle project css and those module can only work under inlineStyle disabled.
             rule,
+            // Handle those module can only work under inlineStyle enabled.
             ruleSetStylesheet,
           ],
         };
@@ -222,7 +275,7 @@ const styleSheetLoaderForClient = (config, transformCssModule) => {
 
       // Find and replace the less rule
       if (rule.test && rule.test instanceof RegExp && rule.test.source.indexOf('.less') > -1) {
-        rule.test = transformCssModule ? /(\.module|global)\.css$/i : /(\.global)\.css$/i;
+        rule.test = transformCssModule ? /(\.module|global)\.less$/i : /(\.global)\.less$/i;
         rules[i] = {
           test: /\.less$/i,
           oneOf: [
@@ -242,7 +295,7 @@ const styleSheetLoaderForClient = (config, transformCssModule) => {
  */
 function applyStylesheetLoaderForServer(preBuildOptions, transformCssModule) {
   return (buildOptions) => {
-    const currentOptions = preBuildOptions?.(buildOptions) || buildOptions;
+    const currentOptions = preBuildOptions?.(buildOptions) ?? buildOptions ?? {};
 
     // Remove esbuild-empty-css while use inline style.
     currentOptions.plugins = currentOptions.plugins?.filter(({ name }) => name !== 'esbuild-empty-css');
