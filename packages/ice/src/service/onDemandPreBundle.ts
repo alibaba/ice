@@ -3,7 +3,7 @@ import { createRequire } from 'module';
 import fse from 'fs-extra';
 import findUp from 'find-up';
 import type { Plugin } from 'esbuild';
-import type { Config } from '@ice/webpack-config/types';
+import type { Config } from '@ice/shared-config/types';
 import { logger } from '../utils/logger.js';
 import { CACHE_DIR } from '../constant.js';
 import { bundleDeps, resolvePackageESEntry, getDepsCacheDir } from './preBundleDeps.js';
