@@ -9,7 +9,7 @@ const FRAMEWORK_BUNDLES = [
 
 function transformPathForRegex(str: string) {
   return process.platform === 'win32'
-    // Remove trailing '\' and replace '\' with '\\' at the end of the string for regex compatibility in win32.
+    // Remove trailing '\' at the end of the string and replace '\' with '\\' for regex compatibility in win32.
     ? str.replace(/\\$/, '').replace(/\\/g, '\\') : str;
 }
 
