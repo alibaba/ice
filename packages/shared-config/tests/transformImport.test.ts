@@ -47,6 +47,11 @@ describe('transform core js path', () => {
     expect(await transformImport(orignalCode, coreJsPath))
       .toBe('var _object_spread = require(\'@swc/helpers/cjs/_object_spread.cjs\')._;module.exports = {};');
   });
+  it('@swc/helpers special identifier', async () => {
+    const orignalCode = fs.readFileSync(path.join(__dirname, './fixtures/transformImport/specialIdentifier.js'), 'utf-8');
+    expect(await transformImport(orignalCode, coreJsPath))
+      .toBe('var _create_class = require(\'@swc/helpers/cjs/_create_class.cjs\')._;module.exports = {};\n');
+  });
   it('with import.meta', async () => {
     const orignalCode = fs.readFileSync(path.join(__dirname, './fixtures/transformImport/importMeta.js'), 'utf-8');
     expect(await transformImport(orignalCode, coreJsPath))

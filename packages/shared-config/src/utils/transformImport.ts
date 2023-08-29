@@ -44,7 +44,7 @@ const transformImport = async (source: string, coreJsPath: string) => {
         const matchImport = importStr.match(/import\s+{\s+([\w*\s{},]*)\s+}\s+from\s+['"](.*)['"]/);
         if (matchImport) {
           const [,identifier] = matchImport;
-          const replaceModule = `var ${identifier.split('as')[1].trim()} = require('${targetImport.n.replace(/@swc\/helpers\/_\/(.*)$/,
+          const replaceModule = `var ${identifier.split(' as ')[1].trim()} = require('${targetImport.n.replace(/@swc\/helpers\/_\/(.*)$/,
             (_, matched) => `@swc/helpers/cjs/${matched}.cjs`)}')._`;
           str().overwrite(targetImport.ss, targetImport.se, replaceModule);
         }
