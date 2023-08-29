@@ -50,7 +50,7 @@ describe('transform core js path', () => {
   it('@swc/helpers special identifier', async () => {
     const orignalCode = fs.readFileSync(path.join(__dirname, './fixtures/transformImport/specialIdentifier.js'), 'utf-8');
     expect(await transformImport(orignalCode, coreJsPath))
-      .toBe('var _create_class = require(\'@swc/helpers/cjs/_create_class.cjs\')._;module.exports = {};\n');
+      .toBe('var _create_class = require(\'@swc/helpers/cjs/_create_class.cjs\')._;module.exports = {};');
   });
   it('with import.meta', async () => {
     const orignalCode = fs.readFileSync(path.join(__dirname, './fixtures/transformImport/importMeta.js'), 'utf-8');
