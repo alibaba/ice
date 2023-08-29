@@ -7,6 +7,12 @@ const FRAMEWORK_BUNDLES = [
   'react', 'react-dom', 'react-router', 'react-router-dom',
 ];
 
+function transformPathForRegex(str: string) {
+  return process.platform === 'win32'
+    // Remove trailing '\' and replace '\' with '\\' at the end of the string for regex compatibility in win32.
+    ? str.replace(/\\$/, '').replace(/\\/g, '\\') : str;
+}
+
 const getChunksStrategy = (rootDir: string) => {
   const frameworkPaths: string[] = [];
   const visitedFramework = new Set<string>();
@@ -21,7 +27,7 @@ const getChunksStrategy = (rootDir: string) => {
       });
       const packageDir = path.join(packageJsonPath, '../');
       if (frameworkPaths.includes(packageDir)) return;
-      frameworkPaths.push(packageDir);
+      frameworkPaths.push(transformPathForRegex(packageDir));
       const dependencies = require(packageJsonPath).dependencies || {};
       for (const name of Object.keys(dependencies)) {
         addPackagePath(name, packageDir);
