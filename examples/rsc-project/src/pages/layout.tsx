@@ -26,13 +26,3 @@ export const pageConfig = definePageConfig(() => {
     auth: ['admin'],
   };
 });
-
-// export const dataLoader = defineDataLoader(() => {
-//   return new Promise((resolve) => {
-//     setTimeout(() => {
-//       resolve({
-//         layout: true,
-//       });
-//     }, 1 * 100);
-//   });
-// });

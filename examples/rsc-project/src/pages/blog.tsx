@@ -1,16 +1,7 @@
-import { Link, useData, useConfig, definePageConfig } from 'ice';
+import { Link, definePageConfig } from 'ice';
 
-// interface Data {
-//   name: string;
-// }
 
 export default function Blog() {
-  // const data = useData<Data>();
-  // const data = useData();
-  // const config = useConfig();
-
-  // console.log('render Blog', 'data', data, 'config', config);
-
   return (
     <>
       <h2>Blog Page</h2>

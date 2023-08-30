@@ -1,4 +1,4 @@
-'use server';
+'use client';
 import { RouteErrorComponent, WrapRouteComponent, createRouteLoader } from '@ice/runtime';
 import { createStaticRouter } from 'react-router-dom/server.mjs';
 import { createServerRoutes } from '@ice/runtime';

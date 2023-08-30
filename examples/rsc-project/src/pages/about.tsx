@@ -1,11 +1,6 @@
 // @ts-expect-error
 import { Link, useData, useConfig, definePageConfig, defineDataLoader } from 'ice';
 import url from './ice.png';
-import Blog from './blog';
-
-// interface Data {
-//   name: string;
-// }
 
 export default function About() {
   const data = useData();
@@ -44,12 +39,3 @@ export const pageConfig = definePageConfig(() => {
   };
 });
 
-// export const dataLoader = defineDataLoader(() => {
-//   return new Promise((resolve) => {
-//     setTimeout(() => {
-//       resolve({
-//         name: 'About',
-//       });
-//     }, 1 * 100);
-//   });
-// });
