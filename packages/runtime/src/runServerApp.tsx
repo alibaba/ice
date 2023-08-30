@@ -179,9 +179,7 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
 
     return new Promise<void>((resolve, reject) => {
       if (renderOptions.useRsc) {
-        console.log('render RSC and sendResponse');
         pipe(res);
-        // sendResponse(req, res, result);
         resolve();
         return;
       }
@@ -311,22 +309,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
   const matches = matchRoutes(routes, location, finalBasename);
   const routePath = getCurrentRoutePath(matches);
 
-  console.log('server use RSC', useRsc);
   if (useRsc && location.pathname === '/rsc') {
-    // const routeModules = await loadRouteModules(matches.map(({ route: { id, lazy } }) => ({ id, lazy })));
-    // const loaderData = {};
-    // for (const routeId in routeModules) {
-    //   const { loader } = routeModules[routeId];
-    //   if (loader) {
-    //     const { data, pageConfig } = await loader();
-    //     loaderData[routeId] = {
-    //       data,
-    //       pageConfig,
-    //     };
-    //   }
-    // }
-    // const revalidate = renderMode === 'SSG' && needRevalidate(matches);
-    // runtime.setAppContext({ ...appContext, revalidate, routeModules, loaderData, routePath, matches, appData });
     return renderRsc(requestContext, routeManifest, {
       runtime,
       matches,
@@ -546,11 +529,8 @@ function renderDocument(options: RenderDocumentOptions): Response {
   };
 }
 
-//  函数位置可能要改
 export function renderReactTree(ReactServerApp, props): Response { //  props 是根 RSC 组件的 props
-  // await waitForWebpack();
   const { rscManifest } = props;
-  console.log('rscManifest', rscManifest);
   const App = React.createElement(ReactServerApp, null, null);
   const { pipe, abort } = ReactServerDomWebpack.renderToPipeableStream(
     App,
@@ -567,7 +547,7 @@ export function renderReactTree(ReactServerApp, props): Response { //  props 是
 /**
  * Render and send the result to ServerResponse.
  */
-export async function renderRsc( // renderToRscFlow
+export async function renderRsc(
   requestContext,
   routeManifest,
   {
@@ -578,7 +558,6 @@ export async function renderRsc( // renderToRscFlow
   }: RenderServerEntry,
 ) {
   const appContext = runtime.getAppContext();
-  // console.log('appconfig', appContext.routes)
   const { routes, routePath, loaderData, basename } = appContext;
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
   const AppRouter = runtime.getAppRouter<RscServerAppRouterProps>();
@@ -602,7 +581,6 @@ export async function renderRsc( // renderToRscFlow
   const ReactServerApp = () => {
     return (
       <div>
-        {/* <RscServerRouter routes={routeManifest} routerContext={routerContext} renderMode={renderMode}></RscServerRouter> */}
         <RscServerRouter />
         <div>runServerApp</div>
       </div>

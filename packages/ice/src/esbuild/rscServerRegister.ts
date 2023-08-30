@@ -5,24 +5,21 @@ import { Parser } from 'acorn';
 import jsx from 'acorn-jsx';
 import recast from 'recast';
 
-// TODO：整理代码
 const rscServerRegister = (): Plugin => {
   return {
     name: 'rsc-server-register',
     setup: async (build: PluginBuild) => {
-      build.onLoad({ filter: /\/src\/.*\.(js|ts|jsx|tsx)$/ }, async (args) => { //  /src\/.*\
+      build.onLoad({ filter: /\/src\/.*\.(js|ts|jsx|tsx)$/ }, async (args) => {
         const { path } = args;
         const loader = path.endsWith('.tsx') || path.endsWith('.ts') ? 'tsx' : 'jsx';
         const content = await fs.promises.readFile(path, 'utf-8');
         if (path.indexOf('routes-config') > 0) {
-          console.log('path.indexOf(\'routes-config\') > 0');
           return { contents: content, loader };
         }
 
         if (path.indexOf('/src/') === -1) {
           return { contents: content, loader };
         }
-        console.log('rsc 编译', path, content.indexOf('use client'), content.indexOf('use server'));
 
         if (content.indexOf('use client') === -1 && content.indexOf('use server') === -1) {
           return { contents: content, loader };
@@ -36,7 +33,6 @@ const rscServerRegister = (): Plugin => {
           }) as any).body;
         } catch (x) {
           console.error('Error parsing %s %s %s', url, x.message, path);
-          console.log(content);
           return { contents: content, loader };
         }
 
@@ -82,9 +78,9 @@ const rscServerRegister = (): Plugin => {
             ecmaVersion: 2024,
             sourceType: 'module',
           }) as any).body;
-          for (let i = 0; i < body.length; i++) { //  TODO：编译后的的代码其实是不完整的，忽略了有一些全局定义的变量的情况
+          for (let i = 0; i < body.length; i++) {
             const node = body[i];
-            if (node.type === 'ImportDeclaration') { // TODO: 如果是 import 语句的情况
+            if (node.type === 'ImportDeclaration') {
               const { start, end } = node;
               source += content.substring(start, end);
             } else if (node.type === 'ExportNamedDeclaration' || node.type === 'ExportDefaultDeclaration') {
@@ -103,15 +99,11 @@ const rscServerRegister = (): Plugin => {
                   export default comp;
                   `;
                 }
-              } else { //  TODO: 不是 function 类型的导出的情况
-                //
               }
             }
           }
-          console.log('服务端组件编译结果', source);
         }
 
-        source += ';console.log(\'------------==============---------\');';
         source = source.replace(/^(\'|\")use (client|server)(\';|\'|\";|\")/, '');
         return { contents: source, loader };
       });
@@ -127,7 +119,7 @@ const rscServerRegister = (): Plugin => {
   };
 };
 
-function transformContent(moduleId: string) { //  TODO: 还没处理 import 语句的情况，待加入
+function transformContent(moduleId: string) {
   let content = '';
   if (moduleId.indexOf('/pages') !== -1) {
     content = `\
@@ -138,7 +130,6 @@ function transformContent(moduleId: string) { //  TODO: 还没处理 import 语�
     const comp = createClientModuleProxy('${moduleId}');
     export default comp`;
   }
-  console.log('客户端组件编译结果', content);
   return content;
 }
 

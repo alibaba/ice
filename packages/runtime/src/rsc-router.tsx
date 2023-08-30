@@ -20,19 +20,18 @@ const initialCache = new Map();
 
 export function RSCRouter(): React.ReactElement {
   const [cache, setCache] = useState(initialCache);
-  // const [location, setLocation] = useState({
-  //   param: 'param'
-  // });
+  const [location, setLocation] = useState({
+    param: '',
+  });
 
   const locationKey = JSON.stringify(location);
   let content = cache.get(locationKey);
   if (!content) {
     console.log('createFromFetch');
     content = createFromFetch(
-      // fetch('/app?location=' + encodeURIComponent(locationKey))
       fetch('/rsc'),
     );
-    // cache.set(locationKey, content);
+    cache.set(locationKey, content);
   }
 
   function refresh(response) {
@@ -51,17 +50,16 @@ export function RSCRouter(): React.ReactElement {
 
   function navigate(nextLocation) {
     startTransition(() => {
-      // setLocation(loc => ({
-      //   ...loc,
-      //   ...nextLocation
-      // }));
+      setLocation(loc => ({
+        ...loc,
+        ...nextLocation,
+      }));
     });
   }
 
   const [finalContent, setFinalContent] = useState(null);
   useEffect(() => {
     content.then((res: any) => {
-      console.log('content res', res);
       setFinalContent(res);
     }, (e): any => {
       console.error(e);
@@ -74,7 +72,6 @@ export function RSCRouter(): React.ReactElement {
         <div>123</div>
         <Suspense fallback={<div>loading...</div>}>
           {finalContent}
-          {/* {use(content)} */}
         </Suspense>
       </RouterContext.Provider>
     </AppErrorBoundary>
@@ -91,7 +88,6 @@ export function useMutation({ endpoint, method }) {
   const [didError, setDidError] = useState(false);
   const [error, setError] = useState(null);
   if (didError) {
-    // Let the nearest error boundary handle errors while saving.
     throw error;
   }
 

@@ -12,7 +12,6 @@ const SERVER_REFERENCE = Symbol.for('react.server.reference');
 const PROMISE_PROTOTYPE = Promise.prototype;
 
 const FunctionBind = Function.prototype.bind;
-// $FlowFixMe[method-unbinding]
 const ArraySlice = Array.prototype.slice;
 function bind(ctx) {
   const newFn = FunctionBind.apply(ctx, arguments);
@@ -221,6 +220,5 @@ export function createClientModuleProxy(moduleId: string) {
     },
   );
   const pxy = new Proxy(clientReference, proxyHandlers);
-  console.log('proxy', pxy);
-  return pxy; //  new Proxy(clientReference, proxyHandlers)
+  return pxy;
 }

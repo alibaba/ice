@@ -68,8 +68,6 @@ async function webpackCompiler(options: {
     if (useDevServer) {
       const outputDir = webpackConfig.output.path;
 
-      console.log('output dir', outputDir);
-
       if (command === 'start' && serverRunner) {
         // Add server runner plugin
         webpackConfig.plugins.push(new ServerRunnerPlugin(
@@ -92,7 +90,6 @@ async function webpackCompiler(options: {
         webpackConfig.plugins.push(serverCompilerPlugin);
 
         if (userConfig.rsc) {
-          console.log('rsc plugin');
           webpackConfig.plugins.push(new ReactServerWebpackPlugin({
             isServer: false,
             clientReferences: [{
@@ -102,8 +99,6 @@ async function webpackCompiler(options: {
               exclude: /types.ts|.d.ts/,
             }],
             clientManifestFilename: 'rsc-client-manifest.json',
-            // clientManifestFilename: `${rootDir}/rsc-folder/rsc-client-manifest.json`,
-            // ssrManifestFilename: `$react-ssr-manifest.json`,
           }));
         }
       }

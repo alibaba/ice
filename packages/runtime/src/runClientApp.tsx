@@ -48,8 +48,6 @@ export default async function runClientApp(options: RunClientAppOptions) {
     dataLoaderDecorator,
   } = options;
 
-  console.log('rsc: ', rsc);
-
   const windowContext: WindowContext = (window as any).__ICE_APP_CONTEXT__ || {};
   const assetsManifest: AssetsManifest = (window as any).__ICE_ASSETS_MANIFEST__ || {};
   let {
@@ -196,11 +194,6 @@ async function render({ history, runtime, needHydrate, useRsc }: RenderOptions) 
     root,
     useRsc
     ? <RSCRouter />
-    // <AppContextProvider value={appContext}>
-    //   <AppRuntimeProvider>
-    //     <RSCRouter />
-    //   </AppRuntimeProvider>
-    // </AppContextProvider>
     : <AppContextProvider value={appContext}>
       <AppRuntimeProvider>
         <AppRouter
