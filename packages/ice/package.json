@@ -84,7 +84,7 @@
     "chokidar": "^3.5.3",
     "esbuild": "^0.17.16",
     "jest": "^29.0.2",
-    "react": "^18.3.0-canary-1cea38448-20230530",
+    "react": "^0.0.0-experimental-1cea38448-20230530",
     "react-router": "6.11.2",
     "sass": "^1.50.0",
     "unplugin": "^0.9.0",

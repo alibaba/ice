@@ -40,8 +40,8 @@
     "@remix-run/web-fetch": "^4.3.3",
     "@types/react": "^18.0.8",
     "@types/react-dom": "^18.0.3",
-    "react": "^18.3.0-canary-1cea38448-20230530",
-    "react-dom": "^18.3.0-canary-1cea38448-20230530",
+    "react": "0.0.0-experimental-1cea38448-20230530",
+    "react-dom": "0.0.0-experimental-1cea38448-20230530",
     "react-server-dom-webpack": "18.3.0-canary-1cea38448-20230530",
     "regenerator-runtime": "^0.13.9"
   },

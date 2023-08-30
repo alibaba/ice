@@ -1,4 +1,3 @@
-// 'use /client';
 import { Outlet, useData, useConfig, definePageConfig, defineDataLoader } from 'ice';
 
 export default () => {

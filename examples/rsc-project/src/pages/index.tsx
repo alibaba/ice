@@ -1,4 +1,3 @@
-// 'use /client';
 import { Suspense } from 'react';
 import { Link, useData, useConfig, definePageConfig, defineDataLoader } from 'ice';
 // Not recommended but works.

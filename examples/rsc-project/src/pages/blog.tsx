@@ -1,4 +1,3 @@
-// 'use /server';
 import { Link, useData, useConfig, definePageConfig } from 'ice';
 
 // interface Data {
