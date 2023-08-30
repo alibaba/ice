@@ -1,6 +1,7 @@
+import type { MultiStats } from '@rspack/core';
 import { logger } from '../../utils/logger.js';
 import { getOutputPaths, removeServerOutput } from '../config/output.js';
-import type { BuildOptions, CompileResults, MultiStats } from '../types.js';
+import type { BuildOptions, CompileResults } from '../types.js';
 import formatStats from './formatStats.js';
 
 async function build(options: BuildOptions) {
