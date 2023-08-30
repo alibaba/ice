@@ -15,7 +15,7 @@
   "main": "./esm/index.js",
   "type": "module",
   "dependencies": {
-    "@swc/core": "1.3.77",
+    "@swc/core": "1.3.80",
     "@ice/swc-plugin-remove-export": "0.2.0",
     "@ice/swc-plugin-keep-export": "0.2.0",
     "@ice/swc-plugin-node-transform": "0.2.0",
