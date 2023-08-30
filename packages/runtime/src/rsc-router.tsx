@@ -7,6 +7,7 @@ import React, {
   useState,
   useEffect,
   ReactElement,
+  Suspense,
 } from 'react';
 import pkg from 'react-server-dom-webpack/client';
 import { ClientAppRouterProps } from './types.js';
@@ -62,7 +63,6 @@ export function RSCRouter(): React.ReactElement {
     content.then((res: any) => {
       console.log('content res', res);
       setFinalContent(res);
-      // console.log('finalContent', finalContent)
     }, (e): any => {
       console.error(e);
     });
@@ -72,7 +72,10 @@ export function RSCRouter(): React.ReactElement {
     <AppErrorBoundary>
       <RouterContext.Provider value={{ location, navigate, refresh }}>
         <div>123</div>
-        {finalContent}
+        <Suspense fallback={<div>loading...</div>}>
+          {finalContent}
+          {/* {use(content)} */}
+        </Suspense>
       </RouterContext.Provider>
     </AppErrorBoundary>
   );

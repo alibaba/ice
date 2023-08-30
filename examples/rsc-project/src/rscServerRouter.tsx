@@ -1,4 +1,4 @@
-'use client';
+'use server';
 // import { RouteErrorComponent, WrapRouteComponent, createRouteLoader } from '@ice/runtime';
 // // import { NestedRouteManifest } from "../../../packages/route-manifest/esm";
 // import { StaticRouterProvider, createStaticRouter } from 'react-router-dom/server.mjs';
@@ -74,21 +74,15 @@ export default function RscServerRouter() {
 
   return (
     <>
-      {/* <TestClient name={'asdgasdf'} /> */}
-      <div>34efa3</div>
+      <TestClient name={'RCC props'} />
+      <div>Server component: rscServerRouter</div>
     </>
     // <>
-    //   {/* <App> */}
-    //   {/* <div></div> */}
     //   {/* <StaticRouterProvider
     //     router={router}
     //     context={routerContext}
     //     hydrate={false} // Don't set hydrate, hydation data has been injected by __window.__ICE_APP_CONTEXT__.
     //   /> */}
-    //   {/* <div onClick={()=>{alert('sdafasfdaf')}}>faisudhfasd89fg7as9</div> */}
-    //   {/* <TestClient name={() => { alert('asfas'); }} /> */}
-    //   {/* <TestClient name={'asdgasdf'} /> */}
-    //   <div>34efa3</div>
     //   {/* </App> */}
     // </>
   );
