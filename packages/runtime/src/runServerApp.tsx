@@ -415,7 +415,14 @@ async function renderServerEntry(
   const pipe = renderToNodeStream(element);
 
   const fallback = () => {
-    return renderDocument({ matches, routePath, renderOptions, routes, downgrade: true, documentData: appContext.documentData });
+    return renderDocument({
+      matches,
+      routePath,
+      renderOptions,
+      routes,
+      downgrade: true,
+      documentData: appContext.documentData,
+    });
   };
 
   return {
