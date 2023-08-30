@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import { Meta, Title, Links, Main, Scripts, useAppData, defineDataLoader, unstable_useDocumentData } from 'ice';
 import type { AppData } from '@/types';
 
