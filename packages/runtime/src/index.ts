@@ -86,6 +86,7 @@ function useDocumentData() {
 }
 
 // @TODO: remove unstable prefix or refactor.
+// eslint-disable-next-line
 export const unstable_useDocumentData = useDocumentData;
 
 export {
