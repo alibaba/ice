@@ -39,6 +39,7 @@ const { readFileSync } = fsPkg;
 interface RenderOptions {
   app: AppExport;
   assetsManifest: AssetsManifest;
+  rscManifest: any;
   createRoutes: (options: Pick<RouteLoaderOptions, 'requestContext' | 'renderMode'>) => RouteItem[];
   runtimeModules: RuntimeModules;
   Document: DocumentComponent;
@@ -548,15 +549,12 @@ function renderDocument(options: RenderDocumentOptions): Response {
 //  函数位置可能要改
 export function renderReactTree(ReactServerApp, props): Response { //  props 是根 RSC 组件的 props
   // await waitForWebpack();
-  const manifest = readFileSync(
-    path.resolve('./build/rsc-client-manifest.json'),
-    'utf8',
-  );
-  const moduleMap = JSON.parse(manifest);
+  const { rscManifest } = props;
+  console.log('rscManifest', rscManifest);
   const App = React.createElement(ReactServerApp, null, null);
   const { pipe, abort } = ReactServerDomWebpack.renderToPipeableStream(
     App,
-    moduleMap,
+    rscManifest,
   );
   return {
     value: {
@@ -592,22 +590,7 @@ export async function renderRsc( // renderToRscFlow
     location,
   };
 
-  const { Document, renderMode, RscServerRouter } = renderOptions;
-  console.log('routerContext', routerContext);
-
-  // function eraseFunction(object) {
-  //   if(!object) {
-  //     return;
-  //   }
-  //   for (let key in object) {
-  //     if (typeof object[key] === 'function' && key === 'lazy') {
-  //       delete object[key];
-  //     } else if (typeof object[key] === 'object') {
-  //       eraseFunction(object[key]);
-  //     }
-  //   }
-  // }
-  // eraseFunction(routes)
+  const { Document, renderMode, RscServerRouter, rscManifest } = renderOptions;
 
   const documentContext = {
     main: (
@@ -615,42 +598,18 @@ export async function renderRsc( // renderToRscFlow
     ),
   };
 
-  // function isPlainObject(obj) {
-  //   if (typeof obj !== 'object' || obj === null) return false
-
-  //   let proto = obj
-  //   while (Object.getPrototypeOf(proto) !== null) {
-  //     proto = Object.getPrototypeOf(proto)
-  //   }
-
-  //   return Object.getPrototypeOf(obj) === proto
-  // }
-
-  // console.log('route is plain', isPlainObject(routes))
-  // console.log('routeManifest is plain', isPlainObject(routeManifest))
-  // console.log('routerContext is plain', isPlainObject(routerContext))
-  // console.log('routeManifest\n', routeManifest)
-  // console.log('requestContext', requestContext)
-
-  console.log('RscServerRouter', RscServerRouter);
 
   const ReactServerApp = () => {
     return (
       <div>
-        {/* <AppContextProvider value={{ ...appContext, routes: null, requestContext: null }}> */}
         {/* <RscServerRouter routes={routeManifest} routerContext={routerContext} renderMode={renderMode}></RscServerRouter> */}
         <RscServerRouter />
-        {/* <DocumentContextProvider value={documentContext}> */}
-        {/* <Document routerContext={routerContext} renderMode={renderMode} pagePath={routePath} /> */}
         <div>runServerApp</div>
-        {/* <AppRouter routes={routeManifest} routerContext={routerContext} renderMode={renderMode}/> */}
-        {/* </DocumentContextProvider> */}
-        {/* </AppContextProvider> */}
       </div>
     );
   };
 
-  return renderReactTree(ReactServerApp, {});
+  return renderReactTree(ReactServerApp, { rscManifest });
 }
 
 

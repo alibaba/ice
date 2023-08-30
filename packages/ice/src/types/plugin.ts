@@ -54,6 +54,7 @@ export interface CompilerOptions {
   transformEnv?: boolean;
   compilationInfo?: {
     assetsManifest?: AssetsManifest;
+    rscManifest?: any;
   };
   redirectImports?: Config['redirectImports'];
   removeOutputs?: boolean;

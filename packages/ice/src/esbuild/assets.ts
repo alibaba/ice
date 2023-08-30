@@ -40,6 +40,7 @@ const ASSETS_RE = new RegExp(`\\.(${ASSET_TYPES.join('|')})(\\?.*)?$`);
 
 interface CompilationInfo {
   assetsManifest?: AssetsManifest;
+  rscManifest?: any;
 }
 
 const createAssetsPlugin = (compilationInfo: CompilationInfo | (() => CompilationInfo), rootDir: string) => ({
@@ -57,6 +58,21 @@ const createAssetsPlugin = (compilationInfo: CompilationInfo | (() => Compilatio
       const manifest = typeof compilationInfo === 'function' ? compilationInfo() : compilationInfo;
       return {
         contents: JSON.stringify(manifest?.assetsManifest || ''),
+        loader: 'json',
+      };
+    });
+    build.onResolve({ filter: /rsc-manifest.json$/ }, (args) => {
+      if (args.path === 'virtual:rsc-manifest.json') {
+        return {
+          path: args.path,
+          namespace: 'rsc-manifest',
+        };
+      }
+    });
+    build.onLoad({ filter: /.*/, namespace: 'rsc-manifest' }, () => {
+      const manifest = typeof compilationInfo === 'function' ? compilationInfo() : compilationInfo;
+      return {
+        contents: JSON.stringify(manifest?.rscManifest || ''),
         loader: 'json',
       };
     });

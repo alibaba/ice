@@ -9,6 +9,7 @@ import type { RenderMode, DistType } from '@ice/runtime';
 import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 // @ts-ignore
 import assetsManifest from 'virtual:assets-manifest.json';
+import rscManifest from 'virtual:rsc-manifest.json';
 import createRoutes from './routes';
 import routesConfig from './routes-config.bundle.mjs';
 import routeManifest from './route-manifest.json';
@@ -88,6 +89,7 @@ function mergeOptions(options) {
     ...options,
     app,
     assetsManifest,
+    rscManifest,
     routeManifest,
     createRoutes,
     runtimeModules,
