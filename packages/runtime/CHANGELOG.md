@@ -1,5 +1,15 @@
 # @ice/runtime
 
+## 1.2.8
+
+### Patch Changes
+
+- 47ba84d3: fix: typo of specifier for app data loader
+- 477d14cc: fix: mark polyfill signal as es module
+- 69e68633: feat: support API useDocumentData
+- 99c0dd26: hotfix: sourceMap generator perf
+- d4904e92: fix: runtime should compatible with old browsers
+
 ## 1.2.7
 
 ### Patch Changes

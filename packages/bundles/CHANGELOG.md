@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.15
+
+### Patch Changes
+
+- 2875b544: fix: bump @swc/core version
+- 1fa826b0: chore: bump rspack version for more hook and plugin support
+
 ## 0.1.14
 
 ### Patch Changes

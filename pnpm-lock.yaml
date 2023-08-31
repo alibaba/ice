@@ -1095,12 +1095,12 @@ importers:
 
   packages/ice:
     specifiers:
-      '@ice/bundles': 0.1.14
+      '@ice/bundles': 0.1.15
       '@ice/route-manifest': 1.2.1
-      '@ice/rspack-config': 1.0.1
-      '@ice/runtime': ^1.2.7
-      '@ice/shared-config': 1.0.1
-      '@ice/webpack-config': 1.1.0
+      '@ice/rspack-config': 1.0.2
+      '@ice/runtime': ^1.2.8
+      '@ice/shared-config': 1.0.2
+      '@ice/webpack-config': 1.1.1
       '@rspack/core': 0.3.0
       '@rspack/dev-server': 0.3.0
       '@swc/helpers': 0.5.1
@@ -1570,8 +1570,8 @@ importers:
 
   packages/rspack-config:
     specifiers:
-      '@ice/bundles': 0.1.14
-      '@ice/shared-config': 1.0.1
+      '@ice/bundles': 0.1.15
+      '@ice/shared-config': 1.0.2
       '@rspack/core': ^0.3.0
     dependencies:
       '@ice/bundles': link:../bundles
@@ -1626,7 +1626,7 @@ importers:
 
   packages/shared-config:
     specifiers:
-      '@ice/bundles': 0.1.14
+      '@ice/bundles': 0.1.15
       '@rollup/pluginutils': ^4.2.0
       browserslist: ^4.19.3
       consola: ^2.15.3
@@ -1659,8 +1659,8 @@ importers:
 
   packages/webpack-config:
     specifiers:
-      '@ice/bundles': 0.1.14
-      '@ice/shared-config': 1.0.1
+      '@ice/bundles': 0.1.15
+      '@ice/shared-config': 1.0.2
       fast-glob: ^3.2.11
       process: ^0.11.10
       webpack: ^5.88.0

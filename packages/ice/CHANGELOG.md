@@ -1,5 +1,27 @@
 # Changelog
 
+## 3.3.1
+
+### Patch Changes
+
+- 69e68633: feat: support API useDocumentData
+- 41bc1440: fix: ignore static resource when render server entry
+- 1fa826b0: chore: bump rspack version for more hook and plugin support
+- Updated dependencies [47ba84d3]
+- Updated dependencies [477d14cc]
+- Updated dependencies [2875b544]
+- Updated dependencies [69e68633]
+- Updated dependencies [e3e1f27c]
+- Updated dependencies [99c0dd26]
+- Updated dependencies [101eadea]
+- Updated dependencies [d4904e92]
+- Updated dependencies [1fa826b0]
+  - @ice/runtime@1.2.8
+  - @ice/bundles@0.1.15
+  - @ice/rspack-config@1.0.2
+  - @ice/shared-config@1.0.2
+  - @ice/webpack-config@1.1.1
+
 ## 3.3.0
 
 ### Minor Changes
