@@ -23,6 +23,7 @@ import formatPath from '../utils/formatPath.js';
 import { createLogger } from '../utils/logger.js';
 import { getExpandedEnvs } from '../utils/runtimeEnv.js';
 import getCSSModuleIdent from '../utils/getCSSModuleIdent.js';
+import rscServerRegister from '../esbuild/rscServerRegister.js';
 import { scanImports } from './analyze.js';
 import type { PreBundleDepsMetaData } from './preBundleDeps.js';
 import preBundleDeps from './preBundleDeps.js';
@@ -197,6 +198,7 @@ export function createServerCompiler(options: Options) {
           externals: server.externals,
         }),
         server?.ignores && ignorePlugin(server.ignores),
+        rscServerRegister(),
         cssModulesPlugin({
           extract: false,
           generateLocalIdentName: function (name: string, fileName: string) {

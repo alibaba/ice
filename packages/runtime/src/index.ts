@@ -26,6 +26,8 @@ import type { RunClientAppOptions, CreateRoutes } from './runClientApp.js';
 import { useAppContext as useInternalAppContext, useAppData, AppContextProvider } from './AppContext.js';
 import { getAppData } from './appData.js';
 import { useData, useConfig } from './RouteContext.js';
+// import runRSCApp from './runRSCApp.js';
+import { createClientModuleProxy } from './reactFlightWebpackReference.js';
 import {
   Meta,
   Title,
@@ -133,6 +135,9 @@ export {
   createRouteLoader,
   WrapRouteComponent,
   RouteErrorComponent,
+
+  // runRSCApp,
+  createClientModuleProxy,
 };
 
 export type {

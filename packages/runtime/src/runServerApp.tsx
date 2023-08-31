@@ -4,6 +4,7 @@ import * as ReactDOMServer from 'react-dom/server';
 import { parsePath } from 'history';
 import type { Location } from 'history';
 import type { RenderToPipeableStreamOptions } from 'react-dom/server';
+import { renderToPipeableStream } from 'react-server-dom-webpack/server.node';
 import type {
   AppContext, RouteItem, ServerContext,
   AppExport, AssetsManifest,
@@ -53,6 +54,7 @@ interface RenderOptions {
   prependCode?: string;
   serverData?: any;
   streamOptions?: RenderToPipeableStreamOptions;
+  clientManifest: any;
 }
 
 interface Piper {
@@ -271,6 +273,10 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     }
   }
 
+  if (req.url.indexOf('?') === -1) {
+    return renderDocument({ matches: [], routes, renderOptions });
+  }
+
   // HashRouter loads route modules by the CSR.
   if (appConfig?.router?.type === 'hash') {
     return renderDocument({ matches: [], routes, renderOptions });
@@ -381,22 +387,41 @@ async function renderServerEntry(
     location,
   };
 
-  const documentContext = {
-    main: (
-      <AppRouter routes={routes} routerContext={routerContext} />
-    ),
-  };
+  const Page = await matches[1].route.lazy();
+  // @ts-expect-error
+  const PageComponent = Page.Component;
+
   const element = (
-    <AppContextProvider value={appContext}>
-      <AppRuntimeProvider>
-        <DocumentContextProvider value={documentContext}>
-          <Document pagePath={routePath} />
-        </DocumentContextProvider>
-      </AppRuntimeProvider>
-    </AppContextProvider>
+    <div>
+      <PageComponent />
+    </div>
   );
 
-  const pipe = renderToNodeStream(element);
+  // const documentContext = {
+  //   main: (
+  //     <AppRouter routes={routes} routerContext={routerContext} />
+  //   ),
+  // };
+  // const element = (
+  //   <AppContextProvider value={appContext}>
+  //     <AppRuntimeProvider>
+  //       <DocumentContextProvider value={documentContext}>
+  //         <Document pagePath={routePath} />
+  //       </DocumentContextProvider>
+  //     </AppRuntimeProvider>
+  //   </AppContextProvider>
+  // );
+
+  const moduleMap = {
+    clientManifest: renderOptions.clientManifest,
+  };
+
+  const { pipe } = renderToPipeableStream(
+    element,
+    moduleMap,
+  );
+
+  // const pipe = renderToNodeStream(element);
 
   const fallback = () => {
     return renderDocument({ matches, routePath, renderOptions, routes, downgrade: true });
