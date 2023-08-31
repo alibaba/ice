@@ -172,7 +172,7 @@ function loadInitialDataInClient(loaders: Loaders) {
   const loaderData = context.loaderData || {};
   const { renderMode } = context;
 
-  const ids = ['_app'].concat(matchedIds);
+  const ids = ['__app'].concat(matchedIds);
   ids.forEach(id => {
     const dataFromSSR = loaderData[id]?.data;
     if (dataFromSSR) {

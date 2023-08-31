@@ -1,9 +1,10 @@
 import type { ServerResponse, IncomingMessage } from 'http';
 import * as React from 'react';
-import * as ReactDOMServer from 'react-dom/server';
-import { parsePath } from 'history';
-import type { Location } from 'history';
 import type { RenderToPipeableStreamOptions } from 'react-dom/server';
+import * as ReactDOMServer from 'react-dom/server';
+import type { Location } from 'history';
+import { parsePath } from 'history';
+import { isFunction } from '@ice/shared';
 import type {
   AppContext, RouteItem, ServerContext,
   AppExport, AssetsManifest,
@@ -13,7 +14,7 @@ import type {
   DocumentComponent,
   RuntimeModules,
   AppData,
-  ServerAppRouterProps,
+  ServerAppRouterProps, DataLoaderConfig,
 } from './types.js';
 import Runtime from './runtime.js';
 import { AppContextProvider } from './AppContext.js';
@@ -31,11 +32,13 @@ import ServerRouter from './ServerRouter.js';
 import { renderHTMLToJS } from './renderHTMLToJS.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 
+
 interface RenderOptions {
   app: AppExport;
   assetsManifest: AssetsManifest;
   createRoutes: (options: Pick<RouteLoaderOptions, 'requestContext' | 'renderMode'>) => RouteItem[];
   runtimeModules: RuntimeModules;
+  documentDataLoader?: DataLoaderConfig;
   Document: DocumentComponent;
   documentOnly?: boolean;
   renderMode?: RenderMode;
@@ -180,7 +183,7 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
           sendResponse(req, res, result);
           resolve();
         },
-        onError: async (err) => {
+        onError: (err) => {
           onError && onError(err);
           // onError triggered after shell ready, should not downgrade to csr
           // and should not be throw to break the render process
@@ -262,7 +265,20 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
   }
 
-  // don't need to execute getAppData in CSR
+  // Execute document dataLoader.
+  let documentData: any;
+  if (renderOptions.documentDataLoader) {
+    const { loader } = renderOptions.documentDataLoader;
+    if (isFunction(loader)) {
+      documentData = await loader(requestContext);
+      // @TODO: document should have it's own context, not shared with app.
+      appContext.documentData = documentData;
+    } else {
+      console.warn('Document dataLoader only accepts function.');
+    }
+  }
+
+  // Not to execute [getAppData] when CSR.
   if (!documentOnly) {
     try {
       appData = await getAppData(app, requestContext);
@@ -273,13 +289,13 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
 
   // HashRouter loads route modules by the CSR.
   if (appConfig?.router?.type === 'hash') {
-    return renderDocument({ matches: [], routes, renderOptions });
+    return renderDocument({ matches: [], routes, renderOptions, documentData });
   }
 
   const matches = matchRoutes(routes, location, finalBasename);
   const routePath = getCurrentRoutePath(matches);
   if (documentOnly) {
-    return renderDocument({ matches, routePath, routes, renderOptions });
+    return renderDocument({ matches, routePath, routes, renderOptions, documentData });
   } else if (!matches.length) {
     return handleNotFoundResponse();
   }
@@ -339,7 +355,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
       throw err;
     }
     console.error('Warning: render server entry error, downgrade to csr.', err);
-    return renderDocument({ matches, routePath, renderOptions, routes, downgrade: true });
+    return renderDocument({ matches, routePath, renderOptions, routes, downgrade: true, documentData });
   }
 }
 
@@ -399,7 +415,14 @@ async function renderServerEntry(
   const pipe = renderToNodeStream(element);
 
   const fallback = () => {
-    return renderDocument({ matches, routePath, renderOptions, routes, downgrade: true });
+    return renderDocument({
+      matches,
+      routePath,
+      renderOptions,
+      routes,
+      downgrade: true,
+      documentData: appContext.documentData,
+    });
   };
 
   return {
@@ -414,6 +437,7 @@ interface RenderDocumentOptions {
   matches: RouteMatch[];
   renderOptions: RenderOptions;
   routes: RouteItem[];
+  documentData: any;
   routePath?: string;
   downgrade?: boolean;
 }
@@ -428,6 +452,7 @@ function renderDocument(options: RenderDocumentOptions): Response {
     routePath,
     downgrade,
     routes,
+    documentData,
   }: RenderDocumentOptions = options;
 
   const {
@@ -465,6 +490,7 @@ function renderDocument(options: RenderDocumentOptions): Response {
     basename,
     downgrade,
     serverData,
+    documentData,
   };
 
   const documentContext = {

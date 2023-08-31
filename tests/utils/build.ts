@@ -22,7 +22,7 @@ interface ReturnValue {
 }
 
 // get builtIn plugins
-export const buildFixture = async function (example: string, commandArgs?: Record<string, string>) {
+export const buildFixture = async function (example: string, commandArgs?: Record<string, string | boolean>) {
   const rootDir = path.join(__dirname, `../../examples/${example}`);
   // process.env.DISABLE_FS_CACHE = 'true';
   const service = await createService({
