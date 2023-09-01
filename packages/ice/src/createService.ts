@@ -33,10 +33,11 @@ import { logger, createLogger } from './utils/logger.js';
 import ServerRunner from './service/ServerRunner.js';
 import RouteManifest from './utils/routeManifest.js';
 import dynamicImport from './utils/dynamicImport.js';
-import mergeTaskConfig from './utils/mergeTaskConfig.js';
+import mergeTaskConfig, { mergeConfig } from './utils/mergeTaskConfig.js';
 import addPolyfills from './utils/runtimePolyfill.js';
 import webpackBundler from './bundler/webpack/index.js';
 import rspackBundler from './bundler/rspack/index.js';
+import getDefaultTaskConfig from './plugins/task.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -220,6 +221,15 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   // get userConfig after setup because of userConfig maybe modified by plugins
   const { userConfig } = ctx;
   const { routes: routesConfig, server, syntaxFeatures, polyfill, output: { distType } } = userConfig;
+
+  // Merge task config with default config, so developer should not care about the config built-in of framework.
+  const defaultTaskConfig = getDefaultTaskConfig({ rootDir, command });
+  taskConfigs = taskConfigs.map((task) => {
+    return {
+      ...task,
+      config: mergeConfig(defaultTaskConfig, task.config),
+    };
+  });
 
   const coreEnvKeys = getCoreEnvKeys();
 

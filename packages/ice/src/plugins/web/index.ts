@@ -3,12 +3,12 @@ import type { Plugin } from '../../types/plugin.js';
 import { WEB } from '../../constant.js';
 import openBrowser from '../../utils/openBrowser.js';
 import { logger } from '../../utils/logger.js';
-import getWebTask from './task.js';
+import getWebTask from '../task.js';
 
 const plugin: Plugin = () => ({
   name: 'plugin-web',
   setup: ({ registerTask, onHook, context, generator }) => {
-    const { rootDir, commandArgs, command, userConfig } = context;
+    const { commandArgs, command, userConfig } = context;
 
     generator.addTargetExport({
       specifier: [
@@ -32,7 +32,19 @@ const plugin: Plugin = () => ({
       target: 'web',
     });
 
-    registerTask(WEB, getWebTask({ rootDir, command, userConfig }));
+    const removeExportExprs = ['serverDataLoader', 'staticDataLoader'];
+    // Remove dataLoader exports only when build in production
+    // and configure to generate data-loader.js.
+    if (command === 'build' && userConfig.dataLoader) {
+      removeExportExprs.push('dataLoader');
+    }
+    registerTask(WEB, {
+      target: WEB,
+      useDataLoader: true,
+      swcOptions: {
+        removeExportExprs,
+      },
+    });
 
     onHook('after.start.compile', async ({ isSuccessful, isFirstCompile, urls, devUrlInfo }) => {
       const { port, open } = commandArgs;

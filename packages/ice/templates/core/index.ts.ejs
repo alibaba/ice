@@ -1,7 +1,7 @@
 <% if (globalStyle) {-%>
 import '<%= globalStyle %>'
 <% } -%>
-import type { PageConfig, PageConfigDefinition } from './types';
+import { definePageConfig } from './types';
 <%- framework.imports %>
 
 <%- framework.variablesStr %>
@@ -18,9 +18,7 @@ function definePageConfig(pageConfig: PageConfig | PageConfigDefinition): PageCo
 export {
   definePageConfig,
   <% if (framework.exports) { -%><%- framework.exports %><% } -%>
-
   <% if (framework.targetExports) { -%><%- framework.targetExports %><% } -%>
-
 };
 
 export * from './types';
