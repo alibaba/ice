@@ -164,6 +164,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     generatorAPI.addExport(exports);
   });
   const routeManifest = new RouteManifest();
+  // Merge task config with default config, so developer should not care about the config built-in of framework.
+  const defaultTaskConfig = getDefaultTaskConfig({ rootDir, command });
   const ctx = new Context<Config, ExtendsPluginAPI>({
     rootDir,
     command,
@@ -187,6 +189,10 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       serverCompileTask,
       dataCache,
       createLogger,
+      // Override registerTask to merge default config.
+      registerTask: (target: string, config: Partial<Config>) => {
+        return ctx.registerTask(target, mergeConfig(defaultTaskConfig, config));
+      },
     },
   });
   // Load .env before resolve user config, so we can access env variables defined in .env files.
@@ -221,15 +227,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   // get userConfig after setup because of userConfig maybe modified by plugins
   const { userConfig } = ctx;
   const { routes: routesConfig, server, syntaxFeatures, polyfill, output: { distType } } = userConfig;
-
-  // Merge task config with default config, so developer should not care about the config built-in of framework.
-  const defaultTaskConfig = getDefaultTaskConfig({ rootDir, command });
-  taskConfigs = taskConfigs.map((task) => {
-    return {
-      ...task,
-      config: mergeConfig(defaultTaskConfig, task.config),
-    };
-  });
 
   const coreEnvKeys = getCoreEnvKeys();
 

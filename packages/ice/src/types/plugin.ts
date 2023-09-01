@@ -1,5 +1,5 @@
 import type webpack from '@ice/bundles/compiled/webpack';
-import type { _Plugin, CommandArgs, TaskConfig } from 'build-scripts';
+import type { _Plugin, CommandArgs, RegisterTask, TaskConfig } from 'build-scripts';
 import type { Configuration, Stats, WebpackOptionsNormalized } from '@ice/bundles/compiled/webpack';
 import type { esbuild } from '@ice/bundles';
 import type { DefineExtraRoutes, NestedRouteManifest } from '@ice/route-manifest';
@@ -134,6 +134,7 @@ export interface ExtendsPluginAPI {
   context: {
     webpack?: typeof webpack;
   };
+  registerTask: RegisterTask<Config>;
   generator: {
     addExport: AddExport;
     addTargetExport: AddTargetExport;
