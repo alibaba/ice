@@ -1,6 +1,6 @@
 <% if (importCoreJs) { -%>import 'core-js';<% } %>
 import { createElement, Fragment } from 'react';
-import { getAppConfig } from '<%- iceRuntimePath %>';
+import { runRSCApp, getAppConfig } from '<%- iceRuntimePath %>';
 import { commons, statics } from './runtimeModules';
 import * as app from '@/app';
 <%- runtimeOptions.imports %>
@@ -11,33 +11,6 @@ const getRouterBasename = () => {
 }
 // Add react fragment for split chunks of app.
 // Otherwise chunk of route component will pack @ice/jsx-runtime and depend on framework bundle.
-
-import React, { Suspense, use } from 'react';
-import * as ReactDOM from 'react-dom/client';
-import { createFromFetch } from 'react-server-dom-webpack/client';
-
-async function runRSCApp() {
-  function Message({ response }) {
-    const body = use(response);
-    return <div>{body}</div>;
-  }
-
-  function App({ response }) {
-    return (
-      <Suspense fallback={<h1>Loading...</h1>}>
-        <Message response={response} />
-      </Suspense>
-    );
-  }
-
-  const response = createFromFetch(
-    fetch('/?body'),
-  );
-
-  const container = document.getElementById('app');
-  const root = ReactDOM.createRoot(container);
-  root.render(<App response={response} />);
-}
 
 const render = (customOptions = {}) => {
   return runRSCApp();

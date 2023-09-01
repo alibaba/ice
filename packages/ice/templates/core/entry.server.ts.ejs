@@ -9,7 +9,7 @@ import type { RenderMode, DistType } from '@ice/runtime';
 import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 // @ts-ignore
 import assetsManifest from 'virtual:assets-manifest.json';
-import clientManifest from './react-client-manifest.json';
+import clientManifest from 'virtual:react-client-manifest.json';
 import createRoutes from './routes';
 import routesConfig from './routes-config.bundle.mjs';
 <% if(dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>

@@ -412,13 +412,11 @@ async function renderServerEntry(
   //   </AppContextProvider>
   // );
 
-  const moduleMap = {
-    clientManifest: renderOptions.clientManifest,
-  };
+  // console.log(moduleMap);
 
   const { pipe } = renderToPipeableStream(
     element,
-    moduleMap,
+    renderOptions.clientManifest,
   );
 
   // const pipe = renderToNodeStream(element);

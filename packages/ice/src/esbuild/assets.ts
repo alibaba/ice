@@ -40,6 +40,7 @@ const ASSETS_RE = new RegExp(`\\.(${ASSET_TYPES.join('|')})(\\?.*)?$`);
 
 interface CompilationInfo {
   assetsManifest?: AssetsManifest;
+  rscManifest?: any;
 }
 
 const createAssetsPlugin = (compilationInfo: CompilationInfo | (() => CompilationInfo), rootDir: string) => ({
@@ -57,6 +58,21 @@ const createAssetsPlugin = (compilationInfo: CompilationInfo | (() => Compilatio
       const manifest = typeof compilationInfo === 'function' ? compilationInfo() : compilationInfo;
       return {
         contents: JSON.stringify(manifest?.assetsManifest || ''),
+        loader: 'json',
+      };
+    });
+    build.onResolve({ filter: /react-client-manifest.json$/ }, (args) => {
+      if (args.path === 'virtual:react-client-manifest.json') {
+        return {
+          path: args.path,
+          namespace: 'react-client-manifest',
+        };
+      }
+    });
+    build.onLoad({ filter: /.*/, namespace: 'react-client-manifest' }, () => {
+      const manifest = typeof compilationInfo === 'function' ? compilationInfo() : compilationInfo;
+      return {
+        contents: JSON.stringify(manifest?.rscManifest || ''),
         loader: 'json',
       };
     });

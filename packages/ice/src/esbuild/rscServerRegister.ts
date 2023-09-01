@@ -9,7 +9,7 @@ const rscServerRegister = (): Plugin => {
         const { path } = args;
         const loader = path.endsWith('.tsx') || path.endsWith('.ts') ? 'tsx' : 'jsx';
         const moduleId: string = url.pathToFileURL(path).href;
-        let source = 'import {createClientModuleProxy} from \'@ice/runtime\';';
+        let source = 'const Server: any = require(\'react-server-dom-webpack/server.node\');const createClientModuleProxy = Server.createClientModuleProxy;';
         source += transformContent(moduleId);
         return { contents: source, loader };
       });
@@ -20,7 +20,7 @@ const rscServerRegister = (): Plugin => {
 function transformContent(moduleId: string) {
   const content = `\
     const comp = createClientModuleProxy('${moduleId}');
-    export default comp`;
+    module.exports = comp`;
   return content;
 }
 

@@ -41,6 +41,10 @@ export default class ServerCompilerPlugin {
         // Option of compilationInfo need to be object, while it may changed during multi-time compilation.
         this.compilerOptions.compilationInfo.assetsManifest =
           JSON.parse(compilation.assets['assets-manifest.json'].source().toString());
+
+        // @ts-ignore
+        this.compilerOptions.compilationInfo.rscManifest =
+          JSON.parse(compilation.assets['react-client-manifest.json']?.source()?.toString());
       }
       // For first time, we create a new task.
       // The next time, we use incremental build so do not create task again.

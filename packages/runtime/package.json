@@ -39,9 +39,9 @@
   "devDependencies": {
     "@types/react": "^18.0.8",
     "@types/react-dom": "^18.0.3",
-    "react": "18.3.0-next-3ba7add60-20221201",
-    "react-server-dom-webpack": "18.3.0-next-855b77c9b-20230202",
-    "react-dom": "18.3.0-next-855b77c9b-20230202",
+    "react": "18.3.0-canary-dd480ef92-20230822",
+    "react-server-dom-webpack": "18.3.0-canary-dd480ef92-20230822",
+    "react-dom": "18.3.0-canary-dd480ef92-20230822",
     "regenerator-runtime": "^0.13.9",
     "@remix-run/web-fetch": "^4.3.3"
   },
@@ -62,9 +62,9 @@
     "source-map": "^0.7.4"
   },
   "peerDependencies": {
-    "react": "18.3.0-next-3ba7add60-20221201",
-    "react-dom": "18.3.0-next-855b77c9b-20230202",
-    "react-server-dom-webpack": "18.3.0-next-855b77c9b-20230202"
+    "react": "18.3.0-canary-dd480ef92-20230822",
+    "react-dom": "18.3.0-canary-dd480ef92-20230822",
+    "react-server-dom-webpack": "18.3.0-canary-dd480ef92-20230822"
   },
   "publishConfig": {
     "access": "public"

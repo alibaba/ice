@@ -31,6 +31,7 @@ const getWebTask = ({ rootDir, command, userConfig }): Config => {
       '@swc/helpers': path.dirname(require.resolve('@swc/helpers/package.json')),
       'universal-env': envReplacement,
       '@uni/env': envReplacement,
+      'react-server-dom-webpack/client': require.resolve('react-server-dom-webpack/client.browser'),
     },
     swcOptions: {
       removeExportExprs,
