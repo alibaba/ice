@@ -8,6 +8,7 @@ const __dirname = fileURLToPath(path.dirname(import.meta.url));
 describe('defineVitestConfig', () => {
   const builtInAlias = [
     'ice',
+    'ice/type',
     '@',
     'webpack/hot',
     'regenerator-runtime',

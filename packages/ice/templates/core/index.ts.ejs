@@ -7,14 +7,6 @@ import { definePageConfig } from './types';
 <%- framework.variablesStr %>
 <%- framework.targetImport %>
 
-function definePageConfig(pageConfig: PageConfig | PageConfigDefinition): PageConfigDefinition {
-  if (typeof pageConfig !== 'function') {
-    return () => pageConfig;
-  } else {
-    return pageConfig;
-  }
-}
-
 export {
   definePageConfig,
   <% if (framework.exports) { -%><%- framework.exports %><% } -%>
