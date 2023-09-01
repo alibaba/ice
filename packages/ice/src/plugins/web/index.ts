@@ -3,7 +3,6 @@ import type { Plugin } from '../../types/plugin.js';
 import { WEB } from '../../constant.js';
 import openBrowser from '../../utils/openBrowser.js';
 import { logger } from '../../utils/logger.js';
-import getWebTask from '../task.js';
 
 const plugin: Plugin = () => ({
   name: 'plugin-web',

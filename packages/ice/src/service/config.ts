@@ -10,7 +10,6 @@ import { RUNTIME_TMP_DIR, CACHE_DIR } from '../constant.js';
 import { createLogger } from '../utils/logger.js';
 import externalBuiltinPlugin from '../esbuild/externalNodeBuiltin.js';
 
-
 type GetOutfile = (entry: string, exportNames: string[]) => string;
 
 interface CompileConfig {

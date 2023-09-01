@@ -12,15 +12,6 @@ type PageConfigDefinitionContext<DataType = any> = {
 };
 type PageConfigDefinition = (context: PageConfigDefinitionContext) => PageConfig;
 
-// Only used for type defination.
-export function definePageConfig(pageConfig: PageConfig | PageConfigDefinition): PageConfigDefinition {
-  if (typeof pageConfig !== 'function') {
-    return () => pageConfig;
-  } else {
-    return pageConfig;
-  }
-}
-
 export type {
   AppConfig,
   PageConfig,

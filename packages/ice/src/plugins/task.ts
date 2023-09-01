@@ -15,7 +15,7 @@ const getDefaultTaskConfig = ({ rootDir, command }): Config => {
     cacheDir: path.join(rootDir, CACHE_DIR),
     alias: {
       ice: path.join(rootDir, RUNTIME_TMP_DIR, 'index.ts'),
-      'ice/types': path.join(rootDir, RUNTIME_TMP_DIR, 'types.ts'),
+      'ice/types': path.join(rootDir, RUNTIME_TMP_DIR, 'type-defines.ts'),
       '@': path.join(rootDir, 'src'),
       // set alias for webpack/hot while webpack has been prepacked
       'webpack/hot': '@ice/bundles/compiled/webpack/hot',
