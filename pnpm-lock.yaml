@@ -1205,6 +1205,7 @@ importers:
       '@ice/pkg': ^1.5.0
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
+      cross-env: ^7.0.3
       react: ^18.0.0
       react-dom: ^18.0.0
       style-unit: ^3.0.4
@@ -1214,6 +1215,7 @@ importers:
       '@ice/pkg': 1.5.5
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
+      cross-env: 7.0.3
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
 
@@ -1330,6 +1332,7 @@ importers:
       '@types/accept-language-parser': ^1.5.3
       '@types/react': ^18.0.33
       accept-language-parser: ^1.5.0
+      cross-env: ^7.0.3
       universal-cookie: ^4.0.4
       url-join: ^5.0.0
       webpack-dev-server: ^4.13.2
@@ -1346,6 +1349,7 @@ importers:
       '@remix-run/router': 1.6.1
       '@types/accept-language-parser': 1.5.3
       '@types/react': 18.0.34
+      cross-env: 7.0.3
       webpack-dev-server: 4.13.2
 
   packages/plugin-icestark:
@@ -1546,6 +1550,7 @@ importers:
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
       create-react-class: ^15.7.0
+      cross-env: ^7.0.3
       react: ^18.0.0
       react-dom: ^18.0.0
       style-unit: ^3.0.5
@@ -1559,6 +1564,7 @@ importers:
       '@types/rax': 1.0.10
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
+      cross-env: 7.0.3
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
 
@@ -10562,6 +10568,14 @@ packages:
 
   /create-require/1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
+    dev: true
+
+  /cross-env/7.0.3:
+    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
+    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
     dev: true
 
   /cross-fetch/3.1.5:

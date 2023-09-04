@@ -30,8 +30,8 @@
   },
   "sideEffects": false,
   "scripts": {
-    "watch": "ice-pkg start",
-    "build": "ice-pkg build"
+    "watch": "cross-env NODE_ENV=development ice-pkg start",
+    "build": "cross-env NODE_ENV=production ice-pkg build"
   },
   "keywords": [
     "ice.js",
@@ -52,6 +52,7 @@
     "@remix-run/router": "^1.6.1",
     "@types/accept-language-parser": "^1.5.3",
     "@types/react": "^18.0.33",
+    "cross-env": "^7.0.3",
     "webpack-dev-server": "^4.13.2"
   },
   "peerDependencies": {

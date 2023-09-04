@@ -31,7 +31,7 @@
     "webpack-dev-server": "^4.7.4"
   },
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsc"
   },
   "publishConfig": {
