@@ -1,6 +1,6 @@
 {
   "name": "@ice/shared-config",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "repository": "alibaba/ice",
   "bugs": "https://github.com/alibaba/ice/issues",
   "homepage": "https://v3.ice.work",
@@ -17,7 +17,7 @@
     "*.d.ts"
   ],
   "dependencies": {
-    "@ice/bundles": "0.1.14",
+    "@ice/bundles": "0.1.15",
     "@rollup/pluginutils": "^4.2.0",
     "browserslist": "^4.19.3",
     "consola": "^2.15.3",

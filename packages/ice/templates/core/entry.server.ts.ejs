@@ -4,7 +4,7 @@ import * as runtime from '@ice/runtime/server';
 import { commons, statics } from './runtimeModules';
 <% }-%>
 import * as app from '@/app';
-import Document from '@/document';
+import * as Document from '@/document';
 import type { RenderMode, DistType } from '@ice/runtime';
 import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 // @ts-ignore
@@ -86,7 +86,8 @@ function mergeOptions(options) {
     assetsManifest,
     createRoutes,
     runtimeModules,
-    Document,
+    documentDataLoader: Document.dataLoader,
+    Document: Document.default,
     basename: basename || getRouterBasename(),
     renderMode,
     routesConfig,
