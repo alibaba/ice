@@ -3,7 +3,6 @@ import * as React from 'react';
 import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 import * as ReactDOMServer from 'react-dom/server';
 import type { Location } from 'history';
-import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 import { renderToPipeableStream } from 'react-server-dom-webpack/server.node';
 import { parsePath } from 'history';
 import { isFunction } from '@ice/shared';
@@ -291,7 +290,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
   }
 
   if (req.url.indexOf('?') === -1) {
-    return renderDocument({ matches: [], routes, renderOptions });
+    return renderDocument({ matches: [], routes, renderOptions, documentData });
   }
 
   // HashRouter loads route modules by the CSR.
