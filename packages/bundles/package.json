@@ -35,7 +35,9 @@
     "error-stack-parser": "^2.0.6",
     "@rspack/core": "0.3.0",
     "@rspack/dev-server": "0.3.0",
-    "@ice/css-modules-hash": "0.0.6"
+    "@ice/css-modules-hash": "0.0.6",
+    "acorn-loose": "^8.3.0",
+    "neo-async": "^2.6.1"
   },
   "devDependencies": {
     "@types/less": "^3.0.3",
@@ -97,7 +99,11 @@
     "loader-utils": "^2.0.0",
     "source-map": "0.8.0-beta.0",
     "find-up": "5.0.0",
-    "common-path-prefix": "3.0.0"
+    "common-path-prefix": "3.0.0",
+    "react-builtin": "npm:react@18.3.0-canary-dd480ef92-20230822",
+    "react-dom-builtin": "npm:react-dom@18.3.0-canary-dd480ef92-20230822",
+    "react-server-dom-webpack": "18.3.0-canary-dd480ef92-20230822",
+    "scheduler-builtin": "npm:scheduler@0.24.0-canary-dd480ef92-20230822"
   },
   "publishConfig": {
     "access": "public",

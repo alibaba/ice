@@ -22,6 +22,53 @@ export const taskExternals = {
   esbuild: 'esbuild',
 };
 
+// Override the `react`, `react-dom` and `scheduler`'s package names to avoid
+// "The name `react` was looked up in the Haste module map" warnings.
+function overridePackageName(source: string, channel: string) {
+  const json = JSON.parse(source);
+  json.name = `${json.name}-${channel}`;
+  return JSON.stringify(
+    {
+      name: json.name,
+      main: json.main,
+      exports: json.exports,
+      dependencies: json.dependencies,
+      peerDependencies: json.peerDependencies,
+      browser: json.browser,
+    },
+    null,
+    2,
+  );
+}
+
+interface CopyModulesOptions {
+  loaders?: { test: RegExp; handler: (code: string, id: string) => string }[];
+  channel?: string;
+  ignore?: string[];
+}
+
+function copyModules(rules: string[], packageName: string, option?: CopyModulesOptions) {
+  const { channel, ignore, loaders } = option || {};
+  const pkgDir = path.join(__dirname, `../node_modules/${packageName}${channel ? `-${channel}` : ''}`);
+  const targetDir = path.join(__dirname, `../compiled/${packageName}`);
+  const filePaths = globbySync(rules, { cwd: pkgDir, ignore: ignore ?? ['node_modules'] });
+  filePaths.forEach((filePath) => {
+    fs.ensureDirSync(path.join(targetDir, path.dirname(filePath)));
+    const sourcePath = path.join(pkgDir, filePath);
+    const targetPath = path.join(targetDir, filePath);
+    // Only deal with js files.
+    if (loaders) {
+      const loader = loaders.find(({ test }) => test.test(filePath));
+      if (loader) {
+        const fileContent = fs.readFileSync(sourcePath, 'utf8');
+        fs.writeFileSync(targetPath, loader.handler(fileContent, filePath));
+        return;
+      }
+    }
+    fs.copyFileSync(sourcePath, targetPath);
+  });
+}
+
 const commonDeps = ['terser', 'tapable', 'cssnano', 'terser-webpack-plugin', 'webpack', 'schema-utils',
   'lodash', 'postcss-preset-env', 'loader-utils', 'find-up', 'common-path-prefix', 'magic-string'];
 
@@ -202,6 +249,84 @@ const tasks = [
       const targetPath = path.join(__dirname, '../compiled/webpack');
       fs.copySync(path.join(pkgPath, 'hot'), path.join(targetPath, 'hot'));
       fs.copySync(path.join(__dirname, '../webpack/packages'), targetPath);
+    },
+  },
+  {
+    pkgName: 'react',
+    skipCompile: true,
+    declaration: false,
+    patch: () => {
+      copyModules(
+        ['*.{json,js}', 'cjs/**/*.js', 'LICENSE'],
+        'react',
+        {
+          channel: 'builtin',
+          loaders: [
+            { test: /package.json$/, handler: (source) => overridePackageName(source, 'builtin') },
+            { test: /\.js$/, handler: (source) => replaceDeps(source, ['scheduler']) },
+          ],
+        },
+      );
+    },
+  },
+  {
+    pkgName: 'react-dom',
+    skipCompile: true,
+    declaration: false,
+    patch: () => {
+      copyModules(
+        ['*.{json,js}', 'cjs/**/*.js', 'LICENSE'],
+        'react',
+        {
+          channel: 'builtin',
+          loaders: [
+            { test: /package.json$/, handler: (source) => overridePackageName(source, 'builtin') },
+            { test: /\.js$/, handler: (source) => replaceDeps(source, ['scheduler', 'react']) },
+          ],
+          // Ignore unused files.
+          ignore: [
+            'node_modules',
+            'static.js',
+            'static.node.js',
+            'static.browser.js',
+            'unstable_testing.js',
+            'test-utils.js',
+            'server.bun.js',
+            'cjs/react-dom-server.bun.development.js',
+            'cjs/react-dom-server.bun.production.min.js',
+            'cjs/react-dom-test-utils.development.js',
+            'cjs/react-dom-test-utils.production.min.js',
+            'unstable_server-external-runtime.js',
+          ],
+        },
+      );
+    },
+  },
+  {
+    pkgName: 'react-server-dom-webpack',
+    skipCompile: true,
+    patch: () => {
+      copyModules(
+        ['*.{json,js}', 'cjs/**/*.js', 'LICENSE'],
+        'react-server-dom-webpack',
+      );
+    },
+  },
+  {
+    pkgName: 'scheduler',
+    skipCompile: true,
+    declaration: false,
+    patch: () => {
+      copyModules(
+        ['*.{json,js}', 'cjs/**/*.js', 'LICENSE'],
+        'scheduler',
+        {
+          channel: 'builtin',
+          loaders: [
+            { test: /package.json$/, handler: (source) => overridePackageName(source, 'builtin') },
+          ],
+        },
+      );
     },
   },
 ];
