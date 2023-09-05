@@ -41,7 +41,10 @@ async function build(options: BuildOptions) {
 
   if (isSuccessful) {
     const outputDir = rspackConfigs[0].output.path;
-    const { serverEntry } = await extendsPluginAPI.serverCompileTask.get() || {};
+    const { serverEntry, error } = await extendsPluginAPI.serverCompileTask.get() || {};
+    if (error) {
+      throw new Error('Build failed, please check the error message.');
+    }
     const outputPaths = await getOutputPaths({
       rootDir,
       serverEntry,
