@@ -146,7 +146,7 @@ export interface Config {
   redirectImports?: ImportDeclaration[];
 
   entry?: {
-    [key: string]: string;
+    [key: string]: string | string[];
   };
 
   splitChunks?: boolean | 'vendors' | 'chunks' | 'page-vendors' | webpack.Configuration['optimization']['splitChunks'];

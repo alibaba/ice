@@ -289,6 +289,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     }
   }
 
+  // TODO: mark temporary, should be removed after refactor.
   if (req.url.indexOf('?') === -1) {
     return renderDocument({ matches: [], routes, renderOptions, documentData });
   }
@@ -406,36 +407,25 @@ async function renderServerEntry(
   const Page = await matches[1].route.lazy();
   // @ts-expect-error
   const PageComponent = Page.Component;
+  const documentContext = {
+    main: (
+      <AppRouter routes={routes} routerContext={routerContext} />
+    ),
+  };
 
-  const element = (
+  const element = renderOptions.clientManifest ? (
     <div>
       <PageComponent />
     </div>
+  ) : (
+    <AppContextProvider value={appContext}>
+      <AppRuntimeProvider>
+        <DocumentContextProvider value={documentContext}>
+          <Document pagePath={routePath} />
+        </DocumentContextProvider>
+      </AppRuntimeProvider>
+    </AppContextProvider>
   );
-
-  // const documentContext = {
-  //   main: (
-  //     <AppRouter routes={routes} routerContext={routerContext} />
-  //   ),
-  // };
-  // const element = (
-  //   <AppContextProvider value={appContext}>
-  //     <AppRuntimeProvider>
-  //       <DocumentContextProvider value={documentContext}>
-  //         <Document pagePath={routePath} />
-  //       </DocumentContextProvider>
-  //     </AppRuntimeProvider>
-  //   </AppContextProvider>
-  // );
-
-  // console.log(moduleMap);
-
-  const { pipe } = renderToPipeableStream(
-    element,
-    renderOptions.clientManifest,
-  );
-
-  // const pipe = renderToNodeStream(element);
 
   const fallback = () => {
     return renderDocument({
@@ -447,7 +437,15 @@ async function renderServerEntry(
       documentData: appContext.documentData,
     });
   };
-
+  let pipe: NodeWritablePiper;
+  if (renderOptions.clientManifest) {
+    pipe = renderToPipeableStream(
+      element,
+      renderOptions.clientManifest,
+    ).pipe;
+  } else {
+    pipe = renderToNodeStream(element);
+  }
   return {
     value: {
       pipe,

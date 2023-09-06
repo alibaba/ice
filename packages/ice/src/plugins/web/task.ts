@@ -32,8 +32,7 @@ const getWebTask = ({ rootDir, command, userConfig }): Config => {
       '@swc/helpers': path.dirname(require.resolve('@swc/helpers/package.json')),
       'universal-env': envReplacement,
       '@uni/env': envReplacement,
-      // TOOD: only create rsc aliased when use rsc.
-      ...createRSCAliases(),
+      ...(userConfig.rsc ? createRSCAliases() : {}),
     },
     swcOptions: {
       removeExportExprs,
@@ -45,6 +44,10 @@ const getWebTask = ({ rootDir, command, userConfig }): Config => {
     useDevServer: true,
     useDataLoader: true,
     target: WEB,
+    ...(userConfig.rsc ? {
+      // TODO: temporary solution for rsc.
+      entry: { main: [path.join(rootDir, RUNTIME_TMP_DIR, 'clientEntry.tsx')] },
+    } : {}),
   };
 };
 
