@@ -289,11 +289,6 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     }
   }
 
-  // TODO: mark temporary, should be removed after refactor.
-  if (req.url.indexOf('?') === -1) {
-    return renderDocument({ matches: [], routes, renderOptions, documentData });
-  }
-
   // HashRouter loads route modules by the CSR.
   if (appConfig?.router?.type === 'hash') {
     return renderDocument({ matches: [], routes, renderOptions, documentData });
@@ -404,28 +399,35 @@ async function renderServerEntry(
     location,
   };
 
-  const Page = await matches[1].route.lazy();
-  // @ts-expect-error
-  const PageComponent = Page.Component;
-  const documentContext = {
-    main: (
-      <AppRouter routes={routes} routerContext={routerContext} />
-    ),
-  };
+  let element: JSX.Element;
 
-  const element = renderOptions.clientManifest ? (
-    <div>
-      <PageComponent />
-    </div>
-  ) : (
-    <AppContextProvider value={appContext}>
-      <AppRuntimeProvider>
-        <DocumentContextProvider value={documentContext}>
-          <Document pagePath={routePath} />
-        </DocumentContextProvider>
-      </AppRuntimeProvider>
-    </AppContextProvider>
-  );
+  if (renderOptions.clientManifest) {
+    const Page = await matches[1].route.lazy();
+    // @ts-expect-error
+    const PageComponent = Page.Component;
+
+    element = (
+      <div>
+        <PageComponent />
+      </div>
+    );
+  } else {
+    const documentContext = {
+      main: (
+        <AppRouter routes={routes} routerContext={routerContext} />
+      ),
+    };
+
+    element = (
+      <AppContextProvider value={appContext}>
+        <AppRuntimeProvider>
+          <DocumentContextProvider value={documentContext}>
+            <Document pagePath={routePath} />
+          </DocumentContextProvider>
+        </AppRuntimeProvider>
+      </AppContextProvider>
+    );
+  }
 
   const fallback = () => {
     return renderDocument({
