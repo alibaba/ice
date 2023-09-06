@@ -39,7 +39,7 @@
     "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-rax-compat"
   },
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsc && cp src/rax-compat.d.ts  esm/rax-compat.d.ts"
   },
   "publishConfig": {

@@ -1,6 +1,6 @@
 {
   "name": "@ice/bundles",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "license": "MIT",
   "author": "ICE",
   "description": "Basic dependencies for ice.",
@@ -9,13 +9,13 @@
     "compiled"
   ],
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsx scripts/build.ts && tsc"
   },
   "main": "./esm/index.js",
   "type": "module",
   "dependencies": {
-    "@swc/core": "1.3.77",
+    "@swc/core": "1.3.80",
     "@ice/swc-plugin-remove-export": "0.2.0",
     "@ice/swc-plugin-keep-export": "0.2.0",
     "@ice/swc-plugin-node-transform": "0.2.0",
@@ -33,8 +33,8 @@
     "react-refresh": "0.14.0",
     "core-js-pure": "^3.8.1",
     "error-stack-parser": "^2.0.6",
-    "@rspack/core": "0.2.12",
-    "@rspack/dev-server": "0.2.12",
+    "@rspack/core": "0.3.0",
+    "@rspack/dev-server": "0.3.0",
     "@ice/css-modules-hash": "0.0.6"
   },
   "devDependencies": {

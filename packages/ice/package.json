@@ -1,6 +1,6 @@
 {
   "name": "@ice/app",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "description": "provide scripts and configuration used by web framework ice",
   "type": "module",
   "main": "./esm/index.js",
@@ -27,7 +27,7 @@
     "npm": ">=3.0.0"
   },
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsc",
     "postinstall": "node ./scripts/postinstall.mjs"
   },
@@ -37,12 +37,12 @@
   "bugs": "https://github.com/alibaba/ice/issues",
   "homepage": "https://v3.ice.work",
   "dependencies": {
-    "@ice/bundles": "0.1.14",
+    "@ice/bundles": "0.1.15",
     "@ice/route-manifest": "1.2.1",
-    "@ice/runtime": "^1.2.7",
-    "@ice/shared-config": "1.0.1",
-    "@ice/webpack-config": "1.1.0",
-    "@ice/rspack-config": "1.0.1",
+    "@ice/runtime": "^1.2.8",
+    "@ice/shared-config": "1.0.2",
+    "@ice/webpack-config": "1.1.1",
+    "@ice/rspack-config": "1.0.2",
     "@swc/helpers": "0.5.1",
     "@types/express": "^4.17.14",
     "address": "^1.1.2",
@@ -88,8 +88,8 @@
     "unplugin": "^0.9.0",
     "webpack": "^5.88.0",
     "webpack-dev-server": "^4.7.4",
-    "@rspack/core": "0.2.12",
-    "@rspack/dev-server": "0.2.12"
+    "@rspack/core": "0.3.0",
+    "@rspack/dev-server": "0.3.0"
   },
   "peerDependencies": {
     "react": ">=18.0.0",

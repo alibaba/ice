@@ -1,6 +1,7 @@
+import type { MultiStats } from '@rspack/core';
 import { logger } from '../../utils/logger.js';
 import { getOutputPaths, removeServerOutput } from '../config/output.js';
-import type { BuildOptions, CompileResults, MultiStats } from '../types.js';
+import type { BuildOptions, CompileResults } from '../types.js';
 import formatStats from './formatStats.js';
 
 async function build(options: BuildOptions) {
@@ -40,7 +41,10 @@ async function build(options: BuildOptions) {
 
   if (isSuccessful) {
     const outputDir = rspackConfigs[0].output.path;
-    const { serverEntry } = await extendsPluginAPI.serverCompileTask.get() || {};
+    const { serverEntry, error } = await extendsPluginAPI.serverCompileTask.get() || {};
+    if (error) {
+      throw new Error('Build failed, please check the error message.');
+    }
     const outputPaths = await getOutputPaths({
       rootDir,
       serverEntry,

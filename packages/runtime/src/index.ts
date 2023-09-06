@@ -80,6 +80,15 @@ function usePublicAppContext(): PublicAppContext {
   };
 }
 
+function useDocumentData() {
+  const context = useInternalAppContext();
+  return context.documentData;
+}
+
+// @TODO: remove unstable prefix or refactor.
+// eslint-disable-next-line
+export const unstable_useDocumentData = useDocumentData;
+
 export {
   getAppConfig,
   defineAppConfig,

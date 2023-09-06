@@ -80,5 +80,26 @@ describe('JSX Plus Plugin', () => {
       expect(ret.code).toBe(`import { createCondition as __create_condition__ } from "babel-runtime-jsx-plus";
 __create_condition__([[() => false, () => <div />]]);`);
     });
+
+    it('transformer w/ parent element is a <></>', () => {
+      const plugin = jsxPlus({
+        include: ['foo'],
+      });
+      const fakeConfig = {};
+      function onGetConfig(fn) {
+        fn(fakeConfig);
+      }
+      const context = {
+        rootDir: '/foo/bar',
+      };
+      // @ts-ignore
+      plugin.setup({ onGetConfig, context });
+
+      const transformer = fakeConfig['transforms'][0];
+      const ret = transformer('<><div x-if={true} /></>', '/foo/bar/a.tsx');
+      expect(ret.code).toBe(`import { createCondition as __create_condition__ } from "babel-runtime-jsx-plus";
+import { Fragment } from "react";
+<>{__create_condition__([[() => true, () => <div />]])}</>;`);
+    });
   });
 });

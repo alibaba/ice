@@ -36,3 +36,25 @@ describe(`start ${example}`, () => {
     await browser.close();
   });
 });
+
+describe(`start ${example} in speedup mode`, () => {
+  let page: Page;
+  let browser: Browser;
+  test('open /', async () => {
+    const { devServer, port } = await startFixture(example, { speedup: true });
+    const res = await setupStartBrowser({ server: devServer, port });
+    page = res.page;
+    browser = res.browser;
+    await page.push('/ice');
+    expect(await page.$$text('h1')).toStrictEqual(['home']);
+  });
+  afterAll(async () => {
+    await browser.close();
+  });
+});
+
+describe(`build ${example} in speedup mode`, () => {
+  test('open /', async () => {
+    await buildFixture(example, { speedup: true });
+  });
+});

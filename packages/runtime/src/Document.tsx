@@ -169,7 +169,7 @@ export const Data: DataType = (props: DataProps) => {
   } = props;
 
   const matchedIds = matches.map(match => match.route.id);
-  const routePath = encodeURI(getCurrentRoutePath(matches));
+  const routePath = matches.length > 0 ? encodeURI(getCurrentRoutePath(matches)) : '';
   const windowContext: WindowContext = {
     appData,
     loaderData,
@@ -187,7 +187,7 @@ export const Data: DataType = (props: DataProps) => {
     // Should merge global context when there are multiple <Data />.
     <ScriptElement
       suppressHydrationWarning={documentOnly}
-      dangerouslySetInnerHTML={{ __html: `window.__ICE_APP_CONTEXT__=Object.assign(${JSON.stringify(windowContext)}, window.__ICE_APP_CONTEXT__ || {});` }}
+      dangerouslySetInnerHTML={{ __html: `!(function () {var a = window.__ICE_APP_CONTEXT__ || {};var b = ${JSON.stringify(windowContext)};for (var k in a) {b[k] = a[k]}window.__ICE_APP_CONTEXT__=b;})();` }}
     />
   );
 };

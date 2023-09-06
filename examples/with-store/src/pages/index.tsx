@@ -1,4 +1,4 @@
-import { Link } from 'ice';
+import { Link, definePageConfig } from 'ice';
 import pageStore from './store';
 import logo from './ice.png';
 import appStore from '@/store';
@@ -26,5 +26,8 @@ function Home() {
   );
 }
 
+export const pageConfig = definePageConfig(() => ({
+  title: 'Home Page',
+}));
 
 export default Home;

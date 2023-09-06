@@ -24,3 +24,6 @@ if (import.meta.renderer === 'client' && window.Request && !window.Request.proto
       self.Request = Request;
   })(window);
 }
+// Mark the current file as es module, otherwise the polyfill will be inject by require,
+// it is not allowed to use require in `type: module` package.
+export default {};

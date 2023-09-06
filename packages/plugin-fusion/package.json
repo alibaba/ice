@@ -24,7 +24,7 @@
     "access": "public"
   },
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsc"
   }
 }

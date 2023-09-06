@@ -18,7 +18,7 @@
     "minimatch": "^5.0.1"
   },
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsc"
   },
   "publishConfig": {
