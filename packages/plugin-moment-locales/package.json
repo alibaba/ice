@@ -4,7 +4,7 @@
   "description": "ice.js plugin for reduce moment locale size.",
   "type": "module",
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsc"
   },
   "main": "./esm/index.js",

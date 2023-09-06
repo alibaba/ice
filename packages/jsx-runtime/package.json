@@ -24,8 +24,8 @@
     "*.css"
   ],
   "scripts": {
-    "watch": "ice-pkg start",
-    "build": "ice-pkg build",
+    "watch": "cross-env NODE_ENV=development ice-pkg start",
+    "build": "cross-env NODE_ENV=production ice-pkg build",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
@@ -40,6 +40,7 @@
     "@ice/pkg": "^1.5.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "cross-env": "^7.0.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },

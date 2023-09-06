@@ -5,7 +5,7 @@
   "main": "./esm/index.js",
   "types": "./esm/index.d.ts",
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsc",
     "prepublishOnly": "npm run build"
   },

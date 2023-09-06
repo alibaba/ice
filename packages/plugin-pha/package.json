@@ -13,7 +13,7 @@
     "*.d.ts"
   ],
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsc"
   },
   "dependencies": {

@@ -62,7 +62,7 @@
     "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-store"
   },
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsc"
   },
   "publishConfig": {
