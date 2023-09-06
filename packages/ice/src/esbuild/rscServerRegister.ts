@@ -94,7 +94,7 @@ const rscServerRegister = (): Plugin => {
 };
 
 function transformContent(moduleId: string) {
-  let content = `\
+  const content = `\
     const comp = createClientModuleProxy('${moduleId}');\n\
     module.exports = comp;`;
   return content;
