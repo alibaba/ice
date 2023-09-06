@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useAppContext } from 'ice';
 import styles from './index.module.css';
 // import Comments from '@/components/Comments';
 // import Footer from '@/components/Footer';
@@ -7,6 +8,10 @@ import Counter from '@/components/Counter.client';
 
 export default function Home() {
   console.log('Render: Index');
+
+  const appContext = useAppContext();
+
+  console.log(appContext);
 
   return (
     <div>

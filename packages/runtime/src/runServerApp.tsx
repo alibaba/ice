@@ -3,7 +3,7 @@ import * as React from 'react';
 import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 import * as ReactDOMServer from 'react-dom/server';
 import type { Location } from 'history';
-import { renderToPipeableStream } from 'react-server-dom-webpack/server.node';
+import { renderToPipeableStream, registerServerReference } from 'react-server-dom-webpack/server.node';
 import { parsePath } from 'history';
 import { isFunction } from '@ice/shared';
 import type {
@@ -385,16 +385,18 @@ interface RenderServerEntry {
 async function renderServerEntry(
   {
     runtime,
-    matches,
     location,
     renderOptions,
   }: RenderServerEntry,
 ): Promise<Response> {
-  const { Document } = renderOptions;
+  // @ts-ignore
+  const { Document, AppRouter } = renderOptions;
   const appContext = runtime.getAppContext();
-  const { routes, routePath, loaderData, basename } = appContext;
+  const { routes, matches, routeModules, requestContext, ...others } = appContext;
+  const { routePath, loaderData, basename } = others;
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
-  const AppRouter = runtime.getAppRouter<ServerAppRouterProps>();
+  // const AppRouter = runtime.getAppRouter<ServerAppRouterProps>();
+
   const routerContext: ServerAppRouterProps['routerContext'] = {
     // @ts-expect-error matches type should be use `AgnosticDataRouteMatch[]`
     matches,
@@ -403,30 +405,26 @@ async function renderServerEntry(
     location,
   };
 
-  const Page = await matches[1].route.lazy();
-  // @ts-expect-error
-  const PageComponent = Page.Component;
+  const serverRoutes = createServerRoutes(routes, appContext.routeModules);
+
+  function App(props) {
+    return (
+      <AppContextProvider value={others}>
+        {props.children}
+      </AppContextProvider>
+    );
+  }
+
+  const ServerApp = registerServerReference(App, 'app');
 
   const element = (
-    <div>
-      <PageComponent />
-    </div>
+    <ServerApp>
+      <AppRuntimeProvider>
+        {/* @ts-ignore */}
+        <AppRouter routes={serverRoutes} location={routerContext.location} basename={routerContext.basename} />
+      </AppRuntimeProvider>
+    </ServerApp>
   );
-
-  // const documentContext = {
-  //   main: (
-  //     <AppRouter routes={routes} routerContext={routerContext} />
-  //   ),
-  // };
-  // const element = (
-  //   <AppContextProvider value={appContext}>
-  //     <AppRuntimeProvider>
-  //       <DocumentContextProvider value={documentContext}>
-  //         <Document pagePath={routePath} />
-  //       </DocumentContextProvider>
-  //     </AppRuntimeProvider>
-  //   </AppContextProvider>
-  // );
 
   // console.log(moduleMap);
 
@@ -463,6 +461,34 @@ interface RenderDocumentOptions {
   documentData: any;
   routePath?: string;
   downgrade?: boolean;
+}
+
+function createServerRoutes(routes, routeModules) {
+  return routes.map((route) => {
+    const Component = routeModules[route.id].default || {};
+
+    let children;
+    let elementChildren;
+    if (route?.children?.length > 0) {
+      children = createServerRoutes(
+        route.children,
+        routeModules,
+      );
+
+      elementChildren = children.map(child => child.element);
+    }
+
+    let dataRoute = {
+      // Static Router need element or Component when matched.
+      element: <Component id={route.id}>{elementChildren}</Component>,
+      id: route.id,
+      index: route.index,
+      path: route.path,
+      children: children,
+    };
+
+    return dataRoute;
+  });
 }
 
 /**

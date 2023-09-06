@@ -73,11 +73,7 @@ export function getRoutesDefinition(nestRouteManifest: NestedRouteManifest[], la
       routeImports.push(`import * as ${routeSpecifier} from '${formatPath(componentPath)}';`);
       loadStatement = routeSpecifier;
     }
-    const component = `Component: () => WrapRouteComponent({
-          routeId: '${id}',
-          isLayout: ${layout},
-          routeExports: ${lazy ? 'componentModule' : loadStatement},
-        })`;
+    const component = `Component: ${lazy ? 'componentModule' : loadStatement}`;
     const loader = `loader: createRouteLoader({
           routeId: '${id}',
           requestContext,

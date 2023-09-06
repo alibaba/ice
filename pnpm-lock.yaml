@@ -778,12 +778,14 @@ importers:
       '@types/react-dom': ^18.0.6
       react: 18.3.0-canary-dd480ef92-20230822
       react-dom: 18.3.0-canary-dd480ef92-20230822
+      react-router-dom: 6.14.2
       react-server-dom-webpack: 18.3.0-canary-dd480ef92-20230822
     dependencies:
       '@ice/app': link:../../packages/ice
       '@ice/runtime': link:../../packages/runtime
       react: 18.3.0-canary-dd480ef92-20230822
       react-dom: 18.3.0-canary-dd480ef92-20230822_hhgf3bgmselb7o32scmuz3hjam
+      react-router-dom: 6.14.2_i5uyhljmd6xc2xkotszrmzynhy
       react-server-dom-webpack: 18.3.0-canary-dd480ef92-20230822_i5uyhljmd6xc2xkotszrmzynhy
     devDependencies:
       '@types/react': 18.0.34

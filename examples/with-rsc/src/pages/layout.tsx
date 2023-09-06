@@ -1,12 +1,10 @@
-import { Outlet } from 'ice';
-
-export default function Layout() {
+export default function Layout(props) {
   console.log('Render: Layout');
 
   return (
     <div>
       <h1>Suspense App</h1>
-      <Outlet />
+      {props.children}
     </div>
   );
 }
