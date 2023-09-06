@@ -22,3 +22,7 @@ export default function EditButton({ noteId, children }) {
     </button>
   );
 }
+
+export function clientPrint(sentence) {
+  return sentence;
+}
