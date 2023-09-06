@@ -1,4 +1,4 @@
-function createRSCAliases() {
+export function createRSCAliases() {
   const alias: Record<string, string> = {
     react$: '@ice/bundles/compiled/react',
     'react-dom$': '@ice/bundles/compiled/react-dom',

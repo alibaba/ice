@@ -276,7 +276,7 @@ const tasks = [
     patch: () => {
       copyModules(
         ['*.{json,js}', 'cjs/**/*.js', 'LICENSE'],
-        'react',
+        'react-dom',
         {
           channel: 'builtin',
           loaders: [

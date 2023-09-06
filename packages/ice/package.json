@@ -82,20 +82,18 @@
     "chokidar": "^3.5.3",
     "esbuild": "^0.17.16",
     "jest": "^29.0.2",
-    "react": "18.3.0-next-3ba7add60-20221201",
+    "react": "^18.2.0",
     "react-router": "6.14.2",
     "sass": "^1.50.0",
     "unplugin": "^0.9.0",
     "webpack": "^5.88.0",
     "webpack-dev-server": "^4.7.4",
     "@rspack/core": "0.3.0",
-    "@rspack/dev-server": "0.3.0",
-    "react-server-dom-webpack": "18.3.0-canary-dd480ef92-20230822"
+    "@rspack/dev-server": "0.3.0"
   },
   "peerDependencies": {
-    "react": "18.3.0-canary-dd480ef92-20230822",
-    "react-dom": "18.3.0-canary-dd480ef92-20230822",
-    "react-server-dom-webpack": "18.3.0-canary-dd480ef92-20230822"
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
   },
   "publishConfig": {
     "access": "public"

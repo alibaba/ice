@@ -1,8 +1,9 @@
-// @ts-ignore
-import React, { Suspense, use } from 'react';
+import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import pkg from 'react-server-dom-webpack/client';
 const { createFromFetch } = pkg;
+// @ts-ignore
+const { Suspense, use } = React;
 
 export default async function runRSCApp() {
   function Message({ response }) {
