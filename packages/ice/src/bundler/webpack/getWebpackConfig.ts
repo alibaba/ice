@@ -118,16 +118,17 @@ const getWebpackConfig: GetWebpackConfig = async (context, options) => {
     }
     // Add spinner for webpack task.
     webpackConfig.plugins.push(getSpinnerPlugin(spinner));
-
-    webpackConfig.plugins.push(new ReactServerWebpackPlugin({
-      isServer: false,
-      clientReferences: [{
-        directory: path.join(rootDir, 'src'),
-        recursive: true,
-        include: /\.(js|ts|jsx|tsx)$/,
-        exclude: /types.ts|.d.ts/,
-      }],
-    }));
+    if (userConfig.rsc) {
+      webpackConfig.plugins.push(new ReactServerWebpackPlugin({
+        isServer: false,
+        clientReferences: [{
+          directory: path.join(rootDir, 'src'),
+          recursive: true,
+          include: /\.(js|ts|jsx|tsx)$/,
+          exclude: /types.ts|.d.ts/,
+        }],
+      }));
+    }
 
     return webpackConfig;
   });

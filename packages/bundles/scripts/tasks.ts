@@ -309,6 +309,17 @@ const tasks = [
       copyModules(
         ['*.{json,js}', 'cjs/**/*.js', 'LICENSE'],
         'react-server-dom-webpack',
+        {
+          loaders: [
+            { test: /package.json$/,
+handler: (source) => {
+              const json = JSON.parse(source);
+              // Compatible with both esm and cjs.
+              json.exports['./plugin.js'] = './plugin.js';
+              return JSON.stringify(json, null, 2);
+            } },
+          ],
+        },
       );
     },
   },
