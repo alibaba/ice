@@ -32,10 +32,10 @@ export const Storage = {
       }
 
       return new Promise((resolve, reject) => {
-        if (typeof window !== 'undefined' && window.localStorage) {
+        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
           resolve(localStorage.setItem(key, value));
         } else {
-          reject();
+          reject(new Error('localStorage is undefined.'));
         }
       });
     } catch (e) {
