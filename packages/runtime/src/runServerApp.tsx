@@ -289,10 +289,6 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     }
   }
 
-  if (req.url.indexOf('?') === -1) {
-    return renderDocument({ matches: [], routes, renderOptions, documentData });
-  }
-
   // HashRouter loads route modules by the CSR.
   if (appConfig?.router?.type === 'hash') {
     return renderDocument({ matches: [], routes, renderOptions, documentData });
@@ -403,39 +399,35 @@ async function renderServerEntry(
     location,
   };
 
-  const Page = await matches[1].route.lazy();
-  // @ts-expect-error
-  const PageComponent = Page.Component;
+  let element: JSX.Element;
 
-  const element = (
-    <div>
-      <PageComponent />
-    </div>
-  );
+  if (renderOptions.clientManifest) {
+    const Page = await matches[1].route.lazy();
+    // @ts-expect-error
+    const PageComponent = Page.Component;
 
-  // const documentContext = {
-  //   main: (
-  //     <AppRouter routes={routes} routerContext={routerContext} />
-  //   ),
-  // };
-  // const element = (
-  //   <AppContextProvider value={appContext}>
-  //     <AppRuntimeProvider>
-  //       <DocumentContextProvider value={documentContext}>
-  //         <Document pagePath={routePath} />
-  //       </DocumentContextProvider>
-  //     </AppRuntimeProvider>
-  //   </AppContextProvider>
-  // );
+    element = (
+      <div>
+        <PageComponent />
+      </div>
+    );
+  } else {
+    const documentContext = {
+      main: (
+        <AppRouter routes={routes} routerContext={routerContext} />
+      ),
+    };
 
-  // console.log(moduleMap);
-
-  const { pipe } = renderToPipeableStream(
-    element,
-    renderOptions.clientManifest,
-  );
-
-  // const pipe = renderToNodeStream(element);
+    element = (
+      <AppContextProvider value={appContext}>
+        <AppRuntimeProvider>
+          <DocumentContextProvider value={documentContext}>
+            <Document pagePath={routePath} />
+          </DocumentContextProvider>
+        </AppRuntimeProvider>
+      </AppContextProvider>
+    );
+  }
 
   const fallback = () => {
     return renderDocument({
@@ -447,7 +439,15 @@ async function renderServerEntry(
       documentData: appContext.documentData,
     });
   };
-
+  let pipe: NodeWritablePiper;
+  if (renderOptions.clientManifest) {
+    pipe = renderToPipeableStream(
+      element,
+      renderOptions.clientManifest,
+    ).pipe;
+  } else {
+    pipe = renderToNodeStream(element);
+  }
   return {
     value: {
       pipe,

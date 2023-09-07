@@ -11,9 +11,8 @@
   "dependencies": {
     "@ice/app": "workspace:*",
     "@ice/runtime": "workspace:*",
-    "react": "18.3.0-canary-dd480ef92-20230822",
-    "react-dom": "18.3.0-canary-dd480ef92-20230822",
-    "react-server-dom-webpack": "18.3.0-canary-dd480ef92-20230822"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",

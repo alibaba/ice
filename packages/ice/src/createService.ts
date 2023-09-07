@@ -270,6 +270,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     dataLoader: userConfig.dataLoader,
     routeImports,
     routeDefinition,
+    rsc: userConfig.rsc,
   });
   dataCache.set('routes', JSON.stringify(routesInfo));
   dataCache.set('hasExportAppData', hasExportAppData ? 'true' : '');

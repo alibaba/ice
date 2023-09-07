@@ -2,6 +2,7 @@ import * as path from 'path';
 import { createRequire } from 'module';
 import type { Config } from '@ice/shared-config/types';
 import { CACHE_DIR, RUNTIME_TMP_DIR, WEB } from '../../constant.js';
+import { createRSCAliases } from './config.js';
 
 const require = createRequire(import.meta.url);
 const getWebTask = ({ rootDir, command, userConfig }): Config => {
@@ -31,7 +32,7 @@ const getWebTask = ({ rootDir, command, userConfig }): Config => {
       '@swc/helpers': path.dirname(require.resolve('@swc/helpers/package.json')),
       'universal-env': envReplacement,
       '@uni/env': envReplacement,
-      'react-server-dom-webpack/client': require.resolve('react-server-dom-webpack/client.browser'),
+      ...(userConfig.rsc ? createRSCAliases() : {}),
     },
     swcOptions: {
       removeExportExprs,
@@ -43,6 +44,10 @@ const getWebTask = ({ rootDir, command, userConfig }): Config => {
     useDevServer: true,
     useDataLoader: true,
     target: WEB,
+    ...(userConfig.rsc ? {
+      // TODO: temporary solution for rsc.
+      entry: { main: [path.join(rootDir, RUNTIME_TMP_DIR, 'clientEntry.tsx')] },
+    } : {}),
   };
 };
 
