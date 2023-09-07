@@ -190,6 +190,10 @@ export interface UserConfig {
    */
   ssg?: boolean;
   /**
+   * A switch for RSC (React Server Component) support.
+   */
+  rsc?: boolean;
+  /**
    * config for server bundle
    * @see https://v3.ice.work/docs/guide/basic/config#server
    */

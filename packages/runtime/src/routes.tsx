@@ -60,13 +60,12 @@ export function WrapRouteComponent(options: {
 }) {
   const { routeId, isLayout, routeExports } = options;
 
-  return <routeExports.default />;
-  // const { RouteWrappers } = useAppContext();
-  // return (
-  //   <RouteWrapper routeExports={routeExports} id={routeId} isLayout={isLayout} wrappers={RouteWrappers}>
-  //     <routeExports.default />
-  //   </RouteWrapper>
-  // );
+  const { RouteWrappers } = useAppContext() || {};
+  return (
+    <RouteWrapper routeExports={routeExports} id={routeId} isLayout={isLayout} wrappers={RouteWrappers}>
+      <routeExports.default />
+    </RouteWrapper>
+  );
 }
 
 export function RouteComponent({ id }: { id: string }) {
