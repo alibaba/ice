@@ -13,6 +13,7 @@ function useAppContext() {
 
 function useAppData() {
   const value = React.useContext(Context);
+  // @ts-ignore
   return value.appData;
 }
 
