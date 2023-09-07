@@ -1,7 +1,8 @@
 import * as React from 'react';
 import type { AppContext } from './types.js';
 
-const Context = React.createContext<AppContext | undefined>(undefined);
+// @ts-ignore
+const Context = React.createServerContext ? React.createServerContext(undefined) : React.createContext(undefined);
 
 Context.displayName = 'AppContext';
 
