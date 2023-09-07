@@ -54,6 +54,7 @@ const getConfig: GetConfig = (options) => {
     proxy,
     devServer = {},
     plugins = [],
+    middlewares,
   } = taskConfig || {};
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
   const hashKey = hash === true ? 'hash:8' : (hash || '');
@@ -161,6 +162,7 @@ const getConfig: GetConfig = (options) => {
         logging: 'info',
       },
       ...devServer,
+      setupMiddlewares: middlewares,
     },
   };
   return config;
