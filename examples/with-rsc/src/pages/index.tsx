@@ -10,7 +10,6 @@ export default function Home() {
   console.log('Render: Index');
 
   const appContext = useAppContext();
-
   console.log(appContext);
 
   return (
