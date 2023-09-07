@@ -33,7 +33,6 @@ import ServerRouter from './ServerRouter.js';
 import { renderHTMLToJS } from './renderHTMLToJS.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 
-
 interface RenderOptions {
   app: AppExport;
   assetsManifest: AssetsManifest;
@@ -289,7 +288,8 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     }
   }
 
-  if (req.url.indexOf('?') === -1) {
+  // FIXME
+  if (renderOptions.clientManifest && req.url.indexOf('?') === -1) {
     return renderDocument({ matches: [], routes, renderOptions, documentData });
   }
 
@@ -389,13 +389,13 @@ async function renderServerEntry(
     renderOptions,
   }: RenderServerEntry,
 ): Promise<Response> {
-  // @ts-ignore
-  const { Document, AppRouter } = renderOptions;
+  const { Document } = renderOptions;
   const appContext = runtime.getAppContext();
   const { routes, matches, routeModules, requestContext, ...others } = appContext;
   const { routePath, loaderData, basename } = others;
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
-  // const AppRouter = runtime.getAppRouter<ServerAppRouterProps>();
+  // @ts-ignore
+  const AppRouter = renderOptions.clientManifest ? renderOptions.AppRouter : runtime.getAppRouter<ServerAppRouterProps>();
 
   const routerContext: ServerAppRouterProps['routerContext'] = {
     // @ts-expect-error matches type should be use `AgnosticDataRouteMatch[]`
@@ -405,35 +405,46 @@ async function renderServerEntry(
     location,
   };
 
-  const serverRoutes = createServerRoutes(routes, appContext.routeModules);
+  let element: JSX.Element;
 
-  function App(props) {
-    return (
-      <AppContextProvider value={others}>
-        {props.children}
+  if (renderOptions.clientManifest) {
+    const serverRoutes = createServerRoutes(routes, appContext.routeModules);
+
+    function App(props) {
+      return (
+        <AppContextProvider value={others}>
+          {props.children}
+        </AppContextProvider>
+      );
+    }
+
+    const ServerApp = registerServerReference(App, 'app');
+
+    element = (
+      <ServerApp>
+        <AppRuntimeProvider>
+          {/* @ts-ignore */}
+          <AppRouter routes={serverRoutes} location={routerContext.location} basename={routerContext.basename} />
+        </AppRuntimeProvider>
+      </ServerApp>
+    );
+  } else {
+    const documentContext = {
+      main: (
+        <AppRouter routes={routes} routerContext={routerContext} />
+      ),
+    };
+
+    element = (
+      <AppContextProvider value={appContext}>
+        <AppRuntimeProvider>
+          <DocumentContextProvider value={documentContext}>
+            <Document pagePath={routePath} />
+          </DocumentContextProvider>
+        </AppRuntimeProvider>
       </AppContextProvider>
     );
   }
-
-  const ServerApp = registerServerReference(App, 'app');
-
-  const element = (
-    <ServerApp>
-      <AppRuntimeProvider>
-        {/* @ts-ignore */}
-        <AppRouter routes={serverRoutes} location={routerContext.location} basename={routerContext.basename} />
-      </AppRuntimeProvider>
-    </ServerApp>
-  );
-
-  // console.log(moduleMap);
-
-  const { pipe } = renderToPipeableStream(
-    element,
-    renderOptions.clientManifest,
-  );
-
-  // const pipe = renderToNodeStream(element);
 
   const fallback = () => {
     return renderDocument({
@@ -445,7 +456,15 @@ async function renderServerEntry(
       documentData: appContext.documentData,
     });
   };
-
+  let pipe: NodeWritablePiper;
+  if (renderOptions.clientManifest) {
+    pipe = renderToPipeableStream(
+      element,
+      renderOptions.clientManifest,
+    ).pipe;
+  } else {
+    pipe = renderToNodeStream(element);
+  }
   return {
     value: {
       pipe,

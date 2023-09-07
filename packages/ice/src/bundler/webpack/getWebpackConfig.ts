@@ -3,7 +3,7 @@ import webpack from '@ice/bundles/compiled/webpack/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import { getWebpackConfig as getDefaultWebpackConfig } from '@ice/webpack-config';
 import type { Configuration } from 'webpack';
-import ReactServerWebpackPlugin from 'react-server-dom-webpack/plugin';
+import ReactServerWebpackPlugin from '@ice/bundles/compiled/react-server-dom-webpack/plugin.js';
 import { getExpandedEnvs } from '../../utils/runtimeEnv.js';
 import { getRouteExportConfig } from '../../service/config.js';
 import { getFileHash } from '../../utils/hash.js';
@@ -118,19 +118,22 @@ const getWebpackConfig: GetWebpackConfig = async (context, options) => {
     }
     // Add spinner for webpack task.
     webpackConfig.plugins.push(getSpinnerPlugin(spinner));
-
-    webpackConfig.plugins.push(new ReactServerWebpackPlugin({ isServer: false,
-clientReferences: [{
-      directory: path.join(rootDir, 'src'),
-      recursive: true,
-      include: /\.(js|ts|jsx|tsx)$/,
-      exclude: /types.ts|.d.ts/,
-    }, {
-      directory: path.join(rootDir, '.ice'),
-      recursive: true,
-      include: /\.(js|ts|jsx|tsx)$/,
-      exclude: /types.ts|.d.ts/,
-    }] }));
+    if (userConfig.rsc) {
+      webpackConfig.plugins.push(new ReactServerWebpackPlugin({
+        isServer: false,
+        clientReferences: [{
+          directory: path.join(rootDir, 'src'),
+          recursive: true,
+          include: /\.(js|ts|jsx|tsx)$/,
+          exclude: /types.ts|.d.ts/,
+        }, {
+          directory: path.join(rootDir, '.ice'),
+          recursive: true,
+          include: /\.(js|ts|jsx|tsx)$/,
+          exclude: /types.ts|.d.ts/,
+        }],
+      }));
+    }
 
     return webpackConfig;
   });

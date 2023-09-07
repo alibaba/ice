@@ -776,17 +776,15 @@ importers:
       '@ice/runtime': workspace:*
       '@types/react': ^18.0.17
       '@types/react-dom': ^18.0.6
-      react: 18.3.0-canary-dd480ef92-20230822
-      react-dom: 18.3.0-canary-dd480ef92-20230822
+      react: ^18.2.0
+      react-dom: ^18.2.0
       react-router-dom: 6.14.2
-      react-server-dom-webpack: 18.3.0-canary-dd480ef92-20230822
     dependencies:
       '@ice/app': link:../../packages/ice
       '@ice/runtime': link:../../packages/runtime
-      react: 18.3.0-canary-dd480ef92-20230822
-      react-dom: 18.3.0-canary-dd480ef92-20230822_hhgf3bgmselb7o32scmuz3hjam
-      react-router-dom: 6.14.2_i5uyhljmd6xc2xkotszrmzynhy
-      react-server-dom-webpack: 18.3.0-canary-dd480ef92-20230822_i5uyhljmd6xc2xkotszrmzynhy
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-router-dom: 6.14.2_biqbaboplfbrettd7655fr4n2y
     devDependencies:
       '@types/react': 18.0.34
       '@types/react-dom': 18.0.11
@@ -930,6 +928,7 @@ importers:
       '@types/less': ^3.0.3
       '@types/lodash': ^4.14.181
       '@types/webpack-bundle-analyzer': ^4.4.1
+      acorn-loose: ^8.3.0
       ansi-html-community: ^0.0.8
       bonjour-service: ^1.0.13
       cacache: 17.0.4
@@ -969,6 +968,7 @@ importers:
       lodash: 4.17.21
       magic-string: 0.27.0
       mini-css-extract-plugin: 2.6.1
+      neo-async: ^2.6.1
       open: ^8.0.9
       ora: 5.4.1
       p-retry: ^4.5.0
@@ -979,10 +979,14 @@ importers:
       postcss-nested: 5.0.6
       postcss-plugin-rpx2vw: 1.0.0
       postcss-preset-env: 7.4.3
+      react-builtin: npm:react@18.3.0-canary-dd480ef92-20230822
+      react-dom-builtin: npm:react-dom@18.3.0-canary-dd480ef92-20230822
       react-refresh: 0.14.0
+      react-server-dom-webpack: 18.3.0-canary-dd480ef92-20230822
       rimraf: ^3.0.2
       sass: 1.50.0
       sass-loader: 12.6.0
+      scheduler-builtin: npm:scheduler@0.24.0-canary-dd480ef92-20230822
       schema-utils: ^4.0.0
       selfsigned: ^2.0.1
       serve-index: ^1.9.1
@@ -1008,6 +1012,7 @@ importers:
       '@rspack/core': 0.3.0_zur76qpjdwubwowmoyfe2ntqhe
       '@rspack/dev-server': 0.3.0_bioma5hrmjqlc63rjodddzwoma
       '@swc/core': 1.3.80
+      acorn-loose: 8.3.0
       ansi-html-community: 0.0.8
       caniuse-lite: 1.0.30001462
       chokidar: 3.5.3
@@ -1019,6 +1024,7 @@ importers:
       html-entities: 2.3.3
       jest-worker: 27.5.1
       less: 4.1.2
+      neo-async: 2.6.2
       postcss: 8.4.12
       react-refresh: 0.14.0
       sass: 1.50.0
@@ -1064,8 +1070,12 @@ importers:
       postcss-nested: 5.0.6_postcss@8.4.12
       postcss-plugin-rpx2vw: 1.0.0_postcss@8.4.12
       postcss-preset-env: 7.4.3_postcss@8.4.12
+      react-builtin: /react/18.3.0-canary-dd480ef92-20230822
+      react-dom-builtin: /react-dom/18.3.0-canary-dd480ef92-20230822
+      react-server-dom-webpack: 18.3.0-canary-dd480ef92-20230822_webpack@5.88.2
       rimraf: 3.0.2
       sass-loader: 12.6.0_sass@1.50.0+webpack@5.88.2
+      scheduler-builtin: /scheduler/0.24.0-canary-dd480ef92-20230822
       schema-utils: 4.0.0
       selfsigned: 2.1.1
       serve-index: 1.9.1
@@ -1155,9 +1165,8 @@ importers:
       mrmime: ^1.0.0
       open: ^8.4.0
       path-to-regexp: ^6.2.0
-      react: 18.3.0-next-3ba7add60-20221201
+      react: ^18.2.0
       react-router: 6.14.2
-      react-server-dom-webpack: 18.3.0-canary-dd480ef92-20230822
       regenerator-runtime: ^0.13.0
       resolve.exports: ^1.1.0
       sass: ^1.50.0
@@ -1215,9 +1224,8 @@ importers:
       chokidar: 3.5.3
       esbuild: 0.17.16
       jest: 29.5.0
-      react: 18.3.0-next-3ba7add60-20221201
-      react-router: 6.14.2_osgg5tsgainv67oqv2d3ptcxsm
-      react-server-dom-webpack: 18.3.0-canary-dd480ef92-20230822_eaktsl3pcltpekt37vdcusnisq
+      react: 18.2.0
+      react-router: 6.14.2_react@18.2.0
       sass: 1.50.0
       unplugin: 0.9.5_4yjf5voakpkrj4qbnm3gtqjbli
       webpack: 5.88.2_esbuild@0.17.16
@@ -1615,10 +1623,10 @@ importers:
       fs-extra: ^10.0.0
       history: ^5.3.0
       htmlparser2: ^8.0.1
-      react: 18.3.0-canary-dd480ef92-20230822
-      react-dom: 18.3.0-canary-dd480ef92-20230822
+      react: ^18.2.0
+      react-dom: ^18.2.0
       react-router-dom: 6.14.2
-      react-server-dom-webpack: 18.3.0-canary-dd480ef92-20230822
+      react-server-dom-webpack: canary
       regenerator-runtime: ^0.13.9
       semver: ^7.4.0
       source-map: ^0.7.4
@@ -1631,16 +1639,16 @@ importers:
       fs-extra: 10.1.0
       history: 5.3.0
       htmlparser2: 8.0.1
-      react-router-dom: 6.14.2_i5uyhljmd6xc2xkotszrmzynhy
+      react-router-dom: 6.14.2_biqbaboplfbrettd7655fr4n2y
       semver: 7.4.0
       source-map: 0.7.4
     devDependencies:
       '@remix-run/web-fetch': 4.3.3
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
-      react: 18.3.0-canary-dd480ef92-20230822
-      react-dom: 18.3.0-canary-dd480ef92-20230822_hhgf3bgmselb7o32scmuz3hjam
-      react-server-dom-webpack: 18.3.0-canary-dd480ef92-20230822_i5uyhljmd6xc2xkotszrmzynhy
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-server-dom-webpack: 18.3.0-canary-b9be4537c-20230905_biqbaboplfbrettd7655fr4n2y
       regenerator-runtime: 0.13.11
 
   packages/shared:
@@ -19998,14 +20006,14 @@ packages:
       react: 18.2.0
       scheduler: 0.23.0
 
-  /react-dom/18.3.0-canary-dd480ef92-20230822_hhgf3bgmselb7o32scmuz3hjam:
+  /react-dom/18.3.0-canary-dd480ef92-20230822:
     resolution: {integrity: sha512-xAUst7w1A+Cupsv8x9pT/hZ8VmkA4UwZixUVMiay2keN9oRY8f0xvQTcwXgFgOH6wqgsoT2KPpmm6Yf8QMik5g==}
     peerDependencies:
       react: 18.3.0-canary-dd480ef92-20230822
     dependencies:
       loose-envify: 1.4.0
-      react: 18.3.0-canary-dd480ef92-20230822
       scheduler: 0.24.0-canary-dd480ef92-20230822
+    dev: true
 
   /react-error-overlay/6.0.11:
     resolution: {integrity: sha512-/6UZ2qgEyH2aqzYZgQPxEnz33NJ2gNsnHA2o5+o4wW9bLM/JYQitNP9xPhsXwC08hMMovfGe/8retsdDsczPRg==}
@@ -20157,7 +20165,7 @@ packages:
       tiny-invariant: 1.3.1
       tiny-warning: 1.0.3
 
-  /react-router-dom/6.14.2_i5uyhljmd6xc2xkotszrmzynhy:
+  /react-router-dom/6.14.2_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-5pWX0jdKR48XFZBuJqHosX3AAHjRAzygouMTyimnBPOLdY3WjzUSKhus2FVMihUFWzeLebDgr4r8UeQFAct7Bg==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -20165,9 +20173,9 @@ packages:
       react-dom: '>=16.8'
     dependencies:
       '@remix-run/router': 1.7.2
-      react: 18.3.0-canary-dd480ef92-20230822
-      react-dom: 18.3.0-canary-dd480ef92-20230822_hhgf3bgmselb7o32scmuz3hjam
-      react-router: 6.14.2_hhgf3bgmselb7o32scmuz3hjam
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-router: 6.14.2_react@18.2.0
     dev: false
 
   /react-router/5.3.4_react@17.0.2:
@@ -20186,27 +20194,31 @@ packages:
       tiny-invariant: 1.3.1
       tiny-warning: 1.0.3
 
-  /react-router/6.14.2_hhgf3bgmselb7o32scmuz3hjam:
+  /react-router/6.14.2_react@18.2.0:
     resolution: {integrity: sha512-09Zss2dE2z+T1D03IheqAFtK4UzQyX8nFPWx6jkwdYzGLXd5ie06A6ezS2fO6zJfEb/SpG6UocN2O1hfD+2urQ==}
     engines: {node: '>=14'}
     peerDependencies:
       react: '>=16.8'
     dependencies:
       '@remix-run/router': 1.7.2
-      react: 18.3.0-canary-dd480ef92-20230822
-    dev: false
+      react: 18.2.0
 
-  /react-router/6.14.2_osgg5tsgainv67oqv2d3ptcxsm:
-    resolution: {integrity: sha512-09Zss2dE2z+T1D03IheqAFtK4UzQyX8nFPWx6jkwdYzGLXd5ie06A6ezS2fO6zJfEb/SpG6UocN2O1hfD+2urQ==}
-    engines: {node: '>=14'}
+  /react-server-dom-webpack/18.3.0-canary-b9be4537c-20230905_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-5/+E3R9lrlklaZHq+zvh5cun+a5hRwG/bQUCsuZi2KGsXFQ9fJmvND5lDA11BZuhwyu8TfSCGj8MzDhM2izKww==}
+    engines: {node: '>=0.10.0'}
     peerDependencies:
-      react: '>=16.8'
+      react: 18.3.0-canary-b9be4537c-20230905
+      react-dom: 18.3.0-canary-b9be4537c-20230905
+      webpack: ^5.59.0
     dependencies:
-      '@remix-run/router': 1.7.2
-      react: 18.3.0-next-3ba7add60-20221201
+      acorn-loose: 8.3.0
+      loose-envify: 1.4.0
+      neo-async: 2.6.2
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: true
 
-  /react-server-dom-webpack/18.3.0-canary-dd480ef92-20230822_eaktsl3pcltpekt37vdcusnisq:
+  /react-server-dom-webpack/18.3.0-canary-dd480ef92-20230822_webpack@5.88.2:
     resolution: {integrity: sha512-vBIBAkrOMrqZZGKgjSY9ly82YgZrmQgK4OOMBfMD5ZpAl58eifQFF18ZtVYNX9sLdPPi4MrizYfGjMaS9fP2VQ==}
     engines: {node: '>=0.10.0'}
     peerDependencies:
@@ -20217,23 +20229,8 @@ packages:
       acorn-loose: 8.3.0
       loose-envify: 1.4.0
       neo-async: 2.6.2
-      react: 18.3.0-next-3ba7add60-20221201
-      webpack: 5.88.2_esbuild@0.17.16
+      webpack: 5.88.2_yt3h3qjhcnsf3663codtuni62a
     dev: true
-
-  /react-server-dom-webpack/18.3.0-canary-dd480ef92-20230822_i5uyhljmd6xc2xkotszrmzynhy:
-    resolution: {integrity: sha512-vBIBAkrOMrqZZGKgjSY9ly82YgZrmQgK4OOMBfMD5ZpAl58eifQFF18ZtVYNX9sLdPPi4MrizYfGjMaS9fP2VQ==}
-    engines: {node: '>=0.10.0'}
-    peerDependencies:
-      react: 18.3.0-canary-dd480ef92-20230822
-      react-dom: 18.3.0-canary-dd480ef92-20230822
-      webpack: ^5.59.0
-    dependencies:
-      acorn-loose: 8.3.0
-      loose-envify: 1.4.0
-      neo-async: 2.6.2
-      react: 18.3.0-canary-dd480ef92-20230822
-      react-dom: 18.3.0-canary-dd480ef92-20230822_hhgf3bgmselb7o32scmuz3hjam
 
   /react-textarea-autosize/8.4.0_h7fc2el62uaa77gho3xhys6ola:
     resolution: {integrity: sha512-YrTFaEHLgJsi8sJVYHBzYn+mkP3prGkmP2DKb/tm0t7CLJY5t1Rxix8070LAKb0wby7bl/lf2EeHkuMihMZMwQ==}
@@ -20279,12 +20276,6 @@ packages:
 
   /react/18.3.0-canary-dd480ef92-20230822:
     resolution: {integrity: sha512-12tBLcvl+cSvREyeKgGfv7k9R22nxNIjIaExcPTYtPCEoefaagzuW8v3jFFSgZNw/XGg57bivIQVkj8ImVvnvg==}
-    engines: {node: '>=0.10.0'}
-    dependencies:
-      loose-envify: 1.4.0
-
-  /react/18.3.0-next-3ba7add60-20221201:
-    resolution: {integrity: sha512-/hwADSpnz/GeDEljbg7Z2mF2MaYw7V1CsdbGvvhCUse4RvaRueHjcH7B/jbik8wRll3rxBPlomt15rSjIMjEJQ==}
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
@@ -20924,6 +20915,7 @@ packages:
     resolution: {integrity: sha512-6hp1jChwe5RNdfVyA8rXw28CdPh7/hVGALqjwNwpaVrTM0SdPHy0Hes6Rqon1c9qKfUrQFhds+C+0fNMgy9hRw==}
     dependencies:
       loose-envify: 1.4.0
+    dev: true
 
   /schema-utils/2.7.0:
     resolution: {integrity: sha512-0ilKFI6QQF5nxDZLFn2dMjvc4hjg/Wkg7rHd3jK6/A4a1Hl9VFdQWvgB1UMGoU94pad1P/8N7fMcEnLnSiju8A==}

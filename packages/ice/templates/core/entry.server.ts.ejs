@@ -9,10 +9,12 @@ import type { RenderMode, DistType } from '@ice/runtime';
 import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 // @ts-ignore
 import assetsManifest from 'virtual:assets-manifest.json';
+<% if(rsc) {-%>
 import clientManifest from 'virtual:react-client-manifest.json';
+import AppRouter from './router.client.js';
+<% }-%>
 import createRoutes from './routes';
 import routesConfig from './routes-config.bundle.mjs';
-import AppRouter from './router.client.js';
 <% if(dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
 <%- runtimeOptions.imports %>
 <% if(!hydrate) {-%>
@@ -92,8 +94,10 @@ function mergeOptions(options) {
     basename: basename || getRouterBasename(),
     renderMode,
     routesConfig,
+    <% if(rsc) {-%>
     clientManifest,
     AppRouter,
+    <% }-%>
     runtimeOptions: {
     <% if (runtimeOptions.exports) { -%>
       <%- runtimeOptions.exports %>
