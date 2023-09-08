@@ -36,7 +36,8 @@ function collateMixins(mixins: any) {
 
 function flattenHooks(key: string, hooks: Array<any>) {
   let hookType = typeof hooks[0];
-  if (hookType === 'object') {
+  // Consider "null" value.
+  if (hooks[0] && hookType === 'object') {
     // Merge objects in hooks
     hooks.unshift({});
     return Object.assign.apply(null, hooks);
@@ -89,7 +90,10 @@ function createReactClass<P, S = {}>(spec: ComponentSpec<P, S>): ClassicComponen
     applyMixins(spec, collateMixins(spec.mixins));
   }
 
-  Object.assign(ReactClass.prototype, spec);
+  // Not to pass contextTypes to prototype.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { propTypes, contextTypes, ...others } = spec;
+  Object.assign(ReactClass.prototype, others);
 
   if (spec.statics) {
     Object.assign(ReactClass, spec.statics);
