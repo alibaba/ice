@@ -4,6 +4,7 @@ import type { Plugin, PluginBuild } from 'esbuild';
 import { Parser } from 'acorn';
 import jsx from 'acorn-jsx';
 import recast from 'recast';
+import ts from 'typescript';
 
 const rscServerRegister = (): Plugin => {
   return {
@@ -12,10 +13,23 @@ const rscServerRegister = (): Plugin => {
       build.onLoad({ filter: /\/src\/.*\.(js|ts|jsx|tsx)$/ }, async (args) => {
         const { path } = args;
         const loader = path.endsWith('.tsx') || path.endsWith('.ts') ? 'tsx' : 'jsx';
-        const content: string = await fs.promises.readFile(path, 'utf-8');
+        let content: string = await fs.promises.readFile(path, 'utf-8');
 
         if (content.indexOf('use client') === -1 && content.indexOf('use server') === -1) {
           return { contents: content, loader };
+        }
+
+        //  transform tsx/ts code to es6 jsx code
+        if (path.endsWith('tsx') || path.endsWith('ts')) {
+          const result = ts.transpileModule(content, {
+            compilerOptions: {
+              target: ts.ScriptTarget.ES2022,
+              module: ts.ModuleKind.ES2022,
+              jsx: ts.JsxEmit.Preserve,
+              moduleResolution: ts.ModuleResolutionKind.NodeJs,
+            },
+          });
+          content = result.outputText;
         }
 
         let body;
@@ -77,11 +91,14 @@ const rscServerRegister = (): Plugin => {
               const { declaration } = node;
               // Handling the case where the export is a function.
               if (declaration.type === 'FunctionDeclaration') {
-                source += `var ${declaration.id.name} = registerServerReference(${recast.print(declaration).code}, '${moduleId}', null);\n`;
+                const functionName = declaration.id.name;
+                source += `${recast.print(declaration).code};\n`;
                 if (node.type === 'ExportNamedDeclaration') {
-                  source += `module.exports.${declaration.id.name} = ${declaration.id.name};\n`;
+                  source += `registerServerReference(${functionName}, '${moduleId}', '${functionName}');\n`;
+                  source += `module.exports.${functionName} = ${functionName};\n`;
                 } else {
-                  source += `module.exports = ${declaration.id.name};\n`;
+                  source += `registerServerReference(${functionName}, '${moduleId}', null);\n`;
+                  source += `module.exports = ${functionName};\n`;
                 }
               }
             }

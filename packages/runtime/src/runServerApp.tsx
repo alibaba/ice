@@ -289,6 +289,10 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     }
   }
 
+  if (renderOptions.clientManifest && req.url.indexOf('?') === -1) {
+    return renderDocument({ matches: [], routes, renderOptions, documentData });
+  }
+
   // HashRouter loads route modules by the CSR.
   if (appConfig?.router?.type === 'hash') {
     return renderDocument({ matches: [], routes, renderOptions, documentData });
