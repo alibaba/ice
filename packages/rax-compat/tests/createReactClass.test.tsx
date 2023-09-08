@@ -8,7 +8,7 @@ import { render } from '@testing-library/react';
 import PropTypes from 'prop-types';
 import createReactClass from '../src/create-class';
 
-describe('createClass', () => {
+describe('createReactClass', () => {
   it('the simplest usage', () => {
     const ReactClass = createReactClass({
       name: '',
