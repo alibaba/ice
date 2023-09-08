@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import styles from './index.module.css';
-import { clientPrint } from './EditButton.client';
+import { clientPrint } from './EditButton';
 
 export default function Counter({ children }) {
   const [count, setCount] = useState(0);

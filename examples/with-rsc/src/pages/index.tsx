@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './index.module.css';
-import ServerComp from '@/components/Server';
+import Container from '@/components/Container';
 // import Comments from '@/components/Comments';
 // import Footer from '@/components/Footer';
 
@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div>
       <h2>Home Page</h2>
-      <ServerComp />
+      <Container />
     </div>
   );
 }

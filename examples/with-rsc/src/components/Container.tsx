@@ -1,10 +1,10 @@
 'use server';
 
-import EditButton from '@/components/EditButton.client';
-import Counter from '@/components/Counter.client';
-import InnerServer from '@/components/Content.server';
+import EditButton from '@/components/EditButton';
+import Counter from '@/components/Counter';
+import InnerServer from '@/components/Content';
 
-export default function ServerComp() {
+export default function Container() {
   return (
     <>
       <Counter>
