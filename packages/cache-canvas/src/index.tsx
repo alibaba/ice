@@ -119,10 +119,9 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
           {
             (typeof fallback === 'function') && (<div
               id={`fallback-${id}`}
-              style={isNode || Storage.getItem(cacheKey, { bizID }) ? { display: 'none' } : { display: 'block' }}
             >
               {
-                fallback()
+                (isNode || !Storage.getItem(cacheKey, { bizID })) && fallback()
               }
             </div>)
           }
@@ -155,9 +154,9 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
                   if (base64Data) {
                     const img = document.getElementById('canvas-img-${id}');
                     img && (img.src = base64Data);
-                    fallback && (fallback.style.display = 'none');
-                  } else {
-                    fallback && (fallback.style.display = 'block');
+                    if (fallback && fallback.childNodes[0]) {
+                      fallback.removeChild(fallback.childNodes[0]);
+                    }
                   }
                 `,
               }}
