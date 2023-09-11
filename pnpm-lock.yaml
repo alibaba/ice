@@ -1541,24 +1541,24 @@ importers:
     specifiers:
       '@ice/appear': ^0.2.0
       '@ice/pkg': ^1.5.0
-      '@swc/helpers': ^0.4.3
+      '@swc/helpers': ^0.5.1
       '@types/rax': ^1.0.8
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
-      create-react-class: ^15.7.0
+      prop-types: ^15.8.1
       react: ^18.0.0
       react-dom: ^18.0.0
       style-unit: ^3.0.5
     dependencies:
       '@ice/appear': link:../appear
-      '@swc/helpers': 0.4.14
-      create-react-class: 15.7.0
+      '@swc/helpers': 0.5.1
       style-unit: 3.0.5
     devDependencies:
       '@ice/pkg': 1.5.5
       '@types/rax': 1.0.10
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
+      prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
 
@@ -7652,12 +7652,6 @@ packages:
       '@swc/core-win32-ia32-msvc': 1.3.80
       '@swc/core-win32-x64-msvc': 1.3.80
 
-  /@swc/helpers/0.4.14:
-    resolution: {integrity: sha512-4C7nX/dvpzB7za4Ql9K81xK3HPxCpHMgwTZVyf+9JQ6VUbn9jjZVN7/Nkdz/Ugzs2CSjqnL/UPXroiVBVHUWUw==}
-    dependencies:
-      tslib: 2.5.0
-    dev: false
-
   /@swc/helpers/0.5.1:
     resolution: {integrity: sha512-sJ902EfIzn1Fa+qYmjdQqh8tPsoxyBz+8yBKC2HKUxyezKJFwPGOn7pv4WY6QuQW//ySQi5lJjA/ZT9sNWWNTg==}
     dependencies:
@@ -10552,13 +10546,6 @@ packages:
       parse-json: 5.2.0
       path-type: 4.0.0
     dev: true
-
-  /create-react-class/15.7.0:
-    resolution: {integrity: sha512-QZv4sFWG9S5RUvkTYWbflxeZX+JG7Cz0Tn33rQBJ+WFQTqTfUTjMjiv9tnfXazjsO5r0KhPs+AqCjyrQX6h2ng==}
-    dependencies:
-      loose-envify: 1.4.0
-      object-assign: 4.1.1
-    dev: false
 
   /create-require/1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
