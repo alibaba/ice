@@ -11,7 +11,6 @@ import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 import assetsManifest from 'virtual:assets-manifest.json';
 <% if(rsc) {-%>
 import clientManifest from 'virtual:react-client-manifest.json';
-import AppRouter from './router.client.js';
 <% }-%>
 import createRoutes from './routes';
 import routesConfig from './routes-config.bundle.mjs';
@@ -96,7 +95,6 @@ function mergeOptions(options) {
     routesConfig,
     <% if(rsc) {-%>
     clientManifest,
-    AppRouter,
     <% }-%>
     runtimeOptions: {
     <% if (runtimeOptions.exports) { -%>

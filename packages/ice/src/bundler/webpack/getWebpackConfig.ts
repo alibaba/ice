@@ -126,11 +126,6 @@ const getWebpackConfig: GetWebpackConfig = async (context, options) => {
           recursive: true,
           include: /\.(js|ts|jsx|tsx)$/,
           exclude: /types.ts|.d.ts/,
-        }, {
-          directory: path.join(rootDir, '.ice'),
-          recursive: true,
-          include: /\.(js|ts|jsx|tsx)$/,
-          exclude: /types.ts|.d.ts/,
         }],
       }));
     }

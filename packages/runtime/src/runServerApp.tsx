@@ -3,7 +3,7 @@ import * as React from 'react';
 import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 import * as ReactDOMServer from 'react-dom/server';
 import type { Location } from 'history';
-import { renderToPipeableStream, registerServerReference } from 'react-server-dom-webpack/server.node';
+import { renderToPipeableStream } from 'react-server-dom-webpack/server.node';
 import { parsePath } from 'history';
 import { isFunction } from '@ice/shared';
 import type {
@@ -15,7 +15,7 @@ import type {
   DocumentComponent,
   RuntimeModules,
   AppData,
-  ServerAppRouterProps, DataLoaderConfig,
+  ServerAppRouterProps, DataLoaderConfig, RouteModules,
 } from './types.js';
 import Runtime from './runtime.js';
 import { AppContextProvider } from './AppContext.js';
@@ -288,8 +288,8 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     }
   }
 
-  // FIXME
-  if (renderOptions.clientManifest && req.url.indexOf('?') === -1) {
+  // Render Document for RSC App.
+  if (renderOptions.clientManifest && location.search?.indexOf('rsc') === -1) {
     return renderDocument({ matches: [], routes, renderOptions, documentData });
   }
 
@@ -391,11 +391,10 @@ async function renderServerEntry(
 ): Promise<Response> {
   const { Document } = renderOptions;
   const appContext = runtime.getAppContext();
-  const { routes, matches, routeModules, requestContext, ...others } = appContext;
-  const { routePath, loaderData, basename } = others;
+  const { routes, matches, routeModules, requestContext, ...staticContext } = appContext;
+  const { routePath, loaderData, basename } = staticContext;
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
-  // @ts-ignore
-  const AppRouter = renderOptions.clientManifest ? renderOptions.AppRouter : runtime.getAppRouter<ServerAppRouterProps>();
+  const AppRouter = runtime.getAppRouter<ServerAppRouterProps>();
 
   const routerContext: ServerAppRouterProps['routerContext'] = {
     // @ts-expect-error matches type should be use `AgnosticDataRouteMatch[]`
@@ -408,25 +407,12 @@ async function renderServerEntry(
   let element: JSX.Element;
 
   if (renderOptions.clientManifest) {
-    const serverRoutes = createServerRoutes(routes, appContext.routeModules);
-
-    function App(props) {
-      return (
-        <AppContextProvider value={others}>
-          {props.children}
-        </AppContextProvider>
-      );
-    }
-
-    const ServerApp = registerServerReference(App, 'app');
-
     element = (
-      <ServerApp>
+      <AppContextProvider value={staticContext}>
         <AppRuntimeProvider>
-          {/* @ts-ignore */}
-          <AppRouter routes={serverRoutes} location={routerContext.location} basename={routerContext.basename} />
+          {renderMatches(matches, routeModules)}
         </AppRuntimeProvider>
-      </ServerApp>
+      </AppContextProvider>
     );
   } else {
     const documentContext = {
@@ -482,32 +468,18 @@ interface RenderDocumentOptions {
   downgrade?: boolean;
 }
 
-function createServerRoutes(routes, routeModules) {
-  return routes.map((route) => {
-    const Component = routeModules[route.id].default || {};
+function renderMatches(matches: RouteMatch[], routeModules: RouteModules) {
+  return matches.reduceRight((children, match) => {
+    if (match.route) {
+      const Component = routeModules[match.route.id].default;
 
-    let children;
-    let elementChildren;
-    if (route?.children?.length > 0) {
-      children = createServerRoutes(
-        route.children,
-        routeModules,
-      );
-
-      elementChildren = children.map(child => child.element);
+      return React.createElement(Component, {
+        children,
+      });
     }
 
-    let dataRoute = {
-      // Static Router need element or Component when matched.
-      element: <Component id={route.id}>{elementChildren}</Component>,
-      id: route.id,
-      index: route.index,
-      path: route.path,
-      children: children,
-    };
-
-    return dataRoute;
-  });
+    return children;
+  }, React.createElement(null));
 }
 
 /**
