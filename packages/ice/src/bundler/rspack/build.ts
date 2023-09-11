@@ -6,7 +6,13 @@ import formatStats from './formatStats.js';
 
 async function build(options: BuildOptions) {
   const { compiler, context, hooksAPI, taskConfigs, rspackConfigs, appConfig, routeManifest } = options;
-  const { rootDir, extendsPluginAPI, applyHook, userConfig } = context;
+  const { rootDir, extendsPluginAPI, applyHook, userConfig, commandArgs } = context;
+  await applyHook('before.build.run', {
+    commandArgs,
+    taskConfigs,
+    rspackConfigs,
+    ...hooksAPI,
+  });
   const { stats, isSuccessful, messages } = await new Promise<CompileResults>((resolve, reject) => {
     let messages: { errors: string[]; warnings: string[] };
     compiler.run(async (_, stats: MultiStats) => {

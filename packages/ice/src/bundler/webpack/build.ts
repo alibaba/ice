@@ -13,8 +13,14 @@ async function build(
   context: Context,
   options: BundlerOptions,
 ) {
-  const { rootDir, extendsPluginAPI, applyHook } = context;
+  const { rootDir, extendsPluginAPI, applyHook, commandArgs } = context;
   const { hooksAPI, taskConfigs, appConfig, userConfig, routeManifest } = options;
+  await applyHook('before.build.run', {
+    commandArgs,
+    taskConfigs,
+    webpackConfigs,
+    ...hooksAPI,
+  });
   // Run webpack compiler.
   const { stats, isSuccessful, messages } = await new Promise<CompileResults>((resolve, reject) => {
     let messages: { errors: string[]; warnings: string[] };
