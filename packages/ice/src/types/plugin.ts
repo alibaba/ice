@@ -38,7 +38,8 @@ type ServerCompilerBuildOptions = Pick<
   'plugins' |
   'logLevel' |
   'sourcemap' |
-  'metafile'
+  'metafile' |
+  'supported'
 >;
 
 export type ServerBuildResult =
