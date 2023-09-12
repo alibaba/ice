@@ -42,6 +42,6 @@ export default defineConfig(() => ({
   ],
   eslint: true,
   cssModules: {
-    hashOnly: true,
+    localIdentName: '[hash:8]',
   },
 }));

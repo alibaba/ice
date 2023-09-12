@@ -182,7 +182,7 @@ export interface Config {
   postcss?: ProcessOptions & { plugins?: (string | [string, Record<string, any>?])[] };
 
   cssModules?: {
-    hashOnly?: boolean;
+    localIdentName?: string;
   };
 
   enableCopyPlugin?: boolean;

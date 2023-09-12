@@ -164,9 +164,9 @@ export async function bundleDeps(options:
             // Prebundle only works in development mode.
             mode: 'development',
             fileName,
-            localIdentName: name,
+            localName: name,
             rule: speedup ? 'native' : 'loader',
-            hashOnly: taskConfig.cssModules?.hashOnly,
+            localIdentName: taskConfig.cssModules?.localIdentName,
           });
         },
       }),

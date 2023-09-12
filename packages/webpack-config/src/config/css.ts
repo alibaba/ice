@@ -29,7 +29,7 @@ function configCSSRule(config: CSSRuleConfig, options: Options) {
     modules: {
       auto: (resourcePath: string) => resourcePath.endsWith(`.module.${style}`),
       getLocalIdent: (context: LoaderContext<any>, localIdentName: string, localName: string) => {
-        return getCSSModuleLocalIdent(context.resourcePath, localName, cssModules?.hashOnly);
+        return getCSSModuleLocalIdent(context.resourcePath, localName, cssModules?.localIdentName);
       },
     },
   };
