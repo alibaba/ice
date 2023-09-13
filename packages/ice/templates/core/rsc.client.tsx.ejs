@@ -1,0 +1,8 @@
+<% if (importCoreJs) { -%>import 'core-js';<% } %>
+import { runRSCClientApp } from '<%- iceRuntimePath %>';
+
+const render = (customOptions = {}) => {
+  return runRSCClientApp();
+};
+
+<%- entryCode %>

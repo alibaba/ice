@@ -57,13 +57,16 @@ export function WrapRouteComponent(options: {
   routeId: string;
   isLayout?: boolean;
   routeExports: ComponentModule;
+  children?: Array<ComponentModule>;
 }) {
-  const { routeId, isLayout, routeExports } = options;
+  const { routeId, isLayout, routeExports, children } = options;
 
   const { RouteWrappers } = useAppContext() || {};
   return (
     <RouteWrapper routeExports={routeExports} id={routeId} isLayout={isLayout} wrappers={RouteWrappers}>
-      <routeExports.default />
+      <routeExports.default>
+        { children }
+      </routeExports.default>
     </RouteWrapper>
   );
 }
