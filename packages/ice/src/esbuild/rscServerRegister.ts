@@ -5,7 +5,7 @@ const rscServerRegister = (): Plugin => {
   return {
     name: 'rsc-server-register',
     setup: async (build: PluginBuild) => {
-      build.onLoad({ filter: /.*\.client\.(js|ts|jsx|tsx)$/ }, async (args) => { //  /src\/.*\
+      build.onLoad({ filter: /\/src\/.*\.client\.(js|ts|jsx|tsx)$/ }, async (args) => { //  /src\/.*\
         const { path } = args;
         const loader = path.endsWith('.tsx') || path.endsWith('.ts') ? 'tsx' : 'jsx';
         const moduleId: string = url.pathToFileURL(path).href;

@@ -17,11 +17,7 @@ import type {
   ServerRenderOptions as RenderOptions,
 } from './types.js';
 
-export function runRSCServerApp(serverContext: ServerContext, renderOptions: RenderOptions) {
-  return renderReactTree(serverContext, renderOptions);
-}
-
-async function renderReactTree(serverContext: ServerContext, renderOptions: RenderOptions) {
+export async function runRSCServerApp(serverContext: ServerContext, renderOptions: RenderOptions) {
   const { req, res } = serverContext;
 
   const {
