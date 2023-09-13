@@ -1541,6 +1541,12 @@ importers:
       react-dom: 18.2.0_react@18.2.0
       regenerator-runtime: 0.13.11
 
+  packages/plugin-stream-error:
+    specifiers:
+      '@ice/app': workspace:^
+    devDependencies:
+      '@ice/app': link:../ice
+
   packages/rax-compat:
     specifiers:
       '@ice/appear': ^0.2.0
