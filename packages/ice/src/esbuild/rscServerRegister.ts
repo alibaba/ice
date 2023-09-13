@@ -91,6 +91,8 @@ export function rscCodeTransform({ content, path }: { content: string; path: str
             source += `module.exports = ${functionName};\n`;
           }
         }
+      } else if (node.type === 'FunctionDeclaration') {
+        source += `${recast.print(node).code};\n`;
       }
     }
   }
