@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.7
+
+### Patch Changes
+
+- b70bba1e: 1. update @swc/helpers version to latest. 2. relplace create react class with simple impl.
+
 ## 0.2.6
 
 ### Patch Changes
