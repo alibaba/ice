@@ -1095,12 +1095,12 @@ importers:
 
   packages/ice:
     specifiers:
-      '@ice/bundles': 0.1.15
-      '@ice/route-manifest': 1.2.1
-      '@ice/rspack-config': 1.0.2
-      '@ice/runtime': ^1.2.8
-      '@ice/shared-config': 1.0.2
-      '@ice/webpack-config': 1.1.1
+      '@ice/bundles': 0.1.16
+      '@ice/route-manifest': 1.2.2
+      '@ice/rspack-config': 1.0.3
+      '@ice/runtime': ^1.2.9
+      '@ice/shared-config': 1.0.3
+      '@ice/webpack-config': 1.1.2
       '@rspack/core': 0.3.0
       '@rspack/dev-server': 0.3.0
       '@swc/helpers': 0.5.1
@@ -1224,7 +1224,7 @@ importers:
 
   packages/miniapp-loader:
     specifiers:
-      '@ice/bundles': ^0.1.10
+      '@ice/bundles': ^0.1.16
       webpack: ^5.88.0
     dependencies:
       '@ice/bundles': link:../bundles
@@ -1233,8 +1233,8 @@ importers:
 
   packages/miniapp-react-dom:
     specifiers:
-      '@ice/miniapp-runtime': ^1.0.2
-      '@ice/shared': ^1.0.0
+      '@ice/miniapp-runtime': ^1.1.2
+      '@ice/shared': ^1.0.2
       react: ^18.0.0
       react-reconciler: 0.27.0
       scheduler: ^0.20.1
@@ -1248,8 +1248,8 @@ importers:
 
   packages/miniapp-runtime:
     specifiers:
-      '@ice/runtime': ^1.2.4
-      '@ice/shared': ^1.0.1
+      '@ice/runtime': ^1.2.9
+      '@ice/shared': ^1.0.2
       '@types/react': ^18.0.0
       history: ^5.3.0
       miniapp-history: ^0.1.7
@@ -1267,8 +1267,8 @@ importers:
 
   packages/plugin-antd:
     specifiers:
-      '@ice/app': ^3.1.2
-      '@ice/style-import': ^1.0.0
+      '@ice/app': ^3.3.2
+      '@ice/style-import': ^1.0.1
     dependencies:
       '@ice/style-import': link:../style-import
     devDependencies:
@@ -1276,8 +1276,8 @@ importers:
 
   packages/plugin-auth:
     specifiers:
-      '@ice/app': ^3.1.2
-      '@ice/runtime': ^1.1.3
+      '@ice/app': ^3.3.2
+      '@ice/runtime': ^1.2.9
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
       regenerator-runtime: ^0.13.9
@@ -1290,9 +1290,9 @@ importers:
 
   packages/plugin-cavans:
     specifiers:
-      '@ice/app': ^3.2.10
+      '@ice/app': ^3.3.2
       '@ice/cache-canvas': workspace:*
-      '@ice/runtime': ^1.2.5
+      '@ice/runtime': ^1.2.9
       webpack: ^5.88.0
     dependencies:
       '@ice/cache-canvas': link:../cache-canvas
@@ -1303,7 +1303,7 @@ importers:
 
   packages/plugin-css-assets-local:
     specifiers:
-      '@ice/app': ^3.1.2
+      '@ice/app': ^3.3.2
       consola: ^2.15.3
       extract-css-assets-webpack-plugin: ^0.2.10
     dependencies:
@@ -1314,8 +1314,8 @@ importers:
 
   packages/plugin-fusion:
     specifiers:
-      '@ice/app': ^3.1.2
-      '@ice/style-import': ^1.0.0
+      '@ice/app': ^3.3.2
+      '@ice/style-import': ^1.0.1
     dependencies:
       '@ice/style-import': link:../style-import
     devDependencies:
@@ -1324,7 +1324,7 @@ importers:
   packages/plugin-i18n:
     specifiers:
       '@ice/app': workspace:^
-      '@ice/jsx-runtime': ^0.2.0
+      '@ice/jsx-runtime': ^0.2.2
       '@ice/pkg': ^1.5.0
       '@ice/runtime': workspace:^
       '@remix-run/router': ^1.6.1
@@ -1354,8 +1354,8 @@ importers:
 
   packages/plugin-icestark:
     specifiers:
-      '@ice/app': ^3.2.0
-      '@ice/runtime': ^1.2.0
+      '@ice/app': ^3.3.2
+      '@ice/runtime': ^1.2.9
       '@ice/stark': ^2.7.4
       '@ice/stark-app': ^1.2.0
       '@types/react': ^18.0.0
@@ -1372,7 +1372,7 @@ importers:
   packages/plugin-jsx-plus:
     specifiers:
       '@babel/core': ^7.19.1
-      '@ice/app': ^3.1.2
+      '@ice/app': ^3.3.2
       '@types/react': ^18.0.20
       '@types/react-dom': ^18.0.6
       babel-plugin-transform-jsx-class: ^0.1.3
@@ -1398,13 +1398,13 @@ importers:
 
   packages/plugin-miniapp:
     specifiers:
-      '@ice/app': ^3.2.6
-      '@ice/bundles': ^0.1.12
-      '@ice/miniapp-loader': ^1.1.0
-      '@ice/miniapp-react-dom': ^1.0.1
-      '@ice/miniapp-runtime': ^1.1.1
-      '@ice/runtime': ^1.2.4
-      '@ice/shared': ^1.0.1
+      '@ice/app': ^3.3.2
+      '@ice/bundles': ^0.1.16
+      '@ice/miniapp-loader': ^1.1.1
+      '@ice/miniapp-react-dom': ^1.0.2
+      '@ice/miniapp-runtime': ^1.1.2
+      '@ice/runtime': ^1.2.9
+      '@ice/shared': ^1.0.2
       acorn-walk: ^8.2.0
       chalk: ^4.0.0
       consola: ^2.15.3
@@ -1433,13 +1433,13 @@ importers:
 
   packages/plugin-moment-locales:
     specifiers:
-      '@ice/app': ^3.1.2
+      '@ice/app': ^3.3.2
     devDependencies:
       '@ice/app': link:../ice
 
   packages/plugin-pha:
     specifiers:
-      '@ice/app': ^3.2.9
+      '@ice/app': ^3.3.2
       '@remix-run/router': ^1.6.1
       build-scripts: ^2.1.2-0
       chalk: ^4.0.0
@@ -1468,14 +1468,14 @@ importers:
     specifiers:
       '@babel/core': ^7.0.0
       '@babel/plugin-proposal-export-default-from': ^7.18.9
-      '@ice/app': ^3.2.8
-      '@ice/bundles': ^0.1.10
+      '@ice/app': ^3.3.2
+      '@ice/bundles': ^0.1.16
       '@types/lodash-es': ^4.17.7
       babel-plugin-transform-jsx-stylesheet: 1.0.6
       consola: ^2.15.3
       css: ^2.2.1
       lodash-es: ^4.17.21
-      rax-compat: ^0.2.1
+      rax-compat: ^0.2.8
       style-unit: ^3.0.5
       stylesheet-loader: ^0.9.1
       webpack: ^5.88.0
@@ -1497,8 +1497,8 @@ importers:
 
   packages/plugin-request:
     specifiers:
-      '@ice/app': ^3.1.2
-      '@ice/runtime': ^1.1.3
+      '@ice/app': ^3.3.2
+      '@ice/runtime': ^1.2.9
       '@types/react': ^18.0.0
       '@types/react-dom': ^18.0.0
       ahooks: ^3.0.0
@@ -1543,7 +1543,7 @@ importers:
 
   packages/rax-compat:
     specifiers:
-      '@ice/appear': ^0.2.0
+      '@ice/appear': ^0.2.1
       '@ice/pkg': ^1.5.0
       '@swc/helpers': ^0.5.1
       '@types/rax': ^1.0.8
@@ -1576,8 +1576,8 @@ importers:
 
   packages/rspack-config:
     specifiers:
-      '@ice/bundles': 0.1.15
-      '@ice/shared-config': 1.0.2
+      '@ice/bundles': 0.1.16
+      '@ice/shared-config': 1.0.3
       '@rspack/core': ^0.3.0
     dependencies:
       '@ice/bundles': link:../bundles
@@ -1587,8 +1587,8 @@ importers:
 
   packages/runtime:
     specifiers:
-      '@ice/jsx-runtime': ^0.2.1
-      '@ice/shared': ^1.0.1
+      '@ice/jsx-runtime': ^0.2.2
+      '@ice/shared': ^1.0.2
       '@remix-run/router': 1.7.2
       '@remix-run/web-fetch': ^4.3.3
       '@types/react': ^18.0.8
@@ -1632,7 +1632,7 @@ importers:
 
   packages/shared-config:
     specifiers:
-      '@ice/bundles': 0.1.15
+      '@ice/bundles': 0.1.16
       '@rollup/pluginutils': ^4.2.0
       browserslist: ^4.19.3
       consola: ^2.15.3
@@ -1665,8 +1665,8 @@ importers:
 
   packages/webpack-config:
     specifiers:
-      '@ice/bundles': 0.1.15
-      '@ice/shared-config': 1.0.2
+      '@ice/bundles': 0.1.16
+      '@ice/shared-config': 1.0.3
       fast-glob: ^3.2.11
       process: ^0.11.10
       webpack: ^5.88.0
@@ -1680,7 +1680,7 @@ importers:
 
   packages/webpack-modify:
     specifiers:
-      '@ice/webpack-config': ^1.0.0
+      '@ice/webpack-config': ^1.1.2
       consola: ^2.15.3
       webpack: ^5.88.0
     dependencies:

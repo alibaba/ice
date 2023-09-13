@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.2
+
+### Patch Changes
+
+- b8b1d5e4: fix: sourceMap url in prod files but not publish with sourceMap file
+- Updated dependencies [b8b1d5e4]
+- Updated dependencies [64442269]
+  - @ice/shared-config@1.0.3
+  - @ice/bundles@0.1.16
+
 ## 1.1.1
 
 ### Patch Changes
