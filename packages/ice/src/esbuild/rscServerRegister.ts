@@ -73,7 +73,14 @@ export function rscCodeTransform({ content, path }: { content: string; path: str
     source += 'const registerServerReference = Server.registerServerReference;\n';
     for (let i = 0; i < body.length; i++) {
       const node = body[i];
-      if (node.type === 'ImportDeclaration') {
+      if (['ExpressionStatement', 'VariableDeclaration', 'AssignmentExpression', 'ForStatement', 'IfStatement'].includes(node.type)) {
+        // concat top level statements.
+        const { start, end } = node;
+        const statement = content.substring(start, end);
+        if (statement.indexOf('use client') === -1 && statement.indexOf('use server') === -1) {
+          source += `${statement}\n`;
+        }
+      } else if (node.type === 'ImportDeclaration') {
         // concat the 'import' statements.
         const { start, end } = node;
         source += `${content.substring(start, end)}\n`;
@@ -89,6 +96,13 @@ export function rscCodeTransform({ content, path }: { content: string; path: str
           } else {
             source += `registerServerReference(${functionName}, '${moduleId}', null);\n`;
             source += `module.exports = ${functionName};\n`;
+          }
+        } else {
+          //  concat export variables
+          const exportNames = declaration.declarations.map(item => item.id.name);
+          source += `${recast.print(declaration).code}\n`;
+          for (const exportName of exportNames) {
+            source += `module.exports.${exportName} = ${exportName};\n`;
           }
         }
       } else if (node.type === 'FunctionDeclaration') {
@@ -106,7 +120,6 @@ const rscServerRegister = (): Plugin => {
     setup: async (build: PluginBuild) => {
       build.onLoad({ filter: /\/src\/.*\.(js|ts|jsx|tsx)$/ }, async (args) => {
         const { path } = args;
-        console.log('path', path);
         const loader = path.endsWith('.tsx') || path.endsWith('.ts') ? 'tsx' : 'jsx';
         let content: string = await fs.promises.readFile(path, 'utf-8');
         const source = rscCodeTransform({ content, path });

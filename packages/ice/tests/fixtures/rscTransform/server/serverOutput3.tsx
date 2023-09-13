@@ -10,6 +10,7 @@ function Container() {
         </Counter>
         <EditButton noteId="editButton">hello world</EditButton>
         <div> {serverPrint("serverPrint call")} </div>
+        <div> {privateFunc()} </div>
     </>;
 };
 registerServerReference(Container, 'file:///Users/lzx/Documents/project/ice/packages/ice/tests/fixtures/rscTransform/server/serverInput3.tsx', null);
@@ -20,7 +21,5 @@ function serverPrint(sentence) {
 registerServerReference(serverPrint, 'file:///Users/lzx/Documents/project/ice/packages/ice/tests/fixtures/rscTransform/server/serverInput3.tsx', 'serverPrint');
 module.exports.serverPrint = serverPrint;
 function privateFunc() {
-    return 'privateFunc';
+    return "privateFunc";
 };
-registerServerReference(privateFunc, 'file:///Users/lzx/Documents/project/ice/packages/ice/tests/fixtures/rscTransform/server/serverInput3.tsx', 'privateFunc');
-module.exports.privateFunc = privateFunc;
