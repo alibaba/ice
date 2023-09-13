@@ -6,7 +6,7 @@ import pkg from 'react-server-dom-webpack/client';
 const { Suspense, use } = React;
 const { createFromFetch } = pkg;
 
-export default async function runRSCApp() {
+export async function runRSCClientApp() {
   function App({ response }) {
     return (
       <Suspense fallback={<h1>Loading...</h1>}>

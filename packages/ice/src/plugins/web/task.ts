@@ -46,7 +46,7 @@ const getWebTask = ({ rootDir, command, userConfig }): Config => {
     target: WEB,
     ...(userConfig.rsc ? {
       // TODO: temporary solution for rsc.
-      entry: { main: [path.join(rootDir, RUNTIME_TMP_DIR, 'clientEntry.tsx')] },
+      entry: { main: [path.join(rootDir, RUNTIME_TMP_DIR, 'rsc.client.tsx')] },
     } : {}),
   };
 };

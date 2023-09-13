@@ -62,6 +62,11 @@ export async function renderToResponse(requestContext, options: RenderOptions = 
   setRuntimeEnv(renderMode);
 
   const mergedOptions = mergeOptions(options);
+
+  <% if(rsc) {-%>
+  return runtime.runRSCServerApp(requestContext, mergedOptions);
+  <% }-%>
+
   return runtime.renderToResponse(requestContext, mergedOptions);
 }
 
