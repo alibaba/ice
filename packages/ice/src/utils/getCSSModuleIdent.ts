@@ -13,6 +13,7 @@ interface Options {
   localIdentName: string;
 }
 
+// TODO: move this logic to getCSSModuleLocalIdent.
 const getCSSModuleIdent = (options: Options) => {
   const { rootDir, fileName, localName, localIdentName, rule, mode } = options;
   if (rule === 'native') {
