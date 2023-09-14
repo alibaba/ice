@@ -10,19 +10,11 @@ async function bundler(
   context: Context,
   options: BundlerOptions,
 ) {
-  const { command, applyHook, commandArgs } = context;
+  const { command } = context;
   const {
     taskConfigs,
-    hooksAPI,
   } = options;
   const webpackConfigs = await getWebpackConfig(context, options);
-
-  await applyHook(`before.${command}.run`, {
-    commandArgs,
-    taskConfigs,
-    webpackConfigs,
-    ...hooksAPI,
-  });
 
   let compiler: webpack.Compiler;
   let devServer: WebpackDevServer;

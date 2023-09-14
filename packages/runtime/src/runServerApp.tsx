@@ -449,7 +449,7 @@ function renderDocument(options: RenderDocumentOptions): Response {
   const {
     matches,
     renderOptions,
-    routePath,
+    routePath = '',
     downgrade,
     routes,
     documentData,

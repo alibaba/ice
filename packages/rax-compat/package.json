@@ -1,6 +1,6 @@
 {
   "name": "rax-compat",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Rax compatible mode, running rax project on the react runtime.",
   "files": [
     "esm",
@@ -33,8 +33,8 @@
     "*.css"
   ],
   "scripts": {
-    "watch": "ice-pkg start",
-    "build": "ice-pkg build",
+    "watch": "cross-env NODE_ENV=development ice-pkg start",
+    "build": "cross-env NODE_ENV=production ice-pkg build",
     "prepublishOnly": "npm run build",
     "eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
     "eslint:fix": "npm run eslint -- --fix",
@@ -48,7 +48,7 @@
     "compat"
   ],
   "dependencies": {
-    "@ice/appear": "^0.2.0",
+    "@ice/appear": "^0.2.1",
     "@swc/helpers": "^0.5.1",
     "style-unit": "^3.0.5"
   },
@@ -57,6 +57,7 @@
     "@types/rax": "^1.0.8",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "cross-env": "^7.0.3",
     "prop-types": "^15.8.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"

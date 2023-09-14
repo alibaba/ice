@@ -1,5 +1,13 @@
 # @ice/miniapp-loader
 
+## 1.1.1
+
+### Patch Changes
+
+- b8b1d5e4: fix: sourceMap url in prod files but not publish with sourceMap file
+- Updated dependencies [b8b1d5e4]
+  - @ice/bundles@0.1.16
+
 ## 1.1.0
 
 ### Minor Changes

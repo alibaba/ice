@@ -1,6 +1,6 @@
 {
   "name": "@ice/runtime",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "description": "Runtime module for ice.js",
   "type": "module",
   "types": "./esm/index.d.ts",
@@ -32,7 +32,7 @@
   "bugs": "https://github.com/alibaba/ice/issues",
   "homepage": "https://v3.ice.work",
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsc",
     "postinstall": "node ./scripts/postinstall.mjs"
   },
@@ -49,8 +49,8 @@
     "./esm/polyfills/abortcontroller.js"
   ],
   "dependencies": {
-    "@ice/jsx-runtime": "^0.2.1",
-    "@ice/shared": "^1.0.1",
+    "@ice/jsx-runtime": "^0.2.2",
+    "@ice/shared": "^1.0.2",
     "@remix-run/router": "1.7.2",
     "abortcontroller-polyfill": "1.7.5",
     "ejs": "^3.1.6",

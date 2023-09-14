@@ -1,5 +1,15 @@
 # @ice/plugin-canvas
 
+## 0.0.5
+
+### Patch Changes
+
+- b8b1d5e4: fix: sourceMap url in prod files but not publish with sourceMap file
+- Updated dependencies [1e4b20af]
+- Updated dependencies [b8b1d5e4]
+- Updated dependencies [a04cc002]
+  - @ice/cache-canvas@0.0.13
+
 ## 0.0.4
 
 ### Patch Changes

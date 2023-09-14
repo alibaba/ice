@@ -1,10 +1,10 @@
 {
   "name": "@ice/plugin-moment-locales",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "ice.js plugin for reduce moment locale size.",
   "type": "module",
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsc"
   },
   "main": "./esm/index.js",
@@ -16,7 +16,7 @@
     "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-moment-locales"
   },
   "devDependencies": {
-    "@ice/app": "^3.1.2"
+    "@ice/app": "^3.3.2"
   },
   "publishConfig": {
     "access": "public"

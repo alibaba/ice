@@ -1,5 +1,26 @@
 # Changelog
 
+## 3.3.2
+
+### Patch Changes
+
+- b8b1d5e4: fix: sourceMap url in prod files but not publish with sourceMap file
+- 06829a4e: fix: params urls for hook before.start.run
+- 7194c75c: fix: throw error when server compile failed
+- 68f19eae: fix: should not import runtime module and routes when csr
+- cec448c3: fix: browsers compatibility of dataLoader
+- 64442269: fix: redirect import of definePageConfig
+- Updated dependencies [b8b1d5e4]
+- Updated dependencies [68f19eae]
+- Updated dependencies [64442269]
+- Updated dependencies [b7488105]
+  - @ice/route-manifest@1.2.2
+  - @ice/webpack-config@1.1.2
+  - @ice/rspack-config@1.0.3
+  - @ice/shared-config@1.0.3
+  - @ice/bundles@0.1.16
+  - @ice/runtime@1.2.9
+
 ## 3.3.1
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-rax-compat",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Provide rax compat support for ice.js",
   "license": "MIT",
   "type": "module",
@@ -20,17 +20,17 @@
   "dependencies": {
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-export-default-from": "^7.18.9",
-    "@ice/bundles": "^0.1.10",
+    "@ice/bundles": "^0.1.16",
     "babel-plugin-transform-jsx-stylesheet": "1.0.6",
     "consola": "^2.15.3",
     "css": "^2.2.1",
     "lodash-es": "^4.17.21",
-    "rax-compat": "^0.2.1",
+    "rax-compat": "^0.2.8",
     "style-unit": "^3.0.5",
     "stylesheet-loader": "^0.9.1"
   },
   "devDependencies": {
-    "@ice/app": "^3.2.8",
+    "@ice/app": "^3.3.2",
     "@types/lodash-es": "^4.17.7",
     "webpack": "^5.88.0"
   },
@@ -39,7 +39,7 @@
     "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-rax-compat"
   },
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsc && cp src/rax-compat.d.ts  esm/rax-compat.d.ts"
   },
   "publishConfig": {

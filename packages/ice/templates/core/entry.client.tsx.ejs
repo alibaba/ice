@@ -2,7 +2,7 @@
 <%- entry.imports %>
 import { createElement, Fragment } from 'react';
 import { runClientApp, getAppConfig } from '<%- iceRuntimePath %>';
-import { commons, statics } from './runtimeModules';
+import { commons, statics } from './runtime-modules';
 import * as app from '@/app';
 <% if (enableRoutes) { -%>
 import createRoutes from './routes';
