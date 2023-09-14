@@ -1,5 +1,14 @@
 # @ice/shared-config
 
+## 1.0.3
+
+### Patch Changes
+
+- b8b1d5e4: fix: sourceMap url in prod files but not publish with sourceMap file
+- 64442269: fix: redirect import of definePageConfig
+- Updated dependencies [b8b1d5e4]
+  - @ice/bundles@0.1.16
+
 ## 1.0.2
 
 ### Patch Changes
