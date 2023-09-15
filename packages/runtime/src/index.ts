@@ -26,8 +26,7 @@ import type { RunClientAppOptions, CreateRoutes } from './runClientApp.js';
 import { useAppContext as useInternalAppContext, useAppData, AppContextProvider } from './AppContext.js';
 import { getAppData } from './appData.js';
 import { useData, useConfig } from './RouteContext.js';
-import { runRSCClientApp, useRSCRouter } from './runRSCClientApp.js';
-
+import { runRSCClientApp, useRefresh } from './runRSCClientApp.js';
 import {
   Meta,
   Title,
@@ -146,7 +145,7 @@ export {
   RouteErrorComponent,
 
   runRSCClientApp,
-  useRSCRouter,
+  useRefresh,
 };
 
 export type {

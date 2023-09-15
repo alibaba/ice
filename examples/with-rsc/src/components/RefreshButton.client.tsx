@@ -1,8 +1,8 @@
 'use client';
-import { useRSCRouter } from '@ice/runtime';
+import { useRefresh } from '@ice/runtime';
 
 export default function Button({ children }) {
-  const router = useRSCRouter();
+  const refresh = useRefresh();
 
   return (
     <button
@@ -10,7 +10,7 @@ export default function Button({ children }) {
         'edit-button',
         'edit-button--solid',
       ].join(' ')}
-      onClick={() => router.refresh()}
+      onClick={() => refresh()}
       role="menuitem"
     >
       {children}

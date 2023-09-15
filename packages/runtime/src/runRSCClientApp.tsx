@@ -44,15 +44,6 @@ function Router() {
     });
   }
 
-  // function navigate(nextLocation) {
-  //   startTransition(() => {
-  //     setLocation(loc => ({
-  //       ...loc,
-  //       ...nextLocation
-  //     }));
-  //   });
-  // }
-
   return (
     <RouterContext.Provider value={{ location, refresh }}>
       <Suspense fallback={<h1>Loading...</h1>}>
@@ -62,8 +53,9 @@ function Router() {
   );
 }
 
-export function useRSCRouter() {
-  return useContext(RouterContext);
+export function useRefresh() {
+  const router = useContext(RouterContext);
+  return router.refresh;
 }
 
 function getReactTree(location) {
