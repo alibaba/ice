@@ -39,7 +39,7 @@ interface RenderOptions {
   createRoutes: (options: Pick<RouteLoaderOptions, 'requestContext' | 'renderMode'>) => RouteItem[];
   runtimeModules: RuntimeModules;
   documentDataLoader?: DataLoaderConfig;
-  Document: DocumentComponent;
+  Document?: DocumentComponent;
   documentOnly?: boolean;
   renderMode?: RenderMode;
   // basename is used both for server and client, once set, it will be sync to client.
@@ -406,7 +406,9 @@ async function renderServerEntry(
     <AppContextProvider value={appContext}>
       <AppRuntimeProvider>
         <DocumentContextProvider value={documentContext}>
-          <Document pagePath={routePath} />
+          {
+            Document && <Document pagePath={routePath} />
+          }
         </DocumentContextProvider>
       </AppRuntimeProvider>
     </AppContextProvider>
@@ -500,7 +502,9 @@ function renderDocument(options: RenderDocumentOptions): Response {
   const htmlStr = ReactDOMServer.renderToString(
     <AppContextProvider value={appContext}>
       <DocumentContextProvider value={documentContext}>
-        <Document pagePath={routePath} />
+        {
+          Document && <Document pagePath={routePath} />
+        }
       </DocumentContextProvider>
     </AppContextProvider>,
   );
