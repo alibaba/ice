@@ -1,7 +1,7 @@
 import { dataLoader } from '@ice/runtime';
 import * as app from '@/app';
 import dataloaderConfig from './dataloader-config'
-<% if(dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
+<% if (dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
 <% const staticModuleNames = []; -%>
 <% if (runtimeModules.length) { -%>
   <% runtimeModules.forEach((runtimeModule, index) => { -%>
@@ -14,10 +14,10 @@ import dataloaderConfig from './dataloader-config'
 
 const loaders = {
   ...dataloaderConfig,
-  <% if(hasExportAppData) {-%>__app: app.dataLoader,<% } -%>
+  <% if (hasExportAppData) {-%>__app: app.dataLoader,<% } -%>
 }
 
-<% if(!dataLoaderImport.imports) {-%>
+<% if (!dataLoaderImport.imports) {-%>
 let dataLoaderFetcher = (options) => {
   return window.fetch(options.url, options);
 }
