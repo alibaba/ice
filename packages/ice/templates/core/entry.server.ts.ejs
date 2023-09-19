@@ -1,23 +1,25 @@
 import './env.server';
 import * as runtime from '@ice/runtime/server';
-<% if(hydrate) {-%>
+<% if (hydrate) {-%>
 import { commons, statics } from './runtime-modules';
 <% }-%>
 import * as app from '@/app';
+<% if (hasDocument) {-%>
 import * as Document from '@/document';
+<% }-%>
 import type { RenderMode, DistType } from '@ice/runtime';
 import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 // @ts-ignore
 import assetsManifest from 'virtual:assets-manifest.json';
-<% if(hydrate) {-%>
+<% if (hydrate) {-%>
 import createRoutes from './routes';
 <% } else { -%>
 import routesManifest from './route-manifest.json';
 <% } -%>
 import routesConfig from './routes-config.bundle.mjs';
-<% if(dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
-<% if(hydrate) {-%><%- runtimeOptions.imports %><% } -%>
-<% if(!hydrate) {-%>
+<% if (dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
+<% if (hydrate) {-%><%- runtimeOptions.imports %><% } -%>
+<% if (!hydrate) {-%>
 // Do not inject runtime modules when render mode is document only.
 const commons = [];
 const statics = [];
@@ -90,12 +92,14 @@ function mergeOptions(options) {
     assetsManifest,
     createRoutes,
     runtimeModules,
+    <% if (hasDocument) {-%>
     documentDataLoader: Document.dataLoader,
     Document: Document.default,
+    <% }-%>
     basename: basename || getRouterBasename(),
     renderMode,
     routesConfig,
-    <% if(hydrate) {-%>
+    <% if (hydrate) {-%>
     runtimeOptions: {
     <% if (runtimeOptions.exports) { -%>
       <%- runtimeOptions.exports %>
