@@ -18,7 +18,7 @@ module.exports = Container;
 function serverPrint(sentence) {
     return sentence;
 };
-registerServerReference(serverPrint, 'file:///Users/lzx/Documents/project/ice/packages/ice/tests/fixtures/rscTransform/server/serverInput3.tsx', 'serverPrint');
+registerServerReference(serverPrint, 'file:///home/runner/work/ice/ice/packages/ice/tests/fixtures/rscTransform/server/serverInput3.tsx', 'serverPrint');
 module.exports.serverPrint = serverPrint;
 function privateFunc() {
     return "privateFunc";

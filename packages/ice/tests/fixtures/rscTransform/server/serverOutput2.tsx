@@ -12,10 +12,10 @@ function Container() {
         <div> {serverPrint("serverPrint call")} </div>
     </>;
 };
-registerServerReference(Container, 'file:///Users/lzx/Documents/project/ice/packages/ice/tests/fixtures/rscTransform/server/serverInput2.tsx', null);
+registerServerReference(Container, 'file:///home/runner/work/ice/ice/packages/ice/tests/fixtures/rscTransform/server/serverInput2.tsx', null);
 module.exports = Container;
 function serverPrint(sentence) {
     return sentence;
 };
-registerServerReference(serverPrint, 'file:///Users/lzx/Documents/project/ice/packages/ice/tests/fixtures/rscTransform/server/serverInput2.tsx', 'serverPrint');
+registerServerReference(serverPrint, 'file:///home/runner/work/ice/ice/packages/ice/tests/fixtures/rscTransform/server/serverInput2.tsx', 'serverPrint');
 module.exports.serverPrint = serverPrint;

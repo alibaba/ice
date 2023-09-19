@@ -21,5 +21,5 @@ function Container() {
         <div>{word}</div>
     </>;
 };
-registerServerReference(Container, 'file:///Users/lzx/Documents/project/ice/packages/ice/tests/fixtures/rscTransform/server/serverInput4.tsx', null);
+registerServerReference(Container, 'file:///home/runner/work/ice/ice/packages/ice/tests/fixtures/rscTransform/server/serverInput4.tsx', null);
 module.exports = Container;

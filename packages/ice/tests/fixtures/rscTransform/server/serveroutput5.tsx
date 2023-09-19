@@ -6,7 +6,7 @@ function Container() {
         <div>{word}</div>
     </>;
 };
-registerServerReference(Container, 'file:///Users/lzx/Documents/project/ice/packages/ice/tests/fixtures/rscTransform/server/serverInput5.tsx', null);
+registerServerReference(Container, 'file:///home/runner/work/ice/ice/packages/ice/tests/fixtures/rscTransform/server/serverInput5.tsx', null);
 module.exports = Container;
 var tmp = 1, tmp2 = 2;
 module.exports.tmp = tmp;
