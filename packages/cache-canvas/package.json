@@ -1,11 +1,11 @@
 {
   "name": "@ice/cache-canvas",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "",
   "main": "./esm/index.js",
   "types": "./esm/index.d.ts",
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsc",
     "prepublishOnly": "npm run build"
   },

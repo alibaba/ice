@@ -1,10 +1,10 @@
 {
   "name": "@ice/style-import",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "automatic import style by transform code",
   "type": "module",
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsc"
   },
   "main": "./esm/index.js",

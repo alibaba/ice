@@ -25,6 +25,7 @@ declare global {
     _windvane_backControl: Function | null;
     __megability_bridge__: {
       syncCall: Function;
+      asyncCall: Function;
     };
   }
 }
@@ -74,7 +75,7 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
     }
     // Cache base64 string when canvas rendered.
     if (renderedCanvas && strBase64) {
-      Storage.setItem(cacheKey, strBase64, {
+      return Storage.setItem(cacheKey, strBase64, {
         bizID,
       });
     }
@@ -87,27 +88,6 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  useEffect(() => {
-    if (window.WindVane) {
-      window.WindVane.call('WebAppInterface', 'enableHookNativeBack', {});
-      window._windvane_backControl = () => {
-        cacheCanvasFunc();
-        // Windvane must return a string value of true for it to work properly.
-        return 'false';
-      };
-    }
-    document.addEventListener('wvBackClickEvent', cacheCanvasFunc, false);
-    window.addEventListener('beforeunload', cacheCanvasFunc);
-
-    return () => {
-      window.removeEventListener('beforeunload', cacheCanvasFunc);
-      window.removeEventListener('wvBackClickEvent', cacheCanvasFunc);
-      if (window._windvane_backControl) {
-        window._windvane_backControl = null;
-      }
-    };
-  }, [cacheCanvasFunc]);
 
   useEffect(() => {
     if (mounted && typeof init === 'function') {
@@ -139,10 +119,9 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
           {
             (typeof fallback === 'function') && (<div
               id={`fallback-${id}`}
-              style={isNode || Storage.getItem(cacheKey, { bizID }) ? { display: 'none' } : { display: 'block' }}
             >
               {
-                fallback()
+                (isNode || !Storage.getItem(cacheKey, { bizID })) && fallback()
               }
             </div>)
           }
@@ -175,9 +154,9 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
                   if (base64Data) {
                     const img = document.getElementById('canvas-img-${id}');
                     img && (img.src = base64Data);
-                    fallback && (fallback.style.display = 'none');
-                  } else {
-                    fallback && (fallback.style.display = 'block');
+                    if (fallback && fallback.childNodes[0]) {
+                      fallback.removeChild(fallback.childNodes[0]);
+                    }
                   }
                 `,
               }}

@@ -55,6 +55,10 @@ export default class DataLoaderPlugin {
               target: 'es6', // should not set to esnext, https://github.com/alibaba/ice/issues/5830
               format: 'iife',
               entryPoints: [filePath],
+              supported: {
+                // Do not wrap arrow function when format as IIFE.
+                arrow: false,
+              },
               write: false,
               logLevel: 'silent', // The main server compile process will log it.
             },

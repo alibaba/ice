@@ -1,6 +1,6 @@
 {
   "name": "@ice/miniapp-runtime",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "ice runtime for miniapps.",
   "type": "module",
   "types": "./esm/index.d.ts",
@@ -20,13 +20,13 @@
   "bugs": "https://github.com/alibaba/ice/issues",
   "homepage": "https://v3.ice.work",
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsc"
   },
   "sideEffects": false,
   "dependencies": {
-    "@ice/shared": "^1.0.1",
-    "@ice/runtime": "^1.2.4",
+    "@ice/shared": "^1.0.2",
+    "@ice/runtime": "^1.2.9",
     "miniapp-history": "^0.1.7"
   },
   "devDependencies": {

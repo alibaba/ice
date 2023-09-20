@@ -1,11 +1,11 @@
 {
   "name": "@ice/appear",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "",
   "main": "./esm/index.js",
   "types": "./esm/index.d.ts",
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsc",
     "prepublishOnly": "npm run build"
   },

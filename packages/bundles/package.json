@@ -1,6 +1,6 @@
 {
   "name": "@ice/bundles",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "license": "MIT",
   "author": "ICE",
   "description": "Basic dependencies for ice.",
@@ -9,7 +9,7 @@
     "compiled"
   ],
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsx scripts/build.ts && tsc"
   },
   "main": "./esm/index.js",

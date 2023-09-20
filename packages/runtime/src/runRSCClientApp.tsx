@@ -3,24 +3,61 @@ import * as ReactDOM from 'react-dom/client';
 import pkg from 'react-server-dom-webpack/client';
 
 // @ts-ignore
-const { Suspense, use } = React;
+const { Suspense, use, useState, createContext, useContext, startTransition } = React;
 const { createFromFetch } = pkg;
 
 export async function runRSCClientApp() {
-  function App({ response }) {
-    return (
-      <Suspense fallback={<h1>Loading...</h1>}>
-        {use(response)}
-      </Suspense>
-    );
-  }
-
-  const rscPath = location.href + (location.href.indexOf('?') ? '?rsc' : '&rsc');
-  const response = createFromFetch(
-    fetch(rscPath),
-  );
-
   const container = document.getElementById('app');
   const root = ReactDOM.createRoot(container);
-  root.render(<App response={response} />);
+  root.render(<Root />);
+}
+
+function Root() {
+  return (
+    <Router />
+  );
+}
+
+const RouterContext = createContext(null);
+const initialCache = new Map();
+
+function Router() {
+  const [cache, setCache] = useState(initialCache);
+  const [location, setLocation] = useState(window.location.href);
+
+  let content = cache.get(location);
+  if (!content) {
+    content = createFromFetch(
+      getReactTree(location),
+    );
+    cache.set(location, content);
+  }
+
+  function refresh() {
+    startTransition(() => {
+      const nextCache = new Map();
+      const nextContent = createFromFetch(
+        getReactTree(location),
+      );
+      nextCache.set(location, nextContent);
+      setCache(nextCache);
+    });
+  }
+
+  return (
+    <RouterContext.Provider value={{ location, refresh }}>
+      <Suspense fallback={<h1>Loading...</h1>}>
+        {use(content)}
+      </Suspense>
+    </RouterContext.Provider>
+  );
+}
+
+export function useRefresh() {
+  const router = useContext(RouterContext);
+  return router.refresh;
+}
+
+function getReactTree(location) {
+  return fetch(location + location.indexOf('?') ? '?rsc' : '&rsc');
 }

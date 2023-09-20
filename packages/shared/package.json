@@ -1,6 +1,6 @@
 {
   "name": "@ice/shared",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "ice utils for internal use",
   "type": "module",
   "types": "./esm/index.d.ts",
@@ -18,7 +18,7 @@
   "bugs": "https://github.com/alibaba/ice/issues",
   "homepage": "https://v3.ice.work",
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsc"
   },
   "sideEffects": false,

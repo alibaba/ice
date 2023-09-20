@@ -74,7 +74,7 @@ export type { webpack };
 export interface Config {
   target?: string;
 
-  mode: 'none' | 'development' | 'production';
+  mode?: 'none' | 'development' | 'production';
 
   define?: {
     [key: string]: string | boolean;
