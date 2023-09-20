@@ -63,7 +63,6 @@ export default async function runClientApp(options: RunClientAppOptions) {
     serverData,
     revalidate,
   } = appConfig.encodeData ? decodeWindowContext(windowContext) : windowContext;
-  // Decode for data from server.
   const formattedBasename = addLeadingSlash(basename);
   const requestContext = getRequestContext(window.location);
 
