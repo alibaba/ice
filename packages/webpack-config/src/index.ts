@@ -174,7 +174,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     polyfill,
     enableEnv: true,
     getRoutesFile,
-    serverComponent: false,
+    serverComponent,
     isServer: false,
   });
   const webpackConfig = {

@@ -31,8 +31,9 @@ class ClientReferenceDependency extends ModuleDependency {
   userRequest: string;
   request: string;
 
-  constructor(request: any) {
+  constructor(request: string) {
     super(request);
+    this.request = request;
   }
   get type(): string {
     return 'client-reference';
@@ -55,7 +56,9 @@ export class FlightManifestPlugin {
   ssrManifestFilename?: string;
 
   constructor(options: Options = {}) {
-    if (!options.clientReferences) {
+    if (options.clientReferences) {
+      this.clientReferences = options.clientReferences;
+    } else {
       this.clientReferences = [
         {
           directory: '.',
@@ -64,8 +67,6 @@ export class FlightManifestPlugin {
           exclude: /types.ts|.d.ts|node_modules/,
         },
       ];
-    } else {
-      this.clientReferences = options.clientReferences;
     }
     if (typeof options.chunkName === 'string') {
       this.chunkName = options.chunkName;
@@ -293,7 +294,10 @@ export class FlightManifestPlugin {
             clientRefDep.userRequest = dep.userRequest;
             return clientRefDep;
           });
-          asyncLib.filter(clientRefDeps, (dep: ClientReferenceDependency, filterCb: (err: null | Error, truthValue: boolean) => void) => {
+          asyncLib.filter(
+            clientRefDeps,
+            (dep: ClientReferenceDependency, filterCb: (err: null | Error, truthValue: boolean) => void,
+          ) => {
             normalResolver.resolve(
               {},
               context,
