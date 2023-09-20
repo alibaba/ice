@@ -168,7 +168,8 @@ const cache = new Map<string, CachedResult>();
  * Start getData once data-loader.js is ready in client, and set to cache.
  */
 function loadInitialDataInClient(loaders: Loaders) {
-  const context = decodeWindowContext((window as any).__ICE_APP_CONTEXT__ || {});
+  const windowContext = (window as any).__ICE_APP_CONTEXT__ || {};
+  const context = windowContext.encodeData ? decodeWindowContext((window as any).__ICE_APP_CONTEXT__ || {}) : windowContext;
   const matchedIds = context.matchedIds || [];
   const loaderData = context.loaderData || {};
   const { renderMode } = context;

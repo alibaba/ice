@@ -50,7 +50,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     dataLoaderFetcher,
     dataLoaderDecorator,
   } = options;
-
+  const appConfig = getAppConfig(app);
   const windowContext: WindowContext = (window as any).__ICE_APP_CONTEXT__ || {};
   const assetsManifest: AssetsManifest = (window as any).__ICE_ASSETS_MANIFEST__ || {};
   let {
@@ -62,11 +62,11 @@ export default async function runClientApp(options: RunClientAppOptions) {
     renderMode,
     serverData,
     revalidate,
-  } = decodeWindowContext(windowContext);
+  } = appConfig.encodeData ? decodeWindowContext(windowContext) : windowContext;
   // Decode for data from server.
   const formattedBasename = addLeadingSlash(basename);
   const requestContext = getRequestContext(window.location);
-  const appConfig = getAppConfig(app);
+
   const routes = createRoutes ? createRoutes({
     requestContext,
     renderMode: 'CSR',

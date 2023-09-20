@@ -163,7 +163,8 @@ export type DataType = (props: DataProps) => JSX.Element;
 
 // use app context separately
 export const Data: DataType = (props: DataProps) => {
-  const { documentOnly, matches, downgrade, renderMode, serverData, loaderData, revalidate } = useAppContext();
+  const { documentOnly, matches, downgrade, renderMode, serverData, loaderData, revalidate, appConfig } = useAppContext();
+  const { encodeData } = appConfig;
   const appData = useAppData();
   const {
     ScriptElement = 'script',
@@ -172,6 +173,7 @@ export const Data: DataType = (props: DataProps) => {
   const matchedIds = matches.map(match => match.route.id);
   const routePath = matches.length > 0 ? encodeURI(getCurrentRoutePath(matches)) : '';
   const windowContext: WindowContext = {
+    encodeData,
     appData,
     loaderData,
     routePath,
@@ -188,7 +190,7 @@ export const Data: DataType = (props: DataProps) => {
     // Should merge global context when there are multiple <Data />.
     <ScriptElement
       suppressHydrationWarning={documentOnly}
-      dangerouslySetInnerHTML={{ __html: `!(function () {var a = window.__ICE_APP_CONTEXT__ || {};var b = ${JSON.stringify(encodeWindowContext(windowContext))};for (var k in a) {b[k] = a[k]}window.__ICE_APP_CONTEXT__=b;})();` }}
+      dangerouslySetInnerHTML={{ __html: `!(function () {var a = window.__ICE_APP_CONTEXT__ || {};var b = ${JSON.stringify(encodeData ? encodeWindowContext(windowContext) : windowContext)};for (var k in a) {b[k] = a[k]}window.__ICE_APP_CONTEXT__=b;})();` }}
     />
   );
 };

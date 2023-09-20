@@ -33,6 +33,7 @@ export default defineAppConfig(() => ({
   app: {
     rootId: 'app',
   },
+  encodeData: true,
 }));
 
 export const dataLoader = defineDataLoader(() => {
