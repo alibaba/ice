@@ -118,6 +118,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     enableCopyPlugin,
     polyfill,
     enableRpx2Vw = true,
+    serverComponent,
   } = config;
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
   const dev = mode !== 'production';
@@ -173,6 +174,8 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     polyfill,
     enableEnv: true,
     getRoutesFile,
+    serverComponent: false,
+    isServer: false,
   });
   const webpackConfig = {
     mode,

@@ -37,6 +37,7 @@ const getWebTask = ({ rootDir, command, userConfig }): Config => {
     swcOptions: {
       removeExportExprs,
     },
+    serverComponent: userConfig.rsc,
     assetsManifest: true,
     fastRefresh: command === 'start',
     logging: process.env.WEBPACK_LOGGING || defaultLogging,

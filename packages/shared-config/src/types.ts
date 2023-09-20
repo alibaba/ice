@@ -193,4 +193,6 @@ export interface Config {
   useDevServer?: boolean;
 
   useDataLoader?: boolean;
+
+  serverComponent?: boolean;
 }
