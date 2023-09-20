@@ -3,6 +3,7 @@ import type { WindowContext, RouteMatch, AssetsManifest } from './types.js';
 import { useAppContext, useAppData } from './AppContext.js';
 import { getMeta, getTitle, getLinks, getScripts } from './routesConfig.js';
 import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
+import { encodeWindowContext } from './utils/formatWindowContext.js';
 
 interface DocumentContext {
   main: React.ReactNode | null;
@@ -187,7 +188,7 @@ export const Data: DataType = (props: DataProps) => {
     // Should merge global context when there are multiple <Data />.
     <ScriptElement
       suppressHydrationWarning={documentOnly}
-      dangerouslySetInnerHTML={{ __html: `!(function () {var a = window.__ICE_APP_CONTEXT__ || {};var b = ${JSON.stringify(windowContext)};for (var k in a) {b[k] = a[k]}window.__ICE_APP_CONTEXT__=b;})();` }}
+      dangerouslySetInnerHTML={{ __html: `!(function () {var a = window.__ICE_APP_CONTEXT__ || {};var b = ${JSON.stringify(encodeWindowContext(windowContext))};for (var k in a) {b[k] = a[k]}window.__ICE_APP_CONTEXT__=b;})();` }}
     />
   );
 };

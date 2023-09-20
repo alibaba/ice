@@ -4,6 +4,7 @@ import type {
   RuntimeModules, StaticRuntimePlugin, CommonJsRuntime,
   Loader, DataLoaderResult, StaticDataLoader, DataLoaderConfig, DataLoaderOptions,
 } from './types.js';
+import { decodeWindowContext } from './utils/formatWindowContext.js';
 interface Loaders {
   [routeId: string]: DataLoaderConfig;
 }
@@ -167,7 +168,7 @@ const cache = new Map<string, CachedResult>();
  * Start getData once data-loader.js is ready in client, and set to cache.
  */
 function loadInitialDataInClient(loaders: Loaders) {
-  const context = (window as any).__ICE_APP_CONTEXT__ || {};
+  const context = decodeWindowContext((window as any).__ICE_APP_CONTEXT__ || {});
   const matchedIds = context.matchedIds || [];
   const loaderData = context.loaderData || {};
   const { renderMode } = context;

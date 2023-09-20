@@ -43,7 +43,7 @@ const getHydrateData = (id: string) => {
   }
   return {
     hasHydrateData,
-    data,
+    data: JSON.parse(decodeURI(data)),
   };
 };
 
@@ -166,6 +166,6 @@ function Data(props) {
   const data = useSuspenseData();
 
   return (
-    <script dangerouslySetInnerHTML={{ __html: `!function(){window['${LOADER}'] = window['${LOADER}'] || {};window['${LOADER}']['${props.id}'] = ${JSON.stringify(data)}}();` }} />
+    <script dangerouslySetInnerHTML={{ __html: `!function(){window['${LOADER}'] = window['${LOADER}'] || {};window['${LOADER}']['${props.id}'] = ${encodeURI(JSON.stringify(data))}}();` }} />
   );
 }

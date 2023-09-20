@@ -21,6 +21,7 @@ import addLeadingSlash from './utils/addLeadingSlash.js';
 import { AppContextProvider } from './AppContext.js';
 import { deprecatedHistory } from './utils/deprecatedHistory.js';
 import reportRecoverableError from './reportRecoverableError.js';
+import { decodeWindowContext } from './utils/formatWindowContext.js';
 
 export type CreateRoutes = (options: Pick<RouteLoaderOptions, 'renderMode' | 'requestContext'>) => RouteItem[];
 
@@ -61,7 +62,8 @@ export default async function runClientApp(options: RunClientAppOptions) {
     renderMode,
     serverData,
     revalidate,
-  } = windowContext;
+  } = decodeWindowContext(windowContext);
+  // Decode for data from server.
   const formattedBasename = addLeadingSlash(basename);
   const requestContext = getRequestContext(window.location);
   const appConfig = getAppConfig(app);
