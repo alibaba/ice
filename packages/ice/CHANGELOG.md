@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.3.3
+
+### Patch Changes
+
+- c3a9c20a: chore: modify output
+- 82702258: feat: compat no document
+
 ## 3.3.2
 
 ### Patch Changes
