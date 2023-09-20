@@ -104,6 +104,7 @@ export default async function preBundleDeps(
       alias,
       external,
       define,
+      taskConfig,
       speedup,
     });
 
@@ -129,9 +130,10 @@ export async function bundleDeps(options:
     plugins: Plugin[];
     external: string[];
     define: BuildOptions['define'];
+    taskConfig: Config;
     speedup?: boolean;
   }) {
-  const { entryPoints, outdir, alias, ignores, plugins, external, define, speedup, rootDir } = options;
+  const { entryPoints, outdir, alias, ignores, plugins, external, define, speedup, rootDir, taskConfig } = options;
   return await esbuild.build({
     absWorkingDir: process.cwd(),
     entryPoints,
@@ -162,8 +164,9 @@ export async function bundleDeps(options:
             // Prebundle only works in development mode.
             mode: 'development',
             fileName,
-            localIdentName: name,
+            localName: name,
             rule: speedup ? 'native' : 'loader',
+            localIdentName: taskConfig.cssModules?.localIdentName,
           });
         },
       }),

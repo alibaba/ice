@@ -180,6 +180,11 @@ export interface Config {
   cssChunkFilename?: string;
 
   postcss?: ProcessOptions & { plugins?: (string | [string, Record<string, any>?])[] };
+
+  cssModules?: {
+    localIdentName?: string;
+  };
+
   enableCopyPlugin?: boolean;
 
   enableRpx2Vw?: boolean;
