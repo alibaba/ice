@@ -21,7 +21,7 @@ export async function getOutputPaths(options: {
     }
   }
   if (serverEntry && userConfig.htmlGenerating) {
-    outputPaths = await buildCustomOuputs(rootDir, outputDir, serverEntry, bundleOptions);
+    outputPaths = await buildCustomOutputs(rootDir, outputDir, serverEntry, bundleOptions);
   }
   return outputPaths;
 }
@@ -32,7 +32,7 @@ export async function removeServerOutput(outputDir: string, ssr: boolean) {
   }
 }
 // Build custom outputs such html and js file for weex.
-async function buildCustomOuputs(
+async function buildCustomOutputs(
   rootDir: string,
   outputDir: string,
   serverEntry: string,

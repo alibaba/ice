@@ -45,6 +45,13 @@ const start = async ({
     appConfig,
     devServerConfig,
   });
+  await applyHook('before.start.run', {
+    commandArgs,
+    taskConfigs,
+    rspackConfigs,
+    urls,
+    ...hooksAPI,
+  });
 
   const { RspackDevServer } = await import('@ice/bundles/esm/dev-server.js');
   const devServer = new RspackDevServer(devServerConfig, compiler);

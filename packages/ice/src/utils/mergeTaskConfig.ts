@@ -15,13 +15,16 @@ function mergeTaskConfig(
     return {
       ...rest,
       name,
-      config: mergeWith(config, customConfig, (objValue, srcValue) => {
-        if (Array.isArray(objValue)) {
-          return objValue.concat(srcValue);
-        }
-      }),
+      config: mergeConfig(config, customConfig),
     };
   });
 }
 
+export function mergeConfig(target: Config, source: Config): Config {
+  return mergeWith(target, source, (objValue, srcValue) => {
+    if (Array.isArray(objValue)) {
+      return objValue.concat(srcValue);
+    }
+  });
+}
 export default mergeTaskConfig;

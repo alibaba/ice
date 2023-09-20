@@ -6,7 +6,13 @@ import formatStats from './formatStats.js';
 
 async function build(options: BuildOptions) {
   const { compiler, context, hooksAPI, taskConfigs, rspackConfigs, appConfig, routeManifest } = options;
-  const { rootDir, extendsPluginAPI, applyHook, userConfig } = context;
+  const { rootDir, extendsPluginAPI, applyHook, userConfig, commandArgs } = context;
+  await applyHook('before.build.run', {
+    commandArgs,
+    taskConfigs,
+    rspackConfigs,
+    ...hooksAPI,
+  });
   const { stats, isSuccessful, messages } = await new Promise<CompileResults>((resolve, reject) => {
     let messages: { errors: string[]; warnings: string[] };
     compiler.run(async (_, stats: MultiStats) => {
@@ -41,7 +47,10 @@ async function build(options: BuildOptions) {
 
   if (isSuccessful) {
     const outputDir = rspackConfigs[0].output.path;
-    const { serverEntry } = await extendsPluginAPI.serverCompileTask.get() || {};
+    const { serverEntry, error } = await extendsPluginAPI.serverCompileTask.get() || {};
+    if (error) {
+      throw new Error('Build failed, please check the error message.');
+    }
     const outputPaths = await getOutputPaths({
       rootDir,
       serverEntry,

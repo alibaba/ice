@@ -1,5 +1,6 @@
 import * as path from 'path';
 import fs from 'fs-extra';
+import type { Config as SharedConfig } from '@ice/shared-config/types';
 import type { ServerCompiler } from '../types/plugin.js';
 import { getCache, setCache } from '../utils/persistentCache.js';
 import { getFileHash } from '../utils/hash.js';
@@ -17,6 +18,7 @@ interface CompileConfig {
   transformInclude?: (id: string) => boolean;
   needRecompile?: (entry: string, options: string[]) => Promise<boolean | string>;
   getOutfile?: GetOutfile;
+  redirectImports?: SharedConfig['redirectImports'];
 }
 
 class Config {
@@ -39,7 +41,7 @@ class Config {
 
   public setCompiler(serverCompiler: ServerCompiler): void {
     this.compiler = async (keepExports) => {
-      const { entry, transformInclude } = this.compileConfig;
+      const { entry, transformInclude, redirectImports } = this.compileConfig;
       const outfile = this.getOutfile(entry, keepExports);
       this.status = 'PENDING';
       const { error } = await serverCompiler({
@@ -61,6 +63,7 @@ class Config {
             include: transformInclude,
           },
         },
+        redirectImports,
       });
       if (!error) {
         this.status = 'RESOLVED';
@@ -211,6 +214,10 @@ export const getRouteExportConfig = (rootDir: string) => {
         return false;
       }
     },
+    redirectImports: [{
+      specifier: ['definePageConfig'],
+      source: 'ice/types',
+    }],
   });
 
   const dataloaderConfig = new Config({

@@ -98,7 +98,13 @@ export async function startDevServer(
       isFirstCompile = false;
     }
   });
-
+  await applyHook('before.start.run', {
+    commandArgs,
+    taskConfigs,
+    webpackConfigs,
+    urls,
+    ...hooksAPI,
+  });
   const devServer = new WebpackDevServer(devServerConfig, compiler);
   devServer.startCallback(() => {
     applyHook('after.start.devServer', {

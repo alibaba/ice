@@ -1,0 +1,10 @@
+import type { PageConfig, PageConfigDefinition } from './types';
+
+// Only used for type defination.
+export function definePageConfig(pageConfig: PageConfig | PageConfigDefinition): PageConfigDefinition {
+  if (typeof pageConfig !== 'function') {
+    return () => pageConfig;
+  } else {
+    return pageConfig;
+  }
+}

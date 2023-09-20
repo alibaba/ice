@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.7
+
+### Patch Changes
+
+- b8b1d5e4: fix: sourceMap url in prod files but not publish with sourceMap file
+- Updated dependencies [b8b1d5e4]
+  - rax-compat@0.2.8
+  - @ice/bundles@0.1.16
+
 ## 0.2.6
 
 ### Patch Changes

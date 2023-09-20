@@ -1,6 +1,6 @@
 {
   "name": "@ice/route-manifest",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Generate route manifest",
   "type": "module",
   "main": "./esm/index.js",
@@ -18,7 +18,7 @@
     "minimatch": "^5.0.1"
   },
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsc"
   },
   "publishConfig": {
