@@ -1,5 +1,11 @@
 # @ice/shared-config
 
+## 1.0.4
+
+### Patch Changes
+
+- 78f850fa: feat: support hash only class name for css modules
+
 ## 1.0.3
 
 ### Patch Changes
