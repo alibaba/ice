@@ -13,12 +13,13 @@ interface Options {
   postcssOptions: Config['postcss'];
   rootDir: string;
   enableRpx2Vw: boolean;
+  cssModules: Config['cssModules'];
 }
 
 const require = createRequire(import.meta.url);
 
 function configCSSRule(config: CSSRuleConfig, options: Options) {
-  const { publicPath, rootDir, enableRpx2Vw, postcssOptions: userPostcssOptions } = options;
+  const { publicPath, rootDir, enableRpx2Vw, postcssOptions: userPostcssOptions, cssModules } = options;
   const [style, loader, loaderOptions] = config;
   const cssLoaderOpts = {
     sourceMap: true,
@@ -28,7 +29,7 @@ function configCSSRule(config: CSSRuleConfig, options: Options) {
     modules: {
       auto: (resourcePath: string) => resourcePath.endsWith(`.module.${style}`),
       getLocalIdent: (context: LoaderContext<any>, localIdentName: string, localName: string) => {
-        return getCSSModuleLocalIdent(context.resourcePath, localName);
+        return getCSSModuleLocalIdent(context.resourcePath, localName, cssModules?.localIdentName);
       },
     },
   };
@@ -64,7 +65,7 @@ function configCSSRule(config: CSSRuleConfig, options: Options) {
 }
 
 const css: ModifyWebpackConfig<Configuration, typeof webpack> = (config, ctx) => {
-  const { publicPath, hashKey, cssFilename, cssChunkFilename, postcss, rootDir, enableRpx2Vw } = ctx;
+  const { publicPath, hashKey, cssFilename, cssChunkFilename, postcss, rootDir, enableRpx2Vw, cssModules } = ctx;
   const cssOutputFolder = 'css';
   config.module.rules.push(...([
     ['css'],
@@ -76,7 +77,7 @@ const css: ModifyWebpackConfig<Configuration, typeof webpack> = (config, ctx) =>
       implementation: sass,
     }],
   ] as CSSRuleConfig[]).map((config) => configCSSRule(config, {
-    publicPath, postcssOptions: postcss, rootDir, enableRpx2Vw },
+    publicPath, postcssOptions: postcss, rootDir, enableRpx2Vw, cssModules },
   )));
   config.plugins.push(
     new MiniCssExtractPlugin({

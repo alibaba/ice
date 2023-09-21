@@ -117,6 +117,7 @@ export interface UserConfig {
   postcss?: ProcessOptions & {
     plugins?: (string | [string, Record<string, any>?])[];
   };
+  cssModules?: Config['cssModules'];
   /**
    * Custom file-system based route rules.
    * @see https://v3.ice.work/docs/guide/basic/config#routes

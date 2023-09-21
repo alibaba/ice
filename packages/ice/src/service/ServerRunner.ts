@@ -112,14 +112,16 @@ class ServerRunner extends Runner {
         },
       },
     }, 'esbuild', { isServer: true });
-    const { alias, ignores } = filterAlias(task.config.alias || {});
-    const define = getRuntimeDefination(task.config.define || {});
+    const taskConfig = task.config;
+    const { alias, ignores } = filterAlias(taskConfig.alias || {});
+    const define = getRuntimeDefination(taskConfig.define || {});
     const runtimeMeta = new RuntimeMeta({
       rootDir,
       alias,
       ignores,
       external: server.externals || [],
       define,
+      taskConfig,
       speedup,
     });
 
@@ -140,8 +142,9 @@ class ServerRunner extends Runner {
             // ServerRunner only works in development mode.
             mode: 'development',
             fileName,
-            localIdentName: name,
+            localName: name,
             rule: speedup ? 'native' : 'loader',
+            localIdentName: taskConfig.cssModules?.localIdentName,
           });
         },
       }),

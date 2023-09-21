@@ -712,4 +712,23 @@ export default defineConfig(() => ({
 }));
 ```
 
+### cssModules
+
+- 类型：`{ localIdentName: string }`
+- 默认值：`{}`
+
+构建 cssModules 时，定制 class 名称的生成规则，配置参考 https://webpack.js.org/loaders/css-loader/#localidentname
+
+例如，配置 '[hash:8]' 可以只保留 hash 值，以精简 HTML 大小及 CSS 文件大小。默认情况 `className="custom-head-tab-wrap"` 会被构建为 `class="custom-head-tab-wrap--rAEgGaqM"`，自定义构建规则后后样式名会被精简为 `class="rAEgGaqM"`。
+
+```js
+import { defineConfig } from '@ice/app';
+
+export default defineConfig(() => ({
+  cssModules: {
+    localIdentName: '[hash:8]'
+  },
+}));
+```
+
 > 如有定制需求欢迎👏 PR 或反馈：<https://github.com/alibaba/ice/issues>

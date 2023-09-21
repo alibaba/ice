@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.3.3
+
+### Patch Changes
+
+- c3a9c20a: chore: modify output
+- 82702258: feat: compat no document
+- 78f850fa: feat: support hash only class name for css modules
+- Updated dependencies [78f850fa]
+  - @ice/webpack-config@1.1.3
+  - @ice/shared-config@1.0.4
+  - @ice/rspack-config@1.0.4
+
 ## 3.3.2
 
 ### Patch Changes

@@ -5,6 +5,7 @@ import { Context } from 'build-scripts';
 import type { CommandArgs, CommandName } from 'build-scripts';
 import type { Config } from '@ice/shared-config/types';
 import type { AppConfig } from '@ice/runtime/types';
+import fse from 'fs-extra';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type {
   DeclarationData,
@@ -274,6 +275,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     enableRoutes: true,
     entryCode,
     jsOutput: distType.includes('javascript'),
+    hasDocument: fse.existsSync(path.join(rootDir, 'src/document.tsx')),
     dataLoader: userConfig.dataLoader,
     routeImports,
     routeDefinition,
