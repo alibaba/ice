@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.3
+
+### Patch Changes
+
+- 78f850fa: feat: support hash only class name for css modules
+- Updated dependencies [78f850fa]
+  - @ice/shared-config@1.0.4
+
 ## 1.1.2
 
 ### Patch Changes

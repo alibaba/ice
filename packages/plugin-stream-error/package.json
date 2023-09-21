@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-stream-error",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "",
   "license": "MIT",
   "type": "module",
