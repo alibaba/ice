@@ -1,5 +1,5 @@
 import path from 'path';
-import { swc, swcPluginRemoveExport, swcPluginKeepExport, swcPluginNodeTransform, coreJsPath, caniuseLite } from '@ice/bundles';
+import { swc, swcPluginRemoveExport, swcPluginKeepExport, swcPluginNodeTransform, swcPluginReactServerComponent, coreJsPath, caniuseLite } from '@ice/bundles';
 import browserslist from 'browserslist';
 import consola from 'consola';
 import type { SwcConfig, ReactConfig } from '@ice/bundles';
@@ -24,6 +24,8 @@ interface Options {
   polyfill?: Config['polyfill'];
   enableEnv?: boolean;
   getRoutesFile?: () => string[];
+  serverComponent?: boolean;
+  isServer?: boolean;
 }
 
 const formatId = (id: string) => id.split(path.sep).join('/');
@@ -44,6 +46,8 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
     polyfill,
     enableEnv,
     getRoutesFile,
+    serverComponent,
+    isServer,
   } = options;
 
   const { removeExportExprs, compilationConfig, keepExports, nodeTransform } = swcOptions;
@@ -106,6 +110,16 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
       }
 
       const swcPlugins = [];
+
+      if (serverComponent) {
+        swcPlugins.push([
+          swcPluginReactServerComponent,
+          {
+            isServer,
+            assertImports: false,
+          },
+        ]);
+      }
 
       // handle app.tsx and page entries only
       if (removeExportExprs) {
@@ -218,7 +232,6 @@ function getJsxTransformOptions({
     },
     module: {
       type: 'es6',
-      noInterop: false,
     },
   };
   if (enableEnv) {

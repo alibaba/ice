@@ -47,6 +47,7 @@ function getCompilerPlugins(rootDir: string, config: Config, compiler: Compiler,
     polyfill,
     enableEnv,
     getRoutesFile,
+    serverComponent,
   } = config;
   const compilerPlugins = [];
 
@@ -71,6 +72,8 @@ function getCompilerPlugins(rootDir: string, config: Config, compiler: Compiler,
       polyfill,
       enableEnv,
       getRoutesFile,
+      serverComponent,
+      isServer: true,
     }));
   }
 

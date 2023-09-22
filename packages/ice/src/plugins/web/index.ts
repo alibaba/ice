@@ -45,6 +45,7 @@ const plugin: Plugin = () => ({
       swcOptions: {
         removeExportExprs,
       },
+      serverComponent: userConfig.rsc,
       ...(userConfig.rsc ? {
         alias: createRSCAliases(),
         // TODO: temporary solution for rsc.
