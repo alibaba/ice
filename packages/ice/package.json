@@ -10,6 +10,19 @@
     "./analyze": "./esm/service/analyze.js",
     "./service": "./esm/createService.js"
   },
+  "typesVersions": {
+    "*": {
+      "types": [
+        "./esm/types/index.d.ts"
+      ],
+      "analyze": [
+        "./esm/service/analyze.d.ts"
+      ],
+      "service": [
+        "./esm/createService.d.ts"
+      ]
+    }
+  },
   "bin": {
     "ice": "./bin/ice-cli.mjs"
   },
