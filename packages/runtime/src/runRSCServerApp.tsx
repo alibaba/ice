@@ -83,6 +83,7 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
     moduleMap[id]['*'] = {
       ...clientManifest[key],
       chunks: [],
+      async: false,
     };
   }
 
