@@ -275,7 +275,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     enableRoutes: true,
     entryCode,
     jsOutput: distType.includes('javascript'),
-    hasDocument: fse.existsSync(path.join(rootDir, 'src/document.tsx')),
+    hasDocument: fse.existsSync(path.join(rootDir, 'src/document.tsx')) || fse.existsSync(path.join(rootDir, 'src/document.jsx')),
     dataLoader: userConfig.dataLoader,
     routeImports,
     routeDefinition,
