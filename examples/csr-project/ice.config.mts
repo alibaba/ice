@@ -10,6 +10,10 @@ export default defineConfig(() => ({
     }
     return webpackConfig;
   },
+  server: {
+    onDemand: true,
+    format: 'esm',
+  },
   dropLogLevel: 'warn',
   plugins: [
     auth(),
