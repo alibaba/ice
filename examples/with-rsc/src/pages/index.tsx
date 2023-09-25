@@ -1,4 +1,3 @@
-import { useAppContext } from 'ice';
 import { Suspense } from 'react';
 import styles from './index.module.css';
 // import EditButton from '@/components/EditButton.client';

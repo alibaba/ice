@@ -1,7 +1,9 @@
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 // import { renderToPipeableStream } from 'react-server-dom-webpack/server.node';
+// @ts-ignore
 import { use } from 'react';
+// @ts-ignore
 import * as EdgeServer from 'react-dom/server.edge';
 import { createFromReadableStream } from 'react-server-dom-webpack/client.edge';
 import { renderToReadableStream } from 'react-server-dom-webpack/server.edge';
@@ -20,8 +22,6 @@ import type {
   RouteModules,
   ServerRenderOptions as RenderOptions,
 } from './types.js';
-// @ts-ignore
-// @ts-ignore
 
 export async function runRSCServerApp(serverContext: ServerContext, renderOptions: RenderOptions) {
   const { req, res } = serverContext;
