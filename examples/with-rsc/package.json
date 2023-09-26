@@ -1,5 +1,5 @@
 {
-  "name": "with-server-component",
+  "name": "@examples/with-server-component",
   "version": "1.0.0",
   "scripts": {
     "start": "ice start",
