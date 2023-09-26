@@ -1,4 +1,4 @@
-import { afterAll, expect, it, describe } from 'vitest';
+import { expect, it, describe } from 'vitest';
 import getRoutePaths from '../src/utils/getRoutePaths.js';
 
 describe('getRoutePaths', () => {
