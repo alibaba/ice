@@ -1,9 +1,11 @@
-import { Outlet } from 'ice';
+import { Outlet, useConfig } from 'ice';
 
 export default () => {
+  const config = useConfig();
   return (
     <div>
       <h1>Layout</h1>
+      <h2>{config.title}</h2>
       <Outlet />
     </div>
   );
