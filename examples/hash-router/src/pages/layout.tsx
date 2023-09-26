@@ -5,7 +5,7 @@ export default () => {
   return (
     <div>
       <h1>Layout</h1>
-      <h2>{config.title}</h2>
+      <h3>{config.title}</h3>
       <Outlet />
     </div>
   );
