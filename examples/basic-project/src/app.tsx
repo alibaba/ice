@@ -1,4 +1,4 @@
-import { defineAppConfig, defineDataLoader } from 'ice';
+import { defineAppConfig, defineDataLoader, defineRunApp } from 'ice';
 import { isWeb, isNode } from '@uni/env';
 
 if (process.env.ICE_CORE_ERROR_BOUNDARY === 'true') {
@@ -43,6 +43,6 @@ export const dataLoader = defineDataLoader(() => {
   });
 });
 
-export const runApp = (render) => {
+export const runApp = defineRunApp((render) => {
   render();
-};
+});
