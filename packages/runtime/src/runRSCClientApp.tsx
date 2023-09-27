@@ -1,13 +1,15 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import pkg from 'react-server-dom-webpack/client';
+import type { AppConfig } from './types.js';
 
 // @ts-ignore
 const { Suspense, use, useState, createContext, useContext, startTransition } = React;
 const { createFromFetch } = pkg;
 
-export async function runRSCClientApp() {
-  const container = document.getElementById('app');
+export async function runRSCClientApp(appConfig: AppConfig) {
+  const rootId = appConfig.app.rootId || 'app';
+  const container = document.getElementById(rootId);
   const root = ReactDOM.createRoot(container);
   root.render(<Root />);
 }
@@ -23,7 +25,7 @@ const initialCache = new Map();
 
 function Router() {
   const [cache, setCache] = useState(initialCache);
-  const [location, setLocation] = useState(window.location.href);
+  const [location] = useState(window.location.href);
 
   let content = cache.get(location);
   if (!content) {
