@@ -7,7 +7,7 @@ import type { AppConfig } from './types.js';
 const { Suspense, use, useState, createContext, useContext, startTransition } = React;
 const { createFromFetch } = pkg;
 
-export async function runRSCClientApp(appConfig) {
+export async function runRSCClientApp(appConfig: AppConfig) {
   const rootId = appConfig.app.rootId || 'app';
   const container = document.getElementById(rootId);
   const root = ReactDOM.createRoot(container);
