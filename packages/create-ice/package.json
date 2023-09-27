@@ -1,6 +1,6 @@
 {
   "name": "create-ice",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "npm init ice",
   "type": "module",
   "main": "./esm/index.mjs",
@@ -20,7 +20,7 @@
     "npm": ">=3.0.0"
   },
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsc"
   },
   "dependencies": {

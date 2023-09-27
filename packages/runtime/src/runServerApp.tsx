@@ -376,7 +376,9 @@ async function renderServerEntry(
     <AppContextProvider value={appContext}>
       <AppRuntimeProvider>
         <DocumentContextProvider value={documentContext}>
-          <Document pagePath={routePath} />
+          {
+            Document && <Document pagePath={routePath} />
+          }
         </DocumentContextProvider>
       </AppRuntimeProvider>
     </AppContextProvider>
@@ -419,7 +421,7 @@ function renderDocument(options: RenderDocumentOptions): Response {
   const {
     matches,
     renderOptions,
-    routePath,
+    routePath = '',
     downgrade,
     routes,
     documentData,
@@ -470,7 +472,9 @@ function renderDocument(options: RenderDocumentOptions): Response {
   const htmlStr = ReactDOMServer.renderToString(
     <AppContextProvider value={appContext}>
       <DocumentContextProvider value={documentContext}>
-        <Document pagePath={routePath} />
+        {
+          Document && <Document pagePath={routePath} />
+        }
       </DocumentContextProvider>
     </AppContextProvider>,
   );

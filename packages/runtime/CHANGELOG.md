@@ -1,5 +1,15 @@
 # @ice/runtime
 
+## 1.2.9
+
+### Patch Changes
+
+- b8b1d5e4: fix: sourceMap url in prod files but not publish with sourceMap file
+- 68f19eae: fix: should not import runtime module and routes when csr
+- Updated dependencies [b8b1d5e4]
+  - @ice/jsx-runtime@0.2.2
+  - @ice/shared@1.0.2
+
 ## 1.2.8
 
 ### Patch Changes

@@ -1,7 +1,5 @@
-import { useSuspenseData, withSuspense } from 'ice';
-
-function Comments() {
-  const comments = useSuspenseData(getData);
+async function Comments() {
+  const comments = await getData();
 
   console.log('Render: Comments');
 
@@ -16,7 +14,7 @@ function Comments() {
   );
 }
 
-export default withSuspense(Comments);
+export default Comments;
 
 const fakeData = [
   "Wait, it doesn't wait for React to load?",

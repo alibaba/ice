@@ -5,6 +5,7 @@ import { Context } from 'build-scripts';
 import type { CommandArgs, CommandName } from 'build-scripts';
 import type { Config } from '@ice/shared-config/types';
 import type { AppConfig } from '@ice/runtime/types';
+import fse from 'fs-extra';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type {
   DeclarationData,
@@ -33,10 +34,11 @@ import { logger, createLogger } from './utils/logger.js';
 import ServerRunner from './service/ServerRunner.js';
 import RouteManifest from './utils/routeManifest.js';
 import dynamicImport from './utils/dynamicImport.js';
-import mergeTaskConfig from './utils/mergeTaskConfig.js';
+import mergeTaskConfig, { mergeConfig } from './utils/mergeTaskConfig.js';
 import addPolyfills from './utils/runtimePolyfill.js';
 import webpackBundler from './bundler/webpack/index.js';
 import rspackBundler from './bundler/rspack/index.js';
+import getDefaultTaskConfig from './plugins/task.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -163,6 +165,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     generatorAPI.addExport(exports);
   });
   const routeManifest = new RouteManifest();
+  // Merge task config with default config, so developer should not care about the config built-in of framework.
+  const defaultTaskConfig = getDefaultTaskConfig({ rootDir, command });
   const ctx = new Context<Config, ExtendsPluginAPI>({
     rootDir,
     command,
@@ -186,6 +190,10 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       serverCompileTask,
       dataCache,
       createLogger,
+      // Override registerTask to merge default config.
+      registerTask: (target: string, config: Partial<Config>) => {
+        return ctx.registerTask(target, mergeConfig(defaultTaskConfig, config));
+      },
     },
   });
   // Load .env before resolve user config, so we can access env variables defined in .env files.
@@ -267,6 +275,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     enableRoutes: true,
     entryCode,
     jsOutput: distType.includes('javascript'),
+    hasDocument: fse.existsSync(path.join(rootDir, 'src/document.tsx')),
     dataLoader: userConfig.dataLoader,
     routeImports,
     routeDefinition,

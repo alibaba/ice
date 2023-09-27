@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-canvas",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Provide canvas render support for ice.js",
   "license": "MIT",
   "type": "module",
@@ -31,16 +31,16 @@
     "@ice/cache-canvas": "workspace:*"
   },
   "devDependencies": {
-    "@ice/app": "^3.2.10",
+    "@ice/app": "^3.3.2",
     "webpack": "^5.88.0",
-    "@ice/runtime": "^1.2.5"
+    "@ice/runtime": "^1.2.9"
   },
   "repository": {
     "type": "http",
     "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-canvas"
   },
   "scripts": {
-    "watch": "tsc -w",
+    "watch": "tsc -w --sourceMap",
     "build": "tsc"
   },
   "publishConfig": {

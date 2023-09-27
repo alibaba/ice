@@ -10,7 +10,7 @@ async function bundler(
   context: Context,
   options: BundlerOptions,
 ) {
-  const { command, applyHook, commandArgs } = context;
+  const { command } = context;
   const {
     taskConfigs,
     hooksAPI,
@@ -18,12 +18,6 @@ async function bundler(
     appConfig,
   } = options;
   const rspackConfigs = await getConfig(context, options);
-  await applyHook(`before.${command}.run`, {
-    commandArgs,
-    taskConfigs,
-    rspackConfigs,
-    ...hooksAPI,
-  });
 
   let compiler: MultiCompiler;
   let devServer: RspackDevServer;

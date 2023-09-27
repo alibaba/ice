@@ -8,6 +8,7 @@ const __dirname = fileURLToPath(path.dirname(import.meta.url));
 describe('defineJestConfig', () => {
   const builtInAlias = [
     '^ice',
+    '^ice/types',
     '^@/(.*)',
     '^webpack/hot',
     '^regenerator-runtime',

@@ -14,24 +14,33 @@ export const Storage = {
         });
 
         if (canIUse) {
-          const res = window.__megability_bridge__.syncCall('userKVStorage', 'setItem', {
-            key,
-            value,
-            bizID,
+          return new Promise((resolve, reject) => {
+            // The base64 of canvans may be too large, and the syncCall will block the thread.
+            window.__megability_bridge__.asyncCall('userKVStorage', 'setItem', {
+              key,
+              value,
+              bizID,
+            }, (res) => {
+              if (res && res.statusCode <= 100) {
+                resolve(res);
+              } else {
+                reject();
+              }
+            });
           });
-          if (res && res.statusCode === 0) {
-            return;
-          }
         }
       }
 
-      if (typeof window !== 'undefined' && window.localStorage) {
-        return localStorage.setItem(key, value);
-      }
-
-      return (cache[key] = value);
+      return new Promise((resolve, reject) => {
+        if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+          resolve(localStorage.setItem(key, value));
+        } else {
+          reject(new Error('localStorage is undefined.'));
+        }
+      });
     } catch (e) {
       console.error('Storage setItem error:', e);
+      return Promise.reject(e);
     }
   },
   getItem: (key, { bizID = '' }) => {

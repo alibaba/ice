@@ -13,8 +13,14 @@ async function build(
   context: Context,
   options: BundlerOptions,
 ) {
-  const { rootDir, extendsPluginAPI, applyHook } = context;
+  const { rootDir, extendsPluginAPI, applyHook, commandArgs } = context;
   const { hooksAPI, taskConfigs, appConfig, userConfig, routeManifest } = options;
+  await applyHook('before.build.run', {
+    commandArgs,
+    taskConfigs,
+    webpackConfigs,
+    ...hooksAPI,
+  });
   // Run webpack compiler.
   const { stats, isSuccessful, messages } = await new Promise<CompileResults>((resolve, reject) => {
     let messages: { errors: string[]; warnings: string[] };
@@ -52,7 +58,10 @@ async function build(
   if (isSuccessful) {
     // Generate html when SSG.
     const outputDir = webpackConfigs[0].output.path;
-    const { serverEntry } = await extendsPluginAPI.serverCompileTask.get() || {};
+    const { serverEntry, error } = await extendsPluginAPI.serverCompileTask.get() || {};
+    if (error) {
+      throw new Error('Build failed, please check the error message.');
+    }
     const outputPaths = await getOutputPaths({
       rootDir,
       serverEntry,

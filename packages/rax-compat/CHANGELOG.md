@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.2.8
+
+### Patch Changes
+
+- b8b1d5e4: fix: sourceMap url in prod files but not publish with sourceMap file
+- Updated dependencies [b8b1d5e4]
+  - @ice/appear@0.2.1
+
+## 0.2.7
+
+### Patch Changes
+
+- b70bba1e: 1. update @swc/helpers version to latest. 2. relplace create react class with simple impl.
+
 ## 0.2.6
 
 ### Patch Changes
