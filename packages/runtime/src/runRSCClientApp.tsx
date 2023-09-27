@@ -21,7 +21,6 @@ export async function runRSCClientApp(appConfig: AppConfig) {
     fetch(rscPath),
   );
 
-  debugger;
   const rootId = appConfig.app.rootId || 'app';
   const container = document.getElementById(rootId);
   const root = ReactDOM.createRoot(container);
