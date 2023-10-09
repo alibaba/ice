@@ -1,3 +1,4 @@
+import { createElement } from 'react';
 import {
   Link,
   Outlet,
@@ -90,6 +91,8 @@ function useDocumentData() {
 export const unstable_useDocumentData = useDocumentData;
 
 export {
+  // Export createElement while `@ice/runtime` is configured as `importSource` in swc jsx transform options.
+  createElement,
   getAppConfig,
   defineAppConfig,
   Runtime,
