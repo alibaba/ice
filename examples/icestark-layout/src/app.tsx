@@ -8,12 +8,12 @@ export const icestark = defineFrameworkConfig(() => ({
     path: '/seller',
     title: '商家平台',
     loadScriptMode: 'import',
-    entry: 'https://iceworks.oss-cn-hangzhou.aliyuncs.com/icestark/child-seller-ice-vite/index.html',
+    entry: '/page-seller/index.html',
   }, {
     path: '/waiter',
     title: '小二平台',
     loadScriptMode: 'import',
-    entry: 'https://iceworks.oss-cn-hangzhou.aliyuncs.com/icestark/child-vue3-vite/index.html',
+    entry: '/page-waiter/index.html',
   }]),
 }));
 
