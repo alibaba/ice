@@ -17,7 +17,10 @@
     "./types": "./esm/types.js",
     "./package.json": "./package.json",
     "./polyfills/signal": "./esm/polyfills/signal.js",
-    "./polyfills/abortcontroller": "./esm/polyfills/abortcontroller.js"
+    "./polyfills/abortcontroller": "./esm/polyfills/abortcontroller.js",
+    "./react": "./esm/react.js",
+    "./react/jsx-runtime": "./esm/jsx-runtime.js",
+    "./react/jsx-dev-runtime": "./esm/jsx-dev-runtime.js"
   },
   "files": [
     "esm",
