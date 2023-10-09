@@ -97,9 +97,13 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
         type: false,
       });
 
+      // Must create a variable to store the original compilationConfig.
+      const originalSwcCompilationConfig = typeof config.swcOptions?.compilationConfig === 'object'
+        ? cloneDeep(config.swcOptions?.compilationConfig || {})
+        : {};
       const compilationConfigFunc = typeof config.swcOptions?.compilationConfig === 'function'
         ? config.swcOptions?.compilationConfig
-        : () => config.swcOptions?.compilationConfig;
+        : () => originalSwcCompilationConfig;
 
       // Reset jsc.transform.react.runtime to classic.
       config.swcOptions = merge(config.swcOptions || {}, {
