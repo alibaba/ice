@@ -2,4 +2,4 @@
 '@ice/plugin-fusion': patch
 ---
 
-fix: compatible with win32 when config themePackage
+chore: add warning when options of plugin is not correct
