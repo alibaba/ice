@@ -10,6 +10,10 @@ interface PluginOptions {
 
 const require = createRequire(import.meta.url);
 
+function formatPath(pathStr: string): string {
+  return process.platform === 'win32' ? pathStr.split(path.sep).join('/') : pathStr;
+}
+
 function getVariablesPath({
   packageName,
   filename = 'variables.scss',
@@ -24,7 +28,7 @@ function getVariablesPath({
       console.log('[ERROR]', `fail to resolve ${variables}`);
     }
   }
-  return filePath;
+  return formatPath(filePath);
 }
 
 function importIcon(iconPath: string, cssPrefix: string) {
@@ -34,7 +38,7 @@ function importIcon(iconPath: string, cssPrefix: string) {
     enforce: 'pre',
     transformInclude(id: string) {
       // Only transform source code and icon file.
-      return (id.match(/\.(js|jsx|ts|tsx)$/) && !id.match(/node_modules/)) || iconPath === id;
+      return (id.match(/\.(js|jsx|ts|tsx)$/) && !id.match(/node_modules/)) || iconPath === formatPath(id);
     },
     async transform(code: string, id: string, options: { isServer: boolean }) {
       const { isServer } = options;
@@ -46,7 +50,7 @@ function importIcon(iconPath: string, cssPrefix: string) {
         }
         if (id === entryFile) {
           return `import '${iconPath}';\n${code}`;
-        } else if (id === iconPath) {
+        } else if (formatPath(id) === iconPath) {
           // Default cssPrefix for icon.scss.
           return `$css-prefix: '${cssPrefix}';\n${code}`;
         }
