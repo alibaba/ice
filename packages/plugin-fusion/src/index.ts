@@ -1,4 +1,5 @@
 import { createRequire } from 'module';
+import * as path from 'path';
 import type { Plugin } from '@ice/app/types';
 import styleImportPlugin from '@ice/style-import';
 
@@ -61,7 +62,7 @@ function importIcon(iconPath: string, cssPrefix: string) {
 
 const plugin: Plugin<PluginOptions> = (options = {}) => ({
   name: '@ice/plugin-fusion',
-  setup: ({ onGetConfig }) => {
+  setup: ({ onGetConfig, createLogger }) => {
     const { theme, themePackage, importStyle } = options;
     if (importStyle) {
       onGetConfig((config) => {
@@ -105,6 +106,10 @@ const plugin: Plugin<PluginOptions> = (options = {}) => ({
               });
               if (themeFile) {
                 additionalContent.push(`@import '${themePackage}/variables.scss';`);
+                if (importStyle === true) {
+                  createLogger('Plugin Fusion').warn('themePackage is configured, please configurate importStyle as "sass", ' +
+                    'ohterwise, themes defined by sass variables will not take effect.');
+                }
               }
             }
             let themeConfig = [];
