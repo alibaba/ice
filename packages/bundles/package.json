@@ -28,7 +28,7 @@
     "events": "3.3.0",
     "jest-worker": "27.5.1",
     "less": "4.1.2",
-    "postcss": "8.4.12",
+    "postcss": "8.4.31",
     "sass": "1.50.0",
     "react-refresh": "0.14.0",
     "core-js-pure": "^3.8.1",
