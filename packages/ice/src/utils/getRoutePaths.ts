@@ -9,12 +9,12 @@ import formatPath from './formatPath.js';
  */
 export default function getRoutePaths(routes: NestedRouteManifest[], parentPath = ''): string[] {
   let pathList = [];
-
   routes.forEach(route => {
+    const routePath = formatPath(path.join('/', parentPath.replace(/^\//, ''), route.path || ''));
     if (route.children) {
-      pathList = pathList.concat(getRoutePaths(route.children, route.path));
+      pathList = pathList.concat(getRoutePaths(route.children, routePath));
     } else {
-      pathList.push(formatPath(path.join('/', parentPath, route.path || '')));
+      pathList.push(routePath);
     }
   });
 
