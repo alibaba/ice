@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.1/1.3.2
+
+- [fix] using document.visibilityState to indicate the app is showing
+
 ## 1.3.0
 
 - [feat] support unhandledRejection event in miniapp
