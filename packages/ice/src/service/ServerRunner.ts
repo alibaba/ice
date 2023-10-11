@@ -72,7 +72,7 @@ async function transformJsxRuntime(source: string) {
     }
     // JSX runtime is added after swc plugins
     // use es-module-lexer to replace the import statement.
-    if (imp.n === '@ice/runtime/jsx-dev-runtime') {
+    if (imp.n === '@ice/runtime/jsx-dev-runtime' || imp.n === '@ice/runtime/react/jsx-dev-runtime') {
       str().overwrite(
         imp.ss,
         imp.se,
