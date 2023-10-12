@@ -100,10 +100,10 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
       // TODO: optimize the logic, support deep merge in plugin API.
       // Must create a variable to store the original compilationConfig.
       const originalSwcCompilationConfig = typeof config.swcOptions?.compilationConfig === 'object'
-        ? cloneDeep(config.swcOptions?.compilationConfig || {})
+        ? cloneDeep(config.swcOptions.compilationConfig)
         : {};
       const originalSwcCompilationConfigFunc = typeof config.swcOptions?.compilationConfig === 'function'
-        ? config.swcOptions.compilationConfig
+        ? cloneDeep(config.swcOptions.compilationConfig)
         : () => originalSwcCompilationConfig;
 
       // Reset jsc.transform.react.runtime to classic.
@@ -136,6 +136,7 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
           }
 
           return merge(
+            {},
             originalSwcCompilationConfigFunc(source, id),
             swcCompilationConfig,
           );
