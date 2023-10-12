@@ -97,6 +97,7 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
         type: false,
       });
 
+      // TODO: optimize the logic, support deep merge in plugin API.
       // Must create a variable to store the original compilationConfig.
       const originalSwcCompilationConfig = typeof config.swcOptions?.compilationConfig === 'object'
         ? cloneDeep(config.swcOptions?.compilationConfig || {})
