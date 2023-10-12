@@ -7,7 +7,7 @@ A transform function for automatic import style.
 ```js
 import transform from '@ice/style-import';
 
-transfrom(`import { Button } from 'antd';
+transform(`import { Button } from 'antd';
 ReactDOM.render(<Button>xxxx</Button>);`, [{
   libraryName: 'antd',
   style: (importSpecifiers) =>
