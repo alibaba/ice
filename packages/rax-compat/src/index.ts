@@ -17,6 +17,8 @@ import { Component, PureComponent, memo } from './component.js';
 import { createContext } from './context.js';
 import shared from './shared.js';
 
+export { default as PropTypes } from './prop-types.js';
+
 // Mocked version for rax.
 const version = '1.2.2-compat';
 
