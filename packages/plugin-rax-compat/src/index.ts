@@ -102,8 +102,9 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
       const originalSwcCompilationConfig = typeof config.swcOptions?.compilationConfig === 'object'
         ? cloneDeep(config.swcOptions.compilationConfig)
         : {};
+
       const originalSwcCompilationConfigFunc = typeof config.swcOptions?.compilationConfig === 'function'
-        ? cloneDeep(config.swcOptions.compilationConfig)
+        ? config.swcOptions.compilationConfig
         : () => originalSwcCompilationConfig;
 
       // Reset jsc.transform.react.runtime to classic.
