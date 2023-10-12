@@ -1,5 +1,17 @@
 # @ice/runtime
 
+## 1.3.0
+
+### Minor Changes
+
+- 50efd1ee: fix: modify import source
+
+### Patch Changes
+
+- df854102: fix: compatible with query parsing errors caused by ctx.req.url error in the fc environment
+- 4d256e30: fix: update route config when dataLoader is not defined
+- 50efd1ee: fix: export createElement from react
+
 ## 1.2.9
 
 ### Patch Changes
