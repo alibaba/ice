@@ -1,5 +1,6 @@
 import getRspackConfig from '@ice/rspack-config';
 import type { Configuration } from '@rspack/core';
+import type { rspack as Rspack } from '@ice/bundles/esm/rspack.js';
 import type { Config } from '@ice/shared-config/types';
 import { getRouteExportConfig } from '../../service/config.js';
 import {
@@ -16,10 +17,11 @@ import type { BundlerOptions, Context } from '../types.js';
 
 type GetConfig = (
   context: Context,
-  options: BundlerOptions
+  options: BundlerOptions,
+  rspack: typeof Rspack,
 ) => Promise<Configuration[]>;
 
-const getConfig: GetConfig = async (context, options) => {
+const getConfig: GetConfig = async (context, options, rspack) => {
   const {
     taskConfigs,
     spinner,
@@ -73,6 +75,7 @@ const getConfig: GetConfig = async (context, options) => {
     const plugins = getPlugins(config);
     return getRspackConfig({
       rootDir,
+      rspack,
       runtimeTmpDir: RUNTIME_TMP_DIR,
       runtimeDefineVars: {
         [IMPORT_META_TARGET]: JSON.stringify(config.target),

@@ -1,8 +1,9 @@
 import * as path from 'path';
 import { createRequire } from 'module';
 import { compilationPlugin, compileExcludes, getDefineVars } from '@ice/shared-config';
-import type { Config } from '@ice/shared-config/types';
+import type { Config, ModifyWebpackConfig } from '@ice/shared-config/types';
 import type { Configuration } from '@rspack/core';
+import type { rspack as Rspack } from '@ice/bundles/esm/rspack.js';
 import AssetManifest from './plugins/AssetManifest.js';
 import getSplitChunks from './splitChunks.js';
 import getAssetsRule from './assetsRule.js';
@@ -16,6 +17,7 @@ interface GetRspackConfigOptions {
   runtimeDefineVars?: Record<string, any>;
   getRoutesFile?: () => string[];
   localIdentName?: string;
+  rspack: typeof Rspack;
 }
 
 type GetConfig = (
@@ -33,6 +35,7 @@ const getConfig: GetConfig = (options) => {
     runtimeDefineVars,
     getRoutesFile,
     localIdentName,
+    rspack,
   } = options;
 
   const {
@@ -55,6 +58,7 @@ const getConfig: GetConfig = (options) => {
     devServer = {},
     plugins = [],
     middlewares,
+    configureWebpack = [],
   } = taskConfig || {};
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
   const hashKey = hash === true ? 'hash:8' : (hash || '');
@@ -165,7 +169,16 @@ const getConfig: GetConfig = (options) => {
       setupMiddlewares: middlewares,
     },
   };
-  return config;
+  // Compatible with API configureWebpack.
+  const ctx = {
+    ...taskConfig,
+    rootDir,
+    hashKey,
+    enableRpx2Vw,
+    bundler: rspack,
+  };
+  return (configureWebpack as unknown as ModifyWebpackConfig<Configuration, typeof Rspack>[])
+    .reduce((rspackConfig, next) => next(rspackConfig, ctx), config);
 };
 
 
