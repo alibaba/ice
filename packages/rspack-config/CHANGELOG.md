@@ -1,5 +1,14 @@
 # @ice/rspack-config
 
+## 1.0.5
+
+### Patch Changes
+
+- ca14f6d3: fix: compatible with configureWebpack in speedup mode
+- Updated dependencies [ca14f6d3]
+- Updated dependencies [50efd1ee]
+  - @ice/shared-config@1.1.0
+
 ## 1.0.4
 
 ### Patch Changes

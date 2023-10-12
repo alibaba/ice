@@ -1097,10 +1097,10 @@ importers:
     specifiers:
       '@ice/bundles': 0.1.16
       '@ice/route-manifest': 1.2.2
-      '@ice/rspack-config': 1.0.4
-      '@ice/runtime': ^1.2.9
-      '@ice/shared-config': 1.0.4
-      '@ice/webpack-config': 1.1.3
+      '@ice/rspack-config': 1.0.5
+      '@ice/runtime': ^1.3.0
+      '@ice/shared-config': 1.1.0
+      '@ice/webpack-config': 1.1.4
       '@rspack/core': 0.3.0
       '@rspack/dev-server': 0.3.0
       '@swc/helpers': 0.5.1
@@ -1314,7 +1314,7 @@ importers:
 
   packages/plugin-fusion:
     specifiers:
-      '@ice/app': ^3.3.2
+      '@ice/app': ^3.3.4
       '@ice/style-import': ^1.0.1
     dependencies:
       '@ice/style-import': link:../style-import
@@ -1468,7 +1468,7 @@ importers:
     specifiers:
       '@babel/core': ^7.0.0
       '@babel/plugin-proposal-export-default-from': ^7.18.9
-      '@ice/app': ^3.3.2
+      '@ice/app': ^3.3.4
       '@ice/bundles': ^0.1.16
       '@types/lodash-es': ^4.17.7
       babel-plugin-transform-jsx-stylesheet: 1.0.6
@@ -1583,7 +1583,7 @@ importers:
   packages/rspack-config:
     specifiers:
       '@ice/bundles': 0.1.16
-      '@ice/shared-config': 1.0.4
+      '@ice/shared-config': 1.1.0
       '@rspack/core': ^0.3.0
     dependencies:
       '@ice/bundles': link:../bundles
@@ -1672,7 +1672,7 @@ importers:
   packages/webpack-config:
     specifiers:
       '@ice/bundles': 0.1.16
-      '@ice/shared-config': 1.0.4
+      '@ice/shared-config': 1.1.0
       fast-glob: ^3.2.11
       process: ^0.11.10
       webpack: ^5.88.0
