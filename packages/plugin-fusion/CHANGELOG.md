@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.5
+
+### Patch Changes
+
+- 9f455628: fix: compatible with win32 when custom icon file
+- 9f455628: chore: add warning when options of plugin is not correct
+
 ## 1.0.4
 
 ### Patch Changes

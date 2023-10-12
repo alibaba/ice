@@ -143,10 +143,14 @@ export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
   }
 
   if (!dataLoaderConfig) {
-    return () => {
-      return {
+    return async () => {
+      const loaderData = {
         pageConfig: pageConfig ? pageConfig({}) : {},
       };
+      if (import.meta.renderer === 'client') {
+        await updateRoutesConfig(loaderData);
+      }
+      return loaderData;
     };
   }
 

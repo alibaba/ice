@@ -34,6 +34,11 @@ interface InitOptions {
 type ResolveCallback = Parameters<PluginBuild['onResolve']>[1];
 type LoadCallback = Parameters<PluginBuild['onLoad']>[1];
 
+const FALLBACK_LOADERS = {
+  '.json': 'json',
+  '.txt': 'text',
+};
+
 function getPluginLifecycle(plugin: Plugin, compiler: 'onLoad'): [OnResolveOptions, LoadCallback][];
 function getPluginLifecycle(plugin: Plugin, compiler: 'onResolve'): [OnResolveOptions, ResolveCallback][];
 function getPluginLifecycle(plugin: Plugin, hookKey: 'onResolve' | 'onLoad') {
@@ -67,7 +72,7 @@ async function transformJsxRuntime(source: string) {
     }
     // JSX runtime is added after swc plugins
     // use es-module-lexer to replace the import statement.
-    if (imp.n === '@ice/runtime/jsx-dev-runtime') {
+    if (imp.n === '@ice/runtime/jsx-dev-runtime' || imp.n === '@ice/runtime/react/jsx-dev-runtime') {
       str().overwrite(
         imp.ss,
         imp.se,
@@ -263,11 +268,21 @@ class ServerRunner extends Runner {
                     ...args,
                     path: formatedId,
                   });
-
+                  // If res is undefined, it means the plugin does not handle the file, fallback to default handler.
+                  if (!res && FALLBACK_LOADERS[path.extname(formatedId)]) {
+                    res = {
+                      loader: FALLBACK_LOADERS[path.extname(formatedId)],
+                    };
+                  }
                   if (res) {
                     const { contents, loader } = res;
                     if (['json', 'text'].includes(loader)) {
-                      code = `__ice_exports__.default = ${contents || JSON.stringify(await fse.readFile(formatedId, 'utf-8'))}`;
+                      if (contents) {
+                        code = `__ice_exports__.default = ${contents}`;
+                      } else {
+                        const contents = await fse.readFile(formatedId, 'utf-8');
+                        code = `__ice_exports__.default = ${loader === 'text' ? JSON.stringify(contents) : contents}`;
+                      }
                     } else {
                       code = typeof contents === 'string' ? contents : contents.toString();
                     }

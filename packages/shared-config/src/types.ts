@@ -31,7 +31,11 @@ export type MinimizerOptions<T> = PredefinedOptions & InferDefaultType<T>;
 interface ConfigurationCtx<T = typeof webpack> extends Config {
   hashKey: string;
   enableRpx2Vw: boolean;
-  webpack: T;
+  /**
+   * @deprecated Access bundler instance via `ctx.bundler` instead.
+   */
+  webpack?: T;
+  bundler?: T;
   rootDir: string;
 }
 
