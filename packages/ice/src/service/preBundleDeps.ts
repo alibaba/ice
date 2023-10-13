@@ -114,7 +114,7 @@ export default async function preBundleDeps(
       metadata,
     };
   } catch (error) {
-    logger.briefError('Failed to bundle dependencies.');
+    logger.briefError('Failed to bundle dependencies.', flatIdDeps);
     logger.debug(error);
     return {};
   }
