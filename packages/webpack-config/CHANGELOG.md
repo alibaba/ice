@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.1.4
+
+### Patch Changes
+
+- ca14f6d3: fix: compatible with configureWebpack in speedup mode
+- Updated dependencies [ca14f6d3]
+- Updated dependencies [50efd1ee]
+  - @ice/shared-config@1.1.0
+
+## 1.1.3
+
+### Patch Changes
+
+- 78f850fa: feat: support hash only class name for css modules
+- Updated dependencies [78f850fa]
+  - @ice/shared-config@1.0.4
+
 ## 1.1.2
 
 ### Patch Changes

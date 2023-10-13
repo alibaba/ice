@@ -10,7 +10,9 @@ export interface Location {
  */
 export default function getRequestContext(location: Location, serverContext: ServerContext = {}): RequestContext {
   const { pathname, search } = location;
-  const query = parseSearch(search);
+  // Use query form server context first to avoid unnecessary parsing.
+  // @ts-ignore
+  const query = serverContext?.req?.query || parseSearch(search);
 
   const requestContext: RequestContext = {
     ...(serverContext || {}),

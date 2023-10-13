@@ -1,5 +1,21 @@
 # @ice/shared-config
 
+## 1.1.0
+
+### Minor Changes
+
+- 50efd1ee: fix: modify import source
+
+### Patch Changes
+
+- ca14f6d3: fix: compatible with configureWebpack in speedup mode
+
+## 1.0.4
+
+### Patch Changes
+
+- 78f850fa: feat: support hash only class name for css modules
+
 ## 1.0.3
 
 ### Patch Changes

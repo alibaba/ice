@@ -429,6 +429,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     rootDir,
     hashKey,
     webpack,
+    bundler: webpack,
     enableRpx2Vw,
   };
   return [configCss, configAssets, ...(configureWebpack || [])]
