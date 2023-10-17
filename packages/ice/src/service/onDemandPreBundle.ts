@@ -132,7 +132,7 @@ export default async function preBundleDeps(options: PreBundleOptions): Promise<
       rootDir,
     });
   } catch (err) {
-    logger.error('Failed to bundle dependencies.');
+    logger.error('Failed to bundle dependencies.', { [pkgName]: resolveId });
     logger.error(err);
     return {};
   }
