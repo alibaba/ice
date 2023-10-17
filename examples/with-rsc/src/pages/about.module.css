@@ -1,4 +1,4 @@
-.app {
+.about {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -6,23 +6,23 @@
   height: 100vh;
 }
 
-.app > header {
+.about > header {
   display: flex;
   flex-direction: column;
   align-items: center;
 } 
 
-.app > header > img {
+.about > header > img {
   width: 120px;
 }
 
-.app > header > p {
+.about > header > p {
   margin: 20px 0;
   text-align: center;
   font-size: 2.6rem;
 }
 
-.app > main {
+.about > main {
   display: flex;
   flex-direction: column;
   margin: 20px 0 10px;
