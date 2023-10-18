@@ -130,16 +130,16 @@ export class FlightManifestPlugin {
                   .replace(/\[index\]/g, `${i}`)
                   .replace(/\[request\]/g, toPath(dep.userRequest));
 
-                const block = new webpack.AsyncDependenciesBlock(
-                  {
-                    name: chunkName,
-                  },
-                  null,
-                  dep.request,
-                );
-                // @ts-expect-error TODO: add types for ModuleDependency.
-                block.addDependency(dep);
-                module.addBlock(block);
+                // const block = new webpack.AsyncDependenciesBlock(
+                //   {
+                //     name: chunkName,
+                //   },
+                //   null,
+                //   dep.request,
+                // );
+                // // @ts-expect-error TODO: add types for ModuleDependency.
+                // block.addDependency(dep);
+                // module.addBlock(block);
               }
             }
           }
@@ -178,6 +178,7 @@ export class FlightManifestPlugin {
 
         compilation.chunkGroups.forEach((chunkGroup) => {
           const chunkIds = chunkGroup.chunks.map((chunk) => chunk.id);
+
           const recordModule = (id: string | number, module: any) => {
             if (!resolveClientFiles.has(module.resource)) {
               return;
@@ -220,6 +221,7 @@ export class FlightManifestPlugin {
             });
           });
         });
+        console.log(clientManifest);
         const clientOutput = JSON.stringify(clientManifest, null, 2);
         compilation.emitAsset(
           _this.clientManifestFilename,

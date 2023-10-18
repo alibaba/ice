@@ -1,5 +1,5 @@
 import * as path from 'path';
-import _querystring from 'querystring';
+import querystring from 'querystring';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type { Compiler, Compilation } from 'webpack';
 
@@ -59,9 +59,12 @@ export class FlightClientEntryPlugin {
   }
 
   injectClientEntryAndSSRModules({ compiler, compilation, entryName, clientImports }) {
-    const clientLoader = `flight-client-entry-loader?${(0, _querystring.stringify)({
+    // @ts-ignore
+    const clientLoader = `flight-client-entry-loader?${querystring.stringify({
       modules: [...clientImports],
     })}!`;
+
+    console.log(clientLoader);
 
     const clientComponentEntryDep = webpack.EntryPlugin.createDependency(clientLoader, {
       name: `rsc@${entryName}`,
@@ -82,7 +85,7 @@ export class FlightClientEntryPlugin {
     // entryModule.addBlock(block);
 
     return new Promise<void>((resolve, reject) => {
-      compilation.addEntry(compiler.context, clientComponentEntryDep, { name: `rsc@${entryName}`, import: clientLoader }, (err) => {
+      compilation.addEntry(compiler.context, clientComponentEntryDep, { name: `rsc@${entryName}`, dependOn: ['main'] }, (err) => {
         if (err) {
           console.error(err);
           reject(err);
