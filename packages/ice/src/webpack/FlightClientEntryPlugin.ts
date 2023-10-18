@@ -1,5 +1,5 @@
 import * as path from 'path';
-import querystring from 'querystring';
+import { stringify } from 'querystring';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type { Compiler, Compilation } from 'webpack';
 
@@ -16,133 +16,110 @@ export class FlightClientEntryPlugin {
   }
 
   async createClientEntries(compiler: Compiler, compilation: Compilation) {
-    const addClientEntryAndSSRModulesList = [];
+    const addClientEntryList = [];
 
     for (const [name, entry] of compilation.entries.entries()) {
       if (name === 'main') {
         continue;
       }
 
-      const clientEntriesToInject = new Set();
+      const entryDependency = entry.dependencies?.[0];
+      if (!entryDependency) {
+        continue;
+      }
 
-      let _entry_dependencies;
-      const entryDependency = (_entry_dependencies = entry.dependencies) == null ? void 0 : _entry_dependencies[0];
-      let entryModule = compilation.moduleGraph.getResolvedModule(entryDependency);
-
+      const entryModule = compilation.moduleGraph.getResolvedModule(entryDependency);
       for (const connection of compilation.moduleGraph.getOutgoingConnections(entryModule)) {
-        // @ts-ignore
-        const entryRequest = connection.dependency.request;
+        const entryRequest = (connection.dependency as any).request;
 
-        const result = this.collectComponentInfoFromServerEntryDependency({
-          entryRequest,
+        if (entryRequest.indexOf('@/pages/') === -1) continue;
+
+        const { clientComponentImports, CSSImports } = this.collectComponentInfoFromDependency({
           compilation,
           resolvedModule: connection.resolvedModule,
         });
 
-        if (result && result.length > 0) {
-          result.forEach((value) => clientEntriesToInject.add(value));
-        }
-      }
+        if (clientComponentImports.length || CSSImports.length) {
+          console.log(name, entryRequest, clientComponentImports, CSSImports);
 
-      if (clientEntriesToInject.size) {
-        const injected = this.injectClientEntryAndSSRModules({
-          compiler,
-          compilation,
-          entryName: name,
-          clientImports: clientEntriesToInject,
-        });
-        addClientEntryAndSSRModulesList.push(injected);
+          const injected = this.injectClientEntry({
+            compiler,
+            compilation,
+            bundlePath: entryRequest,
+            clientImports: [
+              ...clientComponentImports,
+              ...CSSImports,
+            ],
+          });
+
+          addClientEntryList.push(injected);
+        }
       }
     }
 
-    await Promise.all(addClientEntryAndSSRModulesList);
+    await Promise.all(addClientEntryList);
   }
 
-  injectClientEntryAndSSRModules({ compiler, compilation, entryName, clientImports }) {
-    // @ts-ignore
-    const clientLoader = `flight-client-entry-loader?${querystring.stringify({
-      modules: [...clientImports],
+  injectClientEntry({ compiler, compilation, bundlePath, clientImports }) {
+    const clientLoader = `flight-client-entry-loader?${stringify({
+      modules: clientImports,
     })}!`;
 
-    console.log(clientLoader);
-
+    const name = `rsc${bundlePath}`;
     const clientComponentEntryDep = webpack.EntryPlugin.createDependency(clientLoader, {
-      name: `rsc@${entryName}`,
+      name,
     });
 
-    // const block = new webpack.AsyncDependenciesBlock(
-    //   {
-    //     name: 'about_chunk',
-    //   },
-    //   null,
-    //   clientLoader,
-    // );
-    // // @ts-expect-error TODO: add types for ModuleDependency.
-    // block.addDependency(clientLoader);
-
-    // const entry = compilation.entries.get('main');
-    // let entryModule = compilation.moduleGraph.getResolvedModule(entry.dependencies[0]);
-    // entryModule.addBlock(block);
-
     return new Promise<void>((resolve, reject) => {
-      compilation.addEntry(compiler.context, clientComponentEntryDep, { name: `rsc@${entryName}`, dependOn: ['main'] }, (err) => {
+      compilation.addEntry(compiler.context, clientComponentEntryDep, { name, dependOn: ['main'] }, (err) => {
         if (err) {
           console.error(err);
           reject(err);
         }
+
         resolve();
       });
-
-    //   compilation.addModuleTree({
-    //     context: compiler.context,
-    //     dependency: clientComponentEntryDep,
-    // }, (err, module)=>{
-    //     if (err) {
-    //         compilation.hooks.failedEntry.call(clientComponentEntryDep, {}, err);
-    //         return reject(err);
-    //     }
-    //     console.log('after add entry ----');
-    //     console.log(compilation.entries)
-    //     compilation.hooks.succeedEntry.call(clientComponentEntryDep, {}, module);
-    //     return resolve(module);
-    // });
     });
   }
 
-  collectComponentInfoFromServerEntryDependency({ entryRequest, compilation, resolvedModule }) {
+  collectComponentInfoFromDependency({ compilation, resolvedModule }) {
     // Keep track of checked modules to avoid infinite loops with recursive imports.
     const visited = new Set();
     // Info to collect.
-    const result = [];
+    const clientComponentImports = [];
+    const CSSImports = [];
+
     const filterClientComponents = (mod) => {
-        let _mod_resourceResolveData,
-_mod_resourceResolveData1;
-        if (!mod) return;
-        const isCSS = isCSSMod(mod);
-        // We have to always use the resolved request here to make sure the
-        // server and client are using the same module path (required by RSC), as
-        // the server compiler and client compiler have different resolve configs.
-        let modRequest = ((_mod_resourceResolveData = mod.resourceResolveData) == null ? void 0 : _mod_resourceResolveData.path) + ((_mod_resourceResolveData1 = mod.resourceResolveData) == null ? void 0 : _mod_resourceResolveData1.query);
-        // Context modules don't have a resource path, we use the identifier instead.
-        if (mod.constructor.name === 'ContextModule') {
-            modRequest = mod._identifier;
-        }
-        if (!modRequest || visited.has(modRequest)) return;
-        visited.add(modRequest);
-        if (isCSS) {
-          result.push(modRequest);
-        }
-        if (isClientComponentEntryModule(mod)) {
-          result.push(modRequest);
-          return;
-        }
-        compilation.moduleGraph.getOutgoingConnections(mod).forEach((connection) => {
-            filterClientComponents(connection.resolvedModule);
-        });
+      if (!mod) return;
+
+      const modRequest: string | undefined = mod.resourceResolveData?.path + mod.resourceResolveData?.query;
+
+      if (!modRequest || visited.has(modRequest)) return;
+      visited.add(modRequest);
+
+      const isCSS = isCSSMod(mod);
+
+      if (isCSS) {
+        CSSImports.push(modRequest);
+      }
+
+      if (isClientComponentEntryModule(mod)) {
+        clientComponentImports.push(modRequest);
+        return;
+      }
+
+      compilation.moduleGraph.getOutgoingConnections(mod).forEach((connection) => {
+        filterClientComponents(connection.resolvedModule);
+      });
     };
+
     // Traverse the module graph to find all client components.
     filterClientComponents(resolvedModule);
-    return result;
+
+    return {
+      clientComponentImports,
+      CSSImports,
+    };
   }
 }
 

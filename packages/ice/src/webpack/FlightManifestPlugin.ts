@@ -120,6 +120,9 @@ export class FlightManifestPlugin {
           if (!module.resource.includes('react-server-dom-webpack/client.browser')) {
             return;
           }
+
+          console.log(module.resource);
+
           clientFileNameFound = true;
           if (resolvedClientReferences) {
             if (resolvedClientReferences) {
