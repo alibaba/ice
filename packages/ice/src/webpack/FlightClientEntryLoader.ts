@@ -3,18 +3,16 @@ export type CssImports = Record<string, string[]>;
 
 export type FlightClientEntryLoaderOptions = {
   modules: ClientComponentImports;
-  /** This is transmitted as a string to `getOptions` */
-  server: boolean | 'true' | 'false';
 };
 
 export default function transformSource() {
-  let { modules } = this.getOptions();
+  let { modules }: FlightClientEntryLoaderOptions = this.getOptions();
 
   if (!Array.isArray(modules)) {
     modules = modules ? [modules] : [];
   }
 
-  const requests = modules;
+  const requests = modules as string[];
   const code = requests
     .map(
       (request) =>
@@ -22,6 +20,5 @@ export default function transformSource() {
     )
     .join(';\n');
 
-    console.log(code);
   return code;
 }
