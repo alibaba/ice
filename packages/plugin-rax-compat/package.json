@@ -40,7 +40,9 @@
   },
   "scripts": {
     "watch": "tsc -w --sourceMap",
-    "build": "tsc && cp src/rax-compat.d.ts  esm/rax-compat.d.ts"
+    "copy:dts": "cp src/rax-compat.d.ts esm/rax-compat.d.ts",
+    "copy:legacy": "cp src/rax-compat-legacy-exports.ts.template esm/rax-compat-legacy-exports.ts.template",
+    "build": "tsc && npm run copy:dts && npm run copy:legacy"
   },
   "publishConfig": {
     "access": "public"

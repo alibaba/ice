@@ -1,0 +1,22 @@
+export * from 'rax-compat';
+
+const typeChecker = () => {};
+
+export const PropTypes = {
+  array: typeChecker,
+  bool: typeChecker,
+  func: typeChecker,
+  number: typeChecker,
+  object: typeChecker,
+  string: typeChecker,
+  symbol: typeChecker,
+  element: typeChecker,
+  node: typeChecker,
+  any: typeChecker,
+  arrayOf: typeChecker,
+  instanceOf: typeChecker,
+  objectOf: typeChecker,
+  oneOf: typeChecker,
+  oneOfType: typeChecker,
+  shape: typeChecker,
+};
