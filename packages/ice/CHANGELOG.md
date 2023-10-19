@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.3.5
+
+### Patch Changes
+
+- d72753e2: fix: do not prebundle node built-in module
+- 3896cbea: feat: support default document
+
 ## 3.3.4
 
 ### Patch Changes
