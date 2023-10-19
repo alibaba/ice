@@ -22,6 +22,7 @@ async function bundler(
   const { rspack } = await import('@ice/bundles/esm/rspack.js');
   const rspackConfigs = await getConfig(context, options, rspack);
   try {
+    // @ts-ignore
     compiler = rspack(rspackConfigs);
   } catch (error) {
     logger.error('Webpack compile error.');

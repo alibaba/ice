@@ -19,7 +19,7 @@
     "@ice/bundles": "0.1.16"
   },
   "devDependencies": {
-    "@rspack/core": "^0.3.0"
+    "@rspack/core": "0.3.6"
   },
   "scripts": {
     "watch": "tsc -w --sourceMap",
