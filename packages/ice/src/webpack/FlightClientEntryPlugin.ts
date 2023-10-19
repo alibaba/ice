@@ -77,7 +77,7 @@ export class FlightClientEntryPlugin {
             return;
           }
           resolvedClientRefs.forEach(dep => {
-            this.clientFiles.add(dep.request);
+            _this.clientFiles.add(dep.request);
           });
 
           callback();
@@ -86,8 +86,23 @@ export class FlightClientEntryPlugin {
     });
 
     compiler.hooks.finishMake.tapPromise(PLUGIN_NAME, (compilation) =>
-      this.createClientEntries(compiler, compilation),
+      _this.createClientEntries(compiler, compilation),
     );
+
+    compiler.hooks.make.tap(PLUGIN_NAME, (compilation) => {
+      compilation.hooks.processAssets.tap({
+        name: PLUGIN_NAME,
+        stage: webpack.Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
+      }, () => {
+        compilation.chunks.forEach((chunk) => {
+          if (chunk.name === 'route' || chunk.runtime === 'route') {
+            chunk.files.forEach((file) => {
+              delete compilation.assets[file];
+            });
+          }
+        });
+      });
+    });
   }
 
   async createClientEntries(compiler: Compiler, compilation: Compilation) {
@@ -310,8 +325,4 @@ export class FlightClientEntryPlugin {
 const regexCSS = /\.(css|scss|sass)(\?.*)?$/;
 function isCSSMod(mod) {
   return mod.resource && regexCSS.test(mod.resource);
-}
-
-function isClientComponentEntryModule(mod) {
-  return mod.resource && mod.resource.indexOf('.client.tsx') > -1;
 }

@@ -9,13 +9,15 @@ interface Assets {
   getFiles: () => string[];
 }
 
-function filterAssets(assets: Assets): string[] {
+function filterAssets(compilation: Compilation, assets: Assets): string[] {
   return (
     assets
       ?.getFiles()
       .filter((file: string) => {
+        const exists = compilation.assets[file];
         // We don't want to include `.hot-update.js` files into the initial page
-        return /(?<!\.hot-update)\.(js|css)($|\?)/.test(file);
+        const notHotUpdate = exists && /(?<!\.hot-update)\.(js|css)($|\?)/.test(file);
+        return exists && notHotUpdate;
       })
       .map((file: string) => file.replace(/\\/g, '/')) ?? []
   );
@@ -43,19 +45,34 @@ export default class AssetsManifestPlugin {
         assets[asset.sourceFilename] = asset.contenthash;
       }
     }
+
     const entryFiles = [];
     for (const entrypoint of entrypoints) {
       const entryName = entrypoint.name;
-      const mainFiles = filterAssets(entrypoint);
-      entries[entryName] = mainFiles;
-      const jsMainFiles = mainFiles.filter((file) => file.endsWith('.js'));
-      entryFiles.push(jsMainFiles[0]);
-      const chunks = entrypoint?.getChildren();
-      chunks.forEach((chunk) => {
+
+      // Keep only main chunk as entry files.
+      const entryChunk = entrypoint.getEntrypointChunk();
+      const entryFile = entryChunk.files[0];
+      if (entryChunk.runtime === entryChunk.name && compilation.assets[entryFile]) {
+        entryFiles.push(entryFile);
+      } else {
+        continue;
+      }
+
+      const mainFiles = filterAssets(compilation, entrypoint);
+      // Temp files may have been deleted.
+      if (mainFiles.length) {
+        entries[entryName] = mainFiles;
+      } else {
+        continue;
+      }
+
+      const childChunks = entrypoint?.getChildren();
+      childChunks.forEach((chunk) => {
         // Dynamic import missing chunk name, but not output solid assets.
         const chunkName = chunk.name;
         if (chunkName) {
-          pages[chunkName.replace(/^p_/, '')] = filterAssets(chunk);
+          pages[chunkName.replace(/^p_/, '')] = filterAssets(compilation, chunk);
         }
       });
     }
@@ -76,6 +93,7 @@ export default class AssetsManifestPlugin {
     const output = JSON.stringify(manifest, null, 2);
     // Emit asset manifest for server compile.
     compilation.emitAsset(this.fileName, new webpack.sources.RawSource(output));
+
     // Inject assets manifest to entry file.
     entryFiles.forEach((entryFile) => {
       compilation.assets[entryFile] = new webpack.sources.ConcatSource(
