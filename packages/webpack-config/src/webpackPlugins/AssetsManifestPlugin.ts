@@ -50,22 +50,26 @@ export default class AssetsManifestPlugin {
     for (const entrypoint of entrypoints) {
       const entryName = entrypoint.name;
 
-      // Keep only main chunk as entry files.
       const entryChunk = entrypoint.getEntrypointChunk();
-      const entryFile = entryChunk.files[0];
-      if (entryChunk.runtime === entryChunk.name && compilation.assets[entryFile]) {
-        entryFiles.push(entryFile);
-      } else {
+
+      // Keep only main chunk as entry files.
+      if (entryChunk.runtime !== entryChunk.name) {
+        continue;
+      }
+
+      const entryFile = [...entryChunk.files].filter((file) => file.endsWith('.js'))?.[0];
+      // Temp files may have been deleted.
+      if (!compilation.assets[entryFile]) {
         continue;
       }
 
       const mainFiles = filterAssets(compilation, entrypoint);
-      // Temp files may have been deleted.
-      if (mainFiles.length) {
-        entries[entryName] = mainFiles;
-      } else {
+      if (!mainFiles.length) {
         continue;
       }
+
+      entryFiles.push(entryFile);
+      entries[entryName] = mainFiles;
 
       const childChunks = entrypoint?.getChildren();
       childChunks.forEach((chunk) => {
