@@ -101,10 +101,10 @@
     "source-map": "0.8.0-beta.0",
     "find-up": "5.0.0",
     "common-path-prefix": "3.0.0",
-    "react-builtin": "npm:react@18.3.0-canary-dd480ef92-20230822",
-    "react-dom-builtin": "npm:react-dom@18.3.0-canary-dd480ef92-20230822",
-    "react-server-dom-webpack": "18.3.0-canary-dd480ef92-20230822",
-    "scheduler-builtin": "npm:scheduler@0.24.0-canary-dd480ef92-20230822"
+    "react-builtin": "npm:react@18.3.0-canary-9617d39ec-20231018",
+    "react-dom-builtin": "npm:react-dom@18.3.0-canary-9617d39ec-20231018",
+    "react-server-dom-webpack": "18.3.0-canary-9617d39ec-20231018",
+    "scheduler-builtin": "npm:scheduler@0.24.0-canary-9617d39ec-20231018"
   },
   "publishConfig": {
     "access": "public",

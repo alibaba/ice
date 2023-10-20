@@ -1,6 +1,6 @@
 export function createRSCAliases() {
   const alias: Record<string, string> = {
-    react$: '@ice/bundles/compiled/react',
+    react$: '@ice/bundles/compiled/react/react.shared-subset.js',
     'react-dom$': '@ice/bundles/compiled/react-dom',
     'react/jsx-runtime$': '@ice/bundles/compiled/react/jsx-runtime',
     'react/jsx-dev-runtime$': '@ice/bundles/compiled/react/jsx-dev-runtime',

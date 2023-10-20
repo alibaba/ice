@@ -61,6 +61,17 @@ export class FlightManifestPlugin {
 
           let hasRecord = false;
 
+          const chunks: Array<string> = [];
+          chunkGroup.chunks.forEach((c) => {
+            for (const file of c.files) {
+              if (!file.endsWith('.js')) return;
+              if (file.endsWith('.hot-update.js')) return;
+              // @ts-ignore
+              chunks.push(c.id, file);
+              break;
+            }
+          });
+
           const recordModule = (id: string | number, module: any) => {
             // const modId = path.relative(compiler.context, module.resource);
             const modId = module.resource;
@@ -69,7 +80,7 @@ export class FlightManifestPlugin {
 
               clientManifest[modId] = {
                 id,
-                chunks: chunkIds,
+                chunks,
                 name: '*',
               };
               // TODO: If this module ends up split into multiple modules, then
@@ -86,7 +97,6 @@ export class FlightManifestPlugin {
             }
           };
 
-          const chunkIds = chunkGroup.chunks.map((chunk) => chunk.id);
           chunkGroup.chunks.forEach((chunk) => {
             const chunkModules = compilation.chunkGraph.getChunkModulesIterable(chunk);
             [...chunkModules].forEach((module) => {
