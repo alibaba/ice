@@ -72,7 +72,7 @@ export default class AssetsManifestPlugin {
         // Dynamic import missing chunk name, but not output solid assets.
         const chunkName = chunk.name;
         if (chunkName) {
-          pages[chunkName.replace(/^p_/, '')] = filterAssets(compilation, chunk);
+          pages[chunkName.replace(/^p_/, '').replace(/^rsc_/, '')] = filterAssets(compilation, chunk);
         }
       });
     }

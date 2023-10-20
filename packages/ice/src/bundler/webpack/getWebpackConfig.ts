@@ -129,7 +129,9 @@ const getWebpackConfig: GetWebpackConfig = async (context, options) => {
         },
       };
 
-      webpackConfig.plugins.push(new FlightClientEntryPlugin());
+      webpackConfig.plugins.push(new FlightClientEntryPlugin({
+        rootDir,
+      }));
       webpackConfig.plugins.push(new FlightManifestPlugin());
     }
 

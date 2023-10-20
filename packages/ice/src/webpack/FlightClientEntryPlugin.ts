@@ -1,10 +1,15 @@
-import * as path from 'path';
+import { join, isAbsolute, relative, sep } from 'path';
 import { stringify } from 'querystring';
 import { asyncLib, acorn } from '@ice/bundles';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import NullDependency from '@ice/bundles/compiled/webpack/NullDependency.js';
 import ModuleDependency from '@ice/bundles/compiled/webpack/ModuleDependency.js';
 import type { Compiler, Compilation } from 'webpack';
+import { createComponentName } from '@ice/route-manifest';
+
+export function formatPath(pathStr) {
+    return process.platform === 'win32' ? pathStr.split(sep).join('/') : pathStr;
+}
 
 const PLUGIN_NAME = 'FlightClientEntryPlugin';
 
@@ -16,6 +21,7 @@ interface ClientReferenceSearchPath {
 }
 
 interface Options {
+  rootDir: string;
   clientReferences?: ClientReferenceSearchPath[];
 }
 
@@ -35,8 +41,11 @@ class ClientReferenceDependency extends ModuleDependency {
 export class FlightClientEntryPlugin {
   clientReferences: ClientReferenceSearchPath[];
   clientFiles = new Set();
+  pageDir: string;
 
-  constructor(options: Options = {}) {
+  constructor(options: Options) {
+    this.pageDir = join(options.rootDir, 'src', 'pages');
+
     if (options.clientReferences) {
       this.clientReferences = options.clientReferences;
     } else {
@@ -133,7 +142,8 @@ export class FlightClientEntryPlugin {
           const injected = this.injectClientEntry({
             compiler,
             compilation,
-            bundlePath: entryRequest,
+            // @ts-ignore
+            bundlePath: connection.resolvedModule?.resource,
             clientImports: [
               ...clientComponentImports,
               ...CSSImports,
@@ -153,7 +163,8 @@ export class FlightClientEntryPlugin {
       modules: clientImports,
     })}!`;
 
-    const name = `rsc${bundlePath}`;
+    const componentName = createComponentName(formatPath(relative(this.pageDir, bundlePath)));
+    const name = `rsc_${componentName}`;
     const clientComponentEntryDep = webpack.EntryPlugin.createDependency(clientLoader, {
       name,
     });
@@ -272,7 +283,7 @@ export class FlightClientEntryPlugin {
           if (err) return cb(err);
           const clientRefDeps = dependencies.map(dep => {
             // Use userRequest instead of request. request always end with undefined which is wrong.
-            const request = path.join(resolvedDirectory as string, dep.userRequest);
+            const request = join(resolvedDirectory as string, dep.userRequest);
             const clientRefDep = new ClientReferenceDependency(request);
             clientRefDep.userRequest = dep.userRequest;
             return clientRefDep;
