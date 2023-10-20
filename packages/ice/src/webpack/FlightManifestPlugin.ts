@@ -113,13 +113,11 @@ export class FlightManifestPlugin {
                   | number
                   | null;
 
-                if (modId !== null) {
+                if (modId) {
                   recordModule(modId, clientEntryMod);
                 } else {
                   // If this is a concatenation, register each child to the parent ID.
-                  if (
-                    connection.module?.constructor.name === 'ConcatenatedModule'
-                  ) {
+                  if (connection.module?.constructor.name === 'ConcatenatedModule') {
                     const concatenatedMod = connection.module;
                     const concatenatedModId =
                       compilation.chunkGraph.getModuleId(concatenatedMod);
