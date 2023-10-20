@@ -51,15 +51,8 @@ const plugin: Plugin = () => ({
         // TODO: temporary solution for rsc.
         entry: {
           main: [path.join(rootDir, RUNTIME_TMP_DIR, 'rsc.client.tsx')],
-          // 'pages/index': [path.join(rootDir, 'src', 'pages/index.tsx')],
-          // 'aaa': {
-          //   // @ts-ignore
-          //   dependOn: ['main'],
-          //   import: 'flight-client-entry-loader?modules=%2FUsers%2Fshuilan%2FDocuments%2Fwork%2Fbugfix%2Fice%2Fexamples%2Fwith-rsc%2Fsrc%2Fcomponents%2FCounter.client.tsx&modules=%2FUsers%2Fshuilan%2FDocuments%2Fwork%2Fbugfix%2Fice%2Fexamples%2Fwith-rsc%2Fsrc%2Fcomponents%2FRefreshButton.client.tsx&modules=%2FUsers%2Fshuilan%2FDocuments%2Fwork%2Fbugfix%2Fice%2Fexamples%2Fwith-rsc%2Fsrc%2Fcomponents%2FEditButton.client.tsx&modules=%2FUsers%2Fshuilan%2FDocuments%2Fwork%2Fbugfix%2Fice%2Fexamples%2Fwith-rsc%2Fsrc%2Fpages%2Fabout.module.css!'
-          // }
           route: [path.join(rootDir, RUNTIME_TMP_DIR, 'routes.tsx')],
-      },
-      } : {}),
+      } } : {}),
     });
 
     onHook('after.start.compile', async ({ isSuccessful, isFirstCompile, urls, devUrlInfo }) => {
