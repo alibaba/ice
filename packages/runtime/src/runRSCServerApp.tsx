@@ -1,3 +1,4 @@
+import { match } from 'assert';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { renderToPipeableStream } from 'react-server-dom-webpack/server.node';
@@ -26,7 +27,7 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
     renderMode,
     basename,
     serverOnlyBasename,
-    clientManifest,
+    clientManifest: clientManifestMapping,
     assetsManifest,
   } = renderOptions;
 
@@ -60,6 +61,16 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
       {renderMatches(matches, routeModules)}
     </AppContextProvider>
   );
+
+  // Merge client manifest for match route.
+  const clientManifest = {};
+  matches.forEach(match => {
+    const { componentName } = match.route;
+    const manifest = clientManifestMapping[`rsc_${componentName}`];
+    if (manifest) {
+      Object.assign(clientManifest, manifest);
+    }
+  });
 
   const { pipe } = renderToPipeableStream(
     element,

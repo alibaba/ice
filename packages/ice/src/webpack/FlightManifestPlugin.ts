@@ -14,6 +14,18 @@ interface SSRExports {
   [chunkName: string]: { specifier: string; name: string };
 }
 
+interface ClientManifest {
+ [key: string]: {
+  chunks: (string | number)[];
+  id: string | number;
+  name: string;
+};
+}
+
+interface SsrManifest {
+  [key: string]: SSRExports;
+}
+
 export class FlightManifestPlugin {
   clientManifestFilename?: string;
   ssrManifestFilename?: string;
@@ -33,23 +45,28 @@ export class FlightManifestPlugin {
         name: PLUGIN_NAME,
         stage: webpack.Compilation.PROCESS_ASSETS_STAGE_REPORT,
       }, () => {
-        const clientManifest: { [key: string]: {
-          chunks: (string | number)[];
-          id: string | number;
-          name: string;
-        };} = {};
-
-        const ssrManifest: {
-          [key: string]: SSRExports;
+        const clientManifestMapping: {
+          [key: string]: ClientManifest;
+        } = {};
+        const ssrManifestSetMapping: {
+          [key: string]: SsrManifest;
         } = {};
 
         compilation.chunkGroups.forEach((chunkGroup) => {
-          const chunkIds = chunkGroup.chunks.map((chunk) => chunk.id);
+          const chunkGroupName = chunkGroup.name;
+
+          const clientManifest: ClientManifest = {};
+
+          const ssrManifest: SsrManifest = {};
+
+          let hasRecord = false;
 
           const recordModule = (id: string | number, module: any) => {
             // const modId = path.relative(compiler.context, module.resource);
             const modId = module.resource;
             if (modId !== undefined) {
+              hasRecord = true;
+
               clientManifest[modId] = {
                 id,
                 chunks: chunkIds,
@@ -69,6 +86,7 @@ export class FlightManifestPlugin {
             }
           };
 
+          const chunkIds = chunkGroup.chunks.map((chunk) => chunk.id);
           chunkGroup.chunks.forEach((chunk) => {
             const chunkModules = compilation.chunkGraph.getChunkModulesIterable(chunk);
             [...chunkModules].forEach((module) => {
@@ -110,16 +128,22 @@ export class FlightManifestPlugin {
                 }
               }
             });
+
+            // One client component may bundle into serveral chunks, so we need to create manifest for each page.
+            if (hasRecord) {
+              clientManifestMapping[chunkGroupName] = clientManifest;
+              ssrManifestSetMapping[chunkGroupName] = ssrManifest;
+            }
           });
         });
 
-        const clientOutput = JSON.stringify(clientManifest, null, 2);
+        const clientOutput = JSON.stringify(clientManifestMapping, null, 2);
         compilation.emitAsset(
           _this.clientManifestFilename,
           new webpack.sources.RawSource(clientOutput, false),
         );
 
-        const ssrOutput = JSON.stringify(ssrManifest, null, 2);
+        const ssrOutput = JSON.stringify(ssrManifestSetMapping, null, 2);
         compilation.emitAsset(
           _this.ssrManifestFilename,
           new webpack.sources.RawSource(ssrOutput, false),
