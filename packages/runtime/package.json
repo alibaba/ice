@@ -41,7 +41,7 @@
     "@types/react-dom": "^18.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-server-dom-webpack": "canary",
+    "react-server-dom-webpack": "18.3.0-canary-dd480ef92-20230822",
     "regenerator-runtime": "^0.13.9",
     "@remix-run/web-fetch": "^4.3.3"
   },
