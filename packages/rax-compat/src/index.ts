@@ -48,3 +48,29 @@ export {
 
   version,
 };
+
+
+export default {
+  Component,
+  Fragment,
+  PureComponent,
+  createContext,
+  createElement,
+  createRef,
+  forwardRef,
+  memo,
+  render,
+
+  // This is mocked object for rax compatible.
+  shared,
+  useCallback,
+  useContext,
+  useEffect,
+  useImperativeHandle,
+  useLayoutEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+  version,
+};
