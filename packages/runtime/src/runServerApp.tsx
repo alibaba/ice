@@ -239,7 +239,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
   if (renderOptions.documentDataLoader) {
     const { loader } = renderOptions.documentDataLoader;
     if (isFunction(loader)) {
-      documentData = await loader(requestContext);
+      documentData = await loader(requestContext, { documentOnly });
       // @TODO: document should have it's own context, not shared with app.
       appContext.documentData = documentData;
     } else {

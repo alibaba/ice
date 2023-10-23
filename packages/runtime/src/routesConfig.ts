@@ -158,7 +158,8 @@ async function updateAssets(type: string, assets: RouteConfig['links'] | RouteCo
   }));
 
   oldTags.forEach((tag) => {
-    tag.parentNode!.removeChild(tag);
+    // In some parcel case oldTags may be removed by other routes.
+    tag.parentNode?.removeChild(tag);
   });
 }
 

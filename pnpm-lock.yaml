@@ -1499,7 +1499,7 @@ importers:
     specifiers:
       '@babel/core': ^7.0.0
       '@babel/plugin-proposal-export-default-from': ^7.18.9
-      '@ice/app': ^3.3.4
+      '@ice/app': ^3.3.5
       '@ice/bundles': ^0.1.16
       '@types/lodash-es': ^4.17.7
       babel-plugin-transform-jsx-stylesheet: 1.0.6

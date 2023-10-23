@@ -1,5 +1,17 @@
 # @ice/runtime
 
+## 1.3.2
+
+### Patch Changes
+
+- 899c4740: feat: support options when call document dataLoader
+
+## 1.3.1
+
+### Patch Changes
+
+- f144dd63: fix: compatible with tag.parentNode is null when update routes config
+
 ## 1.3.0
 
 ### Minor Changes

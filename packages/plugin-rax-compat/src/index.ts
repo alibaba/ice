@@ -4,7 +4,6 @@ import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 import type { Plugin } from '@ice/app/types';
 import type { RuleSetRule } from 'webpack';
-import consola from 'consola';
 import { merge, cloneDeep } from 'lodash-es';
 import { transformSync } from '@babel/core';
 import styleSheetLoader from './transform-styles.js';
@@ -78,12 +77,19 @@ export interface CompatRaxOptions {
    * @default true
    */
   cssModule?: boolean;
+  /**
+   * Compat for legacy rax version(`v 0.6.x`), add `PropTypes` as exports.
+   *
+   * @default false
+   */
+  legacy?: boolean;
 }
 
 const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
   name: '@ice/plugin-rax-compat',
-  setup: ({ onGetConfig, context, generator }) => {
+  setup: ({ onGetConfig, context, generator, createLogger }) => {
     const { userConfig } = context;
+    const logger = createLogger('plugin-rax-compat');
 
     onGetConfig((config) => {
       // Inject rax-compat type fix in .ice/rax-compat.d.ts
@@ -97,13 +103,30 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
         type: false,
       });
 
+      if (options.legacy) {
+        logger.warn('Legacy mode should only be used for compatibility with rax v0.6.x.');
+
+        const legacyEntryFile = 'rax-compat-legacy-exports.ts';
+
+        // Create .ice/rax-compat-legacy-exports.ts as rax entry in legacy mode.
+        generator.addRenderFile(
+          path.join(__dirname, './', `${legacyEntryFile}.template`),
+          legacyEntryFile,
+          {},
+        );
+
+        // Update alias to use rax-compat-legacy-exports.ts as rax entry.
+        alias.rax = path.join(context.rootDir, '.ice', legacyEntryFile);
+      }
+
       // TODO: optimize the logic, support deep merge in plugin API.
       // Must create a variable to store the original compilationConfig.
       const originalSwcCompilationConfig = typeof config.swcOptions?.compilationConfig === 'object'
-        ? cloneDeep(config.swcOptions?.compilationConfig || {})
+        ? cloneDeep(config.swcOptions.compilationConfig)
         : {};
-      const compilationConfigFunc = typeof config.swcOptions?.compilationConfig === 'function'
-        ? config.swcOptions?.compilationConfig
+
+      const originalSwcCompilationConfigFunc = typeof config.swcOptions?.compilationConfig === 'function'
+        ? config.swcOptions.compilationConfig
         : () => originalSwcCompilationConfig;
 
       // Reset jsc.transform.react.runtime to classic.
@@ -136,8 +159,8 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
           }
 
           return merge(
-            // Clone config object to avoid Maximum call stack size exceeded error.
-            cloneDeep(compilationConfigFunc(source, id)),
+            {},
+            originalSwcCompilationConfigFunc(source, id),
             swcCompilationConfig,
           );
         },
@@ -147,7 +170,7 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
 
       if (options.inlineStyle) {
         if (!warnOnce) {
-          consola.warn('Enabling inline style is not recommended.\n       It is recommended to use CSS modules (as default). Only allow old projects to migrate and use.');
+          logger.warn('Enabling inline style is not recommended.\n       It is recommended to use CSS modules (as default). Only allow old projects to migrate and use.');
           warnOnce = true;
         }
 

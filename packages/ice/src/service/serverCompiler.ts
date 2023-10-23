@@ -2,6 +2,7 @@ import * as path from 'path';
 import { esbuild } from '@ice/bundles';
 import fse from 'fs-extra';
 import fg from 'fast-glob';
+import { isNodeBuiltin } from 'mlly';
 import type { Config } from '@ice/shared-config/types';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import type { TaskConfig } from 'build-scripts';
@@ -320,7 +321,10 @@ async function createPreBundleDepsMetadata(
   function filterPreBundleDeps(deps: Record<string, DepScanData>) {
     const preBundleDepsInfo = {};
     for (const dep in deps) {
-      if (!isExternalBuiltinDep(dep)) {
+      const { name } = deps[dep];
+      // Filter the deps which do not aliased and is node builtin module.
+      const isNodeBuiltinDep = name === dep && isNodeBuiltin(dep);
+      if (!isExternalBuiltinDep(dep) && !isNodeBuiltinDep) {
         preBundleDepsInfo[dep] = deps[dep];
       }
     }

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.9
+
+### Patch Changes
+
+- 4816afb5: support legacy option for legacy rax compat
+- 042b49b1: refactor: remove cloneDeep for performance
+
 ## 0.2.8
 
 ### Patch Changes
