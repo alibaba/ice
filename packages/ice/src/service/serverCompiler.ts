@@ -222,8 +222,9 @@ export function createServerCompiler(options: Options) {
               rootDir,
               mode: dev ? 'development' : 'production',
               fileName,
-              localIdentName: name,
+              localName: name,
               rule: speedup ? 'native' : 'loader',
+              localIdentName: task.config.cssModules?.localIdentName,
             });
           },
         }),

@@ -114,6 +114,7 @@ function renderDocument(requestContext, renderOptions, appContext, matches) {
   );
 
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  res.send(`<!DOCTYPE html>${htmlStr}`);
+  res.write(`<!DOCTYPE html>${htmlStr}`);
+  res.end();
 }
 

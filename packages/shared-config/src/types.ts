@@ -31,7 +31,11 @@ export type MinimizerOptions<T> = PredefinedOptions & InferDefaultType<T>;
 interface ConfigurationCtx<T = typeof webpack> extends Config {
   hashKey: string;
   enableRpx2Vw: boolean;
-  webpack: T;
+  /**
+   * @deprecated Access bundler instance via `ctx.bundler` instead.
+   */
+  webpack?: T;
+  bundler?: T;
   rootDir: string;
 }
 
@@ -180,6 +184,11 @@ export interface Config {
   cssChunkFilename?: string;
 
   postcss?: ProcessOptions & { plugins?: (string | [string, Record<string, any>?])[] };
+
+  cssModules?: {
+    localIdentName?: string;
+  };
+
   enableCopyPlugin?: boolean;
 
   enableRpx2Vw?: boolean;

@@ -1,5 +1,38 @@
 # Changelog
 
+## 3.3.4
+
+### Patch Changes
+
+- ca14f6d3: fix: compatible with configureWebpack in speedup mode
+- 244bb17f: add typesVersions for export fields support
+- 6f18c3db: fix: deal with json file when use on-demand compile
+- 1de19371: feat: add type definition of runApp
+- 7924f2d1: fix: return render root
+- 93e868d3: fix: hasDocument should check jsx
+- aa29b37b: fix: get flatten routes which nested level more than 3
+- Updated dependencies [ca14f6d3]
+- Updated dependencies [df854102]
+- Updated dependencies [50efd1ee]
+- Updated dependencies [4d256e30]
+- Updated dependencies [50efd1ee]
+  - @ice/webpack-config@1.1.4
+  - @ice/rspack-config@1.0.5
+  - @ice/shared-config@1.1.0
+  - @ice/runtime@1.3.0
+
+## 3.3.3
+
+### Patch Changes
+
+- c3a9c20a: chore: modify output
+- 82702258: feat: compat no document
+- 78f850fa: feat: support hash only class name for css modules
+- Updated dependencies [78f850fa]
+  - @ice/webpack-config@1.1.3
+  - @ice/shared-config@1.0.4
+  - @ice/rspack-config@1.0.4
+
 ## 3.3.2
 
 ### Patch Changes

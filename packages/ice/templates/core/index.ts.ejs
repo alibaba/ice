@@ -1,7 +1,7 @@
 <% if (globalStyle) {-%>
 import '<%= globalStyle %>'
 <% } -%>
-import { definePageConfig } from './type-defines';
+import { definePageConfig, defineRunApp } from './type-defines';
 <%- framework.imports %>
 
 <%- framework.variablesStr %>
@@ -9,6 +9,7 @@ import { definePageConfig } from './type-defines';
 
 export {
   definePageConfig,
+  defineRunApp,
   <% if (framework.exports) { -%><%- framework.exports %><% } -%>
   <% if (framework.targetExports) { -%><%- framework.targetExports %><% } -%>
 

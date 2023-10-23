@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.8
+
+### Patch Changes
+
+- 47a7a25d: fix: user compilation config lose
+
 ## 0.2.7
 
 ### Patch Changes
