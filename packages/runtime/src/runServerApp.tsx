@@ -56,7 +56,6 @@ interface RenderOptions {
   prependCode?: string;
   serverData?: any;
   streamOptions?: RenderToPipeableStreamOptions;
-  cacheFirstChunk?: boolean;
 }
 
 interface Piper {
@@ -385,7 +384,7 @@ async function renderServerEntry(
     renderOptions,
   }: RenderServerEntry,
 ): Promise<Response> {
-  const { Document, cacheFirstChunk } = renderOptions;
+  const { Document } = renderOptions;
   const appContext = runtime.getAppContext();
   const { routes, routePath, loaderData, basename } = appContext;
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
@@ -402,7 +401,6 @@ async function renderServerEntry(
     main: (
       <AppRouter routes={routes} routerContext={routerContext} />
     ),
-    cacheFirstChunk,
   };
 
   const element = (
@@ -500,7 +498,6 @@ function renderDocument(options: RenderDocumentOptions): Response {
 
   const documentContext = {
     main: null,
-    cacheFirstChunk: false,
   };
 
   const htmlStr = ReactDOMServer.renderToString(

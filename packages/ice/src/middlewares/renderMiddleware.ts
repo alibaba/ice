@@ -51,7 +51,6 @@ export default function createRenderMiddleware(options: Options): Middleware {
         serverModule.renderToResponse(requestContext, {
           renderMode,
           documentOnly,
-          cacheFirstChunk: true,
         });
       }
     } else {

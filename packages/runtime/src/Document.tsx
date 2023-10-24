@@ -6,7 +6,6 @@ import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
 
 interface DocumentContext {
   main: React.ReactNode | null;
-  cacheFirstChunk: boolean;
 }
 
 const Context = React.createContext<DocumentContext | undefined>(undefined);
@@ -196,7 +195,7 @@ export const Data: DataType = (props: DataProps) => {
 export type MainType = (props: React.HTMLAttributes<HTMLDivElement>) => JSX.Element;
 
 export const Main: MainType = (props: React.HTMLAttributes<HTMLDivElement>) => {
-  const { main, cacheFirstChunk } = useDocumentContext();
+  const { main } = useDocumentContext();
   const { appConfig } = useAppContext();
 
   return (
@@ -205,7 +204,7 @@ export const Main: MainType = (props: React.HTMLAttributes<HTMLDivElement>) => {
         {main}
       </div>
       {
-        (cacheFirstChunk && appConfig.cache?.firstChunk) && <div dangerouslySetInnerHTML={{ __html: '<!-- fcc-->' }} />
+        appConfig.cache?.firstChunk && <div dangerouslySetInnerHTML={{ __html: '<!-- fcc-->' }} />
       }
     </>
   );
