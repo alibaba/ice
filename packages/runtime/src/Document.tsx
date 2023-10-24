@@ -204,7 +204,7 @@ export const Main: MainType = (props: React.HTMLAttributes<HTMLDivElement>) => {
         {main}
       </div>
       {
-        appConfig.cache?.firstChunk && <div dangerouslySetInnerHTML={{ __html: '<!-- fcc-->' }} />
+        appConfig.cache?.firstChunk && <div dangerouslySetInnerHTML={{ __html: '<!--fcc-->' }} />
       }
     </>
   );
