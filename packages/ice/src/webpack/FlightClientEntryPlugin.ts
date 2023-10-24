@@ -20,6 +20,7 @@ interface ClientReferenceSearchPath {
 interface Options {
   rootDir: string;
   clientReferences?: ClientReferenceSearchPath[];
+  getRoutesFile: () => string[];
 }
 
 class ClientReferenceDependency extends ModuleDependency {
@@ -39,9 +40,14 @@ export class FlightClientEntryPlugin {
   clientReferences: ClientReferenceSearchPath[];
   clientFiles = new Set();
   pageDir: string;
+  rootDir: string;
+  getRoutesFile: () => string[];
 
   constructor(options: Options) {
+    this.rootDir = options.rootDir;
     this.pageDir = join(options.rootDir, 'src', 'pages');
+
+    this.getRoutesFile = options.getRoutesFile;
 
     if (options.clientReferences) {
       this.clientReferences = options.clientReferences;
@@ -112,6 +118,7 @@ export class FlightClientEntryPlugin {
   }
 
   async createClientEntries(compiler: Compiler, compilation: Compilation) {
+    const routes = this.getRoutesFile().map(file => join(this.rootDir, file));
     const addClientEntryList = [];
 
     for (const [name, entry] of compilation.entries.entries()) {
@@ -126,9 +133,10 @@ export class FlightClientEntryPlugin {
 
       const entryModule = compilation.moduleGraph.getResolvedModule(entryDependency);
       for (const connection of compilation.moduleGraph.getOutgoingConnections(entryModule)) {
-        const entryRequest = (connection.dependency as any).request;
+        // @ts-ignore
+        const entryRequest = connection.resolvedModule?.resource;
 
-        if (entryRequest.indexOf('@/pages/') === -1) continue;
+        if (routes.indexOf(entryRequest) === -1) continue;
 
         const { clientComponentImports, CSSImports } = this.collectComponentInfoFromDependency({
           compilation,
@@ -139,8 +147,7 @@ export class FlightClientEntryPlugin {
           const injected = this.injectClientEntry({
             compiler,
             compilation,
-            // @ts-ignore
-            bundlePath: connection.resolvedModule?.resource,
+            bundlePath: entryRequest,
             clientImports: [
               ...clientComponentImports,
               ...CSSImports,
