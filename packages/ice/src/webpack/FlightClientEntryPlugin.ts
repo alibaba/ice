@@ -6,10 +6,7 @@ import NullDependency from '@ice/bundles/compiled/webpack/NullDependency.js';
 import ModuleDependency from '@ice/bundles/compiled/webpack/ModuleDependency.js';
 import type { Compiler, Compilation } from 'webpack';
 import { createComponentName } from '@ice/route-manifest';
-
-export function formatPath(pathStr) {
-    return process.platform === 'win32' ? pathStr.split(sep).join('/') : pathStr;
-}
+import formatPath from '../utils/formatPath.js';
 
 const PLUGIN_NAME = 'FlightClientEntryPlugin';
 
