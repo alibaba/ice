@@ -61,5 +61,15 @@ async function getData() {
       title: 'ice.js',
       description: '这是 ICE 框架',
     },
+    {
+      logo,
+      title: 'ice.js',
+      description: '这是 ICE 框架',
+    },
+    {
+      logo,
+      title: 'ice.js',
+      description: '这是 ICE 框架',
+    },
   ];
 }
