@@ -1,12 +1,12 @@
 {
-  "name": "@examples/with-suspense-ssr",
+  "name": "@examples/with-first-chunk-cache-ssr",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "ice start",
     "build": "ice build"
   },
-  "description": "ICE example with suspense ssr",
+  "description": "ICE example with first chunk cache ssr",
   "author": "ICE Team",
   "license": "MIT",
   "dependencies": {
