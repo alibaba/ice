@@ -61,5 +61,5 @@ export function useRefresh() {
 }
 
 function getReactTree(location) {
-  return fetch(location + location.indexOf('?') ? '?rsc' : '&rsc');
+  return fetch(location + (location.indexOf('?') > -1 ? '&rsc' : '?rsc'));
 }
