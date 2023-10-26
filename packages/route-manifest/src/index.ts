@@ -46,10 +46,13 @@ const routeModuleExts = [
   // '.mdx',
 ];
 
+export {
+  createComponentName,
+};
+
 export function isRouteModuleFile(filename: string): boolean {
   return routeModuleExts.includes(path.extname(filename));
 }
-
 
 export function generateRouteManifest(
   rootDir: string,

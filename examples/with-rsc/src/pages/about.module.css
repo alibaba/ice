@@ -1,4 +1,4 @@
-.app {
+.about {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -6,40 +6,25 @@
   height: 100vh;
 }
 
-.app > header {
+.about > header {
   display: flex;
   flex-direction: column;
   align-items: center;
 } 
 
-.app > header > img {
+.about > header > img {
   width: 120px;
 }
 
-.app > header > p {
+.about > header > p {
   margin: 20px 0;
   text-align: center;
   font-size: 2.6rem;
 }
 
-.app > main {
+.about > main {
   display: flex;
   flex-direction: column;
   margin: 20px 0 10px;
   font-size: 0.9rem;
-}
-
-.link {
-  font-size: 1.2rem;
-  color: var(--primary);
-}
-
-.button {
-  outline: none;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 35px;
-  background: var(--primary);
-  box-shadow: 0 5px 10px 0 #ddd;
-  font-size: calc(10px + 2vmin);
 }

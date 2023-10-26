@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useAppContext } from 'ice';
-import styles from './index.module.css';
+import styles from './counter.module.css';
 
 export default function Counter() {
   const [count, setCount] = useState(0);

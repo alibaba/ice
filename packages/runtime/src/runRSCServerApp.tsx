@@ -26,7 +26,7 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
     renderMode,
     basename,
     serverOnlyBasename,
-    clientManifest,
+    clientManifest: clientManifestMapping,
     assetsManifest,
   } = renderOptions;
 
@@ -50,7 +50,7 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
   };
 
   if (req.url?.indexOf('rsc') === -1) {
-    return renderDocument(serverContext, renderOptions, appContext);
+    return renderDocument(serverContext, renderOptions, appContext, matches);
   }
 
   const routeModules = await loadRouteModules(matches.map(({ route: { id, lazy } }) => ({ id, lazy })));
@@ -60,6 +60,16 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
       {renderMatches(matches, routeModules)}
     </AppContextProvider>
   );
+
+  // Merge client manifest for match route.
+  const clientManifest = {};
+  matches.forEach(match => {
+    const { componentName } = match.route;
+    const manifest = clientManifestMapping[`rsc_${componentName}`];
+    if (manifest) {
+      Object.assign(clientManifest, manifest);
+    }
+  });
 
   const { pipe } = renderToPipeableStream(
     element,
@@ -83,11 +93,12 @@ function renderMatches(matches: RouteMatch[], routeModules: RouteModules) {
   }, React.createElement(null));
 }
 
-function renderDocument(requestContext, renderOptions, appContext) {
+function renderDocument(requestContext, renderOptions, appContext, matches) {
   const { res } = requestContext;
 
   const {
     Document,
+    routePath,
   } = renderOptions;
 
   const documentContext = {
@@ -95,9 +106,9 @@ function renderDocument(requestContext, renderOptions, appContext) {
   };
 
   const htmlStr = ReactDOMServer.renderToString(
-    <AppContextProvider value={appContext}>
+    <AppContextProvider value={{ ...appContext, matches }}>
       <DocumentContextProvider value={documentContext}>
-        <Document />
+        <Document pagePath={routePath} />
       </DocumentContextProvider>
     </AppContextProvider>,
   );

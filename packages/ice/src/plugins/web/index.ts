@@ -49,8 +49,10 @@ const plugin: Plugin = () => ({
       ...(userConfig.rsc ? {
         alias: createRSCAliases(),
         // TODO: temporary solution for rsc.
-        entry: { main: [path.join(rootDir, RUNTIME_TMP_DIR, 'rsc.client.tsx')] },
-      } : {}),
+        entry: {
+          main: [path.join(rootDir, RUNTIME_TMP_DIR, 'rsc.client.tsx')],
+          route: [path.join(rootDir, RUNTIME_TMP_DIR, 'routes.tsx')],
+      } } : {}),
     });
 
     onHook('after.start.compile', async ({ isSuccessful, isFirstCompile, urls, devUrlInfo }) => {
