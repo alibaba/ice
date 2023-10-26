@@ -1,4 +1,4 @@
-import { join, relative, sep } from 'path';
+import { join, relative } from 'path';
 import { stringify } from 'querystring';
 import { asyncLib, acorn } from '@ice/bundles';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
