@@ -68,5 +68,5 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
   },
-  "packageManager": "pnpm@7.29.1"
+  "packageManager": "pnpm@8.9.2"
 }

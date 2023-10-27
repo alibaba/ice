@@ -89,6 +89,15 @@ export interface DataLoaderConfig {
   options?: DataLoaderOptions;
 }
 
+interface DocumentLoaderOptions {
+  documentOnly?: boolean;
+}
+export type DocumentDataLoader = (ctx: RequestContext, options: DocumentLoaderOptions) => DataLoaderResult;
+
+export interface DocumentDataLoaderConfig {
+  loader: DocumentDataLoader;
+}
+
 export interface LoadersData {
   [routeId: string]: LoaderData;
 }
