@@ -1,0 +1,22 @@
+{
+  "name": "@examples/with-first-chunk-cache-ssr",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "ice start",
+    "build": "ice build"
+  },
+  "description": "ICE example with first chunk cache ssr",
+  "author": "ICE Team",
+  "license": "MIT",
+  "dependencies": {
+    "@ice/app": "workspace:*",
+    "@ice/runtime": "workspace:*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6"
+  }
+}
