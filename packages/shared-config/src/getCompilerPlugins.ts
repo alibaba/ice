@@ -86,7 +86,6 @@ function getCompilerPlugins(rootDir: string, config: Config, compiler: Compiler,
       exportData: redirectImports,
     }));
   }
-  console.log('compiler', compiler);
   if (clientBundlers.includes(compiler)) {
     return compilerPlugins
       // Plugins will be transformed as webpack loader, the execute order of webpack loader is reversed.
