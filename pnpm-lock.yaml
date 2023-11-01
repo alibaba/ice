@@ -812,7 +812,7 @@ importers:
         specifier: ^5.88.0
         version: 5.88.2
 
-  examples/with-fitst-chunk-cache-ssr:
+  examples/with-first-chunk-cache-ssr:
     dependencies:
       '@ice/app':
         specifier: workspace:*
