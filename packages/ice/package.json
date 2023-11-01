@@ -98,7 +98,7 @@
     "react": "^18.2.0",
     "react-router": "6.14.2",
     "sass": "^1.50.0",
-    "unplugin": "^0.9.0",
+    "unplugin": "^1.5.0",
     "webpack": "^5.88.0",
     "webpack-dev-server": "^4.7.4",
     "@rspack/core": "0.3.0",

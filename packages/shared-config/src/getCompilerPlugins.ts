@@ -6,7 +6,7 @@ import compilationPlugin from './unPlugins/compilation.js';
 import redirectImportPlugin from './unPlugins/redirectImport.js';
 import compileExcludes from './compileExcludes.js';
 
-type Compiler = 'webpack' | 'esbuild';
+type Compiler = 'webpack' | 'esbuild' | 'rspack';
 interface TransformOptions {
   isServer: boolean;
 }
@@ -31,6 +31,7 @@ function transformInclude(id: string) {
   return !!id.match(/\.(js|jsx|ts|tsx|mjs|mts|css|less|scss)$/);
 }
 
+function getCompilerPlugins(rootDir: string, config: Config, compiler: 'rspack', transformOptions: TransformOptions): Config['plugins'];
 function getCompilerPlugins(rootDir: string, config: Config, compiler: 'webpack', transformOptions: TransformOptions): Config['plugins'];
 function getCompilerPlugins(rootDir: string, config: Config, compiler: 'esbuild', transformOptions: TransformOptions): BuildOptions['plugins'];
 function getCompilerPlugins(rootDir: string, config: Config, compiler: Compiler, transformOptions: TransformOptions) {
@@ -55,10 +56,10 @@ function getCompilerPlugins(rootDir: string, config: Config, compiler: Compiler,
     ...(transformPlugins.filter(({ enforce }) => !enforce || enforce === 'pre') || []),
     ...transforms.map((transform, index) => ({ name: `transform_${index}`, transform, transformInclude })),
   );
-
+  const clientBundlers = ['webpack', 'rspack'];
   // Use webpack loader instead of webpack plugin to do the compilation.
   // Reason: https://github.com/unjs/unplugin/issues/154
-  if (swcOptions && compiler !== 'webpack') {
+  if (swcOptions && !clientBundlers.includes(compiler)) {
     compilerPlugins.push(compilationPlugin({
       rootDir,
       cacheDir,
@@ -85,13 +86,14 @@ function getCompilerPlugins(rootDir: string, config: Config, compiler: Compiler,
       exportData: redirectImports,
     }));
   }
-
-  return compiler === 'webpack'
-    // Plugins will be transformed as webpack loader, the execute order of webpack loader is reversed.
-    ? compilerPlugins
-        .reverse()
-        .map((plugin) => createUnplugin(() => getPluginTransform(plugin, transformOptions)).webpack()) as Config['plugins']
-    : compilerPlugins.map(plugin => getPluginTransform(plugin, transformOptions));
+  if (clientBundlers.includes(compiler)) {
+    return compilerPlugins
+      // Plugins will be transformed as webpack loader, the execute order of webpack loader is reversed.
+      .reverse()
+      .map((plugin) => createUnplugin(() => getPluginTransform(plugin, transformOptions))[compiler]()) as Config['plugins'];
+  } else {
+    return compilerPlugins.map(plugin => getPluginTransform(plugin, transformOptions));
+  }
 }
 
 export default getCompilerPlugins;
