@@ -49,7 +49,7 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
     matches: [],
   };
 
-  if (req.url?.indexOf('rsc') === -1) {
+  if (req.url?.indexOf('rsc=true') === -1) {
     return renderDocument(serverContext, renderOptions, appContext, matches);
   }
 
@@ -71,6 +71,7 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
     }
   });
 
+  res.setHeader('Content-Type', 'text/x-component; charset=utf-8');
   const { pipe } = renderToPipeableStream(
     element,
     clientManifest,
