@@ -58,6 +58,7 @@ export default class DataLoaderPlugin {
               supported: {
                 // Do not wrap arrow function when format as IIFE.
                 arrow: false,
+                'const-and-let': false,
               },
               write: false,
               logLevel: 'silent', // The main server compile process will log it.
