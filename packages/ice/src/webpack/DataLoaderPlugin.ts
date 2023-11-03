@@ -2,6 +2,7 @@ import * as path from 'path';
 import fse from 'fs-extra';
 import type { Compiler } from 'webpack';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
+import { isSupportedFeature } from '@ice/shared-config';
 import type { Context } from 'build-scripts';
 import type { ServerCompiler, PluginData } from '../types/plugin.js';
 import type { DeclarationData } from '../types/generator.js';
@@ -50,6 +51,7 @@ export default class DataLoaderPlugin {
         // Check file data-loader.ts if it is exists.
         const filePath = path.join(this.rootDir, RUNTIME_TMP_DIR, 'data-loader.ts');
         if (fse.existsSync(filePath)) {
+          const isLetSupported = isSupportedFeature('let', this.rootDir);
           const { outputFiles, error } = await this.serverCompiler(
             {
               target: 'es6', // should not set to esnext, https://github.com/alibaba/ice/issues/5830
@@ -58,7 +60,7 @@ export default class DataLoaderPlugin {
               supported: {
                 // Do not wrap arrow function when format as IIFE.
                 arrow: false,
-                'const-and-let': false,
+                'const-and-let': isLetSupported,
               },
               write: false,
               logLevel: 'silent', // The main server compile process will log it.
