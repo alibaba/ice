@@ -5,6 +5,7 @@ export default defineAppConfig({
     rootId: 'app',
   },
   cache: {
-    firstChunk: true,
+    firstChunk: false,
+    snapshot: true,
   },
 });
