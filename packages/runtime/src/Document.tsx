@@ -207,23 +207,31 @@ export const FirstChunkCache: FirstChunkCacheType = () => {
 export type SnapshotCacheType = () => JSX.Element;
 
 function Snapshot(rootId) {
+  // Run before </html>.
   const SNAPSHOT_ID = 'fcc-snapshot';
   const FCC_FLAG = decodeURIComponent('%3C!--fcc--%3E');
-  // Template before stream.
+  // Cache template before stream.
   const iceContainerEle = document.getElementById(rootId);
   let snapshot = document.documentElement.outerHTML;
+
   window.addEventListener('stream-end', () => {
-    // Remove snapshot when stream-end.
+    // Remove snapshot when stream-end event.
     const snapshotEle = document.getElementById(SNAPSHOT_ID);
-    snapshotEle && (snapshotEle.innerHTML = null);
+    const snapshotOuterHTML = snapshotEle.outerHTML;
+    if (snapshotEle) {
+      snapshotEle.removeAttribute('style');
+      snapshotEle.innerHTML = '';
+    }
+
     const hasCacheFlag = snapshot.indexOf(FCC_FLAG) >= 0;
     if (hasCacheFlag) {
       let cacheStr = snapshot.split(FCC_FLAG)[0] + FCC_FLAG;
       const style = 'position:absolute;width:100%;top:0;left:0;z-index:999';
-      cacheStr = cacheStr.replace(`<div id="${SNAPSHOT_ID}"></div>`, `<div id="${SNAPSHOT_ID}" style="${style}">${iceContainerEle.innerHTML}</div>`);
+      cacheStr = cacheStr.replace(snapshotOuterHTML, `<div id="${SNAPSHOT_ID}" style="${style}">${iceContainerEle.innerHTML}</div>`);
       console.log('cacheStr', cacheStr);
-      if (!window.__windvane__) return;
-      window.__windvane__.call('WVClient.setCache', {
+      let mega = (window as any).__megability_bridge__;
+      if (!mega) return;
+      mega.asyncCall('ssr', 'setFirstChunkCache', {
         html: cacheStr,
       });
       console.log('cache success');
