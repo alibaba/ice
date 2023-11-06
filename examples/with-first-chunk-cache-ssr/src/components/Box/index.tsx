@@ -44,8 +44,8 @@ async function getData() {
   ];
 
   return [
-    images[Math.round(Math.random() * images.length - 1)],
-    images[Math.round(Math.random() * images.length - 1)],
-    images[Math.round(Math.random() * images.length - 1)],
+    images[Math.floor(Math.random() * images.length)],
+    images[Math.floor(Math.random() * images.length)],
+    images[Math.floor(Math.random() * images.length)],
   ];
 }

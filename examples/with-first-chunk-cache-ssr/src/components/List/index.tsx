@@ -55,27 +55,27 @@ async function getData() {
 
   return [
     {
-      logo: images[Math.round(Math.random() * images.length - 1)],
+      logo: images[Math.floor(Math.random() * images.length)],
       title: 'ice.js',
       description: '这是 ICE 框架',
     },
     {
-      logo: images[Math.round(Math.random() * images.length - 1)],
+      logo: images[Math.floor(Math.random() * images.length)],
       title: 'ice.js',
       description: '这是 ICE 框架',
     },
     {
-      logo: images[Math.round(Math.random() * images.length - 1)],
+      logo: images[Math.floor(Math.random() * images.length)],
       title: 'ice.js',
       description: '这是 ICE 框架',
     },
     {
-      logo: images[Math.round(Math.random() * images.length - 1)],
+      logo: images[Math.floor(Math.random() * images.length)],
       title: 'ice.js',
       description: '这是 ICE 框架',
     },
     {
-      logo: images[Math.round(Math.random() * images.length - 1)],
+      logo: images[Math.floor(Math.random() * images.length)],
       title: 'ice.js',
       description: '这是 ICE 框架',
     },
