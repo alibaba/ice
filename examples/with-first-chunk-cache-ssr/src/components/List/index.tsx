@@ -1,7 +1,7 @@
 import { useSuspenseData, withSuspense } from 'ice';
 import styles from './index.module.css';
 
-const Item = withSuspense((props) => {
+const Item = (props) => {
   console.log('Render: List');
 
   return (
@@ -13,7 +13,7 @@ const Item = withSuspense((props) => {
       </div>
     </div>)
   );
-});
+};
 
 function List() {
   const data = useSuspenseData(getData);

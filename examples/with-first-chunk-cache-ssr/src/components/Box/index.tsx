@@ -1,7 +1,7 @@
 import { useSuspenseData, withSuspense } from 'ice';
 import styles from './index.module.css';
 
-const Item = withSuspense((props) => {
+const Item = (props) => {
   console.log('Render: Item');
 
   return (
@@ -9,7 +9,7 @@ const Item = withSuspense((props) => {
       <img src={props.src} height="100" width="100" />
     </div>)
   );
-});
+};
 
 function Box() {
   const data = useSuspenseData(getData);
