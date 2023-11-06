@@ -1,11 +1,11 @@
 .list {
   background-color: #FFF;
+  padding: 10px;
 }
 
 .item{
-  padding: 20px;
+  padding: 30px;
   background-color: aliceblue;
-  margin: 20px;
   display: flex;
 }
 
