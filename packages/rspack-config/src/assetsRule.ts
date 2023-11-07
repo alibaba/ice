@@ -2,10 +2,7 @@ import type { Configuration } from '@rspack/core';
 
 const getAssetsRule = () => {
   const assetsRule = [
-    [/\.woff2?$/, { mimetype: 'application/font-woff' }],
-    [/\.ttf$/, { mimetype: 'application/octet-stream' }],
-    [/\.eot$/, { mimetype: 'application/vnd.ms-fontobject' }],
-    [/\.svg$/, { mimetype: 'image/svg+xml' }, false],
+    [/\.woff2?$/], [/\.ttf$/], [/\.eot$/], [/\.svg$/],
     [/\.(png|jpg|webp|jpeg|gif)$/i],
   ];
 
@@ -21,13 +18,13 @@ const getAssetsRule = () => {
     return {
       test,
       type: 'asset',
-      parser: {
-        ...(urlCondition ? {
+      ...(urlCondition ? {
+        parser: {
           dataUrlCondition: {
             maxSize: 8 * 1024, // 8kb
           },
-        } : {}),
-      },
+        },
+      } : {}),
       ...(typeof ruleOption === 'object' ? ruleOption : {}),
     };
   }) as Configuration['module']['rules']).concat(queryRules);
