@@ -6,8 +6,6 @@ import fse from 'fs-extra';
 import { fileURLToPath } from 'url';
 import { program, Option } from 'commander';
 import yargsParser from 'yargs-parser';
-// hijack webpack before import other modules
-import '../esm/requireHook.js';
 import createService from '../esm/createService.js';
 import { TARGETS, WEB } from '../esm/constant.js';
 
