@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.5
+
+### Patch Changes
+
+- 52eb7a40: fix: do not minify assets in public by default
+- Updated dependencies [d4aaa580]
+  - @ice/shared-config@1.1.1
+  - @ice/bundles@0.1.17
+
 ## 1.1.4
 
 ### Patch Changes
