@@ -1,9 +1,12 @@
 # Changelog
 
+## 2.0.9
+
+- [fix] convert kebab-case to PascalCase for `Layout` name, such as `hello-wordLayout` to `HelloWorldLayout`
+
 ## 2.0.8
 
 - [feat] support export `createModel` API
-- [fix] convert kebab-case to PascalCase for `Layout` name, such as `hello-wordLayout` to `HelloWorldLayout`
 
 ## 2.0.7
 
