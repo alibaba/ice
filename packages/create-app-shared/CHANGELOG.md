@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.3.1/1.3.2
+
+- [fix] using document.visibilityState to indicate the app is showing
+
+## 1.3.0
+
+- [feat] support unhandledRejection event in miniapp
+- [fix] miss parms in pageNotFound event in miniapp
+
 ## 1.2.6
 
 - [fix] miniapp app lifecycle is invalid 

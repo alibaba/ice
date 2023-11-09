@@ -26,6 +26,7 @@ export interface Options {
   sourceMap?: boolean;
   library?: string;
   filenameStrategy?: string;
+  cssNamespace?: string;
 }
 
 export type PartialPlugin = Partial<IPluginAPI>;

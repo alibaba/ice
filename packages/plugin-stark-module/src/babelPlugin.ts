@@ -2,7 +2,8 @@ import * as t from '@babel/types';
 
 const mountStatement = `
   export function mount(ModuleComponent, targetNode, props) {
-    ReactDOM.render(React.createElement(ModuleComponent, Object.assign({}, props)), targetNode);
+    props.mountCallback = props.mountCallback || (function () {});
+    ReactDOM.render(React.createElement(ModuleComponent, Object.assign({}, props)), targetNode, props.mountCallback);
   }
   `;
 const unmountStatement = `

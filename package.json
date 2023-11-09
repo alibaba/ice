@@ -75,5 +75,6 @@
     "@typescript-eslint/parser": "^4.0.0",
     "postcss": "^8.3.5",
     "eslint-plugin-react": "7.24.0"
-  }
+  },
+  "repository": "git@github.com:alibaba/ice.git"
 }

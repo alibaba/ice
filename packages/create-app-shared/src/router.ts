@@ -1,6 +1,8 @@
 const current = {
   pathname: '/',
-  visibilityState: true
+  visibilityState: typeof document !== 'undefined'
+    ? document.visibilityState === 'visible'
+    : true, // Considering SSR or other non-browser environment.
 };
 
 const router = {

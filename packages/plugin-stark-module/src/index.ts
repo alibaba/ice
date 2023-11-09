@@ -10,9 +10,23 @@ import setDevLog from './setDevLog';
 
 // TODO: remove this line next update
 // @ts-ignore
-const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, registerUserConfig, hasRegistration }, options: Options = {} ) => {
+const plugin: IPlugin = (
+  {
+    onGetWebpackConfig,
+    context,
+    registerTask,
+    onHook,
+    registerUserConfig,
+    hasRegistration,
+  },
+  options: Options = {}
+) => {
   const { command, userConfig, webpack, commandArgs } = context;
-  const { minify: outerMinify, sourceMap: outerSourceMap, outputDir: outerOutputDir  } = (userConfig || {}) as IUserConfig;
+  const {
+    minify: outerMinify,
+    sourceMap: outerSourceMap,
+    outputDir: outerOutputDir,
+  } = (userConfig || {}) as IUserConfig;
 
   const hasOutputDirRegistered = hasRegistration('outputDir', 'userConfig');
   if (!hasOutputDirRegistered) {
@@ -24,11 +38,8 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, re
 
   options.outputDir = options.outputDir ?? (outerOutputDir as string);
 
-  const {
-    moduleExternals,
-    minify,
-    sourceMap,
-  } = options as any as Options ?? {};
+  const { moduleExternals, minify, sourceMap } =
+    (options as any as Options) ?? {};
   const mode = command === 'start' ? 'development' : 'production';
 
   const baseConfig = getWebpackConfig(mode);
@@ -46,13 +57,11 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, re
   if (localSourceMap !== undefined) {
     baseConfig.devtool(sourceMap ? 'source-map' : false);
     // eslint-disable-next-line no-unused-expressions
-    sourceMap
-      && (command === 'build')
-      && baseConfig.optimization
+    sourceMap &&
+      command === 'build' &&
+      baseConfig.optimization
         .minimizer('TerserPlugin')
-        .tap(([opts]: any) => [
-          { ...opts, sourceMap: true },
-        ]);
+        .tap(([opts]: any) => [{ ...opts, sourceMap: true }]);
   }
 
   // definePlugin, Compatible with @ali/build-plugin-ice-def
@@ -60,24 +69,49 @@ const plugin: IPlugin = ({ onGetWebpackConfig, context, registerTask, onHook, re
     'process.env.NODE_ENV': JSON.stringify(mode || 'development'),
     'process.env.SERVER_PORT': JSON.stringify(commandArgs.port),
   };
-  baseConfig.plugin('DefinePlugin')
+  baseConfig
+    .plugin('DefinePlugin')
     .use((webpack as any).DefinePlugin, [defineVariables])
     .end();
 
   // register webpack-plugin-import
   // https://github.com/alibaba/ice/tree/master/packages/webpack-plugin-import
-  baseConfig.plugin('WebpackPluginImport')
-    .use(WebpackPluginImport, [[
-      {
-        libraryName: /@ali\/ice-.*/,
-        stylePath: 'style.js',
-      },
-    ]])
+  baseConfig
+    .plugin('WebpackPluginImport')
+    .use(WebpackPluginImport, [
+      [
+        {
+          libraryName: /@ali\/ice-.*/,
+          stylePath: 'style.js',
+        },
+      ],
+    ])
     .end();
 
   // set umd
   setUMDConfig({ context, onGetWebpackConfig }, options as any as Options);
 
+  if (options.cssNamespace) {
+    ['css', 'scss', 'less'].forEach((rule) => {
+      baseConfig.module
+        .rule(rule)
+        .use('postcss-loader')
+        .tap((loaderOptions) => {
+          // eslint-disable-next-line import/no-dynamic-require, global-require
+          const postcssConfig = require(`${loaderOptions.config.path}/postcss.config`)();
+          return {
+            ...postcssConfig,
+            plugins: [
+              ...postcssConfig.plugins,
+              // eslint-disable-next-line import/no-dynamic-require, global-require
+              require('postcss-prefix-selector')({
+                prefix: `.${options.cssNamespace}`,
+              }),
+            ],
+          };
+        });
+    });
+  }
   // set moduleExternals
   if (moduleExternals) {
     setExternals({ onGetWebpackConfig }, { moduleExternals });

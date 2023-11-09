@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.0
+
+- [feat] support scope css.
+
 ## 2.2.4
 
 - [fix] when `url` configured, compile externals to `runtime.json`.

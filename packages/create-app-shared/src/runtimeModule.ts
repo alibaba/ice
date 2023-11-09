@@ -134,7 +134,7 @@ class RuntimeModule {
   public composeAppProvider() {
     if (!this.AppProvider.length) return null;
     return this.AppProvider.reduce((ProviderComponent, CurrentProvider) => {
-      return ({ children, ...rest }) => {
+      return ({ children, ...rest }: any) => {
         const element = CurrentProvider
           ? this.context.createElement(CurrentProvider, { ...rest }, children)
           : children;
