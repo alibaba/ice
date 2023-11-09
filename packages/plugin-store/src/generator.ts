@@ -99,6 +99,10 @@ export default class Generator {
     this.applyMethod('addRenderFile', pageComponentTemplatePath, pageComponentTargetPath, pageComponentRenderData);
   }
 
+  private kebabToPascal = (str: string) => { 
+    return str.replace(/-(\w)/g, parts => parts[parts.length-1].toUpperCase()).replace(/^\w/, s => s.toUpperCase());
+  }
+
   private renderPageLayout({ pageName, pageDir, pageStoreFile }: IRenderPageParams) {
     const pageComponentTemplatePath = path.join(__dirname, './template/pageComponent.tsx.ejs');
     const pageComponentTargetPath = path.join(this.tempPath, 'pages', pageName, 'Layout.tsx');
@@ -108,7 +112,7 @@ export default class Generator {
       return;
     }
 
-    const pageLayoutName = `${pageName}Layout`;
+    const pageLayoutName = `${pageName.indexOf('-') !== -1 ? this.kebabToPascal(pageName) : pageName}Layout`;
     const pageStoreExtname = path.extname(pageStoreFile);
     const pageLayoutRenderData = {
       pageComponentImport: `import ${pageLayoutName} from '${pageComponentSourcePath}'`,
