@@ -310,6 +310,10 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
           // ignore assets already in compilation.assets such as js and css files
           force: false,
           noErrorOnMissing: true,
+          // Skip minimization by default.
+          info: {
+            minimized: true,
+          },
           globOptions: {
             dot: true,
             gitignore: true,

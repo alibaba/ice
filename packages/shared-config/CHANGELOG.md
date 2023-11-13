@@ -1,5 +1,13 @@
 # @ice/shared-config
 
+## 1.1.1
+
+### Patch Changes
+
+- d4aaa580: fix: support custom transform plugins in speedup mode
+- Updated dependencies [d4aaa580]
+  - @ice/bundles@0.1.17
+
 ## 1.1.0
 
 ### Minor Changes

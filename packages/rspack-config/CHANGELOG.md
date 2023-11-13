@@ -1,5 +1,15 @@
 # @ice/rspack-config
 
+## 1.0.6
+
+### Patch Changes
+
+- e678188e: fix: assets rule for rspack
+- d4aaa580: fix: support custom transform plugins in speedup mode
+- Updated dependencies [d4aaa580]
+  - @ice/shared-config@1.1.1
+  - @ice/bundles@0.1.17
+
 ## 1.0.5
 
 ### Patch Changes

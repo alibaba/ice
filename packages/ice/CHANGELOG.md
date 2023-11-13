@@ -1,5 +1,33 @@
 # Changelog
 
+## 3.3.7
+
+### Patch Changes
+
+- 0953dece: fix: the judgment of unsupported syntax
+
+## 3.3.6
+
+### Patch Changes
+
+- 4a7340af: fix: check let support by browserslist
+- d4aaa580: fix: support custom transform plugins in speedup mode
+- b28118d3: move require hijack to createService
+- Updated dependencies [e678188e]
+- Updated dependencies [52eb7a40]
+- Updated dependencies [d4aaa580]
+  - @ice/rspack-config@1.0.6
+  - @ice/webpack-config@1.1.5
+  - @ice/shared-config@1.1.1
+  - @ice/bundles@0.1.17
+
+## 3.3.5
+
+### Patch Changes
+
+- d72753e2: fix: do not prebundle node built-in module
+- 3896cbea: feat: support default document
+
 ## 3.3.4
 
 ### Patch Changes

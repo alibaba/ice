@@ -1,0 +1,18 @@
+.list {
+  background-color: rgba(0,0,0,.03);
+}
+
+.item{
+  padding: 20px;
+  background-color: aliceblue;
+  margin: 20px;
+  display: flex;
+}
+
+.image {
+  padding: 10px;
+}
+
+.title {
+  padding: 15px 0px;
+}
