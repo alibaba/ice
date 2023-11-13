@@ -1,6 +1,10 @@
 # Changelog
 
-## 0.2.0
+## 0.1.3
+
+- [fix] compatible with win32 of rule test
+
+## 0.1.2
 
 - [feat] support custom style regexp
 

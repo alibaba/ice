@@ -27,7 +27,6 @@ const plugin: IPlugin = ({ onGetWebpackConfig, modifyUserConfig, log, context },
         .rule('ignore-style')
         .test((pathStr) => {
           const reg = new RegExp(externalRule);
-          // return reg.test(pathStr) || reg.test(pathStr.replace(/\\/g, '/'));
           return reg.test(pathStr.split(path.sep).join('/'));
         })
         .before('jsx')

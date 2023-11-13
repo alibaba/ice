@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-keep-alive",
-  "version": "1.8.1",
+  "version": "1.9.0",
   "description": "implementation of the keep-alive function for ice",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
