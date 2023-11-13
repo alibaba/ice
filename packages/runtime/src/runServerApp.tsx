@@ -403,6 +403,7 @@ async function renderServerEntry(
       <AppRouter routes={routes} routerContext={routerContext} />
     ),
   };
+
   const element = (
     <AppContextProvider value={appContext}>
       <AppRuntimeProvider>

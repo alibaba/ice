@@ -87,6 +87,22 @@ const tasks = [
     bundleName: 'webpack/loaders/load.js',
   },
   {
+    pkgName: 'unplugin',
+    declaration: false,
+    emptyDir: false,
+    externals: taskExternals,
+    file: 'node_modules/unplugin/dist/rspack/loaders/transform.js',
+    bundleName: 'rspack/loaders/transform.js',
+  },
+  {
+    pkgName: 'unplugin',
+    declaration: false,
+    emptyDir: false,
+    externals: taskExternals,
+    file: 'node_modules/unplugin/dist/rspack/loaders/load.js',
+    bundleName: 'rspack/loaders/load.js',
+  },
+  {
     // pack main package
     pkgName: 'fork-ts-checker-webpack-plugin',
     externals: taskExternals,
