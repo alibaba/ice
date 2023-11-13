@@ -19,7 +19,7 @@
   "dependencies": {
     "@ice/bundles": "0.1.17",
     "@rollup/pluginutils": "^4.2.0",
-    "browserslist": "^4.19.3",
+    "browserslist": "^4.22.1",
     "consola": "^2.15.3",
     "fast-glob": "^3.2.11",
     "process": "^0.11.10"
