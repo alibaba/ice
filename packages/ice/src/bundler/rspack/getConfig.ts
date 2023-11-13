@@ -71,9 +71,9 @@ const getConfig: GetConfig = async (context, options, rspack) => {
       }),
     ].filter(Boolean);
   };
-  return taskConfigs.map(({ config }) => {
+  return await Promise.all(taskConfigs.map(async ({ config }) => {
     const plugins = getPlugins(config);
-    return getRspackConfig({
+    return await getRspackConfig({
       rootDir,
       rspack,
       runtimeTmpDir: RUNTIME_TMP_DIR,
@@ -89,7 +89,7 @@ const getConfig: GetConfig = async (context, options, rspack) => {
         plugins: (config.plugins || []).concat(plugins),
       },
     });
-  });
+  }));
 };
 
 
