@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.3.7
+
+### Patch Changes
+
+- 0953dece: fix: the judgment of unsupported syntax
+
 ## 3.3.6
 
 ### Patch Changes
