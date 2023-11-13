@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-store",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "description": "builtin `@ice/store` in icejs",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",

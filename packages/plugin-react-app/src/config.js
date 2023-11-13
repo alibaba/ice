@@ -63,7 +63,7 @@ module.exports = function() {
     {
       name: 'optimizeRuntime',
       defaultValue: true,
-      validation: 'boolean',
+      validation: 'boolean|object',
     },
   ];
 };

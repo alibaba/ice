@@ -1,5 +1,6 @@
 import type { IPlugin } from 'build-scripts';
 import type { Plugin } from 'vite';
+import * as path from 'path';
 
 interface Options {
   libraryName: string;
@@ -24,7 +25,10 @@ const plugin: IPlugin = ({ onGetWebpackConfig, modifyUserConfig, log, context },
     onGetWebpackConfig((config) => {
       config.module
         .rule('ignore-style')
-        .test(new RegExp(externalRule))
+        .test((pathStr) => {
+          const reg = new RegExp(externalRule);
+          return reg.test(pathStr.split(path.sep).join('/'));
+        })
         .before('jsx')
         .use('null-loader').loader(require.resolve('./null-loader'));
     });

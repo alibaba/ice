@@ -4820,7 +4820,7 @@ cosmiconfig@^7.0.0:
 create-cert@^1.0.2:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/create-cert/-/create-cert-1.0.6.tgz#7ed01fff7f9f0cea500aba5eff119af4c8de84f6"
-  integrity sha1-ftAf/3+fDOpQCrpe/xGa9MjehPY=
+  integrity sha512-jOVt/HWAWhFFlt3H8TrnlAfvZMUoVf4XjvZqLxZ1Yzy+VTEm/rTgnfliKs3yioYENs9mNoHRWZQKAmVSrHfESw==
   dependencies:
     pem "^1.9.7"
     pify "^3.0.0"
@@ -10796,9 +10796,9 @@ path-type@^4.0.0:
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
 
 pem@^1.9.7:
-  version "1.14.4"
-  resolved "https://registry.yarnpkg.com/pem/-/pem-1.14.4.tgz#a68c70c6e751ccc5b3b5bcd7af78b0aec1177ff9"
-  integrity sha512-v8lH3NpirgiEmbOqhx0vwQTxwi0ExsiWBGYh0jYNq7K6mQuO4gI6UEFlr6fLAdv9TPXRt6GqiwE37puQdIDS8g==
+  version "1.14.6"
+  resolved "https://registry.yarnpkg.com/pem/-/pem-1.14.6.tgz#89babca3a73466fb844df70666dbf1b25eb0dc56"
+  integrity sha512-I5GKUer2PPv5qzUfxaZ6IGRkhp+357Kyv2t1JJg9vP8hGGI13qU34N2QupmggbpIZGPuudH0jn8KU5hjFpPk3g==
   dependencies:
     es6-promisify "^6.0.0"
     md5 "^2.2.1"
@@ -11909,15 +11909,14 @@ rax@^1.0.0:
     rax-create-factory "^1.0.0"
     rax-is-valid-element "^1.0.0"
 
-react-activation@^0.7.0:
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/react-activation/-/react-activation-0.7.4.tgz#c65f8617f089527c0b976f51580d9587b2eb667d"
-  integrity sha512-go/UEuRW03jOaFM3NUc1doByzUBbrCyIHGEFNJ0tAqA2AKzmMyh0Ru8XVEY3PB1/ev9dYgRWfAiXeqyKn1kavg==
+react-activation@^0.12.0:
+  version "0.12.2"
+  resolved "https://registry.yarnpkg.com/react-activation/-/react-activation-0.12.2.tgz#3fc28ac416b2a82841cbaa82bd26ae32cc270004"
+  integrity sha512-nNk0FJ0ljWPM3I5q5h9mewp/5mIKnJELOFc8mRq0JrwmVP4ozkZEUN05OolRXdnGPuS5S50ec3mTZA3B6wSYJA==
   dependencies:
     create-react-context "^0.3.0"
     hoist-non-react-statics "^3.3.0"
-    jsx-ast-utils "^2.2.1"
-    react-node-key "^0.2.0"
+    react-node-key "^0.4.0"
     szfe-tools "^0.0.0-beta.7"
 
 react-dom@^16.12.0, react-dom@^16.4.1:
@@ -11964,10 +11963,10 @@ react-is@^17.0.1, react-is@^17.0.2:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-node-key@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/react-node-key/-/react-node-key-0.2.0.tgz#c937390208de87a0361bce87b507ccef35fb0f35"
-  integrity sha512-fC5ZVz3TwhSY0o1hw08R/V/Ze/exfhaeDllRucuvEH2Xj1qT4Y4IoSr93BftcVJHJFt3fmmTCV/mGk+LX5x20w==
+react-node-key@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-node-key/-/react-node-key-0.4.0.tgz#acb90f06828f594051c6e37c005ea080be228ee2"
+  integrity sha512-puiuP2QYEuNBVVvcjpUE8d8/jdAhiXHBHMmjZzQT4+fe276RMYea/tY7JoZoYlrhAX8DORLPvjySjXYJZ1m6/A==
   dependencies:
     jsx-ast-utils "^2.2.1"
     szfe-tools "^0.0.0-beta.7"

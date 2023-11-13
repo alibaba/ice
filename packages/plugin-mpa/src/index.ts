@@ -102,7 +102,8 @@ const plugin: IPlugin = (api) => {
           });
         }
       });
-      if (userConfig.optimizeRuntime) {
+      const optimizeRuntime = userConfig.optimizeRuntime as (boolean | Record<string, any>);
+      if (optimizeRuntime) {
         onHook('before.build.load', async (options) => {
           await Promise.all(Object.keys(parsedEntries).map(async (entryKey) => {
             const { generator, generateTasks, entryPath } = parsedEntries[entryKey];
@@ -129,7 +130,9 @@ const plugin: IPlugin = (api) => {
                 alias,
                 analyzeRelativeImport: true,
               });
-              Object.keys(runtimeUsedMap).forEach((pluginName) => {
+              const filterRuntime = typeof optimizeRuntime === 'object' && Array.isArray((optimizeRuntime?.keep))
+                ? optimizeRuntime.keep : [];
+              Object.keys(runtimeUsedMap).filter((pluginName) => !filterRuntime.includes(pluginName)).forEach((pluginName) => {
                 const isUsed = runtimeUsedMap[pluginName];
                 if (!isUsed) {
                   if (pluginName === 'build-plugin-ice-auth') {

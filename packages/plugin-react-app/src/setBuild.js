@@ -17,7 +17,8 @@ module.exports = (api) => {
     onHook('before.build.load', async () => {
       const sourceFiles = await globSourceFiles(path.join(rootDir, 'src'));
       const runtimeUsedMap = await analyzeRuntime(sourceFiles, { rootDir });
-      Object.keys(runtimeUsedMap).forEach((pluginName) => {
+      const filterRuntime = Array.isArray(userConfig.optimizeRuntime?.keep) ? userConfig.optimizeRuntime.keep : [];
+      Object.keys(runtimeUsedMap).filter((pluginName) => !filterRuntime.includes(pluginName)).forEach((pluginName) => {
         const isUsed = runtimeUsedMap[pluginName];
         if (!isUsed) {
           if (pluginName === 'build-plugin-ice-auth') {
