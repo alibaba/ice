@@ -1251,7 +1251,7 @@ importers:
       '@ice/swc-plugin-remove-export':
         specifier: 0.2.0
         version: 0.2.0
-      '@rspack/core':
+      '@rspack/binding':
         specifier: 0.3.11
         version: 0.3.11
       '@rspack/dev-server':
@@ -1263,18 +1263,27 @@ importers:
       ansi-html-community:
         specifier: ^0.0.8
         version: 0.0.8
+      browserslist:
+        specifier: ^4.21.3
+        version: 4.21.5
       caniuse-lite:
         specifier: ^1.0.30001431
         version: 1.0.30001462
       chokidar:
         specifier: 3.5.3
         version: 3.5.3
+      compare-versions:
+        specifier: 6.0.0-rc.1
+        version: 6.0.0-rc.1
       core-js:
         specifier: 3.32.0
         version: 3.32.0
       core-js-pure:
         specifier: ^3.8.1
         version: 3.29.0
+      enhanced-resolve:
+        specifier: 5.12.0
+        version: 5.12.0
       error-stack-parser:
         specifier: ^2.0.6
         version: 2.1.4
@@ -1284,15 +1293,24 @@ importers:
       events:
         specifier: 3.3.0
         version: 3.3.0
+      fast-querystring:
+        specifier: 1.1.2
+        version: 1.1.2
       html-entities:
         specifier: ^2.3.2
         version: 2.3.3
       jest-worker:
         specifier: 27.5.1
         version: 27.5.1
+      json-parse-even-better-errors:
+        specifier: ^3.0.0
+        version: 3.0.0
       less:
         specifier: 4.1.2
         version: 4.1.2
+      neo-async:
+        specifier: 2.6.2
+        version: 2.6.2
       postcss:
         specifier: 8.4.31
         version: 8.4.31
@@ -1302,10 +1320,25 @@ importers:
       sass:
         specifier: 1.50.0
         version: 1.50.0
+      watchpack:
+        specifier: ^2.4.0
+        version: 2.4.0
+      webpack-sources:
+        specifier: 3.2.3
+        version: 3.2.3
+      zod:
+        specifier: ^3.21.4
+        version: 3.21.4
+      zod-validation-error:
+        specifier: 1.2.0
+        version: 1.2.0(zod@3.21.4)
     devDependencies:
       '@pmmmwh/react-refresh-webpack-plugin':
         specifier: 0.5.10
         version: 0.5.10(react-refresh@0.14.0)(webpack-dev-server@4.15.0)(webpack@5.88.2)
+      '@rspack/core':
+        specifier: 0.3.11
+        version: 0.3.11
       '@types/less':
         specifier: ^3.0.3
         version: 3.0.3
@@ -1376,7 +1409,7 @@ importers:
         specifier: 13.1.2
         version: 13.1.2
       graceful-fs:
-        specifier: ^4.2.6
+        specifier: 4.2.10
         version: 4.2.10
       http-proxy-middleware:
         specifier: ^2.0.3
@@ -12034,14 +12067,6 @@ packages:
     dependencies:
       graceful-fs: 4.2.10
       tapable: 2.2.1
-
-  /enhanced-resolve@5.14.1:
-    resolution: {integrity: sha512-Vklwq2vDKtl0y/vtwjSesgJ5MYS7Etuk5txS8VdKL4AOS1aUlD96zqIfsOSLQsdv3xgMRbtkWM8eG9XDfKUPow==}
-    engines: {node: '>=10.13.0'}
-    dependencies:
-      graceful-fs: 4.2.10
-      tapable: 2.2.1
-    dev: true
 
   /enhanced-resolve@5.15.0:
     resolution: {integrity: sha512-LXYT42KJ7lpIKECr2mAXIaMldcNCh/7E0KBKOu4KSfkHmP+mZmSs+8V5gBAqisWBy0OO4W5Oyys0GO1Y8KtdKg==}
@@ -23318,7 +23343,7 @@ packages:
       acorn-import-assertions: 1.9.0(acorn@8.11.2)
       browserslist: 4.21.5
       chrome-trace-event: 1.0.3
-      enhanced-resolve: 5.15.0
+      enhanced-resolve: 5.12.0
       es-module-lexer: 0.9.3
       eslint-scope: 5.1.1
       events: 3.3.0
@@ -23357,7 +23382,7 @@ packages:
       acorn-import-assertions: 1.9.0(acorn@8.11.2)
       browserslist: 4.21.5
       chrome-trace-event: 1.0.3
-      enhanced-resolve: 5.15.0
+      enhanced-resolve: 5.12.0
       es-module-lexer: 0.9.3
       eslint-scope: 5.1.1
       events: 3.3.0
@@ -23397,7 +23422,7 @@ packages:
       acorn-import-assertions: 1.9.0(acorn@8.8.2)
       browserslist: 4.21.5
       chrome-trace-event: 1.0.3
-      enhanced-resolve: 5.14.1
+      enhanced-resolve: 5.15.0
       es-module-lexer: 1.2.1
       eslint-scope: 5.1.1
       events: 3.3.0

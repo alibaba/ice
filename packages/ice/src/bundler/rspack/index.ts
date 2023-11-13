@@ -19,7 +19,7 @@ async function bundler(
   } = options;
   let compiler: MultiCompiler;
   let devServer: RspackDevServer;
-  const { rspack } = await import('@ice/bundles/esm/rspack.js');
+  const { rspack } = await import('@ice/bundles/compiled/@rspack/core/dist/index.js');
   const rspackConfigs = await getConfig(context, options, rspack);
   try {
     // @ts-ignore

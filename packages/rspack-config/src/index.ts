@@ -3,7 +3,7 @@ import { createRequire } from 'module';
 import { compilationPlugin, compileExcludes, getDefineVars, getCompilerPlugins } from '@ice/shared-config';
 import type { Config, ModifyWebpackConfig } from '@ice/shared-config/types';
 import type { Configuration } from '@rspack/core';
-import type { rspack as Rspack } from '@ice/bundles/esm/rspack.js';
+import type { rspack as Rspack } from '@ice/bundles/compiled/@rspack/core/dist/index.js';
 import AssetManifest from './plugins/AssetManifest.js';
 import getSplitChunks from './splitChunks.js';
 import getAssetsRule from './assetsRule.js';
@@ -75,7 +75,7 @@ const getConfig: GetConfig = async (options) => {
     enableEnv: true,
     getRoutesFile,
   });
-  const { DefinePlugin, ProvidePlugin } = await import('@ice/bundles/esm/rspack.js');
+  const { DefinePlugin, ProvidePlugin } = await import('@ice/bundles/compiled/@rspack/core/dist/index.js');
   const cssFilename = `css/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`;
   // get compile plugins
   const compilerWebpackPlugins = getCompilerPlugins(rootDir, taskConfig || {}, 'rspack', { isServer: false });
