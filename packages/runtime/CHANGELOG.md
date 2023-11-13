@@ -1,5 +1,11 @@
 # @ice/runtime
 
+## 1.3.2
+
+### Patch Changes
+
+- 899c4740: feat: support options when call document dataLoader
+
 ## 1.3.1
 
 ### Patch Changes

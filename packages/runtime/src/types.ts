@@ -67,6 +67,9 @@ export interface AppConfig {
     basename?: string;
     initialEntries?: InitialEntry[];
   };
+  cache?: {
+    firstChunk?: boolean;
+  };
 }
 
 export interface RoutesConfig {
@@ -84,6 +87,15 @@ export interface DataLoaderOptions {
 export interface DataLoaderConfig {
   loader: Loader;
   options?: DataLoaderOptions;
+}
+
+interface DocumentLoaderOptions {
+  documentOnly?: boolean;
+}
+export type DocumentDataLoader = (ctx: RequestContext, options: DocumentLoaderOptions) => DataLoaderResult;
+
+export interface DocumentDataLoaderConfig {
+  loader: DocumentDataLoader;
 }
 
 export interface LoadersData {

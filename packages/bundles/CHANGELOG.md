@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.17
+
+### Patch Changes
+
+- d4aaa580: fix: support custom transform plugins in speedup mode
+
 ## 0.1.16
 
 ### Patch Changes

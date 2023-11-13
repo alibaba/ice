@@ -1,6 +1,6 @@
 {
   "name": "@ice/bundles",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "license": "MIT",
   "author": "ICE",
   "description": "Basic dependencies for ice.",
@@ -71,7 +71,7 @@
     "webpack": "5.88.2",
     "webpack-bundle-analyzer": "4.5.0",
     "webpack-dev-server": "4.15.0",
-    "unplugin": "0.9.5",
+    "unplugin": "1.5.0",
     "bonjour-service": "^1.0.13",
     "colorette": "^2.0.10",
     "compression": "^1.7.4",

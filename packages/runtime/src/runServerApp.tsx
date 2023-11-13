@@ -14,7 +14,8 @@ import type {
   DocumentComponent,
   RuntimeModules,
   AppData,
-  ServerAppRouterProps, DataLoaderConfig,
+  ServerAppRouterProps,
+  DocumentDataLoaderConfig,
 } from './types.js';
 import Runtime from './runtime.js';
 import { AppContextProvider } from './AppContext.js';
@@ -38,7 +39,7 @@ interface RenderOptions {
   assetsManifest: AssetsManifest;
   createRoutes: (options: Pick<RouteLoaderOptions, 'requestContext' | 'renderMode'>) => RouteItem[];
   runtimeModules: RuntimeModules;
-  documentDataLoader?: DataLoaderConfig;
+  documentDataLoader?: DocumentDataLoaderConfig;
   Document?: DocumentComponent;
   documentOnly?: boolean;
   renderMode?: RenderMode;
@@ -270,7 +271,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
   if (renderOptions.documentDataLoader) {
     const { loader } = renderOptions.documentDataLoader;
     if (isFunction(loader)) {
-      documentData = await loader(requestContext);
+      documentData = await loader(requestContext, { documentOnly });
       // @TODO: document should have it's own context, not shared with app.
       appContext.documentData = documentData;
     } else {
@@ -402,6 +403,7 @@ async function renderServerEntry(
       <AppRouter routes={routes} routerContext={routerContext} />
     ),
   };
+
   const element = (
     <AppContextProvider value={appContext}>
       <AppRuntimeProvider>

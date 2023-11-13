@@ -192,15 +192,30 @@ export const Data: DataType = (props: DataProps) => {
   );
 };
 
+/**
+ * Flag of first chunk cache.
+ */
+export type FirstChunkCacheType = () => JSX.Element;
+
+export const FirstChunkCache: FirstChunkCacheType = () => {
+  return <div dangerouslySetInnerHTML={{ __html: '<!--fcc-->' }} />;
+};
+
 export type MainType = (props: React.HTMLAttributes<HTMLDivElement>) => JSX.Element;
 
 export const Main: MainType = (props: React.HTMLAttributes<HTMLDivElement>) => {
   const { main } = useDocumentContext();
   const { appConfig } = useAppContext();
+
   return (
-    <div id={appConfig.app.rootId} {...props}>
-      {main}
-    </div>
+    <>
+      <div id={appConfig.app.rootId} {...props}>
+        {main}
+      </div>
+      {
+        appConfig.cache?.firstChunk && <FirstChunkCache />
+      }
+    </>
   );
 };
 

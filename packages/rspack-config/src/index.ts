@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { createRequire } from 'module';
-import { compilationPlugin, compileExcludes, getDefineVars } from '@ice/shared-config';
+import { compilationPlugin, compileExcludes, getDefineVars, getCompilerPlugins } from '@ice/shared-config';
 import type { Config, ModifyWebpackConfig } from '@ice/shared-config/types';
 import type { Configuration } from '@rspack/core';
 import type { rspack as Rspack } from '@ice/bundles/esm/rspack.js';
@@ -76,6 +76,8 @@ const getConfig: GetConfig = (options) => {
     getRoutesFile,
   });
   const cssFilename = `css/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`;
+  // get compile plugins
+  const compilerWebpackPlugins = getCompilerPlugins(rootDir, taskConfig || {}, 'rspack', { isServer: false });
   const config: Configuration = {
     entry: {
       main: [path.join(rootDir, runtimeTmpDir, 'entry.client.tsx')],
@@ -127,11 +129,13 @@ const getConfig: GetConfig = (options) => {
     },
     // @ts-expect-error plugin instance defined by default in not compatible with rspack.
     plugins: [
+      ...plugins,
+      // Unplugin should be compatible with rspack.
+      ...compilerWebpackPlugins,
       new AssetManifest({
         fileName: 'assets-manifest.json',
         outputDir: path.join(rootDir, runtimeTmpDir),
       }),
-      ...plugins,
     ].filter(Boolean),
     builtins: {
       define: getDefineVars(define, runtimeDefineVars, getExpandedEnvs),
