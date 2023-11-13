@@ -16,6 +16,8 @@ function getPluginTransform(plugin: UnpluginOptions, transformOptions: Transform
   const { transform } = plugin;
   if (transform) {
     return {
+      // Add default enfoce pre, so it will excute before swc compilation.
+      enforce: 'pre',
       ...plugin,
       transform(code: string, id: string) {
         return transform.call(this, code, id, transformOptions);
@@ -88,8 +90,6 @@ function getCompilerPlugins(rootDir: string, config: Config, compiler: Compiler,
   }
   if (clientBundlers.includes(compiler)) {
     return compilerPlugins
-      // Plugins will be transformed as webpack loader, the execute order of webpack loader is reversed.
-      .reverse()
       .map((plugin) => createUnplugin(() => getPluginTransform(plugin, transformOptions))[compiler]()) as Config['plugins'];
   } else {
     return compilerPlugins.map(plugin => getPluginTransform(plugin, transformOptions));
