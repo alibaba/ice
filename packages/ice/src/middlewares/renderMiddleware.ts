@@ -48,6 +48,7 @@ export default function createRenderMiddleware(options: Options): Middleware {
           req,
           res,
         };
+        res.setHeader('fcc-enable', 'true');
         serverModule.renderToResponse(requestContext, {
           renderMode,
           documentOnly,

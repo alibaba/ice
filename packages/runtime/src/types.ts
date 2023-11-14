@@ -69,6 +69,7 @@ export interface AppConfig {
   };
   cache?: {
     firstChunk?: boolean;
+    snapshot?: boolean;
   };
 }
 

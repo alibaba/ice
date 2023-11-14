@@ -201,6 +201,57 @@ export const FirstChunkCache: FirstChunkCacheType = () => {
   return <div dangerouslySetInnerHTML={{ __html: '<!--fcc-->' }} />;
 };
 
+/**
+ * Snapshot cache.
+ */
+export type SnapshotCacheType = () => JSX.Element;
+
+function Snapshot(rootId) {
+  // Run before </html>.
+  const SNAPSHOT_ID = 'fcc-snapshot';
+  const FCC_FLAG = decodeURIComponent('%3C!--fcc--%3E');
+  // Cache template before stream.
+  const iceContainerEle = document.getElementById(rootId);
+  let snapshot = document.documentElement.outerHTML;
+
+  window.addEventListener('stream-end', () => {
+    // Remove snapshot when stream-end event.
+    const snapshotEle = document.getElementById(SNAPSHOT_ID);
+    const snapshotOuterHTML = snapshotEle.outerHTML;
+    if (snapshotEle) {
+      snapshotEle.removeAttribute('style');
+      snapshotEle.innerHTML = '';
+    }
+
+    const hasCacheFlag = snapshot.indexOf(FCC_FLAG) >= 0;
+    if (hasCacheFlag) {
+      let cacheStr = snapshot.split(FCC_FLAG)[0] + FCC_FLAG;
+      const style = 'position:absolute;width:100%;top:0;left:0;z-index:999';
+      cacheStr = cacheStr.replace(snapshotOuterHTML, `<div id="${SNAPSHOT_ID}" style="${style}">${iceContainerEle.innerHTML}</div>`);
+      console.log('cacheStr', cacheStr);
+      let mega = (window as any).__megability_bridge__;
+      if (!mega) return;
+      mega.asyncCall('ssr', 'setFirstChunkCache', {
+        html: cacheStr,
+      });
+      console.log('cache success');
+    }
+  });
+}
+
+export const SnapshotCache: SnapshotCacheType = () => {
+  const { appConfig } = useAppContext();
+  return (<>
+    <div id="fcc-snapshot" />
+    <FirstChunkCache />
+    <script
+      dangerouslySetInnerHTML={{
+      __html: `(${Snapshot.toString()})('${appConfig.app.rootId}')`,
+    }}
+    />
+  </>);
+};
+
 export type MainType = (props: React.HTMLAttributes<HTMLDivElement>) => JSX.Element;
 
 export const Main: MainType = (props: React.HTMLAttributes<HTMLDivElement>) => {
@@ -212,6 +263,9 @@ export const Main: MainType = (props: React.HTMLAttributes<HTMLDivElement>) => {
       <div id={appConfig.app.rootId} {...props}>
         {main}
       </div>
+      {
+        appConfig.cache?.snapshot && <SnapshotCache />
+      }
       {
         appConfig.cache?.firstChunk && <FirstChunkCache />
       }

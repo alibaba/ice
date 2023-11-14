@@ -1,11 +1,11 @@
 .list {
-  background-color: rgba(0,0,0,.03);
+  background-color: #FFF;
+  padding: 10px;
 }
 
 .item{
-  padding: 20px;
+  padding: 30px;
   background-color: aliceblue;
-  margin: 20px;
   display: flex;
 }
 
