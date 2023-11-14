@@ -1,5 +1,11 @@
 # @ice/shared-config
 
+## 1.1.2
+
+### Patch Changes
+
+- 58d8cb80: fix: reoder transform plugins
+
 ## 1.1.1
 
 ### Patch Changes

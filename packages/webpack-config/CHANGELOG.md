@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.6
+
+### Patch Changes
+
+- Updated dependencies [58d8cb80]
+  - @ice/shared-config@1.1.2
+
 ## 1.1.5
 
 ### Patch Changes
