@@ -19,7 +19,7 @@ async function bundler(
   } = options;
   let compiler: MultiCompiler;
   let devServer: RspackDevServer;
-  const { rspack } = await import('@ice/bundles/compiled/@rspack/core/dist/index.js');
+  const { rspack } = await import('@ice/bundles/esm/rspack.js');
   // Override the type of rspack, because of rspack is imported from pre-compiled bundle.
   const rspackConfigs = await getConfig(context, options, rspack as unknown as typeof Rspack);
   try {

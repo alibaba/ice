@@ -74,7 +74,7 @@ const getConfig: GetConfig = async (options) => {
     enableEnv: true,
     getRoutesFile,
   });
-  const { DefinePlugin, ProvidePlugin } = await import('@ice/bundles/compiled/@rspack/core/dist/index.js');
+  const { DefinePlugin, ProvidePlugin } = await import('@ice/bundles/esm/rspack.js');
   const cssFilename = `css/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`;
   // get compile plugins
   const compilerWebpackPlugins = getCompilerPlugins(rootDir, taskConfig || {}, 'rspack', { isServer: false });
