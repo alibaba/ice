@@ -1,6 +1,5 @@
 import getRspackConfig from '@ice/rspack-config';
-import type { Configuration } from '@rspack/core';
-import type { rspack as Rspack } from '@ice/bundles/compiled/@rspack/core/dist/index.js';
+import type { Configuration, rspack as Rspack } from '@rspack/core';
 import type { Config } from '@ice/shared-config/types';
 import { getRouteExportConfig } from '../../service/config.js';
 import {
@@ -42,9 +41,8 @@ const getConfig: GetConfig = async (context, options, rspack) => {
     },
   } = context;
   const { reCompile, ensureRoutesConfig } = getRouteExportConfig(rootDir);
-  const getPlugins = (taskConfig: Config): Configuration['plugins'] => {
+  const getPlugins = (taskConfig: Config): Config['plugins'] => {
     const { target, outputDir, useDataLoader, server } = taskConfig;
-    // @ts-expect-error ignore webpack plugin for rspack.
     return [
       // Add spinner for webpack task.
       getSpinnerPlugin(spinner),
@@ -70,7 +68,7 @@ const getConfig: GetConfig = async (context, options, rspack) => {
         getAllPlugin,
         frameworkExports: generator.getExportList('framework', target),
       }),
-    ].filter(Boolean);
+    ].filter(Boolean) as Config['plugins'];
   };
   return await Promise.all(taskConfigs.map(async ({ config }) => {
     const plugins = getPlugins(config);
@@ -87,7 +85,6 @@ const getConfig: GetConfig = async (context, options, rspack) => {
       localIdentName: config.mode === 'development' ? CSS_MODULES_LOCAL_IDENT_NAME_DEV : CSS_MODULES_LOCAL_IDENT_NAME,
       taskConfig: {
         ...config,
-        // @ts-expect-error ignore webpack plugin for rspack.
         plugins: (config.plugins || []).concat(plugins),
       },
     });
