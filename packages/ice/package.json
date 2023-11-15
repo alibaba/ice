@@ -12,9 +12,6 @@
   },
   "typesVersions": {
     "*": {
-      "types": [
-        "./esm/types/index.d.ts"
-      ],
       "analyze": [
         "./esm/service/analyze.d.ts"
       ],
