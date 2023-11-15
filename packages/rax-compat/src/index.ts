@@ -1,5 +1,5 @@
-import * as Rax from './exports';
+import * as Rax from './exports.js';
 
-export * from './exports';
+export * from './exports.js';
 
 export default Rax;
