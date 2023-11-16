@@ -1,6 +1,5 @@
 import { useAppContext } from 'ice';
 import styles from './about.module.css';
-import RefreshButton from '@/components/RefreshButton.client';
 import Counter from '@/components/Counter.client';
 
 if (!global.requestCount) {
@@ -18,9 +17,6 @@ export default function Home() {
       <h2>About Page</h2>
       <div>server request count:  { global.requestCount++ }</div>
       <Counter />
-      <RefreshButton>
-        Refresh Button
-      </RefreshButton>
     </div>
   );
 }
