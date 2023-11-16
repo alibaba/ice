@@ -1,3 +1,4 @@
+import { TextDecoder, TextEncoder } from 'util';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { renderToPipeableStream } from 'react-server-dom-webpack/server.node';

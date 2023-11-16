@@ -15,7 +15,7 @@ export async function runRSCClientApp(appConfig: AppConfig) {
     DOMContentLoaded();
   }
 
-  const rscData = (self as any).__rsc_data || [];
+  const rscData = (self as any).__rsc_data = (self as any).__rsc_data || [];
   rscData.forEach(serverDataCallback);
   rscData.push = serverDataCallback;
 
