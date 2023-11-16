@@ -1,4 +1,4 @@
-import { Meta, Title, Links, Main, Scripts } from 'ice';
+import { Meta, Title, Links, Main, Scripts, FirstChunkCache } from 'ice';
 
 function Document() {
   return (
@@ -13,6 +13,7 @@ function Document() {
       </head>
       <body>
         <Main />
+        <FirstChunkCache />
         <Scripts async />
       </body>
     </html>
