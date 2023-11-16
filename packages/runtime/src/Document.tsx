@@ -208,14 +208,9 @@ export const Main: MainType = (props: React.HTMLAttributes<HTMLDivElement>) => {
   const { appConfig } = useAppContext();
 
   return (
-    <>
-      <div id={appConfig.app.rootId} {...props}>
-        {main}
-      </div>
-      {
-        appConfig.cache?.firstChunk && <FirstChunkCache />
-      }
-    </>
+    <div id={appConfig.app.rootId} {...props}>
+      {main}
+    </div>
   );
 };
 
