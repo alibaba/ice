@@ -8,7 +8,7 @@ import { InputCompat } from './input.js';
 
 let ElementFactory: (type: any, props: any, ...args: any[]) => ReactElement;
 export function createJSXElementFactory(factory: typeof ElementFactory) {
-  return (type: any, props: object, ...args: any[]): ReactElement => {
+  return (type: any, props: any, ...args: any[]): ReactElement => {
     // Get a shallow copy of props, to avoid mutating the original object.
     let rest = Object.assign({}, props) as any;
     const { onAppear, onDisappear } = rest;
