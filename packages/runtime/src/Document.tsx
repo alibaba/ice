@@ -12,6 +12,9 @@ const Context = React.createContext<DocumentContext | undefined>(undefined);
 
 Context.displayName = 'DocumentContext';
 
+// Collect render assets for SSR preRender.
+const renderAssets = (global.renderAssets = []);
+
 function useDocumentContext() {
   const value = React.useContext(Context);
   return value;
@@ -77,6 +80,10 @@ export const Links: LinksType = (props: LinksProps) => {
   const entryAssets = getEntryAssets(assetsManifest);
   const styles = entryAssets.concat(pageAssets).filter(path => path.indexOf('.css') > -1);
 
+  // Collect styles.
+  renderAssets && renderAssets.push(...styles);
+  renderAssets && renderAssets.push(...routeLinks.map(routeLink => routeLink.href));
+
   return (
     <>
       {
@@ -120,6 +127,10 @@ export const Scripts: ScriptsType = (props: ScriptsProps) => {
     return true;
   });
 
+  // Collect scripts.
+  renderAssets && renderAssets.push(...routeScripts);
+  renderAssets && renderAssets.push(...scripts);
+
   return (
     <>
       <Data ScriptElement={ScriptElement} />
@@ -150,7 +161,6 @@ export function usePageAssets() {
   if (assetsManifest.dataLoader) {
     assets.unshift(`${assetsManifest.publicPath}${assetsManifest.dataLoader}`);
   }
-
   return assets;
 }
 

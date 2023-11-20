@@ -1,10 +1,10 @@
 import type { ServerResponse, IncomingMessage } from 'http';
 import * as React from 'react';
-import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 import * as ReactDOMServer from 'react-dom/server';
 import type { Location } from 'history';
 import { parsePath } from 'history';
 import { isFunction } from '@ice/shared';
+import type { RenderToPipeableStreamOptions } from './server/streamRender.js';
 import type {
   AppContext, RouteItem, ServerContext,
   AppExport, AssetsManifest,
@@ -191,8 +191,8 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
           console.error('PipeToResponse error.');
           console.error(err);
         },
-        onAllReady: () => {
-          onAllReady && onAllReady();
+        onAllReady: (params: OnAllReadyParams) => {
+          onAllReady && onAllReady(params);
           resolve();
         },
       });

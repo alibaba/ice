@@ -1,9 +1,19 @@
 import * as Stream from 'stream';
 import type * as StreamType from 'stream';
 import * as ReactDOMServer from 'react-dom/server';
-import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 
 const { Writable } = Stream;
+
+export interface OnAllReadyParams {
+  renderAssets: string[];
+}
+export type OnAllReady = (OnAllReadyParams) => void;
+export interface RenderToPipeableStreamOptions {
+  onShellReady?: () => void;
+  onShellError?: (error: unknown) => void;
+  onAllReady?: OnAllReady;
+  onError?: (error: unknown) => void;
+}
 
 export type NodeWritablePiper = (
   res: StreamType.Writable,
@@ -26,7 +36,9 @@ export function renderToNodeStream(
         options?.onError && options?.onError(error);
       },
       onAllReady() {
-        options?.onAllReady && options?.onAllReady();
+        options?.onAllReady && options?.onAllReady({
+          renderAssets: global.renderAssets || [],
+        });
       },
     });
   };
