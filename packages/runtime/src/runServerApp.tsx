@@ -4,7 +4,7 @@ import * as ReactDOMServer from 'react-dom/server';
 import type { Location } from 'history';
 import { parsePath } from 'history';
 import { isFunction } from '@ice/shared';
-import type { RenderToPipeableStreamOptions } from './server/streamRender.js';
+import type { RenderToPipeableStreamOptions, OnAllReadyParams } from './server/streamRender.js';
 import type {
   AppContext, RouteItem, ServerContext,
   AppExport, AssetsManifest,
