@@ -1,0 +1,43 @@
+{
+  "name": "@ice/plugin-unocss",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./esm/index.d.ts",
+      "import": "./esm/index.js",
+      "default": "./esm/index.js"
+    }
+  },
+  "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
+  "files": [
+    "esm",
+    "!esm/**/*.map",
+    "*.d.ts"
+  ],
+  "dependencies": {
+    "@unocss/config": "^0.57.6",
+    "@unocss/core": "^0.57.6",
+    "@unocss/reset": "^0.57.6",
+    "@unocss/webpack": "^0.57.6",
+    "unocss": "^0.57.6"
+  },
+  "devDependencies": {
+    "@ice/app": "workspace:^",
+    "@nuxt/schema": "^3.8.1"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-unocss"
+  },
+  "scripts": {
+    "watch": "tsc -w --sourceMap",
+    "build": "tsc"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
