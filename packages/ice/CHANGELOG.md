@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.3.8
+
+### Patch Changes
+
+- Updated dependencies [58d8cb80]
+  - @ice/shared-config@1.1.2
+  - @ice/rspack-config@1.0.7
+  - @ice/webpack-config@1.1.6
+
 ## 3.3.7
 
 ### Patch Changes
