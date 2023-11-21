@@ -8,12 +8,30 @@ interface DocumentContext {
   main: React.ReactNode | null;
 }
 
+declare global {
+  interface Window {
+    renderAssets: string[];
+  }
+}
+
 const Context = React.createContext<DocumentContext | undefined>(undefined);
 
 Context.displayName = 'DocumentContext';
 
 // Collect render assets for SSR preRender.
-const renderAssets = (global.renderAssets = []);
+function pushRenderAssets(asset: Array<string> | string) {
+  if (typeof window === 'undefined') return;
+  console.log('pushRenderAssets', typeof window);
+  if (!window.renderAssets) {
+    window.renderAssets = [];
+  }
+
+  if (Array.isArray(asset)) {
+    window.renderAssets.push(...asset);
+  } else {
+    window.renderAssets.push(asset);
+  }
+}
 
 function useDocumentContext() {
   const value = React.useContext(Context);
@@ -81,8 +99,8 @@ export const Links: LinksType = (props: LinksProps) => {
   const styles = entryAssets.concat(pageAssets).filter(path => path.indexOf('.css') > -1);
 
   // Collect styles.
-  renderAssets && renderAssets.push(...styles);
-  renderAssets && renderAssets.push(...routeLinks.map(routeLink => routeLink.href));
+  pushRenderAssets(styles);
+  pushRenderAssets(routeLinks.map(routeLink => routeLink.href));
 
   return (
     <>
@@ -128,8 +146,8 @@ export const Scripts: ScriptsType = (props: ScriptsProps) => {
   });
 
   // Collect scripts.
-  renderAssets && renderAssets.push(...routeScripts);
-  renderAssets && renderAssets.push(...scripts);
+  pushRenderAssets(routeScripts);
+  pushRenderAssets(scripts);
 
   return (
     <>

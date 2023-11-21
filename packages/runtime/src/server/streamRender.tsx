@@ -37,7 +37,7 @@ export function renderToNodeStream(
       },
       onAllReady() {
         options?.onAllReady && options?.onAllReady({
-          renderAssets: global.renderAssets || [],
+          renderAssets: (typeof window === 'undefined') ? [] : (window.renderAssets || []),
         });
       },
     });
