@@ -21,7 +21,6 @@ Context.displayName = 'DocumentContext';
 // Collect render assets for SSR preRender.
 function pushRenderAssets(asset: Array<string> | string) {
   if (typeof window === 'undefined') return;
-  console.log('pushRenderAssets', typeof window);
   if (!window.renderAssets) {
     window.renderAssets = [];
   }
