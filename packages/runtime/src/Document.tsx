@@ -146,7 +146,7 @@ export const Scripts: ScriptsType = (props: ScriptsProps) => {
   });
 
   // Collect scripts.
-  pushRenderAssets(routeScripts);
+  pushRenderAssets(routeScripts.map(routeScriptProps => routeScriptProps.src));
   pushRenderAssets(scripts);
 
   return (
