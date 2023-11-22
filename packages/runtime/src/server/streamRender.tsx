@@ -1,6 +1,9 @@
 import * as Stream from 'stream';
 import type * as StreamType from 'stream';
 import * as ReactDOMServer from 'react-dom/server';
+import { getAllAssets } from '../Document.js';
+import type { RenderOptions } from '../runServerApp.js';
+import type { ServerAppRouterProps } from '../types.js';
 
 const { Writable } = Stream;
 
@@ -20,8 +23,13 @@ export type NodeWritablePiper = (
   options?: RenderToPipeableStreamOptions,
 ) => void;
 
+export type RenderToNodeStreamOptions = {
+  renderOptions: RenderOptions;
+  routerContext: ServerAppRouterProps['routerContext'];
+};
 export function renderToNodeStream(
   element: React.ReactElement,
+  renderToNodeStreamOptions: RenderToNodeStreamOptions,
 ): NodeWritablePiper {
   return (res, options) => {
     const { pipe } = ReactDOMServer.renderToPipeableStream(element, {
@@ -36,8 +44,27 @@ export function renderToNodeStream(
         options?.onError && options?.onError(error);
       },
       onAllReady() {
+        const {
+          renderOptions,
+          routerContext,
+        } = renderToNodeStreamOptions;
+
+        const {
+          assetsManifest,
+        } = renderOptions;
+
+        const {
+          matches,
+          loaderData,
+        } = routerContext;
+
+        const renderAssets = getAllAssets(loaderData, matches, assetsManifest);
+        if (typeof window !== 'undefined' && window.renderAssets) {
+          renderAssets.concat(window.renderAssets);
+        }
+
         options?.onAllReady && options?.onAllReady({
-          renderAssets: (typeof window === 'undefined') ? [] : (window.renderAssets || []),
+          renderAssets,
         });
       },
     });

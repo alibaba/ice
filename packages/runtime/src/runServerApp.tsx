@@ -7,7 +7,8 @@ import { isFunction } from '@ice/shared';
 import type { RenderToPipeableStreamOptions, OnAllReadyParams } from './server/streamRender.js';
 import type {
   AppContext, RouteItem, ServerContext,
-  AppExport, AssetsManifest,
+  AppExport,
+  AssetsManifest,
   RouteMatch,
   PageConfig,
   RenderMode,
@@ -21,7 +22,7 @@ import Runtime from './runtime.js';
 import { AppContextProvider } from './AppContext.js';
 import { getAppData } from './appData.js';
 import getAppConfig from './appConfig.js';
-import { DocumentContextProvider } from './Document.js';
+import { DocumentContextProvider, usePageAssets } from './Document.js';
 import { loadRouteModules } from './routes.js';
 import type { RouteLoaderOptions } from './routes.js';
 import { pipeToString, renderToNodeStream } from './server/streamRender.js';
@@ -34,7 +35,7 @@ import { renderHTMLToJS } from './renderHTMLToJS.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 
 
-interface RenderOptions {
+export interface RenderOptions {
   app: AppExport;
   assetsManifest: AssetsManifest;
   createRoutes: (options: Pick<RouteLoaderOptions, 'requestContext' | 'renderMode'>) => RouteItem[];
@@ -416,7 +417,10 @@ async function renderServerEntry(
     </AppContextProvider>
   );
 
-  const pipe = renderToNodeStream(element);
+  const pipe = renderToNodeStream(element, {
+    renderOptions,
+    routerContext,
+  });
 
   const fallback = () => {
     return renderDocument({
