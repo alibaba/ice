@@ -58,9 +58,9 @@ export function renderToNodeStream(
           loaderData,
         } = routerContext;
 
-        const renderAssets = getAllAssets(loaderData, matches, assetsManifest);
+        let renderAssets = getAllAssets(loaderData, matches, assetsManifest);
         if (typeof window !== 'undefined' && window.renderAssets) {
-          renderAssets.concat(window.renderAssets);
+          renderAssets = renderAssets.concat(window.renderAssets);
         }
 
         options?.onAllReady && options?.onAllReady({
