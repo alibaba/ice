@@ -33,7 +33,7 @@
     "react-refresh": "0.14.0",
     "core-js-pure": "^3.8.1",
     "error-stack-parser": "^2.0.6",
-    "@rspack/dev-server": "0.3.11",
+    "@rspack/dev-server": "0.4.0",
     "@ice/css-modules-hash": "0.0.6",
     "browserslist": "^4.21.3",
     "compare-versions": "6.0.0-rc.1",
@@ -45,10 +45,10 @@
     "webpack-sources": "3.2.3",
     "zod": "^3.21.4",
     "zod-validation-error": "1.2.0",
-    "@rspack/binding": "0.3.11"
+    "@rspack/binding": "0.4.0"
   },
   "devDependencies": {
-    "@rspack/core": "0.3.11",
+    "@rspack/core": "0.4.0",
     "@types/less": "^3.0.3",
     "@types/lodash": "^4.14.181",
     "@types/webpack-bundle-analyzer": "^4.4.1",
