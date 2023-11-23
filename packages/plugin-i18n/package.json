@@ -56,7 +56,7 @@
     "webpack-dev-server": "4.15.0"
   },
   "peerDependencies": {
-    "@ice/app": "^3.3.7",
+    "@ice/app": "^3.3.8",
     "@ice/runtime": "^1.3.2"
   },
   "publishConfig": {

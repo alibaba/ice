@@ -1564,16 +1564,16 @@ importers:
         specifier: 1.2.2
         version: link:../route-manifest
       '@ice/rspack-config':
-        specifier: 1.0.6
+        specifier: 1.0.7
         version: link:../rspack-config
       '@ice/runtime':
         specifier: ^1.3.0
         version: link:../runtime
       '@ice/shared-config':
-        specifier: 1.1.1
+        specifier: 1.1.2
         version: link:../shared-config
       '@ice/webpack-config':
-        specifier: 1.1.5
+        specifier: 1.1.6
         version: link:../webpack-config
       '@swc/helpers':
         specifier: 0.5.1
@@ -2230,7 +2230,7 @@ importers:
         specifier: 0.1.17
         version: link:../bundles
       '@ice/shared-config':
-        specifier: 1.1.1
+        specifier: 1.1.2
         version: link:../shared-config
     devDependencies:
       '@rspack/core':
@@ -2347,7 +2347,7 @@ importers:
         specifier: 0.1.17
         version: link:../bundles
       '@ice/shared-config':
-        specifier: 1.1.1
+        specifier: 1.1.2
         version: link:../shared-config
       fast-glob:
         specifier: ^3.2.11
