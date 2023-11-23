@@ -8,6 +8,12 @@ interface DocumentContext {
   main: React.ReactNode | null;
 }
 
+declare global {
+  interface Window {
+    renderAssets: string[];
+  }
+}
+
 const Context = React.createContext<DocumentContext | undefined>(undefined);
 
 Context.displayName = 'DocumentContext';
@@ -137,8 +143,7 @@ export const Scripts: ScriptsType = (props: ScriptsProps) => {
   );
 };
 
-export function usePageAssets() {
-  const { loaderData, matches, assetsManifest } = useAppContext();
+export function getAllAssets(loaderData, matches, assetsManifest): Array<string> {
   const routeLinks = getLinks(matches, loaderData);
   const routeScripts = getScripts(matches, loaderData);
   const pageAssets = getPageAssets(matches, assetsManifest);
@@ -150,8 +155,12 @@ export function usePageAssets() {
   if (assetsManifest.dataLoader) {
     assets.unshift(`${assetsManifest.publicPath}${assetsManifest.dataLoader}`);
   }
-
   return assets;
+}
+
+export function usePageAssets() {
+  const { loaderData, matches, assetsManifest } = useAppContext();
+  return getAllAssets(loaderData, matches, assetsManifest);
 }
 
 interface DataProps {
