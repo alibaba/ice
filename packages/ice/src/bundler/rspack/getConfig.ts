@@ -1,6 +1,5 @@
 import getRspackConfig from '@ice/rspack-config';
-import type { Configuration } from '@rspack/core';
-import type { rspack as Rspack } from '@ice/bundles/esm/rspack.js';
+import type { Configuration, rspack as Rspack } from '@rspack/core';
 import type { Config } from '@ice/shared-config/types';
 import { getRouteExportConfig } from '../../service/config.js';
 import {
@@ -42,7 +41,7 @@ const getConfig: GetConfig = async (context, options, rspack) => {
     },
   } = context;
   const { reCompile, ensureRoutesConfig } = getRouteExportConfig(rootDir);
-  const getPlugins = (taskConfig: Config): Configuration['plugins'] => {
+  const getPlugins = (taskConfig: Config): Config['plugins'] => {
     const { target, outputDir, useDataLoader, server } = taskConfig;
     return [
       // Add spinner for webpack task.
@@ -69,11 +68,11 @@ const getConfig: GetConfig = async (context, options, rspack) => {
         getAllPlugin,
         frameworkExports: generator.getExportList('framework', target),
       }),
-    ].filter(Boolean);
+    ].filter(Boolean) as Config['plugins'];
   };
-  return taskConfigs.map(({ config }) => {
+  return await Promise.all(taskConfigs.map(async ({ config }) => {
     const plugins = getPlugins(config);
-    return getRspackConfig({
+    return await getRspackConfig({
       rootDir,
       rspack,
       runtimeTmpDir: RUNTIME_TMP_DIR,
@@ -89,7 +88,7 @@ const getConfig: GetConfig = async (context, options, rspack) => {
         plugins: (config.plugins || []).concat(plugins),
       },
     });
-  });
+  }));
 };
 
 

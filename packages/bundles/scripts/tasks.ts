@@ -220,6 +220,29 @@ const tasks = [
       fs.copySync(path.join(__dirname, '../webpack/packages'), targetPath);
     },
   },
+  {
+    pkgName: '@rspack/core',
+    skipCompile: true,
+    declaration: false,
+    patch: () => {
+      const pkgPath = path.join(__dirname, '../node_modules/@rspack/core');
+      const targetPath = path.join(__dirname, '../compiled/@rspack/core');
+      fs.removeSync(targetPath);
+      // Copy the entire directory.
+      // Mark: when copy each file separately, the build process will be stuck.
+      fs.copySync(pkgPath, targetPath);
+      // Remove node_modules while bin files may be linked to node_modules.
+      fs.removeSync(path.join(pkgPath, 'node_modules'));
+      // filter out js files and replace with compiled files.
+      const filePaths = globbySync(['**/*.js'], { cwd: targetPath, ignore: ['node_modules'] });
+      filePaths.forEach((filePath) => {
+        const sourcePath = path.join(targetPath, filePath);
+        const fileContent = fs.readFileSync(sourcePath, 'utf8');
+        fs.writeFileSync(sourcePath, replaceDeps(fileContent, ['tapable', 'schema-utils', 'graceful-fs']));
+      });
+      // TODO: replace @rspack/binding.
+    },
+  },
 ];
 
 export default tasks;

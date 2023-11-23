@@ -32,8 +32,10 @@ export async function startDevServer(
     // Sort by length, shortest path first.
     a.split('/').filter(Boolean).length - b.split('/').filter(Boolean).length);
   const webTaskConfig = taskConfigs.find(({ name }) => name === WEB);
-  const customMiddlewares = webpackConfigs[0].devServer?.setupMiddlewares;
-  const defaultDevServerConfig = await getDefaultServerConfig(webpackConfigs[0].devServer, commandArgs);
+  // @ts-expect-error webpack-dev-server types in Configuration is missing.
+  const originalDevServer: DevServerConfiguration = webpackConfigs[0].devServer;
+  const customMiddlewares = originalDevServer?.setupMiddlewares;
+  const defaultDevServerConfig = await getDefaultServerConfig(originalDevServer, commandArgs);
   let devServerConfig: DevServerConfiguration = {
     ...defaultDevServerConfig,
     setupMiddlewares: (middlewares, devServer) => {
@@ -50,7 +52,7 @@ export async function startDevServer(
     },
   };
   // merge devServerConfig with webpackConfig.devServer
-  devServerConfig = merge(webpackConfigs[0].devServer, devServerConfig);
+  devServerConfig = merge(originalDevServer, devServerConfig);
   const urls = getUrls({
     taskConfig: webTaskConfig,
     devServerConfig,

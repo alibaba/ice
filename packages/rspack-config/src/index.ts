@@ -2,8 +2,7 @@ import * as path from 'path';
 import { createRequire } from 'module';
 import { compilationPlugin, compileExcludes, getDefineVars, getCompilerPlugins } from '@ice/shared-config';
 import type { Config, ModifyWebpackConfig } from '@ice/shared-config/types';
-import type { Configuration } from '@rspack/core';
-import type { rspack as Rspack } from '@ice/bundles/esm/rspack.js';
+import type { Configuration, rspack as Rspack } from '@rspack/core';
 import AssetManifest from './plugins/AssetManifest.js';
 import getSplitChunks from './splitChunks.js';
 import getAssetsRule from './assetsRule.js';
@@ -22,11 +21,11 @@ interface GetRspackConfigOptions {
 
 type GetConfig = (
   options: GetRspackConfigOptions,
-) => Configuration;
+) => Promise<Configuration>;
 
 const require = createRequire(import.meta.url);
 
-const getConfig: GetConfig = (options) => {
+const getConfig: GetConfig = async (options) => {
   const {
     rootDir,
     taskConfig,
@@ -75,6 +74,7 @@ const getConfig: GetConfig = (options) => {
     enableEnv: true,
     getRoutesFile,
   });
+  const { DefinePlugin, ProvidePlugin } = await import('@ice/bundles/esm/rspack.js');
   const cssFilename = `css/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`;
   // get compile plugins
   const compilerWebpackPlugins = getCompilerPlugins(rootDir, taskConfig || {}, 'rspack', { isServer: false });
@@ -136,13 +136,13 @@ const getConfig: GetConfig = (options) => {
         fileName: 'assets-manifest.json',
         outputDir: path.join(rootDir, runtimeTmpDir),
       }),
-    ].filter(Boolean),
-    builtins: {
-      define: getDefineVars(define, runtimeDefineVars, getExpandedEnvs),
-      provide: {
+      new DefinePlugin(getDefineVars(define, runtimeDefineVars, getExpandedEnvs)),
+      new ProvidePlugin({
         process: [require.resolve('process/browser')],
         $ReactRefreshRuntime$: [require.resolve('./client/reactRefresh.cjs')],
-      },
+      }),
+    ].filter(Boolean),
+    builtins: {
       devFriendlySplitChunks: true,
       css: {
         modules: { localIdentName },
