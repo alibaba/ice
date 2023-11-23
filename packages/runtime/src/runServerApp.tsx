@@ -4,7 +4,7 @@ import * as ReactDOMServer from 'react-dom/server';
 import type { Location } from 'history';
 import { parsePath } from 'history';
 import { isFunction } from '@ice/shared';
-import type { RenderToPipeableStreamOptions, OnAllReadyParams } from './server/streamRender.js';
+import type { RenderToPipeableStreamOptions, OnAllReadyParams, NodeWritablePiper } from './server/streamRender.js';
 import type {
   AppContext, RouteItem, ServerContext,
   AppExport,
@@ -22,11 +22,10 @@ import Runtime from './runtime.js';
 import { AppContextProvider } from './AppContext.js';
 import { getAppData } from './appData.js';
 import getAppConfig from './appConfig.js';
-import { DocumentContextProvider, usePageAssets } from './Document.js';
+import { DocumentContextProvider } from './Document.js';
 import { loadRouteModules } from './routes.js';
 import type { RouteLoaderOptions } from './routes.js';
 import { pipeToString, renderToNodeStream } from './server/streamRender.js';
-import type { NodeWritablePiper } from './server/streamRender.js';
 import getRequestContext from './requestContext.js';
 import matchRoutes from './matchRoutes.js';
 import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
