@@ -28,7 +28,7 @@
     "esbuild": "^0.17.16",
     "postcss": "^8.4.31",
     "webpack": "^5.86.0",
-    "webpack-dev-server": "^4.7.4"
+    "webpack-dev-server": "4.15.0"
   },
   "scripts": {
     "watch": "tsc -w --sourceMap",

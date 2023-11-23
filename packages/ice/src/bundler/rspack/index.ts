@@ -1,4 +1,4 @@
-import type { MultiCompiler } from '@rspack/core';
+import type { MultiCompiler, rspack as Rspack } from '@rspack/core';
 import type { RspackDevServer } from '@rspack/dev-server';
 import { logger } from '../../utils/logger.js';
 import type { BundlerOptions, Context } from '../types.js';
@@ -20,8 +20,10 @@ async function bundler(
   let compiler: MultiCompiler;
   let devServer: RspackDevServer;
   const { rspack } = await import('@ice/bundles/esm/rspack.js');
-  const rspackConfigs = await getConfig(context, options, rspack);
+  // Override the type of rspack, because of rspack is imported from pre-compiled bundle.
+  const rspackConfigs = await getConfig(context, options, rspack as unknown as typeof Rspack);
   try {
+    // @ts-ignore
     compiler = rspack(rspackConfigs);
   } catch (error) {
     logger.error('Webpack compile error.');
