@@ -4,10 +4,21 @@ import pkg from 'react-server-dom-webpack/client';
 import type { AppConfig } from './types.js';
 
 // @ts-ignore
-const { Suspense, use, useState, createContext, useContext, startTransition } = React;
-const { createFromFetch } = pkg;
+const { Suspense, use } = React;
+const { createFromReadableStream } = pkg;
 
 export async function runRSCClientApp(appConfig: AppConfig) {
+  // It's possible that the DOM is already loaded.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', DOMContentLoaded, false);
+  } else {
+    DOMContentLoaded();
+  }
+
+  const rscData = (self as any).__rsc_data = (self as any).__rsc_data || [];
+  rscData.forEach(serverDataCallback);
+  rscData.push = serverDataCallback;
+
   const rootId = appConfig.app.rootId || 'app';
   const container = document.getElementById(rootId);
   const root = ReactDOM.createRoot(container);
@@ -15,51 +26,71 @@ export async function runRSCClientApp(appConfig: AppConfig) {
 }
 
 function Root() {
+  const response = useInitialServerResponse(window.location.href);
+
   return (
-    <Router />
+    <Suspense>
+      {use(response)}
+    </Suspense>
   );
 }
 
-const RouterContext = createContext(null);
-const initialCache = new Map();
+const rscCache = new Map();
 
-function Router() {
-  const [cache, setCache] = useState(initialCache);
-  const [location] = useState(window.location.href);
+function useInitialServerResponse(cacheKey: string): Promise<JSX.Element> {
+  const response = rscCache.get(cacheKey);
+  if (response) return response;
 
-  let content = cache.get(location);
-  if (!content) {
-    content = createFromFetch(
-      getReactTree(location),
-    );
-    cache.set(location, content);
-  }
+  const readable = new ReadableStream({
+    start(controller) {
+      nextServerDataRegisterWriter(controller);
+    },
+  });
 
-  function refresh() {
-    startTransition(() => {
-      const nextCache = new Map();
-      const nextContent = createFromFetch(
-        getReactTree(location),
-      );
-      nextCache.set(location, nextContent);
-      setCache(nextCache);
+  const newResponse = createFromReadableStream(readable);
+
+  rscCache.set(cacheKey, newResponse);
+  return newResponse;
+}
+
+let initialServerDataBuffer: string[] | undefined;
+let initialServerDataWriter: ReadableStreamDefaultController | undefined;
+let initialServerDataLoaded = false;
+let initialServerDataFlushed = false;
+const encoder = new TextEncoder();
+
+function nextServerDataRegisterWriter(ctr: ReadableStreamDefaultController) {
+  if (initialServerDataBuffer) {
+    initialServerDataBuffer.forEach((val) => {
+      ctr.enqueue(encoder.encode(val));
     });
+    if (initialServerDataLoaded && !initialServerDataFlushed) {
+      ctr.close();
+      initialServerDataFlushed = true;
+      initialServerDataBuffer = undefined;
+    }
   }
 
-  return (
-    <RouterContext.Provider value={{ location, refresh }}>
-      <Suspense fallback={<h1>Loading...</h1>}>
-        {use(content)}
-      </Suspense>
-    </RouterContext.Provider>
-  );
+  initialServerDataWriter = ctr;
 }
 
-export function useRefresh() {
-  const router = useContext(RouterContext);
-  return router.refresh;
-}
+// When `DOMContentLoaded`, we can close all pending writers to finish hydration.
+const DOMContentLoaded = function () {
+  if (initialServerDataWriter && !initialServerDataFlushed) {
+    initialServerDataWriter.close();
+    initialServerDataFlushed = true;
+    initialServerDataBuffer = undefined;
+  }
+  initialServerDataLoaded = true;
+};
 
-function getReactTree(location) {
-  return fetch(location + (location.indexOf('?') > -1 ? '&rsc=true' : '?rsc=true'));
+function serverDataCallback(seg) {
+  if (initialServerDataWriter) {
+    initialServerDataWriter.enqueue(encoder.encode(seg));
+  } else {
+    if (!initialServerDataBuffer) {
+      initialServerDataBuffer = [];
+    }
+    initialServerDataBuffer.push(seg);
+  }
 }

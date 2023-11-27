@@ -1,3 +1,4 @@
+import { TextDecoder, TextEncoder } from 'util';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { renderToPipeableStream } from 'react-server-dom-webpack/server.node';
@@ -16,6 +17,22 @@ import type {
   RouteModules,
   ServerRenderOptions as RenderOptions,
 } from './types.js';
+
+// This utility is based on https://github.com/zertosh/htmlescape
+// License: https://github.com/zertosh/htmlescape/blob/0527ca7156a524d256101bb310a9f970f63078ad/LICENSE
+const ESCAPE_LOOKUP: { [match: string]: string } = {
+  '&': '\\u0026',
+  '>': '\\u003e',
+  '<': '\\u003c',
+  '\u2028': '\\u2028',
+  '\u2029': '\\u2029',
+};
+
+const ESCAPE_REGEX = /[&><\u2028\u2029]/g;
+
+function htmlEscapeJsonString(str: string): string {
+  return str.replace(ESCAPE_REGEX, (match) => ESCAPE_LOOKUP[match]);
+}
 
 export async function runRSCServerApp(serverContext: ServerContext, renderOptions: RenderOptions) {
   const { req, res } = serverContext;
@@ -49,9 +66,7 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
     matches: [],
   };
 
-  if (req.url?.indexOf('rsc=true') === -1) {
-    return renderDocument(serverContext, renderOptions, appContext, matches);
-  }
+  renderDocument(serverContext, renderOptions, appContext, matches);
 
   const routeModules = await loadRouteModules(matches.map(({ route: { id, lazy } }) => ({ id, lazy })));
 
@@ -71,7 +86,22 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
     }
   });
 
-  res.setHeader('Content-Type', 'text/x-component; charset=utf-8');
+  const decoder = new TextDecoder();
+  const encoder = new TextEncoder();
+
+  res.write('<script>self.__rsc_data=self.__rsc_data||[];</script>');
+
+  function decorateWrite(write) {
+    return function (data) {
+      const chunk = decoder.decode(data, { stream: true });
+      const modifiedData = `<script>self.__rsc_data.push(${htmlEscapeJsonString(JSON.stringify([chunk]))})</script>`;
+
+      return write.call(this, encoder.encode(modifiedData));
+    };
+  }
+
+  res.write = decorateWrite(res.write);
+
   const { pipe } = renderToPipeableStream(
     element,
     clientManifest,
@@ -116,6 +146,5 @@ function renderDocument(requestContext, renderOptions, appContext, matches) {
 
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.write(`<!DOCTYPE html>${htmlStr}`);
-  res.end();
 }
 
