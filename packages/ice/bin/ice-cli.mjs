@@ -36,7 +36,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
         ...parseUnknownOptions(ctx.args),
         ...commandArgs,
       } });
-      service.run();
+      service.run().catch((error) => {
+        console.log(chalk.red('Build Error'), error);
+        // Set exit code to 1 to exit process with failure code, otherwise CI may regard build as success.
+        process.exit(1);
+      });
     });
 
   program
