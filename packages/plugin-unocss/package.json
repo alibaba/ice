@@ -1,7 +1,7 @@
 {
   "name": "@ice/plugin-unocss",
   "version": "1.0.0",
-  "description": "",
+  "description": "A plugin for enable unocss in your app based on `@ice/app`",
   "license": "MIT",
   "type": "module",
   "exports": {
