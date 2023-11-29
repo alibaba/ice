@@ -26,3 +26,7 @@ order: 2
 ## [@ice/plugin-fusion](../advanced/fusion)
 
 提供 fusion 组件样式按需加载及主题配置能力。
+
+## [@ice/plugin-unocss](../advanced/unocss)
+
+提供 UnoCSS 原子化 CSS 能力。
