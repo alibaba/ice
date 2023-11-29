@@ -48,9 +48,22 @@ export default function createRenderMiddleware(options: Options): Middleware {
           req,
           res,
         };
+
+        // Simulating window object for wormhole.
+        // @ts-ignore
+        global.window = {};
+
         serverModule.renderToResponse(requestContext, {
           renderMode,
           documentOnly,
+          preRender: true,
+          streamOptions: {
+            onAllReady: (params) => {
+              console.log('middleware onAllReady');
+              console.log('params', params);
+              res.write(params.renderAssets.join(','));
+            },
+          },
         });
       }
     } else {

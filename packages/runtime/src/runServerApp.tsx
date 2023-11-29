@@ -42,6 +42,7 @@ export interface RenderOptions {
   documentDataLoader?: DocumentDataLoaderConfig;
   Document?: DocumentComponent;
   documentOnly?: boolean;
+  preRender?: boolean;
   renderMode?: RenderMode;
   // basename is used both for server and client, once set, it will be sync to client.
   basename?: string;

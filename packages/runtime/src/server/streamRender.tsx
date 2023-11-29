@@ -32,9 +32,18 @@ export function renderToNodeStream(
   renderToNodeStreamOptions: RenderToNodeStreamOptions,
 ): NodeWritablePiper {
   return (res, options) => {
+    const {
+      renderOptions,
+    } = renderToNodeStreamOptions;
+    const {
+      preRender = false,
+    } = renderOptions;
+    console.log('preRender', preRender);
     const { pipe } = ReactDOMServer.renderToPipeableStream(element, {
       onShellReady() {
-        pipe(res);
+        if (!preRender) {
+          pipe(res);
+        }
         options?.onShellReady && options.onShellReady();
       },
       onShellError(error) {
@@ -66,6 +75,10 @@ export function renderToNodeStream(
         options?.onAllReady && options?.onAllReady({
           renderAssets,
         });
+
+        if (preRender) {
+          pipe(res);
+        }
       },
     });
   };
