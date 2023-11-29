@@ -38,9 +38,10 @@ export function renderToNodeStream(
     const {
       preRender = false,
     } = renderOptions;
-    console.log('preRender', preRender);
+
     const { pipe } = ReactDOMServer.renderToPipeableStream(element, {
       onShellReady() {
+        // Pip after onAllReady when pre render SSR.
         if (!preRender) {
           pipe(res);
         }
@@ -53,30 +54,31 @@ export function renderToNodeStream(
         options?.onError && options?.onError(error);
       },
       onAllReady() {
-        const {
-          renderOptions,
-          routerContext,
-        } = renderToNodeStreamOptions;
-
-        const {
-          assetsManifest,
-        } = renderOptions;
-
-        const {
-          matches,
-          loaderData,
-        } = routerContext;
-
-        let renderAssets = getAllAssets(loaderData, matches, assetsManifest);
-        if (typeof window !== 'undefined' && window.renderAssets) {
-          renderAssets = renderAssets.concat(window.renderAssets);
-        }
-
-        options?.onAllReady && options?.onAllReady({
-          renderAssets,
-        });
-
+        // For pre render SSR.
         if (preRender) {
+          const {
+            renderOptions,
+            routerContext,
+          } = renderToNodeStreamOptions;
+
+          const {
+            assetsManifest,
+          } = renderOptions;
+
+          const {
+            matches,
+            loaderData,
+          } = routerContext;
+
+          let renderAssets = getAllAssets(loaderData, matches, assetsManifest);
+          if (typeof window !== 'undefined' && window.renderAssets) {
+            renderAssets = renderAssets.concat(window.renderAssets);
+          }
+
+          options?.onAllReady && options?.onAllReady({
+            renderAssets,
+          });
+
           pipe(res);
         }
       },
