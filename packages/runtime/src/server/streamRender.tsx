@@ -79,7 +79,12 @@ export function renderToNodeStream(
             renderAssets,
           });
 
+          // Pipe after collecting assets.
           pipe(res);
+        } else {
+          options?.onAllReady && options?.onAllReady({
+            renderAssets: [],
+          });
         }
       },
     });
