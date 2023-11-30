@@ -1,5 +1,12 @@
 # @ice/runtime
 
+## 1.3.3
+
+### Patch Changes
+
+- b8a6f9b8: feat: support pre render ssr
+- 5d854188: chore: remove switch of cache first chunk
+
 ## 1.3.2
 
 ### Patch Changes
