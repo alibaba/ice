@@ -67,9 +67,6 @@ export interface AppConfig {
     basename?: string;
     initialEntries?: InitialEntry[];
   };
-  cache?: {
-    firstChunk?: boolean;
-  };
 }
 
 export interface RoutesConfig {

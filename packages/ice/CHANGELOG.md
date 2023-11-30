@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.3.9
+
+### Patch Changes
+
+- 72fc36c8: chore: remove `./types` export in `typesVersions` field to be compatible with `/// <reference types="@ice/app/types" />` in scaffolds
+- ddff5558: chore: better error handling for build script
+- Updated dependencies [b8a6f9b8]
+- Updated dependencies [5d854188]
+  - @ice/runtime@1.3.3
+
 ## 3.3.8
 
 ### Patch Changes
