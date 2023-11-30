@@ -15,8 +15,8 @@
     "*.d.ts"
   ],
   "dependencies": {
-    "@ice/shared-config": "1.1.2",
-    "@ice/bundles": "0.1.17"
+    "@ice/bundles": "0.1.17",
+    "@ice/shared-config": "1.1.2"
   },
   "devDependencies": {
     "@rspack/core": "0.4.0"

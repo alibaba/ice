@@ -1,9 +1,9 @@
 import * as path from 'path';
 import { createRequire } from 'module';
-import { compilationPlugin, compileExcludes, getDefineVars, getCompilerPlugins } from '@ice/shared-config';
+import { compilationPlugin, compileExcludes, getDefineVars, getCompilerPlugins, getJsxTransformOptions } from '@ice/shared-config';
 import type { Config, ModifyWebpackConfig } from '@ice/shared-config/types';
 import type { Configuration, rspack as Rspack } from '@rspack/core';
-import AssetManifest from './plugins/AssetManifest.js';
+import lodash from '@ice/bundles/compiled/lodash/index.js';
 import getSplitChunks from './splitChunks.js';
 import getAssetsRule from './assetsRule.js';
 import getCssRules from './cssRules.js';
@@ -25,6 +25,7 @@ type GetConfig = (
 
 const require = createRequire(import.meta.url);
 
+const { merge } = lodash;
 const getConfig: GetConfig = async (options) => {
   const {
     rootDir,
@@ -39,6 +40,7 @@ const getConfig: GetConfig = async (options) => {
 
   const {
     mode,
+    minify,
     publicPath = '/',
     cacheDir,
     outputDir = 'build',
@@ -58,6 +60,7 @@ const getConfig: GetConfig = async (options) => {
     plugins = [],
     middlewares,
     configureWebpack = [],
+    minimizerOptions = {},
   } = taskConfig || {};
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
   const hashKey = hash === true ? 'hash:8' : (hash || '');
@@ -75,10 +78,32 @@ const getConfig: GetConfig = async (options) => {
     getRoutesFile,
   });
 
-  const { rspack: { DefinePlugin, ProvidePlugin } } = await import('@ice/bundles/esm/rspack.js');
+  const { rspack: { DefinePlugin, ProvidePlugin, SwcJsMinimizerRspackPlugin } } = await import('@ice/bundles/esm/rspack.js');
   const cssFilename = `css/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`;
   // get compile plugins
   const compilerWebpackPlugins = getCompilerPlugins(rootDir, taskConfig || {}, 'rspack', { isServer: false });
+  const jsMinimizerPluginOptions: any = merge({
+    compress: {
+      ecma: 5,
+      unused: true,
+      dead_code: true,
+      // The following two options are known to break valid JavaScript code
+      // https://github.com/vercel/next.js/issues/7178#issuecomment-493048965
+      comparisons: false,
+      inline: 2,
+      passes: 4,
+    },
+    mangle: {
+      safari10: true,
+    },
+    format: {
+      safari10: true,
+      comments: false,
+      // Fixes usage of Emoji and certain Regex
+      asciiOnly: true,
+    },
+    module: true,
+  }, minimizerOptions);
   const config: Configuration = {
     entry: {
       main: [path.join(rootDir, runtimeTmpDir, 'entry.client.tsx')],
@@ -98,15 +123,19 @@ const getConfig: GetConfig = async (options) => {
     context: rootDir,
     module: {
       rules: [
-        // Compliation rules for js / ts.
         {
+          // TODO: use regexp to improve performance.
           test: compilation.transformInclude,
-          use: [{
-            loader: require.resolve('@ice/shared-config/compilation-loader'),
+          use: {
+            loader: 'builtin:compilation-loader',
             options: {
-              transform: compilation.transform,
+              swcOptions: getJsxTransformOptions({ rootDir, mode, fastRefresh: false, polyfill, enableEnv: true }),
+              transformFeatures: {
+                removeExport: swcOptions.removeExportExprs,
+                keepExport: swcOptions.keepExports,
+              },
             },
-          }],
+          },
         },
         ...getAssetsRule(),
         ...getCssRules({
@@ -124,6 +153,7 @@ const getConfig: GetConfig = async (options) => {
       aggregateTimeout: 100,
     },
     optimization: {
+      minimize: !!minify,
       splitChunks: typeof splitChunks == 'object'
         ? splitChunks
         : getSplitChunks(rootDir, splitChunks),
@@ -133,19 +163,21 @@ const getConfig: GetConfig = async (options) => {
       ...plugins,
       // Unplugin should be compatible with rspack.
       ...compilerWebpackPlugins,
-      new AssetManifest({
-        fileName: 'assets-manifest.json',
-        outputDir: path.join(rootDir, runtimeTmpDir),
-      }),
       new DefinePlugin(getDefineVars(define, runtimeDefineVars, getExpandedEnvs)),
       new ProvidePlugin({
         process: [require.resolve('process/browser')],
         $ReactRefreshRuntime$: [require.resolve('./client/reactRefresh.cjs')],
       }),
+      !!minify && new SwcJsMinimizerRspackPlugin(jsMinimizerPluginOptions),
     ].filter(Boolean),
     builtins: {
       css: {
         modules: { localIdentName },
+      },
+    },
+    experiments: {
+      rspackFuture: {
+        disableTransformByDefault: true,
       },
     },
     stats: 'none',
