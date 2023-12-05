@@ -204,7 +204,6 @@ const getConfig: GetConfig = async (options) => {
       ...devServer,
       setupMiddlewares: middlewares,
     },
-    features: {},
   };
   // Compatible with API configureWebpack.
   const ctx = {
