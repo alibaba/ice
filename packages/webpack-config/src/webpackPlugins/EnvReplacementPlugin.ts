@@ -13,8 +13,8 @@ export default function EnvReplacementPlugin() {
             unique++;
             const query = `?u=${unique}`;
             resolveData.request += query;
-            // resolveData.query = query;
-            // resolveData.cacheable = false;
+            resolveData.query = query;
+            resolveData.cacheable = false;
           }
         });
       });
