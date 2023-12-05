@@ -239,7 +239,7 @@ const tasks = [
       filePaths.forEach((filePath) => {
         const sourcePath = path.join(targetPath, filePath);
         const matched = filesAddOverwrite.some(filePath => {
-          const matched = sourcePath.includes(filePath);
+          const matched = sourcePath.split(path.sep).join('/').includes(filePath);
           if (matched) {
             fs.copyFileSync(path.join(__dirname, `../override/rspack/${path.basename(filePath)}`), sourcePath);
           }
