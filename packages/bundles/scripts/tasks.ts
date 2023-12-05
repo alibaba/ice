@@ -235,7 +235,7 @@ const tasks = [
       fs.removeSync(path.join(pkgPath, 'node_modules'));
       // filter out js files and replace with compiled files.
       const filePaths = globbySync(['**/*.js'], { cwd: targetPath, ignore: ['node_modules'] });
-      const filesAddOverwrite = ['dist/config/adapter.js', 'dist/config/defaults.js'];
+      const filesAddOverwrite = ['dist/config/adapter.js', 'dist/config/defaults.js', 'dist/config/zod.js'];
       filePaths.forEach((filePath) => {
         const sourcePath = path.join(targetPath, filePath);
         const matched = filesAddOverwrite.some(filePath => {
