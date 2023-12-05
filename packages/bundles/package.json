@@ -22,7 +22,7 @@
     "ansi-html-community": "^0.0.8",
     "html-entities": "^2.3.2",
     "core-js": "3.32.0",
-    "caniuse-lite": "^1.0.30001431",
+    "caniuse-lite": "^1.0.30001561",
     "chokidar": "3.5.3",
     "esbuild": "^0.17.16",
     "events": "3.3.0",

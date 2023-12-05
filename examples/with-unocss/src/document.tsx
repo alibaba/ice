@@ -1,11 +1,11 @@
-import { Meta, Title, Links, Main, Scripts, FirstChunkCache } from 'ice';
+import { Meta, Title, Links, Main, Scripts } from 'ice';
 
 function Document() {
   return (
     <html>
       <head>
         <meta charSet="utf-8" />
-        <meta name="description" content="ICE 3.0 Demo" />
+        <meta name="description" content="with-web-worker" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Title />
@@ -13,8 +13,7 @@ function Document() {
       </head>
       <body>
         <Main />
-        <FirstChunkCache />
-        <Scripts async />
+        <Scripts />
       </body>
     </html>
   );

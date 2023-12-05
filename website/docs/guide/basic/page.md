@@ -57,11 +57,15 @@ Meta 信息会显示在文档上，可以通过 `metas` 属性来设置。 示�
 import { definePageConfig } from 'ice';
 
 export const pageConfig = definePageConfig(() => ({
-  metas: [
+  meta: [
     { charset: 'utf-8' },
     {
-      title: 'Something cool',
-      description: 'This becomes the nice preview on search results.',
+      name: 'title',
+      value: 'Something cool',
+    },
+    {
+      name: 'description',
+      value: 'This becomes the nice preview on search results.',
     },
   ],
 }));
