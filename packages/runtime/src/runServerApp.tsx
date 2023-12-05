@@ -1,13 +1,14 @@
 import type { ServerResponse, IncomingMessage } from 'http';
 import * as React from 'react';
-import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 import * as ReactDOMServer from 'react-dom/server';
 import type { Location } from 'history';
 import { parsePath } from 'history';
 import { isFunction } from '@ice/shared';
+import type { RenderToPipeableStreamOptions, OnAllReadyParams, NodeWritablePiper } from './server/streamRender.js';
 import type {
   AppContext, RouteItem, ServerContext,
-  AppExport, AssetsManifest,
+  AppExport,
+  AssetsManifest,
   RouteMatch,
   PageConfig,
   RenderMode,
@@ -25,7 +26,6 @@ import { DocumentContextProvider } from './Document.js';
 import { loadRouteModules } from './routes.js';
 import type { RouteLoaderOptions } from './routes.js';
 import { pipeToString, renderToNodeStream } from './server/streamRender.js';
-import type { NodeWritablePiper } from './server/streamRender.js';
 import getRequestContext from './requestContext.js';
 import matchRoutes from './matchRoutes.js';
 import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
@@ -34,7 +34,7 @@ import { renderHTMLToJS } from './renderHTMLToJS.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 
 
-interface RenderOptions {
+export interface RenderOptions {
   app: AppExport;
   assetsManifest: AssetsManifest;
   createRoutes: (options: Pick<RouteLoaderOptions, 'requestContext' | 'renderMode'>) => RouteItem[];
@@ -42,6 +42,7 @@ interface RenderOptions {
   documentDataLoader?: DocumentDataLoaderConfig;
   Document?: DocumentComponent;
   documentOnly?: boolean;
+  preRender?: boolean;
   renderMode?: RenderMode;
   // basename is used both for server and client, once set, it will be sync to client.
   basename?: string;
@@ -191,8 +192,8 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
           console.error('PipeToResponse error.');
           console.error(err);
         },
-        onAllReady: () => {
-          onAllReady && onAllReady();
+        onAllReady: (params: OnAllReadyParams) => {
+          onAllReady && onAllReady(params);
           resolve();
         },
       });
@@ -416,7 +417,10 @@ async function renderServerEntry(
     </AppContextProvider>
   );
 
-  const pipe = renderToNodeStream(element);
+  const pipe = renderToNodeStream(element, {
+    renderOptions,
+    routerContext,
+  });
 
   const fallback = () => {
     return renderDocument({

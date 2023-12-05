@@ -4,7 +4,4 @@ export default defineAppConfig({
   app: {
     rootId: 'app',
   },
-  cache: {
-    firstChunk: true,
-  },
 });
