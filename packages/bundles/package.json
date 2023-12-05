@@ -45,7 +45,7 @@
     "webpack-sources": "3.2.3",
     "zod": "^3.21.4",
     "zod-validation-error": "1.2.0",
-    "@rspack/binding": "0.4.0"
+    "@ice/pack-binding": "0.0.2"
   },
   "devDependencies": {
     "@rspack/core": "0.4.0",

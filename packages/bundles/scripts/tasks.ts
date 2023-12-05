@@ -248,10 +248,13 @@ const tasks = [
 
         if (!matched) {
           const fileContent = fs.readFileSync(sourcePath, 'utf8');
-          fs.writeFileSync(sourcePath, replaceDeps(fileContent, ['tapable', 'schema-utils', 'graceful-fs']));
+          fs.writeFileSync(
+            sourcePath,
+            replaceDeps(fileContent, ['tapable', 'schema-utils', 'graceful-fs'])
+            .replace(new RegExp('require\\(["\']@rspack/binding["\']\\)', 'g'), 'require("@ice/pack-binding")'),
+          );
         }
       });
-      // TODO: replace @rspack/binding.
     },
   },
 ];

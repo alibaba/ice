@@ -1267,6 +1267,9 @@ importers:
       '@ice/css-modules-hash':
         specifier: 0.0.6
         version: 0.0.6
+      '@ice/pack-binding':
+        specifier: 0.0.2
+        version: 0.0.2
       '@ice/swc-plugin-keep-export':
         specifier: 0.2.0
         version: 0.2.0
@@ -1276,9 +1279,6 @@ importers:
       '@ice/swc-plugin-remove-export':
         specifier: 0.2.0
         version: 0.2.0
-      '@rspack/binding':
-        specifier: 0.4.0
-        version: 0.4.0
       '@rspack/dev-server':
         specifier: 0.4.0
         version: 0.4.0(@rspack/core@0.4.0)(@swc/core@1.3.80)(esbuild@0.17.16)(react-refresh@0.14.0)
@@ -6639,6 +6639,81 @@ packages:
       '@ice/css-modules-hash-linux-x64-musl': 0.0.6
       '@ice/css-modules-hash-win32-arm64-msvc': 0.0.6
       '@ice/css-modules-hash-win32-x64-msvc': 0.0.6
+    dev: false
+
+  /@ice/pack-binding-darwin-arm64@0.0.2:
+    resolution: {integrity: sha512-OvwDHEqcYr5coVgQGLQxb90MTC6/ySnmQkq03dikAMf8w3o5ooMzqSfRGLL8uAqBBhNNNipYPI97C7b9Pz+eaw==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@ice/pack-binding-darwin-universal@0.0.2:
+    resolution: {integrity: sha512-TG0e5NT6r2+yzL3eBU20RegLfWHDXjSyPjfQc0HM9sWgAHABQ0q+gE47rTv0ThWL8vC1uh4jlhPamwUCpjvLoQ==}
+    engines: {node: '>= 10'}
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@ice/pack-binding-darwin-x64@0.0.2:
+    resolution: {integrity: sha512-WcNGfHUClA4x0KjZf9ju0hG0/xFHnMUR1neoEyMw0UW1m6jZF76aWKBfQABocZkFV+veIyTZFXs/2GAmGZOJYw==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@ice/pack-binding-linux-x64-gnu@0.0.2:
+    resolution: {integrity: sha512-FQM056bjtP3gyp1ilS7PdrNMhpfwJS1PJvktw0LsrulCrsg+7vkUSvYHY5Jb2IcUAWX0JvTOhvyUeFQ4sN4S6A==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@ice/pack-binding-linux-x64-musl@0.0.2:
+    resolution: {integrity: sha512-h2ELqYZbo/Ckpa0YS6U0z+/oFsJ7gVcta4Ib8IWjUdoXQpK4r37DxY7GdDe+VafGoYGwSJijdzbYQRYsobSVhQ==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@ice/pack-binding-win32-arm64-msvc@0.0.2:
+    resolution: {integrity: sha512-hgxGL5c2gReksGcPeLkdgtmTBKC8baxb7ZAXN3HQoYyT8TJmTjeG6tJvDAfoJU7k6VrGWD2IQvdjWGSsdHUQzw==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [win32]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@ice/pack-binding-win32-x64-msvc@0.0.2:
+    resolution: {integrity: sha512-TRacy9q8O2GLS1vA1Mh6ySPvpmzN459sTaOQ21WoGdbq+z6lrAgEKezbdB50hUoNZsw4DBDIPKwzZv2hhJGb6w==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@ice/pack-binding@0.0.2:
+    resolution: {integrity: sha512-UkWq7iZG0pH3u4yaU0lVRJjQT8CKfaRyPWSfiD6M8A8klRs3Ksd+yRWqsaIlQ6TxpQ9LvtAGKdAWBEYoJHqm/Q==}
+    engines: {node: '>= 10'}
+    optionalDependencies:
+      '@ice/pack-binding-darwin-arm64': 0.0.2
+      '@ice/pack-binding-darwin-universal': 0.0.2
+      '@ice/pack-binding-darwin-x64': 0.0.2
+      '@ice/pack-binding-linux-x64-gnu': 0.0.2
+      '@ice/pack-binding-linux-x64-musl': 0.0.2
+      '@ice/pack-binding-win32-arm64-msvc': 0.0.2
+      '@ice/pack-binding-win32-x64-msvc': 0.0.2
     dev: false
 
   /@ice/pkg@1.5.5:
