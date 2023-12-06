@@ -2,8 +2,6 @@ import StreamWeb from 'stream/web';
 import { TextDecoder, TextEncoder } from 'util';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
-// @ts-ignore
-import * as EdgeServer from 'react-dom/server.edge';
 import { renderToReadableStream } from 'react-server-dom-webpack/server.edge';
 import { createFromReadableStream } from 'react-server-dom-webpack/client.edge';
 import { AppContextProvider } from './AppContext.js';
@@ -178,6 +176,7 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
     );
   }
 
+  const EdgeServer = require('react-dom/server.edge');
   const appStream = await EdgeServer.renderToReadableStream(<App />);
   startReadingFromStream(res, appStream);
 }
