@@ -340,4 +340,5 @@ export interface ServerRenderOptions {
   serverData?: any;
   streamOptions?: RenderToPipeableStreamOptions;
   clientManifest?: any;
+  serverManifest?: any;
 }

@@ -10,20 +10,16 @@ interface Options {
   ssrManifestFilename?: string;
 }
 
-interface SSRExports {
-  [chunkName: string]: { specifier: string; name: string };
-}
-
-interface ClientManifest {
+interface Manifest {
  [key: string]: {
-  chunks: (string | number)[];
-  id: string | number;
-  name: string;
-};
+    chunks: (string | number)[];
+    id: string | number;
+    name: string;
+  };
 }
 
-interface SsrManifest {
-  [key: string]: SSRExports;
+interface ServerManifest {
+  [key: string]: Manifest;
 }
 
 export class FlightManifestPlugin {
@@ -46,23 +42,21 @@ export class FlightManifestPlugin {
         stage: webpack.Compilation.PROCESS_ASSETS_STAGE_REPORT,
       }, () => {
         const clientManifestMapping: {
-          [key: string]: ClientManifest;
+          [key: string]: Manifest;
         } = {};
         const ssrManifestSetMapping: {
-          [key: string]: SsrManifest;
+          [key: string]: ServerManifest;
         } = {};
 
         compilation.chunkGroups.forEach((chunkGroup) => {
           const chunkGroupName = chunkGroup.name;
 
-          const clientManifest: ClientManifest = {};
-
-          const ssrManifest: SsrManifest = {};
+          const clientManifest: Manifest = {};
+          const ssrManifest: ServerManifest = {};
 
           let hasRecord = false;
 
           const recordModule = (id: string | number, module: any) => {
-            // const modId = path.relative(compiler.context, module.resource);
             const modId = module.resource;
             if (modId !== undefined) {
               hasRecord = true;
@@ -79,7 +73,8 @@ export class FlightManifestPlugin {
               // deal with module splitting so is likely broken from ESM anyway.
               ssrManifest[id] = {
                 '*': {
-                  specifier: modId,
+                  id: modId,
+                  chunks: [],
                   name: '*',
                 },
               };

@@ -1,7 +1,11 @@
+import StreamWeb from 'stream/web';
 import { TextDecoder, TextEncoder } from 'util';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
-import { renderToPipeableStream } from 'react-server-dom-webpack/server.node';
+// @ts-ignore
+import * as EdgeServer from 'react-dom/server.edge';
+import { renderToReadableStream } from 'react-server-dom-webpack/server.edge';
+import { createFromReadableStream } from 'react-server-dom-webpack/client.edge';
 import { AppContextProvider } from './AppContext.js';
 import { DocumentContextProvider } from './Document.js';
 import { loadRouteModules } from './routes.js';
@@ -17,6 +21,11 @@ import type {
   RouteModules,
   ServerRenderOptions as RenderOptions,
 } from './types.js';
+
+if (!global.ReadableStream) {
+  // @ts-ignore
+  global.ReadableStream = StreamWeb.ReadableStream;
+}
 
 // This utility is based on https://github.com/zertosh/htmlescape
 // License: https://github.com/zertosh/htmlescape/blob/0527ca7156a524d256101bb310a9f970f63078ad/LICENSE
@@ -44,7 +53,10 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
     basename,
     serverOnlyBasename,
     clientManifest: clientManifestMapping,
+    serverManifest: serverManifestMapping,
     assetsManifest,
+    routePath,
+    Document,
   } = renderOptions;
 
   const location = getLocation(req.url);
@@ -66,30 +78,28 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
     matches: [],
   };
 
-  renderDocument(serverContext, renderOptions, appContext, matches);
+  // renderDocument(serverContext, renderOptions, appContext, matches);
 
   const routeModules = await loadRouteModules(matches.map(({ route: { id, lazy } }) => ({ id, lazy })));
 
-  const element = (
-    <AppContextProvider value={appContext}>
-      {renderMatches(matches, routeModules)}
-    </AppContextProvider>
-  );
-
   // Merge client manifest for match route.
   const clientManifest = {};
+  const serverManifest = {};
   matches.forEach(match => {
     const { componentName } = match.route;
     const manifest = clientManifestMapping[`rsc_${componentName}`];
     if (manifest) {
       Object.assign(clientManifest, manifest);
     }
+
+    const ssrManifest = serverManifestMapping[`rsc_${componentName}`];
+    if (ssrManifest) {
+      Object.assign(serverManifest, ssrManifest);
+    }
   });
 
   const decoder = new TextDecoder();
   const encoder = new TextEncoder();
-
-  res.write('<script>self.__rsc_data=self.__rsc_data||[];</script>');
 
   function decorateWrite(write) {
     return function (data) {
@@ -99,15 +109,98 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
       return write.call(this, encoder.encode(modifiedData));
     };
   }
+  // res.write = decorateWrite(res.write);
 
-  res.write = decorateWrite(res.write);
+  function decodeText(
+    input: Uint8Array | undefined,
+    textDecoder: TextDecoder,
+  ) {
+    return textDecoder.decode(input, { stream: true });
+  }
 
-  const { pipe } = renderToPipeableStream(
-    element,
-    clientManifest,
+  const element = (
+    <AppContextProvider value={appContext}>
+      {renderMatches(matches, routeModules)}
+    </AppContextProvider>
   );
 
-  pipe(res);
+  function createFlightStream() {
+    const flightStream = renderToReadableStream(
+      element,
+      clientManifest,
+    );
+
+    const [renderStream, forwardStream] = flightStream.tee();
+    const forwardReader = forwardStream.getReader();
+
+    function readRSCTree() {
+      forwardReader.read().then(({ done, value }) => {
+        if (done) {
+          return;
+        } else {
+          const responsePartial = decodeText(value, decoder);
+          const modifiedData = `<script>self.__rsc_data.push(${htmlEscapeJsonString(JSON.stringify([responsePartial]))})</script>`;
+          res.write(encoder.encode(modifiedData));
+          readRSCTree();
+        }
+      });
+    }
+
+    const response = createFromReadableStream(renderStream, {
+      moduleMap: serverManifest,
+    });
+
+    res.write('<script>self.__rsc_data=self.__rsc_data||[];</script>');
+    readRSCTree();
+    return response;
+  }
+
+  const response = createFlightStream();
+
+  function Main() {
+    // @ts-ignore
+    return React.use(response);
+  }
+
+  const documentContext = {
+    main: <Main />,
+  };
+
+  function App() {
+    return (
+      <AppContextProvider value={{ ...appContext, matches }}>
+        <DocumentContextProvider value={documentContext}>
+          <Document pagePath={routePath} />
+        </DocumentContextProvider>
+      </AppContextProvider>
+    );
+  }
+
+  const appStream = await EdgeServer.renderToReadableStream(<App />);
+  startReadingFromStream(res, appStream);
+}
+
+function startReadingFromStream(response, stream) {
+  let reader = stream.getReader();
+
+  function progress(_ref) {
+    let { done } = _ref,
+        { value } = _ref;
+
+    if (done) {
+      response.end();
+      return;
+    }
+
+    response.write(value);
+    return reader.read().then(progress).catch(error);
+  }
+
+  function error(e) {
+    console.log(e);
+  }
+
+  reader.read().then(progress).catch(error);
 }
 
 function renderMatches(matches: RouteMatch[], routeModules: RouteModules) {

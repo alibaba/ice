@@ -47,6 +47,12 @@ export default class ServerCompilerPlugin {
             this.compilerOptions.compilationInfo.rscManifest =
               JSON.parse(compilation.assets['react-client-manifest.json']?.source()?.toString());
           }
+
+          if (compilation.assets?.['react-ssr-manifest.json']) {
+            // @ts-ignore
+            this.compilerOptions.compilationInfo.rscServerManifest =
+              JSON.parse(compilation.assets['react-ssr-manifest.json']?.source()?.toString());
+          }
       }
       // For first time, we create a new task.
       // The next time, we use incremental build so do not create task again.
