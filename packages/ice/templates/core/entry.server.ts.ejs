@@ -1,5 +1,9 @@
 import './env.server';
-import * as runtime from '@ice/runtime/server';
+import { 
+  getAppConfig,
+  renderToHTML as originRenderToHTML, 
+  renderToResponse as originRenderToResponse, 
+  renderToEntry as originRenderToEntry } from '@ice/runtime/server';
 <% if (hydrate) {-%>
 import { commons, statics } from './runtime-modules';
 <% }-%>
@@ -14,6 +18,7 @@ import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 // @ts-ignore
 import assetsManifest from 'virtual:assets-manifest.json';
 <% if(rsc) {-%>
+import { runRSCServerApp } from '@ice/runtime/server';
 import clientManifest from 'virtual:react-client-manifest.json';
 import serverManifest from 'virtual:react-ssr-manifest.json';
 import rscModule from 'virtual-rsc-module:react-ssr-manifest.json';
@@ -35,7 +40,7 @@ const createRoutes = () => routesManifest;
 const runtimeModules = { commons, statics };
 
 const getRouterBasename = () => {
-  const appConfig = runtime.getAppConfig(app);
+  const appConfig = getAppConfig(app);
   return appConfig?.router?.basename ?? <%- basename %> ?? '';
 }
 
@@ -69,7 +74,7 @@ export async function renderToHTML(requestContext, options: RenderOptions = {}) 
   setRuntimeEnv(renderMode);
 
   const mergedOptions = mergeOptions(options);
-  return await runtime.renderToHTML(requestContext, mergedOptions);
+  return await originRenderToHTML(requestContext, mergedOptions);
 }
 
 export async function renderToResponse(requestContext, options: RenderOptions = {}) {
@@ -79,9 +84,9 @@ export async function renderToResponse(requestContext, options: RenderOptions = 
   const mergedOptions = mergeOptions(options);
 
   <% if(rsc) {-%>
-  return runtime.runRSCServerApp(requestContext, mergedOptions);
+  return runRSCServerApp(requestContext, mergedOptions);
   <% } else { -%>
-  return runtime.renderToResponse(requestContext, mergedOptions);
+  return originRenderToResponse(requestContext, mergedOptions);
   <% }-%>
 }
 
@@ -91,7 +96,7 @@ export async function renderToEntry(requestContext, options: RenderOptions = {})
   setRuntimeEnv(renderMode);
 
   const mergedOptions = mergeOptions(options);
-  return await runtime.renderToEntry(requestContext, mergedOptions);
+  return await originRenderToEntry(requestContext, mergedOptions);
 }
 <% } -%>
 
