@@ -101,6 +101,8 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
   const decoder = new TextDecoder();
   const encoder = new TextEncoder();
 
+  // res.write('<script>self.__rsc_data=self.__rsc_data||[];</script>');
+
   function decorateWrite(write) {
     return function (data) {
       const chunk = decoder.decode(data, { stream: true });
