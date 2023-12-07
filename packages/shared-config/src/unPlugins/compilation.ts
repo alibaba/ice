@@ -248,6 +248,7 @@ export function getJsxTransformOptions({
       parser: {
         jsx: true,
         ...syntaxFeatures,
+        syntax: 'ecmascript',
       },
     },
   }, commonOptions);

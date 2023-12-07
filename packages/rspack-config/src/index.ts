@@ -129,7 +129,7 @@ const getConfig: GetConfig = async (options) => {
           use: {
             loader: 'builtin:compilation-loader',
             options: {
-              swcOptions: getJsxTransformOptions({ rootDir, mode, fastRefresh: false, polyfill, enableEnv: true }),
+              swcOptions: getJsxTransformOptions({ suffix: 'jsx', rootDir, mode, fastRefresh: false, polyfill, enableEnv: true }),
               transformFeatures: {
                 removeExport: swcOptions.removeExportExprs,
                 keepExport: swcOptions.keepExports,
