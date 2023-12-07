@@ -230,7 +230,7 @@ const tasks = [
       // Copy the entire directory.
       // filter out js files and replace with compiled files.
       const filePaths = globbySync(['**/*'], { cwd: pkgPath, ignore: ['node_modules'] });
-      const filesAddOverwrite = ['dist/config/adapter.js', 'dist/config/defaults.js', 'dist/config/zod.js', 'dist/utils/bindingVersionCheck.js'];
+      const filesAddOverwrite = ['dist/config/adapter.js', 'dist/config/defaults.js', 'dist/config/zod.js', 'dist/util/bindingVersionCheck.js'];
       filePaths.forEach((filePath) => {
         const sourcePath = path.join(pkgPath, filePath);
         const targetFilePath = path.join(targetPath, filePath);
@@ -270,7 +270,10 @@ const tasks = [
         const targetPath = path.join(__dirname, `../compiled/@rspack/dev-server/${filePath}`);
         if (path.extname(filePath) === '.js') {
           const fileContent = fs.readFileSync(sourcePath, 'utf8');
-          fs.writeFileSync(targetPath, replaceDeps(fileContent, webpackDevServerDeps.concat([...commonDeps, '@rspack/core', 'webpack-dev-server'])));
+          fs.writeFileSync(targetPath,
+            replaceDeps(fileContent, webpackDevServerDeps.concat([...commonDeps, '@rspack/core', 'webpack-dev-server']))
+             .replace(/webpack-dev-server\/client\/clients/g, '@ice/bundles/compiled/webpack-dev-server/client/clients'),
+          );
         } else {
           fs.copyFileSync(sourcePath, targetPath);
         }
