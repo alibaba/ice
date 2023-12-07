@@ -44,6 +44,7 @@
     "webpack-sources": "3.2.3",
     "zod": "^3.21.4",
     "zod-validation-error": "1.2.0",
+    "terminal-link": "^2.1.1",
     "@ice/pack-binding": "0.0.2",
     "@rspack/plugin-react-refresh": "0.4.0"
   },
