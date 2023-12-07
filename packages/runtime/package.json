@@ -9,6 +9,7 @@
     ".": "./esm/index.js",
     "./client": "./esm/index.js",
     "./server": "./esm/index.server.js",
+    "./rsc": "./esm/runRSCServerApp.js",
     "./jsx-runtime": "./esm/jsx-runtime.js",
     "./jsx-dev-runtime": "./esm/jsx-dev-runtime.js",
     "./matchRoutes": "./esm/matchRoutes.js",
