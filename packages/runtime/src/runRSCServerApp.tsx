@@ -1,4 +1,4 @@
-import StreamWeb from 'stream/web';
+// import StreamWeb from 'stream/web';
 import { TextDecoder, TextEncoder } from 'util';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
@@ -20,10 +20,10 @@ import type {
   ServerRenderOptions as RenderOptions,
 } from './types.js';
 
-if (!global.ReadableStream) {
-  // @ts-ignore
-  global.ReadableStream = StreamWeb.ReadableStream;
-}
+// if (!global.ReadableStream) {
+//   // @ts-ignore
+//   global.ReadableStream = StreamWeb.ReadableStream;
+// }
 
 // This utility is based on https://github.com/zertosh/htmlescape
 // License: https://github.com/zertosh/htmlescape/blob/0527ca7156a524d256101bb310a9f970f63078ad/LICENSE

@@ -26,16 +26,18 @@ const RscLoaderPlugin = (compilationInfo: CompilationInfo | (() => CompilationIn
       const imports = [];
       const maps = [];
       const modules = {};
+      let index = 0;
 
       Object.keys(serverManifest).map(router => {
         const moduleMap = serverManifest[router];
-        Object.keys(moduleMap).map((moduleId, index) => {
-          if (modules[moduleId] || moduleId.indexOf('.css') > -1) return;
+        Object.keys(moduleMap).map((moduleId) => {
+          if (modules[moduleId] || moduleId.indexOf('.css') > -1 || moduleId.indexOf('.scss') > -1) return;
 
+          index++;
           modules[moduleId] = true;
           const { id } = moduleMap[moduleId]['*'];
-          imports.push(`import * as component_${router}_${index} from "(rsc)${id}";`);
-          maps.push(`"${id}": component_${router}_${index}`);
+          imports.push(`import * as component_${index} from "(rsc)${id}";`);
+          maps.push(`"${id}": component_${index}`);
         });
       });
 
