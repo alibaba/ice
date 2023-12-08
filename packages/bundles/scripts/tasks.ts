@@ -227,20 +227,57 @@ const tasks = [
     patch: () => {
       const pkgPath = path.join(__dirname, '../node_modules/@rspack/core');
       const targetPath = path.join(__dirname, '../compiled/@rspack/core');
-      fs.removeSync(targetPath);
       // Copy the entire directory.
-      // Mark: when copy each file separately, the build process will be stuck.
-      fs.copySync(pkgPath, targetPath);
-      // Remove node_modules while bin files may be linked to node_modules.
-      fs.removeSync(path.join(pkgPath, 'node_modules'));
       // filter out js files and replace with compiled files.
-      const filePaths = globbySync(['**/*.js'], { cwd: targetPath, ignore: ['node_modules'] });
+      const filePaths = globbySync(['**/*'], { cwd: pkgPath, ignore: ['node_modules'] });
+      const filesAddOverwrite = ['dist/config/adapter.js', 'dist/config/defaults.js', 'dist/config/zod.js', 'dist/util/bindingVersionCheck.js'];
       filePaths.forEach((filePath) => {
-        const sourcePath = path.join(targetPath, filePath);
-        const fileContent = fs.readFileSync(sourcePath, 'utf8');
-        fs.writeFileSync(sourcePath, replaceDeps(fileContent, ['tapable', 'schema-utils', 'graceful-fs']));
+        const sourcePath = path.join(pkgPath, filePath);
+        const targetFilePath = path.join(targetPath, filePath);
+        fs.ensureDirSync(path.dirname(targetFilePath));
+        if (path.extname(filePath) === '.js') {
+          const matched = filesAddOverwrite.some(filePath => {
+            const matched = sourcePath.split(path.sep).join('/').includes(filePath);
+            if (matched) {
+              fs.copyFileSync(path.join(__dirname, `../override/rspack/${path.basename(filePath)}`), targetFilePath);
+            }
+            return matched;
+          });
+          if (!matched) {
+            const fileContent = fs.readFileSync(sourcePath, 'utf8');
+            fs.writeFileSync(
+              targetFilePath,
+              replaceDeps(fileContent, ['tapable', 'schema-utils', 'graceful-fs'])
+                .replace(new RegExp('require\\(["\']@rspack/binding["\']\\)', 'g'), 'require("@ice/pack-binding")'),
+            );
+          }
+        } else {
+          fs.copyFileSync(sourcePath, targetFilePath);
+        }
       });
-      // TODO: replace @rspack/binding.
+    },
+  },
+  {
+    pkgName: '@rspack/dev-server',
+    skipCompile: true,
+    patch: () => {
+      // Copy webpack-dev-server while all dependencies has been packed.
+      const pkgPath = path.join(__dirname, '../node_modules/@rspack/dev-server');
+      const filePaths = globbySync(['**/*'], { cwd: pkgPath, ignore: ['node_modules', 'types', 'bin'] });
+      filePaths.forEach((filePath) => {
+        fs.ensureDirSync(path.join(__dirname, `../compiled/@rspack/dev-server/${path.dirname(filePath)}`));
+        const sourcePath = path.join(pkgPath, filePath);
+        const targetPath = path.join(__dirname, `../compiled/@rspack/dev-server/${filePath}`);
+        if (path.extname(filePath) === '.js') {
+          const fileContent = fs.readFileSync(sourcePath, 'utf8');
+          fs.writeFileSync(targetPath,
+            replaceDeps(fileContent, webpackDevServerDeps.concat([...commonDeps, '@rspack/core', 'webpack-dev-server']))
+             .replace(/webpack-dev-server\/client\/clients/g, '@ice/bundles/compiled/webpack-dev-server/client/clients'),
+          );
+        } else {
+          fs.copyFileSync(sourcePath, targetPath);
+        }
+      });
     },
   },
 ];

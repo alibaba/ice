@@ -39,6 +39,7 @@ async function bundler(
     rspackConfigs,
   };
   if (command === 'start') {
+    // @ts-expect-error dev-server has been pre-packed, so it will have different type.
     devServer = await start(buildOptions);
   } else if (command === 'build') {
     await build(buildOptions);

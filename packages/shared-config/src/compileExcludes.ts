@@ -1,4 +1,4 @@
-const SKIP_COMPILE = [
+export const SKIP_COMPILE = [
   // polyfill and helpers
   'core-js', 'core-js-pure', '@swc/helpers', '@babel/runtime', 'tslib',
   // Deprecate version of @babel/runtime.
