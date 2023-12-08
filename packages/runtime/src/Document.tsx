@@ -225,7 +225,7 @@ function Snapshot(rootId) {
 
     const hasCacheFlag = snapshot.indexOf(FCC_FLAG) >= 0;
     if (hasCacheFlag) {
-      let cacheStr = snapshot.split(FCC_FLAG)[0] + FCC_FLAG;
+      let cacheStr = `${snapshot.split(FCC_FLAG)[0] + FCC_FLAG}</div>`;
       const style = 'position:absolute;width:100%;top:0;left:0;z-index:999';
       cacheStr = cacheStr.replace(snapshotOuterHTML, `<div id="${SNAPSHOT_ID}" style="${style}">${iceContainerEle.innerHTML}</div>`);
       console.log('cacheStr', cacheStr);
