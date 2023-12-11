@@ -1,3 +1,5 @@
+import * as path from 'path';
+
 function getAliasWithRoot(rootDir: string, alias?: Record<string, string | boolean>) {
   const aliasWithRoot = {};
   Object.keys(alias).forEach((key) => {
