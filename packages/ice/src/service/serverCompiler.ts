@@ -145,8 +145,18 @@ export function createServerCompiler(options: Options) {
       getRoutesFile,
     }, 'esbuild', { isServer });
     const define = getRuntimeDefination(task.config?.define || {}, runtimeDefineVars, transformEnv);
-
     if (preBundle) {
+      const plugins = [
+        // Add assets plugin for pre-bundle in case of third-party library requires assets.
+        compilationInfo && createAssetsPlugin(compilationInfo, rootDir),
+      ];
+      if (enableSyntaxFeatures) {
+        plugins.push(
+          transformPipePlugin({
+            plugins: transformPlugins,
+          }),
+        );
+      }
       preBundleDepsMetadata = await createPreBundleDepsMetadata({
         task,
         alias,
@@ -156,11 +166,7 @@ export function createServerCompiler(options: Options) {
         speedup,
         external: Object.keys(externals),
         // Pass transformPlugins only if syntaxFeatures is enabled
-        plugins: enableSyntaxFeatures ? [
-          transformPipePlugin({
-            plugins: transformPlugins,
-          }),
-        ] : [],
+        plugins,
       });
     }
 
