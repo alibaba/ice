@@ -1,9 +1,11 @@
 import * as path from 'path';
 import { createRequire } from 'module';
-import { compilationPlugin, compileExcludes, getDefineVars, getCompilerPlugins, getJsxTransformOptions } from '@ice/shared-config';
+import { compilationPlugin, compileExcludes, getDefineVars, getCompilerPlugins, getJsxTransformOptions, getAliasWithRoot } from '@ice/shared-config';
 import type { Config, ModifyWebpackConfig } from '@ice/shared-config/types';
 import type { Configuration, rspack as Rspack } from '@rspack/core';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
+import { coreJsPath } from '@ice/bundles';
+import RefreshPlugin from '@ice/bundles/esm/plugin-refresh.js';
 import getSplitChunks from './splitChunks.js';
 import getAssetsRule from './assetsRule.js';
 import getCssRules from './cssRules.js';
@@ -26,6 +28,7 @@ type GetConfig = (
 const require = createRequire(import.meta.url);
 
 const { merge } = lodash;
+
 const getConfig: GetConfig = async (options) => {
   const {
     rootDir,
@@ -62,6 +65,7 @@ const getConfig: GetConfig = async (options) => {
     configureWebpack = [],
     minimizerOptions = {},
   } = taskConfig || {};
+  const isDev = mode === 'development';
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
   const hashKey = hash === true ? 'hash:8' : (hash || '');
   const compilation = compilationPlugin({
@@ -129,7 +133,7 @@ const getConfig: GetConfig = async (options) => {
           use: {
             loader: 'builtin:compilation-loader',
             options: {
-              swcOptions: getJsxTransformOptions({ suffix: 'jsx', rootDir, mode, fastRefresh: false, polyfill, enableEnv: true }),
+              swcOptions: getJsxTransformOptions({ suffix: 'jsx', rootDir, mode, fastRefresh: isDev, polyfill, enableEnv: true }),
               transformFeatures: {
                 removeExport: swcOptions.removeExportExprs,
                 keepExport: swcOptions.keepExports,
@@ -146,7 +150,11 @@ const getConfig: GetConfig = async (options) => {
       ],
     },
     resolve: {
-      alias,
+      alias: {
+        // Always lock the corejs version, it is decided by shared-config.
+        'core-js': coreJsPath,
+        ...getAliasWithRoot(rootDir, alias),
+      },
     },
     watchOptions: {
       ignored: /node_modules/,
@@ -163,10 +171,10 @@ const getConfig: GetConfig = async (options) => {
       ...plugins,
       // Unplugin should be compatible with rspack.
       ...compilerWebpackPlugins,
+      isDev && new RefreshPlugin(),
       new DefinePlugin(getDefineVars(define, runtimeDefineVars, getExpandedEnvs)),
       new ProvidePlugin({
         process: [require.resolve('process/browser')],
-        $ReactRefreshRuntime$: [require.resolve('./client/reactRefresh.cjs')],
       }),
       !!minify && new SwcJsMinimizerRspackPlugin(jsMinimizerPluginOptions),
     ].filter(Boolean),

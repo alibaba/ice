@@ -11,7 +11,7 @@ import ESlintPlugin from '@ice/bundles/compiled/eslint-webpack-plugin/index.js';
 import CopyPlugin from '@ice/bundles/compiled/copy-webpack-plugin/index.js';
 import type { NormalModule, Compiler, Configuration } from 'webpack';
 import type webpack from 'webpack';
-import { compilationPlugin, compileExcludes, getCompilerPlugins, getDefineVars } from '@ice/shared-config';
+import { compilationPlugin, compileExcludes, getCompilerPlugins, getDefineVars, getAliasWithRoot } from '@ice/shared-config';
 import type { Config, ModifyWebpackConfig } from '@ice/shared-config/types.js';
 import configAssets from './config/assets.js';
 import configCss from './config/css.js';
@@ -57,16 +57,6 @@ function getEntry(rootDir: string, runtimeTmpDir: string) {
     // FIXME: https://github.com/ice-lab/ice-next/issues/217, https://github.com/ice-lab/ice-next/issues/199
     // loader: [dataLoaderFile],
   };
-}
-
-// format alias
-export function getAliasWithRoot(rootDir: string, alias?: Record<string, string | boolean>) {
-  const aliasWithRoot = {};
-  Object.keys(alias).forEach((key) => {
-    const aliasValue = alias[key];
-    aliasWithRoot[key] = (aliasValue && typeof aliasValue === 'string' && aliasValue.startsWith('.')) ? path.join(rootDir, aliasValue) : aliasValue;
-  });
-  return aliasWithRoot;
 }
 
 export function getWebpackConfig(options: GetWebpackConfigOptions): Configuration {

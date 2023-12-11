@@ -82,7 +82,7 @@ const getConfig: GetConfig = async (context, options, rspack) => {
       },
       getRoutesFile,
       getExpandedEnvs,
-      localIdentName: config.mode === 'development' ? CSS_MODULES_LOCAL_IDENT_NAME_DEV : CSS_MODULES_LOCAL_IDENT_NAME,
+      localIdentName: config.cssModules?.localIdentName || (config.mode === 'development' ? CSS_MODULES_LOCAL_IDENT_NAME_DEV : CSS_MODULES_LOCAL_IDENT_NAME),
       taskConfig: {
         ...config,
         plugins: (config.plugins || []).concat(plugins),
