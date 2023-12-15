@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { useAppContext } from 'ice';
+// import { useAppContext } from 'ice';
 import styles from './index.module.css';
 import EditButton from '@/components/EditButton.client';
 import Counter from '@/components/Counter.client';
@@ -8,8 +8,8 @@ import Comments from '@/components/Comments';
 export default function Home() {
   console.log('Render: Index');
 
-  const appContext = useAppContext();
-  console.log(appContext);
+  // const appContext = useAppContext();
+  // console.log(appContext);
 
   return (
     <div className={styles.app}>

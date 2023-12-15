@@ -19,7 +19,7 @@
     "@ice/swc-plugin-remove-export": "0.2.0",
     "@ice/swc-plugin-keep-export": "0.2.0",
     "@ice/swc-plugin-node-transform": "0.2.0",
-    "@ice/swc-plugin-react-server-component": "0.1.1",
+    "@ice/swc-plugin-react-server-component": "0.1.2",
     "ansi-html-community": "^0.0.8",
     "html-entities": "^2.3.2",
     "core-js": "3.32.0",
@@ -101,10 +101,10 @@
     "source-map": "0.8.0-beta.0",
     "find-up": "5.0.0",
     "common-path-prefix": "3.0.0",
-    "react-builtin": "npm:react@18.3.0-canary-dd480ef92-20230822",
-    "react-dom-builtin": "npm:react-dom@18.3.0-canary-dd480ef92-20230822",
-    "react-server-dom-webpack": "18.3.0-canary-dd480ef92-20230822",
-    "scheduler-builtin": "npm:scheduler@0.24.0-canary-dd480ef92-20230822"
+    "react-builtin": "npm:react@18.3.0-canary-2c338b16f-20231116",
+    "react-dom-builtin": "npm:react-dom@18.3.0-canary-2c338b16f-20231116",
+    "react-server-dom-webpack": "18.3.0-canary-2c338b16f-20231116",
+    "scheduler-builtin": "npm:scheduler@0.24.0-canary-2c338b16f-20231116"
   },
   "publishConfig": {
     "access": "public",

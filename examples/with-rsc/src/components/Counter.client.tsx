@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { useAppContext } from 'ice';
+// import { useAppContext } from 'ice';
 import styles from './counter.module.css';
 
 export default function Counter() {
@@ -10,8 +10,8 @@ export default function Counter() {
     setCount(count + 1);
   }
 
-  const appContext = useAppContext();
-  console.log(appContext);
+  // const appContext = useAppContext();
+  // console.log(appContext);
 
   return (
     <button className={styles.button} type="button" onClick={updateCount}>

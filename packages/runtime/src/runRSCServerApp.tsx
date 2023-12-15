@@ -1,9 +1,8 @@
-// import StreamWeb from 'stream/web';
-import { TextDecoder, TextEncoder } from 'util';
+
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
-import { renderToReadableStream } from 'react-server-dom-webpack/server.edge';
-import { createFromReadableStream } from 'react-server-dom-webpack/client.edge';
+// @ts-ignore
+import * as ReactDOMServerEdge from 'react-dom/server.edge';
 import { AppContextProvider } from './AppContext.js';
 import { DocumentContextProvider } from './Document.js';
 import { loadRouteModules } from './routes.js';
@@ -19,26 +18,18 @@ import type {
   RouteModules,
   ServerRenderOptions as RenderOptions,
 } from './types.js';
+import createServerComponentRenderer from './server/createServerComponentRenderer.js';
 
-// if (!global.ReadableStream) {
-//   // @ts-ignore
-//   global.ReadableStream = StreamWeb.ReadableStream;
-// }
+if (!global.ReadableStream) {
+  global.ReadableStream = require('stream/web').ReadableStream;
+}
 
-// This utility is based on https://github.com/zertosh/htmlescape
-// License: https://github.com/zertosh/htmlescape/blob/0527ca7156a524d256101bb310a9f970f63078ad/LICENSE
-const ESCAPE_LOOKUP: { [match: string]: string } = {
-  '&': '\\u0026',
-  '>': '\\u003e',
-  '<': '\\u003c',
-  '\u2028': '\\u2028',
-  '\u2029': '\\u2029',
-};
+if (!global.WritableStream) {
+  global.WritableStream = require('stream/web').WritableStream;
+}
 
-const ESCAPE_REGEX = /[&><\u2028\u2029]/g;
-
-function htmlEscapeJsonString(str: string): string {
-  return str.replace(ESCAPE_REGEX, (match) => ESCAPE_LOOKUP[match]);
+if (!global.TransformStream) {
+  global.TransformStream = require('stream/web').TransformStream;
 }
 
 export async function runRSCServerApp(serverContext: ServerContext, renderOptions: RenderOptions) {
@@ -50,8 +41,8 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
     renderMode,
     basename,
     serverOnlyBasename,
-    clientManifest: clientManifestMapping,
-    serverManifest: serverManifestMapping,
+    clientManifest,
+    serverManifest,
     assetsManifest,
     routePath,
     Document,
@@ -80,90 +71,25 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
 
   const routeModules = await loadRouteModules(matches.map(({ route: { id, lazy } }) => ({ id, lazy })));
 
-  // Merge client manifest for match route.
-  const clientManifest = {};
-  const serverManifest = {};
-  matches.forEach(match => {
-    const { componentName } = match.route;
-    const manifest = clientManifestMapping[`rsc_${componentName}`];
-    if (manifest) {
-      Object.assign(clientManifest, manifest);
-    }
+  const clientReferenceManifest = createClientReferenceManifest(clientManifest, serverManifest, matches);
 
-    const ssrManifest = serverManifestMapping[`rsc_${componentName}`];
-    if (ssrManifest) {
-      Object.assign(serverManifest, ssrManifest);
-    }
+  const rscWriter = createWritableStream(res);
+  const Main = createServerComponentRenderer(() => {
+    return renderMatches(matches, routeModules);
+  }, {
+    writable: rscWriter,
+    clientReferenceManifest,
+    serverComponentsErrorHandler: (err) => {
+      console.log(err);
+    },
   });
 
-  const decoder = new TextDecoder();
-  const encoder = new TextEncoder();
-
-  // res.write('<script>self.__rsc_data=self.__rsc_data||[];</script>');
-
-  function decorateWrite(write) {
-    return function (data) {
-      const chunk = decoder.decode(data, { stream: true });
-      const modifiedData = `<script>self.__rsc_data.push(${htmlEscapeJsonString(JSON.stringify([chunk]))})</script>`;
-
-      return write.call(this, encoder.encode(modifiedData));
-    };
-  }
-  // res.write = decorateWrite(res.write);
-
-  function decodeText(
-    input: Uint8Array | undefined,
-    textDecoder: TextDecoder,
-  ) {
-    return textDecoder.decode(input, { stream: true });
-  }
-
-  const element = (
-    <AppContextProvider value={appContext}>
-      {renderMatches(matches, routeModules)}
-    </AppContextProvider>
-  );
-
-  function createFlightStream() {
-    const flightStream = renderToReadableStream(
-      element,
-      clientManifest,
-    );
-
-    const [renderStream, forwardStream] = flightStream.tee();
-    const forwardReader = forwardStream.getReader();
-
-    function readRSCTree() {
-      forwardReader.read().then(({ done, value }) => {
-        if (done) {
-          return;
-        } else {
-          const responsePartial = decodeText(value, decoder);
-          const modifiedData = `<script>self.__rsc_data.push(${htmlEscapeJsonString(JSON.stringify([responsePartial]))})</script>`;
-          res.write(encoder.encode(modifiedData));
-          readRSCTree();
-        }
-      });
-    }
-
-    const response = createFromReadableStream(renderStream, {
-      moduleMap: serverManifest,
-    });
-
-    res.write('<script>self.__rsc_data=self.__rsc_data||[];</script>');
-    readRSCTree();
-    return response;
-  }
-
-  const response = createFlightStream();
-
-  function Main() {
-    // @ts-ignore
-    return React.use(response);
-  }
-
   const documentContext = {
-    main: <Main />,
+    main: (
+      <React.Suspense>
+        <Main />
+      </React.Suspense>
+    ),
   };
 
   function App() {
@@ -176,32 +102,62 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
     );
   }
 
-  const EdgeServer = require('react-dom/server.edge');
-  const appStream = await EdgeServer.renderToReadableStream(<App />);
-  startReadingFromStream(res, appStream);
+  const appStream = await ReactDOMServerEdge.renderToReadableStream(<App />);
+  const htmlWriter = createWritableStream(res, true);
+  appStream.pipeTo(htmlWriter);
 }
 
-function startReadingFromStream(response, stream) {
-  let reader = stream.getReader();
-
-  function progress(_ref) {
-    let { done } = _ref,
-        { value } = _ref;
-
-    if (done) {
-      response.end();
-      return;
+// Merge client manifest for match route.
+function createClientReferenceManifest(clientManifest, serverManifest, matches) {
+  const clientModules = {};
+  const serverModules = {};
+  matches.forEach(match => {
+    const { componentName } = match.route;
+    const manifest = clientManifest[`rsc_${componentName}`];
+    if (manifest) {
+      Object.assign(clientModules, manifest);
     }
 
-    response.write(value);
-    return reader.read().then(progress).catch(error);
+    const ssrManifest = serverManifest[`rsc_${componentName}`];
+    if (ssrManifest) {
+      Object.assign(serverModules, ssrManifest);
+    }
+  });
+
+  const clientReferenceManifest = {
+    clientModules,
+    serverModules,
+    moduleLoading: {
+      prefix: '',
+      crossOrigin: false,
+    },
+  };
+
+  return clientReferenceManifest;
+}
+
+// Write chunk to node response.
+function createWritableStream(response, close?: boolean) {
+  const config: any = {
+    write(chunk) {
+      return new Promise(resolve => {
+        response.write(chunk);
+        resolve(null);
+      });
+    },
+    abort(error) {
+      console.log(error);
+    },
+  };
+
+  if (close) {
+    config.close = () => {
+      response.end();
+    };
   }
 
-  function error(e) {
-    console.log(e);
-  }
-
-  reader.read().then(progress).catch(error);
+  const writable = new WritableStream(config);
+  return writable;
 }
 
 function renderMatches(matches: RouteMatch[], routeModules: RouteModules) {
