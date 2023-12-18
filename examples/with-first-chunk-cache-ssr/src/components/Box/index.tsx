@@ -16,7 +16,7 @@ function Box() {
   console.log('Render: Box');
 
   return (
-    <div className={styles.box}>
+    <div id="Box-real" className={styles.box}>
       {
         data.map((item, index) => {
           return <Item id="Item" key={index} src={item} />;

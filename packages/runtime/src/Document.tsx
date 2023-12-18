@@ -213,6 +213,8 @@ function Snapshot(rootId) {
   // Cache template before stream.
   const iceContainerEle = document.getElementById(rootId);
   let snapshot = document.documentElement.outerHTML;
+  const boxFallback = iceContainerEle.querySelector('#Box-fallback').outerHTML;
+  const listFallback = iceContainerEle.querySelector('#List-fallback').outerHTML;
 
   window.addEventListener('stream-end', () => {
     // Remove snapshot when stream-end event.
@@ -227,7 +229,15 @@ function Snapshot(rootId) {
     if (hasCacheFlag) {
       let cacheStr = `${snapshot.split(FCC_FLAG)[0] + FCC_FLAG}</div>`;
       const style = 'position:absolute;width:100%;top:0;left:0;z-index:999';
-      cacheStr = cacheStr.replace(snapshotOuterHTML, `<div id="${SNAPSHOT_ID}" style="${style}">${iceContainerEle.innerHTML}</div>`);
+      const boxReal = iceContainerEle.querySelector('#Box-real').outerHTML;
+      const listReal = iceContainerEle.querySelector('#List-real').outerHTML;
+
+      if (boxFallback && boxReal && listReal && listFallback) {
+        cacheStr = cacheStr.replace(boxFallback, boxReal);
+        cacheStr = cacheStr.replace(listFallback, listReal);
+      } else {
+        cacheStr = cacheStr.replace(snapshotOuterHTML, `<div id="${SNAPSHOT_ID}" style="${style}">${iceContainerEle.innerHTML}</div>`);
+      }
       console.log('cacheStr', cacheStr);
       let mega = (window as any).__megability_bridge__;
       if (!mega) return;

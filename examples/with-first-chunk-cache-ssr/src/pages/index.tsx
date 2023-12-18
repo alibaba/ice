@@ -8,7 +8,7 @@ const StreamEnd = withSuspense(() => {
   console.log(`Render: ${data}`);
 
   return (
-    <script dangerouslySetInnerHTML={{ __html: 'window.dispatchEvent(new Event(\'stream-end\'));' }} />
+    <script dangerouslySetInnerHTML={{ __html: 'setTimeout(() => {window.dispatchEvent(new Event(\'stream-end\'));}, 300);' }} />
   );
 });
 
@@ -30,8 +30,8 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <Box id="Box" fallback={<div className={styles.boxFallback} />} />
-      <List id="List" fallback={<div className={styles.boxFallback} />} />
+      <Box id="Box" fallback={<div id="Box-fallback" className={styles.boxFallback} />} />
+      <List id="List" fallback={<div id="List-fallback" className={styles.boxFallback} />} />
       {/* https://github.com/xiaoxiaojx/blog/issues/37 */}
       <div dangerouslySetInnerHTML={{ __html: '<div style="height:0;width:0;">\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b</div>' }} />
       <StreamEnd id="StreamEnd" />
