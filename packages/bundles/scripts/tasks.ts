@@ -286,6 +286,30 @@ const tasks = [
       });
     },
   },
+  {
+    pkgName: '@rspack/plugin-react-refresh',
+    skipCompile: true,
+    patch: () => {
+      const pkgPath = path.join(__dirname, '../node_modules/@rspack/plugin-react-refresh');
+      const filePaths = globbySync(['**/*'], { cwd: pkgPath, ignore: ['node_modules'] });
+      filePaths.forEach((filePath) => {
+        fs.ensureDirSync(path.join(__dirname, `../compiled/@rspack/plugin-react-refresh/${path.dirname(filePath)}`));
+        const sourcePath = path.join(pkgPath, filePath);
+        const targetPath = path.join(__dirname, `../compiled/@rspack/plugin-react-refresh/${filePath}`);
+        if (path.extname(filePath) === '.js') {
+          const fileContent = fs.readFileSync(sourcePath, 'utf8');
+          fs.writeFileSync(targetPath,
+            replaceDeps(fileContent, webpackDevServerDeps.concat([
+              ...commonDeps,
+              '@rspack/core',
+            ])).replace(/@pmmmwh\/react-refresh-webpack-plugin\/lib\/runtime\/RefreshUtils/g, '@ice/bundles/compiled/@pmmmwh/react-refresh-webpack-plugin/lib/runtime/RefreshUtils'),
+          );
+        } else {
+          fs.copyFileSync(sourcePath, targetPath);
+        }
+      });
+    },
+  },
 ];
 
 export default tasks;

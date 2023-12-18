@@ -1279,9 +1279,6 @@ importers:
       '@ice/swc-plugin-remove-export':
         specifier: 0.2.0
         version: 0.2.0
-      '@rspack/plugin-react-refresh':
-        specifier: 0.4.0
-        version: 0.4.0(react-refresh@0.14.0)(webpack-dev-server@4.15.0)(webpack@5.88.2)
       '@swc/core':
         specifier: 1.3.80
         version: 1.3.80
@@ -1370,6 +1367,9 @@ importers:
       '@rspack/dev-server':
         specifier: 0.4.0
         version: 0.4.0(@rspack/core@0.4.0)(@swc/core@1.3.80)(esbuild@0.17.16)(react-refresh@0.14.0)
+      '@rspack/plugin-react-refresh':
+        specifier: 0.4.0
+        version: 0.4.0(react-refresh@0.14.0)(webpack-dev-server@4.15.0)(webpack@5.88.2)
       '@types/less':
         specifier: ^3.0.3
         version: 3.0.3
@@ -7662,6 +7662,7 @@ packages:
       source-map: 0.7.4
       webpack: 5.88.2(@swc/core@1.3.80)(esbuild@0.17.16)
       webpack-dev-server: 4.15.0(webpack@5.88.2)
+    dev: true
 
   /@polka/url@1.0.0-next.21:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
@@ -8170,7 +8171,7 @@ packages:
       - webpack-dev-server
       - webpack-hot-middleware
       - webpack-plugin-serve
-    dev: false
+    dev: true
 
   /@sideway/address@4.1.4:
     resolution: {integrity: sha512-7vwq+rOHVWjyXxVlR76Agnvhy8I9rpzjosTESvmhNeXOXdZZB15Fl+TI9x1SiHZH5Jv2wTGduSxFDIaq0m3DUw==}
@@ -11633,6 +11634,7 @@ packages:
 
   /common-path-prefix@3.0.0:
     resolution: {integrity: sha512-QE33hToZseCH3jS0qN96O/bSh3kaw/h+Tq7ngyY9eWDUnTlTNUyqfqvCXioLe5Na5jFsL78ra/wuBU4iuEgd4w==}
+    dev: true
 
   /commondir@1.0.1:
     resolution: {integrity: sha512-W9pAhw0ja1Edb5GVdIF1mjZw/ASI0AlShXM83UUGe2DVr5TdAPEA1OA8m/g8zWp9x6On7gqufY+FatDbC3MDQg==}
