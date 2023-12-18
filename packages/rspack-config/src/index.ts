@@ -6,7 +6,7 @@ import type { Configuration, rspack as Rspack } from '@rspack/core';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import { coreJsPath } from '@ice/bundles';
 import RefreshPlugin from '@ice/bundles/esm/plugin-refresh.js';
-import getSplitChunks from './splitChunks.js';
+import getSplitChunks, { getFrameworkBundles } from './splitChunks.js';
 import getAssetsRule from './assetsRule.js';
 import getCssRules from './cssRules.js';
 
@@ -24,6 +24,13 @@ interface GetRspackConfigOptions {
 type GetConfig = (
   options: GetRspackConfigOptions,
 ) => Promise<Configuration>;
+
+interface BuiltinFeatures {
+  splitChunksStrategy?: {
+    name: string;
+    topLevelFrameworks: string[];
+  };
+}
 
 const require = createRequire(import.meta.url);
 
@@ -108,6 +115,19 @@ const getConfig: GetConfig = async (options) => {
     },
     module: true,
   }, minimizerOptions);
+  const builtinFeatures: BuiltinFeatures = {};
+  let splitChunksStrategy = null;
+  // Use builtin splitChunks strategy by default.
+  if (splitChunks === true || splitChunks === 'chunks') {
+    builtinFeatures.splitChunksStrategy = {
+      name: 'chunks',
+      topLevelFrameworks: getFrameworkBundles(rootDir),
+    };
+  } else {
+    splitChunksStrategy = typeof splitChunks == 'object'
+      ? splitChunks
+      : getSplitChunks(rootDir, splitChunks);
+  }
   const config: Configuration = {
     entry: {
       main: [path.join(rootDir, runtimeTmpDir, 'entry.client.tsx')],
@@ -162,9 +182,7 @@ const getConfig: GetConfig = async (options) => {
     },
     optimization: {
       minimize: !!minify,
-      splitChunks: typeof splitChunks == 'object'
-        ? splitChunks
-        : getSplitChunks(rootDir, splitChunks),
+      ...(splitChunksStrategy ? { splitChunks: splitChunksStrategy } : {}),
     },
     // @ts-expect-error plugin instance defined by default in not compatible with rspack.
     plugins: [
@@ -212,7 +230,7 @@ const getConfig: GetConfig = async (options) => {
       ...devServer,
       setupMiddlewares: middlewares,
     },
-    features: {},
+    features: builtinFeatures,
   };
   // Compatible with API configureWebpack.
   const ctx = {

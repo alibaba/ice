@@ -13,7 +13,7 @@ function transformPathForRegex(str: string) {
     ? str.replace(/\\$/, '').replace(/\\/g, '\\') : str;
 }
 
-const getChunksStrategy = (rootDir: string) => {
+export const getFrameworkBundles = (rootDir: string) => {
   const frameworkPaths: string[] = [];
   const visitedFramework = new Set<string>();
   function addPackagePath(packageName: string, dir: string) {
@@ -40,7 +40,11 @@ const getChunksStrategy = (rootDir: string) => {
   FRAMEWORK_BUNDLES.forEach((packageName) => {
     addPackagePath(packageName, rootDir);
   });
+  return frameworkPaths;
+};
 
+const getChunksStrategy = (rootDir: string) => {
+  const frameworkPaths = getFrameworkBundles(rootDir);
   // Create test rule for framework.
   const frameworkTest = new RegExp(frameworkPaths.join('|'));
   return {
@@ -81,14 +85,14 @@ export const getVendorStrategy = (options: Configuration['splitChunks']) => {
   };
 };
 
-const getSplitChunks = (rootDir: string, strategy: string | boolean) => {
+const getSplitChunks = (_: string, strategy: string | boolean) => {
   if (strategy === false) {
     return { minChunks: Infinity, cacheGroups: { default: false } };
   } else if (typeof strategy === 'string' && ['page-vendors', 'vendors'].includes(strategy)) {
     const splitChunksOptions = strategy === 'page-vendors' ? { chunks: 'all' } : {};
     return getVendorStrategy(splitChunksOptions);
   }
-  return getChunksStrategy(rootDir);
+  return {};
 };
 
 export default getSplitChunks;
