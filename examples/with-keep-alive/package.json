@@ -7,13 +7,15 @@
     "build": "ice build"
   },
   "dependencies": {
-    "@ice/runtime": "alpha",
-    "react": "experimental",
-    "react-dom": "experimental"
+    "react": "0.0.0-experimental-0cdfef19b-20231211",
+    "react-dom": "0.0.0-experimental-0cdfef19b-20231211"
   },
   "devDependencies": {
-    "@ice/app": "alpha",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.2"
+  },
+  "resolutions": {
+    "react": "0.0.0-experimental-0cdfef19b-20231211",
+    "react-dom": "0.0.0-experimental-0cdfef19b-20231211"
   }
 }
