@@ -20,7 +20,7 @@ function List() {
   console.log('Render: List');
 
   return (
-    <div id="List-real" className={styles.list}>
+    <div className={styles.list}>
       {
         data.map((item, index) => {
           return (<Item
