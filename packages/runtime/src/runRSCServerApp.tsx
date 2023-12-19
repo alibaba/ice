@@ -114,7 +114,7 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
 // Merge client manifest for match route.
 function createClientReferenceManifest(clientManifest, serverManifest, matches) {
   const clientModules = {};
-  const serverModules = {};
+  const ssrModuleMapping = {};
   matches.forEach(match => {
     const { componentName } = match.route;
     const manifest = clientManifest[`rsc_${componentName}`];
@@ -124,16 +124,16 @@ function createClientReferenceManifest(clientManifest, serverManifest, matches) 
 
     const ssrManifest = serverManifest[`rsc_${componentName}`];
     if (ssrManifest) {
-      Object.assign(serverModules, ssrManifest);
+      Object.assign(ssrModuleMapping, ssrManifest);
     }
   });
 
   const clientReferenceManifest = {
     clientModules,
-    serverModules,
+    ssrModuleMapping,
     moduleLoading: {
       prefix: '',
-      crossOrigin: false,
+      crossOrigin: null,
     },
   };
 

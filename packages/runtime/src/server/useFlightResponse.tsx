@@ -1,5 +1,6 @@
 import { TextDecoder, TextEncoder } from 'util';
 import { createFromReadableStream } from 'react-server-dom-webpack/client.edge';
+import type { ClientReferenceManifest } from './flightManifest.js';
 
 // This utility is based on https://github.com/zertosh/htmlescape
 // License: https://github.com/zertosh/htmlescape/blob/0527ca7156a524d256101bb310a9f970f63078ad/LICENSE
@@ -55,11 +56,11 @@ function createFlightTransformer() {
  * This is only used for renderToHTML, the Flight response does not need additional wrappers.
  */
 export default function useFlightResponse(
-  writable,
-  flightStream,
-  clientReferenceManifest,
+  writable: WritableStream<Uint8Array>,
+  flightStream: ReadableStream<Uint8Array>,
+  clientReferenceManifest: ClientReferenceManifest,
   flightResponseRef,
-) {
+): Promise<JSX.Element> {
   if (flightResponseRef.current !== null) {
     return flightResponseRef.current;
   }
@@ -68,7 +69,7 @@ export default function useFlightResponse(
 
   const response = createFromReadableStream(renderStream, {
     ssrManifest: {
-      moduleMap: clientReferenceManifest.serverModules,
+      moduleMap: clientReferenceManifest.ssrModuleMapping,
       moduleLoading: clientReferenceManifest.moduleLoading,
     },
   });

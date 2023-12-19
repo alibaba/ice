@@ -2,11 +2,18 @@
 import { renderToReadableStream } from 'react-server-dom-webpack/server.edge';
 import * as React from 'react';
 import useFlightResponse from './useFlightResponse.js';
+import type { ClientReferenceManifest } from './flightManifest.js';
 
 // @ts-ignore
 const { use } = React;
 
-export default function createServerComponentRenderer(ComponentToRender, options) {
+export type RendererOptions = {
+  clientReferenceManifest: ClientReferenceManifest;
+  serverComponentsErrorHandler: Function;
+  writable: WritableStream;
+};
+
+export default function createServerComponentRenderer<Props>(ComponentToRender: (props: Props) => any, options: RendererOptions): (props: Props) => JSX.Element {
   const {
     clientReferenceManifest,
     serverComponentsErrorHandler,
@@ -14,7 +21,7 @@ export default function createServerComponentRenderer(ComponentToRender, options
   } = options;
 
   let flightStream: ReadableStream<Uint8Array>;
-  const createFlightStream = (props) => {
+  const createFlightStream = (props: Props) => {
     if (!flightStream) {
       flightStream = renderToReadableStream(
         <ComponentToRender {...(props as any)} />,
@@ -29,7 +36,7 @@ export default function createServerComponentRenderer(ComponentToRender, options
 
   const flightResponseRef = { current: null };
 
-  return function ServerComponentWrapper(props): JSX.Element {
+  return function ServerComponentWrapper(props: Props): JSX.Element {
     const response = useFlightResponse(
       writable,
       createFlightStream(props),
