@@ -43,7 +43,7 @@ export const getFrameworkBundles = (rootDir: string) => {
   return frameworkPaths;
 };
 
-const getChunksStrategy = (rootDir: string) => {
+export const getChunksStrategy = (rootDir: string) => {
   const frameworkPaths = getFrameworkBundles(rootDir);
   // Create test rule for framework.
   const frameworkTest = new RegExp(frameworkPaths.join('|'));
