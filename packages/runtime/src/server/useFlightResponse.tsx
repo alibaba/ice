@@ -83,7 +83,9 @@ export default function useFlightResponse(
     .finally(() => {
       // Once the last encoding stream has flushed, then unset the flight
       // response ref.
-      flightResponseRef.current = null;
+      setTimeout(() => {
+        flightResponseRef.current = null;
+      }, 0);
     })
     .catch((err) => {
       console.error('Unexpected error while rendering Flight stream', err);

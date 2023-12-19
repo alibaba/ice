@@ -80,7 +80,7 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
     writable: rscWriter,
     clientReferenceManifest,
     serverComponentsErrorHandler: (err) => {
-      console.log(err);
+      console.error(err);
     },
   });
 
@@ -102,7 +102,11 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
     );
   }
 
-  const appStream = await ReactDOMServerEdge.renderToReadableStream(<App />);
+  const appStream = await ReactDOMServerEdge.renderToReadableStream(<App />, {
+    onError: (err) => {
+      console.error(err);
+    },
+  });
   const htmlWriter = createWritableStream(res, true);
   appStream.pipeTo(htmlWriter);
 }

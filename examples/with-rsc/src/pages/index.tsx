@@ -4,6 +4,7 @@ import styles from './index.module.css';
 import EditButton from '@/components/EditButton.client';
 import Counter from '@/components/Counter.client';
 import Comments from '@/components/Comments';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 export default function Home() {
   console.log('Render: Index');
@@ -15,10 +16,12 @@ export default function Home() {
     <div className={styles.app}>
       <h2>Home Page</h2>
       <Counter />
-      <Suspense fallback={<>loading</>}>
-        {/* @ts-ignore */}
-        <Comments />
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={<>loading</>}>
+          {/* @ts-ignore */}
+          <Comments />
+        </Suspense>
+      </ErrorBoundary>
       <EditButton noteId="editButton">
         hello world
       </EditButton>
