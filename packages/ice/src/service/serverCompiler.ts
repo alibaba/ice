@@ -16,7 +16,7 @@ import createAssetsPlugin from '../esbuild/assets.js';
 import { CACHE_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
 import emptyCSSPlugin from '../esbuild/emptyCSS.js';
 import rscLoderPlugin from '../esbuild/rscLoader.js';
-import transformRSCDirectivePlugin from '../esbuild/transfromRSCDirective2.js';
+import transformRSCDirectivePlugin from '../esbuild/transfromRSCDirective.js';
 import transformImportPlugin from '../esbuild/transformImport.js';
 import transformPipePlugin from '../esbuild/transformPipe.js';
 import isExternalBuiltinDep from '../utils/isExternalBuiltinDep.js';
