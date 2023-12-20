@@ -62,7 +62,7 @@ interface RenderOptions {
 }
 
 <% if(rsc) {-%>
-global._requere_rsc_module = (id) => rscModule[id].default;
+global._require_rsc_module = (id) => rscModule[id].default;
 <% }-%>
 
 export async function renderToHTML(requestContext, options: RenderOptions = {}) {
