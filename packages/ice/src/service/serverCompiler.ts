@@ -168,7 +168,7 @@ export function createServerCompiler(options: Options) {
 
     if (serverComponent) {
       // react-server-dom-webpack/client.edge use __webpack_require__ to load client components
-      // in ssr, we need to replace it by custom module laoder.
+      // In ssr, we need to replace it by custom server module loader.
       define['__webpack_require__'] = 'global._require_rsc_module';
     }
 
