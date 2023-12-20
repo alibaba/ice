@@ -93,6 +93,7 @@ const transformPipe = (options: PluginOptions = {}): Plugin => {
             return resolveData;
           }, Promise.resolve({ path: args.path }));
 
+          // For path not changed, should return null, otherwise it will breack other path resolution.
           if (redirected && (path.isAbsolute(res.path) || res.external)) {
             return res;
           }
