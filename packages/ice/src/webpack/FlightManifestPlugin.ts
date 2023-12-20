@@ -18,10 +18,12 @@ interface Manifest {
   };
 }
 
-interface ServerManifest {
+interface ssrManifest {
   [key: string]: Manifest;
 }
 
+// react-client-manifest.json  manifest for csr to load client components.
+// react-ssr-manifest.json  manifest for ssr to load client components.
 export class FlightManifestPlugin {
   clientManifestFilename?: string;
   ssrManifestFilename?: string;
@@ -45,14 +47,14 @@ export class FlightManifestPlugin {
           [key: string]: Manifest;
         } = {};
         const ssrManifestSetMapping: {
-          [key: string]: ServerManifest;
+          [key: string]: ssrManifest;
         } = {};
 
         compilation.chunkGroups.forEach((chunkGroup) => {
           const chunkGroupName = chunkGroup.name;
 
           const clientManifest: Manifest = {};
-          const ssrManifest: ServerManifest = {};
+          const ssrManifest: ssrManifest = {};
 
           let hasRecord = false;
 
