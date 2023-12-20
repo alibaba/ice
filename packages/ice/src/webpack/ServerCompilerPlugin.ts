@@ -44,13 +44,13 @@ export default class ServerCompilerPlugin {
 
           if (compilation.assets?.['react-client-manifest.json']) {
             // @ts-ignore
-            this.compilerOptions.compilationInfo.rscManifest =
+            this.compilerOptions.compilationInfo.reactClientManifest =
               JSON.parse(compilation.assets['react-client-manifest.json']?.source()?.toString());
           }
 
           if (compilation.assets?.['react-ssr-manifest.json']) {
             // @ts-ignore
-            this.compilerOptions.compilationInfo.rscServerManifest =
+            this.compilerOptions.compilationInfo.reactSSRManifest =
               JSON.parse(compilation.assets['react-ssr-manifest.json']?.source()?.toString());
           }
       }

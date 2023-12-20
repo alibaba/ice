@@ -40,8 +40,8 @@ const ASSETS_RE = new RegExp(`\\.(${ASSET_TYPES.join('|')})(\\?.*)?$`);
 
 interface CompilationInfo {
   assetsManifest?: AssetsManifest;
-  rscManifest?: any;
-  rscServerManifest?: any;
+  reactClientManifest?: any;
+  reactSSRManifest?: any;
 }
 
 const createAssetsPlugin = (compilationInfo: CompilationInfo | (() => CompilationInfo), rootDir: string) => ({
@@ -73,7 +73,7 @@ const createAssetsPlugin = (compilationInfo: CompilationInfo | (() => Compilatio
     build.onLoad({ filter: /.*/, namespace: 'react-client-manifest' }, () => {
       const manifest = typeof compilationInfo === 'function' ? compilationInfo() : compilationInfo;
       return {
-        contents: JSON.stringify(manifest?.rscManifest || ''),
+        contents: JSON.stringify(manifest?.reactClientManifest || ''),
         loader: 'json',
       };
     });
@@ -88,7 +88,7 @@ const createAssetsPlugin = (compilationInfo: CompilationInfo | (() => Compilatio
     build.onLoad({ filter: /.*/, namespace: 'react-ssr-manifest' }, () => {
       const manifest = typeof compilationInfo === 'function' ? compilationInfo() : compilationInfo;
       return {
-        contents: JSON.stringify(manifest?.rscServerManifest || ''),
+        contents: JSON.stringify(manifest?.reactSSRManifest || ''),
         loader: 'json',
       };
     });

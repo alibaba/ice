@@ -3,10 +3,11 @@ import type { AssetsManifest } from '@ice/runtime/types';
 
 interface CompilationInfo {
   assetsManifest?: AssetsManifest;
-  rscManifest?: any;
-  rscServerManifest?: any;
+  reactClientManifest?: any;
+  reactSSRManifest?: any;
 }
 
+// Import client component modules for ssr.
 const RscLoaderPlugin = (compilationInfo: CompilationInfo | (() => CompilationInfo)) => ({
   name: 'esbuild-rsc-loader',
   setup(build: PluginBuild) {
@@ -21,7 +22,7 @@ const RscLoaderPlugin = (compilationInfo: CompilationInfo | (() => CompilationIn
 
     build.onLoad({ filter: /.*/, namespace: 'virtual-rsc-module' }, () => {
       const manifest = typeof compilationInfo === 'function' ? compilationInfo() : compilationInfo;
-      const serverManifest = manifest?.rscServerManifest || {};
+      const ssrManifest = manifest?.reactSSRManifest || {};
 
       const imports: string[] = [];
       const maps: string[] = [];
@@ -30,8 +31,8 @@ const RscLoaderPlugin = (compilationInfo: CompilationInfo | (() => CompilationIn
 
       const CSSRegex = /\.(css|sass|scss)$/;
 
-      Object.keys(serverManifest).map(router => {
-        const moduleMap = serverManifest[router];
+      Object.keys(ssrManifest).map(router => {
+        const moduleMap = ssrManifest[router];
         Object.keys(moduleMap).map((moduleId) => {
           const { id } = moduleMap[moduleId]['*'];
           if (modules[id] || CSSRegex.test(id)) return;

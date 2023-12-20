@@ -1,9 +1,10 @@
 import fse from 'fs-extra';
 
-// Transform Client Component for RSC.
-const transformRsc = () => {
+// Remove `use client` directive for Client Component
+// to rendering rsc result by ssr.
+const transformRscDirective = () => {
   return {
-    name: 'transform-rsc',
+    name: 'transform-rsc-directive',
     resolveId(id) {
       if (id.indexOf('(rsc)') > -1) {
         const newId = id.replace('(rsc)', '');
@@ -25,4 +26,4 @@ const transformRsc = () => {
   };
 };
 
-export default transformRsc;
+export default transformRscDirective;
