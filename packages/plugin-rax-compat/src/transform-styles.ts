@@ -1,3 +1,4 @@
+import path from 'path';
 import { createRequire } from 'module';
 import css from 'css';
 import transformerModule from 'stylesheet-loader/lib/transformer.js';
@@ -20,12 +21,14 @@ const CSS_VAR_NAME = ':root';
 // @ts-ignore
 const transformer = transformerModule.default;
 
-async function styleSheetLoader(source, type = 'css') {
+async function styleSheetLoader(source: string, sourcePath: string, type = 'css') {
   let cssContent = source;
   if (type === 'less') {
     // compact for @import "~bootstrap/less/bootstrap";
     cssContent = cssContent.replace(/@import "~/g, '@import "');
-    cssContent = (await less.render(cssContent)).css;
+    cssContent = (await less.render(cssContent, {
+      paths: [path.dirname(sourcePath), 'node_modules'],
+    })).css;
   }
 
   const newContent = await postcss([require('@ice/bundles/compiled/postcss-plugin-rpx2vw/index.js')({ unitPrecision: 4 })]).process(cssContent).css;

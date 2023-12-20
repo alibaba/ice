@@ -178,7 +178,11 @@ const plugin: Plugin<CompatRaxOptions> = (options = {}) => ({
 
         if (userConfig.ssr || userConfig.ssg) {
           config.server ??= {};
-          config.server.buildOptions = applyStylesheetLoaderForServer(config.server.buildOptions, transformCssModule);
+          config.server.buildOptions = applyStylesheetLoaderForServer(
+            config.server.buildOptions,
+            transformCssModule,
+            options.inlineStyle,
+          );
         }
 
         config.configureWebpack ??= [];
@@ -321,7 +325,7 @@ const styleSheetLoaderForClient = (config, transformCssModule, inlineStyleFiler:
  * StyleSheet Loader for Server.
  * @param config
  */
-function applyStylesheetLoaderForServer(preBuildOptions, transformCssModule) {
+function applyStylesheetLoaderForServer(preBuildOptions, transformCssModule, inlineStyleFilter: CompatRaxOptions['inlineStyle']) {
   return (buildOptions) => {
     const currentOptions = preBuildOptions?.(buildOptions) ?? buildOptions ?? {};
 
@@ -330,7 +334,11 @@ function applyStylesheetLoaderForServer(preBuildOptions, transformCssModule) {
     const cssModuleIndex = currentOptions.plugins?.findIndex(({ name }) => name === 'esbuild-css-modules') as number;
 
     // Add custom transform for server compile.
-    currentOptions.plugins?.splice(transformCssModule ? cssModuleIndex + 1 : cssModuleIndex, 0, inlineStylePlugin());
+    currentOptions.plugins?.splice(
+      transformCssModule ? cssModuleIndex + 1 : cssModuleIndex,
+      0,
+      inlineStylePlugin(inlineStyleFilter),
+    );
 
     currentOptions.treeShaking = true;
     return currentOptions;
@@ -341,13 +349,20 @@ function applyStylesheetLoaderForServer(preBuildOptions, transformCssModule) {
  * Transform css files to inline style by esbuild.
  * @returns
  */
-const inlineStylePlugin = () => {
+const inlineStylePlugin = (inlineStyleFilter: CompatRaxOptions['inlineStyle']) => {
   return {
     name: 'esbuild-inline-style',
     setup: (build) => {
       build.onLoad({ filter: /\.(css|sass|scss|less)$/ }, async (args) => {
+        const inlineStyleEnabled =
+          typeof inlineStyleFilter === 'boolean' ? inlineStyleFilter : inlineStyleFilter(args.path);
+
+        if (!inlineStyleEnabled) {
+          return null;
+        }
+
         const cssContent = await fs.promises.readFile(args.path, 'utf8');
-        const content = await styleSheetLoader(cssContent, args.path.includes('.less') ? 'less' : 'css');
+        const content = await styleSheetLoader(cssContent, args.path, args.path.includes('.less') ? 'less' : 'css');
 
         return {
           contents: content,
