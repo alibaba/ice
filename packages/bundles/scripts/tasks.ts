@@ -326,6 +326,14 @@ handler: (source) => {
                   .replace('require(\'react-dom\')', 'require(\'@ice/bundles/compiled/react-dom/server-rendering-stub.js\')');
               },
             },
+            {
+              test: /react-server-dom-webpack-server.edge.production.min.js$/,
+              handler: (source) => {
+                return source
+                  .replace('require(\"react\")', 'require(\"@ice/bundles/compiled/react/react.shared-subset.js\")')
+                  .replace('require(\"react-dom\")', 'require(\"@ice/bundles/compiled/react-dom/server-rendering-stub.js\")');
+              },
+            },
           ],
         },
       );

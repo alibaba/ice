@@ -1,5 +1,5 @@
 'use client';
-import { Component } from 'react';
+import { Component, lazy, Suspense } from 'react';
 import type { ReactNode } from 'react';
 
 type EProps = {
@@ -21,7 +21,15 @@ export default class ErrorBoundary extends Component<EProps, EState> {
 
   render() {
     if (this.state.hasError) {
-      return <h1 id="fallback">Something went wrong.</h1>;
+      // @ts-ignore
+      const ClientComments = lazy(() => import('./CommentsWithServerError'));
+
+      return (
+        <Suspense fallback="loading client comments">
+          <h3>Client Comments</h3>
+          <ClientComments />
+        </Suspense>
+      );
     }
 
     return this.props.children;
