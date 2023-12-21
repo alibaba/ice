@@ -4,7 +4,7 @@ import type { Configuration, Stats, WebpackOptionsNormalized } from '@ice/bundle
 import type { esbuild } from '@ice/bundles';
 import type { DefineExtraRoutes, NestedRouteManifest } from '@ice/route-manifest';
 import type { Config } from '@ice/shared-config/types';
-import type { AppConfig, AssetsManifest } from '@ice/runtime/types';
+import type { AppConfig, AssetsManifest, ClientManifest, SSRModuleMapping } from '@ice/runtime/types';
 import type ServerCompileTask from '../utils/ServerCompileTask.js';
 import type { CreateLogger } from '../utils/logger.js';
 import type { DeclarationData, TargetDeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport, Render } from './generator.js';
@@ -55,6 +55,8 @@ export interface CompilerOptions {
   transformEnv?: boolean;
   compilationInfo?: {
     assetsManifest?: AssetsManifest;
+    reactClientManifest?: ClientManifest;
+    reactSSRModuleMapping?: SSRModuleMapping;
   };
   redirectImports?: Config['redirectImports'];
   removeOutputs?: boolean;

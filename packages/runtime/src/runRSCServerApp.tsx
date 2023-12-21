@@ -42,7 +42,7 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
     basename,
     serverOnlyBasename,
     clientManifest,
-    serverManifest,
+    ssrModuleMapping,
     assetsManifest,
     routePath,
     Document,
@@ -71,7 +71,7 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
 
   const routeModules = await loadRouteModules(matches.map(({ route: { id, lazy } }) => ({ id, lazy })));
 
-  const clientReferenceManifest = createClientReferenceManifest(clientManifest, serverManifest, matches);
+  const clientReferenceManifest = createClientReferenceManifest(clientManifest, ssrModuleMapping, matches);
 
   const rscWriter = createWritableStream(res);
   const Main = createServerComponentRenderer(() => {
@@ -112,25 +112,26 @@ export async function runRSCServerApp(serverContext: ServerContext, renderOption
 }
 
 // Merge client manifest for match route.
-function createClientReferenceManifest(clientManifest, serverManifest, matches) {
-  const clientModules = {};
-  const ssrModuleMapping = {};
+function createClientReferenceManifest(clientManifest, ssrModuleMapping, matches) {
+  const matchedClientModules = {};
+  const matchedSSRModuleMapping = {};
   matches.forEach(match => {
     const { componentName } = match.route;
-    const manifest = clientManifest[`rsc_${componentName}`];
-    if (manifest) {
-      Object.assign(clientModules, manifest);
+
+    const clientModules = clientManifest[`rsc_${componentName}`];
+    if (clientModules) {
+      Object.assign(matchedClientModules, clientModules);
     }
 
-    const ssrManifest = serverManifest[`rsc_${componentName}`];
-    if (ssrManifest) {
-      Object.assign(ssrModuleMapping, ssrManifest);
+    const ssrModules = ssrModuleMapping[`rsc_${componentName}`];
+    if (ssrModules) {
+      Object.assign(matchedSSRModuleMapping, ssrModules);
     }
   });
 
   const clientReferenceManifest = {
-    clientModules,
-    ssrModuleMapping,
+    clientModules: matchedClientModules,
+    ssrModuleMapping: matchedSSRModuleMapping,
     moduleLoading: {
       prefix: '',
       crossOrigin: null,

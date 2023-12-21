@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as mrmime from 'mrmime';
 import fs from 'fs-extra';
 import type { PluginBuild } from 'esbuild';
-import type { AssetsManifest } from '@ice/runtime/types';
+import type { AssetsManifest, ClientManifest, SSRModuleMapping } from '@ice/runtime/types';
 
 export const ASSET_TYPES = [
   // images
@@ -40,8 +40,8 @@ const ASSETS_RE = new RegExp(`\\.(${ASSET_TYPES.join('|')})(\\?.*)?$`);
 
 interface CompilationInfo {
   assetsManifest?: AssetsManifest;
-  reactClientManifest?: any;
-  reactSSRManifest?: any;
+  reactClientManifest?: ClientManifest;
+  reactSSRModuleMapping?: SSRModuleMapping;
 }
 
 const createAssetsPlugin = (compilationInfo: CompilationInfo | (() => CompilationInfo), rootDir: string) => ({
@@ -77,18 +77,18 @@ const createAssetsPlugin = (compilationInfo: CompilationInfo | (() => Compilatio
         loader: 'json',
       };
     });
-    build.onResolve({ filter: /react-ssr-manifest.json$/ }, (args) => {
-      if (args.path === 'virtual:react-ssr-manifest.json') {
+    build.onResolve({ filter: /react-ssr-module-mapping.json$/ }, (args) => {
+      if (args.path === 'virtual:react-ssr-module-mapping.json') {
         return {
           path: args.path,
-          namespace: 'react-ssr-manifest',
+          namespace: 'react-ssr-module-mapping',
         };
       }
     });
-    build.onLoad({ filter: /.*/, namespace: 'react-ssr-manifest' }, () => {
+    build.onLoad({ filter: /.*/, namespace: 'react-ssr-module-mapping' }, () => {
       const manifest = typeof compilationInfo === 'function' ? compilationInfo() : compilationInfo;
       return {
-        contents: JSON.stringify(manifest?.reactSSRManifest || ''),
+        contents: JSON.stringify(manifest?.reactSSRModuleMapping || ''),
         loader: 'json',
       };
     });

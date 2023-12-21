@@ -43,15 +43,13 @@ export default class ServerCompilerPlugin {
           JSON.parse(compilation.assets['assets-manifest.json'].source().toString());
 
           if (compilation.assets?.['react-client-manifest.json']) {
-            // @ts-ignore
             this.compilerOptions.compilationInfo.reactClientManifest =
               JSON.parse(compilation.assets['react-client-manifest.json']?.source()?.toString());
           }
 
-          if (compilation.assets?.['react-ssr-manifest.json']) {
-            // @ts-ignore
-            this.compilerOptions.compilationInfo.reactSSRManifest =
-              JSON.parse(compilation.assets['react-ssr-manifest.json']?.source()?.toString());
+          if (compilation.assets?.['react-ssr-module-mapping.json']) {
+            this.compilerOptions.compilationInfo.reactSSRModuleMapping =
+              JSON.parse(compilation.assets['react-ssr-module-mapping.json']?.source()?.toString());
           }
       }
       // For first time, we create a new task.

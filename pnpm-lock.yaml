@@ -1556,7 +1556,7 @@ importers:
         version: link:../rspack-config
       '@ice/runtime':
         specifier: ^1.3.0
-        version: 1.3.3(react-dom@18.2.0)(react@18.2.0)
+        version: link:../runtime
       '@ice/shared-config':
         specifier: 1.1.0
         version: link:../shared-config
