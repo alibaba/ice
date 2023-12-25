@@ -341,8 +341,20 @@ export interface RSCManifestNode {
 export type ClientManifest = {
   [routeId: string]: RSCManifestNode;
 };
+
 export type SSRModuleMapping = {
   [routeId: string]: {
+    [moduleId: string]: RSCManifestNode;
+  };
+};
+
+export type ClientReferenceManifest = {
+  moduleLoading: {
+    prefix: string;
+    crossOrigin: string | null;
+  };
+  clientModules: RSCManifestNode;
+  ssrModuleMapping: {
     [moduleId: string]: RSCManifestNode;
   };
 };

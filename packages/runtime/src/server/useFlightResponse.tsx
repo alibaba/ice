@@ -1,6 +1,6 @@
 import { TextDecoder, TextEncoder } from 'util';
 import { createFromReadableStream } from 'react-server-dom-webpack/client.edge';
-import type { ClientReferenceManifest } from './flightManifest.js';
+import type { ClientReferenceManifest } from '../types.js';
 
 // This utility is based on https://github.com/zertosh/htmlescape
 // License: https://github.com/zertosh/htmlescape/blob/0527ca7156a524d256101bb310a9f970f63078ad/LICENSE

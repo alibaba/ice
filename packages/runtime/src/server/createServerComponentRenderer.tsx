@@ -1,8 +1,8 @@
 
 import { renderToReadableStream } from 'react-server-dom-webpack/server.edge';
 import * as React from 'react';
+import type { ClientReferenceManifest } from '../types.js';
 import useFlightResponse from './useFlightResponse.js';
-import type { ClientReferenceManifest } from './flightManifest.js';
 
 // @ts-ignore
 const { use } = React;
