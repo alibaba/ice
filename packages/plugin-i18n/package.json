@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-i18n",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "I18n plugin for ice.js 3.",
   "files": [
     "es2017",
@@ -56,7 +56,7 @@
     "webpack-dev-server": "4.15.0"
   },
   "peerDependencies": {
-    "@ice/app": "^3.3.9",
+    "@ice/app": "^3.4.0",
     "@ice/runtime": "^1.3.3"
   },
   "publishConfig": {

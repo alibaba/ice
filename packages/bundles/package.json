@@ -1,6 +1,6 @@
 {
   "name": "@ice/bundles",
-  "version": "0.1.17",
+  "version": "0.2.0",
   "license": "MIT",
   "author": "ICE",
   "description": "Basic dependencies for ice.",
