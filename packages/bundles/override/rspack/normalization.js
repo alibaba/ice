@@ -1,8 +1,5 @@
 "use strict";
 /**
- * The following code is modified based on the dist build of @rspack/core
- */
-/**
  * The following code is modified based on
  * https://github.com/webpack/webpack/blob/4b4ca3b/lib/config/normalization.js
  *
@@ -37,6 +34,7 @@ const getNormalizedRspackOptions = (config) => {
             ? { main: {} }
             : getNormalizedEntryStatic(config.entry),
         output: nestedConfig(config.output, output => {
+            var _a;
             const { library } = output;
             const libraryAsName = library;
             const libraryBase = typeof library === "object" &&
@@ -120,6 +118,7 @@ const getNormalizedRspackOptions = (config) => {
                         ? output.umdNamedDefine
                         : libraryBase.umdNamedDefine
                 },
+                strictModuleErrorHandling: (_a = output.strictModuleErrorHandling) !== null && _a !== void 0 ? _a : output.strictModuleExceptionHandling,
                 trustedTypes: optionalNestedConfig(output.trustedTypes, trustedTypes => {
                     if (trustedTypes === true)
                         return {};
@@ -134,7 +133,8 @@ const getNormalizedRspackOptions = (config) => {
                 asyncChunks: output.asyncChunks,
                 workerChunkLoading: output.workerChunkLoading,
                 workerWasmLoading: output.workerWasmLoading,
-                workerPublicPath: output.workerPublicPath
+                workerPublicPath: output.workerPublicPath,
+                scriptType: output.scriptType
             };
         }),
         resolve: nestedConfig(config.resolve, resolve => ({
