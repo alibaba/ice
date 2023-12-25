@@ -1,5 +1,12 @@
 # @ice/miniapp-loader
 
+## 1.1.2
+
+### Patch Changes
+
+- Updated dependencies [a68ff48d]
+  - @ice/bundles@0.2.0
+
 ## 1.1.1
 
 ### Patch Changes
