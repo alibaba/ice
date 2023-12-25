@@ -1,6 +1,6 @@
 {
   "name": "react-app-renderer",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "https://github.com/alibaba/ice#readme",
@@ -11,8 +11,8 @@
     "test": "__tests__"
   },
   "dependencies": {
-    "@loadable/component": "^5.14.1",
-    "@loadable/server": "^5.14.0",
+    "@loadable/component": "5.15.3",
+    "@loadable/server": "5.15.3",
     "create-app-container": "^0.1.2",
     "create-use-router": "^0.1.1",
     "query-string": "^6.13.7"
