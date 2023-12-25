@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0
+
+### Minor Changes
+
+- a68ff48d: feat: support @ice/pack-binding
+
 ## 0.1.17
 
 ### Patch Changes
