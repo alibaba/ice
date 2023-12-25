@@ -45,7 +45,8 @@
     "zod": "^3.21.4",
     "zod-validation-error": "1.2.0",
     "terminal-link": "^2.1.1",
-    "@ice/pack-binding": "0.0.4"
+    "@ice/pack-binding": "0.0.4",
+    "mime-types": "2.1.35"
   },
   "devDependencies": {
     "@rspack/plugin-react-refresh": "0.4.3",
