@@ -1335,6 +1335,9 @@ importers:
       less:
         specifier: 4.1.2
         version: 4.1.2
+      mime-types:
+        specifier: 2.1.35
+        version: 2.1.35
       neo-async:
         specifier: 2.6.2
         version: 2.6.2
