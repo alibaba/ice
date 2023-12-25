@@ -1360,11 +1360,11 @@ importers:
         specifier: 3.2.3
         version: 3.2.3
       zod:
-        specifier: ^3.21.4
-        version: 3.21.4
+        specifier: ^3.22.3
+        version: 3.22.3
       zod-validation-error:
         specifier: 1.2.0
-        version: 1.2.0(zod@3.21.4)
+        version: 1.2.0(zod@3.22.3)
     devDependencies:
       '@pmmmwh/react-refresh-webpack-plugin':
         specifier: 0.5.10
@@ -8029,8 +8029,8 @@ packages:
       terminal-link: 2.1.1
       watchpack: 2.4.0
       webpack-sources: 3.2.3
-      zod: 3.21.4
-      zod-validation-error: 1.3.1(zod@3.21.4)
+      zod: 3.22.3
+      zod-validation-error: 1.3.1(zod@3.22.3)
     dev: true
 
   /@rspack/dev-server@0.4.3(@rspack/core@0.4.3)(@swc/core@1.3.80)(esbuild@0.17.16)(react-refresh@0.14.0):
@@ -24772,26 +24772,26 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  /zod-validation-error@1.2.0(zod@3.21.4):
+  /zod-validation-error@1.2.0(zod@3.22.3):
     resolution: {integrity: sha512-laJkD/ugwEh8CpuH+xXv5L9Z+RLz3lH8alNxolfaHZJck611OJj97R4Rb+ZqA7WNly2kNtTo4QwjdjXw9scpiw==}
     engines: {node: ^14.17 || >=16.0.0}
     peerDependencies:
       zod: ^3.18.0
     dependencies:
-      zod: 3.21.4
+      zod: 3.22.3
     dev: false
 
-  /zod-validation-error@1.3.1(zod@3.21.4):
+  /zod-validation-error@1.3.1(zod@3.22.3):
     resolution: {integrity: sha512-cNEXpla+tREtNdAnNKY4xKY1SGOn2yzyuZMu4O0RQylX9apRpUjNcPkEc3uHIAr5Ct7LenjZt6RzjEH6+JsqVQ==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       zod: ^3.18.0
     dependencies:
-      zod: 3.21.4
+      zod: 3.22.3
     dev: true
 
-  /zod@3.21.4:
-    resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
+  /zod@3.22.3:
+    resolution: {integrity: sha512-EjIevzuJRiRPbVH4mGc8nApb/lVLKVpmUhAaR5R5doKGfAnGJ6Gr3CViAVjP+4FWSxCsybeWQdcgCtbX+7oZug==}
 
   /zwitch@1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
