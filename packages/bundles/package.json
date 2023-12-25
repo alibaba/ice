@@ -45,12 +45,12 @@
     "zod": "^3.21.4",
     "zod-validation-error": "1.2.0",
     "terminal-link": "^2.1.1",
-    "@ice/pack-binding": "0.0.3"
+    "@ice/pack-binding": "0.0.4"
   },
   "devDependencies": {
-    "@rspack/plugin-react-refresh": "0.4.0",
-    "@rspack/dev-server": "0.4.0",
-    "@rspack/core": "0.4.0",
+    "@rspack/plugin-react-refresh": "0.4.3",
+    "@rspack/dev-server": "0.4.3",
+    "@rspack/core": "0.4.3",
     "@types/less": "^3.0.3",
     "@types/lodash": "^4.14.181",
     "@types/webpack-bundle-analyzer": "^4.4.1",
