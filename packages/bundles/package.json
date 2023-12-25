@@ -42,7 +42,7 @@
     "neo-async": "2.6.2",
     "watchpack": "^2.4.0",
     "webpack-sources": "3.2.3",
-    "zod": "^3.21.4",
+    "zod": "^3.22.3",
     "zod-validation-error": "1.2.0",
     "terminal-link": "^2.1.1",
     "@ice/pack-binding": "0.0.4",
