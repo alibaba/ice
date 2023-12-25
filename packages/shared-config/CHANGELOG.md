@@ -1,5 +1,17 @@
 # @ice/shared-config
 
+## 1.2.0
+
+### Minor Changes
+
+- a68ff48d: feat: support @ice/pack-binding
+
+### Patch Changes
+
+- 7d193fe9: fix: optimize utils
+- Updated dependencies [a68ff48d]
+  - @ice/bundles@0.2.0
+
 ## 1.1.2
 
 ### Patch Changes

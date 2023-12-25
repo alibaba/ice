@@ -72,14 +72,16 @@ const createAssetsPlugin = (compilationInfo: CompilationInfo | (() => Compilatio
       let url = '';
       // Suffix `?url` will generate content hash in assets manifest,
       // keep the same file rule with client side.
-      const contentHash = manifest?.assetsManifest!.assets[`${relativePath}${args.suffix}`];
+      const contentHash = manifest?.assetsManifest?.assets?.[`${relativePath}${args.suffix}`];
       if (contentHash) {
         const basename = path.basename(args.path);
         const extname = path.extname(basename);
         const ext = extname.substring(1);
         const name = basename.slice(0, -extname.length);
+        // In case of rspack bundler it will return full hash even it is set to [hash:8].
+        const hash = contentHash.length > 8 ? contentHash.slice(0, 8) : contentHash;
         // assets/[name].[hash:8][ext]
-        url = `${manifest?.assetsManifest.publicPath}assets/${name}.${contentHash}.${ext}`;
+        url = `${manifest?.assetsManifest.publicPath}assets/${name}.${hash}.${ext}`;
       } else {
         url = `data:${mrmime.lookup(args.path)};base64,${content.toString('base64')}`;
       }
