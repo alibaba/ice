@@ -2,4 +2,4 @@
 '@ice/app': patch
 ---
 
-exports internal api for programmatic usage
+exports internal router api for programmatic usage
