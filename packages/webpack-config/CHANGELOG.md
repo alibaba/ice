@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.7
+
+### Patch Changes
+
+- 7d193fe9: fix: optimize utils
+- Updated dependencies [7d193fe9]
+- Updated dependencies [a68ff48d]
+  - @ice/shared-config@1.2.0
+  - @ice/bundles@0.2.0
+
 ## 1.1.6
 
 ### Patch Changes

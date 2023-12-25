@@ -15,7 +15,11 @@ async function build(options: BuildOptions) {
   });
   const { stats, isSuccessful, messages } = await new Promise<CompileResults>((resolve, reject) => {
     let messages: { errors: string[]; warnings: string[] };
-    compiler.run(async (_, stats: MultiStats) => {
+    compiler.run(async (err: any, stats: MultiStats) => {
+      if (err) {
+        reject(err);
+        return;
+      }
       const obj = stats.toJson({
         all: false,
         timings: true,
