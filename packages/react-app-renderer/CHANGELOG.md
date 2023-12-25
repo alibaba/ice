@@ -3,6 +3,7 @@
 ## 2.0.4
 
 - [chore] typo `onErrorBoundaryHandler`
+- [chore] lock the depencencies version of `@loadable/component` to 5.15.3
 
 ## 2.0.3
 
