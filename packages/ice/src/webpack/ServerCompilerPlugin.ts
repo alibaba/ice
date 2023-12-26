@@ -40,12 +40,12 @@ export default class ServerCompilerPlugin {
       if (compilation) {
         // Option of compilationInfo need to be object, while it may changed during multi-time compilation.
         this.compilerOptions.compilationInfo.assetsManifest =
-          JSON.parse(compilation.assets['assets-manifest.json'].source().toString());
+          JSON.parse(compilation.getAsset('assets-manifest.json').source.source().toString());
 
-          if (compilation.assets?.['react-client-manifest.json']) {
+          if (compilation.getAsset('react-client-manifest.json')) {
             // @ts-ignore
             this.compilerOptions.compilationInfo.rscManifest =
-              JSON.parse(compilation.assets['react-client-manifest.json']?.source()?.toString());
+              JSON.parse(compilation.getAsset('react-client-manifest.json').source.source().toString());
           }
       }
       // For first time, we create a new task.
