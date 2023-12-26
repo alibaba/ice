@@ -1,13 +1,15 @@
+import * as path from 'path';
 import chalk from 'chalk';
 import type { Plugin } from '../../types/plugin.js';
-import { WEB } from '../../constant.js';
+import { WEB, RUNTIME_TMP_DIR } from '../../constant.js';
 import openBrowser from '../../utils/openBrowser.js';
 import { logger } from '../../utils/logger.js';
+import { createRSCAliases } from './config.js';
 
 const plugin: Plugin = () => ({
   name: 'plugin-web',
   setup: ({ registerTask, onHook, context, generator }) => {
-    const { commandArgs, command, userConfig } = context;
+    const { commandArgs, command, userConfig, rootDir } = context;
 
     generator.addTargetExport({
       specifier: [
@@ -45,6 +47,14 @@ const plugin: Plugin = () => ({
       swcOptions: {
         removeExportExprs,
       },
+      serverComponent: userConfig.rsc,
+      ...(userConfig.rsc ? {
+        alias: createRSCAliases(),
+        // TODO: temporary solution for rsc.
+        entry: {
+          main: [path.join(rootDir, RUNTIME_TMP_DIR, 'rsc.client.tsx')],
+          route: [path.join(rootDir, RUNTIME_TMP_DIR, 'routes.tsx')],
+      } } : {}),
     });
 
     onHook('after.start.compile', async ({ isSuccessful, isFirstCompile, urls, devUrlInfo }) => {

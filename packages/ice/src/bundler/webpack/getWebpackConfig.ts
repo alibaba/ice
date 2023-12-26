@@ -1,7 +1,11 @@
+import * as path from 'path';
+import { fileURLToPath } from 'url';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import { getWebpackConfig as getDefaultWebpackConfig } from '@ice/webpack-config';
 import type { Configuration } from 'webpack';
+import { FlightManifestPlugin } from '../../webpack/FlightManifestPlugin.js';
+import { FlightClientEntryPlugin } from '../../webpack/FlightClientEntryPlugin.js';
 import { getExpandedEnvs } from '../../utils/runtimeEnv.js';
 import { getRouteExportConfig } from '../../service/config.js';
 import { getFileHash } from '../../utils/hash.js';
@@ -12,6 +16,8 @@ import type RouteManifest from '../../utils/routeManifest.js';
 import type ServerRunnerPlugin from '../../webpack/ServerRunnerPlugin.js';
 import type ServerCompilerPlugin from '../../webpack/ServerCompilerPlugin.js';
 import type { BundlerOptions, Context } from '../types.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const { debounce } = lodash;
 
@@ -116,6 +122,19 @@ const getWebpackConfig: GetWebpackConfig = async (context, options) => {
     }
     // Add spinner for webpack task.
     webpackConfig.plugins.push(getSpinnerPlugin(spinner));
+    if (userConfig.rsc) {
+      webpackConfig.resolveLoader = {
+        alias: {
+          'flight-client-entry-loader': path.join(__dirname, '../../webpack/FlightClientEntryLoader.js'),
+        },
+      };
+
+      webpackConfig.plugins.push(new FlightClientEntryPlugin({
+        rootDir,
+        getRoutesFile,
+      }));
+      webpackConfig.plugins.push(new FlightManifestPlugin());
+    }
 
     return webpackConfig;
   });

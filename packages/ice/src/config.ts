@@ -127,6 +127,11 @@ const userConfig = [
     defaultValue: true,
   },
   {
+    name: 'rsc',
+    validation: 'boolean',
+    defaultValue: false,
+  },
+  {
     name: 'ssr',
     validation: 'boolean',
     defaultValue: false,

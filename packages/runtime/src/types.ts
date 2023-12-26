@@ -3,6 +3,8 @@ import type { InitialEntry, AgnosticRouteObject, Location, History, RouterInit, 
 import type { ComponentType, PropsWithChildren } from 'react';
 import type { HydrationOptions, Root } from 'react-dom/client';
 import type { Params, RouteObject } from 'react-router-dom';
+import type { RenderToPipeableStreamOptions } from './server/streamRender.js';
+import type { RouteLoaderOptions } from './routes.js';
 
 type UseConfig = () => RouteConfig<Record<string, any>>;
 type UseData = () => RouteData;
@@ -312,4 +314,31 @@ declare global {
     // ice.js defined env variables
     env: Record<string, string>;
   }
+}
+
+export interface ServerRenderOptions {
+  app: AppExport;
+  assetsManifest: AssetsManifest;
+  createRoutes: (options: Pick<RouteLoaderOptions, 'requestContext' | 'renderMode'>) => RouteItem[];
+  runtimeModules: RuntimeModules;
+  documentDataLoader?: DocumentDataLoaderConfig;
+  preRender?: boolean;
+  Document?: DocumentComponent;
+  documentOnly?: boolean;
+  renderMode?: RenderMode;
+  // basename is used both for server and client, once set, it will be sync to client.
+  basename?: string;
+  // serverOnlyBasename is used when just want to change basename for server.
+  serverOnlyBasename?: string;
+  routePath?: string;
+  disableFallback?: boolean;
+  routesConfig: {
+    [key: string]: PageConfig;
+  };
+  runtimeOptions?: Record<string, any>;
+  distType?: Array<'html' | 'javascript'>;
+  prependCode?: string;
+  serverData?: any;
+  streamOptions?: RenderToPipeableStreamOptions;
+  clientManifest?: any;
 }

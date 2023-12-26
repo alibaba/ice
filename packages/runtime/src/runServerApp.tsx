@@ -2,21 +2,14 @@ import type { ServerResponse, IncomingMessage } from 'http';
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import type { Location } from 'history';
-import { parsePath } from 'history';
 import { isFunction } from '@ice/shared';
-import type { RenderToPipeableStreamOptions, OnAllReadyParams, NodeWritablePiper } from './server/streamRender.js';
+import type { OnAllReadyParams, NodeWritablePiper } from './server/streamRender.js';
 import type {
   AppContext, RouteItem, ServerContext,
-  AppExport,
-  AssetsManifest,
   RouteMatch,
-  PageConfig,
-  RenderMode,
-  DocumentComponent,
-  RuntimeModules,
   AppData,
   ServerAppRouterProps,
-  DocumentDataLoaderConfig,
+  ServerRenderOptions as RenderOptions,
 } from './types.js';
 import Runtime from './runtime.js';
 import { AppContextProvider } from './AppContext.js';
@@ -24,7 +17,6 @@ import { getAppData } from './appData.js';
 import getAppConfig from './appConfig.js';
 import { DocumentContextProvider } from './Document.js';
 import { loadRouteModules } from './routes.js';
-import type { RouteLoaderOptions } from './routes.js';
 import { pipeToString, renderToNodeStream } from './server/streamRender.js';
 import getRequestContext from './requestContext.js';
 import matchRoutes from './matchRoutes.js';
@@ -32,38 +24,13 @@ import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
 import ServerRouter from './ServerRouter.js';
 import { renderHTMLToJS } from './renderHTMLToJS.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
-
-
-export interface RenderOptions {
-  app: AppExport;
-  assetsManifest: AssetsManifest;
-  createRoutes: (options: Pick<RouteLoaderOptions, 'requestContext' | 'renderMode'>) => RouteItem[];
-  runtimeModules: RuntimeModules;
-  documentDataLoader?: DocumentDataLoaderConfig;
-  Document?: DocumentComponent;
-  documentOnly?: boolean;
-  preRender?: boolean;
-  renderMode?: RenderMode;
-  // basename is used both for server and client, once set, it will be sync to client.
-  basename?: string;
-  // serverOnlyBasename is used when just want to change basename for server.
-  serverOnlyBasename?: string;
-  routePath?: string;
-  disableFallback?: boolean;
-  routesConfig: {
-    [key: string]: PageConfig;
-  };
-  runtimeOptions?: Record<string, any>;
-  distType?: Array<'html' | 'javascript'>;
-  prependCode?: string;
-  serverData?: any;
-  streamOptions?: RenderToPipeableStreamOptions;
-}
+import getLocation from './utils/getLocation.js';
 
 interface Piper {
   pipe: NodeWritablePiper;
-  fallback: Function;
+  fallback?: Function;
 }
+
 interface Response {
   statusCode?: number;
   statusText?: string;
@@ -381,16 +348,16 @@ interface RenderServerEntry {
 async function renderServerEntry(
   {
     runtime,
-    matches,
     location,
     renderOptions,
   }: RenderServerEntry,
 ): Promise<Response> {
   const { Document } = renderOptions;
   const appContext = runtime.getAppContext();
-  const { routes, routePath, loaderData, basename } = appContext;
+  const { routes, matches, routePath, loaderData, basename } = appContext;
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
   const AppRouter = runtime.getAppRouter<ServerAppRouterProps>();
+
   const routerContext: ServerAppRouterProps['routerContext'] = {
     // @ts-expect-error matches type should be use `AgnosticDataRouteMatch[]`
     matches,
@@ -405,7 +372,7 @@ async function renderServerEntry(
     ),
   };
 
-  const element = (
+  const element: JSX.Element = (
     <AppContextProvider value={appContext}>
       <AppRuntimeProvider>
         <DocumentContextProvider value={documentContext}>
@@ -417,10 +384,6 @@ async function renderServerEntry(
     </AppContextProvider>
   );
 
-  const pipe = renderToNodeStream(element, {
-    renderOptions,
-    routerContext,
-  });
 
   const fallback = () => {
     return renderDocument({
@@ -432,6 +395,11 @@ async function renderServerEntry(
       documentData: appContext.documentData,
     });
   };
+
+  const pipe: NodeWritablePiper = renderToNodeStream(element, {
+    renderOptions,
+    routerContext,
+  });
 
   return {
     value: {
@@ -524,21 +492,3 @@ function renderDocument(options: RenderDocumentOptions): Response {
   };
 }
 
-/**
- * ref: https://github.com/remix-run/react-router/blob/main/packages/react-router-dom/server.tsx
- */
-const REGEXP_WITH_HOSTNAME = /^https?:\/\/[^/]+/i;
-function getLocation(url: string) {
-  // In case of invalid URL, provide a default base url.
-  const locationPath = url.replace(REGEXP_WITH_HOSTNAME, '') || '/';
-  const locationProps = parsePath(locationPath);
-  const location: Location = {
-    pathname: locationProps.pathname || '/',
-    search: locationProps.search || '',
-    hash: locationProps.hash || '',
-    state: null,
-    key: 'default',
-  };
-
-  return location;
-}

@@ -95,6 +95,23 @@ export const getRuntimeDefination = (
   return define;
 };
 
+function formatAlias(alias: Record<string, string | boolean>) {
+  const aliasMap: Record<string, string> = {};
+  for (const key in alias) {
+    const value = alias[key];
+    // Esbuild only receive string type of alias.
+    if (typeof value === 'string') {
+      if (key.endsWith('$')) {
+        // Esbuild do not support alias ends with $.
+        aliasMap[key.replace(/\$$/, '')] = value;
+      } else {
+        aliasMap[key] = value;
+      }
+    }
+  }
+  return aliasMap;
+}
+
 export function createServerCompiler(options: Options) {
   const { task, rootDir, command, speedup, server, syntaxFeatures, getRoutesFile } = options;
   const externals = task.config?.externals || {};
@@ -170,7 +187,7 @@ export function createServerCompiler(options: Options) {
       bundle: true,
       format,
       target: 'node12.20.0',
-      alias,
+      alias: formatAlias(alias),
       // enable JSX syntax in .js files by default for compatible with migrate project
       // while it is not recommended
       loader: { '.js': 'jsx' },

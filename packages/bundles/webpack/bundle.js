@@ -13,6 +13,8 @@ module.exports = {
   StringXor: require('webpack/lib/util/StringXor'),
   NormalModule: require('webpack/lib/NormalModule'),
   EntryDependency: require('webpack/lib/dependencies/EntryDependency'),
+  ModuleDependency: require('webpack/lib/dependencies/ModuleDependency'),
+  NullDependency: require('webpack/lib/dependencies/NullDependency'),
   sources: require('webpack').sources,
   webpack: require('webpack'),
   package: {

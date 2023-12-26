@@ -32,7 +32,7 @@ function getMergedValue(key: string, matches: RouteMatch[], loadersData: Loaders
   let result;
   for (let match of matches) {
     const routeId = match.route.id;
-    const data = loadersData[routeId]?.pageConfig;
+    const data = loadersData?.[routeId]?.pageConfig;
     const value = data?.[key];
 
     if (Array.isArray(value)) {

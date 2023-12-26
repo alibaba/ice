@@ -13,6 +13,9 @@ import type { RenderMode, DistType } from '@ice/runtime';
 import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 // @ts-ignore
 import assetsManifest from 'virtual:assets-manifest.json';
+<% if(rsc) {-%>
+import clientManifest from 'virtual:react-client-manifest.json';
+<% }-%>
 <% if (hydrate) {-%>
 import createRoutes from './routes';
 <% } else { -%>
@@ -68,6 +71,11 @@ export async function renderToResponse(requestContext, options: RenderOptions = 
   setRuntimeEnv(renderMode);
 
   const mergedOptions = mergeOptions(options);
+
+  <% if(rsc) {-%>
+  return runtime.runRSCServerApp(requestContext, mergedOptions);
+  <% }-%>
+
   return runtime.renderToResponse(requestContext, mergedOptions);
 }
 
@@ -99,6 +107,9 @@ function mergeOptions(options) {
     basename: basename || getRouterBasename(),
     renderMode,
     routesConfig,
+    <% if(rsc) {-%>
+    clientManifest,
+    <% }-%>
     <% if (hydrate) {-%>
     runtimeOptions: {
     <% if (runtimeOptions.exports) { -%>

@@ -1,0 +1,14 @@
+.link {
+  font-size: 1.2rem;
+  color: var(--primary);
+}
+
+.button {
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 35px;
+  background: var(--primary);
+  box-shadow: 0 5px 10px 0 #ddd;
+  font-size: calc(10px + 2vmin);
+}
