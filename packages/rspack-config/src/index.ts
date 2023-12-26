@@ -1,11 +1,12 @@
 import * as path from 'path';
 import { createRequire } from 'module';
-import { compilationPlugin, compileExcludes, getDefineVars } from '@ice/shared-config';
+import { compilationPlugin, compileExcludes, getDefineVars, getCompilerPlugins, getJsxTransformOptions, getAliasWithRoot } from '@ice/shared-config';
 import type { Config, ModifyWebpackConfig } from '@ice/shared-config/types';
-import type { Configuration } from '@rspack/core';
-import type { rspack as Rspack } from '@ice/bundles/esm/rspack.js';
-import AssetManifest from './plugins/AssetManifest.js';
-import getSplitChunks from './splitChunks.js';
+import type { Configuration, rspack as Rspack } from '@rspack/core';
+import lodash from '@ice/bundles/compiled/lodash/index.js';
+import { coreJsPath } from '@ice/bundles';
+import RefreshPlugin from '@ice/bundles/esm/plugin-refresh.js';
+import getSplitChunks, { getFrameworkBundles } from './splitChunks.js';
 import getAssetsRule from './assetsRule.js';
 import getCssRules from './cssRules.js';
 
@@ -22,11 +23,20 @@ interface GetRspackConfigOptions {
 
 type GetConfig = (
   options: GetRspackConfigOptions,
-) => Configuration;
+) => Promise<Configuration>;
+
+interface BuiltinFeatures {
+  splitChunksStrategy?: {
+    name: string;
+    topLevelFrameworks: string[];
+  };
+}
 
 const require = createRequire(import.meta.url);
 
-const getConfig: GetConfig = (options) => {
+const { merge } = lodash;
+
+const getConfig: GetConfig = async (options) => {
   const {
     rootDir,
     taskConfig,
@@ -40,6 +50,7 @@ const getConfig: GetConfig = (options) => {
 
   const {
     mode,
+    minify,
     publicPath = '/',
     cacheDir,
     outputDir = 'build',
@@ -59,7 +70,9 @@ const getConfig: GetConfig = (options) => {
     plugins = [],
     middlewares,
     configureWebpack = [],
+    minimizerOptions = {},
   } = taskConfig || {};
+  const isDev = mode === 'development';
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
   const hashKey = hash === true ? 'hash:8' : (hash || '');
   const compilation = compilationPlugin({
@@ -75,7 +88,46 @@ const getConfig: GetConfig = (options) => {
     enableEnv: true,
     getRoutesFile,
   });
+
+  const { rspack: { DefinePlugin, ProvidePlugin, SwcJsMinimizerRspackPlugin } } = await import('@ice/bundles/esm/rspack.js');
   const cssFilename = `css/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`;
+  // get compile plugins
+  const compilerWebpackPlugins = getCompilerPlugins(rootDir, taskConfig || {}, 'rspack', { isServer: false });
+  const jsMinimizerPluginOptions: any = merge({
+    compress: {
+      ecma: 5,
+      unused: true,
+      dead_code: true,
+      // The following two options are known to break valid JavaScript code
+      // https://github.com/vercel/next.js/issues/7178#issuecomment-493048965
+      comparisons: false,
+      inline: 2,
+      passes: 4,
+    },
+    mangle: {
+      safari10: true,
+    },
+    format: {
+      safari10: true,
+      comments: false,
+      // Fixes usage of Emoji and certain Regex
+      asciiOnly: true,
+    },
+    module: true,
+  }, minimizerOptions);
+  const builtinFeatures: BuiltinFeatures = {};
+  let splitChunksStrategy = null;
+  // Use builtin splitChunks strategy by default.
+  if (splitChunks === true || splitChunks === 'chunks') {
+    builtinFeatures.splitChunksStrategy = {
+      name: 'chunks',
+      topLevelFrameworks: getFrameworkBundles(rootDir),
+    };
+  } else {
+    splitChunksStrategy = typeof splitChunks == 'object'
+      ? splitChunks
+      : getSplitChunks(rootDir, splitChunks);
+  }
   const config: Configuration = {
     entry: {
       main: [path.join(rootDir, runtimeTmpDir, 'entry.client.tsx')],
@@ -95,15 +147,19 @@ const getConfig: GetConfig = (options) => {
     context: rootDir,
     module: {
       rules: [
-        // Compliation rules for js / ts.
         {
+          // TODO: use regexp to improve performance.
           test: compilation.transformInclude,
-          use: [{
-            loader: require.resolve('@ice/shared-config/compilation-loader'),
+          use: {
+            loader: 'builtin:compilation-loader',
             options: {
-              transform: compilation.transform,
+              swcOptions: getJsxTransformOptions({ suffix: 'jsx', rootDir, mode, fastRefresh: isDev, polyfill, enableEnv: true }),
+              transformFeatures: {
+                removeExport: swcOptions.removeExportExprs,
+                keepExport: swcOptions.keepExports,
+              },
             },
-          }],
+          },
         },
         ...getAssetsRule(),
         ...getCssRules({
@@ -114,34 +170,40 @@ const getConfig: GetConfig = (options) => {
       ],
     },
     resolve: {
-      alias,
+      alias: {
+        // Always lock the corejs version, it is decided by shared-config.
+        'core-js': coreJsPath,
+        ...getAliasWithRoot(rootDir, alias),
+      },
     },
     watchOptions: {
       ignored: /node_modules/,
       aggregateTimeout: 100,
     },
     optimization: {
-      splitChunks: typeof splitChunks == 'object'
-        ? splitChunks
-        : getSplitChunks(rootDir, splitChunks),
+      minimize: !!minify,
+      ...(splitChunksStrategy ? { splitChunks: splitChunksStrategy } : {}),
     },
     // @ts-expect-error plugin instance defined by default in not compatible with rspack.
     plugins: [
-      new AssetManifest({
-        fileName: 'assets-manifest.json',
-        outputDir: path.join(rootDir, runtimeTmpDir),
-      }),
       ...plugins,
+      // Unplugin should be compatible with rspack.
+      ...compilerWebpackPlugins,
+      isDev && new RefreshPlugin(),
+      new DefinePlugin(getDefineVars(define, runtimeDefineVars, getExpandedEnvs)),
+      new ProvidePlugin({
+        process: [require.resolve('process/browser')],
+      }),
+      !!minify && new SwcJsMinimizerRspackPlugin(jsMinimizerPluginOptions),
     ].filter(Boolean),
     builtins: {
-      define: getDefineVars(define, runtimeDefineVars, getExpandedEnvs),
-      provide: {
-        process: [require.resolve('process/browser')],
-        $ReactRefreshRuntime$: [require.resolve('./client/reactRefresh.cjs')],
-      },
-      devFriendlySplitChunks: true,
       css: {
         modules: { localIdentName },
+      },
+    },
+    experiments: {
+      rspackFuture: {
+        disableTransformByDefault: true,
       },
     },
     stats: 'none',
@@ -168,6 +230,7 @@ const getConfig: GetConfig = (options) => {
       ...devServer,
       setupMiddlewares: middlewares,
     },
+    features: builtinFeatures,
   };
   // Compatible with API configureWebpack.
   const ctx = {

@@ -2,13 +2,15 @@ import type { TaskConfig } from 'build-scripts';
 import type { Config } from '@ice/shared-config/types';
 import type { AppConfig } from '@ice/runtime/types';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
+import type { Configuration as RSPackDevServerConfiguration } from '@rspack/dev-server';
+
 import prepareURLs from '../../utils/prepareURLs.js';
 import getRouterBasename from '../../utils/getRouterBasename.js';
 
 interface Options {
   taskConfig: TaskConfig<Config>;
   appConfig: AppConfig;
-  devServerConfig: DevServerConfiguration;
+  devServerConfig: DevServerConfiguration | RSPackDevServerConfiguration;
 }
 
 const getUrls = ({

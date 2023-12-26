@@ -75,14 +75,12 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
     transformInclude(id) {
       // Resolved id is not formatted when used in webpack loader test.
       const formatedId = formatId(id);
-      return extensionRegex.test(formatedId) && !compileExcludes.some((regex) => regex.test(formatedId));
+      const needCompile = extensionRegex.test(formatedId) && !compileExcludes.some((regex) => regex.test(formatedId));
+      const skipCompile = /node_modules/.test(id) && !compileRegex.some((regex) => regex.test(id));
+      return needCompile && !skipCompile;
     },
     async transform(source: string, fileId: string) {
       const id = formatId(fileId);
-      if ((/node_modules/.test(id) && !compileRegex.some((regex) => regex.test(id)))) {
-        return;
-      }
-
       const suffix = (['jsx', 'tsx'] as JSXSuffix[]).find(suffix => new RegExp(`\\.${suffix}?$`).test(id));
 
       const programmaticOptions: SwcConfig = {
@@ -198,13 +196,13 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
 interface GetJsxTransformOptions {
   rootDir: string;
   mode: Options['mode'];
-  suffix: JSXSuffix;
+  suffix?: JSXSuffix;
   fastRefresh: boolean;
   polyfill: Config['polyfill'];
   enableEnv: boolean;
 }
 
-function getJsxTransformOptions({
+export function getJsxTransformOptions({
   suffix,
   fastRefresh,
   polyfill,
@@ -263,6 +261,7 @@ function getJsxTransformOptions({
       parser: {
         jsx: true,
         ...syntaxFeatures,
+        syntax: 'ecmascript',
       },
     },
   }, commonOptions);

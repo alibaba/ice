@@ -75,6 +75,9 @@ interface TransformPlugin {
 
 export type ModifyWebpackConfig<T=Configuration, U=typeof webpack> = (config: T, ctx: ConfigurationCtx<U>) => T;
 export type { webpack };
+
+type PluginFunction = (this: Compiler, compiler: Compiler) => void;
+
 export interface Config {
   target?: string;
 
@@ -103,7 +106,7 @@ export interface Config {
   loaders?: (undefined | null | false | '' | 0 | RuleSetRule | '...')[];
 
   plugins?: (
-    | ((this: Compiler, compiler: Compiler) => void)
+    | PluginFunction
     | WebpackPluginInstance
   )[];
 

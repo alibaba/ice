@@ -1,0 +1,457 @@
+diff --git a/dist/index.d.mts b/dist/index.d.mts
+index 524216f7a6d07c6fb1000cbfaf864087c18c07d6..5f0c400b14c4d53032071963cf1844a2c77b8a1b 100644
+--- a/dist/index.d.mts
++++ b/dist/index.d.mts
+@@ -116,6 +116,11 @@ declare module 'webpack' {
+         $unpluginContext: Record<string, ResolvedUnpluginOptions>;
+     }
+ }
++declare module '@rspack/core' {
++    interface Compiler {
++        $unpluginContext: Record<string, ResolvedUnpluginOptions>;
++    }
++}
+ 
+ declare function createUnplugin<UserOptions, Nested extends boolean = boolean>(factory: UnpluginFactory<UserOptions, Nested>): UnpluginInstance<UserOptions, Nested>;
+ declare function createEsbuildPlugin<UserOptions, Nested extends boolean = boolean>(factory: UnpluginFactory<UserOptions, Nested>): UnpluginFactoryOutput<UserOptions, esbuild.Plugin>;
+diff --git a/dist/index.d.ts b/dist/index.d.ts
+index 524216f7a6d07c6fb1000cbfaf864087c18c07d6..5f0c400b14c4d53032071963cf1844a2c77b8a1b 100644
+--- a/dist/index.d.ts
++++ b/dist/index.d.ts
+@@ -116,6 +116,11 @@ declare module 'webpack' {
+         $unpluginContext: Record<string, ResolvedUnpluginOptions>;
+     }
+ }
++declare module '@rspack/core' {
++    interface Compiler {
++        $unpluginContext: Record<string, ResolvedUnpluginOptions>;
++    }
++}
+ 
+ declare function createUnplugin<UserOptions, Nested extends boolean = boolean>(factory: UnpluginFactory<UserOptions, Nested>): UnpluginInstance<UserOptions, Nested>;
+ declare function createEsbuildPlugin<UserOptions, Nested extends boolean = boolean>(factory: UnpluginFactory<UserOptions, Nested>): UnpluginFactoryOutput<UserOptions, esbuild.Plugin>;
+diff --git a/dist/index.js b/dist/index.js
+index e2ae29096208ae06c2e36fd123ee42585c798da1..2166e91885b7ae53e22028142c188489485f5fea 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -1135,6 +1135,24 @@ function toArray(array) {
+     return array;
+   return [array];
+ }
++function shouldLoad(id, plugin, externalModules) {
++  if (id.startsWith(plugin.__virtualModulePrefix))
++    id = decodeURIComponent(id.slice(plugin.__virtualModulePrefix.length));
++  if (plugin.loadInclude && !plugin.loadInclude(id))
++    return false;
++  return !externalModules.has(id);
++}
++function transformUse(data, plugin, transformLoader) {
++  if (data.resource == null)
++    return [];
++  const id = normalizeAbsolutePath(data.resource + (data.resourceQuery || ""));
++  if (!plugin.transformInclude || plugin.transformInclude(id)) {
++    return [{
++      loader: `${transformLoader}?unpluginName=${encodeURIComponent(plugin.name)}`
++    }];
++  }
++  return [];
++}
+ 
+ // src/esbuild/utils.ts
+ var ExtToLoader = {
+@@ -1430,16 +1448,19 @@ function createRspackContext(compilation) {
+ // src/rspack/index.ts
+ var TRANSFORM_LOADER = (0, import_path4.resolve)(
+   __dirname,
+-  false ? "../../dist/rspack/loaders/transform" : "rspack/loaders/transform"
++  false ? "../../dist/rspack/loaders/transform.js" : "rspack/loaders/transform"
+ );
+ var LOAD_LOADER = (0, import_path4.resolve)(
+   __dirname,
+   false ? "../../dist/rspack/loaders/load" : "rspack/loaders/load"
+ );
++var VIRTUAL_MODULE_PREFIX = (0, import_path4.resolve)(process.cwd(), "_virtual_");
+ function getRspackPlugin(factory) {
+   return (userOptions) => {
+     return {
+       apply(compiler) {
++        const injected = compiler.$unpluginContext || {};
++        compiler.$unpluginContext = injected;
+         const meta = {
+           framework: "rspack",
+           rspack: {
+@@ -1447,27 +1468,43 @@ function getRspackPlugin(factory) {
+           }
+         };
+         const rawPlugins = toArray(factory(userOptions, meta));
+-        for (const plugin of rawPlugins) {
++        for (const rawPlugin of rawPlugins) {
++          const plugin = Object.assign(
++            rawPlugin,
++            {
++              __unpluginMeta: meta,
++              __virtualModulePrefix: VIRTUAL_MODULE_PREFIX
++            }
++          );
++          injected[plugin.name] = plugin;
++          compiler.hooks.thisCompilation.tap(plugin.name, (compilation) => {
++            if (typeof compilation.hooks.childCompiler === "undefined")
++              throw new Error("`compilation.hooks.childCompiler` only support by @rspack/core>=0.4.1");
++            compilation.hooks.childCompiler.tap(plugin.name, (childCompiler) => {
++              childCompiler.$unpluginContext = injected;
++            });
++          });
++          const externalModules = /* @__PURE__ */ new Set();
+           if (plugin.load) {
+-            const use = {
+-              loader: LOAD_LOADER,
+-              options: { plugin }
+-            };
+             compiler.options.module.rules.unshift({
+               enforce: plugin.enforce,
+-              include: /.*/,
+-              use
++              include(id) {
++                return shouldLoad(id, plugin, externalModules);
++              },
++              use: [{
++                loader: LOAD_LOADER,
++                options: {
++                  unpluginName: plugin.name
++                }
++              }]
+             });
+           }
+           if (plugin.transform) {
+-            const use = {
+-              loader: TRANSFORM_LOADER,
+-              options: { plugin }
+-            };
+             compiler.options.module.rules.unshift({
+               enforce: plugin.enforce,
+-              include: /.*/,
+-              use
++              use(data) {
++                return transformUse(data, plugin, TRANSFORM_LOADER);
++              }
+             });
+           }
+           if (plugin.rspack)
+@@ -1570,7 +1607,7 @@ var LOAD_LOADER2 = (0, import_path6.resolve)(
+   __dirname,
+   false ? "../../dist/webpack/loaders/load" : "webpack/loaders/load"
+ );
+-var VIRTUAL_MODULE_PREFIX = (0, import_path6.resolve)(import_process2.default.cwd(), "_virtual_");
++var VIRTUAL_MODULE_PREFIX2 = (0, import_path6.resolve)(import_process2.default.cwd(), "_virtual_");
+ function getWebpackPlugin(factory) {
+   return (userOptions) => {
+     return {
+@@ -1589,7 +1626,7 @@ function getWebpackPlugin(factory) {
+             rawPlugin,
+             {
+               __unpluginMeta: meta,
+-              __virtualModulePrefix: VIRTUAL_MODULE_PREFIX
++              __virtualModulePrefix: VIRTUAL_MODULE_PREFIX2
+             }
+           );
+           injected[plugin.name] = plugin;
+@@ -1650,11 +1687,7 @@ function getWebpackPlugin(factory) {
+           if (plugin.load) {
+             compiler.options.module.rules.unshift({
+               include(id) {
+-                if (id.startsWith(plugin.__virtualModulePrefix))
+-                  id = decodeURIComponent(id.slice(plugin.__virtualModulePrefix.length));
+-                if (plugin.loadInclude && !plugin.loadInclude(id))
+-                  return false;
+-                return !externalModules.has(id);
++                return shouldLoad(id, plugin, externalModules);
+               },
+               enforce: plugin.enforce,
+               use: [{
+@@ -1666,19 +1699,10 @@ function getWebpackPlugin(factory) {
+             });
+           }
+           if (plugin.transform) {
+-            const useLoader = [{
+-              loader: `${TRANSFORM_LOADER2}?unpluginName=${encodeURIComponent(plugin.name)}`
+-            }];
+-            const useNone = [];
+             compiler.options.module.rules.unshift({
+               enforce: plugin.enforce,
+-              use: (data) => {
+-                if (data.resource == null)
+-                  return useNone;
+-                const id = normalizeAbsolutePath(data.resource + (data.resourceQuery || ""));
+-                if (!plugin.transformInclude || plugin.transformInclude(id))
+-                  return useLoader;
+-                return useNone;
++              use(data) {
++                return transformUse(data, plugin, TRANSFORM_LOADER2);
+               }
+             });
+           }
+diff --git a/dist/index.mjs b/dist/index.mjs
+index f815c05c279126543cdd40ec879b0c95b92a8d03..c1caae0c0bb82515ff419c244b20a67fc375efb6 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -1101,6 +1101,24 @@ function toArray(array) {
+     return array;
+   return [array];
+ }
++function shouldLoad(id, plugin, externalModules) {
++  if (id.startsWith(plugin.__virtualModulePrefix))
++    id = decodeURIComponent(id.slice(plugin.__virtualModulePrefix.length));
++  if (plugin.loadInclude && !plugin.loadInclude(id))
++    return false;
++  return !externalModules.has(id);
++}
++function transformUse(data, plugin, transformLoader) {
++  if (data.resource == null)
++    return [];
++  const id = normalizeAbsolutePath(data.resource + (data.resourceQuery || ""));
++  if (!plugin.transformInclude || plugin.transformInclude(id)) {
++    return [{
++      loader: `${transformLoader}?unpluginName=${encodeURIComponent(plugin.name)}`
++    }];
++  }
++  return [];
++}
+ 
+ // src/esbuild/utils.ts
+ var ExtToLoader = {
+@@ -1396,16 +1414,19 @@ function createRspackContext(compilation) {
+ // src/rspack/index.ts
+ var TRANSFORM_LOADER = resolve3(
+   __dirname,
+-  false ? "../../dist/rspack/loaders/transform" : "rspack/loaders/transform"
++  false ? "../../dist/rspack/loaders/transform.js" : "rspack/loaders/transform"
+ );
+ var LOAD_LOADER = resolve3(
+   __dirname,
+   false ? "../../dist/rspack/loaders/load" : "rspack/loaders/load"
+ );
++var VIRTUAL_MODULE_PREFIX = resolve3(process.cwd(), "_virtual_");
+ function getRspackPlugin(factory) {
+   return (userOptions) => {
+     return {
+       apply(compiler) {
++        const injected = compiler.$unpluginContext || {};
++        compiler.$unpluginContext = injected;
+         const meta = {
+           framework: "rspack",
+           rspack: {
+@@ -1413,27 +1434,43 @@ function getRspackPlugin(factory) {
+           }
+         };
+         const rawPlugins = toArray(factory(userOptions, meta));
+-        for (const plugin of rawPlugins) {
++        for (const rawPlugin of rawPlugins) {
++          const plugin = Object.assign(
++            rawPlugin,
++            {
++              __unpluginMeta: meta,
++              __virtualModulePrefix: VIRTUAL_MODULE_PREFIX
++            }
++          );
++          injected[plugin.name] = plugin;
++          compiler.hooks.thisCompilation.tap(plugin.name, (compilation) => {
++            if (typeof compilation.hooks.childCompiler === "undefined")
++              throw new Error("`compilation.hooks.childCompiler` only support by @rspack/core>=0.4.1");
++            compilation.hooks.childCompiler.tap(plugin.name, (childCompiler) => {
++              childCompiler.$unpluginContext = injected;
++            });
++          });
++          const externalModules = /* @__PURE__ */ new Set();
+           if (plugin.load) {
+-            const use = {
+-              loader: LOAD_LOADER,
+-              options: { plugin }
+-            };
+             compiler.options.module.rules.unshift({
+               enforce: plugin.enforce,
+-              include: /.*/,
+-              use
++              include(id) {
++                return shouldLoad(id, plugin, externalModules);
++              },
++              use: [{
++                loader: LOAD_LOADER,
++                options: {
++                  unpluginName: plugin.name
++                }
++              }]
+             });
+           }
+           if (plugin.transform) {
+-            const use = {
+-              loader: TRANSFORM_LOADER,
+-              options: { plugin }
+-            };
+             compiler.options.module.rules.unshift({
+               enforce: plugin.enforce,
+-              include: /.*/,
+-              use
++              use(data) {
++                return transformUse(data, plugin, TRANSFORM_LOADER);
++              }
+             });
+           }
+           if (plugin.rspack)
+@@ -1480,13 +1517,13 @@ function getVitePlugin(factory) {
+ // src/webpack/index.ts
+ import fs3 from "fs";
+ import { resolve as resolve5 } from "path";
+-import process2 from "process";
++import process3 from "process";
+ import VirtualModulesPlugin from "webpack-virtual-modules";
+ 
+ // src/webpack/context.ts
+ import { resolve as resolve4 } from "path";
+ import { Buffer as Buffer4 } from "buffer";
+-import process from "process";
++import process2 from "process";
+ import sources2 from "webpack-sources";
+ import { Parser as Parser3 } from "acorn";
+ function createContext(compilation) {
+@@ -1501,7 +1538,7 @@ function createContext(compilation) {
+     },
+     addWatchFile(id) {
+       (compilation.fileDependencies ?? compilation.compilationDependencies).add(
+-        resolve4(process.cwd(), id)
++        resolve4(process2.cwd(), id)
+       );
+     },
+     emitFile(emittedFile) {
+@@ -1536,7 +1573,7 @@ var LOAD_LOADER2 = resolve5(
+   __dirname,
+   false ? "../../dist/webpack/loaders/load" : "webpack/loaders/load"
+ );
+-var VIRTUAL_MODULE_PREFIX = resolve5(process2.cwd(), "_virtual_");
++var VIRTUAL_MODULE_PREFIX2 = resolve5(process3.cwd(), "_virtual_");
+ function getWebpackPlugin(factory) {
+   return (userOptions) => {
+     return {
+@@ -1555,7 +1592,7 @@ function getWebpackPlugin(factory) {
+             rawPlugin,
+             {
+               __unpluginMeta: meta,
+-              __virtualModulePrefix: VIRTUAL_MODULE_PREFIX
++              __virtualModulePrefix: VIRTUAL_MODULE_PREFIX2
+             }
+           );
+           injected[plugin.name] = plugin;
+@@ -1616,11 +1653,7 @@ function getWebpackPlugin(factory) {
+           if (plugin.load) {
+             compiler.options.module.rules.unshift({
+               include(id) {
+-                if (id.startsWith(plugin.__virtualModulePrefix))
+-                  id = decodeURIComponent(id.slice(plugin.__virtualModulePrefix.length));
+-                if (plugin.loadInclude && !plugin.loadInclude(id))
+-                  return false;
+-                return !externalModules.has(id);
++                return shouldLoad(id, plugin, externalModules);
+               },
+               enforce: plugin.enforce,
+               use: [{
+@@ -1632,19 +1665,10 @@ function getWebpackPlugin(factory) {
+             });
+           }
+           if (plugin.transform) {
+-            const useLoader = [{
+-              loader: `${TRANSFORM_LOADER2}?unpluginName=${encodeURIComponent(plugin.name)}`
+-            }];
+-            const useNone = [];
+             compiler.options.module.rules.unshift({
+               enforce: plugin.enforce,
+-              use: (data) => {
+-                if (data.resource == null)
+-                  return useNone;
+-                const id = normalizeAbsolutePath(data.resource + (data.resourceQuery || ""));
+-                if (!plugin.transformInclude || plugin.transformInclude(id))
+-                  return useLoader;
+-                return useNone;
++              use(data) {
++                return transformUse(data, plugin, TRANSFORM_LOADER2);
+               }
+             });
+           }
+diff --git a/dist/rspack/loaders/load.js b/dist/rspack/loaders/load.js
+index 0587e3d6a1b44e10a022a04b3397b2f6e9ec2fb9..4ad1c2fdf35b9970ff8669c093e078d9f62ae2a4 100644
+--- a/dist/rspack/loaders/load.js
++++ b/dist/rspack/loaders/load.js
+@@ -80,8 +80,9 @@ function normalizeAbsolutePath(path) {
+ // src/rspack/loaders/load.ts
+ async function load(source, map) {
+   const callback = this.async();
++  const { unpluginName } = this.query;
++  const plugin = this._compiler?.$unpluginContext[unpluginName];
+   const id = this.resource;
+-  const { plugin } = this.getOptions();
+   if (!plugin?.load || !id)
+     return callback(null, source, map);
+   if (plugin.loadInclude && !plugin.loadInclude(id))
+diff --git a/dist/rspack/loaders/load.mjs b/dist/rspack/loaders/load.mjs
+index 4a3f6d10edc8bcd4b1c3a37a0f3af8dcee893f1f..f3f6e57129c9c17fc15d4a80815e53106ce8023a 100644
+--- a/dist/rspack/loaders/load.mjs
++++ b/dist/rspack/loaders/load.mjs
+@@ -44,8 +44,9 @@ function normalizeAbsolutePath(path) {
+ // src/rspack/loaders/load.ts
+ async function load(source, map) {
+   const callback = this.async();
++  const { unpluginName } = this.query;
++  const plugin = this._compiler?.$unpluginContext[unpluginName];
+   const id = this.resource;
+-  const { plugin } = this.getOptions();
+   if (!plugin?.load || !id)
+     return callback(null, source, map);
+   if (plugin.loadInclude && !plugin.loadInclude(id))
+diff --git a/dist/rspack/loaders/transform.js b/dist/rspack/loaders/transform.js
+index 21ffe0b8056ac063a80beca1c41eb54285b10551..0a24cb09de77b3ab534da7e9827995544f8d182b 100644
+--- a/dist/rspack/loaders/transform.js
++++ b/dist/rspack/loaders/transform.js
+@@ -71,12 +71,17 @@ function createRspackContext(compilation) {
+ // src/rspack/loaders/transform.ts
+ async function transform(source, map) {
+   const callback = this.async();
++  let unpluginName;
++  if (typeof this.query === "string") {
++    const query = new URLSearchParams(this.query);
++    unpluginName = query.get("unpluginName");
++  } else {
++    unpluginName = this.query.unpluginName;
++  }
+   const id = this.resource;
+-  const { plugin } = this.getOptions();
++  const plugin = this._compiler?.$unpluginContext[unpluginName];
+   if (!plugin?.transform)
+     return callback(null, source, map);
+-  if (plugin.transformInclude && !plugin.transformInclude(id))
+-    return callback(null, source, map);
+   const context = {
+     error: (error) => this.emitError(typeof error === "string" ? new Error(error) : error),
+     warn: (error) => this.emitWarning(typeof error === "string" ? new Error(error) : error)
+diff --git a/dist/rspack/loaders/transform.mjs b/dist/rspack/loaders/transform.mjs
+index c5c1957cb516acf989fa15d4eebfcabebcfa9541..d023ff719d1ddf5d5ade369614cfbcb5870d843b 100644
+--- a/dist/rspack/loaders/transform.mjs
++++ b/dist/rspack/loaders/transform.mjs
+@@ -35,12 +35,17 @@ function createRspackContext(compilation) {
+ // src/rspack/loaders/transform.ts
+ async function transform(source, map) {
+   const callback = this.async();
++  let unpluginName;
++  if (typeof this.query === "string") {
++    const query = new URLSearchParams(this.query);
++    unpluginName = query.get("unpluginName");
++  } else {
++    unpluginName = this.query.unpluginName;
++  }
+   const id = this.resource;
+-  const { plugin } = this.getOptions();
++  const plugin = this._compiler?.$unpluginContext[unpluginName];
+   if (!plugin?.transform)
+     return callback(null, source, map);
+-  if (plugin.transformInclude && !plugin.transformInclude(id))
+-    return callback(null, source, map);
+   const context = {
+     error: (error) => this.emitError(typeof error === "string" ? new Error(error) : error),
+     warn: (error) => this.emitWarning(typeof error === "string" ? new Error(error) : error)

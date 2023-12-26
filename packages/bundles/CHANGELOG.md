@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.0
+
+### Minor Changes
+
+- a68ff48d: feat: support @ice/pack-binding
+
+## 0.1.17
+
+### Patch Changes
+
+- d4aaa580: fix: support custom transform plugins in speedup mode
+
 ## 0.1.16
 
 ### Patch Changes

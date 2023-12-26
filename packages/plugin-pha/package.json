@@ -29,7 +29,7 @@
     "build-scripts": "^2.1.2-0",
     "esbuild": "^0.17.16",
     "webpack": "^5.88.0",
-    "webpack-dev-server": "^4.9.2"
+    "webpack-dev-server": "4.15.0"
   },
   "repository": {
     "type": "http",

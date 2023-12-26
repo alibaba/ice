@@ -134,6 +134,22 @@ const tasks = [
     bundleName: 'webpack/loaders/load.js',
   },
   {
+    pkgName: 'unplugin',
+    declaration: false,
+    emptyDir: false,
+    externals: taskExternals,
+    file: 'node_modules/unplugin/dist/rspack/loaders/transform.js',
+    bundleName: 'rspack/loaders/transform.js',
+  },
+  {
+    pkgName: 'unplugin',
+    declaration: false,
+    emptyDir: false,
+    externals: taskExternals,
+    file: 'node_modules/unplugin/dist/rspack/loaders/load.js',
+    bundleName: 'rspack/loaders/load.js',
+  },
+  {
     // pack main package
     pkgName: 'fork-ts-checker-webpack-plugin',
     externals: taskExternals,
@@ -338,6 +354,96 @@ handler: (source) => {
           ],
         },
       );
+    },
+  },
+  {
+    pkgName: '@rspack/core',
+    skipCompile: true,
+    declaration: false,
+    patch: () => {
+      const pkgPath = path.join(__dirname, '../node_modules/@rspack/core');
+      const targetPath = path.join(__dirname, '../compiled/@rspack/core');
+      // Copy the entire directory.
+      // filter out js files and replace with compiled files.
+      const filePaths = globbySync(['**/*'], { cwd: pkgPath, ignore: ['node_modules'] });
+      const filesAddOverwrite = [
+        'dist/config/adapter.js',
+        'dist/config/defaults.js',
+        'dist/config/zod.js',
+        'dist/config/normalization.js',
+        'dist/util/bindingVersionCheck.js',
+      ];
+      filePaths.forEach((filePath) => {
+        const sourcePath = path.join(pkgPath, filePath);
+        const targetFilePath = path.join(targetPath, filePath);
+        fs.ensureDirSync(path.dirname(targetFilePath));
+        if (path.extname(filePath) === '.js') {
+          const matched = filesAddOverwrite.some(filePath => {
+            const matched = sourcePath.split(path.sep).join('/').includes(filePath);
+            if (matched) {
+              fs.copyFileSync(path.join(__dirname, `../override/rspack/${path.basename(filePath)}`), targetFilePath);
+            }
+            return matched;
+          });
+          if (!matched) {
+            const fileContent = fs.readFileSync(sourcePath, 'utf8');
+            fs.writeFileSync(
+              targetFilePath,
+              replaceDeps(fileContent, ['tapable', 'schema-utils', 'graceful-fs'])
+                .replace(new RegExp('require\\(["\']@rspack/binding["\']\\)', 'g'), 'require("@ice/pack-binding")'),
+            );
+          }
+        } else {
+          fs.copyFileSync(sourcePath, targetFilePath);
+        }
+      });
+    },
+  },
+  {
+    pkgName: '@rspack/dev-server',
+    skipCompile: true,
+    patch: () => {
+      // Copy webpack-dev-server while all dependencies has been packed.
+      const pkgPath = path.join(__dirname, '../node_modules/@rspack/dev-server');
+      const filePaths = globbySync(['**/*'], { cwd: pkgPath, ignore: ['node_modules', 'types', 'bin'] });
+      filePaths.forEach((filePath) => {
+        fs.ensureDirSync(path.join(__dirname, `../compiled/@rspack/dev-server/${path.dirname(filePath)}`));
+        const sourcePath = path.join(pkgPath, filePath);
+        const targetPath = path.join(__dirname, `../compiled/@rspack/dev-server/${filePath}`);
+        if (path.extname(filePath) === '.js') {
+          const fileContent = fs.readFileSync(sourcePath, 'utf8');
+          fs.writeFileSync(targetPath,
+            replaceDeps(fileContent, webpackDevServerDeps.concat([...commonDeps, '@rspack/core', 'webpack-dev-server']))
+             .replace(/webpack-dev-server\/client\/clients/g, '@ice/bundles/compiled/webpack-dev-server/client/clients'),
+          );
+        } else {
+          fs.copyFileSync(sourcePath, targetPath);
+        }
+      });
+    },
+  },
+  {
+    pkgName: '@rspack/plugin-react-refresh',
+    skipCompile: true,
+    patch: () => {
+      const pkgPath = path.join(__dirname, '../node_modules/@rspack/plugin-react-refresh');
+      const filePaths = globbySync(['**/*'], { cwd: pkgPath, ignore: ['node_modules'] });
+      filePaths.forEach((filePath) => {
+        fs.ensureDirSync(path.join(__dirname, `../compiled/@rspack/plugin-react-refresh/${path.dirname(filePath)}`));
+        const sourcePath = path.join(pkgPath, filePath);
+        const targetPath = path.join(__dirname, `../compiled/@rspack/plugin-react-refresh/${filePath}`);
+        if (path.extname(filePath) === '.js') {
+          const fileContent = fs.readFileSync(sourcePath, 'utf8');
+          fs.writeFileSync(targetPath,
+            replaceDeps(fileContent, webpackDevServerDeps.concat([
+              ...commonDeps,
+              '@rspack/core',
+            ])).replace(/@pmmmwh\/react-refresh-webpack-plugin\/lib\/runtime\/RefreshUtils/g, '@ice/bundles/compiled/@pmmmwh/react-refresh-webpack-plugin/lib/runtime/RefreshUtils'),
+          );
+        } else {
+          fs.copyFileSync(sourcePath, targetPath);
+        }
+      });
     },
   },
 ];

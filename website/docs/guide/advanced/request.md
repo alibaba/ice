@@ -509,11 +509,11 @@ export const requestConfig = defineRequestConfig({
 
 ```shell title=".env.local"
 # The should not be committed.
-BASEURL=http://localhost:9999/api
+ICE_BASE_URL=http://localhost:9999/api
 ```
 
-```shell title=".env.prod"
-BASEURL=https://example.com/api
+```shell title=".env.production"
+ICE_BASE_URL=https://example.com/api
 ```
 
 在 `src/app.tsx` 中配置 `request.baseURL`:
@@ -522,6 +522,6 @@ BASEURL=https://example.com/api
 import { defineRequestConfig } from '@ice/plugin-request/types';
 
 export const requestConfig = defineRequestConfig({
-  baseURL: process.env.BASEURL,
+  baseURL: process.env.ICE_BASE_URL,
 });
 ```

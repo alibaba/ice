@@ -3,6 +3,7 @@ import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import type { Location } from 'history';
 import { isFunction } from '@ice/shared';
+import type { OnAllReadyParams, NodeWritablePiper } from './server/streamRender.js';
 import type {
   AppContext, RouteItem, ServerContext,
   RouteMatch,
@@ -17,7 +18,6 @@ import getAppConfig from './appConfig.js';
 import { DocumentContextProvider } from './Document.js';
 import { loadRouteModules } from './routes.js';
 import { pipeToString, renderToNodeStream } from './server/streamRender.js';
-import type { NodeWritablePiper } from './server/streamRender.js';
 import getRequestContext from './requestContext.js';
 import matchRoutes from './matchRoutes.js';
 import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
@@ -159,8 +159,8 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
           console.error('PipeToResponse error.');
           console.error(err);
         },
-        onAllReady: () => {
-          onAllReady && onAllReady();
+        onAllReady: (params: OnAllReadyParams) => {
+          onAllReady && onAllReady(params);
           resolve();
         },
       });
@@ -384,6 +384,7 @@ async function renderServerEntry(
     </AppContextProvider>
   );
 
+
   const fallback = () => {
     return renderDocument({
       matches,
@@ -395,7 +396,10 @@ async function renderServerEntry(
     });
   };
 
-  const pipe: NodeWritablePiper = renderToNodeStream(element);
+  const pipe: NodeWritablePiper = renderToNodeStream(element, {
+    renderOptions,
+    routerContext,
+  });
 
   return {
     value: {

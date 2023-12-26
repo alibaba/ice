@@ -1,3 +1,5 @@
+// hijack webpack before import other modules
+import './requireHook.js';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { createRequire } from 'module';

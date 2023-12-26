@@ -1,5 +1,62 @@
 # Changelog
 
+## 3.4.0
+
+### Minor Changes
+
+- a68ff48d: feat: support @ice/pack-binding
+
+### Patch Changes
+
+- 7d193fe9: fix: css module hash and HMR
+- Updated dependencies [7d193fe9]
+- Updated dependencies [7d193fe9]
+- Updated dependencies [a68ff48d]
+  - @ice/rspack-config@1.1.0
+  - @ice/webpack-config@1.1.7
+  - @ice/shared-config@1.2.0
+  - @ice/bundles@0.2.0
+
+## 3.3.9
+
+### Patch Changes
+
+- 72fc36c8: chore: remove `./types` export in `typesVersions` field to be compatible with `/// <reference types="@ice/app/types" />` in scaffolds
+- ddff5558: chore: better error handling for build script
+- Updated dependencies [b8a6f9b8]
+- Updated dependencies [5d854188]
+  - @ice/runtime@1.3.3
+
+## 3.3.8
+
+### Patch Changes
+
+- Updated dependencies [58d8cb80]
+  - @ice/shared-config@1.1.2
+  - @ice/rspack-config@1.0.7
+  - @ice/webpack-config@1.1.6
+
+## 3.3.7
+
+### Patch Changes
+
+- 0953dece: fix: the judgment of unsupported syntax
+
+## 3.3.6
+
+### Patch Changes
+
+- 4a7340af: fix: check let support by browserslist
+- d4aaa580: fix: support custom transform plugins in speedup mode
+- b28118d3: move require hijack to createService
+- Updated dependencies [e678188e]
+- Updated dependencies [52eb7a40]
+- Updated dependencies [d4aaa580]
+  - @ice/rspack-config@1.0.6
+  - @ice/webpack-config@1.1.5
+  - @ice/shared-config@1.1.1
+  - @ice/bundles@0.1.17
+
 ## 3.3.5
 
 ### Patch Changes
