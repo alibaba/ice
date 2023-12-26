@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import styles from './about.module.css';
-import Counter from '@/components/Counter.client';
+import Counter from '@/components/Counter';
 import CommentsWithServerError from '@/components/CommentsWithServerError';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
