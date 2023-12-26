@@ -316,6 +316,49 @@ declare global {
   }
 }
 
+export interface RSCManifestNode {
+  [moduleExport: string]: {
+    /**
+     * Webpack module id
+     */
+    id: string | number;
+    /**
+     * Export name
+     */
+    name: string;
+    /**
+     * Chunks for the module. JS and CSS.
+     */
+    chunks: Array<string | number>;
+
+    /**
+     * If chunk contains async module
+     */
+    async?: boolean;
+  };
+}
+
+export type ClientManifest = {
+  [routeId: string]: RSCManifestNode;
+};
+
+export type SSRModuleMapping = {
+  [routeId: string]: {
+    [moduleId: string]: RSCManifestNode;
+  };
+};
+
+export type ClientReferenceManifest = {
+  moduleLoading: {
+    prefix: string;
+    crossOrigin: string | null;
+  };
+  clientModules: RSCManifestNode;
+  ssrModuleMapping: {
+    [moduleId: string]: RSCManifestNode;
+  };
+};
+
 export interface ServerRenderOptions {
   app: AppExport;
   assetsManifest: AssetsManifest;
@@ -340,5 +383,6 @@ export interface ServerRenderOptions {
   prependCode?: string;
   serverData?: any;
   streamOptions?: RenderToPipeableStreamOptions;
-  clientManifest?: any;
+  clientManifest?: ClientManifest;
+  ssrModuleMapping?: SSRModuleMapping;
 }

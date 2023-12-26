@@ -9,6 +9,7 @@
     ".": "./esm/index.js",
     "./client": "./esm/index.js",
     "./server": "./esm/index.server.js",
+    "./rsc": "./esm/runRSCServerApp.js",
     "./jsx-runtime": "./esm/jsx-runtime.js",
     "./jsx-dev-runtime": "./esm/jsx-dev-runtime.js",
     "./matchRoutes": "./esm/matchRoutes.js",
@@ -44,7 +45,7 @@
     "@types/react-dom": "^18.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-server-dom-webpack": "18.3.0-canary-dd480ef92-20230822",
+    "react-server-dom-webpack": "18.3.0-canary-2c338b16f-20231116",
     "regenerator-runtime": "^0.13.9",
     "@remix-run/web-fetch": "^4.3.3"
   },

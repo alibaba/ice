@@ -14,7 +14,10 @@ import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 // @ts-ignore
 import assetsManifest from 'virtual:assets-manifest.json';
 <% if(rsc) {-%>
+import { runRSCServerApp } from '@ice/runtime/rsc';
 import clientManifest from 'virtual:react-client-manifest.json';
+import ssrModuleMapping from 'virtual:react-ssr-module-mapping.json';
+import rscModule from 'virtual-rsc-module:react-ssr-module-mapping.json';
 <% }-%>
 <% if (hydrate) {-%>
 import createRoutes from './routes';
@@ -58,6 +61,10 @@ interface RenderOptions {
   streamOptions?: RenderToPipeableStreamOptions;
 }
 
+<% if(rsc) {-%>
+global._require_rsc_module = (id) => rscModule[id].default;
+<% }-%>
+
 export async function renderToHTML(requestContext, options: RenderOptions = {}) {
   const { renderMode = 'SSR' } = options;
   setRuntimeEnv(renderMode);
@@ -73,10 +80,10 @@ export async function renderToResponse(requestContext, options: RenderOptions = 
   const mergedOptions = mergeOptions(options);
 
   <% if(rsc) {-%>
-  return runtime.runRSCServerApp(requestContext, mergedOptions);
-  <% }-%>
-
+  return runRSCServerApp(requestContext, mergedOptions);
+  <% } else { -%>
   return runtime.renderToResponse(requestContext, mergedOptions);
+  <% }-%>
 }
 
 <% if (jsOutput) { -%>
@@ -109,6 +116,7 @@ function mergeOptions(options) {
     routesConfig,
     <% if(rsc) {-%>
     clientManifest,
+    ssrModuleMapping,
     <% }-%>
     <% if (hydrate) {-%>
     runtimeOptions: {

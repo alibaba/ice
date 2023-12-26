@@ -76,20 +76,25 @@ const transformPipe = (options: PluginOptions = {}): Plugin => {
       });
       if (pluginResolveIds.length > 0) {
         build.onResolve({ filter }, async (args) => {
+          let redirected = false;
           const isEntry = args.kind === 'entry-point';
           const res = await pluginResolveIds.reduce(async (resolveData, resolveId) => {
             const { path, external } = await resolveData;
             if (!external) {
               const result = await resolveId(path, isEntry ? undefined : args.importer, { isEntry });
               if (typeof result === 'string') {
+                redirected = true;
                 return { path: result };
               } else if (typeof result === 'object' && result !== null) {
-                return { path: result.id, external: result.external };
+                redirected = true;
+                return { path: result.id, external: result.external, namespace: result.namespace };
               }
             }
             return resolveData;
           }, Promise.resolve({ path: args.path }));
-          if (path.isAbsolute(res.path) || res.external) {
+
+          // For path not changed, should return null, otherwise it will breack other path resolution.
+          if (redirected && (path.isAbsolute(res.path) || res.external)) {
             return res;
           }
         });
@@ -112,7 +117,7 @@ const transformPipe = (options: PluginOptions = {}): Plugin => {
           let sourceMap = null;
 
           if (plugin.load && (!loadInclude || loadInclude?.(id))) {
-            const result = await plugin.load.call(pluginContext, id);
+            const result = await plugin.load.call(pluginContext, id, args.namespace);
             if (typeof result === 'string') {
               sourceCode = result;
             } else if (typeof result === 'object' && result !== null) {

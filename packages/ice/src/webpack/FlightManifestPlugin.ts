@@ -2,6 +2,7 @@
 // Add special handling for ice.js when enable RSC.
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type { Compiler } from 'webpack';
+import type { ClientManifest, SSRModuleMapping, RSCManifestNode } from '@ice/runtime/types';
 
 const PLUGIN_NAME = 'FlightManifestPlugin';
 
@@ -10,22 +11,8 @@ interface Options {
   ssrManifestFilename?: string;
 }
 
-interface SSRExports {
-  [chunkName: string]: { specifier: string; name: string };
-}
-
-interface ClientManifest {
- [key: string]: {
-  chunks: (string | number)[];
-  id: string | number;
-  name: string;
-};
-}
-
-interface SsrManifest {
-  [key: string]: SSRExports;
-}
-
+// react-client-manifest.json  manifest for csr to load client components.
+// react-ssr-module-mapping.json  manifest for ssr to load client components.
 export class FlightManifestPlugin {
   clientManifestFilename?: string;
   ssrManifestFilename?: string;
@@ -34,7 +21,7 @@ export class FlightManifestPlugin {
     this.clientManifestFilename =
       options.clientManifestFilename || 'react-client-manifest.json';
     this.ssrManifestFilename =
-      options.ssrManifestFilename || 'react-ssr-manifest.json';
+      options.ssrManifestFilename || 'react-ssr-module-mapping.json';
   }
 
   apply(compiler: Compiler) {
@@ -45,24 +32,18 @@ export class FlightManifestPlugin {
         name: PLUGIN_NAME,
         stage: webpack.Compilation.PROCESS_ASSETS_STAGE_REPORT,
       }, () => {
-        const clientManifestMapping: {
-          [key: string]: ClientManifest;
-        } = {};
-        const ssrManifestSetMapping: {
-          [key: string]: SsrManifest;
-        } = {};
+        const clientManifestMapping: ClientManifest = {};
+        const ssrModuleMapping: SSRModuleMapping = {};
 
         compilation.chunkGroups.forEach((chunkGroup) => {
           const chunkGroupName = chunkGroup.name;
 
-          const clientManifest: ClientManifest = {};
-
-          const ssrManifest: SsrManifest = {};
+          const clientManifest: RSCManifestNode = {};
+          const ssrModule = {};
 
           let hasRecord = false;
 
           const recordModule = (id: string | number, module: any) => {
-            // const modId = path.relative(compiler.context, module.resource);
             const modId = module.resource;
             if (modId !== undefined) {
               hasRecord = true;
@@ -77,9 +58,10 @@ export class FlightManifestPlugin {
               // When the module isn't split, it doesn't matter and we can just
               // encode the id of the whole module. This code doesn't currently
               // deal with module splitting so is likely broken from ESM anyway.
-              ssrManifest[id] = {
+              ssrModule[id] = {
                 '*': {
-                  specifier: modId,
+                  id: modId,
+                  chunks: [],
                   name: '*',
                 },
               };
@@ -130,7 +112,7 @@ export class FlightManifestPlugin {
             // One client component may bundle into serveral chunks, so we need to create manifest for each page.
             if (hasRecord) {
               clientManifestMapping[chunkGroupName] = clientManifest;
-              ssrManifestSetMapping[chunkGroupName] = ssrManifest;
+              ssrModuleMapping[chunkGroupName] = ssrModule;
             }
           });
         });
@@ -141,7 +123,7 @@ export class FlightManifestPlugin {
           new webpack.sources.RawSource(clientOutput, false),
         );
 
-        const ssrOutput = JSON.stringify(ssrManifestSetMapping, null, 2);
+        const ssrOutput = JSON.stringify(ssrModuleMapping, null, 2);
         compilation.emitAsset(
           _this.ssrManifestFilename,
           new webpack.sources.RawSource(ssrOutput, false),

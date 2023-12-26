@@ -15,6 +15,8 @@ import ignorePlugin from '../esbuild/ignore.js';
 import createAssetsPlugin from '../esbuild/assets.js';
 import { CACHE_DIR, SERVER_OUTPUT_DIR } from '../constant.js';
 import emptyCSSPlugin from '../esbuild/emptyCSS.js';
+import rscLoderPlugin from '../esbuild/rscLoader.js';
+import transformRSCDirectivePlugin from '../esbuild/transfromRSCDirective.js';
 import transformImportPlugin from '../esbuild/transformImport.js';
 import transformPipePlugin from '../esbuild/transformPipe.js';
 import isExternalBuiltinDep from '../utils/isExternalBuiltinDep.js';
@@ -116,6 +118,7 @@ export function createServerCompiler(options: Options) {
   const { task, rootDir, command, speedup, server, syntaxFeatures, getRoutesFile } = options;
   const externals = task.config?.externals || {};
   const sourceMap = task.config?.sourceMap;
+  const serverComponent = task.config?.serverComponent;
   const dev = command === 'start';
 
   // Filter empty alias.
@@ -162,6 +165,12 @@ export function createServerCompiler(options: Options) {
       getRoutesFile,
     }, 'esbuild', { isServer });
     const define = getRuntimeDefination(task.config?.define || {}, runtimeDefineVars, transformEnv);
+
+    if (serverComponent) {
+      // react-server-dom-webpack/client.edge use __webpack_require__ to load client components
+      // In ssr, we need to replace it by custom server module loader.
+      define['__webpack_require__'] = 'global._require_rsc_module';
+    }
 
     if (preBundle) {
       preBundleDepsMetadata = await createPreBundleDepsMetadata({
@@ -230,8 +239,11 @@ export function createServerCompiler(options: Options) {
           },
         }),
         compilationInfo && createAssetsPlugin(compilationInfo, rootDir),
+        serverComponent && compilationInfo && rscLoderPlugin(compilationInfo),
         transformPipePlugin({
+          // @ts-ignore
           plugins: [
+            serverComponent && transformRSCDirectivePlugin(),
             ...transformPlugins,
             // Plugin transformImportPlugin need after transformPlugins in case of it has onLoad lifecycle.
             dev && preBundle && preBundleDepsMetadata && transformImportPlugin(

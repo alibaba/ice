@@ -21,8 +21,8 @@ export async function runRSCClientApp(appConfig: AppConfig) {
 
   const rootId = appConfig.app.rootId || 'app';
   const container = document.getElementById(rootId);
-  const root = ReactDOM.createRoot(container);
-  root.render(<Root />);
+
+  ReactDOM.hydrateRoot(container, <Root />);
 }
 
 function Root() {
