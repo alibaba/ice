@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.9
+
+### Patch Changes
+
+- 85270268: default export support
+
 ## 0.2.8
 
 ### Patch Changes

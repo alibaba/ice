@@ -1,0 +1,63 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+.app > header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} 
+
+.app > header > img {
+  width: 120px;
+}
+
+.app > header > p {
+  margin: 20px 0;
+  text-align: center;
+  font-size: 2.6rem;
+}
+
+.app > main {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0 10px;
+  font-size: 0.9rem;
+}
+
+.boxFallback {
+  background: rgba(0,0,0,.03);
+  border-radius: 3.2vw;
+  height: 100px;
+}
+
+.header {
+  background: linear-gradient(to bottom right, rgb(2, 46, 244), rgb(46, 40, 150));
+  height: 100px;
+  width: 100%;
+  font-size: 22px;
+  align-items: center;
+  line-height: 100px;
+  text-align: center;
+  color: #FFF;
+}
+
+.link {
+  font-size: 1.2rem;
+  color: var(--primary);
+}
+
+.button {
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 35px;
+  background: var(--primary);
+  box-shadow: 0 5px 10px 0 #ddd;
+  font-size: calc(10px + 2vmin);
+}

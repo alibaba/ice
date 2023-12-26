@@ -18,6 +18,7 @@ coverage/
 
 # 忽略第三方包
 /vendor/loader.js
+override/
 
 # 忽略文件
 **/*-min.js

@@ -1,1 +1,1 @@
-export * from '@rspack/core';
+export * from '../compiled/@rspack/core/dist/index.js';

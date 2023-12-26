@@ -1,5 +1,31 @@
 # @ice/shared-config
 
+## 1.2.0
+
+### Minor Changes
+
+- a68ff48d: feat: support @ice/pack-binding
+
+### Patch Changes
+
+- 7d193fe9: fix: optimize utils
+- Updated dependencies [a68ff48d]
+  - @ice/bundles@0.2.0
+
+## 1.1.2
+
+### Patch Changes
+
+- 58d8cb80: fix: reoder transform plugins
+
+## 1.1.1
+
+### Patch Changes
+
+- d4aaa580: fix: support custom transform plugins in speedup mode
+- Updated dependencies [d4aaa580]
+  - @ice/bundles@0.1.17
+
 ## 1.1.0
 
 ### Minor Changes

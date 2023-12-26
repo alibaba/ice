@@ -1,5 +1,36 @@
 # @ice/rspack-config
 
+## 1.1.0
+
+### Minor Changes
+
+- a68ff48d: feat: support @ice/pack-binding
+
+### Patch Changes
+
+- 7d193fe9: fix: css module hash and HMR
+- Updated dependencies [7d193fe9]
+- Updated dependencies [a68ff48d]
+  - @ice/shared-config@1.2.0
+  - @ice/bundles@0.2.0
+
+## 1.0.7
+
+### Patch Changes
+
+- Updated dependencies [58d8cb80]
+  - @ice/shared-config@1.1.2
+
+## 1.0.6
+
+### Patch Changes
+
+- e678188e: fix: assets rule for rspack
+- d4aaa580: fix: support custom transform plugins in speedup mode
+- Updated dependencies [d4aaa580]
+  - @ice/shared-config@1.1.1
+  - @ice/bundles@0.1.17
+
 ## 1.0.5
 
 ### Patch Changes

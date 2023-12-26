@@ -1,5 +1,31 @@
 # Changelog
 
+## 1.1.7
+
+### Patch Changes
+
+- 7d193fe9: fix: optimize utils
+- Updated dependencies [7d193fe9]
+- Updated dependencies [a68ff48d]
+  - @ice/shared-config@1.2.0
+  - @ice/bundles@0.2.0
+
+## 1.1.6
+
+### Patch Changes
+
+- Updated dependencies [58d8cb80]
+  - @ice/shared-config@1.1.2
+
+## 1.1.5
+
+### Patch Changes
+
+- 52eb7a40: fix: do not minify assets in public by default
+- Updated dependencies [d4aaa580]
+  - @ice/shared-config@1.1.1
+  - @ice/bundles@0.1.17
+
 ## 1.1.4
 
 ### Patch Changes

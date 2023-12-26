@@ -40,16 +40,17 @@ export default class ServerCompilerPlugin {
       if (compilation) {
         // Option of compilationInfo need to be object, while it may changed during multi-time compilation.
         this.compilerOptions.compilationInfo.assetsManifest =
-          JSON.parse(compilation.assets['assets-manifest.json'].source().toString());
+          JSON.parse(compilation.getAsset('assets-manifest.json').source.source().toString());
 
-          if (compilation.assets?.['react-client-manifest.json']) {
+          if (compilation.getAsset('react-client-manifest.json')) {
+            // @ts-ignore
             this.compilerOptions.compilationInfo.reactClientManifest =
-              JSON.parse(compilation.assets['react-client-manifest.json']?.source()?.toString());
+              JSON.parse(compilation.getAsset('react-client-manifest.json').source.source().toString());
           }
 
-          if (compilation.assets?.['react-ssr-module-mapping.json']) {
+          if (compilation.getAsset('react-ssr-module-mapping.json')) {
             this.compilerOptions.compilationInfo.reactSSRModuleMapping =
-              JSON.parse(compilation.assets['react-ssr-module-mapping.json']?.source()?.toString());
+              JSON.parse(compilation.getAsset('react-ssr-module-mapping.json').source.source().toString());
           }
       }
       // For first time, we create a new task.
