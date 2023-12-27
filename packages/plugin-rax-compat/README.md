@@ -11,7 +11,7 @@ import { defineConfig } from 'ice';
 import compatRax from '@ice/plugin-rax-compat';
 
 export default defineConfig(() => ({
-  plugins: [compatRax({ /- options -/ })],
+  plugins: [compatRax({ /* options */ })],
 }));
 ```
 
