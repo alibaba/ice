@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { createRequire } from 'module';
-import { compilationPlugin, compileExcludes, getDefineVars, getCompilerPlugins, getJsxTransformOptions, getAliasWithRoot } from '@ice/shared-config';
+import { getDefineVars, getCompilerPlugins, getJsxTransformOptions, getAliasWithRoot, skipCompilePackages } from '@ice/shared-config';
 import type { Config, ModifyWebpackConfig } from '@ice/shared-config/types';
 import type { Configuration, rspack as Rspack } from '@rspack/core';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
@@ -52,9 +52,7 @@ const getConfig: GetConfig = async (options) => {
     mode,
     minify,
     publicPath = '/',
-    cacheDir,
     outputDir = 'build',
-    sourceMap,
     externals = {},
     alias = {},
     compileIncludes,
@@ -75,19 +73,6 @@ const getConfig: GetConfig = async (options) => {
   const isDev = mode === 'development';
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
   const hashKey = hash === true ? 'hash:8' : (hash || '');
-  const compilation = compilationPlugin({
-    rootDir,
-    cacheDir,
-    sourceMap,
-    fastRefresh: false,
-    mode,
-    compileIncludes,
-    compileExcludes,
-    swcOptions,
-    polyfill,
-    enableEnv: true,
-    getRoutesFile,
-  });
 
   const { rspack: { DefinePlugin, ProvidePlugin, SwcJsMinimizerRspackPlugin } } = await import('@ice/bundles/esm/rspack.js');
   const cssFilename = `css/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`;
@@ -128,6 +113,19 @@ const getConfig: GetConfig = async (options) => {
       ? splitChunks
       : getSplitChunks(rootDir, splitChunks);
   }
+  // Get built-in exclude packages.
+  const compileExclude = skipCompilePackages.map((pkg) => {
+    return `node_modules[\\/](${pkg}[\\/]|_${pkg.replace('/', '_')}@[^/]+[\\/])`;
+  });
+  let excludeRule: string;
+
+  if (!compileIncludes || compileIncludes?.length === 0) {
+    excludeRule = 'node_modules';
+  } else if (!compileIncludes?.includes('node_modules') && compileIncludes?.length > 0) {
+    excludeRule = `node_modules[\\/](?!${compileIncludes.map((pkg: string) => {
+      return `${pkg}[\\/]|_${pkg.replace('/', '_')}@[^/]+[\\/]`;
+    }).join('|')}).*`;
+  }
   const config: Configuration = {
     entry: {
       main: [path.join(rootDir, runtimeTmpDir, 'entry.client.tsx')],
@@ -148,8 +146,8 @@ const getConfig: GetConfig = async (options) => {
     module: {
       rules: [
         {
-          // TODO: use regexp to improve performance.
-          test: compilation.transformInclude,
+          test: /\.(jsx?|tsx?|mjs)$/,
+          ...(excludeRule ? { exclude: new RegExp(excludeRule) } : {}),
           use: {
             loader: 'builtin:compilation-loader',
             options: {
@@ -157,6 +155,10 @@ const getConfig: GetConfig = async (options) => {
               transformFeatures: {
                 removeExport: swcOptions.removeExportExprs,
                 keepExport: swcOptions.keepExports,
+              },
+              compileRules: {
+                // "bundles/compiled" is the path when using @ice/bundles.
+                exclude: [...compileExclude, 'bundles/compiled'],
               },
             },
           },
