@@ -71,7 +71,8 @@
   "packageManager": "pnpm@8.9.2",
   "pnpm": {
     "patchedDependencies": {
-      "unplugin@1.5.1": "patches/unplugin@1.5.1.patch"
+      "unplugin@1.5.1": "patches/unplugin@1.5.1.patch",
+      "@rspack/core@0.4.3": "patches/@rspack__core@0.4.3.patch"
     }
   }
 }
