@@ -241,20 +241,24 @@ const userConfig = [
   {
     name: 'compileDependencies',
     validation: 'array|boolean',
-    getDefaultValue: () => (process.env.NODE_ENV === 'development' ? false : [/node_modules\/*/]),
-    setConfig: (config: Config, customValue: UserConfig['compileDependencies']) => {
-      let compileRegex: RegExp | false;
+    getDefaultValue: () => (process.env.NODE_ENV !== 'development'),
+    setConfig: (config: Config, customValue: UserConfig['compileDependencies'], context: UserConfigContext) => {
+      const speedupMode = context.commandArgs.speedup;
+      let compileRegex: RegExp | string | false;
       if (customValue === true) {
-        compileRegex = /node_modules\/*/;
+        compileRegex = speedupMode ? 'node_modules' : /node_modules\/*/;
       } else if (customValue && customValue.length > 0) {
         compileRegex = new RegExp(
           customValue
             .map((dep: string | RegExp) => {
               if (dep instanceof RegExp) {
+                if (speedupMode) {
+                  throw new Error('speedup mode does not support config compileDependencies as RegExp');
+                }
                 return dep.source;
               } else if (typeof dep === 'string') {
                 // add default prefix of node_modules
-                const matchStr = `node_modules/?.+${dep}/`;
+                const matchStr = speedupMode ? dep : `node_modules/?.+${dep}/`;
                 return matchStr;
               }
               return false;

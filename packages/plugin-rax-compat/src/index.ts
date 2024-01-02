@@ -1,10 +1,10 @@
-import { AliasService } from './services/alias';
-import { StyleService } from './services/styles';
-import { JSXService } from './services/jsx';
-import { TypingsService } from './services/typings';
-
 import type { Plugin } from '@ice/app/types';
 import type { NormalizedRaxCompatPluginOptions, RaxCompatPluginOptions } from './typings';
+
+import { AliasService } from './services/alias.js';
+import { StyleService } from './services/styles/index.js';
+import { JSXService } from './services/jsx.js';
+import { TypingsService } from './services/typings.js';
 
 const normalizeOptions = (options?: RaxCompatPluginOptions): NormalizedRaxCompatPluginOptions => {
   const { inlineStyle = false, cssModule = true, legacy = false } = options ?? {};

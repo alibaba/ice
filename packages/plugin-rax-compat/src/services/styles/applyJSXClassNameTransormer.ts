@@ -2,7 +2,7 @@ import { createRequire } from 'module';
 
 import { transformSync } from '@babel/core';
 
-import { checkInlineStyleEnable } from '../../utils';
+import { checkInlineStyleEnable } from '../../utils.js';
 
 import type { NormalizedRaxCompatPluginOptions, PluginAPI, Transformer } from '../../typings';
 

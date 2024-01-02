@@ -3,6 +3,7 @@ import { merge, cloneDeep } from 'lodash-es';
 import type { NormalizedRaxCompatPluginOptions, PluginAPI } from '../typings';
 
 export class JSXService {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public static provide(api: PluginAPI, options: NormalizedRaxCompatPluginOptions) {
     api.onGetConfig((config) => {
       const originalSwcCompilationConfig =

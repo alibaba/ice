@@ -1,9 +1,9 @@
 import { createRequire } from 'module';
 
-import { checkInlineStyleEnable } from '../../utils';
-
 import type { RuleSetRule } from 'webpack';
 import type { NormalizedRaxCompatPluginOptions, PluginAPI, StyleKind, WebpackConfiguration } from '../../typings';
+
+import { checkInlineStyleEnable } from '../../utils.js';
 
 const require = createRequire(import.meta.url);
 

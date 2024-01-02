@@ -3,9 +3,10 @@ import { fileURLToPath } from 'url';
 
 import type { NormalizedRaxCompatPluginOptions, PluginAPI } from '../typings';
 
-const dirname = __dirname ?? path.dirname(fileURLToPath(import.meta.url));
+const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export class TypingsService {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public static provide(api: PluginAPI, options: NormalizedRaxCompatPluginOptions) {
     api.generator.addRenderFile(path.join(dirname, '../templates/rax-compat.d.ts'), 'rax-compat.d.ts', {});
 

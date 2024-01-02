@@ -1,8 +1,8 @@
 import fs from 'fs';
 
-import styleSheetLoader from '../../lib/transform-styles';
+import styleSheetLoader from '../../lib/transform-styles.js';
 
-import { checkInlineStyleEnable, checkStyleKind } from '../../utils';
+import { checkInlineStyleEnable, checkStyleKind } from '../../utils.js';
 
 import type { ESBuildPlugin, NormalizedRaxCompatPluginOptions, PluginAPI } from '../../typings';
 

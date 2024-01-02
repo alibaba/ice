@@ -43,4 +43,4 @@ export interface RaxCompatPluginOptions {
   legacy?: boolean;
 }
 
-export interface NormalizedRaxCompatPluginOptions extends Required<RaxCompatPluginOptions> {}
+export type NormalizedRaxCompatPluginOptions = Required<RaxCompatPluginOptions>;

@@ -30,7 +30,7 @@ export default defineConfig(() => ({
 ### `legacy`
 
 - Default: `false`
-- Enable legacy syntax to import Rax like this:
+- Enable legacy way to import rax as namespace, like `v0.6`:
 
 ```typescript
 import Rax from 'rax';

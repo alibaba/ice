@@ -1,9 +1,10 @@
 import chalk from 'chalk';
-import { applyClientSideStyleProcessor } from './applyClientSideProcessor';
-import { applyJSXClassNameTransformer } from './applyJSXClassNameTransormer';
-import { applyServerSideStyleProcessor } from './applyServerSideProcessor';
 
 import type { NormalizedRaxCompatPluginOptions, PluginAPI } from '../../typings';
+
+import { applyClientSideStyleProcessor } from './applyClientSideProcessor.js';
+import { applyJSXClassNameTransformer } from './applyJSXClassNameTransormer.js';
+import { applyServerSideStyleProcessor } from './applyServerSideProcessor.js';
 
 /**
  * Handle inline style related.
