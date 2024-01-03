@@ -1,49 +1,47 @@
 diff --git a/dist/config/adapter.js b/dist/config/adapter.js
-index 40175429036fbeac26601c59e19c3d2ec1bebd14..5e378ec28ffe510bcffbf4c0c8a64fbf1b545c4c 100644
+index ea1d21db02d413de0d25367c646cd9773fb41223..42aed198ffb18752a7a245e1f8a0f2bf845b80d5 100644
 --- a/dist/config/adapter.js
 +++ b/dist/config/adapter.js
-@@ -17,6 +17,8 @@ const getRawOptions = (options, compiler, processResource) => {
+@@ -16,6 +16,7 @@ const getRawOptions = (options, compiler, processResource) => {
      const mode = options.mode;
      const experiments = getRawExperiments(options.experiments);
      return {
-+        // CUSTOM: add options of features.
 +        features: options.features,
          mode,
          target: getRawTarget(options.target),
          context: options.context,
 diff --git a/dist/config/defaults.js b/dist/config/defaults.js
-index 48239ccd62799ac615d095f0df1fe20f316c6052..68db4c167b989f2fbba0e34e8d2a876c0fc2f4c5 100644
+index b413bb21a053a161a64056664354a50ee6429283..9983bc69e39d031ca49fa04bcad0aea093e4b996 100644
 --- a/dist/config/defaults.js
 +++ b/dist/config/defaults.js
-@@ -50,6 +50,12 @@ const applyRspackOptionsDefaults = (options) => {
+@@ -53,6 +53,11 @@ const applyRspackOptionsDefaults = (options) => {
      applyExperimentsDefaults(options.experiments, {
          cache: options.cache
      });
-+    // CUSTOM: add default rules for features options.
 +    if (options.features) {
-+      applyFeaturesDefaults(options.features);
++        applyFeaturesDefaults(options.features);
 +    } else {
-+      D(options, 'features', {});
++        D(options, 'features', {});
 +    }
      applySnapshotDefaults(options.snapshot, { production });
      applyModuleDefaults(options.module, {
          // syncWebAssembly: options.experiments.syncWebAssembly,
-@@ -125,6 +131,13 @@ const applyExperimentsDefaults = (experiments, { cache }) => {
-         D(experiments.rspackFuture, "disableTransformByDefault", true);
+@@ -129,6 +134,13 @@ const applyExperimentsDefaults = (experiments, { cache }) => {
+         D(experiments.rspackFuture, "disableApplyEntryLazily", false);
      }
  };
 +const applyFeaturesDefaults = (features) => {
-+  D(features, 'split_chunks_strategy', {});
-+  if (typeof features.split_chunks_strategy === 'object') {
-+    D(features.split_chunks_strategy, 'name', '');
-+    D(features.split_chunks_strategy, 'topLevelFrameworks', []);
-+  }
++    D(features, 'split_chunks_strategy', {});
++    if (typeof features.split_chunks_strategy === 'object') {
++        D(features.split_chunks_strategy, 'name', '');
++        D(features.split_chunks_strategy, 'topLevelFrameworks', []);
++    }
 +};
  const applySnapshotDefaults = (snapshot, { production }) => {
      F(snapshot, "module", () => production
          ? { timestamp: true, hash: true }
 diff --git a/dist/config/normalization.js b/dist/config/normalization.js
-index 1d7a4499463026c6b8bd528159c2d5edf300942c..942bfc868423c07d239a1225cf6063ecbcacc694 100644
+index 7769ba679c50a63a60961cfe87f5b7b950593e85..d159573dacd63aec503be254366eea94cdddf826 100644
 --- a/dist/config/normalization.js
 +++ b/dist/config/normalization.js
 @@ -13,6 +13,7 @@ exports.getNormalizedRspackOptions = void 0;
@@ -55,24 +53,15 @@ index 1d7a4499463026c6b8bd528159c2d5edf300942c..942bfc868423c07d239a1225cf6063ec
              ? config.ignoreWarnings.map(ignore => {
                  if (typeof ignore === "function") {
 diff --git a/dist/config/zod.js b/dist/config/zod.js
-index 028aa93bf7b0b813b3b1b1bab62a3c5176855896..0364b4c91973b1b5a3dee2c64475c022aed969d7 100644
+index 9efb9502f22278229c9c5798b7ae5eee2dbd0915..348b9528161995d65d462279f74960d1b00e195f 100644
 --- a/dist/config/zod.js
 +++ b/dist/config/zod.js
-@@ -703,7 +703,8 @@ const profile = zod_1.z.boolean();
- //#endregion
- //#region Builtins (deprecated)
- const builtins = zod_1.z.custom();
--//#endregion
-+const features = zod_1.z.custom();
-+// #endregion
- exports.rspackOptions = zod_1.z.strictObject({
-     name: name.optional(),
-     dependencies: dependencies.optional(),
-@@ -732,5 +733,6 @@ exports.rspackOptions = zod_1.z.strictObject({
-     devServer: devServer.optional(),
+@@ -759,6 +759,7 @@ exports.rspackOptions = zod_1.z.strictObject({
      builtins: builtins.optional(),
      module: moduleOptions.optional(),
--    profile: profile.optional()
-+    profile: profile.optional(),
-+    features: features.optional(),
+     profile: profile.optional(),
+-    bail: bail.optional()
++    bail: bail.optional(),
++    features: zod_1.z.custom().optional(),
  });
+ //# sourceMappingURL=zod.js.map

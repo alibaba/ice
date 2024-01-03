@@ -50,8 +50,8 @@
   },
   "devDependencies": {
     "@rspack/plugin-react-refresh": "0.4.3",
-    "@rspack/dev-server": "0.4.3",
-    "@rspack/core": "0.4.3",
+    "@rspack/dev-server": "0.4.5",
+    "@rspack/core": "0.4.5",
     "@types/less": "^3.0.3",
     "@types/lodash": "^4.14.181",
     "@types/webpack-bundle-analyzer": "^4.4.1",
