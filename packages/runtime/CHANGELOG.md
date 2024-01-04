@@ -1,5 +1,9 @@
 # @ice/runtime
 
+## 1.3.5
+
+- fix: compatible with API `matchRoutes` when basename is not provided.
+
 ## 1.3.4
 
 ### Patch Changes
