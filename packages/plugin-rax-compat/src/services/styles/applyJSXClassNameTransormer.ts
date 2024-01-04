@@ -40,8 +40,7 @@ const JSXClassNameToStyleTransformer = (api: PluginAPI, options: NormalizedRaxCo
     const parserPlugins = ['jsx', 'importMeta', 'topLevelAwait', 'classProperties', 'classPrivateMethods'];
 
     if (/\.tsx?$/.test(id)) {
-      // when routes file is a typescript file,
-      // add ts parser plugins
+      // When routes file is a typescript file, add ts parser plugins
       parserPlugins.push('typescript');
       parserPlugins.push('decorators-legacy');
     }
