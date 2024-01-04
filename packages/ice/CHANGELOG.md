@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.4.1
+
+### Patch Changes
+
+- ebc8ae08: fix: add assets plugin to deal with thrid-party dependencies import assets direactly
+- 420fec85: fix: update binding version for packing error, resolve error when disable code splitting
+- Updated dependencies [23811c82]
+- Updated dependencies [420fec85]
+  - @ice/runtime@1.3.4
+  - @ice/rspack-config@1.1.1
+  - @ice/bundles@0.2.1
+  - @ice/shared-config@1.2.1
+  - @ice/webpack-config@1.1.8
+
 ## 3.4.0
 
 ### Minor Changes
