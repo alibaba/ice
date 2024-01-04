@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1
+
+### Patch Changes
+
+- 420fec85: fix: update binding version for packing error, resolve error when disable code splitting
+
 ## 0.2.0
 
 ### Minor Changes
