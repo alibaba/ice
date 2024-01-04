@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useOutlet, useLocation } from 'react-router-dom';
 
 // @ts-ignore
-const Offscreen = React.unstable_Offscreen;
+const Activity = React.unstable_Activity;
 
 // ref: https://leomyili.github.io/react-stillness-component/docs/examples/react-router/v6
 export default function KeepAliveOutlet() {
-  if (!Offscreen) {
+  if (!Activity) {
     throw new Error('`<KeepAliveOutlet />` now requires react experimental version. Please install it first.');
   }
   const [outlets, setOutlets] = useState([]);
@@ -32,9 +32,9 @@ export default function KeepAliveOutlet() {
       {
         outlets.map((o) => {
           return (
-            <Offscreen key={o.key} mode={location.pathname === o.pathname ? 'visible' : 'hidden'}>
+            <Activity key={o.key} mode={location.pathname === o.pathname ? 'visible' : 'hidden'}>
               {o.outlet}
-            </Offscreen>
+            </Activity>
           );
         })
       }

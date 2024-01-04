@@ -231,10 +231,6 @@ const tasks = [
       // filter out js files and replace with compiled files.
       const filePaths = globbySync(['**/*'], { cwd: pkgPath, ignore: ['node_modules'] });
       const filesAddOverwrite = [
-        'dist/config/adapter.js',
-        'dist/config/defaults.js',
-        'dist/config/zod.js',
-        'dist/config/normalization.js',
         'dist/util/bindingVersionCheck.js',
       ];
       filePaths.forEach((filePath) => {

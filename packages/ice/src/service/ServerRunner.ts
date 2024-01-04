@@ -128,6 +128,11 @@ class ServerRunner extends Runner {
       define,
       taskConfig,
       speedup,
+      plugins: [
+        createAssetsPlugin(() => {
+          return this.compilationInfo;
+        }, rootDir),
+      ],
     });
 
     const esbuildPlugins = [

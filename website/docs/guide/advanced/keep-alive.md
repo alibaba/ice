@@ -47,13 +47,13 @@ export default function Layout() {
 
 ## 缓存其他组件
 
-除了缓存路由组件，还可以直接使用 React 18 提供的实验特性 `<Offscreen />` 组件，进一步缓存更细粒度的组件。
+除了缓存路由组件，还可以直接使用 React 18 提供的实验特性 `<Activity />` 组件，进一步缓存更细粒度的组件。
 
 ```tsx
 import React from 'react';
 
 // @ts-ignore
-const Offscreen = React.unstable_Offscreen;
+const Activity = React.unstable_Activity;
 
 export default function Home() {
   const [auth, setAuth] = React.useState('admin');
@@ -65,12 +65,12 @@ export default function Home() {
         <button onClick={() => setAuth('user')}>Set User</button>
       </div>
       <>
-        <Offscreen mode={auth === 'admin' ? 'visible' : 'hidden'}>
+        <Activity mode={auth === 'admin' ? 'visible' : 'hidden'}>
           Admin Name: <input />
-        </Offscreen>
-        <Offscreen mode={auth === 'user' ? 'visible' : 'hidden'}>
+        </Activity>
+        <Activity mode={auth === 'user' ? 'visible' : 'hidden'}>
           User Name: <input />
-        </Offscreen>
+        </Activity>
       </>
     </>
   )

@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import path from 'path';
+import { fileURLToPath } from 'url';
 import chalk from 'chalk';
 import semver from 'semver';
 import fse from 'fs-extra';
-import { fileURLToPath } from 'url';
 import { program, Option } from 'commander';
 import yargsParser from 'yargs-parser';
 import createService from '../esm/createService.js';
@@ -32,10 +32,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .action(async ({ rootDir, ...commandArgs }, ctx) => {
       renamePlatformToTarget(commandArgs);
       process.env.NODE_ENV = 'production';
-      const service = await createService({ rootDir, command: 'build', commandArgs: {
-        ...parseUnknownOptions(ctx.args),
-        ...commandArgs,
-      } });
+      const service = await createService({
+        rootDir,
+        command: 'build',
+        commandArgs: {
+          ...parseUnknownOptions(ctx.args),
+          ...commandArgs,
+        },
+      });
       service.run().catch((error) => {
         console.log(chalk.red('Build Error'), error);
         // Set exit code to 1 to exit process with failure code, otherwise CI may regard build as success.
@@ -63,10 +67,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .action(async ({ rootDir, ...commandArgs }, ctx) => {
       renamePlatformToTarget(commandArgs);
       process.env.NODE_ENV = 'development';
-      const service = await createService({ rootDir, command: 'start', commandArgs: {
-        ...parseUnknownOptions(ctx.args),
-        ...commandArgs
-      } });
+      const service = await createService({
+        rootDir,
+        command: 'start',
+        commandArgs: {
+          ...parseUnknownOptions(ctx.args),
+          ...commandArgs,
+        },
+      });
       service.run();
     });
 
@@ -105,13 +113,13 @@ function parseUnknownOptions(args) {
 // For ice.js <3.0.3, using --platform to set build target.
 function renamePlatformToTarget(commandArgs) {
   // Rename `platform` to `target`.
-  if (commandArgs.hasOwnProperty('platform')) {
+  if (Object.prototype.hasOwnProperty.call(commandArgs, 'platform')) {
     commandArgs.target = commandArgs.platform;
     delete commandArgs.platform;
   }
 }
 
-function checkNodeVersion (requireNodeVersion, frameworkName = 'ice') {
+function checkNodeVersion(requireNodeVersion, frameworkName = 'ice') {
   if (!semver.satisfies(process.version, requireNodeVersion)) {
     console.log();
     console.log(chalk.red(`  You are using Node ${process.version}`));

@@ -1,6 +1,6 @@
 # with-keep-alive
 
-Experimental keep-alive with React 18 `<Offscreen />`.
+Experimental keep-alive with React 18 `<Activity />`.
 
 ## How to debug
 
@@ -15,9 +15,11 @@ $ cd packages/runtime && yalc publish --push
 Then, install the example dependencies.
 
 ```bash
-$ cd examples/with-keep-alive && yarn install
+$ cd examples/with-keep-alive
 
 $ yalc add @ice/app @ice/runtime
+
+$ yarn install
 
 $ npm run start
 ```
