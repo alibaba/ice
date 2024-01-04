@@ -43,7 +43,6 @@ const getConfig: GetConfig = async (options) => {
     runtimeTmpDir,
     getExpandedEnvs,
     runtimeDefineVars,
-    getRoutesFile,
     localIdentName,
     rspack,
   } = options;
