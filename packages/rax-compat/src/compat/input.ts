@@ -30,15 +30,15 @@ export const InputCompat = forwardRef((props: any, inputRef: any) => {
   // The onChange event is SyntheticEvent in React, but it is dom event in Rax, so it needs compat onChange.
   useEffect(() => {
     let eventTarget: EventTarget;
-    if (ref && ref.current && onChange) {
+    if (ref && ref.current) {
       eventTarget = ref.current;
-      eventTarget.addEventListener('change', onChange);
+      onChange && eventTarget.addEventListener('change', onChange);
+      onInput && eventTarget.addEventListener('input', onInput);
     }
 
     return () => {
-      if (eventTarget) {
-        eventTarget.removeEventListener('change', onChange);
-      }
+      onChange && eventTarget?.removeEventListener('change', onChange);
+      onInput && eventTarget?.removeEventListener('input', onInput);
     };
   }, [onChange, ref]);
 
