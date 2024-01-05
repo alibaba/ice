@@ -1,5 +1,15 @@
 # @ice/runtime
 
+## 1.3.5
+
+- fix: compatible with API `matchRoutes` when basename is not provided.
+
+## 1.3.4
+
+### Patch Changes
+
+- 23811c82: fix: `unstable_OffScreen` to `unstable_Activity`. For https://github.com/facebook/react/pull/27640
+
 ## 1.3.3
 
 ### Patch Changes

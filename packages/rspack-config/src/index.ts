@@ -43,7 +43,6 @@ const getConfig: GetConfig = async (options) => {
     runtimeTmpDir,
     getExpandedEnvs,
     runtimeDefineVars,
-    getRoutesFile,
     localIdentName,
     rspack,
   } = options;
@@ -206,6 +205,8 @@ const getConfig: GetConfig = async (options) => {
     experiments: {
       rspackFuture: {
         disableTransformByDefault: true,
+        // This configuration is make the same behaior with webpack 5.
+        disableApplyEntryLazily: true,
       },
     },
     stats: 'none',

@@ -1,5 +1,14 @@
 # @ice/rspack-config
 
+## 1.1.1
+
+### Patch Changes
+
+- 420fec85: fix: update binding version for packing error, resolve error when disable code splitting
+- Updated dependencies [420fec85]
+  - @ice/bundles@0.2.1
+  - @ice/shared-config@1.2.1
+
 ## 1.1.0
 
 ### Minor Changes

@@ -48,7 +48,7 @@ const stripString = (str: string) => {
 };
 
 export const matchRoutes = (routes: any[], location: Partial<Location> | string, basename: string) => {
-  const stripedBasename = stripString(basename);
+  const stripedBasename = basename ? stripString(basename) : basename;
   const pathname = typeof location === 'string' ? location : location.pathname;
   let stripedPathname = stripString(pathname);
   if (stripedBasename) {
