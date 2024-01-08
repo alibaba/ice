@@ -7,6 +7,7 @@ import App from './App.js';
 import { DataContextProvider } from './singleRouter.js';
 import { useAppContext } from './AppContext.js';
 import { setHistory } from './history.js';
+import { disableHistoryWarning } from './utils/deprecatedHistory.js';
 
 function createRouterHistory(history: History, router: Router) {
   const routerHistory = history;
@@ -39,6 +40,7 @@ function ClientRouter(props: ClientAppRouterProps) {
     clearRouter();
     // @ts-expect-error routes type should be AgnosticBaseRouteObject[]
     router = createRouter(routerContext).initialize();
+    disableHistoryWarning();
     // Replace history methods by router navigate for backwards compatibility.
     setHistory(createRouterHistory({ ...routerContext.history }, router));
   }
