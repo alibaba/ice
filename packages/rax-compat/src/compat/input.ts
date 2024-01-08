@@ -1,25 +1,22 @@
 import type { SyntheticEvent } from 'react';
-import {
-  createElement as _createElement,
-  forwardRef,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { createElement as _createElement, forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 
 /**
  * The rax compat version of input, which ignoring synthetic events.
  */
 export const InputCompat = forwardRef((props: any, inputRef: any) => {
   const { value, onInput, onChange, inputType, ...rest } = props;
-  const [v, setV] = useState(value);
-  const changeCallback = useCallback((event: SyntheticEvent) => {
-    setV((event.target as HTMLInputElement).value);
 
-    // Event of onInput should be native event.
-    onInput && onInput(event.nativeEvent);
-  }, [onInput]);
+  const [v, setV] = useState(value);
+
+  const changeCallback = useCallback(
+    (event: SyntheticEvent) => {
+      setV((event.target as HTMLInputElement).value);
+      // Event of onInput should be native event.
+      onInput && onInput(event.nativeEvent);
+    },
+    [onInput],
+  );
   const defaultRef = useRef();
   const ref = inputRef || defaultRef;
 
@@ -29,22 +26,30 @@ export const InputCompat = forwardRef((props: any, inputRef: any) => {
 
   // The onChange event is SyntheticEvent in React, but it is dom event in Rax, so it needs compat onChange.
   useEffect(() => {
+    function valueChangeListener(e: Event) {
+      setTimeout(() => {
+        onChange?.(e);
+        onInput?.(e);
+        setV((e.target as HTMLInputElement).value);
+      }, 0);
+    }
+
     let eventTarget: EventTarget;
     if (ref && ref.current) {
       eventTarget = ref.current;
-      onChange && eventTarget.addEventListener('change', onChange);
-      onInput && eventTarget.addEventListener('input', onInput);
+      eventTarget.addEventListener('change', valueChangeListener);
+      eventTarget.addEventListener('input', valueChangeListener);
     }
 
     return () => {
-      onChange && eventTarget?.removeEventListener('change', onChange);
-      onInput && eventTarget?.removeEventListener('input', onInput);
+      eventTarget?.removeEventListener('change', valueChangeListener);
+      eventTarget?.removeEventListener('input', valueChangeListener);
     };
-  }, [onChange, ref]);
+  }, [onChange, onInput, ref]);
 
   return _createElement(inputType, {
     ...rest,
-    value: v,
+    value: v ?? '',
     onChange: changeCallback,
     ref,
   });
