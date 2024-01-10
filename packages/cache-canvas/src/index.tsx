@@ -128,36 +128,38 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
           <script
             dangerouslySetInnerHTML={{
                   __html: `
-                  let base64Data = '';
-                  if (
-                    window.__megability_bridge__ &&
-                    window.__megability_bridge__.syncCall
-                  ) {
-                    const canIUse = window.__megability_bridge__.syncCall('ability', 'available', {
-                      ability: 'userKVStorage',
-                      api: 'getItem',
-                    });
-            
-                    if (canIUse) {
-                      const res = window.__megability_bridge__.syncCall('userKVStorage', 'getItem', { key: '${cacheKey}',  bizID: '${bizID}' });
-                      if (res && res.statusCode === 0 && res.data && res.data.result) {
-                        base64Data = res.data.result;
+                  (function () {
+                    var base64Data = '';
+                    if (
+                      window.__megability_bridge__ &&
+                      window.__megability_bridge__.syncCall
+                    ) {
+                      var canIUse = window.__megability_bridge__.syncCall('ability', 'available', {
+                        ability: 'userKVStorage',
+                        api: 'getItem',
+                      });
+              
+                      if (canIUse) {
+                        var res = window.__megability_bridge__.syncCall('userKVStorage', 'getItem', { key: '${cacheKey}',  bizID: '${bizID}' });
+                        if (res && res.statusCode === 0 && res.data && res.data.result) {
+                          base64Data = res.data.result;
+                        }
                       }
                     }
-                  }
-                  
-                  if (!base64Data) {
-                    base64Data = localStorage.getItem(${JSON.stringify(cacheKey)});
-                  }
-                  
-                  const fallback = document.getElementById('fallback-${id}');
-                  if (base64Data) {
-                    const img = document.getElementById('canvas-img-${id}');
-                    img && (img.src = base64Data);
-                    if (fallback && fallback.childNodes[0]) {
-                      fallback.removeChild(fallback.childNodes[0]);
+                    
+                    if (!base64Data) {
+                      base64Data = localStorage.getItem(${JSON.stringify(cacheKey)});
                     }
-                  }
+                    
+                    var fallback = document.getElementById('fallback-${id}');
+                    if (base64Data) {
+                      var img = document.getElementById('canvas-img-${id}');
+                      img && (img.src = base64Data);
+                      if (fallback && fallback.childNodes[0]) {
+                        fallback.removeChild(fallback.childNodes[0]);
+                      }
+                    }
+                  })();
                 `,
               }}
           />
