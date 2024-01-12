@@ -1,5 +1,4 @@
 import { createRequire } from 'module';
-import { log } from 'console';
 import trustCert from '@ice/bundles/compiled/trusted-cert/index.js';
 import fse from 'fs-extra';
 import type { Config } from '@ice/shared-config/types';
@@ -356,12 +355,7 @@ const userConfig = [
     setConfig: (config: Config, optimization: UserConfig['optimization'], context: UserConfigContext) => {
       const { commandArgs } = context;
       if (optimization?.optimizePackageImport) {
-        if (!commandArgs.speedup) {
-          logger.warn(`
-            optimizePackageImport only works in speedup mode,
-            try to run \`npm ${commandArgs.command === 'start' ? 'start' : 'run build'} -- --speedup\``,
-          );
-        } else {
+        if (commandArgs.speedup) {
           config.optimizePackageImports = [
             ...new Set([
               ...(Array.isArray(optimization?.optimizePackageImport) ? optimization?.optimizePackageImport : []),
@@ -427,6 +421,11 @@ const userConfig = [
               'react-icons/wi',
             ]),
           ];
+        } else {
+          logger.warn(`
+            optimizePackageImport only works in speedup mode,
+            try to run \`npm ${commandArgs.command === 'start' ? 'start' : 'run build'} -- --speedup\``,
+          );
         }
       }
     },
