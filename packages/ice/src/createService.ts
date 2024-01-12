@@ -332,7 +332,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       getRoutesFile: () => routeManifest.getRoutesFile(),
     });
     addWatchEvent([
-      /src\/?[\w*-:.$]+$/,
+      // Files in .ice directory will update when routes changed.
+      /(src|.ice)\/?[\w*-:.$]+$/,
       async (eventName: string, filePath: string) => {
         if (eventName === 'change' || eventName === 'add') {
           serverRunner.fileChanged(filePath);
