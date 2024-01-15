@@ -169,7 +169,7 @@ const getConfig: GetConfig = async (options) => {
           test: /__barrel_optimize__/,
           use: ({ realResource }: { realResource: string }) => {
             const names = (
-              realResource.match(/\?names=([^&]+)/)?.[1] || ''
+              realResource.match(/\?names=([^&]+)!=!/)?.[1] || ''
             ).split(',');
             return [{
               loader: 'builtin:barrel-loader',
