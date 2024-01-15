@@ -116,4 +116,34 @@ describe('createElement', () => {
     const node = wrapper.queryByTestId('valueTest');
     expect(node?.getAttribute('maxlength')).toBe(null);
   });
+
+  it('should normalize array type style', () => {
+    const str = 'hello world';
+    const wrapper = render(
+      createElement(
+        'div',
+        {
+          'data-testid': 'styleTest',
+          // @ts-expect-error
+          style: [
+            {
+              width: '300rpx',
+            },
+            {
+              height: '300rpx',
+            },
+            {
+              padding: '300rpx',
+            },
+          ],
+        },
+        str,
+      ),
+    );
+
+    const node = wrapper.queryByTestId('styleTest');
+    expect(node?.style.width).toBe('40vw');
+    expect(node?.style.height).toBe('40vw');
+    expect(node?.style.padding).toBe('40vw');
+  });
 });
