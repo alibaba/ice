@@ -11,6 +11,7 @@ describe('defineJestConfig', () => {
     '^ice/types',
     '^@/(.*)',
     '^webpack/hot',
+    '^regenerator-runtime/runtime.js',
     '^regenerator-runtime',
     '^@swc/helpers/(.*)',
     '^universal-env',
