@@ -9,6 +9,7 @@ const getDefaultTaskConfig = ({ rootDir, command }): Config => {
   const defaultLogging = command === 'start' ? 'summary' : 'summary assets';
 
   const envReplacement = path.join(rootDir, RUNTIME_TMP_DIR, 'env.ts');
+  const regeneratorRuntimePath = require.resolve('regenerator-runtime');
   return {
     mode: command === 'start' ? 'development' : 'production',
     sourceMap: command === 'start' ? 'cheap-module-source-map' : false,
@@ -21,7 +22,8 @@ const getDefaultTaskConfig = ({ rootDir, command }): Config => {
       'webpack/hot': '@ice/bundles/compiled/webpack/hot',
       // Get absolute path of `regenerator-runtime`, `@swc/helpers`
       // so it's unnecessary to add it to project dependencies.
-      'regenerator-runtime': require.resolve('regenerator-runtime'),
+      'regenerator-runtime/runtime.js': regeneratorRuntimePath,
+      'regenerator-runtime': regeneratorRuntimePath,
       '@swc/helpers': path.dirname(require.resolve('@swc/helpers/package.json')),
       'universal-env': envReplacement,
       '@uni/env': envReplacement,
