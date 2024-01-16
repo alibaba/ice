@@ -81,6 +81,9 @@ class Runner {
 
   async run(id: string) {
     const filePath = path.isAbsolute(id) ? id : path.join(this.rootDir, id);
+    // Nevery cache the entry, otherwise it will always return the same exports,
+    // even if the file imported has been changed.
+    this.moduleCache.delete(filePath);
     return await this.cachedRequest(filePath, []);
   }
 
