@@ -14,7 +14,21 @@ const plugin: Plugin<UserConfig> = (options) => ({
     });
 
     // Register webpack plugin of unocss.
-    const unoConfig: UserConfig = options || {
+    const unoPreset = '@unocss/preset-uno';
+    const hasPresetUno = options?.presets?.some((preset) => {
+      return Array.isArray(preset)
+        ? preset.some((item) => item?.name === unoPreset)
+        : preset?.name === unoPreset;
+    });
+
+    const unoConfig: UserConfig = options ? {
+      ...options,
+      presets: [
+        // Add default preset if option is null.
+        ...(hasPresetUno ? [] : [presetUno()]),
+        ...(options.presets ?? []),
+      ],
+    } : {
       presets: [
         // Add default preset if option is null.
         presetUno(),
