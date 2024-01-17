@@ -205,6 +205,7 @@ export function getJsxTransformOptions({
   };
 
   const commonOptions: SwcConfig = {
+    swcrc: false,
     jsc: {
       transform: {
         react: reactTransformConfig,
