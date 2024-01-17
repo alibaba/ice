@@ -1,12 +1,13 @@
 import React, { Suspense } from 'react';
 import { useRouteError, defer, Await as ReactRouterAwait } from 'react-router-dom';
 // eslint-disable-next-line camelcase
-import type { UNSAFE_DeferredData } from '@remix-run/router';
+import type { UNSAFE_DeferredData, LoaderFunctionArgs } from '@remix-run/router';
 import type { RouteItem, RouteModules, RenderMode, RequestContext, ComponentModule, DataLoaderConfig } from './types.js';
 import RouteWrapper from './RouteWrapper.js';
 import { useAppContext } from './AppContext.js';
 import { callDataLoader } from './dataLoader.js';
 import { updateRoutesConfig } from './routesConfig.js';
+import { parseSearch } from './requestContext.js';
 
 type RouteModule = Pick<RouteItem, 'id' | 'lazy'>;
 
@@ -124,11 +125,28 @@ export interface RouteLoaderOptions {
 }
 
 // eslint-disable-next-line camelcase
-type LoaderFunction = () => LoaderData | UNSAFE_DeferredData | Promise<LoaderData>;
+type LoaderFunction = (params: LoaderFunctionArgs) => LoaderData | UNSAFE_DeferredData | Promise<LoaderData>;
+
+function getClientLoaderContext(url: string): RequestContext | null {
+  // Compatible with browsers do not support URL.
+  const patterns = {
+    protocol: '(?:([^:/?#]+):)',
+    authority: '(?://([^/?#]*))',
+    path: '([^?#]*)',
+    query: '(\\?[^#]*)',
+    hash: '(#.*)',
+  };
+  const urlRegExp = new RegExp(`^${patterns.protocol}?${patterns.authority}?${patterns.path}${patterns.query}?${patterns.hash}?`);
+  const urlMatch = urlRegExp.exec(url);
+  return urlMatch ? {
+    pathname: urlMatch[3] || '',
+    query: parseSearch(urlMatch[4] || ''),
+  } : null;
+}
 
 export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
   const { dataLoader, pageConfig, staticDataLoader, serverDataLoader } = options.module;
-  const { requestContext, renderMode, routeId } = options;
+  const { requestContext: defaultRequestContext, renderMode, routeId } = options;
   const globalLoader = (typeof window !== 'undefined' && (window as any).__ICE_DATA_LOADER__) ? (window as any).__ICE_DATA_LOADER__ : null;
 
   let dataLoaderConfig: DataLoaderConfig;
@@ -165,10 +183,10 @@ export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
     loaderOptions = dataLoaderConfig.options;
   }
 
-  const getData = () => {
+  const getData = (requestContext: RequestContext) => {
     let routeData: any;
     if (globalLoader) {
-      routeData = globalLoader.getData(routeId, { renderMode });
+      routeData = globalLoader.getData(routeId, { renderMode, requestContext });
     } else {
       routeData = callDataLoader(loader, requestContext);
     }
@@ -178,8 +196,8 @@ export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
   // Async dataLoader.
   if (loaderOptions?.defer) {
     if (process.env.ICE_CORE_ROUTER === 'true') {
-      return async () => {
-        const promise = getData();
+      return async (params) => {
+        const promise = getData(import.meta.renderer === 'client' ? getClientLoaderContext(params.request.url) : defaultRequestContext);
 
         return defer({
           data: promise,
@@ -192,9 +210,9 @@ export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
     }
   }
   // Await dataLoader before render.
-  return async () => {
-    const result = getData();
-
+  // @ts-ignore
+  return async (params) => {
+    const result = getData(import.meta.renderer === 'client' ? getClientLoaderContext(params.request.url) : defaultRequestContext);
     let routeData;
     try {
       if (Array.isArray(result)) {
