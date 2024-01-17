@@ -80,6 +80,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
       const suffix = (['jsx', 'tsx'] as JSXSuffix[]).find(suffix => new RegExp(`\\.${suffix}?$`).test(id));
 
       const programmaticOptions: SwcConfig = {
+        swcrc: false,
         filename: id,
         sourceMaps: !!sourceMap,
       };
@@ -205,7 +206,6 @@ export function getJsxTransformOptions({
   };
 
   const commonOptions: SwcConfig = {
-    swcrc: false,
     jsc: {
       transform: {
         react: reactTransformConfig,
