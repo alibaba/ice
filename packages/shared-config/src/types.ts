@@ -205,4 +205,6 @@ export interface Config {
   useDevServer?: boolean;
 
   useDataLoader?: boolean;
+
+  optimizePackageImports?: string[];
 }

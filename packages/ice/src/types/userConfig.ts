@@ -22,6 +22,12 @@ interface Optimization {
    * Remove react-router dependencies by force, even if route count is greater than 1.
    */
   disableRouter?: boolean;
+  /**
+   * Automatically the apply modularize imports optimization,
+   * it will remove unused code of package when it is a barrel file.
+   * Note: It is only supported in speedup mode.
+   */
+  optimizePackageImport?: string[] | boolean;
 }
 
 interface MinifyOptions {
