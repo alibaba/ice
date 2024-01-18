@@ -148,6 +148,8 @@ const getConfig: GetConfig = async (options) => {
       rules: [
         {
           test: /\.(jsx?|tsx?|mjs)$/,
+          // Set enforce: 'post' to make sure the compilation-loader is executed after other transformers.
+          enforce: 'post',
           ...(excludeRule ? { exclude: new RegExp(excludeRule) } : {}),
           use: {
             loader: 'builtin:compilation-loader',
