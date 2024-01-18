@@ -1,5 +1,15 @@
 # @ice/shared-config
 
+## 1.2.2
+
+### Patch Changes
+
+- 167c8fec: fix: disable swcrc by default
+- 45c61db8: feat: support optimize package import
+- Updated dependencies [f7dd9fc5]
+- Updated dependencies [45c61db8]
+  - @ice/bundles@0.2.2
+
 ## 1.2.1
 
 ### Patch Changes
