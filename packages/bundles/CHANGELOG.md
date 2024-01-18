@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.2
+
+### Patch Changes
+
+- f7dd9fc5: fix: bump unplugin verison to 1.6.0
+- 45c61db8: fix: update binding version for optimize imports
+
 ## 0.2.1
 
 ### Patch Changes

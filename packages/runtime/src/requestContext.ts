@@ -27,7 +27,7 @@ export default function getRequestContext(location: Location, serverContext: Ser
  * Search string to object
  * URLSearchParams is not compatible with iOS9 and IE.
  */
-function parseSearch(search: string) {
+export function parseSearch(search: string) {
   // remove first '?'
   if (search.indexOf('?') === 0) {
     search = search.slice(1);

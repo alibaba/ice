@@ -352,6 +352,83 @@ const userConfig = [
   {
     name: 'optimization',
     validation: 'object',
+    setConfig: (config: Config, optimization: UserConfig['optimization'], context: UserConfigContext) => {
+      const { commandArgs } = context;
+      if (optimization?.optimizePackageImport) {
+        if (commandArgs.speedup) {
+          config.optimizePackageImports = [
+            ...new Set([
+              ...(Array.isArray(optimization?.optimizePackageImport) ? optimization?.optimizePackageImport : []),
+              // Buit-in packages is modified based on
+              // https://github.com/vercel/next.js/blob/7b73f1137b21c7b1fb1612c3389caaaadd18da65/packages/next/src/server/config.ts#L827
+              '@alifd/next',
+              '@ali/uni-api',
+              'lucide-react',
+              'date-fns',
+              'lodash-es',
+              'ramda',
+              'antd',
+              'react-bootstrap',
+              'ahooks',
+              '@ant-design/icons',
+              '@headlessui/react',
+              '@headlessui-float/react',
+              '@heroicons/react/20/solid',
+              '@heroicons/react/24/solid',
+              '@heroicons/react/24/outline',
+              '@visx/visx',
+              '@tremor/react',
+              'rxjs',
+              '@mui/material',
+              '@mui/icons-material',
+              'recharts',
+              'react-use',
+              '@material-ui/core',
+              '@material-ui/icons',
+              '@tabler/icons-react',
+              'mui-core',
+              'react-icons/ai',
+              'react-icons/bi',
+              'react-icons/bs',
+              'react-icons/cg',
+              'react-icons/ci',
+              'react-icons/di',
+              'react-icons/fa',
+              'react-icons/fa6',
+              'react-icons/fc',
+              'react-icons/fi',
+              'react-icons/gi',
+              'react-icons/go',
+              'react-icons/gr',
+              'react-icons/hi',
+              'react-icons/hi2',
+              'react-icons/im',
+              'react-icons/io',
+              'react-icons/io5',
+              'react-icons/lia',
+              'react-icons/lib',
+              'react-icons/lu',
+              'react-icons/md',
+              'react-icons/pi',
+              'react-icons/ri',
+              'react-icons/rx',
+              'react-icons/si',
+              'react-icons/sl',
+              'react-icons/tb',
+              'react-icons/tfi',
+              'react-icons/ti',
+              'react-icons/vsc',
+              'react-icons/wi',
+            ]),
+          ];
+        } else {
+          logger.warn(`
+            optimizePackageImport only works in speedup mode,
+            try to run \`npm ${commandArgs.command === 'start' ? 'start' : 'run build'} -- --speedup\``,
+          );
+        }
+      }
+    },
   },
   {
     name: 'mock',

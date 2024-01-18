@@ -1,10 +1,13 @@
+import path from 'path';
 import { createRequire } from 'module';
 import css from 'css';
 import transformerModule from 'stylesheet-loader/lib/transformer.js';
 import globalCSSVariable from 'stylesheet-loader/lib/globalCSSVariable.js';
 import { getErrorMessages, getWarnMessages, resetMessage } from 'stylesheet-loader/lib/promptMessage.js';
 import { isPrefersColorScheme, processPrefersColorScheme } from 'stylesheet-loader/lib/processPrefersColorScheme.js';
-import { less, postcss } from '@ice/bundles';
+import { less, postcss, sass } from '@ice/bundles';
+
+import type { StyleKind } from '../typings';
 
 const require = createRequire(import.meta.url);
 
@@ -20,18 +23,36 @@ const CSS_VAR_NAME = ':root';
 // @ts-ignore
 const transformer = transformerModule.default;
 
-async function styleSheetLoader(source, type = 'css') {
+async function styleSheetLoader(source: string, sourcePath: string, type: StyleKind = 'css') {
   let cssContent = source;
   if (type === 'less') {
     // compact for @import "~bootstrap/less/bootstrap";
     cssContent = cssContent.replace(/@import "~/g, '@import "');
-    cssContent = (await less.render(cssContent)).css;
+    cssContent = (
+      await less.render(cssContent, {
+        // For relative @import path
+        paths: [path.dirname(sourcePath), 'node_modules'],
+      })
+    ).css;
   }
 
-  const newContent = await postcss([require('@ice/bundles/compiled/postcss-plugin-rpx2vw/index.js')({ unitPrecision: 4 })]).process(cssContent).css;
+  if (type === 'sass' || type === 'scss') {
+    cssContent = (
+      await sass.compileStringAsync(cssContent, {
+        // For relative @import path
+        url: new URL(`file://${sourcePath}`),
+      })
+    ).css;
+  }
+
+  const newContent = await postcss([
+    require('@ice/bundles/compiled/postcss-plugin-rpx2vw/index.js')({
+      unitPrecision: 4,
+    }),
+  ]).process(cssContent).css;
   const { stylesheet } = css.parse(newContent);
 
-  if (stylesheet.parsingErrors.length) {
+  if (stylesheet?.parsingErrors?.length) {
     throw new Error('StyleSheet Parsing Error occurred.');
   }
 
@@ -46,8 +67,8 @@ async function styleSheetLoader(source, type = 'css') {
 // export for test case
 const parse = (parsedQuery, stylesheet) => {
   const styles = {};
-  const fontFaceRules = [];
-  const mediaRules = [];
+  const fontFaceRules: any[] = [];
+  const mediaRules: any[] = [];
   const { transformDescendantCombinator } = parsedQuery;
 
   stylesheet.rules.forEach((rule) => {
@@ -59,7 +80,10 @@ const parse = (parsedQuery, stylesheet) => {
 
       rule.selectors.forEach((selector) => {
         let sanitizedSelector = transformer.sanitizeSelector(
-          selector, transformDescendantCombinator, rule.position, parsedQuery.log,
+          selector,
+          transformDescendantCombinator,
+          rule.position,
+          parsedQuery.log,
         );
         if (sanitizedSelector) {
           // handle pseudo class
@@ -182,7 +206,10 @@ const getFontFaceContent = (rules) => {
 
   rules.forEach((rule, index) => {
     content += `
-    var fontFace${index} = new FontFace('${rule['font-family'].replace(QUOTES_REG, '')}', '${rule.src.replace(QUOTES_REG, '"')}');
+    var fontFace${index} = new FontFace('${rule['font-family'].replace(QUOTES_REG, '')}', '${rule.src.replace(
+      QUOTES_REG,
+      '"',
+    )}');
     document.fonts.add(fontFace${index});
     `;
   });

@@ -1,5 +1,11 @@
 # @ice/runtime
 
+## 1.3.6
+
+### Patch Changes
+
+- 3727f80d: fix: request context in data loaders
+
 ## 1.3.5
 
 - fix: compatible with API `matchRoutes` when basename is not provided.

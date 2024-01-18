@@ -1,6 +1,6 @@
 {
   "name": "@ice/bundles",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "license": "MIT",
   "author": "ICE",
   "description": "Basic dependencies for ice.",
@@ -45,7 +45,7 @@
     "zod": "^3.22.3",
     "zod-validation-error": "1.2.0",
     "terminal-link": "^2.1.1",
-    "@ice/pack-binding": "0.0.6",
+    "@ice/pack-binding": "0.0.8",
     "mime-types": "2.1.35"
   },
   "devDependencies": {
@@ -85,7 +85,7 @@
     "webpack": "5.88.2",
     "webpack-bundle-analyzer": "4.5.0",
     "webpack-dev-server": "4.15.0",
-    "unplugin": "1.5.1",
+    "unplugin": "1.6.0",
     "bonjour-service": "^1.0.13",
     "colorette": "^2.0.10",
     "compression": "^1.7.4",

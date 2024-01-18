@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.1.9
+
+### Patch Changes
+
+- Updated dependencies [167c8fec]
+- Updated dependencies [45c61db8]
+- Updated dependencies [f7dd9fc5]
+- Updated dependencies [45c61db8]
+  - @ice/shared-config@1.2.2
+  - @ice/bundles@0.2.2
+
 ## 1.1.8
 
 ### Patch Changes

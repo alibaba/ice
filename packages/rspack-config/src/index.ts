@@ -48,6 +48,7 @@ const getConfig: GetConfig = async (options) => {
   } = options;
 
   const {
+    cacheDir,
     mode,
     minify,
     publicPath = '/',
@@ -68,6 +69,7 @@ const getConfig: GetConfig = async (options) => {
     middlewares,
     configureWebpack = [],
     minimizerOptions = {},
+    optimizePackageImports = [],
   } = taskConfig || {};
   const isDev = mode === 'development';
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
@@ -154,12 +156,28 @@ const getConfig: GetConfig = async (options) => {
               transformFeatures: {
                 removeExport: swcOptions.removeExportExprs,
                 keepExport: swcOptions.keepExports,
+                optimizeImport: optimizePackageImports,
               },
               compileRules: {
                 // "bundles/compiled" is the path when using @ice/bundles.
                 exclude: [...compileExclude, 'bundles/compiled'],
               },
             },
+          },
+        },
+        {
+          test: /__barrel_optimize__/,
+          use: ({ realResource }: { realResource: string }) => {
+            const names = (
+              realResource.match(/\?names=([^&]+)!=!/)?.[1] || ''
+            ).split(',');
+            return [{
+              loader: 'builtin:barrel-loader',
+              options: {
+                names,
+                cacheDir,
+              },
+            }];
           },
         },
         ...getAssetsRule(),

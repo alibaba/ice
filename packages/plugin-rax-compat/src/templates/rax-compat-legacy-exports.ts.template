@@ -1,4 +1,10 @@
+import * as rax from 'rax-compat';
+
+// For namespace / named import usage(v1.0)
 export * from 'rax-compat';
+
+// For legacy default import usage(v0.6+) like: import Rax from 'rax'
+export default { ...rax }
 
 const typeChecker = () => {};
 

@@ -167,8 +167,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     generatorAPI.addExport(exports);
   });
   const routeManifest = new RouteManifest();
-  // Merge task config with default config, so developer should not care about the config built-in of framework.
-  const defaultTaskConfig = getDefaultTaskConfig({ rootDir, command });
   const ctx = new Context<Config, ExtendsPluginAPI>({
     rootDir,
     command,
@@ -194,6 +192,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       createLogger,
       // Override registerTask to merge default config.
       registerTask: (target: string, config: Partial<Config>) => {
+        // Merge task config with default config, so developer should not care about the config built-in of framework.
+        const defaultTaskConfig = getDefaultTaskConfig({ rootDir, command });
         return ctx.registerTask(target, mergeConfig(defaultTaskConfig, config));
       },
     },
@@ -332,7 +332,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       getRoutesFile: () => routeManifest.getRoutesFile(),
     });
     addWatchEvent([
-      /src\/?[\w*-:.$]+$/,
+      // Files in .ice directory will update when routes changed.
+      /(src|.ice)\/?[\w*-:.$]+$/,
       async (eventName: string, filePath: string) => {
         if (eventName === 'change' || eventName === 'add') {
           serverRunner.fileChanged(filePath);
