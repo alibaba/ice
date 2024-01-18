@@ -1,5 +1,23 @@
 # Changelog
 
+## 3.4.2
+
+### Patch Changes
+
+- 45c61db8: feat: support optimize package import
+- c06cb978: fix: on demand server cache
+- 41be253a: fix: resolve path of regenerator-runtime/runtime.js
+- Updated dependencies [167c8fec]
+- Updated dependencies [45c61db8]
+- Updated dependencies [f7dd9fc5]
+- Updated dependencies [3727f80d]
+- Updated dependencies [45c61db8]
+  - @ice/shared-config@1.2.2
+  - @ice/rspack-config@1.1.2
+  - @ice/bundles@0.2.2
+  - @ice/runtime@1.3.6
+  - @ice/webpack-config@1.1.9
+
 ## 3.4.1
 
 ### Patch Changes

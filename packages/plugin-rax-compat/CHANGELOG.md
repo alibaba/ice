@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.3.0
+
+### Minor Changes
+
+- 15e8200a: Refactor plugin and fix some issues:
+
+  - The inlineStyleFilter doesnot work for server-side style process.
+  - The inlineStyleFilter doesnot work for style file except vanilla css.
+  - Supports sass-loader now.
+  - Supports array type style in createElement.
+
+### Patch Changes
+
+- Updated dependencies [f7dd9fc5]
+- Updated dependencies [15e8200a]
+- Updated dependencies [45c61db8]
+  - @ice/bundles@0.2.2
+  - rax-compat@0.2.10
+
 ## 0.2.10
 
 ### Patch Changes
