@@ -21,6 +21,7 @@ interface Options {
 
 export interface LoadRoutesDataOptions {
   renderMode: RenderMode;
+  requestContext?: RequestContext;
 }
 
 export function defineDataLoader(dataLoader: Loader, options?: DataLoaderOptions): DataLoaderConfig {
@@ -267,9 +268,8 @@ async function init(loaders: Loaders, options: Options) {
       }
 
       // Call dataLoader.
-      const requestContext = getRequestContext(window.location);
       const { loader } = dataLoaderConfig;
-      return callDataLoader(loader, requestContext);
+      return callDataLoader(loader, options?.requestContext || getRequestContext(window.location));
     },
   };
 }
