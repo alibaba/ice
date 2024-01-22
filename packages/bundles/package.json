@@ -49,9 +49,9 @@
     "mime-types": "2.1.35"
   },
   "devDependencies": {
-    "@rspack/plugin-react-refresh": "0.4.3",
-    "@rspack/dev-server": "0.4.5",
-    "@rspack/core": "0.4.5",
+    "@rspack/plugin-react-refresh": "0.5.1",
+    "@rspack/dev-server": "0.5.1",
+    "@rspack/core": "0.5.1",
     "@types/less": "^3.0.3",
     "@types/lodash": "^4.14.181",
     "@types/webpack-bundle-analyzer": "^4.4.1",

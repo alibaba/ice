@@ -1,8 +1,8 @@
 diff --git a/dist/config/adapter.js b/dist/config/adapter.js
-index ea1d21db02d413de0d25367c646cd9773fb41223..42aed198ffb18752a7a245e1f8a0f2bf845b80d5 100644
+index 021b79b64d88a89baca5eebae5376e3c84438d96..ed00bf266a3c8f9a54baf40a2b03b500d88f2894 100644
 --- a/dist/config/adapter.js
 +++ b/dist/config/adapter.js
-@@ -16,6 +16,7 @@ const getRawOptions = (options, compiler, processResource) => {
+@@ -15,6 +15,7 @@ const getRawOptions = (options, compiler) => {
      const mode = options.mode;
      const experiments = getRawExperiments(options.experiments);
      return {
@@ -11,7 +11,7 @@ index ea1d21db02d413de0d25367c646cd9773fb41223..42aed198ffb18752a7a245e1f8a0f2bf
          target: getRawTarget(options.target),
          context: options.context,
 diff --git a/dist/config/defaults.js b/dist/config/defaults.js
-index b413bb21a053a161a64056664354a50ee6429283..9983bc69e39d031ca49fa04bcad0aea093e4b996 100644
+index 98126c146a2e38b407170113b82d070ac25c3371..464ed60cf455c6ff1be7a11061974353770346c2 100644
 --- a/dist/config/defaults.js
 +++ b/dist/config/defaults.js
 @@ -53,6 +53,11 @@ const applyRspackOptionsDefaults = (options) => {
@@ -26,8 +26,8 @@ index b413bb21a053a161a64056664354a50ee6429283..9983bc69e39d031ca49fa04bcad0aea0
      applySnapshotDefaults(options.snapshot, { production });
      applyModuleDefaults(options.module, {
          // syncWebAssembly: options.experiments.syncWebAssembly,
-@@ -129,6 +134,13 @@ const applyExperimentsDefaults = (experiments, { cache }) => {
-         D(experiments.rspackFuture, "disableApplyEntryLazily", false);
+@@ -115,6 +120,13 @@ const applyExperimentsDefaults = (experiments, { cache }) => {
+         D(experiments.rspackFuture, "disableApplyEntryLazily", true);
      }
  };
 +const applyFeaturesDefaults = (features) => {
@@ -41,11 +41,11 @@ index b413bb21a053a161a64056664354a50ee6429283..9983bc69e39d031ca49fa04bcad0aea0
      F(snapshot, "module", () => production
          ? { timestamp: true, hash: true }
 diff --git a/dist/config/normalization.js b/dist/config/normalization.js
-index 7769ba679c50a63a60961cfe87f5b7b950593e85..d159573dacd63aec503be254366eea94cdddf826 100644
+index e13db5ae3115aa455954784fe48be4145b94e05b..f9a53cb50c2becf65ba3233ec7dee9581d0a630a 100644
 --- a/dist/config/normalization.js
 +++ b/dist/config/normalization.js
-@@ -13,6 +13,7 @@ exports.getNormalizedRspackOptions = void 0;
- const util_1 = require("../util");
+@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
+ exports.getNormalizedRspackOptions = void 0;
  const getNormalizedRspackOptions = (config) => {
      return {
 +        features: config.features,
@@ -53,10 +53,10 @@ index 7769ba679c50a63a60961cfe87f5b7b950593e85..d159573dacd63aec503be254366eea94
              ? config.ignoreWarnings.map(ignore => {
                  if (typeof ignore === "function") {
 diff --git a/dist/config/zod.js b/dist/config/zod.js
-index 9efb9502f22278229c9c5798b7ae5eee2dbd0915..348b9528161995d65d462279f74960d1b00e195f 100644
+index ae3c80c1e17b66c6ceeff02e06ee9d119c795d67..0c07c2044f81ec6b322fcf201ceab1fde4926187 100644
 --- a/dist/config/zod.js
 +++ b/dist/config/zod.js
-@@ -759,6 +759,7 @@ exports.rspackOptions = zod_1.z.strictObject({
+@@ -747,5 +747,6 @@ exports.rspackOptions = zod_1.z.strictObject({
      builtins: builtins.optional(),
      module: moduleOptions.optional(),
      profile: profile.optional(),
@@ -64,4 +64,3 @@ index 9efb9502f22278229c9c5798b7ae5eee2dbd0915..348b9528161995d65d462279f74960d1
 +    bail: bail.optional(),
 +    features: zod_1.z.custom().optional(),
  });
- //# sourceMappingURL=zod.js.map
