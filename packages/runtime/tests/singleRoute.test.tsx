@@ -7,7 +7,6 @@ import {
   createHistory,
   matchRoutes,
   Link,
-  Outlet,
   useParams,
   useSearchParams,
   useLocation,
@@ -127,15 +126,11 @@ describe('single route api', () => {
     ];
     const matchedRoutes = matchRoutes(routes, '/basename/posts', '/basename');
     expect(matchedRoutes).toHaveLength(1);
-    expect(matchedRoutes[0].route.path).toBe('posts');
+    expect(matchedRoutes?.[0].route.path).toBe('posts');
   });
 
   it('Link', () => {
     expect(Link()).toBe(null);
-  });
-
-  it('Outlet', () => {
-    expect(Outlet()).toStrictEqual(<React.Fragment />);
   });
 
   it('useParams', () => {

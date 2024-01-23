@@ -58,7 +58,6 @@ export function Outlet(props: OutletProps): React.ReactElement | null {
 }
 
 export function RenderedRoute({ routeContext, children }) {
-  console.log('routeContext ==>', routeContext);
   return (
     <RouteContext.Provider value={routeContext}>
       {children}
@@ -162,13 +161,8 @@ function compilePath(
     // When matching to the end, ignore trailing slashes
     regexpSource += '\\/*$';
   } else if (path !== '' && path !== '/') {
-    // If our path is non-empty and contains anything beyond an initial slash,
-    // then we have _some_ form of path in our regex, so we should expect to
-    // match only if we find the end of this path segment.  Look for an optional
-    // non-captured trailing slash (to match a portion of the URL) or the end
-    // of the path (if we've matched to the end).  We used to do this with a
-    // word boundary but that gives false positives on routes like
-    // /user-preferences since `-` counts as a word boundary.
+    // Keep alignment with react-router:
+    // https://github.com/remix-run/react-router/blob/fb0f1f94778f4762989930db209e6a111504aa63/packages/router/utils.ts#L988-L995
     regexpSource += '(?:(?=\\/|$))';
   } else {
     // Nothing to match for "" or "/"
@@ -297,7 +291,6 @@ export const useLocation = () => {
 export const useNavigate = () => {
   return {};
 };
-
 
 export const getSingleRoute = async (routes: RouteItem[], basename: string, routeModuleCache = {}) => {
   const matchedRoutes = matchRoutes(routes, location, basename);

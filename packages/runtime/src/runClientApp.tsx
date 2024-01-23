@@ -6,11 +6,11 @@ import type {
   AppContext, WindowContext, AppExport, RouteItem, RuntimeModules, AppConfig, AssetsManifest, ClientAppRouterProps,
   ErrorStack,
 } from './types.js';
-import { createHistory as createHistorySingle, RenderedRoute } from './singleRouter.js';
+import { createHistory as createHistorySingle, getSingleRoute } from './singleRouter.js';
 import { setHistory } from './history.js';
 import Runtime from './runtime.js';
 import { getAppData } from './appData.js';
-import { getRoutesPath, loadRouteModule, loadRouteModules } from './routes.js';
+import { getRoutesPath, loadRouteModule } from './routes.js';
 import type { RouteLoaderOptions } from './routes.js';
 import getRequestContext from './requestContext.js';
 import getAppConfig from './appConfig.js';
@@ -179,43 +179,8 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
       v7_prependBasename: true,
     },
   };
-  let singleComponent = null;
-  let routesData = null;
-  if (process.env.ICE_CORE_ROUTER !== 'true') {
-    const matchedRoutes = matchRoutes(routes, location, basename);
-    const routeModules = await loadRouteModules(matchedRoutes.map(({ route }) => route), routeModuleCache);
-    let loaders = [];
-    let loaderIds = [];
-    const components = matchedRoutes.map(({ route }) => {
-      const { loader } = routeModules[route.id];
-      if (loader) {
-        loaders.push(loader());
-        loaderIds.push(route.id);
-      }
-      return {
-        Component: routeModules[route.id].Component || route.Component,
-        isDataRoute: !!loader,
-        id: route.id,
-      };
-    });
-    routesData = {};
-    // Compose components.
-    const loaderDatas = await Promise.all(loaders);
-    loaderDatas.forEach((data, index) => {
-      routesData[loaderIds[index]] = data;
-    });
-    singleComponent = () => components.reduceRight((outlet, { Component, isDataRoute, id }) => {
-      return (
-        <RenderedRoute
-          routeContext={{
-            outlet,
-            routeData: isDataRoute && routesData[id],
-          }}
-          children={<Component /> || outlet}
-        />
-      );
-    }, null as React.ReactElement | null);
-  }
+  const SingleComponent = process.env.ICE_CORE_ROUTER !== 'true' &&
+    await getSingleRoute(routes, basename, routeModuleCache);
   const renderRoot = appRender(
     root,
     <AppContextProvider value={appContext}>
@@ -224,8 +189,7 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
           routerContext={routerOptions}
           routes={routes}
           location={history.location}
-          Component={singleComponent}
-          loaderData={routesData}
+          Component={SingleComponent}
         />
       </AppRuntimeProvider>
     </AppContextProvider>,
