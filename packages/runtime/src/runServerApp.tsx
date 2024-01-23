@@ -33,7 +33,6 @@ import ServerRouter from './ServerRouter.js';
 import { renderHTMLToJS } from './renderHTMLToJS.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 
-
 export interface RenderOptions {
   app: AppExport;
   assetsManifest: AssetsManifest;

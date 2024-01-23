@@ -4,7 +4,6 @@ import { createRouter } from '@remix-run/router';
 import type { To, History, Router } from '@remix-run/router';
 import type { ClientAppRouterProps } from './types.js';
 import App from './App.js';
-import { DataContextProvider } from './singleRouter.js';
 import { useAppContext } from './AppContext.js';
 import { setHistory } from './history.js';
 
@@ -24,7 +23,7 @@ function createRouterHistory(history: History, router: Router) {
 
 let router: Router = null;
 function ClientRouter(props: ClientAppRouterProps) {
-  const { Component, loaderData, routerContext } = props;
+  const { Component, routerContext } = props;
   const { revalidate } = useAppContext();
 
   function clearRouter() {
@@ -58,11 +57,7 @@ function ClientRouter(props: ClientAppRouterProps) {
   if (process.env.ICE_CORE_ROUTER === 'true') {
     element = <RouterProvider router={router} fallbackElement={null} />;
   } else {
-    element = (
-      <DataContextProvider value={loaderData}>
-        <Component />
-      </DataContextProvider>
-    );
+    element = <Component />;
   }
   return (
     <App>

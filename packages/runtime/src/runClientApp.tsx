@@ -6,11 +6,11 @@ import type {
   AppContext, WindowContext, AppExport, RouteItem, RuntimeModules, AppConfig, AssetsManifest, ClientAppRouterProps,
   ErrorStack,
 } from './types.js';
-import { createHistory as createHistorySingle } from './singleRouter.js';
+import { createHistory as createHistorySingle, RenderedRoute } from './singleRouter.js';
 import { setHistory } from './history.js';
 import Runtime from './runtime.js';
 import { getAppData } from './appData.js';
-import { getRoutesPath, loadRouteModule } from './routes.js';
+import { getRoutesPath, loadRouteModule, loadRouteModules } from './routes.js';
 import type { RouteLoaderOptions } from './routes.js';
 import getRequestContext from './requestContext.js';
 import getAppConfig from './appConfig.js';
@@ -180,12 +180,41 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
     },
   };
   let singleComponent = null;
-  let routeData = null;
+  let routesData = null;
   if (process.env.ICE_CORE_ROUTER !== 'true') {
-    const singleRoute = matchRoutes(routes, location, basename)[0];
-    const { Component, loader } = await loadRouteModule(singleRoute.route, routeModuleCache);
-    singleComponent = Component || singleRoute.route.Component;
-    routeData = loader && await loader();
+    const matchedRoutes = matchRoutes(routes, location, basename);
+    const routeModules = await loadRouteModules(matchedRoutes.map(({ route }) => route), routeModuleCache);
+    let loaders = [];
+    let loaderIds = [];
+    const components = matchedRoutes.map(({ route }) => {
+      const { loader } = routeModules[route.id];
+      if (loader) {
+        loaders.push(loader());
+        loaderIds.push(route.id);
+      }
+      return {
+        Component: routeModules[route.id].Component || route.Component,
+        isDataRoute: !!loader,
+        id: route.id,
+      };
+    });
+    routesData = {};
+    // Compose components.
+    const loaderDatas = await Promise.all(loaders);
+    loaderDatas.forEach((data, index) => {
+      routesData[loaderIds[index]] = data;
+    });
+    singleComponent = () => components.reduceRight((outlet, { Component, isDataRoute, id }) => {
+      return (
+        <RenderedRoute
+          routeContext={{
+            outlet,
+            routeData: isDataRoute && routesData[id],
+          }}
+          children={<Component /> || outlet}
+        />
+      );
+    }, null as React.ReactElement | null);
   }
   const renderRoot = appRender(
     root,
@@ -196,7 +225,7 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
           routes={routes}
           location={history.location}
           Component={singleComponent}
-          loaderData={routeData}
+          loaderData={routesData}
         />
       </AppRuntimeProvider>
     </AppContextProvider>,
