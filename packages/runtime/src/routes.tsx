@@ -15,7 +15,7 @@ export function getRoutesPath(routes: RouteItem[], parentPath = ''): string[] {
   let paths = [];
 
   routes.forEach((route) => {
-    const pathId = `${parentPath}/${route.path || ''}`;
+    const pathId = `${parentPath}/${route.path || ''}`.replace('//', '/');
     if (route.children) {
       paths.push(...getRoutesPath(route.children, pathId));
     } else {
