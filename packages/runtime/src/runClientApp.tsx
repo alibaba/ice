@@ -6,7 +6,7 @@ import type {
   AppContext, WindowContext, AppExport, RouteItem, RuntimeModules, AppConfig, AssetsManifest, ClientAppRouterProps,
   ErrorStack,
 } from './types.js';
-import { createHistory as createHistorySingle } from './singleRouter.js';
+import { createHistory as createHistorySingle, getSingleRoute } from './singleRouter.js';
 import { setHistory } from './history.js';
 import Runtime from './runtime.js';
 import { getAppData } from './appData.js';
@@ -179,14 +179,8 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
       v7_prependBasename: true,
     },
   };
-  let singleComponent = null;
-  let routeData = null;
-  if (process.env.ICE_CORE_ROUTER !== 'true') {
-    const singleRoute = matchRoutes(routes, location, basename)[0];
-    const { Component, loader } = await loadRouteModule(singleRoute.route, routeModuleCache);
-    singleComponent = Component || singleRoute.route.Component;
-    routeData = loader && await loader();
-  }
+  const SingleComponent = process.env.ICE_CORE_ROUTER !== 'true' &&
+    await getSingleRoute(routes, basename, routeModuleCache);
   const renderRoot = appRender(
     root,
     <AppContextProvider value={appContext}>
@@ -195,8 +189,7 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
           routerContext={routerOptions}
           routes={routes}
           location={history.location}
-          Component={singleComponent}
-          loaderData={routeData}
+          Component={SingleComponent}
         />
       </AppRuntimeProvider>
     </AppContextProvider>,

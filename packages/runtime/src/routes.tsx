@@ -211,7 +211,7 @@ export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
   }
   // Await dataLoader before render.
   return async (params) => {
-    const result = getData(import.meta.renderer === 'client' ? getClientLoaderContext(params.request.url) : defaultRequestContext);
+    const result = getData(import.meta.renderer === 'client' && params ? getClientLoaderContext(params.request.url) : defaultRequestContext);
     let routeData;
     try {
       if (Array.isArray(result)) {
