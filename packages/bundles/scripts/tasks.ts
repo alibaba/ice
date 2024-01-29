@@ -298,12 +298,17 @@ const tasks = [
             replaceDeps(fileContent, webpackDevServerDeps.concat([
               ...commonDeps,
               '@rspack/core',
-            ])).replace(/@pmmmwh\/react-refresh-webpack-plugin\/lib\/runtime\/RefreshUtils/g, '@ice/bundles/compiled/@pmmmwh/react-refresh-webpack-plugin/lib/runtime/RefreshUtils'),
+            ])),
           );
         } else {
           fs.copyFileSync(sourcePath, targetPath);
         }
       });
+      // Overwrite RefreshUtils.js which is customized for ice.js.
+      fs.copyFileSync(
+        path.join(__dirname, '../override/RefreshUtils.js'),
+        path.join(__dirname, '../compiled/@rspack/plugin-react-refresh/client/refreshUtils.js'),
+      );
     },
   },
 ];
