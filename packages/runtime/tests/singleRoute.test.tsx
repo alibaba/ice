@@ -7,12 +7,54 @@ import {
   createHistory,
   matchRoutes,
   Link,
-  Outlet,
   useParams,
   useSearchParams,
   useLocation,
   useNavigate,
 } from '../src/singleRouter';
+
+describe('route with layout', () => {
+  it('basic layout', () => {
+    const routes = [
+      {
+        path: '/',
+        children: [
+          {
+            path: '/home',
+          },
+        ],
+      },
+    ];
+    const location = {
+      pathname: '/home',
+    };
+    const matchedRoutes = matchRoutes(routes, location, '/');
+    expect(matchedRoutes).toHaveLength(2);
+  });
+
+  it('nest layout', () => {
+    const routes = [
+      {
+        path: '/',
+        children: [
+          {
+            path: '/home',
+            children: [
+              {
+                path: '/home/child',
+              },
+            ],
+          },
+        ],
+      },
+    ];
+    const location = {
+      pathname: '/home/child',
+    };
+    const matchedRoutes = matchRoutes(routes, location, '/');
+    expect(matchedRoutes).toHaveLength(3);
+  });
+});
 
 describe('single route api', () => {
   it('useRoutes', () => {
@@ -49,7 +91,7 @@ describe('single route api', () => {
     };
     const matchedRoutes = matchRoutes(routes, location, '/');
     expect(matchedRoutes).toHaveLength(1);
-    expect(matchedRoutes[0].route.path).toBe('users');
+    expect(matchedRoutes?.[0].route.path).toBe('users');
   });
 
   it('matchRoutes - mutiple route', () => {
@@ -84,15 +126,11 @@ describe('single route api', () => {
     ];
     const matchedRoutes = matchRoutes(routes, '/basename/posts', '/basename');
     expect(matchedRoutes).toHaveLength(1);
-    expect(matchedRoutes[0].route.path).toBe('posts');
+    expect(matchedRoutes?.[0].route.path).toBe('posts');
   });
 
   it('Link', () => {
     expect(Link()).toBe(null);
-  });
-
-  it('Outlet', () => {
-    expect(Outlet()).toStrictEqual(<React.Fragment />);
   });
 
   it('useParams', () => {
