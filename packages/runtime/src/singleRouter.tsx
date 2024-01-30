@@ -235,11 +235,6 @@ const matchRouteBranch = (branch: RouteBranch, pathname: string) => {
   return matches;
 };
 
-export const Link = () => null;
-export const NavLink = () => null;
-export const Outlet = () => {
-  return <></>;
-}
 const stripBasename = (
   pathname: string,
   basename: string,
@@ -283,7 +278,7 @@ export const matchRoutes = (
 };
 
 export const Link = () => null;
-
+export const NavLink = () => null;
 export const useParams = () => {
   return {};
 };
