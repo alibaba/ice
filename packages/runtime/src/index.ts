@@ -41,6 +41,7 @@ import type {
   TitleType,
   LinksType,
   ScriptsType,
+  FirstChunkCacheType,
   DataType,
   MainType,
 } from './Document.js';
@@ -164,6 +165,7 @@ export type {
   TitleType,
   LinksType,
   ScriptsType,
+  FirstChunkCacheType,
   DataType,
   MainType,
   CreateRoutes,
