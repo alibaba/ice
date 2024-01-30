@@ -69,6 +69,7 @@ export const matchRoutes = (routes: any[], location: Partial<Location> | string,
 };
 
 export const Link = () => null;
+export const NavLink = () => null;
 export const Outlet = () => {
   return <></>;
 };
@@ -83,4 +84,11 @@ export const useLocation = () => {
 };
 export const useNavigate = () => {
   return {};
+};
+export const useNavigation = () => {
+  throw new Error('useNavigation is not supported in single router mode');
+};
+
+export const useRevalidator = () => {
+  throw new Error('useRevalidator is not supported in single router mode');
 };
