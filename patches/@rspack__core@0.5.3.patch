@@ -1,5 +1,5 @@
 diff --git a/dist/config/adapter.js b/dist/config/adapter.js
-index 021b79b64d88a89baca5eebae5376e3c84438d96..ed00bf266a3c8f9a54baf40a2b03b500d88f2894 100644
+index 49122b3e9f4f0ac85b4075a98f693986b4333051..c3436a090fdbac00e555b2e308974f8d3f9c2426 100644
 --- a/dist/config/adapter.js
 +++ b/dist/config/adapter.js
 @@ -15,6 +15,7 @@ const getRawOptions = (options, compiler) => {
@@ -11,7 +11,7 @@ index 021b79b64d88a89baca5eebae5376e3c84438d96..ed00bf266a3c8f9a54baf40a2b03b500
          target: getRawTarget(options.target),
          context: options.context,
 diff --git a/dist/config/defaults.js b/dist/config/defaults.js
-index 98126c146a2e38b407170113b82d070ac25c3371..464ed60cf455c6ff1be7a11061974353770346c2 100644
+index 2bc4a397888a607cb05e4eef9de7257ab8a74ba7..8cf7865d0741c14242e02901dc38c5b46b08f267 100644
 --- a/dist/config/defaults.js
 +++ b/dist/config/defaults.js
 @@ -53,6 +53,11 @@ const applyRspackOptionsDefaults = (options) => {
@@ -26,8 +26,8 @@ index 98126c146a2e38b407170113b82d070ac25c3371..464ed60cf455c6ff1be7a11061974353
      applySnapshotDefaults(options.snapshot, { production });
      applyModuleDefaults(options.module, {
          // syncWebAssembly: options.experiments.syncWebAssembly,
-@@ -115,6 +120,13 @@ const applyExperimentsDefaults = (experiments, { cache }) => {
-         D(experiments.rspackFuture, "disableApplyEntryLazily", true);
+@@ -120,6 +125,13 @@ const applyExperimentsDefaults = (experiments, { cache }) => {
+         }
      }
  };
 +const applyFeaturesDefaults = (features) => {
@@ -41,7 +41,7 @@ index 98126c146a2e38b407170113b82d070ac25c3371..464ed60cf455c6ff1be7a11061974353
      F(snapshot, "module", () => production
          ? { timestamp: true, hash: true }
 diff --git a/dist/config/normalization.js b/dist/config/normalization.js
-index e13db5ae3115aa455954784fe48be4145b94e05b..f9a53cb50c2becf65ba3233ec7dee9581d0a630a 100644
+index 72167c504bd43f606481ccd1de0bdcb9eae71d9f..b16f9f3bbf1c45e00a9ca31684cefec55198683b 100644
 --- a/dist/config/normalization.js
 +++ b/dist/config/normalization.js
 @@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
@@ -53,10 +53,10 @@ index e13db5ae3115aa455954784fe48be4145b94e05b..f9a53cb50c2becf65ba3233ec7dee958
              ? config.ignoreWarnings.map(ignore => {
                  if (typeof ignore === "function") {
 diff --git a/dist/config/zod.js b/dist/config/zod.js
-index ae3c80c1e17b66c6ceeff02e06ee9d119c795d67..0c07c2044f81ec6b322fcf201ceab1fde4926187 100644
+index 7a0a604ddae2eade51aae45636e16e064d8760be..6ebfcd9e9e2aebff0f95194072f87765b812f463 100644
 --- a/dist/config/zod.js
 +++ b/dist/config/zod.js
-@@ -747,5 +747,6 @@ exports.rspackOptions = zod_1.z.strictObject({
+@@ -764,6 +764,7 @@ exports.rspackOptions = zod_1.z.strictObject({
      builtins: builtins.optional(),
      module: moduleOptions.optional(),
      profile: profile.optional(),
@@ -64,3 +64,4 @@ index ae3c80c1e17b66c6ceeff02e06ee9d119c795d67..0c07c2044f81ec6b322fcf201ceab1fd
 +    bail: bail.optional(),
 +    features: zod_1.z.custom().optional(),
  });
+ //# sourceMappingURL=zod.js.map
