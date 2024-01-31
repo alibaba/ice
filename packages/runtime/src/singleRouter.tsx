@@ -278,7 +278,7 @@ export const matchRoutes = (
 };
 
 export const Link = () => null;
-
+export const NavLink = () => null;
 export const useParams = () => {
   return {};
 };
@@ -290,6 +290,14 @@ export const useLocation = () => {
 };
 export const useNavigate = () => {
   return {};
+};
+
+export const useNavigation = () => {
+  throw new Error('useNavigation is not supported in single router mode');
+};
+
+export const useRevalidator = () => {
+  throw new Error('useRevalidator is not supported in single router mode');
 };
 
 export const getSingleRoute = async (routes: RouteItem[], basename: string, routeModuleCache = {}) => {
@@ -327,5 +335,3 @@ export const getSingleRoute = async (routes: RouteItem[], basename: string, rout
     );
   }, null as React.ReactElement | null);
 };
-
-

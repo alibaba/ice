@@ -1,10 +1,3 @@
-import {
-  Link,
-  Outlet,
-  useParams,
-  useSearchParams,
-  useLocation,
-} from 'react-router-dom';
 import type {
   RuntimePlugin,
   AppContext,
@@ -122,12 +115,6 @@ export {
   dataLoader,
   callDataLoader,
   getRequestContext,
-  // react-router-dom API
-  Link,
-  Outlet,
-  useParams,
-  useSearchParams,
-  useLocation,
   history,
 
   KeepAliveOutlet,
@@ -146,6 +133,18 @@ export {
   WrapRouteComponent,
   RouteErrorComponent,
 };
+
+export {
+  Link,
+  NavLink,
+  Outlet,
+  useParams,
+  useSearchParams,
+  useLocation,
+  useNavigate,
+  useNavigation,
+  useRevalidator,
+} from 'react-router-dom';
 
 export type {
   RuntimePlugin,

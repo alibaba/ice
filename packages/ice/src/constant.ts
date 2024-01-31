@@ -41,6 +41,7 @@ export const RUNTIME_EXPORTS = [
   {
     specifier: [
       'Link',
+      'NavLink',
       'Outlet',
       'useParams',
       'useSearchParams',
@@ -48,6 +49,8 @@ export const RUNTIME_EXPORTS = [
       'useData',
       'useConfig',
       'useNavigate',
+      'useNavigation',
+      'useRevalidator',
     ],
     source: '@ice/runtime/router',
   },
