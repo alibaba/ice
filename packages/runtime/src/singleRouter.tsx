@@ -24,7 +24,6 @@ RouteContext.displayName = 'RouteContext';
 
 export function useData<T = any>(): T {
   const value = React.useContext(RouteContext);
-  console.log('use value', value);
   return value.routeData?.data;
 }
 
