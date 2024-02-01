@@ -1,5 +1,26 @@
 # Changelog
 
+## 3.4.3
+
+### Patch Changes
+
+- 2a998626: fix: update rspack config for rspack version 0.5.1
+- fd447841: feat: export new api of react-router
+- Updated dependencies [8d57a24a]
+- Updated dependencies [d88a50a2]
+- Updated dependencies [b85feaae]
+- Updated dependencies [c1aab10a]
+- Updated dependencies [b3c53b87]
+- Updated dependencies [d9e75a02]
+- Updated dependencies [d362b8a8]
+- Updated dependencies [2a998626]
+- Updated dependencies [fd447841]
+  - @ice/runtime@1.4.0
+  - @ice/bundles@0.2.3
+  - @ice/rspack-config@1.1.3
+  - @ice/shared-config@1.2.3
+  - @ice/webpack-config@1.1.10
+
 ## 3.4.2
 
 ### Patch Changes
