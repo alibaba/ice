@@ -1,5 +1,17 @@
 # @ice/rspack-config
 
+## 1.1.3
+
+### Patch Changes
+
+- d362b8a8: fix: set enforce post for compliation loader
+- 2a998626: fix: update rspack config for rspack version 0.5.1
+- Updated dependencies [d88a50a2]
+- Updated dependencies [d9e75a02]
+- Updated dependencies [2a998626]
+  - @ice/bundles@0.2.3
+  - @ice/shared-config@1.2.3
+
 ## 1.1.2
 
 ### Patch Changes

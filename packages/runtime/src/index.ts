@@ -1,10 +1,3 @@
-import {
-  Link,
-  Outlet,
-  useParams,
-  useSearchParams,
-  useLocation,
-} from 'react-router-dom';
 import type {
   RuntimePlugin,
   AppContext,
@@ -41,6 +34,7 @@ import type {
   TitleType,
   LinksType,
   ScriptsType,
+  FirstChunkCacheType,
   DataType,
   MainType,
 } from './Document.js';
@@ -121,12 +115,6 @@ export {
   dataLoader,
   callDataLoader,
   getRequestContext,
-  // react-router-dom API
-  Link,
-  Outlet,
-  useParams,
-  useSearchParams,
-  useLocation,
   history,
 
   KeepAliveOutlet,
@@ -146,6 +134,18 @@ export {
   RouteErrorComponent,
 };
 
+export {
+  Link,
+  NavLink,
+  Outlet,
+  useParams,
+  useSearchParams,
+  useLocation,
+  useNavigate,
+  useNavigation,
+  useRevalidator,
+} from 'react-router-dom';
+
 export type {
   RuntimePlugin,
   AppContext,
@@ -164,6 +164,7 @@ export type {
   TitleType,
   LinksType,
   ScriptsType,
+  FirstChunkCacheType,
   DataType,
   MainType,
   CreateRoutes,

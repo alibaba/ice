@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.3
+
+### Patch Changes
+
+- d88a50a2: fix: HMR boundary in speedup mode
+- d9e75a02: fix: css modules hash is not match
+- 2a998626: fix: update rspack config for rspack version 0.5.1
+
 ## 0.2.2
 
 ### Patch Changes

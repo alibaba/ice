@@ -148,6 +148,8 @@ const getConfig: GetConfig = async (options) => {
       rules: [
         {
           test: /\.(jsx?|tsx?|mjs)$/,
+          // Set enforce: 'post' to make sure the compilation-loader is executed after other transformers.
+          enforce: 'post',
           ...(excludeRule ? { exclude: new RegExp(excludeRule) } : {}),
           use: {
             loader: 'builtin:compilation-loader',
@@ -164,6 +166,7 @@ const getConfig: GetConfig = async (options) => {
               },
             },
           },
+          type: 'javascript/auto',
         },
         {
           test: /__barrel_optimize__/,
@@ -179,6 +182,7 @@ const getConfig: GetConfig = async (options) => {
               },
             }];
           },
+          type: 'javascript/auto',
         },
         ...getAssetsRule(),
         ...getCssRules({
@@ -189,6 +193,7 @@ const getConfig: GetConfig = async (options) => {
       ],
     },
     resolve: {
+      extensions: ['...', '.ts', '.tsx', '.jsx'],
       alias: {
         // Always lock the corejs version, it is decided by shared-config.
         'core-js': coreJsPath,
@@ -222,9 +227,7 @@ const getConfig: GetConfig = async (options) => {
     },
     experiments: {
       rspackFuture: {
-        disableTransformByDefault: true,
-        // This configuration is make the same behaior with webpack 5.
-        disableApplyEntryLazily: true,
+        newTreeshaking: true,
       },
     },
     stats: 'none',
@@ -238,7 +241,6 @@ const getConfig: GetConfig = async (options) => {
         'Access-Control-Allow-Methods': '*',
         'Access-Control-Allow-Headers': '*',
       },
-      // @ts-expect-error devServer.hot in rspack only support boolean.
       hot: true,
       compress: false,
       proxy,

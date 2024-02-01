@@ -1,6 +1,6 @@
 {
   "name": "@ice/runtime",
-  "version": "1.3.6",
+  "version": "1.4.0",
   "description": "Runtime module for ice.js",
   "type": "module",
   "types": "./esm/index.d.ts",
@@ -54,13 +54,13 @@
   "dependencies": {
     "@ice/jsx-runtime": "^0.2.2",
     "@ice/shared": "^1.0.2",
-    "@remix-run/router": "1.7.2",
+    "@remix-run/router": "1.14.2",
     "abortcontroller-polyfill": "1.7.5",
     "ejs": "^3.1.6",
     "fs-extra": "^10.0.0",
     "history": "^5.3.0",
     "htmlparser2": "^8.0.1",
-    "react-router-dom": "6.14.2",
+    "react-router-dom": "6.21.3",
     "semver": "^7.4.0",
     "source-map": "^0.7.4"
   },

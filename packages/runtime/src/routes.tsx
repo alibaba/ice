@@ -15,7 +15,7 @@ export function getRoutesPath(routes: RouteItem[], parentPath = ''): string[] {
   let paths = [];
 
   routes.forEach((route) => {
-    const pathId = `${parentPath}/${route.path || ''}`;
+    const pathId = `${parentPath}/${route.path || ''}`.replace('//', '/');
     if (route.children) {
       paths.push(...getRoutesPath(route.children, pathId));
     } else {
@@ -211,7 +211,7 @@ export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
   }
   // Await dataLoader before render.
   return async (params) => {
-    const result = getData(import.meta.renderer === 'client' ? getClientLoaderContext(params.request.url) : defaultRequestContext);
+    const result = getData(import.meta.renderer === 'client' && params ? getClientLoaderContext(params.request.url) : defaultRequestContext);
     let routeData;
     try {
       if (Array.isArray(result)) {

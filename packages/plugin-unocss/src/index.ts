@@ -35,6 +35,8 @@ const plugin: Plugin<UserConfig> = (options) => ({
       ],
     };
     onGetConfig((config) => {
+      // Unocss is conflict with webpack 5 persistent caching.
+      config.enableCache = false;
       config.configureWebpack ??= [];
       config.configureWebpack.push((webpackConfig) => {
         // @ts-expect-error

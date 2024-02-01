@@ -17,7 +17,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@remix-run/router": "^1.6.1",
+    "@remix-run/router": "^1.14.2",
     "chalk": "^4.0.0",
     "consola": "^2.15.3",
     "humps": "^2.0.1",
