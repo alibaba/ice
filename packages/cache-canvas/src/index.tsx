@@ -1,8 +1,5 @@
 import { useEffect, useState, useImperativeHandle, forwardRef, useCallback } from 'react';
-import type {
-  HTMLAttributes,
-  ReactElement,
-} from 'react';
+import type { HTMLAttributes, ReactElement } from 'react';
 import * as React from 'react';
 import { isNode } from 'universal-env';
 import { Storage } from './storage';
@@ -47,17 +44,7 @@ export type CacheCanvasProps = {
 };
 
 export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
-  const {
-    id,
-    init,
-    useCache = true,
-    getSnapshot,
-    fallback,
-    style,
-    className,
-    bizID = '',
-    ...rest
-  } = props;
+  const { id, init, useCache = true, getSnapshot, fallback, style, className, bizID = '', ...rest } = props;
 
   const [renderedCanvas, setRenderedCanvas] = useState(!useCache);
   const [mounted, setMounted] = useState(false);
@@ -102,69 +89,74 @@ export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
 
   return (
     <>
-      <canvas
-        {...rest}
-        className={className}
-        style={renderedCanvas ? style : { ...style, display: 'none' }}
-        id={id}
-      />
-      {
-        !renderedCanvas && (<>
+      <canvas {...rest} className={className} style={renderedCanvas ? style : { ...style, display: 'none' }} id={id} />
+      {!renderedCanvas && (
+        <>
           <img
             className={className}
             style={style}
             src={Storage.getItem(cacheKey, { bizID }) || ''}
             id={`canvas-img-${id}`}
           />
-          {
-            (typeof fallback === 'function') && (<div
-              id={`fallback-${id}`}
-            >
-              {
-                (isNode || !Storage.getItem(cacheKey, { bizID })) && fallback()
-              }
-            </div>)
-          }
+          {typeof fallback === 'function' && (
+            <div id={`fallback-${id}`}>{(isNode || !Storage.getItem(cacheKey, { bizID })) && fallback()}</div>
+          )}
           <script
             dangerouslySetInnerHTML={{
-                  __html: `
-                  (function () {
-                    var base64Data = '';
-                    if (
-                      window.__megability_bridge__ &&
-                      window.__megability_bridge__.syncCall
-                    ) {
-                      var canIUse = window.__megability_bridge__.syncCall('ability', 'available', {
-                        ability: 'userKVStorage',
-                        api: 'getItem',
-                      });
+              __html: `(function () {
+                var base64Data = '';
+                function callback() {
+                  if (!base64Data) {
+                    base64Data = localStorage.getItem('${JSON.stringify(cacheKey)}');
+                  }
               
-                      if (canIUse) {
-                        var res = window.__megability_bridge__.syncCall('userKVStorage', 'getItem', { key: '${cacheKey}',  bizID: '${bizID}' });
-                        if (res && res.statusCode === 0 && res.data && res.data.result) {
-                          base64Data = res.data.result;
-                        }
+                  var fallback = document.getElementById('fallback-${id}');
+                  if (base64Data) {
+                    var img = document.getElementById('canvas-img-${id}');
+                    img && (img.src = base64Data);
+                    if (fallback && fallback.childNodes[0]) {
+                      fallback.removeChild(fallback.childNodes[0]);
+                    }
+                  }
+                }
+                if (window.__megability_bridge__ && window.__megability_bridge__.asyncCall) {
+                  window.__megability_bridge__.asyncCall(
+                    'ability',
+                    'available',
+                    {
+                      ability: 'userKVStorage',
+                      api: 'getItem',
+                    },
+                    function (res) {
+                      if (res && res.type === 'YES') {
+                        window.__megability_bridge__.asyncCall(
+                          'userKVStorage',
+                          'getItem',
+                          { key: '${cacheKey}', bizID: '${bizID}' },
+                          function (resp) {
+                            if (resp && resp.statusCode === 0 && resp.data && resp.data.result) {
+                              base64Data = resp.data.result;
+                              callback();
+                            }
+                          },
+                          function (e) {
+                            callback();
+                          },
+                        );
                       }
-                    }
-                    
-                    if (!base64Data) {
-                      base64Data = localStorage.getItem(${JSON.stringify(cacheKey)});
-                    }
-                    
-                    var fallback = document.getElementById('fallback-${id}');
-                    if (base64Data) {
-                      var img = document.getElementById('canvas-img-${id}');
-                      img && (img.src = base64Data);
-                      if (fallback && fallback.childNodes[0]) {
-                        fallback.removeChild(fallback.childNodes[0]);
-                      }
-                    }
-                  })();
-                `,
-              }}
+                    },
+                    function (e) {
+                      callback();
+                    },
+                  );
+                } else {
+                  callback();
+                }
+              })();`,
+            }}
           />
-        </>)
-      }
+        </>
+      )}
     </>
   );
 });
