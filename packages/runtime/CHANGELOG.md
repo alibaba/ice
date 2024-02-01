@@ -1,5 +1,9 @@
 # @ice/runtime
 
+## 1.4.1
+
+- fix: compatible with basename is undefined.
+
 ## 1.4.0
 
 ### Minor Changes
