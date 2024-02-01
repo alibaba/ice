@@ -24,7 +24,6 @@ RouteContext.displayName = 'RouteContext';
 
 export function useData<T = any>(): T {
   const value = React.useContext(RouteContext);
-  console.log('use value', value);
   return value.routeData?.data;
 }
 
@@ -259,7 +258,7 @@ export const matchRoutes = (
   basename: string,
 ) => {
   const pathname = typeof location === 'string' ? location : location.pathname;
-  const stripedPathname = stripBasename(pathname || '/', basename);
+  const stripedPathname = stripBasename(pathname || '/', basename || '/');
   let branches = flattenRoutes(routes);
   if (branches.length === 1) {
     // Just one branch, no need to match.
