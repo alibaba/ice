@@ -1,5 +1,18 @@
 # @ice/runtime
 
+## 1.4.0
+
+### Minor Changes
+
+- 8d57a24a: feat: enhance router mode without react-router
+
+### Patch Changes
+
+- b85feaae: fix: do not log warning message when use router api
+- c1aab10a: fix: avoid unexpected slash in route path
+- b3c53b87: fix: export losing ts type
+- fd447841: feat: export new api of react-router
+
 ## 1.3.6
 
 ### Patch Changes
