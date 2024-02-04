@@ -18,19 +18,17 @@ export default function KeepAliveOutlet() {
   const location = useLocation();
   const outlet = useOutlet();
   // Save the first outlet for SSR hydration.
-  const outletRef = useRef(null);
-  const renderRef = useRef(null);
+  const outletRef = useRef({
+    key: location.key,
+    pathname: location.pathname,
+    outlet,
+  });
 
   useEffect(() => {
     // If outlets is empty, save the first outlet for SSR hydration,
     // and should not call setOutlets to avoid re-render.
-    if (outlets.length === 0 && !outletRef.current) {
-      outletRef.current = {
-        key: location.key,
-        pathname: location.pathname,
-        outlet,
-      };
-    } else {
+    if (outlets.length !== 0 ||
+      outletRef.current?.pathname !== location.pathname) {
       let currentOutlets = outletRef.current ? [outletRef.current] : outlets;
       const result = currentOutlets.some(o => o.pathname === location.pathname);
       if (!result) {
@@ -49,16 +47,7 @@ export default function KeepAliveOutlet() {
   }, [location.pathname, location.key, outlet, outlets]);
 
   // Render initail outlet for SSR hydration.
-  const renderOutlets = outlets.length === 0 ? (renderRef.current || [{
-    key: location.key,
-    pathname: location.pathname,
-    outlet,
-  }]) : outlets;
-
-  if (outlets.length === 0) {
-    // Use ref to save the first outlet, in case of route change will unmount the first outlet.
-    renderRef.current = renderOutlets;
-  }
+  const renderOutlets = outlets.length === 0 ? [outletRef.current] : outlets;
 
   return (
     <>
