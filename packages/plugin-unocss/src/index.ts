@@ -1,9 +1,12 @@
+import * as path from 'path';
+import { fileURLToPath } from 'url';
 import type { Plugin } from '@ice/app/types';
-import UnocssWebpackPlugin from '@unocss/webpack';
 import type { UserConfig } from '@unocss/core';
-import { presetUno } from 'unocss';
+import presetUno from '@unocss/preset-uno';
 
 const PLUGIN_NAME = '@ice/plugin-unocss';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const plugin: Plugin<UserConfig> = (options) => ({
   name: PLUGIN_NAME,
@@ -35,14 +38,15 @@ const plugin: Plugin<UserConfig> = (options) => ({
       ],
     };
     onGetConfig((config) => {
-      // Unocss is conflict with webpack 5 persistent caching.
-      config.enableCache = false;
-      config.configureWebpack ??= [];
-      config.configureWebpack.push((webpackConfig) => {
-        // @ts-expect-error
-        webpackConfig.plugins.push(UnocssWebpackPlugin({}, unoConfig));
-        return webpackConfig;
-      });
+      config.alias = {
+        ...config.alias,
+        'uno.css': path.join(__dirname, '../uno.css'),
+      };
+      config.postcss = {
+        plugins: [['@unocss/postcss', {
+          configOrPath: unoConfig,
+        }]],
+      };
     });
   },
 });
