@@ -241,8 +241,12 @@ function Snapshot(rootId) {
       console.log('cacheStr', cacheStr);
       let mega = (window as any).__megability_bridge__;
       if (!mega) return;
+      let prefix = '<!doctype html>';
+      if (!document.head.querySelector('meta[charset="utf-8"]')) {
+        prefix += '<meta charset="utf-8">';
+      }
       mega.asyncCall('ssr', 'setFirstChunkCache', {
-        html: cacheStr,
+        html: prefix + cacheStr,
       });
       console.log('cache success');
     }
