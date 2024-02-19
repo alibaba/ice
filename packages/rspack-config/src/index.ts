@@ -30,6 +30,7 @@ interface BuiltinFeatures {
     name: string;
     topLevelFrameworks: string[];
   };
+  assetsManifest?: boolean;
 }
 
 const require = createRequire(import.meta.url);
@@ -101,7 +102,9 @@ const getConfig: GetConfig = async (options) => {
     },
     module: true,
   }, minimizerOptions);
-  const builtinFeatures: BuiltinFeatures = {};
+  const builtinFeatures: BuiltinFeatures = {
+    assetsManifest: true,
+  };
   let splitChunksStrategy = null;
   // Use builtin splitChunks strategy by default.
   if (splitChunks === true || splitChunks === 'chunks') {
@@ -223,11 +226,6 @@ const getConfig: GetConfig = async (options) => {
     builtins: {
       css: {
         modules: { localIdentName },
-      },
-    },
-    experiments: {
-      rspackFuture: {
-        newTreeshaking: true,
       },
     },
     stats: 'none',
