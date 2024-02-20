@@ -1,18 +1,23 @@
-import { Link } from 'ice';
-import Counter from '@/components/Counter';
+import { useEffect } from 'react';
+import { useActive, Link } from 'ice';
+import Count from '@/components/Count';
 
 export default function Home() {
-  return (
-    <main>
-      <h2>Home</h2>
-      <Counter />
-      <Link to="/about">About</Link>
-    </main>
-  );
-}
+  const active = useActive();
 
-export function pageConfig() {
-  return {
-    title: 'Home',
-  };
+  useEffect(() => {
+    if (active) {
+      console.log('Page Index is actived');
+    } else {
+      console.log('Page Index is deactived');
+    }
+  }, [active]);
+
+  return (
+    <div>
+      <h4>Index</h4>
+      <Count />
+      <Link to="/home">Home</Link>
+    </div>
+  );
 }
