@@ -19,7 +19,7 @@
     "@ice/shared-config": "1.2.3"
   },
   "devDependencies": {
-    "@rspack/core": "0.5.1"
+    "@rspack/core": "0.5.4"
   },
   "scripts": {
     "watch": "tsc -w --sourceMap",
