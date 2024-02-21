@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.10
+
+- [feat] match page names with `-`
+
 ## 2.0.9
 
 - [fix] convert kebab-case to PascalCase for `Layout` name, such as `hello-wordLayout` to `HelloWorldLayout`
