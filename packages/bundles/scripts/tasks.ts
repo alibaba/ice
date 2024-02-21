@@ -274,7 +274,9 @@ const tasks = [
           const fileContent = fs.readFileSync(sourcePath, 'utf8');
           fs.writeFileSync(targetPath,
             replaceDeps(fileContent, webpackDevServerDeps.concat([...commonDeps, '@rspack/core', 'webpack-dev-server']))
-             .replace(/webpack-dev-server\/client\/clients/g, '@ice/bundles/compiled/webpack-dev-server/client/clients'),
+             .replace(/webpack-dev-server\/client\/clients/g, '@ice/bundles/compiled/webpack-dev-server/client/clients')
+             .replace(/@rspack\/core\//g, '@ice/bundles/compiled/@rspack/core/')
+             .replace(/@rspack\/dev-server\//g, '@ice/bundles/compiled/@rspack/dev-server/'),
           );
         } else {
           fs.copyFileSync(sourcePath, targetPath);
