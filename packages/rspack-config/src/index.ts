@@ -1,7 +1,7 @@
 import * as path from 'path';
 import { createRequire } from 'module';
 import { getDefineVars, getCompilerPlugins, getJsxTransformOptions, getAliasWithRoot, skipCompilePackages } from '@ice/shared-config';
-import type { Config, ModifyWebpackConfig } from '@ice/shared-config/types';
+import type { Config, ModifyWebpackConfig, ImportDeclaration } from '@ice/shared-config/types';
 import type { Configuration, rspack as Rspack } from '@rspack/core';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import { coreJsPath } from '@ice/bundles';
@@ -33,9 +33,40 @@ interface BuiltinFeatures {
   assetsManifest?: boolean;
 }
 
+interface TransformFeatures {
+  keepExport?: string[];
+  removeExport?: string[];
+  optimizeImport?: string[];
+  importConfig?: {
+    name: string;
+    map: Record<string, { to: string; importType: 'Named' | 'Default' }>;
+  }[];
+}
+
 const require = createRequire(import.meta.url);
 
 const { merge } = lodash;
+
+function formatRedirectImports(redirectImports: ImportDeclaration[]) {
+  // Transform frameworkExports to swc options.
+  const runtimeRedirect = {};
+  redirectImports.forEach(({ specifier, source }) => {
+    if (Array.isArray(specifier)) {
+      specifier.forEach((name) => {
+        runtimeRedirect[name] = {
+          to: source,
+          importType: 'Named',
+        };
+      });
+    } else {
+      runtimeRedirect[specifier] = {
+        to: source,
+        importType: 'Default',
+      };
+    }
+  });
+  return runtimeRedirect;
+}
 
 const getConfig: GetConfig = async (options) => {
   const {
@@ -71,6 +102,10 @@ const getConfig: GetConfig = async (options) => {
     configureWebpack = [],
     minimizerOptions = {},
     optimizePackageImports = [],
+    entry,
+    assetsManifest,
+    redirectImports,
+    fastRefresh,
   } = taskConfig || {};
   const isDev = mode === 'development';
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
@@ -79,7 +114,12 @@ const getConfig: GetConfig = async (options) => {
   const { rspack: { DefinePlugin, ProvidePlugin, SwcJsMinimizerRspackPlugin } } = await import('@ice/bundles/esm/rspack.js');
   const cssFilename = `css/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`;
   // get compile plugins
-  const compilerWebpackPlugins = getCompilerPlugins(rootDir, taskConfig || {}, 'rspack', { isServer: false });
+  const compilerWebpackPlugins = getCompilerPlugins(rootDir, {
+    ...(taskConfig || {}),
+    // Override redirectImports to empty array,
+    // it's supported by built-in loader in speedup mode.
+    redirectImports: undefined,
+  }, 'rspack', { isServer: false });
   const jsMinimizerPluginOptions: any = merge({
     compress: {
       ecma: 5,
@@ -103,7 +143,7 @@ const getConfig: GetConfig = async (options) => {
     module: true,
   }, minimizerOptions);
   const builtinFeatures: BuiltinFeatures = {
-    assetsManifest: true,
+    assetsManifest,
   };
   let splitChunksStrategy = null;
   // Use builtin splitChunks strategy by default.
@@ -130,8 +170,29 @@ const getConfig: GetConfig = async (options) => {
       return `${pkg}[\\/]|_${pkg.replace('/', '_')}@[^/]+[\\/]`;
     }).join('|')}).*`;
   }
+  const transformFeatures: TransformFeatures = {
+    removeExport: swcOptions.removeExportExprs,
+    // Function type of keepExports is not supported yet.
+    keepExport: swcOptions.keepExports as string[],
+    optimizeImport: optimizePackageImports,
+  };
+
+  if (redirectImports?.length > 0) {
+    transformFeatures.importConfig = [{
+      name: 'ice',
+      map: formatRedirectImports(redirectImports),
+    }, {
+      name: '@ice/runtime',
+      map: {
+        dataLoader: {
+          to: '@ice/runtime/data-loader',
+          importType: 'Named',
+        },
+      },
+    }];
+  }
   const config: Configuration = {
-    entry: {
+    entry: entry || {
       main: [path.join(rootDir, runtimeTmpDir, 'entry.client.tsx')],
     },
     name: 'web',
@@ -157,12 +218,8 @@ const getConfig: GetConfig = async (options) => {
           use: {
             loader: 'builtin:compilation-loader',
             options: {
-              swcOptions: getJsxTransformOptions({ suffix: 'jsx', rootDir, mode, fastRefresh: isDev, polyfill, enableEnv: true }),
-              transformFeatures: {
-                removeExport: swcOptions.removeExportExprs,
-                keepExport: swcOptions.keepExports,
-                optimizeImport: optimizePackageImports,
-              },
+              swcOptions: getJsxTransformOptions({ suffix: 'jsx', rootDir, mode, fastRefresh: isDev && fastRefresh, polyfill, enableEnv: true }),
+              transformFeatures,
               compileRules: {
                 // "bundles/compiled" is the path when using @ice/bundles.
                 exclude: [...compileExclude, 'bundles/compiled'],
@@ -216,7 +273,7 @@ const getConfig: GetConfig = async (options) => {
       ...plugins,
       // Unplugin should be compatible with rspack.
       ...compilerWebpackPlugins,
-      isDev && new RefreshPlugin(),
+      isDev && fastRefresh && new RefreshPlugin(),
       new DefinePlugin(getDefineVars(define, runtimeDefineVars, getExpandedEnvs)),
       new ProvidePlugin({
         process: [require.resolve('process/browser')],

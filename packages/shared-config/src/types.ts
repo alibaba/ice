@@ -47,7 +47,7 @@ interface SwcOptions {
   nodeTransform?: boolean;
 }
 
-interface ImportDeclaration {
+export interface ImportDeclaration {
   specifier?: string | string[];
   source: string;
   type?: boolean;

@@ -78,7 +78,8 @@
     "semver": "^7.3.5",
     "source-map-support": "^0.5.21",
     "temp": "^0.9.4",
-    "yargs-parser": "^21.1.1"
+    "yargs-parser": "^21.1.1",
+    "mime-types": "2.1.35"
   },
   "devDependencies": {
     "@types/babel__generator": "^7.6.4",
