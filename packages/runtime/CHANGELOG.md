@@ -1,5 +1,11 @@
 # @ice/runtime
 
+## 1.4.2
+
+### Patch Changes
+
+- 547601f3: feat: new api of `useActive` for keep alive
+
 ## 1.4.1
 
 - fix: compatible with basename is undefined.
