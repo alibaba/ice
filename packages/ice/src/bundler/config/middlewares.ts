@@ -21,11 +21,6 @@ interface SetupOptions {
   dataLoaderCompiler?: Compiler;
 }
 
-
-function dataLoaderMiddleware(dataLoaderCompiler: Compiler) {
-
-}
-
 function setupMiddlewares(middlewares: Parameters<DevServerConfiguration['setupMiddlewares']>[0], {
   userConfig,
   taskConfig,
