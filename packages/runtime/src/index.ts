@@ -44,6 +44,7 @@ import AppErrorBoundary from './AppErrorBoundary.js';
 import getAppConfig, { defineAppConfig } from './appConfig.js';
 import { routerHistory as history } from './history.js';
 import KeepAliveOutlet from './KeepAliveOutlet.js';
+import { useActive } from './Activity.js';
 import ClientOnly from './ClientOnly.js';
 import useMounted from './useMounted.js';
 import usePageLifecycle from './usePageLifecycle.js';
@@ -117,6 +118,7 @@ export {
   getRequestContext,
   history,
 
+  useActive,
   KeepAliveOutlet,
   AppErrorBoundary,
   ClientOnly,
