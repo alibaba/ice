@@ -387,6 +387,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         },
         userConfig,
         configFile,
+        hasDataLoader,
       };
       try {
         if (command === 'test') {

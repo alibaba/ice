@@ -80,6 +80,7 @@ const getConfig: GetConfig = async (options) => {
   } = options;
 
   const {
+    name,
     cacheDir,
     mode,
     minify,
@@ -195,7 +196,7 @@ const getConfig: GetConfig = async (options) => {
     entry: entry || {
       main: [path.join(rootDir, runtimeTmpDir, 'entry.client.tsx')],
     },
-    name: 'web',
+    name: name || 'web',
     mode,
     externals,
     output: {

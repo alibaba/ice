@@ -17,20 +17,40 @@ async function bundler(
     hooksAPI,
     routeManifest,
     appConfig,
+    hasDataLoader,
   } = options;
   let compiler: MultiCompiler;
-  let dataLoaderCompiler;
+  let dataLoaderCompiler: Compiler;
   let devServer: RspackDevServer;
   const { rspack } = await import('@ice/bundles/esm/rspack.js');
   // Override the type of rspack, because of rspack is imported from pre-compiled bundle.
   const rspackConfigs = await getConfig(context, options, rspack as unknown as typeof Rspack);
-  const dataLoaderRspackConfig = await getDataLoaderConfig(context, taskConfigs.find(({ name }) => name === WEB), rspack as unknown as typeof Rspack);
-  console.log('dataLoaderRspackConfig', dataLoaderRspackConfig);
   try {
+    if (hasDataLoader) {
+      const dataLoaderRspackConfig = await getDataLoaderConfig(
+        context,
+        taskConfigs.find(({ name }) => name === WEB),
+        rspack as unknown as typeof Rspack,
+      );
+      if (command === 'start') {
+        // Create a special compiler for dataLoader,
+        // it will be used in dev-server middleware.
+        // @ts-ignore
+        dataLoaderCompiler = rspack(dataLoaderRspackConfig);
+      } else if (command === 'build') {
+        // Build parrallel when build.
+        rspackConfigs.push(dataLoaderRspackConfig);
+        // Override the output options of clean to false,
+        // Otherwise, the output of previous build will be cleaned.
+        rspackConfigs.forEach((config) => {
+          if (config?.output?.clean) {
+            config.output.clean = false;
+          }
+        });
+      }
+    }
     // @ts-ignore
     compiler = rspack(rspackConfigs);
-    // @ts-ignore
-    dataLoaderCompiler = rspack(dataLoaderRspackConfig);
   } catch (error) {
     logger.error('Webpack compile error.');
     logger.error(error);

@@ -13,7 +13,6 @@ import {
 } from '../../constant.js';
 import { getReCompilePlugin, getServerPlugin, getSpinnerPlugin } from '../config/plugins.js';
 import { getExpandedEnvs } from '../../utils/runtimeEnv.js';
-import DataLoaderPlugin from '../../webpack/DataLoaderPlugin.js';
 import type { BundlerOptions, Context } from '../types.js';
 
 type GetConfig = (
@@ -35,16 +34,14 @@ const getConfig: GetConfig = async (context, options, rspack) => {
   const {
     rootDir,
     userConfig,
-    getAllPlugin,
     extendsPluginAPI: {
       serverCompileTask,
       getRoutesFile,
-      generator,
     },
   } = context;
   const { reCompile, ensureRoutesConfig } = getRouteExportConfig(rootDir);
   const getPlugins = (taskConfig: Config): Config['plugins'] => {
-    const { target, outputDir, useDataLoader, server } = taskConfig;
+    const { target, outputDir, server } = taskConfig;
     return [
       // Add spinner for webpack task.
       getSpinnerPlugin(spinner),
@@ -62,14 +59,6 @@ const getConfig: GetConfig = async (context, options, rspack) => {
       }),
       // Add ReCompile plugin when routes config changed.
       getReCompilePlugin(reCompile, routeManifest),
-      // Add DataLoader plugin.
-      // useDataLoader && new DataLoaderPlugin({
-      //   serverCompiler,
-      //   target,
-      //   rootDir,
-      //   getAllPlugin,
-      //   frameworkExports: generator.getExportList('framework', target),
-      // }),
     ].filter(Boolean) as Config['plugins'];
   };
   return await Promise.all(taskConfigs.map(async ({ config }) => {
@@ -135,6 +124,7 @@ export const getDataLoaderConfig: GetDataLoaderRspackConfig = async (context, ta
       devServer: {
         hot: false,
       },
+      name: 'dataLoader',
     },
   });
 };

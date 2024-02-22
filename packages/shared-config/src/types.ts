@@ -79,6 +79,9 @@ export type { webpack };
 type PluginFunction = (this: Compiler, compiler: Compiler) => void;
 
 export interface Config {
+  // The name of the task, used for the output log.
+  name?: string;
+
   target?: string;
 
   mode?: 'none' | 'development' | 'production';
