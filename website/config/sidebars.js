@@ -23,12 +23,6 @@ module.exports = {
       label: '进阶',
       collapsed: false,
       items: [
-        {
-          type: 'category',
-          label: '小程序',
-          collapsed: true,
-          items: getDocsFromDir('guide/miniapp'),
-        },
         ...getDocsFromDir('guide/advanced'),
       ],
     },
