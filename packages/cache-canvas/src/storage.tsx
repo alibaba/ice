@@ -70,7 +70,7 @@ export const Storage = {
       }
 
       if (typeof window !== 'undefined' && window.localStorage) {
-        return localStorage.getItem(key);
+        return window.localStorage.getItem(key);
       }
 
       return cache[key] || '';

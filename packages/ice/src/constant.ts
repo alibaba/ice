@@ -59,6 +59,7 @@ export const RUNTIME_EXPORTS = [
       'defineAppConfig',
       'useAppData',
       'history',
+      'useActive',
       'KeepAliveOutlet',
       'useMounted',
       'ClientOnly',

@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-unocss",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "A plugin for enable unocss in your app based on `@ice/app`",
   "license": "MIT",
   "type": "module",
@@ -16,18 +16,16 @@
   "files": [
     "esm",
     "!esm/**/*.map",
-    "*.d.ts"
+    "*.d.ts",
+    "uno.css"
   ],
   "dependencies": {
-    "@unocss/config": "^0.57.6",
-    "@unocss/core": "^0.57.6",
-    "@unocss/reset": "^0.57.6",
-    "@unocss/webpack": "^0.57.6",
-    "unocss": "^0.57.6"
+    "@unocss/preset-uno": "^0.58.5",
+    "@unocss/postcss": "^0.58.5"
   },
   "devDependencies": {
-    "@ice/app": "workspace:^",
-    "@nuxt/schema": "^3.8.1"
+    "@unocss/core": "^0.58.5",
+    "@ice/app": "workspace:^"
   },
   "repository": {
     "type": "http",

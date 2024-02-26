@@ -2,4 +2,4 @@ packages:
   - 'packages/*'
   - 'examples/*'
   - 'website'
-  - '!examples/with-keep-alive/'
+  - '!examples/with-keep-alive-react/'

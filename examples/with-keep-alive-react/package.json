@@ -1,0 +1,21 @@
+{
+  "name": "@examples/with-keep-alive-react",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "start": "ice start",
+    "build": "ice build"
+  },
+  "dependencies": {
+    "react": "0.0.0-experimental-0cdfef19b-20231211",
+    "react-dom": "0.0.0-experimental-0cdfef19b-20231211"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.2"
+  },
+  "resolutions": {
+    "react": "0.0.0-experimental-0cdfef19b-20231211",
+    "react-dom": "0.0.0-experimental-0cdfef19b-20231211"
+  }
+}
