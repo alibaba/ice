@@ -1,5 +1,14 @@
 # @ice/rspack-config
 
+## 1.1.4
+
+### Patch Changes
+
+- 4bce5d79: fix: bump rspack version
+- Updated dependencies [4bce5d79]
+  - @ice/bundles@0.2.4
+  - @ice/shared-config@1.2.4
+
 ## 1.1.3
 
 ### Patch Changes
