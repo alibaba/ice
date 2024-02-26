@@ -2,9 +2,9 @@ import * as path from 'path';
 
 // match:
 // eg: src/pages/home | src/pages/home/index | src/pages/home/index(.tsx|.jsx) | src/pages/index(.tsx|jsx)
-const pagePathRegExp = /src\/pages\/\w+((.tsx|.jsx?)$|(\/index(.tsx|.jsx?)?)?$)/;
+const pagePathRegExp = /src\/pages\/(?:[^/*"]+)*((.tsx|.jsx?)$|(\/index(.tsx|.jsx?)?)?$)/;
 // eg：src/pages/home/Layout
-const layoutPathRegExp = /src\/pages\/\w+\/Layout/;
+const layoutPathRegExp = /src\/pages\/(?:[^/*"]+)*\/Layout/;
 
 module.exports = ({ types: t }, { routesPaths, alias, tempDir, applyMethod, rootDir }) => {
   return {
@@ -87,14 +87,14 @@ interface IGetConfigRoutePathParams {
 //  case2: { "@src": "./src", "@pages": "./src/pages" }
 //  case3: { "@": "./src", "@/pages": "./src/pages" }
 function matchAliasPath(
-  { 
-    alias, 
+  {
+    alias,
     value,
     applyMethod,
     rootDir,
-  }: { 
+  }: {
     alias: IAlias;
-    value: string; 
+    value: string;
     applyMethod: Function;
     rootDir: string;
   }): string {
@@ -121,7 +121,7 @@ function matchRelativePath(
     value,
     applyMethod,
     rootDir,
-  }: { 
+  }: {
     routesPath: string;
     value: string;
     applyMethod: Function;
