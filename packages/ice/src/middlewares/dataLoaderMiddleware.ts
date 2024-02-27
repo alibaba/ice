@@ -3,6 +3,7 @@ import { parse } from 'url';
 import crypto from 'crypto';
 import type { Compiler } from '@rspack/core';
 import type { ExpressRequestHandler, Middleware } from 'webpack-dev-server';
+import { logger } from '../utils/logger.js';
 
 function etag(buf: Buffer) {
   return crypto.createHash('sha256').update(buf).digest('hex');
@@ -18,8 +19,17 @@ export default function createDataLoaderMiddleware(compiler: Compiler): Middlewa
     }
   });
   const compileTask = new Promise((resolve, reject) => {
-    compiler.hooks.done.tap('data-loader-compiler', () => {
-      resolve(watching);
+    compiler.hooks.done.tap('data-loader-compiler', (stats) => {
+      const statsJson = stats.toJson({
+        all: false,
+      });
+      if (!stats.hasErrors() || !statsJson?.errors?.length) {
+        resolve(watching);
+      } else if (statsJson?.errors?.length > 0) {
+        logger.error('[data-loader] Compile failed:');
+        logger.log(statsJson?.errors);
+        reject(false);
+      }
     });
   });
 
