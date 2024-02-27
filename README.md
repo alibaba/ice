@@ -57,3 +57,8 @@ Contributors can contact us to join the Contributor Group.
 ## LICENSE
 
 [MIT](https://github.com/alibaba/ice/blob/master/LICENSE)
+
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=alibaba/ice&type=Date)](https://star-history.com/#alibaba/ice&Date)
