@@ -1,6 +1,6 @@
 {
   "name": "ice.js",
-  "version": "2.6.8",
+  "version": "2.6.9",
   "description": "command line interface and builtin plugin for icejs",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -33,7 +33,7 @@
     "build-plugin-ice-request": "2.0.1",
     "build-plugin-ice-router": "2.1.3",
     "build-plugin-ice-ssr": "3.1.4",
-    "build-plugin-ice-store": "2.0.10",
+    "build-plugin-ice-store": "2.0.11",
     "build-plugin-react-app": "2.2.4",
     "build-plugin-pwa": "1.1.1",
     "build-plugin-speed": "1.0.1",
