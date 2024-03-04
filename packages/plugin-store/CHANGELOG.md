@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.11
+
+- [fix] store error when the page name has `-` char in vite mode
+
 ## 2.0.10
 
 - [feat] match page names with `-`
