@@ -3,8 +3,9 @@ import { Plugin } from 'vite';
 import { formatPath } from '@builder/app-helpers';
 
 const getPageName = (resolveId: string): { type: string; pageName: string; } => {
-  const layoutRegExp = /src\/pages\/(\w+)\/Layout/;
-  const pageRegExp = /src\/pages\/(\w+)(\/index)?(.(j|t)s(x)?)?$/;
+  const layoutRegExp = /src\/pages\/([^/*"]+)*\/Layout/;
+  const pageRegExp = /src\/pages\/([^/*"]+)*((.tsx|.jsx?)$|(\/index(.tsx|.jsx?)?)?$)/;
+
   let type = '';
   if (resolveId.match(pageRegExp)) {
     type = 'page';
