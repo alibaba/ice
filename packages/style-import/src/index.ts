@@ -1,6 +1,8 @@
-import { init, parse } from 'es-module-lexer';
+import pkg from 'rs-module-lexer';
 import MagicString from 'magic-string';
-import type { ImportSpecifier, ExportSpecifier } from 'es-module-lexer';
+import type { ImportSpecifier, ExportSpecifier } from 'rs-module-lexer';
+
+const { parseAsync, parse } = pkg;
 
 interface TransformOptions {
   libraryName: string;
@@ -9,7 +11,7 @@ interface TransformOptions {
   kebabCase?: Boolean;
 }
 
-export async function importStyle(code: string, options: TransformOptions): Promise<null | {
+export async function importStyle(code: string, id: string, options: TransformOptions): Promise<null | {
   code: string;
   map: ReturnType<MagicString['generateMap']>;
 }> {
@@ -17,10 +19,15 @@ export async function importStyle(code: string, options: TransformOptions): Prom
   if (!style) {
     return null;
   }
-  await init;
   let imports: readonly ImportSpecifier[] = [];
   try {
-    imports = parse(code)[0];
+    const { output } = await parseAsync({
+      input: [{
+        code,
+        filename: id,
+      }],
+    });
+    imports = output[0].imports;
   } catch (e) {
     console.log(e);
     return null;
@@ -40,7 +47,14 @@ export async function importStyle(code: string, options: TransformOptions): Prom
         const exportSource = importStr.replace('import ', 'export ').replace(/\s+as\s+\w+,?/g, ',');
         let exports: ExportSpecifier[] = [];
         try {
-          exports = parse(exportSource)[1];
+          const { output } = parse({
+            input: [{
+              // Use static filename to mark the source is written by js.
+              filename: 'export.js',
+              code: exportSource,
+            }],
+          });
+          exports = output[0].exports;
         } catch (e) {
           console.log(`error occur when analyze code: ${importStr}`);
           console.log(e);
@@ -89,7 +103,7 @@ export default function importStylePlugin(options: TransformOptions) {
       if (transformOption.isServer || !code) {
         return null;
       }
-      return await importStyle(code, options);
+      return await importStyle(code, id, options);
     },
   };
 }

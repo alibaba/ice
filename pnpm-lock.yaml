@@ -2411,12 +2411,12 @@ importers:
 
   packages/style-import:
     dependencies:
-      es-module-lexer:
-        specifier: ^1.0.2
-        version: 1.2.0
       magic-string:
         specifier: ^0.27.0
         version: 0.27.0
+      rs-module-lexer:
+        specifier: ^2.3.0
+        version: 2.3.0
 
   packages/webpack-config:
     dependencies:
@@ -9435,6 +9435,87 @@ packages:
       '@webassemblyjs/ast': 1.11.5
       '@xtuc/long': 4.2.2
 
+  /@xn-sakina/rml-darwin-arm64@2.3.0:
+    resolution: {integrity: sha512-3CxaA3NRBo6pd9i6Ih5FL+3qmCrYt4nlc1dAw+VhvyUImkSt1tt9WVvm955i2YJVEjQydgsE+U1xhxKJnFa8Hg==}
+    engines: {node: '>=14'}
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@xn-sakina/rml-darwin-x64@2.3.0:
+    resolution: {integrity: sha512-law6NEW5kaBnn9Ic2/SzLMlHRQcwYrVhKRKU0H/nC/60DFURe6ZKnhNgJAuS1SyU26oEHH6VR7NOvlSEcVWrEg==}
+    engines: {node: '>=14'}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@xn-sakina/rml-linux-arm-gnueabihf@2.3.0:
+    resolution: {integrity: sha512-/fshahvO2ma/NXbOZQXgJDd6nq7IcvvCP6twTtIr4l7KffJ1DeNdvarrD0Hrco5SAZX2qrq/0Z3RzJtsQ/8INQ==}
+    engines: {node: '>=14'}
+    cpu: [arm]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@xn-sakina/rml-linux-arm64-gnu@2.3.0:
+    resolution: {integrity: sha512-0/XEPfqvSvFImL+yvTcpNJz12vH5Dit19TSC0scGHL5CrwEOCDwrYrBLMLuPJVqroW7AFM+PRTg6p4GCUdY1Cw==}
+    engines: {node: '>=14'}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@xn-sakina/rml-linux-arm64-musl@2.3.0:
+    resolution: {integrity: sha512-kN9LyssC5HhM36bCWoASB7ECupA3Vpow6kFW6jURyT9p+UXcQzTtkKLQ/2OpRdom/eUNSabYuRmdyxGTJ2XIcw==}
+    engines: {node: '>=14'}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@xn-sakina/rml-linux-x64-gnu@2.3.0:
+    resolution: {integrity: sha512-XFPAqrIHseL8xA4eCNYcTCp6iSst3SnxcPHiKSezHquJdCSm8m0SRzUqJxMPQUULmM2EL5zHtswbbAb7t+AS3g==}
+    engines: {node: '>=14'}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@xn-sakina/rml-linux-x64-musl@2.3.0:
+    resolution: {integrity: sha512-xLbOW1iDTz6fAN5rnGMclRNH1aBagDjrkApWhZ/5wQUaoi5r4ovAJWWAGqxDZlYi2lzpPSzlgKaD4ZlokC7r+A==}
+    engines: {node: '>=14'}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@xn-sakina/rml-win32-arm64-msvc@2.3.0:
+    resolution: {integrity: sha512-gwUV/Kr/Kkg060OBzzhP8ji7kJq1EG3OKhNXqfOlpIQHU4aHq/xKtVEEFu8KlarhgK9oTyjzM+80yMc0XSwtUg==}
+    engines: {node: '>=14'}
+    cpu: [arm64]
+    os: [win32]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@xn-sakina/rml-win32-x64-msvc@2.3.0:
+    resolution: {integrity: sha512-iJZOAKiMQIVPZ+0QN4sZgo0RewmJu01sSLsHUajc3bTB1EMspZODIRgOli0PjLjWh5WvJ3T230xD9VOaXZ0I8g==}
+    engines: {node: '>=14'}
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    dev: false
+    optional: true
+
   /@xtuc/ieee754@1.2.0:
     resolution: {integrity: sha512-DX8nKgqcGwsc0eJSqYt5lwP4DH5FlHnmuWWBRy7X0NcaGR0ZtuyeESgMwTYVEtxmsNGY+qit4QYT/MIYTOTPeA==}
 
@@ -12467,10 +12548,6 @@ packages:
   /es-module-lexer@0.10.5:
     resolution: {integrity: sha512-+7IwY/kiGAacQfY+YBhKMvEmyAJnw5grTUgjG85Pe7vcUI/6b7pZjZG8nQ7+48YhzEAEqrEgD2dCz/JIK+AYvw==}
     dev: true
-
-  /es-module-lexer@1.2.0:
-    resolution: {integrity: sha512-2BMfqBDeVCcOlLaL1ZAfp+D868SczNpKArrTM3dhpd7dK/OVlogzY15qpUngt+LMTq5UC/csb9vVQAgupucSbA==}
-    dev: false
 
   /es-module-lexer@1.2.1:
     resolution: {integrity: sha512-9978wrXM50Y4rTMmW5kXIC09ZdXQZqkE4mxhwkd8VbzsGkXGPgV4zWuqQJgCEzYngdo2dYDa0l8xhX4fkSwJSg==}
@@ -20573,6 +20650,22 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
+
+  /rs-module-lexer@2.3.0:
+    resolution: {integrity: sha512-Ap6ez0EupuGKoohMq1yClBcGRjivQnemFeR0aIYWjyYT1n8HOywYYi0WUz3bzLVSwAKE4OhFHPDr6LiqHGwwvQ==}
+    engines: {node: '>=14'}
+    requiresBuild: true
+    optionalDependencies:
+      '@xn-sakina/rml-darwin-arm64': 2.3.0
+      '@xn-sakina/rml-darwin-x64': 2.3.0
+      '@xn-sakina/rml-linux-arm-gnueabihf': 2.3.0
+      '@xn-sakina/rml-linux-arm64-gnu': 2.3.0
+      '@xn-sakina/rml-linux-arm64-musl': 2.3.0
+      '@xn-sakina/rml-linux-x64-gnu': 2.3.0
+      '@xn-sakina/rml-linux-x64-musl': 2.3.0
+      '@xn-sakina/rml-win32-arm64-msvc': 2.3.0
+      '@xn-sakina/rml-win32-x64-msvc': 2.3.0
+    dev: false
 
   /rtl-detect@1.0.4:
     resolution: {integrity: sha512-EBR4I2VDSSYr7PkBmFy04uhycIpDKp+21p/jARYXlCSjQksTBQcJ0HFUPOO79EPPH5JS6VAhiIQbycf0O3JAxQ==}

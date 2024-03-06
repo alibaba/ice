@@ -32,37 +32,9 @@ function getVariablesPath({
   return formatPath(filePath);
 }
 
-function importIcon(iconPath: string, cssPrefix: string) {
-  let entryFile = '';
-  return {
-    name: 'transform-import-icon',
-    enforce: 'pre',
-    transformInclude(id: string) {
-      // Only transform source code and icon file.
-      return (id.match(/\.(js|jsx|ts|tsx)$/) && !id.match(/node_modules/)) || iconPath === formatPath(id);
-    },
-    async transform(code: string, id: string, options: { isServer: boolean }) {
-      const { isServer } = options;
-      // Only import icon scss in client
-      if (!isServer) {
-        // Icon just import once.
-        if (!entryFile) {
-          entryFile = id;
-        }
-        if (id === entryFile) {
-          return `import '${iconPath}';\n${code}`;
-        } else if (formatPath(id) === iconPath) {
-          // Default cssPrefix for icon.scss.
-          return `$css-prefix: '${cssPrefix}';\n${code}`;
-        }
-      }
-    },
-  };
-}
-
 const plugin: Plugin<PluginOptions> = (options = {}) => ({
   name: '@ice/plugin-fusion',
-  setup: ({ onGetConfig, createLogger }) => {
+  setup: ({ onGetConfig, createLogger, generator }) => {
     const { theme, themePackage, importStyle } = options;
     if (importStyle) {
       onGetConfig((config) => {
@@ -73,16 +45,18 @@ const plugin: Plugin<PluginOptions> = (options = {}) => ({
       });
     }
     if (theme || themePackage) {
-      onGetConfig((config) => {
-        // Try to get icon.scss if exists.
-        const iconFile = getVariablesPath({
-          packageName: themePackage,
-          filename: 'icons.scss',
-          silent: true,
+      // Try to get icon.scss if exists.
+      const iconFile = getVariablesPath({
+        packageName: themePackage,
+        filename: 'icons.scss',
+        silent: true,
+      });
+      if (iconFile) {
+        generator.addEntryImportAhead({
+          source: iconFile,
         });
-        if (iconFile) {
-          config.transformPlugins = [...(config.transformPlugins || []), importIcon(iconFile, theme?.['css-prefix'] || 'next-')];
-        }
+      }
+      onGetConfig((config) => {
         // Modify webpack config of scss rule for fusion theme.
         config.configureWebpack ??= [];
         config.configureWebpack.push((webpackConfig) => {
@@ -90,8 +64,8 @@ const plugin: Plugin<PluginOptions> = (options = {}) => ({
           let sassLoader = null;
           rules.some((rule) => {
             if (typeof rule === 'object' &&
-            rule.test instanceof RegExp &&
-            rule?.test?.source?.match(/scss/)) {
+              rule.test instanceof RegExp &&
+              rule?.test?.source?.match(/scss/)) {
               sassLoader = Array.isArray(rule?.use) &&
                 rule.use.find((use) => typeof use === 'object' && use.loader.includes('sass-loader'));
               return true;
@@ -99,7 +73,9 @@ const plugin: Plugin<PluginOptions> = (options = {}) => ({
             return false;
           });
           if (sassLoader) {
-            const additionalContent = [];
+            const additionalContent = [
+              `$css-prefix: '${theme?.['css-prefix'] || 'next-'}' !default;`,
+            ];
             if (themePackage) {
               const themeFile = getVariablesPath({
                 packageName: themePackage,
