@@ -27,7 +27,7 @@ export default function KeepAliveOutlet(props: OutletProps) {
   const location = useLocation();
   const outlet = useOutlet();
   const outletLimit = props.limit || OUTLET_LIMIT;
-  const keepAlivePaths = props.paths || [];
+  const keepAlivePaths = props.paths;
 
   // Save the first outlet for SSR hydration.
   const outletRef = useRef({
@@ -41,7 +41,7 @@ export default function KeepAliveOutlet(props: OutletProps) {
     if (outlets.length !== 0 ||
       outletRef.current?.pathname !== location.pathname) {
       let currentOutlets = outletRef.current ? [outletRef.current] : outlets;
-      if (keepAlivePaths.length > 0) {
+      if (keepAlivePaths && keepAlivePaths.length > 0) {
         currentOutlets = currentOutlets.filter(o => keepAlivePaths.includes(o.pathname));
       }
       const result = currentOutlets.some(o => o.pathname === location.pathname);
