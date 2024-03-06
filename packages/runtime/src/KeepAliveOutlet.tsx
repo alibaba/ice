@@ -57,7 +57,7 @@ export default function KeepAliveOutlet(props: OutletProps) {
         outletRef.current = null;
       }
     }
-  }, [location.pathname, location.key, outlet, outlets]);
+  }, [location.pathname, location.key, outlet, outlets, outletLimit, keepAlivePaths]);
 
   // Render initail outlet for SSR hydration.
   const renderOutlets = outlets.length === 0 ? [outletRef.current] : outlets;
