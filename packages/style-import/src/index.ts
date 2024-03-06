@@ -32,10 +32,10 @@ export async function importStyle(code: string, id: string, options: TransformOp
     console.log(e);
     return null;
   }
-
   if (!imports.length) {
     return null;
   }
+
   let s: MagicString | undefined;
   const str = () => s || (s = new MagicString(code));
   imports.forEach(({ n, se, ss }) => {
@@ -45,6 +45,10 @@ export async function importStyle(code: string, id: string, options: TransformOp
       // Get specifiers by export statement (es-module-lexer can analyze name exported).
       if (importStr) {
         const exportSource = importStr.replace('import ', 'export ').replace(/\s+as\s+\w+,?/g, ',');
+        // Namespace export is not supported.
+        if (exportSource.includes('*')) {
+          return;
+        }
         let exports: ExportSpecifier[] = [];
         try {
           const { output } = parse({
