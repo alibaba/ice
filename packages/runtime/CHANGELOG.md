@@ -1,5 +1,12 @@
 # @ice/runtime
 
+## 1.4.2
+
+### Patch Changes
+
+- 547601f3: feat: new api of `useActive` for keep alive
+- fix: single router dose not work when route path is customized
+
 ## 1.4.1
 
 - fix: compatible with basename is undefined.

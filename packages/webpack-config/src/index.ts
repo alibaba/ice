@@ -11,7 +11,7 @@ import ESlintPlugin from '@ice/bundles/compiled/eslint-webpack-plugin/index.js';
 import CopyPlugin from '@ice/bundles/compiled/copy-webpack-plugin/index.js';
 import type { NormalModule, Compiler, Configuration } from 'webpack';
 import type webpack from 'webpack';
-import { compilationPlugin, compileExcludes, getCompilerPlugins, getDefineVars, getAliasWithRoot } from '@ice/shared-config';
+import { compilationPlugin, compileExcludes, getCompilerPlugins, getDefineVars, getAliasWithRoot, getDevtoolValue } from '@ice/shared-config';
 import type { Config, ModifyWebpackConfig } from '@ice/shared-config/types.js';
 import configAssets from './config/assets.js';
 import configCss from './config/css.js';
@@ -427,12 +427,3 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     .reduce((result, next: ModifyWebpackConfig<Configuration, typeof webpack>) => next(result, ctx), webpackConfig);
 }
 
-function getDevtoolValue(sourceMap: Config['sourceMap']) {
-  if (typeof sourceMap === 'string') {
-    return sourceMap;
-  } else if (sourceMap === false) {
-    return false;
-  }
-
-  return 'source-map';
-}

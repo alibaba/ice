@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.4
+
+### Patch Changes
+
+- 4bce5d79: fix: bump rspack version
+
 ## 0.2.3
 
 ### Patch Changes

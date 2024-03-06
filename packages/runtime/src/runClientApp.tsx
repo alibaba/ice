@@ -180,7 +180,7 @@ async function render({ history, runtime, needHydrate }: RenderOptions) {
     },
   };
   const SingleComponent = process.env.ICE_CORE_ROUTER !== 'true' &&
-    await getSingleRoute(routes, basename, routeModuleCache);
+    await getSingleRoute(routes, basename, location, routeModuleCache);
   const renderRoot = appRender(
     root,
     <AppContextProvider value={appContext}>

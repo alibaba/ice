@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.4.4
+
+### Patch Changes
+
+- 4bce5d79: fix: bump rspack version
+- Updated dependencies [4bce5d79]
+- Updated dependencies [547601f3]
+  - @ice/bundles@0.2.4
+  - @ice/rspack-config@1.1.4
+  - @ice/runtime@1.4.2
+  - @ice/shared-config@1.2.4
+  - @ice/webpack-config@1.1.11
+
 ## 3.4.3
 
 ### Patch Changes

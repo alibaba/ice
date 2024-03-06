@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { createRequire } from 'module';
-import { getDefineVars, getCompilerPlugins, getJsxTransformOptions, getAliasWithRoot, skipCompilePackages } from '@ice/shared-config';
+import { getDefineVars, getCompilerPlugins, getJsxTransformOptions, getAliasWithRoot, skipCompilePackages, getDevtoolValue } from '@ice/shared-config';
 import type { Config, ModifyWebpackConfig, ImportDeclaration } from '@ice/shared-config/types';
 import type { Configuration, rspack as Rspack } from '@rspack/core';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
@@ -107,6 +107,7 @@ const getConfig: GetConfig = async (options) => {
     assetsManifest,
     redirectImports,
     fastRefresh,
+    sourceMap,
   } = taskConfig || {};
   const isDev = mode === 'development';
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
@@ -213,8 +214,6 @@ const getConfig: GetConfig = async (options) => {
       rules: [
         {
           test: /\.(jsx?|tsx?|mjs)$/,
-          // Set enforce: 'post' to make sure the compilation-loader is executed after other transformers.
-          enforce: 'post',
           ...(excludeRule ? { exclude: new RegExp(excludeRule) } : {}),
           use: {
             loader: 'builtin:compilation-loader',
@@ -290,6 +289,7 @@ const getConfig: GetConfig = async (options) => {
     infrastructureLogging: {
       level: 'warn',
     },
+    devtool: getDevtoolValue(sourceMap),
     devServer: {
       allowedHosts: 'all',
       headers: {
