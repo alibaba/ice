@@ -136,8 +136,11 @@ export const getAppExportConfig = (rootDir: string) => {
   const config = new Config({
     entry: appEntry,
     rootDir,
-    // Only remove top level code for src/app.
-    transformInclude: (id) => id.includes('src/app') || id.includes('.ice'),
+    transformInclude: (id) => {
+      // Only remove top level code for src/app and runtime code in .ice,
+      // env.ts should not be include otherwise it will cause compile error of env variable export.
+      return id.includes('src/app') || (id.includes('.ice') && !id.includes('env.ts'));
+    },
     getOutfile,
     needRecompile: async (entry, keepExports) => {
       const cachedKey = `app_${keepExports.join('_')}_${process.env.__ICE_VERSION__}`;
