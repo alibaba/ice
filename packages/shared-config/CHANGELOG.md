@@ -1,5 +1,14 @@
 # @ice/shared-config
 
+## 1.2.5
+
+### Patch Changes
+
+- c404b151: fix: align the transform order and content with webpack mode
+- 21257778: fix: imporve dev sourcemap
+- Updated dependencies [c404b151]
+  - @ice/bundles@0.2.5
+
 ## 1.2.4
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.4.5
+
+### Patch Changes
+
+- b279c880: fix: app config compile error of env exports
+- Updated dependencies [c404b151]
+- Updated dependencies [21257778]
+  - @ice/shared-config@1.2.5
+  - @ice/bundles@0.2.5
+  - @ice/webpack-config@1.1.12
+  - @ice/rspack-config@1.1.5
+
 ## 3.4.4
 
 ### Patch Changes

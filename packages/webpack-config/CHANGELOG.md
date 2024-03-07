@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.12
+
+### Patch Changes
+
+- 21257778: fix: imporve dev sourcemap
+- Updated dependencies [c404b151]
+- Updated dependencies [21257778]
+  - @ice/shared-config@1.2.5
+  - @ice/bundles@0.2.5
+
 ## 1.1.11
 
 ### Patch Changes

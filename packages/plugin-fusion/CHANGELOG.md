@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.1.0
+
+### Minor Changes
+
+- 79c32a77: feat: optimize function theme injection
+
+### Patch Changes
+
+- Updated dependencies [79c32a77]
+  - @ice/style-import@1.1.0
+
 ## 1.0.5
 
 ### Patch Changes

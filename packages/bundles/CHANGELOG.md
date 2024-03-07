@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.5
+
+### Patch Changes
+
+- c404b151: fix: align the transform order and content with webpack mode
+
 ## 0.2.4
 
 ### Patch Changes
