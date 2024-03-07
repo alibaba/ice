@@ -5,6 +5,7 @@ import getDefineVars from './getDefineVars.js';
 import getPostcssOpts from './getPostcssOpts.js';
 import getCSSModuleLocalIdent from './getCSSModuleLocalIdent.js';
 import getAliasWithRoot from './getAlias.js';
+import getDevtoolValue from './utils/getDevtool.js';
 
 export {
   getCSSModuleLocalIdent,
@@ -17,4 +18,5 @@ export {
   getDefineVars,
   getPostcssOpts,
   getAliasWithRoot,
+  getDevtoolValue,
 };

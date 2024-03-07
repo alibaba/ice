@@ -1,0 +1,44 @@
+diff --git a/dist/index.js b/dist/index.js
+index 631e1459fbcb948d5089ae5432350c91d9853b5c..00cd831ddaf72e181f6260a99ce40e3ee5220f59 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -1535,7 +1535,7 @@ function getRspackPlugin(factory) {
+           });
+           const externalModules = /* @__PURE__ */ new Set();
+           if (plugin.load) {
+-            compiler.options.module.rules.unshift({
++            compiler.options.module.rules.push({
+               enforce: plugin.enforce,
+               include(id) {
+                 return shouldLoad(id, plugin, externalModules);
+@@ -1549,7 +1549,7 @@ function getRspackPlugin(factory) {
+             });
+           }
+           if (plugin.transform) {
+-            compiler.options.module.rules.unshift({
++            compiler.options.module.rules.push({
+               enforce: plugin.enforce,
+               use(data) {
+                 return transformUse(data, plugin, TRANSFORM_LOADER);
+diff --git a/dist/index.mjs b/dist/index.mjs
+index bca4a4f9ccf06032f8e8af17ec12307c9176b440..5be1848ae866cb181c486b59ecdbf26921b5e5c8 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -1501,7 +1501,7 @@ function getRspackPlugin(factory) {
+           });
+           const externalModules = /* @__PURE__ */ new Set();
+           if (plugin.load) {
+-            compiler.options.module.rules.unshift({
++            compiler.options.module.rules.push({
+               enforce: plugin.enforce,
+               include(id) {
+                 return shouldLoad(id, plugin, externalModules);
+@@ -1515,7 +1515,7 @@ function getRspackPlugin(factory) {
+             });
+           }
+           if (plugin.transform) {
+-            compiler.options.module.rules.unshift({
++            compiler.options.module.rules.push({
+               enforce: plugin.enforce,
+               use(data) {
+                 return transformUse(data, plugin, TRANSFORM_LOADER);
