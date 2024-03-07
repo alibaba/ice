@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-fusion",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "plugin for ICE while use fusion component",
   "license": "MIT",
   "type": "module",
@@ -11,10 +11,10 @@
     "!esm/**/*.map"
   ],
   "dependencies": {
-    "@ice/style-import": "^1.0.1"
+    "@ice/style-import": "^1.1.0"
   },
   "devDependencies": {
-    "@ice/app": "^3.3.4"
+    "@ice/app": "^3.4.5"
   },
   "repository": {
     "type": "http",

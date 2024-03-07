@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0
+
+### Minor Changes
+
+- 79c32a77: feat: optimize function theme injection
+
 ## 1.0.1
 
 ### Patch Changes

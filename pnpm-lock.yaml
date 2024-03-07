@@ -1622,22 +1622,22 @@ importers:
   packages/ice:
     dependencies:
       '@ice/bundles':
-        specifier: 0.2.4
+        specifier: 0.2.5
         version: link:../bundles
       '@ice/route-manifest':
         specifier: 1.2.2
         version: link:../route-manifest
       '@ice/rspack-config':
-        specifier: 1.1.4
+        specifier: 1.1.5
         version: link:../rspack-config
       '@ice/runtime':
         specifier: ^1.4.2
         version: link:../runtime
       '@ice/shared-config':
-        specifier: 1.2.4
+        specifier: 1.2.5
         version: link:../shared-config
       '@ice/webpack-config':
-        specifier: 1.1.11
+        specifier: 1.1.12
         version: link:../webpack-config
       '@swc/helpers':
         specifier: 0.5.1
@@ -1927,11 +1927,11 @@ importers:
   packages/plugin-fusion:
     dependencies:
       '@ice/style-import':
-        specifier: ^1.0.1
+        specifier: ^1.1.0
         version: link:../style-import
     devDependencies:
       '@ice/app':
-        specifier: ^3.3.4
+        specifier: ^3.4.5
         version: link:../ice
 
   packages/plugin-i18n:
@@ -2307,10 +2307,10 @@ importers:
   packages/rspack-config:
     dependencies:
       '@ice/bundles':
-        specifier: 0.2.4
+        specifier: 0.2.5
         version: link:../bundles
       '@ice/shared-config':
-        specifier: 1.2.4
+        specifier: 1.2.5
         version: link:../shared-config
     devDependencies:
       '@rspack/core':
@@ -2381,7 +2381,7 @@ importers:
   packages/shared-config:
     dependencies:
       '@ice/bundles':
-        specifier: 0.2.4
+        specifier: 0.2.5
         version: link:../bundles
       '@rollup/pluginutils':
         specifier: ^4.2.0
@@ -2424,10 +2424,10 @@ importers:
   packages/webpack-config:
     dependencies:
       '@ice/bundles':
-        specifier: 0.2.4
+        specifier: 0.2.5
         version: link:../bundles
       '@ice/shared-config':
-        specifier: 1.2.4
+        specifier: 1.2.5
         version: link:../shared-config
       fast-glob:
         specifier: ^3.2.11
