@@ -89,8 +89,10 @@ function getCompilerPlugins(rootDir: string, config: Config, compiler: Compiler,
     }));
   }
   if (clientBundlers.includes(compiler)) {
-    return compilerPlugins
+    const transformPlugins = compilerPlugins
       .map((plugin) => createUnplugin(() => getPluginTransform(plugin, transformOptions))[compiler]()) as Config['plugins'];
+    // Reverse the transformPlugins for rspack, because the unplugin order has been change in rspack mode.
+    return compiler === 'rspack' ? transformPlugins.reverse() : transformPlugins;
   } else {
     return compilerPlugins.map(plugin => getPluginTransform(plugin, transformOptions));
   }
