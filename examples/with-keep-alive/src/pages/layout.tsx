@@ -4,7 +4,7 @@ export default function Layout() {
   return (
     <div>
       <h2>Layout</h2>
-      <KeepAliveOutlet />
+      <KeepAliveOutlet limit={2} paths={['/home']} />
     </div>
   );
 }
