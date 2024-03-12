@@ -57,6 +57,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const coreTemplate = path.join(templateDir, 'core/');
   const configFile = commandArgs.config || 'ice.config.(mts|mjs|ts|js|cjs|json)';
   const dataCache = new Map<string, string>();
+  const builtinPlugin = commandArgs.plugin as string;
   const generator = new Generator({
     // Directory of templates includes `core` and `exports`.
     templateDir,
@@ -161,7 +162,13 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   if (target === WEB) {
     plugins.push(pluginWeb());
   }
-
+  if (builtinPlugin) {
+    try {
+      plugins.push(await dynamicImport(builtinPlugin));
+    } catch (err) {
+      logger.error('Load builtin plugin error:', err);
+    }
+  }
   // Register framework level API.
   RUNTIME_EXPORTS.forEach(exports => {
     generatorAPI.addExport(exports);

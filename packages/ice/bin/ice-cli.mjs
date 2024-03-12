@@ -29,6 +29,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .option('--analyzer', 'visualize size of output files', false)
     .option('--config <config>', 'use custom config')
     .option('--rootDir <rootDir>', 'project root directory', cwd)
+    .option('--plugin <plugin>', 'add ice plugin by npm package')
     .action(async ({ rootDir, ...commandArgs }, ctx) => {
       renamePlatformToTarget(commandArgs);
       process.env.NODE_ENV = 'production';
