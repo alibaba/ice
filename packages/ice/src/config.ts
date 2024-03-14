@@ -576,6 +576,10 @@ const cliOption = [
     name: 'mock',
     commands: ['start'],
   },
+  {
+    name: 'plugin',
+    commands: ['start', 'build', 'test'],
+  },
 ];
 
 const defaultUserConfig = {};

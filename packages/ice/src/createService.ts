@@ -164,9 +164,12 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   }
   if (builtinPlugin) {
     try {
-      plugins.push(await dynamicImport(builtinPlugin));
+      const pluginModule = await dynamicImport(builtinPlugin.startsWith('.') ? path.join(rootDir, builtinPlugin) : builtinPlugin);
+      const plugin = pluginModule.default || pluginModule;
+      plugins.push(plugin());
     } catch (err) {
-      logger.error('Load builtin plugin error:', err);
+      logger.error(`Load builtin plugin error, Faild to import plugin "${builtinPlugin}".`);
+      throw err;
     }
   }
   // Register framework level API.
