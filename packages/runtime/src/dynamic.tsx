@@ -13,7 +13,7 @@ export type Loader<P = {}> = (() => LoaderComponent<P>) | LoaderComponent<P>;
 export interface DynamicOptions {
   /** @default true */
   ssr?: boolean;
-  /** 用于组件获取前的占位 */
+  /** the fallback UI to render before the actual is loaded */
   fallback?: () => ReactNode;
 }
 
