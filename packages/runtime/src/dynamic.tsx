@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
-import React, { Suspense, lazy, useEffect, useState } from 'react';
+import React, { Suspense, lazy } from 'react';
+import useMounted from './useMounted.js';
 
 const isServer = import.meta.renderer === 'server';
 
@@ -41,11 +42,7 @@ export function dynamic<P = {}>(loader: Loader<P>, option?: DynamicOptions) {
 
   const LazyComp = lazy(() => realLoader().then(convertModule));
   return (props) => {
-    const [hasMounted, setHasMounted] = useState(false);
-
-    useEffect(() => {
-      setHasMounted(true);
-    }, []);
+    const hasMounted = useMounted();
 
     return ssr || (!ssr && hasMounted) ? (
       <Suspense fallback={<Fallback />}>
