@@ -43,6 +43,15 @@ describe(`build ${example}`, () => {
       expect(htmlContent.includes('<!--$?--><template id="B:0"></template><div>bare import fallback</div>')).toBe(true);
       expect(htmlContent.includes('<div hidden id="S:0"><div>normal text</div>')).toBe(true);
     });
+
+    test('should support name export', async () => {
+      const htmlPath = '/normal/name-export.html';
+      await page.push(htmlPath);
+      const htmlContent = fs.readFileSync(path.join(__dirname, `../../examples/${example}/build${htmlPath}`), 'utf-8');
+
+      expect(htmlContent.includes('"renderMode":"SSG"')).toBe(true);
+      expect(htmlContent.includes('<div hidden id="S:0"><div>name exported</div></div>')).toBe(true);
+    });
   });
 
   describe('non-ssr pkg case', () => {
