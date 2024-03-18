@@ -7,5 +7,5 @@
     "moduleDetection": "legacy"
   },
   "include": ["src"],
-  "exclude": ["src/shims/*"]
+  "exclude": ["src/utils/*"]
 }

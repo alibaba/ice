@@ -1,12 +1,13 @@
 import chalk from 'chalk';
 import type { Stats, MultiStats } from '@rspack/core';
+import type { StatsCompilation } from 'webpack';
 import formatWebpackMessages from '../../utils/formatWebpackMessages.js';
 
 function formatStats(stats: Stats | MultiStats, showWarnings = true) {
   const statsData = stats.toJson({
     preset: 'errors-warnings',
-  });
-  // @ts-ignore
+  }) as StatsCompilation;
+
   const { errors, warnings } = formatWebpackMessages(statsData);
 
   if (errors.length) {
