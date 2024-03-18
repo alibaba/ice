@@ -258,7 +258,8 @@ export const matchRoutes = (
   basename: string,
 ) => {
   const pathname = typeof location === 'string' ? location : location.pathname;
-  const stripedPathname = stripBasename(pathname || '/', basename || '/');
+  // If striped pathname is not match and return null, we should fallback to the default value "/".
+  const stripedPathname = stripBasename(pathname || '/', basename || '/') || '/';
   let branches = flattenRoutes(routes);
   if (branches.length === 1) {
     // Just one branch, no need to match.
