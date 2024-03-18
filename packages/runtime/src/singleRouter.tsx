@@ -257,13 +257,13 @@ export const matchRoutes = (
   location: Partial<Location> | string,
   basename: string,
 ) => {
-  const pathname = typeof location === 'string' ? location : location.pathname;
+  const pathname = (typeof location === 'string' ? location : location.pathname) || '/';
 
-  let stripedPathname = stripBasename(pathname || '/', basename || '/');
+  let stripedPathname = stripBasename(pathname, basename || '/');
   if (!stripedPathname && basename !== '/') {
     // If pathname is not match, we should ignore the basename,
     // in case of the basename is customized.
-    stripedPathname = stripBasename(pathname || '/', '/');
+    stripedPathname = stripBasename(pathname, '/');
   }
   let branches = flattenRoutes(routes);
   if (branches.length === 1) {
