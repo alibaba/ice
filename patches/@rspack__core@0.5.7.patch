@@ -1,5 +1,5 @@
 diff --git a/dist/config/adapter.js b/dist/config/adapter.js
-index 49122b3e9f4f0ac85b4075a98f693986b4333051..c3436a090fdbac00e555b2e308974f8d3f9c2426 100644
+index 4eebbcf79cba29acbc0a36d565acc1c08eaf790b..1d87c9be33f69b8dda1436d8e3b970ce0b571112 100644
 --- a/dist/config/adapter.js
 +++ b/dist/config/adapter.js
 @@ -15,6 +15,7 @@ const getRawOptions = (options, compiler) => {
@@ -11,7 +11,7 @@ index 49122b3e9f4f0ac85b4075a98f693986b4333051..c3436a090fdbac00e555b2e308974f8d
          target: getRawTarget(options.target),
          context: options.context,
 diff --git a/dist/config/defaults.js b/dist/config/defaults.js
-index aeb7b74dd8473fa049002cf710ae860577d6d2e2..0dd4fd09fd08482b5a2c5a82cad61ab70e2b2d68 100644
+index 1f9f61ff680b6db026c43eb95fe2d78c5f5d8195..56ce90247fd920717d42bc16864e6025fe6dca66 100644
 --- a/dist/config/defaults.js
 +++ b/dist/config/defaults.js
 @@ -53,6 +53,11 @@ const applyRspackOptionsDefaults = (options) => {
@@ -41,7 +41,7 @@ index aeb7b74dd8473fa049002cf710ae860577d6d2e2..0dd4fd09fd08482b5a2c5a82cad61ab7
      D(experiments, "lazyCompilation", false);
      D(experiments, "asyncWebAssembly", false);
 diff --git a/dist/config/normalization.js b/dist/config/normalization.js
-index 72167c504bd43f606481ccd1de0bdcb9eae71d9f..b16f9f3bbf1c45e00a9ca31684cefec55198683b 100644
+index 696eddf849f8a2f2c66237cb37db767f4dfe20ca..7e89b6091471de8287ce0785042676873141cfbe 100644
 --- a/dist/config/normalization.js
 +++ b/dist/config/normalization.js
 @@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
@@ -53,10 +53,10 @@ index 72167c504bd43f606481ccd1de0bdcb9eae71d9f..b16f9f3bbf1c45e00a9ca31684cefec5
              ? config.ignoreWarnings.map(ignore => {
                  if (typeof ignore === "function") {
 diff --git a/dist/config/zod.js b/dist/config/zod.js
-index 1c4c2cf4d02c562b8fc965c103de0eaf8e246b6a..7fa7e42a02180081096d77f64d7df0cc7d61b4d1 100644
+index a81260f08e4e7de64ff3c1f8769a658db4c73883..df3184bad831922f64f3c41b64bce08fcdf5b3cd 100644
 --- a/dist/config/zod.js
 +++ b/dist/config/zod.js
-@@ -766,6 +766,7 @@ exports.rspackOptions = zod_1.z.strictObject({
+@@ -775,5 +775,6 @@ exports.rspackOptions = zod_1.z.strictObject({
      builtins: builtins.optional(),
      module: moduleOptions.optional(),
      profile: profile.optional(),
@@ -64,4 +64,3 @@ index 1c4c2cf4d02c562b8fc965c103de0eaf8e246b6a..7fa7e42a02180081096d77f64d7df0cc
 +    bail: bail.optional(),
 +    features: zod_1.z.custom().optional(),
  });
- //# sourceMappingURL=zod.js.map
