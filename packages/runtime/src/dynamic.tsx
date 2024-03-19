@@ -44,7 +44,7 @@ export function dynamic<P = {}>(loader: Loader<P>, option?: DynamicOptions) {
   return (props) => {
     const hasMounted = useMounted();
 
-    return ssr || (!ssr && hasMounted) ? (
+    return ssr || hasMounted ? (
       <Suspense fallback={<Fallback />}>
         <LazyComp {...props} />
       </Suspense>
