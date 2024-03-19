@@ -274,6 +274,8 @@ async function init(loaders: Loaders, options: Options) {
   };
 }
 
-export default {
+export const dataLoader = {
   init,
 };
+
+export default dataLoader;

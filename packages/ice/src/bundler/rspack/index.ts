@@ -1,8 +1,9 @@
-import type { MultiCompiler, rspack as Rspack } from '@rspack/core';
+import type { MultiCompiler, Compiler, rspack as Rspack } from '@rspack/core';
 import type { RspackDevServer } from '@rspack/dev-server';
 import { logger } from '../../utils/logger.js';
 import type { BundlerOptions, Context } from '../types.js';
-import getConfig from './getConfig.js';
+import { WEB } from '../../constant.js';
+import getConfig, { getDataLoaderConfig } from './getConfig.js';
 import start from './start.js';
 import build from './build.js';
 
@@ -16,13 +17,38 @@ async function bundler(
     hooksAPI,
     routeManifest,
     appConfig,
+    hasDataLoader,
   } = options;
   let compiler: MultiCompiler;
+  let dataLoaderCompiler: Compiler;
   let devServer: RspackDevServer;
   const { rspack } = await import('@ice/bundles/esm/rspack.js');
   // Override the type of rspack, because of rspack is imported from pre-compiled bundle.
   const rspackConfigs = await getConfig(context, options, rspack as unknown as typeof Rspack);
   try {
+    if (hasDataLoader) {
+      const dataLoaderRspackConfig = await getDataLoaderConfig(
+        context,
+        taskConfigs.find(({ name }) => name === WEB),
+        rspack as unknown as typeof Rspack,
+      );
+      if (command === 'start') {
+        // Create a special compiler for dataLoader,
+        // it will be used in dev-server middleware.
+        // @ts-ignore
+        dataLoaderCompiler = rspack(dataLoaderRspackConfig);
+      } else if (command === 'build') {
+        // Build parrallel when build.
+        rspackConfigs.push(dataLoaderRspackConfig);
+        // Override the output options of clean to false,
+        // Otherwise, the output of previous build will be cleaned.
+        rspackConfigs.forEach((config) => {
+          if (config?.output?.clean) {
+            config.output.clean = false;
+          }
+        });
+      }
+    }
     // @ts-ignore
     compiler = rspack(rspackConfigs);
   } catch (error) {
@@ -40,7 +66,7 @@ async function bundler(
   };
   if (command === 'start') {
     // @ts-expect-error dev-server has been pre-packed, so it will have different type.
-    devServer = await start(buildOptions);
+    devServer = await start(buildOptions, dataLoaderCompiler);
   } else if (command === 'build') {
     await build(buildOptions);
   }

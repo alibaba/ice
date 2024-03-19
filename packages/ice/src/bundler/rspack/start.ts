@@ -1,3 +1,4 @@
+import type { Compiler } from '@rspack/core';
 import type { Configuration as DevServerConfiguration } from '@rspack/dev-server';
 import getDefaultServerConfig from '../config/defaultServerConfig.js';
 import getMiddlewares from '../config/middlewares.js';
@@ -15,7 +16,7 @@ const start = async ({
   compiler,
   appConfig,
   hooksAPI,
-}: BuildOptions) => {
+}: BuildOptions, dataLoaderCompiler?: Compiler) => {
   const { rootDir, applyHook, commandArgs, userConfig, extendsPluginAPI: { excuteServerEntry } } = context;
   const customMiddlewares = rspackConfigs[0].devServer?.setupMiddlewares;
   const defaultConfig = await getDefaultServerConfig(rspackConfigs[0].devServer, commandArgs);
@@ -32,6 +33,7 @@ const start = async ({
         excuteServerEntry,
         mock: commandArgs.mock,
         rootDir,
+        dataLoaderCompiler,
       });
       return customMiddlewares ? customMiddlewares(builtInMiddlewares, devServer) : builtInMiddlewares;
     },

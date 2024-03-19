@@ -67,9 +67,6 @@ export const RUNTIME_EXPORTS = [
       'useSuspenseData',
       'usePublicAppContext',
       'Await',
-      'defineDataLoader',
-      'defineServerDataLoader',
-      'defineStaticDataLoader',
       'usePageLifecycle',
       'unstable_useDocumentData',
     ],
@@ -77,6 +74,14 @@ export const RUNTIME_EXPORTS = [
       usePublicAppContext: 'useAppContext',
     },
     source: '@ice/runtime',
+  },
+  {
+    specifier: [
+      'defineDataLoader',
+      'defineServerDataLoader',
+      'defineStaticDataLoader',
+    ],
+    source: '@ice/runtime/data-loader',
   },
 ];
 
