@@ -1,7 +1,8 @@
 import type { ReactNode } from 'react';
 import React, { Suspense, lazy } from 'react';
-import { isNode } from 'universal-env';
 import useMounted from './useMounted.js';
+
+const isServer = import.meta.renderer === 'server';
 
 type ComponentModule<P = {}> = { default: React.ComponentType<P> };
 
@@ -35,7 +36,7 @@ export function dynamic<P = {}>(loader: Loader<P>, option?: DynamicOptions) {
   if (!realLoader) return DefaultFallback;
   const Fallback = fallback;
 
-  if (!ssr && isNode) {
+  if (!ssr && isServer) {
     return () => <Fallback />;
   }
 
