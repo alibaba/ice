@@ -57,10 +57,6 @@ export default defineConfig(() => ({
 
 ### crossOriginLoading
 
-:::caution
-小程序端不支持该配置。
-:::
-
 - 类型：`false | 'anonymous' | 'use-credentials'`
 - 默认值：`false`
 
@@ -121,10 +117,6 @@ console.log(AGE);
 
 ### publicPath
 
-:::caution
-小程序端不支持该配置。
-:::
-
 - 类型：`string`
 - 默认值：`/`
 
@@ -138,10 +130,6 @@ console.log(AGE);
 同 publicPath 仅在执行 start 时生效。
 
 ### hash
-
-:::caution
-小程序端不支持该配置。
-:::
 
 - 类型：`boolean | string`
 - 默认值：`false`
@@ -157,10 +145,6 @@ export default defineConfig(() => ({
 ```
 
 ### externals
-
-:::caution
-小程序端不支持该配置。
-:::
 
 - 类型：`Record<string, string>`
 - 默认值：`{}`
@@ -207,10 +191,6 @@ export default Document;
 构建产物输出目录，默认为 `build` 目录
 
 ### proxy
-
-:::caution
-小程序端不支持该配置。
-:::
 
 - 类型：`object`
 - 默认值：`{}`
@@ -402,10 +382,6 @@ export default defineConfig(() => ({
 
 ### ssr
 
-:::caution
-小程序端不支持该配置。
-:::
-
 - 类型：`boolean`
 - 默认值：`false`
 
@@ -413,20 +389,12 @@ export default defineConfig(() => ({
 
 ### ssg
 
-:::caution
-小程序端不支持该配置。
-:::
-
 - 类型：`boolean`
 - 默认值：`true`
 
 是否开启 SSG 能力，更多 SSG 相关内容参考 [SSG 文档](./ssg)。
 
 ### server
-
-:::caution
-小程序端不支持该配置。
-:::
 
 - 类型：`{ format: 'esm' | 'cjs'; bundle: boolean; ignores: IgnorePattern[]; externals: string[]; onDemand: boolean; }`
 - 默认值：`{ format: 'esm', bundle: false, ignores: [], externals: [], onDemand: false }`
@@ -490,10 +458,6 @@ export default defineConfig(() => ({
 ```
 
 ### routes
-
-:::caution
-小程序端不支持该配置。
-:::
 
 - 类型：`{ ignoreFiles: string[]; defineRoutes: (route: DefineRouteFunction) => void }`
 - 默认值：`{}`
@@ -592,8 +556,7 @@ export default defineConfig({
 ### splitChunks @deprecated
 
 :::caution
-不再建议使用，能力由 codeSplitting 替代。
-小程序端不支持该配置。
+不再建议使用，能力由 codeSplitting 替代
 :::
 
 默认会根据模块体积自动拆分 chunks，有可能会出现多个 bundle。如果不希望打包产物出现过多 bundle ，可设置成 `false`。
@@ -638,10 +601,6 @@ ice.js 内置了大量 ES 语法支持，便于开发者进行编码。对于 [p
 - `object`: 仅 Webpack 模式支持，表现等同于 true，支持配置 [eslint-webpack-plugin](https://github.com/webpack-contrib/eslint-webpack-plugin) 的更多参数
 
 ### mock
-
-:::caution
-小程序端不支持该配置。
-:::
 
 - 类型：`{ exclude: string[] }`
 - 默认值：`{}`
@@ -730,5 +689,29 @@ export default defineConfig(() => ({
   },
 }));
 ```
+
+### optimization
+
+- 类型：`{ disableRouter: boolean; optimizePackageImport: boolean | string[] }`
+- 默认值：`{}`
+
+框架提供内置的优化能力，针对不同场景提供优化策略：
+- `disableRouter`：默认为 `false`，如果希望关闭路由能力，可以设置为 `true`。主要应用不存在依赖路由能力的场景，比如不存在 SPA 页面跳转。
+- `optimizePackageImport`：默认为 `false`，开启后框架默认会对已知三方依赖进行按需加载，项目的构建体验将进一步提升，内置三方依赖列表参考[代码](https://github.com/alibaba/ice/blob/1989fc18fa26230e91322e225dd20633d268a26b/packages/ice/src/config.ts#L364-L421)。
+
+
+参考配置：
+```js
+import { defineConfig } from '@ice/app';
+
+export default defineConfig(() => ({
+  optimization: {
+    disableRouter: true,
+    // optimizePackageImport 配置为 true 则使用内置的三方依赖列表，如果配置为数组则会在内置列表基础上追加
+    optimizePackageImport: ['@ice/components'],
+  },
+}));
+```
+
 
 > 如有定制需求欢迎👏 PR 或反馈：<https://github.com/alibaba/ice/issues>
