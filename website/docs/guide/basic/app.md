@@ -34,10 +34,6 @@ export default defineAppConfig(() => ({
 - 类型：`string`
 - 默认值：`ice-container`
 
-:::tip
-小程序端不支持修改 rootId。
-:::
-
 #### `strict`
 
 是否开启 React 的严格模式 (React.StrictMode)
@@ -53,10 +49,6 @@ export default defineAppConfig(() => ({
 - 默认值：`false`
 
 ### router
-
-:::tip
-小程序端不支持 `router` 配置。关于小程序的 `router` 配置参考[小程序开发-路由](../miniapp/router)
-:::
 
 #### `type` 
 

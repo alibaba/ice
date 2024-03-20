@@ -3,10 +3,6 @@ title: 定制 HTML
 order: 12
 ---
 
-:::tip
-小程序端不支持该能力。
-:::
-
 ice.js 使用 JSX 维护页面的 HTML 模板结构，其入口位于 `src/document.tsx`。
 
 ## 初始模板
