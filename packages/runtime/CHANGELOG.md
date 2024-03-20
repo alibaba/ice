@@ -1,5 +1,14 @@
 # @ice/runtime
 
+## 1.4.3
+
+### Patch Changes
+
+- ba811d72: feat: support props for KeepAliveOutlet
+- a7c76b62: feat: support API dynamic to allow import component in different scenario
+- 0d3cfd59: refactor: the compilation for data-loader
+- d0a748f6: fix: compat with the route path did not match when single route mode
+
 ## 1.4.2
 
 ### Patch Changes

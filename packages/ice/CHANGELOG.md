@@ -1,5 +1,23 @@
 # Changelog
 
+## 3.4.6
+
+### Patch Changes
+
+- 8275f13f: feat: upgrade icepack for new features
+- 0d3cfd59: refactor: the compilation for data-loader
+- ac36776f: feat: support add plugin by cli option
+- Updated dependencies [ba811d72]
+- Updated dependencies [a7c76b62]
+- Updated dependencies [8275f13f]
+- Updated dependencies [0d3cfd59]
+- Updated dependencies [d0a748f6]
+  - @ice/runtime@1.4.3
+  - @ice/rspack-config@1.1.6
+  - @ice/bundles@0.2.6
+  - @ice/shared-config@1.2.6
+  - @ice/webpack-config@1.1.13
+
 ## 3.4.5
 
 ### Patch Changes
