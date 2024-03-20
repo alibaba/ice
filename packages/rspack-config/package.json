@@ -1,6 +1,6 @@
 {
   "name": "@ice/rspack-config",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "repository": "alibaba/ice",
   "bugs": "https://github.com/alibaba/ice/issues",
   "homepage": "https://v3.ice.work",
@@ -15,8 +15,8 @@
     "*.d.ts"
   ],
   "dependencies": {
-    "@ice/bundles": "0.2.5",
-    "@ice/shared-config": "1.2.5"
+    "@ice/bundles": "0.2.6",
+    "@ice/shared-config": "1.2.6"
   },
   "devDependencies": {
     "@rspack/core": "0.5.7"

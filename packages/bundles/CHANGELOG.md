@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.6
+
+### Patch Changes
+
+- 8275f13f: feat: upgrade icepack for new features
+- 0d3cfd59: refactor: the compilation for data-loader
+
 ## 0.2.5
 
 ### Patch Changes

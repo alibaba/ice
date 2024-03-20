@@ -1,5 +1,16 @@
 # @ice/rspack-config
 
+## 1.1.6
+
+### Patch Changes
+
+- 8275f13f: feat: upgrade icepack for new features
+- 0d3cfd59: refactor: the compilation for data-loader
+- Updated dependencies [8275f13f]
+- Updated dependencies [0d3cfd59]
+  - @ice/bundles@0.2.6
+  - @ice/shared-config@1.2.6
+
 ## 1.1.5
 
 ### Patch Changes

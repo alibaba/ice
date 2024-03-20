@@ -1,5 +1,14 @@
 # @ice/shared-config
 
+## 1.2.6
+
+### Patch Changes
+
+- 0d3cfd59: refactor: the compilation for data-loader
+- Updated dependencies [8275f13f]
+- Updated dependencies [0d3cfd59]
+  - @ice/bundles@0.2.6
+
 ## 1.2.5
 
 ### Patch Changes
