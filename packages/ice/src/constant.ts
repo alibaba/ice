@@ -69,6 +69,7 @@ export const RUNTIME_EXPORTS = [
       'Await',
       'usePageLifecycle',
       'unstable_useDocumentData',
+      'dynamic',
     ],
     alias: {
       usePublicAppContext: 'useAppContext',

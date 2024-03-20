@@ -792,6 +792,31 @@ importers:
         specifier: ^18.0.6
         version: 18.0.11
 
+  examples/with-dynamic:
+    dependencies:
+      '@ice/app':
+        specifier: workspace:*
+        version: link:../../packages/ice
+      '@ice/runtime':
+        specifier: workspace:*
+        version: link:../../packages/runtime
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      tslib:
+        specifier: ^2.4.0
+        version: 2.5.0
+    devDependencies:
+      '@types/react':
+        specifier: ^18.0.17
+        version: 18.0.34
+      '@types/react-dom':
+        specifier: ^18.0.6
+        version: 18.0.11
+
   examples/with-entry-type:
     dependencies:
       '@ice/app':
