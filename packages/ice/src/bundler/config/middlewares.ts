@@ -1,9 +1,11 @@
+import type { Compiler } from '@rspack/core';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import type { TaskConfig } from 'build-scripts';
 import type { RenderMode } from '@ice/runtime';
 import type { Config } from '@ice/shared-config/types';
 import createMockMiddleware from '../../middlewares/mock/createMiddleware.js';
 import createRenderMiddleware from '../../middlewares/renderMiddleware.js';
+import createDataLoaderMiddleware from '../../middlewares/dataLoaderMiddleware.js';
 import type { UserConfig } from '../../types/userConfig.js';
 import type RouteManifest from '../../utils/routeManifest.js';
 import type { GetAppConfig } from '../../types/plugin.js';
@@ -16,6 +18,7 @@ interface SetupOptions {
   excuteServerEntry: () => Promise<any>;
   mock: boolean;
   rootDir: string;
+  dataLoaderCompiler?: Compiler;
 }
 
 function setupMiddlewares(middlewares: Parameters<DevServerConfiguration['setupMiddlewares']>[0], {
@@ -26,6 +29,7 @@ function setupMiddlewares(middlewares: Parameters<DevServerConfiguration['setupM
   excuteServerEntry,
   mock,
   rootDir,
+  dataLoaderCompiler,
 }: SetupOptions) {
   const { ssr, ssg } = userConfig;
   let renderMode: RenderMode;
@@ -46,6 +50,12 @@ function setupMiddlewares(middlewares: Parameters<DevServerConfiguration['setupM
     routeManifest,
     excuteServerEntry,
   });
+
+  if (dataLoaderCompiler) {
+    const dataLoaderMiddleware = createDataLoaderMiddleware(dataLoaderCompiler);
+    middlewares.unshift(dataLoaderMiddleware);
+  }
+
   // @ts-ignore property of name is exist.
   const insertIndex = middlewares.findIndex(({ name }) => name === 'serve-index');
   middlewares.splice(

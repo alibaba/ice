@@ -50,7 +50,7 @@ import useMounted from './useMounted.js';
 import usePageLifecycle from './usePageLifecycle.js';
 import { withSuspense, useSuspenseData } from './Suspense.js';
 import { createRouteLoader, WrapRouteComponent, RouteErrorComponent, Await } from './routes.js';
-
+import { dynamic } from './dynamic.js';
 function useAppContext() {
   console.warn('import { useAppContext } from \'@ice/runtime\'; is deprecated, please use import { useAppContext } from \'ice\'; instead.');
   return useInternalAppContext();
@@ -117,6 +117,7 @@ export {
   callDataLoader,
   getRequestContext,
   history,
+  dynamic,
 
   useActive,
   KeepAliveOutlet,

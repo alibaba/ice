@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.11
+
+### Patch Changes
+
+- 886c4de8: fix createElement runtime import
+
 ## 0.2.10
 
 ### Patch Changes

@@ -38,6 +38,7 @@ export interface BundlerOptions {
   configFile: string;
   userConfig: UserConfig;
   routeManifest: RouteManifest;
+  hasDataLoader: boolean;
 }
 
 export type CompileResults = {

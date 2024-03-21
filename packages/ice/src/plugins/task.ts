@@ -28,7 +28,6 @@ const getDefaultTaskConfig = ({ rootDir, command }): Config => {
       'universal-env': envReplacement,
       '@uni/env': envReplacement,
     },
-
     assetsManifest: true,
     fastRefresh: command === 'start',
     logging: process.env.WEBPACK_LOGGING || defaultLogging,
