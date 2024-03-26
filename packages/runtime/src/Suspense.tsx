@@ -26,7 +26,7 @@ type Request = (ctx: RequestContext) => Promise<any>;
 
 const SuspenseContext = React.createContext<SuspenseState | undefined>(undefined);
 
-const getHydrateData = (id: string) => {
+const getHydrateData = (id: string, encodeData: boolean) => {
   let data = null;
   const loaderData = isClient && window[LOADER];
   let hasHydrateData: boolean;
@@ -43,17 +43,17 @@ const getHydrateData = (id: string) => {
   }
   return {
     hasHydrateData,
-    data,
+    data: encodeData ? JSON.parse(decodeURI(data)) : data,
   };
 };
 
 export function useSuspenseData(request?: Request) {
   const appContext = useAppContext();
-  const { requestContext } = appContext;
+  const { requestContext, appConfig } = appContext;
   const suspenseState = React.useContext(SuspenseContext);
 
   const { data, done, promise, update, error, id } = suspenseState;
-  const { hasHydrateData, data: hydrateData } = getHydrateData(id);
+  const { hasHydrateData, data: hydrateData } = getHydrateData(id, appConfig.encodeData);
 
   let thenable: Promise<any> = null;
   if (!hasHydrateData && !error && !done && !promise && request) {
@@ -163,9 +163,10 @@ export function withSuspense(Component) {
 }
 
 function Data(props) {
+  const { appConfig } = useAppContext();
   const data = useSuspenseData();
 
   return (
-    <script dangerouslySetInnerHTML={{ __html: `!function(){window['${LOADER}'] = window['${LOADER}'] || {};window['${LOADER}']['${props.id}'] = ${JSON.stringify(data)}}();` }} />
+    <script dangerouslySetInnerHTML={{ __html: `!function(){window['${LOADER}'] = window['${LOADER}'] || {};window['${LOADER}']['${props.id}'] = ${appConfig.encodeData ? encodeURI(JSON.stringify(data)) : JSON.stringify(data)}}();` }} />
   );
 }
