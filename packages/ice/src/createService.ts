@@ -269,7 +269,10 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const iceRuntimePath = '@ice/runtime';
   // Only when code splitting use the default strategy or set to `router`, the router will be lazy loaded.
   const lazy = [true, 'chunks', 'page', 'page-vendors'].includes(userConfig.codeSplitting);
-  const { routeImports, routeDefinition } = getRoutesDefinition(routesInfo.routes, lazy);
+  const { routeImports, routeDefinition } = getRoutesDefinition({
+    manifest: routesInfo.routes,
+    lazy,
+  });
   // add render data
   generator.setRenderData({
     ...routesInfo,
@@ -291,6 +294,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     dataLoader: userConfig.dataLoader,
     routeImports,
     routeDefinition,
+    routesFile: './routes',
   });
   dataCache.set('routes', JSON.stringify(routesInfo));
   dataCache.set('hasExportAppData', hasExportAppData ? 'true' : '');
@@ -328,6 +332,23 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       specifier: '',
     });
   }
+
+  const routes = routeManifest.getFlattenRoute();
+
+  routes.forEach((route) => {
+    const routeId = route.replace(/\//g, '_');
+    generator.addRenderFile(
+      'core/entry.server.ts.ejs',
+      `server.entry.${routeId}.ts`,
+      {
+        routesFile: `./routes.${routeId}`,
+      },
+    );
+    // Generate route file for each route.
+    generator.addRenderFile('core/routes.tsx.ejs', `routes.${routeId}.tsx`, {
+
+    });
+  });
 
   // render template before webpack compile
   const renderStart = new Date().getTime();

@@ -14,7 +14,7 @@ import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 // @ts-ignore
 import assetsManifest from 'virtual:assets-manifest.json';
 <% if (hydrate) {-%>
-import createRoutes from './routes';
+import createRoutes from '<%- routesFile %>';
 <% } else { -%>
 import routesManifest from './route-manifest.json';
 <% } -%>
