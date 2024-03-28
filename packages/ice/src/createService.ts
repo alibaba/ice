@@ -41,7 +41,7 @@ import addPolyfills from './utils/runtimePolyfill.js';
 import webpackBundler from './bundler/webpack/index.js';
 import rspackBundler from './bundler/rspack/index.js';
 import getDefaultTaskConfig from './plugins/task.js';
-import { escapeRoutePath } from './utils/generateEntry.js';
+import { multipleServerEntry, renderMultiEntry } from './utils/multipleEntry.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -334,22 +334,14 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     });
   }
 
-  const routes = routeManifest.getFlattenRoute();
-
-  routes.forEach((route) => {
-    const routeId = escapeRoutePath(route).replace(/\//g, '_');
-    generator.addRenderFile(
-      'core/entry.server.ts.ejs',
-      `server.entry.${routeId}.ts`,
-      {
-        routesFile: `./routes.${routeId}`,
-      },
-    );
-    // Generate route file for each route.
-    generator.addRenderFile('core/routes.tsx.ejs', `routes.${routeId}.tsx`, {
-
+  if (multipleServerEntry(userConfig, command)) {
+    renderMultiEntry({
+      generator,
+      renderRoutes: routeManifest.getFlattenRoute(),
+      routesManifest: routesInfo.routes,
+      lazy,
     });
-  });
+  }
 
   // render template before webpack compile
   const renderStart = new Date().getTime();
