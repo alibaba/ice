@@ -41,6 +41,7 @@ import addPolyfills from './utils/runtimePolyfill.js';
 import webpackBundler from './bundler/webpack/index.js';
 import rspackBundler from './bundler/rspack/index.js';
 import getDefaultTaskConfig from './plugins/task.js';
+import { escapeRoutePath } from './utils/generateEntry.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -336,7 +337,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const routes = routeManifest.getFlattenRoute();
 
   routes.forEach((route) => {
-    const routeId = route.replace(/\//g, '_');
+    const routeId = escapeRoutePath(route).replace(/\//g, '_');
     generator.addRenderFile(
       'core/entry.server.ts.ejs',
       `server.entry.${routeId}.ts`,

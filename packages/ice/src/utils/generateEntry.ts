@@ -93,9 +93,13 @@ const writeFile = async (file: string, content: string) => {
   await fse.writeFile(file, content);
 };
 
-function formatFilePath(routePath: string, type: 'js' | 'html' | 'js.map'): string {
+export function escapeRoutePath(str: string) {
   // Win32 do not support file name start with ':' and '*'.
-  return routePath === '/' ? `index.${type}` : `${routePath.replace(/\/(:|\*)/g, '/$')}.${type}`;
+  return str.replace(/\/(:|\*)/g, '/$');
+}
+
+function formatFilePath(routePath: string, type: 'js' | 'html' | 'js.map'): string {
+  return routePath === '/' ? `index.${type}` : `${escapeRoutePath(routePath)}.${type}`;
 }
 
 async function generateFilePath(
