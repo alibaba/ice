@@ -938,8 +938,8 @@ importers:
         specifier: ^18.0.2
         version: 18.0.11
       express:
-        specifier: ^4.17.3
-        version: 4.18.2
+        specifier: ^4.19.2
+        version: 4.19.2
       tslib:
         specifier: ^2.5.0
         version: 2.5.0
@@ -1483,8 +1483,8 @@ importers:
         specifier: 3.1.1
         version: 3.1.1(eslint@8.35.0)(webpack@5.88.2)
       express:
-        specifier: ^4.17.3
-        version: 4.18.2
+        specifier: ^4.19.2
+        version: 4.19.2
       find-up:
         specifier: 5.0.0
         version: 5.0.0
@@ -10526,8 +10526,8 @@ packages:
       - supports-color
     dev: true
 
-  /body-parser@1.20.1:
-    resolution: {integrity: sha512-jWi7abTbYwajOytWCQc37VulmWiRae5RyTpaCyDcS5/lMdtwSz5lOpDE67srw/HYe35f1z3fDQw+3txg7gNtWw==}
+  /body-parser@1.20.2:
+    resolution: {integrity: sha512-ml9pReCu3M61kGlqoTm2umSXTlRTuGTx0bfYj+uIUKKYycG5NtSbeetV3faSU6R7ajOPw0g/J1PvK4qNy7s5bA==}
     engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
     dependencies:
       bytes: 3.1.2
@@ -10539,7 +10539,7 @@ packages:
       iconv-lite: 0.4.24
       on-finished: 2.4.1
       qs: 6.11.0
-      raw-body: 2.5.1
+      raw-body: 2.5.2
       type-is: 1.6.18
       unpipe: 1.0.0
     transitivePeerDependencies:
@@ -11369,6 +11369,11 @@ packages:
 
   /cookie@0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
+    engines: {node: '>= 0.6'}
+    dev: true
+
+  /cookie@0.6.0:
+    resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
     engines: {node: '>= 0.6'}
 
   /copy-anything@2.0.6:
@@ -13348,16 +13353,16 @@ packages:
       - supports-color
     dev: true
 
-  /express@4.18.2:
-    resolution: {integrity: sha512-5/PsL6iGPdfQ/lKM1UuielYgv3BUoJfz1aUwU9vHZ+J7gyvwdQXFEBIEIaxeGf0GIcreATNyBExtalisDbuMqQ==}
+  /express@4.19.2:
+    resolution: {integrity: sha512-5T6nhjsT+EOMzuck8JjBHARTHfMht0POzlA60WV2pMD3gyXw2LZnZ+ueGdNxG+0calOJcWKbpFcuzLZ91YWq9Q==}
     engines: {node: '>= 0.10.0'}
     dependencies:
       accepts: 1.3.8
       array-flatten: 1.1.1
-      body-parser: 1.20.1
+      body-parser: 1.20.2
       content-disposition: 0.5.4
       content-type: 1.0.5
-      cookie: 0.5.0
+      cookie: 0.6.0
       cookie-signature: 1.0.6
       debug: 2.6.9
       depd: 2.0.0
@@ -18898,6 +18903,16 @@ packages:
       http-errors: 2.0.0
       iconv-lite: 0.4.24
       unpipe: 1.0.0
+    dev: true
+
+  /raw-body@2.5.2:
+    resolution: {integrity: sha512-8zGqypfENjCIqGhgXToC8aB2r7YrBX+AQAfIPs/Mlk+BtPTztOvTS01NRW/3Eh60J+a48lt8qsCzirQ6loCVfA==}
+    engines: {node: '>= 0.8'}
+    dependencies:
+      bytes: 3.1.2
+      http-errors: 2.0.0
+      iconv-lite: 0.4.24
+      unpipe: 1.0.0
 
   /rax-children@1.0.0(rax@1.2.3):
     resolution: {integrity: sha512-sBKEXAMj9ik6SsPfPGgcQnqggmbWFyBdvAV/Cz/0f04bRA86BtWgbMri/9Dce0k8nkEC/BGWiiTdyA8Q49zIiw==}
@@ -23224,7 +23239,7 @@ packages:
       compression: 1.7.4
       connect-history-api-fallback: 2.0.0
       default-gateway: 6.0.3
-      express: 4.18.2
+      express: 4.19.2
       graceful-fs: 4.2.10
       html-entities: 2.3.3
       http-proxy-middleware: 2.0.6(@types/express@4.17.17)
@@ -23275,7 +23290,7 @@ packages:
       compression: 1.7.4
       connect-history-api-fallback: 2.0.0
       default-gateway: 6.0.3
-      express: 4.18.2
+      express: 4.19.2
       graceful-fs: 4.2.10
       html-entities: 2.3.3
       http-proxy-middleware: 2.0.6(@types/express@4.17.17)(debug@4.3.4)
@@ -23326,7 +23341,7 @@ packages:
       compression: 1.7.4
       connect-history-api-fallback: 2.0.0
       default-gateway: 6.0.3
-      express: 4.18.2
+      express: 4.19.2
       graceful-fs: 4.2.10
       html-entities: 2.3.3
       http-proxy-middleware: 2.0.6(@types/express@4.17.17)
@@ -23377,7 +23392,7 @@ packages:
       compression: 1.7.4
       connect-history-api-fallback: 2.0.0
       default-gateway: 6.0.3
-      express: 4.18.2
+      express: 4.19.2
       graceful-fs: 4.2.10
       html-entities: 2.3.3
       http-proxy-middleware: 2.0.6(@types/express@4.17.17)
