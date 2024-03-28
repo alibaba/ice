@@ -13,6 +13,7 @@ interface Options {
   serverCompileTask: ExtendsPluginAPI['serverCompileTask'];
   ensureRoutesConfig: () => Promise<void>;
   runtimeDefineVars: Record<string, string>;
+  entryPoints?: Record<string, string>;
 }
 
 function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Options) {
@@ -24,15 +25,16 @@ function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Option
     serverCompileTask,
     ensureRoutesConfig,
     runtimeDefineVars,
+    entryPoints,
   } = options;
-  const entryPoint = getServerEntry(rootDir, serverEntry);
   const { ssg, ssr, server: { format } } = userConfig;
   const isEsm = userConfig?.server?.format === 'esm';
+
   return new ServerCompilerPlugin(
     serverCompiler,
     [
       {
-        entryPoints: { index: entryPoint },
+        entryPoints: entryPoints || { index: getServerEntry(rootDir, serverEntry) },
         outdir: path.join(outputDir, SERVER_OUTPUT_DIR),
         splitting: isEsm,
         format,

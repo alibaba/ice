@@ -59,9 +59,20 @@ function getFilePath(file: string) {
   return formatPath(path.isAbsolute(file) ? file : `@/pages/${file}`.replace(new RegExp(`${path.extname(file)}$`), ''));
 }
 
-export function getRoutesDefinition(nestRouteManifest: NestedRouteManifest[], lazy = false, depth = 0) {
+interface GetDefinationOptions {
+  manifest: NestedRouteManifest[];
+  lazy?: boolean;
+  depth?: number;
+  matchRoute?: (route: NestedRouteManifest) => boolean;
+}
+
+export function getRoutesDefinition(options: GetDefinationOptions) {
+  const { manifest, lazy = false, depth = 0, matchRoute = () => true } = options;
   const routeImports: string[] = [];
-  const routeDefinition = nestRouteManifest.reduce((prev, route) => {
+  const routeDefinition = manifest.reduce((prev, route) => {
+    if (!matchRoute(route)) {
+      return prev;
+    }
     const { children, path: routePath, index, componentName, file, id, layout, exports } = route;
     const componentPath = id.startsWith('__') ? file : getFilePath(file);
 
@@ -107,7 +118,12 @@ export function getRoutesDefinition(nestRouteManifest: NestedRouteManifest[], la
       routeProperties.push('layout: true,');
     }
     if (children) {
-      const res = getRoutesDefinition(children, lazy, depth + 1);
+      const res = getRoutesDefinition({
+        manifest: children,
+        lazy,
+        depth: depth + 1,
+        matchRoute,
+      });
       routeImports.push(...res.routeImports);
       routeProperties.push(`children: [${res.routeDefinition}]`);
     }

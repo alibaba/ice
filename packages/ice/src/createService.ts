@@ -41,6 +41,7 @@ import addPolyfills from './utils/runtimePolyfill.js';
 import webpackBundler from './bundler/webpack/index.js';
 import rspackBundler from './bundler/rspack/index.js';
 import getDefaultTaskConfig from './plugins/task.js';
+import { multipleServerEntry, renderMultiEntry } from './utils/multipleEntry.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -269,7 +270,10 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const iceRuntimePath = '@ice/runtime';
   // Only when code splitting use the default strategy or set to `router`, the router will be lazy loaded.
   const lazy = [true, 'chunks', 'page', 'page-vendors'].includes(userConfig.codeSplitting);
-  const { routeImports, routeDefinition } = getRoutesDefinition(routesInfo.routes, lazy);
+  const { routeImports, routeDefinition } = getRoutesDefinition({
+    manifest: routesInfo.routes,
+    lazy,
+  });
   // add render data
   generator.setRenderData({
     ...routesInfo,
@@ -291,6 +295,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     dataLoader: userConfig.dataLoader,
     routeImports,
     routeDefinition,
+    routesFile: './routes',
   });
   dataCache.set('routes', JSON.stringify(routesInfo));
   dataCache.set('hasExportAppData', hasExportAppData ? 'true' : '');
@@ -326,6 +331,15 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     } : {
       source: packageName,
       specifier: '',
+    });
+  }
+
+  if (multipleServerEntry(userConfig, command)) {
+    renderMultiEntry({
+      generator,
+      renderRoutes: routeManifest.getFlattenRoute(),
+      routesManifest: routesInfo.routes,
+      lazy,
     });
   }
 
