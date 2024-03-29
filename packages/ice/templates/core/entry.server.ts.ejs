@@ -9,7 +9,7 @@ import * as Document from '@/document';
 <% } else { -%>
 import * as Document from './document';
 <% } -%>
-import type { RenderMode, DistType } from '@ice/runtime';
+import type { RenderMode } from '@ice/runtime';
 import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 // @ts-ignore
 import assetsManifest from 'virtual:assets-manifest.json';
@@ -49,7 +49,6 @@ interface RenderOptions {
   serverOnlyBasename?: string;
   routePath?: string;
   disableFallback?: boolean;
-  distType?: DistType;
   publicPath?: string;
   serverData?: any;
   streamOptions?: RenderToPipeableStreamOptions;

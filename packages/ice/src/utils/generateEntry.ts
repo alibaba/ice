@@ -1,7 +1,6 @@
 import * as path from 'path';
 import fse from 'fs-extra';
-import type { ServerContext, RenderMode, AppConfig, DistType } from '@ice/runtime';
-import type { UserConfig } from '../types/userConfig.js';
+import type { ServerContext, RenderMode, AppConfig } from '@ice/runtime';
 import dynamicImport from './dynamicImport.js';
 import { logger } from './logger.js';
 import type RouteManifest from './routeManifest.js';
@@ -13,8 +12,6 @@ interface Options {
   documentOnly: boolean;
   routeType: AppConfig['router']['type'];
   renderMode?: RenderMode;
-  distType: UserConfig['output']['distType'];
-  prependCode: string;
   routeManifest: RouteManifest;
 }
 
@@ -30,11 +27,8 @@ export default async function generateEntry(options: Options): Promise<EntryResu
     documentOnly,
     renderMode,
     routeType,
-    prependCode = '',
     routeManifest,
   } = options;
-
-  const distType = typeof options.distType === 'string' ? [options.distType] : options.distType;
 
   let serverEntry: string;
   try {
@@ -51,7 +45,7 @@ export default async function generateEntry(options: Options): Promise<EntryResu
     const routePath = paths[i];
     const {
       htmlOutput,
-    } = await renderEntry({ routePath, serverEntry, documentOnly, renderMode, distType, prependCode });
+    } = await renderEntry({ routePath, serverEntry, documentOnly, renderMode });
     const generateOptions = { rootDir, routePath, outputDir };
     if (htmlOutput) {
       const path = await generateFilePath({ ...generateOptions, type: 'html' });
@@ -104,16 +98,12 @@ async function renderEntry(
     routePath,
     serverEntry,
     documentOnly,
-    distType = ['html'],
-    prependCode = '',
     renderMode,
   }: {
     routePath: string;
     serverEntry: any;
     documentOnly: boolean;
-    distType?: DistType;
     renderMode?: RenderMode;
-    prependCode?: string;
   },
 ) {
   const serverContext: ServerContext = {
@@ -128,8 +118,6 @@ async function renderEntry(
     documentOnly,
     routePath,
     serverOnlyBasename: '/',
-    distType,
-    prependCode,
   });
 
   return {

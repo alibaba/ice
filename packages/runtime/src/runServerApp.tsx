@@ -52,8 +52,6 @@ export interface RenderOptions {
     [key: string]: PageConfig;
   };
   runtimeOptions?: Record<string, any>;
-  distType?: Array<'html' | 'javascript'>;
-  prependCode?: string;
   serverData?: any;
   streamOptions?: RenderToPipeableStreamOptions;
 }
