@@ -7,7 +7,6 @@ import { Context } from 'build-scripts';
 import type { CommandArgs, CommandName } from 'build-scripts';
 import type { Config } from '@ice/shared-config/types';
 import type { AppConfig } from '@ice/runtime/types';
-import fse from 'fs-extra';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type {
   DeclarationData,
@@ -78,7 +77,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       generator.addDeclaration('framework', declarationData);
     },
     addTargetExport: () => {
-      throw Error('`addTargetExport` is deprecated, please use `addExport` instead.');
+      logger.error('`addTargetExport` is deprecated, please use `addExport` instead.');
     },
     addExportTypes: (declarationData: DeclarationData) => {
       generator.addDeclaration('frameworkTypes', declarationData);
