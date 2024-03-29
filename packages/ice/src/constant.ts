@@ -70,6 +70,15 @@ export const RUNTIME_EXPORTS = [
       'usePageLifecycle',
       'unstable_useDocumentData',
       'dynamic',
+      // Document API
+      'Meta',
+      'Title',
+      'Links',
+      'Scripts',
+      'FirstChunkCache',
+      'Data',
+      'Main',
+      'usePageAssets',
     ],
     alias: {
       usePublicAppContext: 'useAppContext',

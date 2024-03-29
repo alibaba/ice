@@ -36,7 +36,7 @@ export default async function generateEntry(options: Options): Promise<EntryResu
 
   const distType = typeof options.distType === 'string' ? [options.distType] : options.distType;
 
-  let serverEntry;
+  let serverEntry: string;
   try {
     serverEntry = await dynamicImport(entry);
   } catch (error) {
@@ -51,8 +51,6 @@ export default async function generateEntry(options: Options): Promise<EntryResu
     const routePath = paths[i];
     const {
       htmlOutput,
-      jsOutput,
-      sourceMap,
     } = await renderEntry({ routePath, serverEntry, documentOnly, renderMode, distType, prependCode });
     const generateOptions = { rootDir, routePath, outputDir };
     if (htmlOutput) {
@@ -60,24 +58,6 @@ export default async function generateEntry(options: Options): Promise<EntryResu
       await writeFile(
         path,
         htmlOutput,
-      );
-      outputPaths.push(path);
-    }
-
-    if (sourceMap) {
-      const path = await generateFilePath({ ...generateOptions, type: 'js.map' });
-      await writeFile(
-        path,
-        sourceMap,
-      );
-      outputPaths.push(path);
-    }
-
-    if (jsOutput) {
-      const path = await generateFilePath({ ...generateOptions, type: 'js' });
-      await writeFile(
-        path,
-        jsOutput,
       );
       outputPaths.push(path);
     }
@@ -141,14 +121,9 @@ async function renderEntry(
       url: routePath,
     } as any,
   };
-
-  // renderToEntry exported when disType includes javascript .
-  const render = distType.includes('javascript') ? serverEntry.renderToEntry : serverEntry.renderToHTML;
   const {
     value,
-    jsOutput,
-    sourceMap,
-  } = await render(serverContext, {
+  } = await serverEntry.renderToHTML(serverContext, {
     renderMode,
     documentOnly,
     routePath,
@@ -159,7 +134,5 @@ async function renderEntry(
 
   return {
     htmlOutput: value,
-    jsOutput,
-    sourceMap,
   };
 }
