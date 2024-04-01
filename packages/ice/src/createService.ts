@@ -380,7 +380,11 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   const appConfig: AppConfig = (await getAppConfig()).default;
 
-  updateRuntimeEnv(appConfig, { disableRouter, dataLoader: loaderExports });
+  updateRuntimeEnv(appConfig, {
+    disableRouter,
+    // The optimization for runtime size should only be enabled in production mode.
+    dataLoader: command !== 'build' || loaderExports,
+  });
 
   return {
     run: async () => {
