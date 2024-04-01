@@ -36,6 +36,15 @@ export async function generateRoutesInfo(
     }
   });
 
+  const routesExports = [];
+  const configExport = generateRouteConfig(routes, 'pageConfig', (str, imports) => {
+    routesExports.push(...imports);
+    return `${str}
+export default {
+  ${imports.map(([routeId, importKey]) => `'${routeId}': ${importKey},`).join('\n  ')}
+};`;
+  });
+
   return {
     routesCount,
     routeManifest,
@@ -46,12 +55,8 @@ export default {
   ${imports.map(([routeId, importKey]) => `'${routeId}': ${importKey},`).join('\n  ')}
 };` : '';
     }),
-    routesConfig: generateRouteConfig(routes, 'pageConfig', (str, imports) => {
-      return `${str}
-export default {
-  ${imports.map(([routeId, importKey]) => `'${routeId}': ${importKey},`).join('\n  ')}
-};`;
-    }),
+    routesConfig: configExport,
+    routesExports,
   };
 }
 

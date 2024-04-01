@@ -378,8 +378,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   );
 
   const appConfig: AppConfig = (await getAppConfig()).default;
-
-  updateRuntimeEnv(appConfig, { disableRouter });
+  updateRuntimeEnv(appConfig, { disableRouter, routesConfig: routesInfo.routesExports.length > 0 || command !== 'build' });
 
   return {
     run: async () => {

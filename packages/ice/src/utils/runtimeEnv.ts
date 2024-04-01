@@ -10,6 +10,7 @@ export interface Envs {
 }
 interface EnvOptions {
   disableRouter: boolean;
+  routesConfig: boolean;
 }
 
 const expandedEnvs = {};
@@ -51,23 +52,36 @@ export async function setEnv(
   process.env.ICE_CORE_ERROR_BOUNDARY = 'true';
   process.env.ICE_CORE_INITIAL_DATA = 'true';
 
+  process.env.ICE_CORE_REMOVE_ROUTES_CONFIG = 'false';
+
   // set ssr and ssg env to false, for remove dead code in CSR.
   process.env.ICE_CORE_SSG = 'false';
   process.env.ICE_CORE_SSR = 'false';
 }
 
 export const updateRuntimeEnv = (appConfig: AppConfig, options: EnvOptions) => {
-  const { disableRouter } = options;
+  const { disableRouter, routesConfig } = options;
   if (!appConfig?.app?.errorBoundary) {
     process.env['ICE_CORE_ERROR_BOUNDARY'] = 'false';
   }
   if (disableRouter) {
     process.env['ICE_CORE_ROUTER'] = 'false';
   }
+  if (!routesConfig) {
+    console.log('ICE_CORE_REMOVE_ROUTES_CONFIG', 'true');
+    process.env.ICE_CORE_REMOVE_ROUTES_CONFIG = 'true';
+  }
 };
 
 export function getCoreEnvKeys() {
-  return ['ICE_CORE_MODE', 'ICE_CORE_ROUTER', 'ICE_CORE_ERROR_BOUNDARY', 'ICE_CORE_INITIAL_DATA', 'ICE_CORE_DEV_PORT'];
+  return [
+    'ICE_CORE_MODE',
+    'ICE_CORE_ROUTER',
+    'ICE_CORE_ERROR_BOUNDARY',
+    'ICE_CORE_INITIAL_DATA',
+    'ICE_CORE_DEV_PORT',
+    'ICE_CORE_REMOVE_ROUTES_CONFIG',
+  ];
 }
 
 export function getExpandedEnvs(): Record<string, string> {
