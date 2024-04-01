@@ -295,7 +295,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   dataCache.set('routes', JSON.stringify(routesInfo));
   dataCache.set('hasExportAppData', hasExportAppData ? 'true' : '');
 
-  const hasDataLoader = Boolean(userConfig.dataLoader) && (hasExportAppData || Boolean(routesInfo.loaders));
+  const loaderExports = hasExportAppData || Boolean(routesInfo.loaders);
+  const hasDataLoader = Boolean(userConfig.dataLoader) && loaderExports;
   // Render exports files if route component export dataLoader / pageConfig.
   renderExportsTemplate(
     {
@@ -379,7 +380,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   const appConfig: AppConfig = (await getAppConfig()).default;
 
-  updateRuntimeEnv(appConfig, { disableRouter });
+  updateRuntimeEnv(appConfig, { disableRouter, dataLoader: loaderExports });
 
   return {
     run: async () => {
