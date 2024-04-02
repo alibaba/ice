@@ -1,7 +1,6 @@
 import * as path from 'path';
 import fse from 'fs-extra';
-import type { ServerContext, RenderMode, AppConfig, DistType } from '@ice/runtime';
-import type { UserConfig } from '../types/userConfig.js';
+import type { ServerContext, RenderMode, AppConfig } from '@ice/runtime';
 import dynamicImport from './dynamicImport.js';
 import { logger } from './logger.js';
 import type RouteManifest from './routeManifest.js';
@@ -13,8 +12,6 @@ interface Options {
   documentOnly: boolean;
   routeType: AppConfig['router']['type'];
   renderMode?: RenderMode;
-  distType: UserConfig['output']['distType'];
-  prependCode: string;
   routeManifest: RouteManifest;
 }
 
@@ -30,13 +27,10 @@ export default async function generateEntry(options: Options): Promise<EntryResu
     documentOnly,
     renderMode,
     routeType,
-    prependCode = '',
     routeManifest,
   } = options;
 
-  const distType = typeof options.distType === 'string' ? [options.distType] : options.distType;
-
-  let serverEntry;
+  let serverEntry: string;
   try {
     serverEntry = await dynamicImport(entry);
   } catch (error) {
@@ -51,33 +45,13 @@ export default async function generateEntry(options: Options): Promise<EntryResu
     const routePath = paths[i];
     const {
       htmlOutput,
-      jsOutput,
-      sourceMap,
-    } = await renderEntry({ routePath, serverEntry, documentOnly, renderMode, distType, prependCode });
+    } = await renderEntry({ routePath, serverEntry, documentOnly, renderMode });
     const generateOptions = { rootDir, routePath, outputDir };
     if (htmlOutput) {
       const path = await generateFilePath({ ...generateOptions, type: 'html' });
       await writeFile(
         path,
         htmlOutput,
-      );
-      outputPaths.push(path);
-    }
-
-    if (sourceMap) {
-      const path = await generateFilePath({ ...generateOptions, type: 'js.map' });
-      await writeFile(
-        path,
-        sourceMap,
-      );
-      outputPaths.push(path);
-    }
-
-    if (jsOutput) {
-      const path = await generateFilePath({ ...generateOptions, type: 'js' });
-      await writeFile(
-        path,
-        jsOutput,
       );
       outputPaths.push(path);
     }
@@ -128,16 +102,12 @@ async function renderEntry(
     routePath,
     serverEntry,
     documentOnly,
-    distType = ['html'],
-    prependCode = '',
     renderMode,
   }: {
     routePath: string;
     serverEntry: any;
     documentOnly: boolean;
-    distType?: DistType;
     renderMode?: RenderMode;
-    prependCode?: string;
   },
 ) {
   const serverContext: ServerContext = {
@@ -145,25 +115,16 @@ async function renderEntry(
       url: routePath,
     } as any,
   };
-
-  // renderToEntry exported when disType includes javascript .
-  const render = distType.includes('javascript') ? serverEntry.renderToEntry : serverEntry.renderToHTML;
   const {
     value,
-    jsOutput,
-    sourceMap,
-  } = await render(serverContext, {
+  } = await serverEntry.renderToHTML(serverContext, {
     renderMode,
     documentOnly,
     routePath,
     serverOnlyBasename: '/',
-    distType,
-    prependCode,
   });
 
   return {
     htmlOutput: value,
-    jsOutput,
-    sourceMap,
   };
 }

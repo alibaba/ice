@@ -1,22 +1,8 @@
-export enum DeclarationType {
-  NORMAL = 'normal',
-  TARGET = 'target',
-}
-
 export interface DeclarationData {
   specifier?: string | string[];
   source: string;
   type?: boolean;
   alias?: Record<string, string>;
-  declarationType?: DeclarationType;
-}
-
-export interface TargetDeclarationData {
-  specifier: string | string[];
-  source: string;
-  target: string;
-  types?: string | string[];
-  declarationType?: DeclarationType;
 }
 
 export type RenderData = Record<string, any>;

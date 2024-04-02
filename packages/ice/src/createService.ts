@@ -7,15 +7,12 @@ import { Context } from 'build-scripts';
 import type { CommandArgs, CommandName } from 'build-scripts';
 import type { Config } from '@ice/shared-config/types';
 import type { AppConfig } from '@ice/runtime/types';
-import fse from 'fs-extra';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import type {
   DeclarationData,
   PluginData,
   ExtendsPluginAPI,
-  TargetDeclarationData,
 } from './types/index.js';
-import { DeclarationType } from './types/index.js';
 import Generator from './service/runtimeGenerator.js';
 import { createServerCompiler } from './service/serverCompiler.js';
 import createWatch from './service/watchSource.js';
@@ -42,6 +39,7 @@ import webpackBundler from './bundler/webpack/index.js';
 import rspackBundler from './bundler/rspack/index.js';
 import getDefaultTaskConfig from './plugins/task.js';
 import { multipleServerEntry, renderMultiEntry } from './utils/multipleEntry.js';
+import hasDocument from './utils/hasDocument.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -76,38 +74,23 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   let entryCode = 'render();';
 
   const generatorAPI = {
-    addExport: (declarationData: Omit<DeclarationData, 'declarationType'>) => {
-      generator.addDeclaration('framework', {
-        ...declarationData,
-        declarationType: DeclarationType.NORMAL,
-      });
+    addExport: (declarationData: DeclarationData) => {
+      generator.addDeclaration('framework', declarationData);
     },
-    addTargetExport: (declarationData: Omit<TargetDeclarationData, 'declarationType'>) => {
-      generator.addDeclaration('framework', {
-        ...declarationData,
-        declarationType: DeclarationType.TARGET,
-      });
+    addTargetExport: () => {
+      logger.error('`addTargetExport` is deprecated, please use `addExport` instead.');
     },
-    addExportTypes: (declarationData: Omit<DeclarationData, 'declarationType'>) => {
-      generator.addDeclaration('frameworkTypes', {
-        ...declarationData,
-        declarationType: DeclarationType.NORMAL,
-      });
+    addExportTypes: (declarationData: DeclarationData) => {
+      generator.addDeclaration('frameworkTypes', declarationData);
     },
-    addRuntimeOptions: (declarationData: Omit<DeclarationData, 'declarationType'>) => {
-      generator.addDeclaration('runtimeOptions', {
-        ...declarationData,
-        declarationType: DeclarationType.NORMAL,
-      });
+    addRuntimeOptions: (declarationData: DeclarationData) => {
+      generator.addDeclaration('runtimeOptions', declarationData);
     },
     removeRuntimeOptions: (removeSource: string | string[]) => {
       generator.removeDeclaration('runtimeOptions', removeSource);
     },
-    addRouteTypes: (declarationData: Omit<DeclarationData, 'declarationType'>) => {
-      generator.addDeclaration('routeConfigTypes', {
-        ...declarationData,
-        declarationType: DeclarationType.NORMAL,
-      });
+    addRouteTypes: (declarationData: DeclarationData) => {
+      generator.addDeclaration('routeConfigTypes', declarationData);
     },
     addRenderFile: generator.addRenderFile,
     addRenderTemplate: generator.addTemplateFiles,
@@ -115,17 +98,11 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       entryCode = callback(entryCode);
     },
     addEntryImportAhead: (declarationData: Pick<DeclarationData, 'source'>) => {
-      generator.addDeclaration('entry', {
-        ...declarationData,
-        declarationType: DeclarationType.NORMAL,
-      });
+      generator.addDeclaration('entry', declarationData);
     },
     modifyRenderData: generator.modifyRenderData,
     addDataLoaderImport: (declarationData: DeclarationData) => {
-      generator.addDeclaration('dataLoaderImport', {
-        ...declarationData,
-        declarationType: DeclarationType.NORMAL,
-      });
+      generator.addDeclaration('dataLoaderImport', declarationData);
     },
     getExportList: (registerKey: string) => {
       return generator.getExportList(registerKey);
@@ -240,7 +217,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   // get userConfig after setup because of userConfig maybe modified by plugins
   const { userConfig } = ctx;
-  const { routes: routesConfig, server, syntaxFeatures, polyfill, output: { distType } } = userConfig;
+  const { routes: routesConfig, server, syntaxFeatures, polyfill } = userConfig;
 
   const coreEnvKeys = getCoreEnvKeys();
 
@@ -290,8 +267,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     // Enable react-router for web as default.
     enableRoutes: true,
     entryCode,
-    jsOutput: distType.includes('javascript'),
-    hasDocument: fse.existsSync(path.join(rootDir, 'src/document.tsx')) || fse.existsSync(path.join(rootDir, 'src/document.jsx')) || fse.existsSync(path.join(rootDir, 'src/document.js')),
+    hasDocument: hasDocument(rootDir),
     dataLoader: userConfig.dataLoader,
     routeImports,
     routeDefinition,

@@ -300,8 +300,6 @@ export interface RouteMatch {
 
 export type RenderMode = 'SSR' | 'SSG' | 'CSR';
 
-export type DistType = Array<'html' | 'javascript'>;
-
 declare global {
   interface ImportMeta {
     // The build target for ice.js

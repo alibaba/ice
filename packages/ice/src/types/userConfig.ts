@@ -58,7 +58,15 @@ export interface UserConfig {
     abortcontroller?: boolean | string;
   };
   output?: {
+    /**
+     * @deprecated
+     * output. distType is deprecated, it will be removed in the future.
+     */
     distType: Array<DistType> | DistType;
+    /**
+     * @deprecated
+     * output.prependCode is deprecated, it will be removed in the future.
+     */
     prependCode?: string;
   };
   /**

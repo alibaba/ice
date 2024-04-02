@@ -25,6 +25,7 @@ function collateMixins(mixins: any) {
     }
 
     for (let key in mixin) {
+      // eslint-disable-next-line no-prototype-builtins
       if (mixin.hasOwnProperty(key) && key !== 'mixins') {
         (keyed[key] || (keyed[key] = [])).push(mixin[key]);
       }
@@ -46,7 +47,7 @@ function flattenHooks(key: string, hooks: Array<any>) {
       let ret;
       for (let i = 0; i < hooks.length; i++) {
         // @ts-ignore
-        let r = hooks[i].apply(this, arguments);
+        let r = hooks[i].apply(this, arguments); // eslint-disable-line prefer-rest-params
         if (r) {
           if (!ret) ret = {};
           Object.assign(ret, r);

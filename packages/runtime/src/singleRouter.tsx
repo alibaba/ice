@@ -305,7 +305,12 @@ export const useRevalidator = () => {
   throw new Error('useRevalidator is not supported in single router mode');
 };
 
-export const getSingleRoute = async (routes: RouteItem[], basename: string, location: Partial<Location> | string, routeModuleCache = {}) => {
+export const getSingleRoute = async (
+  routes: RouteItem[],
+  basename: string,
+  location: Partial<Location> | string,
+  routeModuleCache = {},
+) => {
   const matchedRoutes = matchRoutes(routes, location, basename);
   const routeModules = await loadRouteModules(matchedRoutes.map(({ route }) => route), routeModuleCache);
   let loaders = [];
