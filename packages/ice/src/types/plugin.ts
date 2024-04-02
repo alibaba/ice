@@ -7,17 +7,16 @@ import type { Config } from '@ice/shared-config/types';
 import type { AppConfig, AssetsManifest } from '@ice/runtime/types';
 import type ServerCompileTask from '../utils/ServerCompileTask.js';
 import type { CreateLogger } from '../utils/logger.js';
-import type { DeclarationData, TargetDeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport, Render } from './generator.js';
+import type { DeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport, Render } from './generator.js';
 
 export type { CreateLoggerReturnType } from '../utils/logger.js';
 
 type AddExport = (exportData: DeclarationData) => void;
-type AddTargetExport = (exportData: TargetDeclarationData) => void;
 type AddEntryCode = (callback: (code: string) => string) => void;
 type AddEntryImportAhead = (exportData: Pick<DeclarationData, 'source'>) => void;
 type RemoveExport = (removeSource: string | string[]) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
-type GetExportList = (key: string, target?: string) => (DeclarationData | TargetDeclarationData)[];
+type GetExportList = (key: string, target?: string) => DeclarationData[];
 
 type ServerCompilerBuildOptions = Pick<
   esbuild.BuildOptions,
@@ -138,7 +137,11 @@ export interface ExtendsPluginAPI {
   registerTask: RegisterTask<Config>;
   generator: {
     addExport: AddExport;
-    addTargetExport: AddTargetExport;
+    /**
+     * @deprecated
+     * API will be removed in the next major version.
+     */
+    addTargetExport: () => void;
     addExportTypes: AddExport;
     addRuntimeOptions: AddExport;
     removeRuntimeOptions: RemoveExport;

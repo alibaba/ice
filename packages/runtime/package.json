@@ -21,7 +21,8 @@
     "./react": "./esm/react.js",
     "./react/jsx-runtime": "./esm/jsx-runtime.js",
     "./react/jsx-dev-runtime": "./esm/jsx-dev-runtime.js",
-    "./data-loader": "./esm/dataLoader.js"
+    "./data-loader": "./esm/dataLoader.js",
+    "./document": "./esm/Document.js"
   },
   "files": [
     "esm",
@@ -57,13 +58,9 @@
     "@ice/shared": "^1.0.2",
     "@remix-run/router": "1.14.2",
     "abortcontroller-polyfill": "1.7.5",
-    "ejs": "^3.1.6",
-    "fs-extra": "^10.0.0",
     "history": "^5.3.0",
-    "htmlparser2": "^8.0.1",
     "react-router-dom": "6.21.3",
-    "semver": "^7.4.0",
-    "source-map": "^0.7.4"
+    "semver": "^7.4.0"
   },
   "peerDependencies": {
     "react": "^18.1.0",

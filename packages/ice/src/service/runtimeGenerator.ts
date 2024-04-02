@@ -18,7 +18,6 @@ import type {
   RenderTemplate,
   RenderData,
   DeclarationData,
-  TargetDeclarationData,
   Registration,
   TemplateOptions,
 } from '../types/generator.js';
@@ -37,76 +36,36 @@ interface Options {
   templates?: (string | TemplateOptions)[];
 }
 
-function isDeclarationData(data: TargetDeclarationData | DeclarationData): data is DeclarationData {
-  return data.declarationType === 'normal';
-}
-
-function isTargetDeclarationData(data: TargetDeclarationData | DeclarationData): data is TargetDeclarationData {
-  return data.declarationType === 'target';
-}
-
-export function generateDeclaration(exportList: Array<TargetDeclarationData | DeclarationData>) {
-  const targetImportDeclarations: Array<string> = [];
+export function generateDeclaration(exportList: DeclarationData[]) {
   const importDeclarations: Array<string> = [];
   const exportDeclarations: Array<string> = [];
   const exportNames: Array<string> = [];
-  const variables: Map<string, string> = new Map();
 
-  let moduleId = 0;
   exportList.forEach(data => {
-    // Deal with target.
-    if (isTargetDeclarationData(data)) {
-      const { specifier, source, target, types = [] } = data;
-      const isDefaultImport = !Array.isArray(specifier);
-      const specifiers = isDefaultImport ? [specifier] : specifier;
-      const arrTypes: Array<string> = Array.isArray(types) ? types : [types];
+    const { specifier, source, alias, type } = data;
+    const isDefaultImport = !Array.isArray(specifier);
+    const specifiers = isDefaultImport ? [specifier] : specifier;
+    const symbol = type ? ';' : ',';
 
-      moduleId++;
-      const moduleName = `${target}Module${moduleId}`;
-      targetImportDeclarations.push(`if (import.meta.target === '${target}') {
-  ${specifiers.map(item => `${item} = ${moduleName}.${item};`).join('\n  ')}
-}
-      `);
+    if (specifier) {
+      importDeclarations.push(`import ${type ? 'type ' : ''}${isDefaultImport ? specifier : `{ ${specifiers.map(specifierStr => ((alias && alias[specifierStr]) ? `${specifierStr} as ${alias[specifierStr]}` : specifierStr)).join(', ')} }`} from '${source}';`);
 
-      importDeclarations.push(`import ${isDefaultImport ? moduleName : `* as ${moduleName}`} from '${source}';`);
-
-      if (arrTypes.length) {
-        importDeclarations.push(`import type { ${arrTypes.join(', ')}} from '${source}';`);
-      }
-
-      specifiers.forEach((specifierStr, index) => {
-        if (!variables.has(specifierStr)) {
-          variables.set(specifierStr, arrTypes[index] || 'any');
+      specifiers.forEach((specifierStr) => {
+        if (alias && alias[specifierStr]) {
+          exportDeclarations.push(`${alias[specifierStr]}${symbol}`);
+          exportNames.push(alias[specifierStr]);
+        } else {
+          exportDeclarations.push(`${specifierStr}${symbol}`);
+          exportNames.push(specifierStr);
         }
       });
-    } else if (isDeclarationData(data)) {
-      const { specifier, source, alias, type } = data;
-      const isDefaultImport = !Array.isArray(specifier);
-      const specifiers = isDefaultImport ? [specifier] : specifier;
-      const symbol = type ? ';' : ',';
-
-      if (specifier) {
-        importDeclarations.push(`import ${type ? 'type ' : ''}${isDefaultImport ? specifier : `{ ${specifiers.map(specifierStr => ((alias && alias[specifierStr]) ? `${specifierStr} as ${alias[specifierStr]}` : specifierStr)).join(', ')} }`} from '${source}';`);
-
-        specifiers.forEach((specifierStr) => {
-          if (alias && alias[specifierStr]) {
-            exportDeclarations.push(`${alias[specifierStr]}${symbol}`);
-            exportNames.push(alias[specifierStr]);
-          } else {
-            exportDeclarations.push(`${specifierStr}${symbol}`);
-            exportNames.push(specifierStr);
-          }
-        });
-      } else {
-        importDeclarations.push(`import '${source}';`);
-      }
+    } else {
+      importDeclarations.push(`import '${source}';`);
     }
   });
 
   return {
-    targetImportStr: targetImportDeclarations.join('\n'),
     importStr: importDeclarations.join('\n'),
-    targetExportStr: Array.from(variables.keys()).join(',\n  '),
     /**
      * Add two whitespace character in order to get the formatted code. For example:
      *  export {
@@ -116,39 +75,30 @@ export function generateDeclaration(exportList: Array<TargetDeclarationData | De
      */
     exportStr: exportDeclarations.join('\n  '),
     exportNames,
-    variablesStr: Array.from(variables.entries()).map(item => `let ${item[0]}: ${item[1]};`).join('\n'),
   };
 }
 
 export function checkExportData(
-  currentList: (DeclarationData | TargetDeclarationData)[],
-  exportData: (DeclarationData | TargetDeclarationData) | (DeclarationData | TargetDeclarationData)[],
+  currentList: DeclarationData[],
+  exportData: DeclarationData | DeclarationData[],
   apiName: string,
 ) {
   (Array.isArray(exportData) ? exportData : [exportData]).forEach((data) => {
     const exportNames = (Array.isArray(data.specifier) ? data.specifier : [data.specifier]).map((specifierStr) => {
-      if (isDeclarationData(data)) {
-        return data?.alias?.[specifierStr] || specifierStr;
-      } else {
-        return specifierStr;
-      }
+      return data?.alias?.[specifierStr] || specifierStr;
     });
     currentList.forEach((item) => {
-      if (isTargetDeclarationData(item)) return;
+      const { specifier, alias, source } = item;
 
-      if (isDeclarationData(item)) {
-        const { specifier, alias, source } = item;
+      // check exportName and specifier
+      const currentExportNames = (Array.isArray(specifier) ? specifier : [specifier]).map((specifierStr) => {
+        return alias?.[specifierStr] || specifierStr || source;
+      });
 
-        // check exportName and specifier
-        const currentExportNames = (Array.isArray(specifier) ? specifier : [specifier]).map((specifierStr) => {
-          return alias?.[specifierStr] || specifierStr || source;
-        });
-
-        if (currentExportNames.some((name) => exportNames.includes(name))) {
-          logger.error('specifier:', specifier, 'alias:', alias);
-          logger.error('duplicate with', data);
-          throw new Error(`duplicate export data added by ${apiName}`);
-        }
+      if (currentExportNames.some((name) => exportNames.includes(name))) {
+        logger.error('specifier:', specifier, 'alias:', alias);
+        logger.error('duplicate with', data);
+        throw new Error(`duplicate export data added by ${apiName}`);
       }
     });
   });
@@ -253,18 +203,12 @@ export default class Generator {
       importStr,
       exportStr,
       exportNames,
-      targetExportStr,
-      targetImportStr,
-      variablesStr,
     } = generateDeclaration(exportList);
-    const [importStrKey, exportStrKey, targetImportStrKey, targetExportStrKey] = dataKeys;
+    const [importStrKey, exportStrKey] = dataKeys;
     return {
       [importStrKey]: importStr,
       [exportStrKey]: exportStr,
       exportNames,
-      variablesStr,
-      [targetImportStrKey]: targetImportStr,
-      [targetExportStrKey]: targetExportStr,
     };
   };
 

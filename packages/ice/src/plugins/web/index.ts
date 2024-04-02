@@ -6,33 +6,8 @@ import { logger } from '../../utils/logger.js';
 
 const plugin: Plugin = () => ({
   name: 'plugin-web',
-  setup: ({ registerTask, onHook, context, generator }) => {
+  setup: ({ registerTask, onHook, context }) => {
     const { commandArgs, command, userConfig } = context;
-
-    generator.addTargetExport({
-      specifier: [
-        'Meta',
-        'Title',
-        'Links',
-        'Scripts',
-        'FirstChunkCache',
-        'Data',
-        'Main',
-        'usePageAssets',
-      ],
-      types: [
-        'MetaType',
-        'TitleType',
-        'LinksType',
-        'ScriptsType',
-        'FirstChunkCacheType',
-        'DataType',
-        'MainType',
-      ],
-      source: '@ice/runtime',
-      target: 'web',
-    });
-
     const removeExportExprs = ['serverDataLoader', 'staticDataLoader'];
     // Remove dataLoader exports only when build in production
     // and configure to generate data-loader.js.
