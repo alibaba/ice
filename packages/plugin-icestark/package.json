@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-icestark",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Easy use `icestark` in icejs.",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
