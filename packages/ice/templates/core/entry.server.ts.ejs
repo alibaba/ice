@@ -86,15 +86,13 @@ function mergeOptions(options) {
     Document: Document.default,
     basename: basename || getRouterBasename(),
     renderMode,
-    <% if (hydrate) {-%>
-    runtimeOptions: {
-    <% if (runtimeOptions.exports) { -%>
+    <% if (hydrate) {-%>runtimeOptions: {
+<% if (runtimeOptions.exports) { -%>
       <%- runtimeOptions.exports %>
-    <% } -%>
-    <% if (locals.customRuntimeOptions) { _%>
-    ...<%- JSON.stringify(customRuntimeOptions) %>,
-    <% } _%>
+<% } -%>
+<% if (locals.customRuntimeOptions) { -%>
+      ...<%- JSON.stringify(customRuntimeOptions) %>,
+<% } -%>
     },
-    <% } -%>
-  };
+  <% } -%>};
 }
