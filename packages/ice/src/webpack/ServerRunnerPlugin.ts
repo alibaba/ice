@@ -19,7 +19,6 @@ export default class ServerRunnerPlugin {
 
   public compileTask = async (compilation?: Compilation) => {
     if (!this.isCompiling) {
-      await this.ensureRoutesConfig();
       if (compilation) {
         // Option of compilationInfo need to be object, while it may changed during multi-time compilation.
         this.serverRunner.addCompileData({

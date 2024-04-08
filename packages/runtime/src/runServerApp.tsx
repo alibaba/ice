@@ -48,7 +48,7 @@ export interface RenderOptions {
   serverOnlyBasename?: string;
   routePath?: string;
   disableFallback?: boolean;
-  routesConfig: {
+  routesConfig?: {
     [key: string]: PageConfig;
   };
   runtimeOptions?: Record<string, any>;

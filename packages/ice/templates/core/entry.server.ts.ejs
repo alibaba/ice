@@ -18,7 +18,6 @@ import createRoutes from './routes';
 <% } else { -%>
 import routesManifest from './route-manifest.json';
 <% } -%>
-import routesConfig from './routes-config.bundle.mjs';
 <% if (dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
 <% if (hydrate) {-%><%- runtimeOptions.imports %><% } -%>
 <% if (!hydrate) {-%>
@@ -87,7 +86,6 @@ function mergeOptions(options) {
     Document: Document.default,
     basename: basename || getRouterBasename(),
     renderMode,
-    routesConfig,
     <% if (hydrate) {-%>
     runtimeOptions: {
     <% if (runtimeOptions.exports) { -%>
