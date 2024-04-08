@@ -270,6 +270,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   // Only when code splitting use the default strategy or set to `router`, the router will be lazy loaded.
   const lazy = [true, 'chunks', 'page', 'page-vendors'].includes(userConfig.codeSplitting);
   const { routeImports, routeDefinition } = getRoutesDefinition(routesInfo.routes, lazy);
+  const loaderExports = hasExportAppData || Boolean(routesInfo.loaders);
+  const hasDataLoader = Boolean(userConfig.dataLoader) && loaderExports;
   // add render data
   generator.setRenderData({
     ...routesInfo,
@@ -289,14 +291,13 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     jsOutput: distType.includes('javascript'),
     hasDocument: fse.existsSync(path.join(rootDir, 'src/document.tsx')) || fse.existsSync(path.join(rootDir, 'src/document.jsx')) || fse.existsSync(path.join(rootDir, 'src/document.js')),
     dataLoader: userConfig.dataLoader,
+    hasDataLoader,
     routeImports,
     routeDefinition,
   });
   dataCache.set('routes', JSON.stringify(routesInfo));
   dataCache.set('hasExportAppData', hasExportAppData ? 'true' : '');
 
-  const loaderExports = hasExportAppData || Boolean(routesInfo.loaders);
-  const hasDataLoader = Boolean(userConfig.dataLoader) && loaderExports;
   // Render exports files if route component export dataLoader / pageConfig.
   renderExportsTemplate(
     {
