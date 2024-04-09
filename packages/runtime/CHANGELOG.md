@@ -1,5 +1,9 @@
 # @ice/runtime
 
+## 1.4.4
+
+- chore: add ts type for `@ice/runtime/data-loader`
+
 ## 1.4.3
 
 ### Patch Changes
