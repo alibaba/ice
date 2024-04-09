@@ -817,7 +817,7 @@ importers:
         specifier: ^18.0.6
         version: 18.0.11
 
-  examples/with-entry-type:
+  examples/with-fallback-entry:
     dependencies:
       '@ice/app':
         specifier: workspace:*
@@ -826,10 +826,10 @@ importers:
         specifier: workspace:*
         version: link:../../packages/runtime
       react:
-        specifier: ^18.0.0
+        specifier: ^18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^18.0.0
+        specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
     devDependencies:
       '@types/react':
@@ -838,9 +838,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.0.2
         version: 18.0.11
-      fs-extra:
-        specifier: ^10.0.0
-        version: 10.1.0
       webpack:
         specifier: ^5.88.0
         version: 5.88.2
@@ -19880,7 +19877,7 @@ packages:
     dependencies:
       '@babel/code-frame': 7.18.6
       address: 1.2.2
-      browserslist: 4.22.1
+      browserslist: 4.22.3
       chalk: 4.1.2
       cross-spawn: 7.0.3
       detect-port-alt: 1.1.6
@@ -23523,7 +23520,7 @@ packages:
       '@webassemblyjs/wasm-parser': 1.11.5
       acorn: 8.11.2
       acorn-import-assertions: 1.9.0(acorn@8.11.2)
-      browserslist: 4.21.5
+      browserslist: 4.22.3
       chrome-trace-event: 1.0.3
       enhanced-resolve: 5.15.0
       es-module-lexer: 1.2.1
@@ -23562,7 +23559,7 @@ packages:
       '@webassemblyjs/wasm-parser': 1.11.5
       acorn: 8.11.2
       acorn-import-assertions: 1.9.0(acorn@8.11.2)
-      browserslist: 4.21.5
+      browserslist: 4.22.3
       chrome-trace-event: 1.0.3
       enhanced-resolve: 5.15.0
       es-module-lexer: 1.2.1
