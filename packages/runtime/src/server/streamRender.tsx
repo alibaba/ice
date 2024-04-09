@@ -2,8 +2,7 @@ import * as Stream from 'stream';
 import type * as StreamType from 'stream';
 import * as ReactDOMServer from 'react-dom/server';
 import { getAllAssets } from '../Document.js';
-import type { RenderOptions } from '../runServerApp.js';
-import type { ServerAppRouterProps } from '../types.js';
+import type { ServerAppRouterProps, RenderOptions } from '../types.js';
 
 const { Writable } = Stream;
 

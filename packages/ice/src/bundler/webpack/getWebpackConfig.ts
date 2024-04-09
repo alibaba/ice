@@ -7,7 +7,7 @@ import { getRouteExportConfig } from '../../service/config.js';
 import { getFileHash } from '../../utils/hash.js';
 import DataLoaderPlugin from '../../webpack/DataLoaderPlugin.js';
 import { IMPORT_META_RENDERER, IMPORT_META_TARGET, RUNTIME_TMP_DIR, WEB } from '../../constant.js';
-import { getReCompilePlugin, getServerPlugin, getSpinnerPlugin } from '../config/plugins.js';
+import { getFallbackEntry, getReCompilePlugin, getServerPlugin, getSpinnerPlugin } from '../config/plugins.js';
 import type RouteManifest from '../../utils/routeManifest.js';
 import type ServerRunnerPlugin from '../../webpack/ServerRunnerPlugin.js';
 import type ServerCompilerPlugin from '../../webpack/ServerCompilerPlugin.js';
@@ -92,6 +92,11 @@ const getWebpackConfig: GetWebpackConfig = async (context, options) => {
       serverCompiler,
       target,
       rootDir,
+      fallbackEntry: getFallbackEntry({
+        rootDir,
+        command,
+        fallbackEntry: server?.fallbackEntry,
+      }),
       serverEntry: server?.entry,
       outputDir,
       serverCompileTask,

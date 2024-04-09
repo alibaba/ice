@@ -11,7 +11,7 @@ import {
   CSS_MODULES_LOCAL_IDENT_NAME,
   CSS_MODULES_LOCAL_IDENT_NAME_DEV,
 } from '../../constant.js';
-import { getReCompilePlugin, getServerPlugin, getSpinnerPlugin } from '../config/plugins.js';
+import { getFallbackEntry, getReCompilePlugin, getServerPlugin, getSpinnerPlugin } from '../config/plugins.js';
 import { getExpandedEnvs } from '../../utils/runtimeEnv.js';
 import type { BundlerOptions, Context } from '../types.js';
 
@@ -33,6 +33,7 @@ const getConfig: GetConfig = async (context, options, rspack) => {
   } = options;
   const {
     rootDir,
+    command,
     userConfig,
     extendsPluginAPI: {
       serverCompileTask,
@@ -47,6 +48,11 @@ const getConfig: GetConfig = async (context, options, rspack) => {
       getSpinnerPlugin(spinner),
       // Add Server runner plugin.
       getServerPlugin({
+        fallbackEntry: getFallbackEntry({
+          rootDir,
+          command,
+          fallbackEntry: server?.fallbackEntry,
+        }),
         serverRunner,
         ensureRoutesConfig,
         serverCompiler,

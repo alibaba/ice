@@ -1,7 +1,10 @@
+import path from 'path';
+import type { CommandName } from 'build-scripts';
 import ServerRunnerPlugin from '../../webpack/ServerRunnerPlugin.js';
 import { IMPORT_META_RENDERER, IMPORT_META_TARGET, WEB } from '../../constant.js';
 import getServerCompilerPlugin from '../../utils/getServerCompilerPlugin.js';
 import ReCompilePlugin from '../../webpack/ReCompilePlugin.js';
+import { FALLBACK_ENTRY, RUNTIME_TMP_DIR } from '../../constant.js';
 import type ServerRunner from '../../service/ServerRunner';
 import type ServerCompileTask from '../../utils/ServerCompileTask.js';
 import type { ServerCompiler, UserConfig } from '../../types';
@@ -18,6 +21,18 @@ export const getSpinnerPlugin = (spinner, name?: string) => {
   };
 };
 
+export const getFallbackEntry = (options: {
+  rootDir: string;
+  command: CommandName;
+  fallbackEntry: boolean;
+}): string => {
+  const { command, fallbackEntry, rootDir } = options;
+  if (command === 'build' && fallbackEntry) {
+    return path.join(rootDir, RUNTIME_TMP_DIR, FALLBACK_ENTRY);
+  }
+  return '';
+};
+
 interface ServerPluginOptions {
   serverRunner?: ServerRunner;
   serverCompiler?: ServerCompiler;
@@ -28,6 +43,7 @@ interface ServerPluginOptions {
   serverEntry?: string;
   ensureRoutesConfig: () => Promise<void>;
   userConfig?: UserConfig;
+  fallbackEntry?: string;
 }
 export const getServerPlugin = ({
   serverRunner,
@@ -39,6 +55,7 @@ export const getServerPlugin = ({
   outputDir,
   serverCompileTask,
   userConfig,
+  fallbackEntry,
 }: ServerPluginOptions) => {
   if (serverRunner) {
     return new ServerRunnerPlugin(serverRunner, ensureRoutesConfig);
@@ -47,6 +64,7 @@ export const getServerPlugin = ({
     return getServerCompilerPlugin(serverCompiler, {
       rootDir,
       serverEntry,
+      fallbackEntry,
       outputDir,
       serverCompileTask,
       userConfig,
