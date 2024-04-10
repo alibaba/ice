@@ -3,7 +3,6 @@
  */
 import { expect, it, describe } from 'vitest';
 import { generateDeclaration, checkExportData, removeDeclarations } from '../src/service/runtimeGenerator';
-import { DeclarationType } from '../src/types/generator';
 
 describe('generateDeclaration', () => {
   it('basic usage', () => {
@@ -11,7 +10,6 @@ describe('generateDeclaration', () => {
       source: 'react-router',
       specifier: 'Router',
       type: false,
-      declarationType: DeclarationType.NORMAL,
     }]);
     expect(importStr).toBe('import Router from \'react-router\';');
     expect(exportStr).toBe('Router,');
@@ -21,7 +19,6 @@ describe('generateDeclaration', () => {
       source: 'react-router',
       specifier: 'Router',
       type: true,
-      declarationType: DeclarationType.NORMAL,
     }]);
     expect(importStr).toBe('import type Router from \'react-router\';');
     expect(exportStr).toBe('Router;');
@@ -30,7 +27,6 @@ describe('generateDeclaration', () => {
     const { importStr, exportStr } = generateDeclaration([{
       source: 'react-router',
       specifier: ['Switch', 'Route'],
-      declarationType: DeclarationType.NORMAL,
     }]);
     expect(importStr).toBe('import { Switch, Route } from \'react-router\';');
     expect(exportStr).toBe(['Switch,', 'Route,'].join('\n  '));
@@ -43,7 +39,6 @@ describe('generateDeclaration', () => {
       alias: {
         Helmet: 'Head',
       },
-      declarationType: DeclarationType.NORMAL,
     }]);
     expect(importStr).toBe('import { Helmet as Head } from \'react-helmet\';');
     expect(exportStr).toBe('Head,');
@@ -53,11 +48,9 @@ describe('generateDeclaration', () => {
 const defaultExportData = [{
   source: 'react-router',
   specifier: ['Switch', 'Route'],
-  declarationType: DeclarationType.NORMAL,
 }, {
   source: 'react-helmet',
   specifier: 'Helmet',
-  declarationType: DeclarationType.NORMAL,
 }];
 
 describe('checkExportData', () => {

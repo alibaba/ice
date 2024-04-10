@@ -101,8 +101,10 @@ export default async function runClientApp(options: RunClientAppOptions) {
     await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
   }
 
-  dataLoaderFetcher && setFetcher(dataLoaderFetcher);
-  dataLoaderDecorator && setDecorator(dataLoaderDecorator);
+  if (process.env.ICE_CORE_REMOVE_DATA_LOADER !== 'true') {
+    dataLoaderFetcher && setFetcher(dataLoaderFetcher);
+    dataLoaderDecorator && setDecorator(dataLoaderDecorator);
+  }
 
   if (!appData) {
     appData = await getAppData(app, requestContext);

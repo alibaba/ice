@@ -8,7 +8,7 @@ import * as app from '@/app';
 import createRoutes from './routes';
 <% } -%>
 <%- runtimeOptions.imports %>
-<% if (dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
+<% if (dataLoaderImport.imports && hasDataLoader) {-%><%-dataLoaderImport.imports%><% } -%>
 import type { RunClientAppOptions } from '@ice/runtime';
 
 const getRouterBasename = () => {
@@ -19,7 +19,7 @@ const getRouterBasename = () => {
 // Otherwise chunk of route component will pack @ice/jsx-runtime and depend on framework bundle.
 const App = <></>;
 
-<% if (!dataLoaderImport.imports) {-%>
+<% if (!dataLoaderImport.imports && hasDataLoader) {-%>
 let dataLoaderFetcher = (options) => {
   return window.fetch(options.url, options);
 }
@@ -39,8 +39,9 @@ const renderOptions: RunClientAppOptions = {
   basename: getRouterBasename(),
   hydrate: <%- hydrate %>,
   memoryRouter: <%- memoryRouter || false %>,
+<% if (hasDataLoader) { -%>
   dataLoaderFetcher,
-  dataLoaderDecorator,
+  dataLoaderDecorator,<% } -%>
   runtimeOptions: {
 <% if (runtimeOptions.exports) { -%>
   <%- runtimeOptions.exports %>

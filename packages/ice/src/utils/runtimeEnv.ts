@@ -11,6 +11,7 @@ export interface Envs {
 interface EnvOptions {
   disableRouter: boolean;
   routesConfig: boolean;
+  dataLoader: boolean;
 }
 
 const expandedEnvs = {};
@@ -51,6 +52,8 @@ export async function setEnv(
   process.env.ICE_CORE_ROUTER = 'true';
   process.env.ICE_CORE_ERROR_BOUNDARY = 'true';
   process.env.ICE_CORE_INITIAL_DATA = 'true';
+  // Set to false for compatibility with the old version.
+  process.env.ICE_CORE_REMOVE_DATA_LOADER = 'false';
 
   process.env.ICE_CORE_REMOVE_ROUTES_CONFIG = 'false';
 
@@ -60,15 +63,17 @@ export async function setEnv(
 }
 
 export const updateRuntimeEnv = (appConfig: AppConfig, options: EnvOptions) => {
-  const { disableRouter, routesConfig } = options;
+  const { disableRouter, dataLoader, routesConfig } = options;
   if (!appConfig?.app?.errorBoundary) {
-    process.env['ICE_CORE_ERROR_BOUNDARY'] = 'false';
+    process.env.ICE_CORE_ERROR_BOUNDARY = 'false';
   }
   if (disableRouter) {
-    process.env['ICE_CORE_ROUTER'] = 'false';
+    process.env.ICE_CORE_ROUTER = 'false';
+  }
+  if (!dataLoader) {
+    process.env.ICE_CORE_REMOVE_DATA_LOADER = 'true';
   }
   if (!routesConfig) {
-    console.log('ICE_CORE_REMOVE_ROUTES_CONFIG', 'true');
     process.env.ICE_CORE_REMOVE_ROUTES_CONFIG = 'true';
   }
 };
@@ -81,6 +86,7 @@ export function getCoreEnvKeys() {
     'ICE_CORE_INITIAL_DATA',
     'ICE_CORE_DEV_PORT',
     'ICE_CORE_REMOVE_ROUTES_CONFIG',
+    'ICE_CORE_REMOVE_DATA_LOADER',
   ];
 }
 
