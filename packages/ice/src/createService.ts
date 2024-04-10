@@ -251,6 +251,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     manifest: routesInfo.routes,
     lazy,
   });
+  const loaderExports = hasExportAppData || Boolean(routesInfo.loaders);
+  const hasDataLoader = Boolean(userConfig.dataLoader) && loaderExports;
   // add render data
   generator.setRenderData({
     ...routesInfo,
@@ -269,6 +271,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     entryCode,
     hasDocument: hasDocument(rootDir),
     dataLoader: userConfig.dataLoader,
+    hasDataLoader,
     routeImports,
     routeDefinition,
     routesFile: './routes',
@@ -276,7 +279,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   dataCache.set('routes', JSON.stringify(routesInfo));
   dataCache.set('hasExportAppData', hasExportAppData ? 'true' : '');
 
-  const hasDataLoader = Boolean(userConfig.dataLoader) && (hasExportAppData || Boolean(routesInfo.loaders));
   // Render exports files if route component export dataLoader / pageConfig.
   renderExportsTemplate(
     {
@@ -369,7 +371,11 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   const appConfig: AppConfig = (await getAppConfig()).default;
 
-  updateRuntimeEnv(appConfig, { disableRouter });
+  updateRuntimeEnv(appConfig, {
+    disableRouter,
+    // The optimization for runtime size should only be enabled in production mode.
+    dataLoader: command !== 'build' || loaderExports,
+  });
 
   return {
     run: async () => {

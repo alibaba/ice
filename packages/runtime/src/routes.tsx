@@ -185,10 +185,12 @@ export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
 
   const getData = (requestContext: RequestContext) => {
     let routeData: any;
-    if (globalLoader) {
-      routeData = globalLoader.getData(routeId, { renderMode, requestContext });
-    } else {
-      routeData = callDataLoader(loader, requestContext);
+    if (process.env.ICE_CORE_REMOVE_DATA_LOADER !== 'true') {
+      if (globalLoader) {
+        routeData = globalLoader.getData(routeId, { renderMode, requestContext });
+      } else {
+        routeData = callDataLoader(loader, requestContext);
+      }
     }
     return routeData;
   };
