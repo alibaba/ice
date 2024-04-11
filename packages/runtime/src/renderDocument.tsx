@@ -99,7 +99,10 @@ export function renderDocument(options: RenderDocumentOptions): Response {
   };
 }
 
-export async function getDocumentResponse(serverContext: ServerContext, renderOptions: RenderOptions): Promise<Response> {
+export async function getDocumentResponse(
+  serverContext: ServerContext,
+  renderOptions: RenderOptions,
+): Promise<Response> {
   const { req } = serverContext;
   const {
     app,
