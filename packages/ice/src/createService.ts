@@ -76,9 +76,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     addExport: (declarationData: DeclarationData) => {
       generator.addDeclaration('framework', declarationData);
     },
-    addTargetExport: () => {
-      logger.error('`addTargetExport` is deprecated, please use `addExport` instead.');
-    },
     addExportTypes: (declarationData: DeclarationData) => {
       generator.addDeclaration('frameworkTypes', declarationData);
     },
