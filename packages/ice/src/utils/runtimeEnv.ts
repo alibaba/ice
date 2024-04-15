@@ -10,6 +10,7 @@ export interface Envs {
 }
 interface EnvOptions {
   disableRouter: boolean;
+  routesConfig: boolean;
   dataLoader: boolean;
 }
 
@@ -54,13 +55,15 @@ export async function setEnv(
   // Set to false for compatibility with the old version.
   process.env.ICE_CORE_REMOVE_DATA_LOADER = 'false';
 
+  process.env.ICE_CORE_REMOVE_ROUTES_CONFIG = 'false';
+
   // set ssr and ssg env to false, for remove dead code in CSR.
   process.env.ICE_CORE_SSG = 'false';
   process.env.ICE_CORE_SSR = 'false';
 }
 
 export const updateRuntimeEnv = (appConfig: AppConfig, options: EnvOptions) => {
-  const { disableRouter, dataLoader } = options;
+  const { disableRouter, dataLoader, routesConfig } = options;
   if (!appConfig?.app?.errorBoundary) {
     process.env.ICE_CORE_ERROR_BOUNDARY = 'false';
   }
@@ -69,6 +72,9 @@ export const updateRuntimeEnv = (appConfig: AppConfig, options: EnvOptions) => {
   }
   if (!dataLoader) {
     process.env.ICE_CORE_REMOVE_DATA_LOADER = 'true';
+  }
+  if (!routesConfig) {
+    process.env.ICE_CORE_REMOVE_ROUTES_CONFIG = 'true';
   }
 };
 
@@ -79,6 +85,7 @@ export function getCoreEnvKeys() {
     'ICE_CORE_ERROR_BOUNDARY',
     'ICE_CORE_INITIAL_DATA',
     'ICE_CORE_DEV_PORT',
+    'ICE_CORE_REMOVE_ROUTES_CONFIG',
     'ICE_CORE_REMOVE_DATA_LOADER',
   ];
 }
