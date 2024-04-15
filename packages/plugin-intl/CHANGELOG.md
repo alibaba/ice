@@ -1,4 +1,4 @@
-# @ice/plugin-i18n
+# @ice/plugin-intl
 
 ## 1.0.0
 
