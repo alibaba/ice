@@ -21,6 +21,7 @@ import routesManifest from './route-manifest.json';
 import routesConfig from './routes-config.bundle.mjs';
 <% if (dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
 <% if (hydrate) {-%><%- runtimeOptions.imports %><% } -%>
+
 <% if (!hydrate) {-%>
 // Do not inject runtime modules when render mode is document only.
 const commons = [];
