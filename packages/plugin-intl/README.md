@@ -1,8 +1,8 @@
 # @ice/plugin-intl
 
-`@ice/plugin-intl` is a plugin for use with the ice.js framework. It provides a simple way to add internationalization support to your application.
+`@ice/plugin-intl` is a ice.js plugin. It provides a simple way to add internationalization support to your application.
 
-> `@ice/plugin-int` is implemented based on `react-intl`.
+> `@ice/plugin-int` is based on `react-intl`.
 
 ## Install
 
@@ -16,7 +16,7 @@ Define the plugin in `ice.config.mts`:
 
 ```ts
 import { defineConfig } from '@ice/app';
-import i18n from '@ice/plugin-intl';
+import intl from '@ice/plugin-intl';
 
 export default defineConfig({
   plugins: [
