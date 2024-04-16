@@ -2,7 +2,16 @@ import React, { Suspense } from 'react';
 import { useRouteError, defer, Await as ReactRouterAwait } from 'react-router-dom';
 // eslint-disable-next-line camelcase
 import type { UNSAFE_DeferredData, LoaderFunctionArgs } from '@remix-run/router';
-import type { RouteItem, RouteModules, RenderMode, RequestContext, ComponentModule, DataLoaderConfig } from './types.js';
+import type {
+  RouteItem,
+  RouteModules,
+  RenderMode,
+  RequestContext,
+  ComponentModule,
+  DataLoaderConfig,
+  DataLoaderOptions,
+  Loader,
+} from './types.js';
 import RouteWrapper from './RouteWrapper.js';
 import { useAppContext } from './AppContext.js';
 import { callDataLoader } from './dataLoader.js';
@@ -145,19 +154,21 @@ function getClientLoaderContext(url: string): RequestContext | null {
 }
 
 export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
+  let dataLoaderConfig: DataLoaderConfig;
   const { dataLoader, pageConfig, staticDataLoader, serverDataLoader } = options.module;
   const { requestContext: defaultRequestContext, renderMode, routeId } = options;
   const globalLoader = (typeof window !== 'undefined' && (window as any).__ICE_DATA_LOADER__) ? (window as any).__ICE_DATA_LOADER__ : null;
 
-  let dataLoaderConfig: DataLoaderConfig;
-  if (globalLoader) {
-    dataLoaderConfig = globalLoader.getLoader(routeId);
-  } else if (renderMode === 'SSG') {
-    dataLoaderConfig = staticDataLoader;
-  } else if (renderMode === 'SSR') {
-    dataLoaderConfig = serverDataLoader || dataLoader;
-  } else {
-    dataLoaderConfig = dataLoader;
+  if (process.env.ICE_CORE_REMOVE_DATA_LOADER !== 'true') {
+    if (globalLoader) {
+      dataLoaderConfig = globalLoader.getLoader(routeId);
+    } else if (renderMode === 'SSG') {
+      dataLoaderConfig = staticDataLoader;
+    } else if (renderMode === 'SSR') {
+      dataLoaderConfig = serverDataLoader || dataLoader;
+    } else {
+      dataLoaderConfig = dataLoader;
+    }
   }
 
   if (!dataLoaderConfig) {
@@ -172,79 +183,82 @@ export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
     };
   }
 
-  let loader;
-  let loaderOptions;
+  // if ICE_CORE_REMOVE_DATA_LOADER is true, dataLoaderConfig should be null and it already return above.
+  if (process.env.ICE_CORE_REMOVE_DATA_LOADER !== 'true') {
+    let loader: Loader;
+    let loaderOptions: DataLoaderOptions;
 
-  // Compat dataLoaderConfig not return by defineDataLoader.
-  if (typeof dataLoaderConfig === 'function' || Array.isArray(dataLoaderConfig)) {
-    loader = dataLoaderConfig;
-  } else {
-    loader = dataLoaderConfig.loader;
-    loaderOptions = dataLoaderConfig.options;
-  }
-
-  const getData = (requestContext: RequestContext) => {
-    let routeData: any;
-    if (process.env.ICE_CORE_REMOVE_DATA_LOADER !== 'true') {
-      if (globalLoader) {
-        routeData = globalLoader.getData(routeId, { renderMode, requestContext });
-      } else {
-        routeData = callDataLoader(loader, requestContext);
-      }
-    }
-    return routeData;
-  };
-
-  // Async dataLoader.
-  if (loaderOptions?.defer) {
-    if (process.env.ICE_CORE_ROUTER === 'true') {
-      return async (params) => {
-        const promise = getData(import.meta.renderer === 'client' ? getClientLoaderContext(params.request.url) : defaultRequestContext);
-
-        return defer({
-          data: promise,
-          // Call pageConfig without data.
-          pageConfig: pageConfig ? pageConfig({}) : {},
-        });
-      };
+    // Compat dataLoaderConfig not return by defineDataLoader.
+    if (typeof dataLoaderConfig === 'function' || Array.isArray(dataLoaderConfig)) {
+      loader = dataLoaderConfig;
     } else {
-      throw new Error('DataLoader: defer is not supported in single router mode.');
+      loader = dataLoaderConfig.loader;
+      loaderOptions = dataLoaderConfig.options;
     }
-  }
-  // Await dataLoader before render.
-  return async (params) => {
-    const result = getData(import.meta.renderer === 'client' && params ? getClientLoaderContext(params.request.url) : defaultRequestContext);
-    let routeData;
-    try {
-      if (Array.isArray(result)) {
-        routeData = await Promise.all(result);
-      } else if (result instanceof Promise) {
-        routeData = await result;
-      } else {
-        routeData = result;
+
+    const getData = (requestContext: RequestContext) => {
+      let routeData: any;
+      if (process.env.ICE_CORE_REMOVE_DATA_LOADER !== 'true') {
+        if (globalLoader) {
+          routeData = globalLoader.getData(routeId, { renderMode, requestContext });
+        } else {
+          routeData = callDataLoader(loader, requestContext);
+        }
       }
-    } catch (error) {
-      if (import.meta.renderer === 'client') {
-        console.error('DataLoader: getData error.\n', error);
-        routeData = {
-          message: 'DataLoader: getData error.',
-          error,
+      return routeData;
+    };
+
+    // Async dataLoader.
+    if (loaderOptions?.defer) {
+      if (process.env.ICE_CORE_ROUTER === 'true') {
+        return async (params) => {
+          const promise = getData(import.meta.renderer === 'client' ? getClientLoaderContext(params.request.url) : defaultRequestContext);
+
+          return defer({
+            data: promise,
+            // Call pageConfig without data.
+            pageConfig: pageConfig ? pageConfig({}) : {},
+          });
         };
       } else {
-        // Throw to trigger downgrade.
-        throw error;
+        throw new Error('DataLoader: defer is not supported in single router mode.');
       }
     }
+    // Await dataLoader before render.
+    return async (params) => {
+      const result = getData(import.meta.renderer === 'client' && params ? getClientLoaderContext(params.request.url) : defaultRequestContext);
+      let routeData;
+      try {
+        if (Array.isArray(result)) {
+          routeData = await Promise.all(result);
+        } else if (result instanceof Promise) {
+          routeData = await result;
+        } else {
+          routeData = result;
+        }
+      } catch (error) {
+        if (import.meta.renderer === 'client') {
+          console.error('DataLoader: getData error.\n', error);
+          routeData = {
+            message: 'DataLoader: getData error.',
+            error,
+          };
+        } else {
+          // Throw to trigger downgrade.
+          throw error;
+        }
+      }
 
-    const routeConfig = pageConfig ? pageConfig({ data: routeData }) : {};
-    const loaderData = {
-      data: routeData,
-      pageConfig: routeConfig,
+      const routeConfig = pageConfig ? pageConfig({ data: routeData }) : {};
+      const loaderData = {
+        data: routeData,
+        pageConfig: routeConfig,
+      };
+      // Update routes config when render mode is CSR.
+      if (import.meta.renderer === 'client' && process.env.ICE_CORE_REMOVE_ROUTES_CONFIG !== 'true') {
+        await updateRoutesConfig(loaderData);
+      }
+      return loaderData;
     };
-    // Update routes config when render mode is CSR.
-    if (import.meta.renderer === 'client' && process.env.ICE_CORE_REMOVE_ROUTES_CONFIG !== 'true') {
-      await updateRoutesConfig(loaderData);
-    }
-    return loaderData;
-  };
+  }
 }
