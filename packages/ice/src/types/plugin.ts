@@ -137,11 +137,6 @@ export interface ExtendsPluginAPI {
   registerTask: RegisterTask<Config>;
   generator: {
     addExport: AddExport;
-    /**
-     * @deprecated
-     * API will be removed in the next major version.
-     */
-    addTargetExport: () => void;
     addExportTypes: AddExport;
     addRuntimeOptions: AddExport;
     removeRuntimeOptions: RemoveExport;

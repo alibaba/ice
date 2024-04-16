@@ -165,7 +165,7 @@ export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
       const loaderData = {
         pageConfig: pageConfig ? pageConfig({}) : {},
       };
-      if (import.meta.renderer === 'client') {
+      if (import.meta.renderer === 'client' && process.env.ICE_CORE_REMOVE_ROUTES_CONFIG !== 'true') {
         await updateRoutesConfig(loaderData);
       }
       return loaderData;
@@ -242,7 +242,7 @@ export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
       pageConfig: routeConfig,
     };
     // Update routes config when render mode is CSR.
-    if (import.meta.renderer === 'client') {
+    if (import.meta.renderer === 'client' && process.env.ICE_CORE_REMOVE_ROUTES_CONFIG !== 'true') {
       await updateRoutesConfig(loaderData);
     }
     return loaderData;

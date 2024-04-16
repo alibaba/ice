@@ -76,9 +76,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     addExport: (declarationData: DeclarationData) => {
       generator.addDeclaration('framework', declarationData);
     },
-    addTargetExport: () => {
-      logger.error('`addTargetExport` is deprecated, please use `addExport` instead.');
-    },
     addExportTypes: (declarationData: DeclarationData) => {
       generator.addDeclaration('frameworkTypes', declarationData);
     },
@@ -361,10 +358,10 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   );
 
   const appConfig: AppConfig = (await getAppConfig()).default;
-
   updateRuntimeEnv(appConfig, {
     disableRouter,
     // The optimization for runtime size should only be enabled in production mode.
+    routesConfig: command !== 'build' || routesInfo.routesExports.length > 0,
     dataLoader: command !== 'build' || loaderExports,
   });
 
