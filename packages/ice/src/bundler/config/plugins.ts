@@ -1,10 +1,9 @@
 import path from 'path';
 import type { CommandName } from 'build-scripts';
 import ServerRunnerPlugin from '../../webpack/ServerRunnerPlugin.js';
-import { IMPORT_META_RENDERER, IMPORT_META_TARGET, WEB } from '../../constant.js';
+import { IMPORT_META_RENDERER, IMPORT_META_TARGET, WEB, FALLBACK_ENTRY, RUNTIME_TMP_DIR } from '../../constant.js';
 import getServerCompilerPlugin from '../../utils/getServerCompilerPlugin.js';
 import ReCompilePlugin from '../../webpack/ReCompilePlugin.js';
-import { FALLBACK_ENTRY, RUNTIME_TMP_DIR } from '../../constant.js';
 import type ServerRunner from '../../service/ServerRunner';
 import type ServerCompileTask from '../../utils/ServerCompileTask.js';
 import type { ServerCompiler, UserConfig } from '../../types';
