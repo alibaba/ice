@@ -1656,7 +1656,7 @@ importers:
         specifier: 1.1.6
         version: link:../rspack-config
       '@ice/runtime':
-        specifier: ^1.4.3
+        specifier: ^1.4.5
         version: link:../runtime
       '@ice/shared-config':
         specifier: 1.2.6
