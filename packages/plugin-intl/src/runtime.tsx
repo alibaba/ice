@@ -24,8 +24,7 @@ const runtime: RuntimePlugin<RuntimeOptons> = async ({
   const localeConfig: LocaleConfig = (typeof exported === 'function' ? await exported() : exported) || {};
   const { getLocale, ...l } = localeConfig;
   const locale = getLocale ? getLocale() : getDefaultLocale();
-  console.log('locale', locale);
-  console.log('localeMessages', runtimeOptions.localeMessages?.[locale]);
+
   intl = createIntl({
     ...l,
     messages: runtimeOptions.localeMessages?.[locale] || {},
