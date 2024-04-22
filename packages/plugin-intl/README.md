@@ -2,7 +2,7 @@
 
 `@ice/plugin-intl` is a ice.js plugin. It provides a simple way to add internationalization support to your application.
 
-> `@ice/plugin-int` is based on `react-intl`.
+> `@ice/plugin-intl` is based on `react-intl`.
 
 ## Install
 
