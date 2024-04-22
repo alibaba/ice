@@ -1,5 +1,12 @@
 # @ice/runtime
 
+## 1.4.5
+
+### Patch Changes
+
+- d5c378b6: fix: reduce bundle size by remove runtime module
+- 77155bab: feat: remove runtime code when loaders is not export
+
 ## 1.4.4
 
 - chore: add ts type for `@ice/runtime/data-loader`
