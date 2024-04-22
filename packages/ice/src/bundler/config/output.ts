@@ -39,7 +39,7 @@ async function buildCustomOutputs(
   bundleOptions: Pick<BundlerOptions, 'userConfig' | 'appConfig' | 'routeManifest'>,
 ) {
   const { userConfig, appConfig, routeManifest } = bundleOptions;
-  const { ssg, output: { distType, prependCode } } = userConfig;
+  const { ssg } = userConfig;
   const routeType = appConfig?.router?.type;
   const {
     outputPaths = [],
@@ -51,8 +51,6 @@ async function buildCustomOutputs(
     documentOnly: !ssg,
     renderMode: ssg ? 'SSG' : undefined,
     routeType: appConfig?.router?.type,
-    distType,
-    prependCode,
     routeManifest,
   });
   if (routeType === 'memory' && userConfig?.routes?.injectInitialEntry) {

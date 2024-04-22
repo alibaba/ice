@@ -1656,7 +1656,7 @@ importers:
         specifier: 1.1.6
         version: link:../rspack-config
       '@ice/runtime':
-        specifier: ^1.4.3
+        specifier: ^1.4.5
         version: link:../runtime
       '@ice/shared-config':
         specifier: 1.2.6
@@ -2356,27 +2356,15 @@ importers:
       abortcontroller-polyfill:
         specifier: 1.7.5
         version: 1.7.5
-      ejs:
-        specifier: ^3.1.6
-        version: 3.1.8
-      fs-extra:
-        specifier: ^10.0.0
-        version: 10.1.0
       history:
         specifier: ^5.3.0
         version: 5.3.0
-      htmlparser2:
-        specifier: ^8.0.1
-        version: 8.0.1
       react-router-dom:
         specifier: 6.21.3
         version: 6.21.3(react-dom@18.2.0)(react@18.2.0)
       semver:
         specifier: ^7.4.0
         version: 7.4.0
-      source-map:
-        specifier: ^0.7.4
-        version: 0.7.4
     devDependencies:
       '@remix-run/web-fetch':
         specifier: ^4.3.3
@@ -21217,6 +21205,7 @@ packages:
   /source-map@0.7.4:
     resolution: {integrity: sha512-l3BikUxvPOcn5E74dZiq5BGsTb5yEwhaTSzccU6t4sDOH8NWJCstKO5QT2CvtFoK6F0saL7p9xHAqHOlCPJygA==}
     engines: {node: '>= 8'}
+    dev: true
 
   /source-map@0.8.0-beta.0:
     resolution: {integrity: sha512-2ymg6oRBpebeZi9UUNsgQ89bhx01TcTkmNTGnNO88imTmbSgy4nfujrgVEFKWpMTEGA11EDkTt7mqObTPdigIA==}

@@ -1,4 +1,4 @@
-import type { AppExport, AppData, RequestContext } from './types.js';
+import type { AppExport, AppData, RequestContext, Loader } from './types.js';
 import { callDataLoader } from './dataLoader.js';
 
 /**
@@ -18,15 +18,17 @@ async function getAppData(appExport: AppExport, requestContext?: RequestContext)
     return null;
   }
 
-  let loader;
+  if (process.env.ICE_CORE_REMOVE_DATA_LOADER !== 'true') {
+    let loader: Loader;
 
-  if (typeof appDataLoaderConfig === 'function' || Array.isArray(appDataLoaderConfig)) {
-    loader = appDataLoaderConfig;
-  } else {
-    loader = appDataLoaderConfig.loader;
+    if (typeof appDataLoaderConfig === 'function' || Array.isArray(appDataLoaderConfig)) {
+      loader = appDataLoaderConfig;
+    } else {
+      loader = appDataLoaderConfig.loader;
+    }
+
+    return await callDataLoader(loader, requestContext);
   }
-
-  return await callDataLoader(loader, requestContext);
 }
 
 export {

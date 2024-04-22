@@ -1,2 +1,2 @@
-export { renderToResponse, renderToHTML, renderToEntry } from './runServerApp.js';
+export { renderToResponse, renderToHTML } from './runServerApp.js';
 export * from './index.js';

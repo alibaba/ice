@@ -30,7 +30,6 @@ import getRequestContext from './requestContext.js';
 import matchRoutes from './matchRoutes.js';
 import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
 import ServerRouter from './ServerRouter.js';
-import { renderHTMLToJS } from './renderHTMLToJS.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 
 export interface RenderOptions {
@@ -53,8 +52,6 @@ export interface RenderOptions {
     [key: string]: PageConfig;
   };
   runtimeOptions?: Record<string, any>;
-  distType?: Array<'html' | 'javascript'>;
-  prependCode?: string;
   serverData?: any;
   streamOptions?: RenderToPipeableStreamOptions;
 }
@@ -68,42 +65,6 @@ interface Response {
   statusText?: string;
   value?: string | Piper;
   headers?: Record<string, string>;
-}
-
-/**
- * Render and send the result with both entry bundle and html.
- */
-export async function renderToEntry(
-  requestContext: ServerContext,
-  renderOptions: RenderOptions,
-) {
-  const result = await renderToHTML(requestContext, renderOptions);
-  const { value } = result;
-
-  let jsOutput;
-  let sourceMap;
-  const {
-    distType = ['html'],
-    prependCode = '',
-  } = renderOptions;
-  if (value && distType.includes('javascript')) {
-    const res = await renderHTMLToJS(value, {
-      prependCode,
-    });
-    jsOutput = res.jsOutput;
-    sourceMap = res.sourceMap;
-  }
-
-  let htmlOutput;
-  if (distType.includes('html')) {
-    htmlOutput = result;
-  }
-
-  return {
-    ...htmlOutput,
-    jsOutput,
-    sourceMap,
-  };
 }
 
 /**
