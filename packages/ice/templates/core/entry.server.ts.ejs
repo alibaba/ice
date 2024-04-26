@@ -1,4 +1,5 @@
 import './env.server';
+<%- entryServer.imports %>
 import * as runtime from '@ice/runtime/server';
 <% if (hydrate) {-%>
 import { commons, statics } from './runtime-modules';

@@ -4,21 +4,30 @@ import type { IntlShape } from 'react-intl';
 import type { RuntimePlugin } from '@ice/runtime/types';
 import type { LocaleConfig } from './types.js';
 
-interface RuntimeOptons {
-  localeMessages?: Record<string, Record<string, string>>;
-}
-
 const EXPORT_NAME = 'locale';
 const cache = createIntlCache();
-let intl: IntlShape = null;
 
 const getDefaultLocale = () => {
   return (typeof navigator !== 'undefined' && navigator.language) || 'zh-CN';
 };
-const runtime: RuntimePlugin<RuntimeOptons> = async ({
+
+const getLocaleMessages = () => {
+  return (typeof window !== 'undefined'
+    // @ts-ignore
+    ? window.__ICE_LOCALE_MESSAGES__
+    : global.__ICE_LOCALE_MESSAGES__) || {};
+};
+
+const defaultLocale = getDefaultLocale();
+let intl: IntlShape = createIntl({
+  locale: defaultLocale,
+  messages: getLocaleMessages()?.[defaultLocale] || {},
+});
+
+const runtime: RuntimePlugin = async ({
   addProvider,
   appContext,
-}, runtimeOptions) => {
+}) => {
   const { appExport } = appContext;
   const exported = appExport[EXPORT_NAME];
   const localeConfig: LocaleConfig = (typeof exported === 'function' ? await exported() : exported) || {};
@@ -27,7 +36,7 @@ const runtime: RuntimePlugin<RuntimeOptons> = async ({
 
   intl = createIntl({
     ...l,
-    messages: runtimeOptions.localeMessages?.[locale] || {},
+    messages: getLocaleMessages()?.[locale] || {},
     locale: getLocale ? getLocale() : getDefaultLocale(),
   }, cache);
   addProvider(({ children }) => {

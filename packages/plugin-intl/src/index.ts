@@ -51,13 +51,12 @@ const plugin: Plugin = () => ({
             renderLocaleEntry(files);
           }
         }]);
-
         runtimeSource = './locales';
+
+        generator.addEntryImportAhead({
+          source: runtimeSource,
+        }, 'both');
       }
-      generator.addRuntimeOptions({
-        source: runtimeSource,
-        specifier: 'localeMessages',
-      });
     } else {
       logger.warn('No locale files found, please check the `src/locales` folder.');
     }

@@ -141,7 +141,7 @@ export default class Generator {
     this.rerender = false;
     this.renderTemplates = [];
     this.renderDataRegistration = [];
-    this.contentTypes = ['framework', 'frameworkTypes', 'routeConfigTypes', 'dataLoaderImport', 'runtimeOptions', 'entry'];
+    this.contentTypes = ['framework', 'frameworkTypes', 'routeConfigTypes', 'dataLoaderImport', 'runtimeOptions', 'entry', 'entryServer'];
     // empty .ice before render
     fse.emptyDirSync(path.join(rootDir, targetDir));
     // add initial templates
