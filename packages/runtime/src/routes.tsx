@@ -184,7 +184,8 @@ export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
   }
 
   // if ICE_CORE_REMOVE_DATA_LOADER is true, dataLoaderConfig should be null and it already return above.
-  if (process.env.ICE_CORE_REMOVE_DATA_LOADER !== 'true') {
+  // dataLoader should be always called in server side because of the serverDataLoader.
+  if (import.meta.renderer !== 'client' || process.env.ICE_CORE_REMOVE_DATA_LOADER !== 'true') {
     let loader: Loader;
     let loaderOptions: DataLoaderOptions;
 
@@ -198,7 +199,7 @@ export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
 
     const getData = (requestContext: RequestContext) => {
       let routeData: any;
-      if (process.env.ICE_CORE_REMOVE_DATA_LOADER !== 'true') {
+      if (import.meta.renderer !== 'client' || process.env.ICE_CORE_REMOVE_DATA_LOADER !== 'true') {
         if (globalLoader) {
           routeData = globalLoader.getData(routeId, { renderMode, requestContext });
         } else {
