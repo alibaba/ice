@@ -159,7 +159,7 @@ export function createRouteLoader(options: RouteLoaderOptions): LoaderFunction {
   const { requestContext: defaultRequestContext, renderMode, routeId } = options;
   const globalLoader = (typeof window !== 'undefined' && (window as any).__ICE_DATA_LOADER__) ? (window as any).__ICE_DATA_LOADER__ : null;
 
-  if (process.env.ICE_CORE_REMOVE_DATA_LOADER !== 'true') {
+  if (import.meta.renderer !== 'client' || process.env.ICE_CORE_REMOVE_DATA_LOADER !== 'true') {
     if (globalLoader) {
       dataLoaderConfig = globalLoader.getLoader(routeId);
     } else if (renderMode === 'SSG') {
