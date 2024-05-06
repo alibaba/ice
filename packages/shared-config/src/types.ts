@@ -40,9 +40,20 @@ interface ConfigurationCtx<T = typeof webpack> extends Config {
 }
 
 type Experimental = Configuration['experiments'];
+
+export type JSXSuffix = 'jsx' | 'tsx';
+export interface GetJsxTransformOptions {
+  rootDir: string;
+  mode: Options['mode'];
+  suffix?: JSXSuffix;
+  fastRefresh: boolean;
+  polyfill: Config['polyfill'];
+  enableEnv: boolean;
+}
+
 interface SwcOptions {
   removeExportExprs?: string[];
-  compilationConfig?: SwcCompilationConfig | ((source: string, id: string) => SwcCompilationConfig);
+  compilationConfig?: SwcCompilationConfig | ((source: string, id: string, options: GetJsxTransformOptions) => SwcCompilationConfig);
   keepExports?: string[] | { value: string[]; include?: (id: string) => boolean };
   nodeTransform?: boolean;
 }
