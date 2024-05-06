@@ -23,6 +23,7 @@ const possibleStandardNames = [
   'marginHeight',
   // meta
   'charSet',
+  'dangerouslySetInnerHTML',
 ].reduce((records: Record<string, string>, iter: string) => {
   records[iter.toLowerCase()] = iter;
   return records;
