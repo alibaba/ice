@@ -23,13 +23,17 @@ const possibleStandardNames = [
   'marginHeight',
   // meta
   'charSet',
-].reduce((records: Record<string, string>, iter: string) => {
-  records[iter.toLowerCase()] = iter;
-  return records;
-}, {
-  // Special cases.
-  class: 'className',
-  for: 'htmlFor',
-});
+  'dangerouslySetInnerHTML',
+].reduce(
+  (records: Record<string, string>, iter: string) => {
+    records[iter.toLowerCase()] = iter;
+    return records;
+  },
+  {
+    // Special cases.
+    class: 'className',
+    for: 'htmlFor',
+  },
+);
 
 export default possibleStandardNames;
