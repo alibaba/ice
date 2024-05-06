@@ -12,10 +12,9 @@ const getDefaultLocale = () => {
 };
 
 const getLocaleMessages = () => {
-  return (typeof window !== 'undefined'
-    // @ts-ignore
-    ? window.__ICE_LOCALE_MESSAGES__
-    : global.__ICE_LOCALE_MESSAGES__) || {};
+  // @ts-ignore
+  const localeMessages = typeof window === 'undefined' ? global.__ICE_LOCALE_MESSAGES__ : window.__ICE_LOCALE_MESSAGES__;
+  return localeMessages || {};
 };
 
 const defaultLocale = getDefaultLocale();
