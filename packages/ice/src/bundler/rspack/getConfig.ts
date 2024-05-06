@@ -35,9 +35,11 @@ const getConfig: GetConfig = async (context, options, rspack) => {
   const {
     rootDir,
     userConfig,
+    command,
     extendsPluginAPI: {
       serverCompileTask,
       getRoutesFile,
+      getFlattenRoutes,
     },
   } = context;
   const { reCompile, ensureRoutesConfig } = getRouteExportConfig(rootDir);
@@ -57,6 +59,8 @@ const getConfig: GetConfig = async (context, options, rspack) => {
         outputDir,
         serverCompileTask,
         userConfig,
+        getFlattenRoutes,
+        command,
       }),
       // Add ReCompile plugin when routes config changed.
       getReCompilePlugin(reCompile, routeManifest),
