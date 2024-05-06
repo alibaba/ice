@@ -16,7 +16,7 @@ export class JSXService {
 
       // Reset jsc.transform.react.runtime to classic.
       config.swcOptions = merge(config.swcOptions || {}, {
-        compilationConfig: (source: string, id: string) => {
+        compilationConfig: (source: string, id: string, compileOptions) => {
           let swcCompilationConfig = {};
           const hasJSXComment = source.indexOf('@jsx createElement') !== -1;
           const isRaxComponent = /(from|require\()\s*['"]rax['"]/.test(source);
@@ -43,7 +43,7 @@ export class JSXService {
             };
           }
 
-          return merge({}, originalSwcCompilationConfigFunc(source, id), swcCompilationConfig);
+          return merge({}, originalSwcCompilationConfigFunc(source, id, compileOptions), swcCompilationConfig);
         },
       });
     });
