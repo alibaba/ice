@@ -139,7 +139,8 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
       inline: 2,
       passes: 4,
     },
-    mangle: {
+    // If JSMinifier is swc remove mangle config because it will cause minification error.
+    mangle: minify === JSMinifier.swc ? {} : {
       safari10: true,
     },
     format: {
