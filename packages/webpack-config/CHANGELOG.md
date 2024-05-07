@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.14
+
+### Patch Changes
+
+- a805fa95: fix: minify config of swc
+- Updated dependencies [e4a32686]
+  - @ice/shared-config@1.2.7
+
 ## 1.1.13
 
 ### Patch Changes
