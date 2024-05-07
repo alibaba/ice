@@ -1,7 +1,16 @@
-import { jsx, Fragment, jsxs } from './index.js';
+// @ts-ignore
+import { jsxDEV as _jsxDEV, Fragment } from 'react/jsx-dev-runtime';
+import { hijackElementProps } from './style.js';
 
-export { Fragment };
-export function jsxDEV(
+/**
+ * @param {*} type
+ * @param {object} props
+ * @param {string} key
+ * @param {boolean} isStaticChildren
+ * @param {object} source
+ * @param {any} self
+ */
+function jsxDEV(
   type: any,
   props: object,
   key: string,
@@ -9,5 +18,7 @@ export function jsxDEV(
   source: object,
   self: any,
 ) {
-  return isStaticChildren ? jsxs(type, props, key, source, self) : jsx(type, props, key, source, self);
+  return _jsxDEV(type, hijackElementProps(props), key, isStaticChildren, source, self);
 }
+
+export { jsxDEV, Fragment };
