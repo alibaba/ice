@@ -1,5 +1,9 @@
 # @ice/runtime
 
+## 1.4.6
+
+- Fix: serverDataLoader is not work when dataLoader is not defined.
+
 ## 1.4.5
 
 ### Patch Changes
