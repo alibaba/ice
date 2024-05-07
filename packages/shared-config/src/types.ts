@@ -53,7 +53,8 @@ export interface GetJsxTransformOptions {
 
 interface SwcOptions {
   removeExportExprs?: string[];
-  compilationConfig?: SwcCompilationConfig | ((source: string, id: string, options: GetJsxTransformOptions) => SwcCompilationConfig);
+  compilationConfig?: SwcCompilationConfig |
+    ((source: string, id: string, options: GetJsxTransformOptions) => SwcCompilationConfig);
   keepExports?: string[] | { value: string[]; include?: (id: string) => boolean };
   nodeTransform?: boolean;
 }
