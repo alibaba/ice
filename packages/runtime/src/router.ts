@@ -8,6 +8,7 @@ export {
   useNavigate,
   useNavigation,
   useRevalidator,
+  useAsyncValue,
 } from 'react-router-dom';
 
 export { useData, useConfig } from './RouteContext.js';
