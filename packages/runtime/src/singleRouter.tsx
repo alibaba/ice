@@ -279,6 +279,10 @@ export const matchRoutes = (
   for (let i = 0; matches == null && i < branches.length; i++) {
     matches = matchRouteBranch(branches[i], stripedPathname);
   }
+  if (!matches) {
+    console.warn('Single route manifest: ', routes);
+    console.warn(`Basename "${basename}" is not match with pathname "${pathname}"`);
+  }
   return matches;
 };
 
@@ -316,13 +320,13 @@ export const getSingleRoute = async (
   let loaders = [];
   let loaderIds = [];
   const components = matchedRoutes.map(({ route }) => {
-    const { loader } = routeModules[route.id];
+    const { loader, Component } = routeModules?.[route.id] || {};
     if (loader) {
       loaders.push(loader());
       loaderIds.push(route.id);
     }
     return {
-      Component: routeModules[route.id].Component || route.Component,
+      Component: Component || route.Component,
       isDataRoute: !!loader,
       id: route.id,
     };

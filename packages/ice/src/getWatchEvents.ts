@@ -30,7 +30,10 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
     async (eventName: string) => {
       if (eventName === 'add' || eventName === 'unlink' || eventName === 'change') {
         const routesRenderData = await generateRoutesInfo(rootDir, routesConfig);
-        const { routeImports, routeDefinition } = getRoutesDefinition(routesRenderData.routes, lazyRoutes);
+        const { routeImports, routeDefinition } = getRoutesDefinition({
+          manifest: routesRenderData.routes,
+          lazy: lazyRoutes,
+        });
         const stringifiedData = JSON.stringify(routesRenderData);
         if (cache.get('routes') !== stringifiedData) {
           cache.set('routes', stringifiedData);

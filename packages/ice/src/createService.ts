@@ -38,6 +38,7 @@ import addPolyfills from './utils/runtimePolyfill.js';
 import webpackBundler from './bundler/webpack/index.js';
 import rspackBundler from './bundler/rspack/index.js';
 import getDefaultTaskConfig from './plugins/task.js';
+import { multipleServerEntry, renderMultiEntry } from './utils/multipleEntry.js';
 import hasDocument from './utils/hasDocument.js';
 
 const require = createRequire(import.meta.url);
@@ -93,8 +94,13 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     addEntryCode: (callback: (originalCode: string) => string) => {
       entryCode = callback(entryCode);
     },
-    addEntryImportAhead: (declarationData: Pick<DeclarationData, 'source'>) => {
-      generator.addDeclaration('entry', declarationData);
+    addEntryImportAhead: (declarationData: Pick<DeclarationData, 'source'>, type = 'client') => {
+      if (type === 'both' || type === 'server') {
+        generator.addDeclaration('entryServer', declarationData);
+      }
+      if (type === 'both' || type === 'client') {
+        generator.addDeclaration('entry', declarationData);
+      }
     },
     modifyRenderData: generator.modifyRenderData,
     addDataLoaderImport: (declarationData: DeclarationData) => {
@@ -243,7 +249,10 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const iceRuntimePath = '@ice/runtime';
   // Only when code splitting use the default strategy or set to `router`, the router will be lazy loaded.
   const lazy = [true, 'chunks', 'page', 'page-vendors'].includes(userConfig.codeSplitting);
-  const { routeImports, routeDefinition } = getRoutesDefinition(routesInfo.routes, lazy);
+  const { routeImports, routeDefinition } = getRoutesDefinition({
+    manifest: routesInfo.routes,
+    lazy,
+  });
   const loaderExports = hasExportAppData || Boolean(routesInfo.loaders);
   const hasDataLoader = Boolean(userConfig.dataLoader) && loaderExports;
   // add render data
@@ -267,6 +276,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     hasDataLoader,
     routeImports,
     routeDefinition,
+    routesFile: './routes',
   });
   dataCache.set('routes', JSON.stringify(routesInfo));
   dataCache.set('hasExportAppData', hasExportAppData ? 'true' : '');
@@ -301,6 +311,15 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     } : {
       source: packageName,
       specifier: '',
+    });
+  }
+
+  if (multipleServerEntry(userConfig, command)) {
+    renderMultiEntry({
+      generator,
+      renderRoutes: routeManifest.getFlattenRoute(),
+      routesManifest: routesInfo.routes,
+      lazy,
     });
   }
 

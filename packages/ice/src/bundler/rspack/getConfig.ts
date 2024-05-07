@@ -14,6 +14,7 @@ import {
 import { getReCompilePlugin, getServerPlugin, getSpinnerPlugin } from '../config/plugins.js';
 import { getExpandedEnvs } from '../../utils/runtimeEnv.js';
 import type { BundlerOptions, Context } from '../types.js';
+import type { PluginData } from '../../types/plugin.js';
 
 type GetConfig = (
   context: Context,
@@ -34,9 +35,11 @@ const getConfig: GetConfig = async (context, options, rspack) => {
   const {
     rootDir,
     userConfig,
+    command,
     extendsPluginAPI: {
       serverCompileTask,
       getRoutesFile,
+      getFlattenRoutes,
     },
   } = context;
   const { reCompile, ensureRoutesConfig } = getRouteExportConfig(rootDir);
@@ -56,6 +59,8 @@ const getConfig: GetConfig = async (context, options, rspack) => {
         outputDir,
         serverCompileTask,
         userConfig,
+        getFlattenRoutes,
+        command,
       }),
       // Add ReCompile plugin when routes config changed.
       getReCompilePlugin(reCompile, routeManifest),
@@ -94,9 +99,17 @@ export const getDataLoaderConfig: GetDataLoaderRspackConfig = async (context, ta
     extendsPluginAPI: {
       generator,
     },
+    getAllPlugin,
   } = context;
   const { config } = task;
   const frameworkExports = generator.getExportList('framework', config.target);
+  const plugins = getAllPlugin(['keepExports']) as PluginData[];
+  let keepExports = ['dataLoader'];
+  plugins.forEach(plugin => {
+    if (plugin.keepExports) {
+      keepExports = keepExports.concat(plugin.keepExports);
+    }
+  });
   return await getRspackConfig({
     rootDir,
     rspack,
@@ -115,7 +128,7 @@ export const getDataLoaderConfig: GetDataLoaderRspackConfig = async (context, ta
         'data-loader': path.join(rootDir, RUNTIME_TMP_DIR, 'data-loader.ts'),
       },
       swcOptions: {
-        keepExports: ['dataLoader'],
+        keepExports,
       },
       splitChunks: false,
       redirectImports: frameworkExports,

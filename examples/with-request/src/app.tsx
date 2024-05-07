@@ -1,7 +1,7 @@
 import { request as requestAPI, defineDataLoader } from 'ice';
 import { defineRequestConfig } from '@ice/plugin-request/types';
 
-export const dataLader = defineDataLoader(async () => {
+export const dataLoader = defineDataLoader(async () => {
   try {
     return await requestAPI('/user');
   } catch (err) {
