@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import { useRouteError, defer, Await as ReactRouterAwait } from 'react-router-dom';
+import type { AwaitProps } from 'react-router-dom';
 // eslint-disable-next-line camelcase
 import type { UNSAFE_DeferredData, LoaderFunctionArgs } from '@remix-run/router';
 import type {
@@ -105,7 +106,7 @@ export function RouteErrorComponent() {
   return process.env.ICE_CORE_ROUTER === 'true' ? <ErrorComponentWithRouter /> : <></>;
 }
 
-export function Await(props) {
+export function Await(props: AwaitProps & { fallback: React.ReactNode }) {
   return process.env.ICE_CORE_ROUTER === 'true' ? (
     <Suspense fallback={props.fallback}>
       <ReactRouterAwait

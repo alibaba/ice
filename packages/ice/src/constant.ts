@@ -51,6 +51,7 @@ export const RUNTIME_EXPORTS = [
       'useNavigate',
       'useNavigation',
       'useRevalidator',
+      'useAsyncValue',
     ],
     source: '@ice/runtime/router',
   },
