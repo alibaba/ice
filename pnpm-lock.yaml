@@ -1678,16 +1678,16 @@ importers:
         specifier: 1.2.2
         version: link:../route-manifest
       '@ice/rspack-config':
-        specifier: 1.1.6
+        specifier: 1.1.7
         version: link:../rspack-config
       '@ice/runtime':
-        specifier: ^1.4.5
+        specifier: ^1.4.7
         version: link:../runtime
       '@ice/shared-config':
-        specifier: 1.2.6
+        specifier: 1.2.7
         version: link:../shared-config
       '@ice/webpack-config':
-        specifier: 1.1.13
+        specifier: 1.1.14
         version: link:../webpack-config
       '@swc/helpers':
         specifier: 0.5.1
@@ -2234,7 +2234,7 @@ importers:
         version: 0.9.1
     devDependencies:
       '@ice/app':
-        specifier: ^3.4.2
+        specifier: ^3.4.8
         version: link:../ice
       '@types/lodash-es':
         specifier: ^4.17.7
@@ -2382,7 +2382,7 @@ importers:
         specifier: 0.2.6
         version: link:../bundles
       '@ice/shared-config':
-        specifier: 1.2.6
+        specifier: 1.2.7
         version: link:../shared-config
     devDependencies:
       '@rspack/core':
@@ -2487,7 +2487,7 @@ importers:
         specifier: 0.2.6
         version: link:../bundles
       '@ice/shared-config':
-        specifier: 1.2.6
+        specifier: 1.2.7
         version: link:../shared-config
       fast-glob:
         specifier: ^3.2.11

@@ -59,6 +59,7 @@ const getWebpackConfig: GetWebpackConfig = async (context, options) => {
     configFilePath,
     extendsPluginAPI: {
       serverCompileTask,
+      getFlattenRoutes,
       getRoutesFile,
       generator,
     },
@@ -96,6 +97,8 @@ const getWebpackConfig: GetWebpackConfig = async (context, options) => {
       outputDir,
       serverCompileTask,
       userConfig,
+      command,
+      getFlattenRoutes,
     });
     if (serverCompilerPlugin) {
       webpackConfig.plugins.push(serverCompilerPlugin);

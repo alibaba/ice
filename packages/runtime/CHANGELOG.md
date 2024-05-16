@@ -1,5 +1,15 @@
 # @ice/runtime
 
+## 1.4.7
+
+### Patch Changes
+
+- e78c7d22: fix: single route mismatch warning for development
+
+## 1.4.6
+
+- Fix: serverDataLoader is not work when dataLoader is not defined.
+
 ## 1.4.5
 
 ### Patch Changes

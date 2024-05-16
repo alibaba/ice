@@ -55,6 +55,7 @@ const plugin: Plugin = () => ({
 
         generator.addEntryImportAhead({
           source: runtimeSource,
+        // @ts-ignore
         }, 'both');
       }
     } else {
