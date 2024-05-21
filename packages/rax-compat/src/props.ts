@@ -33,7 +33,6 @@ function transformProps(props: ComponentProps<JSXElementConstructor<any>>): Reco
     } else {
       // Handles component props from rax-components like resizeMode, this causes React to throw a warning.
       key = lowerCasedPropKey;
-      val = typeof val === 'boolean' ? val.toString() : val;
     }
 
     transformedProps[key] = val;
