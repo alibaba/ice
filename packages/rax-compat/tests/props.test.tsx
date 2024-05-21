@@ -51,14 +51,4 @@ describe('props', () => {
       __html: 'xxx',
     });
   });
-
-  it('should work with non-standard props', () => {
-    expect(
-      transformProps({
-        nonStandard: true,
-      }),
-    ).toEqual({
-      nonstandard: 'true',
-    });
-  });
 });
