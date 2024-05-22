@@ -1,0 +1,36 @@
+{
+  "name": "@ice/plugin-externals",
+  "version": "1.0.0",
+  "description": "plugin to make externals much easier in ice.js",
+  "files": [
+    "esm",
+    "!esm/**/*.map",
+    "*.d.ts"
+  ],
+  "type": "module",
+  "main": "esm/index.js",
+  "module": "esm/index.js",
+  "types": "esm/index.d.ts",
+  "exports": {
+    ".": "./esm/index.js"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "watch": "tsc -w --sourceMap",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@ice/app": "^3.3.2",
+    "@ice/runtime": "^1.2.9",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "webpack": "^5.88.0"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-externals"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
