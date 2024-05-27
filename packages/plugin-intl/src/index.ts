@@ -5,7 +5,16 @@ import type { Plugin } from '@ice/app/types';
 
 const _dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const plugin: Plugin = () => ({
+interface PluginOptions {
+  // The key of locale content read from the window object.
+  localeMessagesKey?: string;
+  defaultLocaleKey?: string;
+}
+
+const plugin: Plugin<PluginOptions> = ({
+  localeMessagesKey = '__LOCALE_MESSAGES__',
+  defaultLocaleKey = '__DEFAULT_LOCALE__',
+} = {}) => ({
   name: 'plugin-intl',
   setup: ({ generator, context, createLogger, watch }) => {
     const { rootDir } = context;
@@ -26,6 +35,8 @@ const plugin: Plugin = () => ({
         path.join(_dirname, '../templates/locales.ts.ejs'),
         'locales.ts',
         {
+          localeMessagesKey,
+          defaultLocaleKey,
           localeImport: locales.join('\n'),
           localeExport: localeExport.join('\n  '),
         },
@@ -59,6 +70,11 @@ const plugin: Plugin = () => ({
         }, 'both');
       }
     } else {
+      renderLocaleEntry([]);
+      generator.addEntryImportAhead({
+        source: './locales',
+      // @ts-ignore
+      }, 'both');
       logger.warn('No locale files found, please check the `src/locales` folder.');
     }
 
