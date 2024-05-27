@@ -9,11 +9,13 @@ interface PluginOptions {
   // The key of locale content read from the window object.
   localeMessagesKey?: string;
   defaultLocaleKey?: string;
+  useCDN?: boolean;
 }
 
 const plugin: Plugin<PluginOptions> = ({
   localeMessagesKey = '__LOCALE_MESSAGES__',
   defaultLocaleKey = '__DEFAULT_LOCALE__',
+  useCDN = false,
 } = {}) => ({
   name: 'plugin-intl',
   setup: ({ generator, context, createLogger, watch }) => {
@@ -45,7 +47,7 @@ const plugin: Plugin<PluginOptions> = ({
     const globRule = 'src/locales/*.{ts,js,json}';
     // Glob all locale files, and generate runtime options.
     const localeFiles = fg.sync(globRule, { cwd: rootDir });
-    if (localeFiles.length > 0) {
+    if (localeFiles.length > 0 && !useCDN) {
       // Filter the entry of locale files.
       const mainEntry = localeFiles.find((file) => file.match(/index\.(ts|js|json)$/));
       let runtimeSource = '';
@@ -75,7 +77,9 @@ const plugin: Plugin<PluginOptions> = ({
         source: './locales',
       // @ts-ignore
       }, 'both');
-      logger.warn('No locale files found, please check the `src/locales` folder.');
+      if (!useCDN) {
+        logger.warn('No locale files found, please check the `src/locales` folder.');
+      }
     }
 
     // Add intl export from ice.
