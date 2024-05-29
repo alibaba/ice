@@ -112,6 +112,7 @@ interface AfterCommandCompileOptions {
 
 interface DevServerInfo {
   devPath: string;
+  routePaths: string[];
 }
 
 export interface HookLifecycle {
