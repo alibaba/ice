@@ -56,11 +56,11 @@ const plugin: Plugin = (options: PluginOptions) => ({
           };
         }
         const cdnList = [];
-        Object.keys(cdnMap).map((key) => {
+        Object.keys(cdnMap).forEach((key) => {
           const url = command === 'start' ? cdnMap[key].development : cdnMap[key].production;
           const urls = Array.isArray(url) ? url : [url];
           cdnList.push(...urls);
-        }).filter(Boolean);
+        });
         if (cdnList.length > 0) {
           // @ts-ignore missmatch type becasue of webpack prebundled.
           webpackConfig.plugins.push(new InjectExternalScriptsWebpackPlugin({
