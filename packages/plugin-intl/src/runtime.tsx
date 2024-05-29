@@ -8,7 +8,10 @@ const EXPORT_NAME = 'locale';
 const cache = createIntlCache();
 
 const getDefaultLocale = () => {
-  return (typeof navigator !== 'undefined' && navigator.language) || 'zh-CN';
+  // @ts-ignore
+  return (typeof window !== 'undefined' && window.__ICE_DEFAULT_LOCALE__) ||
+    (typeof navigator !== 'undefined' && navigator.language) ||
+    'zh-CN';
 };
 
 const getLocaleMessages = () => {

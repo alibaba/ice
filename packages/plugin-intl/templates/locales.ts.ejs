@@ -3,11 +3,13 @@
 const localeMessages = {
   <%- localeExport %>
 };
-const LOCALE_KEY = '__ICE_LOCALE_MESSAGES__';
+const LOCALE_MESSAGES_KEY = '__ICE_LOCALE_MESSAGES__';
+const DEFAULT_LOCALE_KEY = '__ICE_DEFAULT_LOCALE__';
 if (typeof window !== 'undefined') {
-  window[LOCALE_KEY] = localeMessages;
+  window[LOCALE_MESSAGES_KEY] = window['<%- localeMessagesKey %>'] || localeMessages;
+  window[DEFAULT_LOCALE_KEY] = window['<%- defaultLocaleKey %>'];
 } else {
-  global[LOCALE_KEY]= localeMessages;
+  global[LOCALE_MESSAGES_KEY]= localeMessages;
 }
 
 export default localeMessages;
