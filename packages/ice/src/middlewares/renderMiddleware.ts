@@ -43,7 +43,6 @@ export default function createRenderMiddleware(options: Options): Middleware {
       // Ignore static resources.
       !isStaticResources.test(req.path)) {
       const serverModule = await excuteServerEntry();
-      console.log('serverModule', serverModule);
       if (serverModule) {
         const requestContext: ServerContext = {
           req,
