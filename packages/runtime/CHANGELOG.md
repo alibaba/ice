@@ -1,5 +1,13 @@
 # @ice/runtime
 
+## 1.4.8
+
+### Patch Changes
+
+- 4c9456fc: feat: export useAsyncData for component Await
+- Updated dependencies [bccc7db1]
+  - @ice/jsx-runtime@0.3.0
+
 ## 1.4.7
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.4.9
+
+### Patch Changes
+
+- 4c9456fc: feat: export useAsyncData for component Await
+- b808156b: feat: support open specified route and list all routes
+- Updated dependencies [4c9456fc]
+  - @ice/runtime@1.4.8
+
 ## 3.4.8
 
 ### Patch Changes

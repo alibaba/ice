@@ -1681,7 +1681,7 @@ importers:
         specifier: 1.1.7
         version: link:../rspack-config
       '@ice/runtime':
-        specifier: ^1.4.7
+        specifier: ^1.4.8
         version: link:../runtime
       '@ice/shared-config':
         specifier: 1.2.7
@@ -1987,7 +1987,7 @@ importers:
   packages/plugin-i18n:
     dependencies:
       '@ice/jsx-runtime':
-        specifier: ^0.2.2
+        specifier: ^0.3.0
         version: link:../jsx-runtime
       '@swc/helpers':
         specifier: ^0.5.1
@@ -2059,10 +2059,10 @@ importers:
         version: 6.3.2(react@18.2.0)(typescript@4.9.5)
     devDependencies:
       '@ice/app':
-        specifier: ^3.3.2
+        specifier: ^3.4.9
         version: link:../ice
       '@ice/runtime':
-        specifier: ^1.2.9
+        specifier: ^1.4.8
         version: link:../runtime
       '@types/react':
         specifier: ^18.0.0
@@ -2259,10 +2259,10 @@ importers:
         version: 18.2.0(react@18.2.0)
     devDependencies:
       '@ice/app':
-        specifier: ^3.3.2
+        specifier: ^3.4.9
         version: link:../ice
       '@ice/runtime':
-        specifier: ^1.2.9
+        specifier: ^1.4.8
         version: link:../runtime
       '@types/react':
         specifier: ^18.0.0
@@ -2392,7 +2392,7 @@ importers:
   packages/runtime:
     dependencies:
       '@ice/jsx-runtime':
-        specifier: ^0.2.2
+        specifier: ^0.3.0
         version: link:../jsx-runtime
       '@ice/shared':
         specifier: ^1.0.2
@@ -14047,6 +14047,7 @@ packages:
 
   /glob@7.1.6:
     resolution: {integrity: sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==}
+    deprecated: Glob versions prior to v9 are no longer supported
     dependencies:
       fs.realpath: 1.0.0
       inflight: 1.0.6
