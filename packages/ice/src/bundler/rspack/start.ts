@@ -3,7 +3,7 @@ import type { Configuration as DevServerConfiguration } from '@rspack/dev-server
 import getDefaultServerConfig from '../config/defaultServerConfig.js';
 import getMiddlewares from '../config/middlewares.js';
 import { logger } from '../../utils/logger.js';
-import getUrls from '../config/getUrls.js';
+import getUrls, { getUrlInfo } from '../config/getUrls.js';
 import { WEB } from '../../constant.js';
 import type { BuildOptions } from '../types.js';
 import formatStats from './formatStats.js';
@@ -80,9 +80,7 @@ const start = async ({
       isSuccessful,
       isFirstCompile,
       urls,
-      devUrlInfo: {
-        devPath: (routePaths[0] || '').replace(/^[/\\]/, ''),
-      },
+      devUrlInfo: getUrlInfo(routePaths),
       messages: message,
       taskConfigs,
       ...hooksAPI,

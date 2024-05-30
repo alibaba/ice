@@ -523,6 +523,10 @@ const cliOption = [
     commands: ['start'],
   },
   {
+    name: 'list',
+    commands: ['start'],
+  },
+  {
     name: 'speedup',
     commands: ['start', 'build'],
   },

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.12
+
+### Patch Changes
+
+- 60ed0e11: lowercase props compat
+
 ## 0.2.11
 
 ### Patch Changes

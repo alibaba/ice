@@ -32,4 +32,11 @@ const getUrls = ({
   return urls;
 };
 
+export const getUrlInfo = (routePaths: string[]) => {
+  return {
+    devPath: (routePaths[0] || '').replace(/^[/\\]/, ''),
+    routePaths: routePaths.map((routePath) => (routePath || '').replace(/^[/\\]/, '')),
+  };
+};
+
 export default getUrls;

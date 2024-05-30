@@ -1,5 +1,11 @@
 # @ice/jsx-runtime
 
+## 0.3.0
+
+### Minor Changes
+
+- bccc7db1: fix: use jsx-dev-runtime when development
+
 ## 0.2.2
 
 ### Patch Changes

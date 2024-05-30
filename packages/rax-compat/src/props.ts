@@ -30,6 +30,9 @@ function transformProps(props: ComponentProps<JSXElementConstructor<any>>): Reco
     } else if (possibleStandardNames.hasOwnProperty(lowerCasedPropKey)) {
       // Transform attribute names that make it works properly in React.
       key = possibleStandardNames[lowerCasedPropKey];
+    } else {
+      // Handles component props from rax-components like resizeMode, this causes React to throw a warning.
+      key = lowerCasedPropKey;
     }
 
     transformedProps[key] = val;
