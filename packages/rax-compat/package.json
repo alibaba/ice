@@ -4,28 +4,78 @@
   "description": "Rax compatible mode, running rax project on the react runtime.",
   "files": [
     "esm",
-    "cjs",
     "es2017",
-    "dist",
-    "build"
+    "es2021"
   ],
   "type": "module",
   "main": "esm/index.js",
   "module": "esm/index.js",
   "exports": {
-    ".": "./esm/index.js",
-    "./children": "./esm/children.js",
-    "./clone-element": "./esm/clone-element.js",
-    "./create-class": "./esm/create-class.js",
-    "./create-factory": "./esm/create-factory.js",
-    "./create-portal": "./esm/create-portal.js",
-    "./find-dom-node": "./esm/find-dom-node.js",
-    "./is-valid-element": "./esm/is-valid-element.js",
-    "./unmount-component-at-node": "./esm/unmount-component-at-node.js",
-    "./runtime": "./esm/runtime/index.js",
-    "./runtime/jsx-dev-runtime": "./esm/runtime/jsx-dev-runtime.js",
-    "./runtime/jsx-runtime": "./esm/runtime/jsx-runtime.js",
-    "./es2017": "./es2017/index.js"
+    ".": {
+      "es2021": "./es2021/index.js",
+      "es2017": "./es2017/index.js",
+      "import": "./esm/index.js"
+    },
+    "./children": {
+      "es2021": "./es2021/children.js",
+      "es2017": "./es2017/children.js",
+      "import": "./esm/children.js"
+    },
+    "./clone-element": {
+      "es2021": "./es2021/clone-element.js",
+      "es2017": "./es2017/clone-element.js",
+      "import": "./esm/clone-element.js"
+    },
+    "./create-class": {
+      "es2021": "./es2021/create-class.js",
+      "es2017": "./es2017/create-class.js",
+      "import": "./esm/create-class.js"
+    },
+    "./create-factory": {
+      "es2021": "./es2021/create-factory.js",
+      "es2017": "./es2017/create-factory.js",
+      "import": "./esm/create-factory.js"
+    },
+    "./create-portal": {
+      "es2021": "./es2021/create-portal.js",
+      "es2017": "./es2017/create-portal.js",
+      "import": "./esm/create-portal.js"
+    },
+    "./find-dom-node": {
+      "es2021": "./es2021/find-dom-node.js",
+      "es2017": "./es2017/find-dom-node.js",
+      "import": "./esm/find-dom-node.js"
+    },
+    "./is-valid-element": {
+      "es2021": "./es2021/is-valid-element.js",
+      "es2017": "./es2017/is-valid-element.js",
+      "import": "./esm/is-valid-element.js"
+    },
+    "./unmount-component-at-node": {
+      "es2021": "./es2021/unmount-component-at-node.js",
+      "es2017": "./es2017/unmount-component-at-node.js",
+      "import": "./esm/unmount-component-at-node.js"
+    },
+    "./runtime": {
+      "es2021": "./es2021/runtime/index.js",
+      "es2017": "./es2017/runtime/index.js",
+      "import": "./esm/runtime/index.js"
+    },
+    "./runtime/jsx-dev-runtime": {
+      "es2021": "./es2021/runtime/jsx-dev-runtime.js",
+      "es2017": "./es2017/runtime/jsx-dev-runtime.js",
+      "import": "./esm/runtime/jsx-dev-runtime.js"
+    },
+    "./runtime/jsx-runtime": {
+      "es2021": "./es2021/runtime/jsx-runtime.js",
+      "es2017": "./es2017/runtime/jsx-runtime.js",
+      "import": "./esm/runtime/jsx-runtime.js"
+    },
+    "./es2017": {
+      "es2021": "./es2021/index.js",
+      "es2017": "./es2017/index.js",
+      "import": "./esm/index.js"
+    }
   },
   "sideEffects": [
     "dist/*",

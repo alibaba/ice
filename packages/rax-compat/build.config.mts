@@ -5,4 +5,7 @@ export default defineConfig({
     formats: ['esm', 'es2017'],
   },
   sourceMaps: process.env.NODE_ENV === 'development',
+  plugins: [
+    './plugin.mjs',
+  ],
 });
