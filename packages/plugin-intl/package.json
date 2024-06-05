@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-intl",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "react intl plugin for ice.js 3.",
   "files": [
     "esm",
