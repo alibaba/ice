@@ -2,7 +2,7 @@
 
 ## 1.0.2
 
-fix: compat with the naviator language return with underslash.
+fix: compat with the navigator language return with underslash.
 
 ## 1.0.1
 
