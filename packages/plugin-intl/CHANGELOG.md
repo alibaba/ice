@@ -1,5 +1,9 @@
 # @ice/plugin-intl
 
+## 1.0.2
+
+fix: compat with the naviator language return with underslash.
+
 ## 1.0.1
 
 ### Patch Changes
