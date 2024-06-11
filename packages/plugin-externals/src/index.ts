@@ -3,7 +3,7 @@ import InjectExternalScriptsWebpackPlugin from './webpack-plugin.js';
 
 const PLUGIN_NAME = '@ice/plugin-externals';
 
-type Preset = 'preset-react';
+type Preset = 'react';
 interface PluginOptions {
   preset?: Preset | Preset[];
   externals?: Record<string, string>;
@@ -36,15 +36,19 @@ const plugin: Plugin = (options: PluginOptions) => ({
       config.configureWebpack.push((webpackConfig) => {
         let externals = options.externals || {};
         let cdnMap = options.cdnMap || {};
-        if (options.preset && options.preset === 'preset-react') {
-          externals = {
-            ...externals,
-            ...reactExternals,
-          };
-          cdnMap = {
-            ...cdnMap,
-            ...reactCDN,
-          };
+        if (options.preset && options.preset === 'react') {
+          switch (options.preset) {
+            case 'react':
+              externals = {
+                ...reactExternals,
+                ...externals,
+              };
+              cdnMap = {
+                ...reactCDN,
+                ...cdnMap,
+              };
+              break;
+          }
         }
 
         if (!webpackConfig.externals) {

@@ -10,14 +10,14 @@ $ npm i @ice/plugin-externals --save-dev
 
 ## Usage
 
-Set `preset-react` to external react in a easy way.
+Set preset `react` to external react in a easy way.
 
 ```js
 import { defineConfig } from '@ice/app';
 import externals from '@ice/plugin-externals';
 
 export default defineConfig(() => ({
-  plugins: [externals({ preset: 'preset-react' })]
+  plugins: [externals({ preset: 'react' })]
 }));
 ```
 
