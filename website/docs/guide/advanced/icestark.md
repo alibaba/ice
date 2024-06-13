@@ -96,6 +96,16 @@ export default defineConfig(() => ({
 }));
 ```
 
+但如果你的主应用是ice2，微应用是ice3，记得在ice3微应用的入口文件，通常是 app.tsx 文件中，调用 @ice/stark-app 中的 `setLibraryName` 方法，设置子应用模块的全局变量名称，通常是 package.json 中的 `name`。
+```ts
+import {setLibraryName} from '@ice/stark-app';
+
+setLibraryName('microName');
+
+// ...其他app.tsx的代码，如export mount, export unmount等等
+
+```
+
 应用入口可以配置相关生命周期执行行为（可选）：
 
 ```ts title="ice.config.mts"
