@@ -36,7 +36,6 @@ const getConfig: GetConfig = async (context, options, rspack) => {
     rootDir,
     command,
     userConfig,
-    command,
     extendsPluginAPI: {
       serverCompileTask,
       getRoutesFile,
