@@ -1,5 +1,13 @@
 # @ice/rspack-config
 
+## 1.1.7
+
+### Patch Changes
+
+- e858a522: fix: support cli option `https` for speedup mode
+- Updated dependencies [e4a32686]
+  - @ice/shared-config@1.2.7
+
 ## 1.1.6
 
 ### Patch Changes

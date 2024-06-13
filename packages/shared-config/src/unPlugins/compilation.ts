@@ -5,12 +5,10 @@ import consola from 'consola';
 import type { SwcConfig, ReactConfig } from '@ice/bundles';
 import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
-import type { Config } from '../types.js';
+import type { Config, JSXSuffix, GetJsxTransformOptions } from '../types.js';
 import transformImport from '../utils/transformImport.js';
 
 const { merge } = lodash;
-
-type JSXSuffix = 'jsx' | 'tsx';
 
 interface Options {
   rootDir: string;
@@ -84,8 +82,8 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
         filename: id,
         sourceMaps: !!sourceMap,
       };
-
-      const commonOptions = getJsxTransformOptions({ rootDir, mode, suffix, fastRefresh, polyfill, enableEnv });
+      const compileOptions = { rootDir, mode, suffix, fastRefresh, polyfill, enableEnv };
+      const commonOptions = getJsxTransformOptions(compileOptions);
 
       // auto detect development mode
       if (
@@ -99,7 +97,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
       merge(programmaticOptions, commonOptions);
 
       if (typeof compilationConfig === 'function') {
-        merge(programmaticOptions, compilationConfig(source, fileId));
+        merge(programmaticOptions, compilationConfig(source, fileId, compileOptions));
       } else if (compilationConfig) {
         merge(programmaticOptions, compilationConfig);
       }
@@ -180,14 +178,6 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
   };
 };
 
-interface GetJsxTransformOptions {
-  rootDir: string;
-  mode: Options['mode'];
-  suffix?: JSXSuffix;
-  fastRefresh: boolean;
-  polyfill: Config['polyfill'];
-  enableEnv: boolean;
-}
 
 export function getJsxTransformOptions({
   suffix,

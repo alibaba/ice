@@ -1,5 +1,30 @@
 # @ice/runtime
 
+## 1.4.8
+
+### Patch Changes
+
+- 4c9456fc: feat: export useAsyncData for component Await
+- Updated dependencies [bccc7db1]
+  - @ice/jsx-runtime@0.3.0
+
+## 1.4.7
+
+### Patch Changes
+
+- e78c7d22: fix: single route mismatch warning for development
+
+## 1.4.6
+
+- Fix: serverDataLoader is not work when dataLoader is not defined.
+
+## 1.4.5
+
+### Patch Changes
+
+- d5c378b6: fix: reduce bundle size by remove runtime module
+- 77155bab: feat: remove runtime code when loaders is not export
+
 ## 1.4.4
 
 - chore: add ts type for `@ice/runtime/data-loader`

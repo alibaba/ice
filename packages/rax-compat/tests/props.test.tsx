@@ -41,4 +41,14 @@ describe('props', () => {
       inputmode: 'numeric',
     }).inputMode).toBe('numeric');
   });
+
+  it('should work with dangerouslySetInnerHTML', () => {
+    expect(
+      transformProps({
+        dangerouslySetInnerHTML: { __html: 'xxx' },
+      }).dangerouslySetInnerHTML,
+    ).toEqual({
+      __html: 'xxx',
+    });
+  });
 });

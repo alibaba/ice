@@ -4,6 +4,8 @@ import ServerRunnerPlugin from '../../webpack/ServerRunnerPlugin.js';
 import { IMPORT_META_RENDERER, IMPORT_META_TARGET, WEB, FALLBACK_ENTRY, RUNTIME_TMP_DIR } from '../../constant.js';
 import getServerCompilerPlugin from '../../utils/getServerCompilerPlugin.js';
 import ReCompilePlugin from '../../webpack/ReCompilePlugin.js';
+import getEntryPoints from '../../utils/getEntryPoints.js';
+import { multipleServerEntry } from '../../utils/multipleEntry.js';
 import type ServerRunner from '../../service/ServerRunner';
 import type ServerCompileTask from '../../utils/ServerCompileTask.js';
 import type { ServerCompiler, UserConfig } from '../../types';
@@ -43,6 +45,8 @@ interface ServerPluginOptions {
   ensureRoutesConfig: () => Promise<void>;
   userConfig?: UserConfig;
   fallbackEntry?: string;
+  getFlattenRoutes?: () => string[];
+  command?: string;
 }
 export const getServerPlugin = ({
   serverRunner,
@@ -55,6 +59,8 @@ export const getServerPlugin = ({
   serverCompileTask,
   userConfig,
   fallbackEntry,
+  getFlattenRoutes,
+  command,
 }: ServerPluginOptions) => {
   if (serverRunner) {
     return new ServerRunnerPlugin(serverRunner, ensureRoutesConfig);
@@ -68,6 +74,8 @@ export const getServerPlugin = ({
       serverCompileTask,
       userConfig,
       ensureRoutesConfig,
+      entryPoints: multipleServerEntry(userConfig, command)
+        ? getEntryPoints(rootDir, getFlattenRoutes(), serverEntry) : undefined,
       runtimeDefineVars: {
         [IMPORT_META_TARGET]: JSON.stringify(target),
         [IMPORT_META_RENDERER]: JSON.stringify('server'),

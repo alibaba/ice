@@ -1,5 +1,40 @@
 # Changelog
 
+## 3.4.9
+
+### Patch Changes
+
+- 4c9456fc: feat: export useAsyncData for component Await
+- b808156b: feat: support open specified route and list all routes
+- Updated dependencies [4c9456fc]
+  - @ice/runtime@1.4.8
+
+## 3.4.8
+
+### Patch Changes
+
+- 8dada9b6: feat: support generator api to inject code in server entry
+- 5c40dc93: fix: do not remove request config of dataLoader compilation in speedup mode
+- 11a87dc6: feat: support spilt page chunk in cjs format
+- Updated dependencies [e4a32686]
+- Updated dependencies [e78c7d22]
+- Updated dependencies [e858a522]
+- Updated dependencies [a805fa95]
+  - @ice/shared-config@1.2.7
+  - @ice/runtime@1.4.7
+  - @ice/rspack-config@1.1.7
+  - @ice/webpack-config@1.1.14
+
+## 3.4.7
+
+### Patch Changes
+
+- d5c378b6: fix: reduce bundle size by remove runtime module
+- 77155bab: feat: remove runtime code when loaders is not export
+- Updated dependencies [d5c378b6]
+- Updated dependencies [77155bab]
+  - @ice/runtime@1.4.5
+
 ## 3.4.6
 
 ### Patch Changes

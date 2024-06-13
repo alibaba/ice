@@ -1,5 +1,5 @@
 import { expect, it, describe } from 'vitest';
-import { hijackElementProps } from '../src/';
+import { hijackElementProps } from '../src/style';
 
 describe('hijack element', () => {
   it('hijackElementProps basic', () => {

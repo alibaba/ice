@@ -1,5 +1,11 @@
 # @ice/shared-config
 
+## 1.2.7
+
+### Patch Changes
+
+- e4a32686: feat: support options for compilationConfig
+
 ## 1.2.6
 
 ### Patch Changes

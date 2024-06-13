@@ -7,7 +7,7 @@ interface RequestResult<R, P extends any[]> extends Result<R, P> {
   request: (...args: P) => Promise<R>;
 }
 
-export function useRequest<TData, TParams extends any[]>(
+export function useRequest<TData, TParams extends any[] = []>(
   service: string | AxiosRequestConfig | Service<TData, TParams>,
   options?: Options<TData, TParams>,
   plugins?: Plugin<TData, TParams>[]) {

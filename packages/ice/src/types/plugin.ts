@@ -13,7 +13,7 @@ export type { CreateLoggerReturnType } from '../utils/logger.js';
 
 type AddExport = (exportData: DeclarationData) => void;
 type AddEntryCode = (callback: (code: string) => string) => void;
-type AddEntryImportAhead = (exportData: Pick<DeclarationData, 'source'>) => void;
+type AddEntryImportAhead = (exportData: Pick<DeclarationData, 'source'>, type?: string) => void;
 type RemoveExport = (removeSource: string | string[]) => void;
 type EventName = 'add' | 'addDir' | 'change' | 'unlink' | 'unlinkDir';
 type GetExportList = (key: string, target?: string) => DeclarationData[];
@@ -112,6 +112,7 @@ interface AfterCommandCompileOptions {
 
 interface DevServerInfo {
   devPath: string;
+  routePaths: string[];
 }
 
 export interface HookLifecycle {

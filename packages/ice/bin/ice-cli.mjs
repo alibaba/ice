@@ -65,6 +65,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     .option('--https [https]', 'enable https', false)
     .option('--force', 'force remove cache directory', false)
     .option('--speedup', 'speed up build time based on Rust tools', false)
+    .option('--open <open>', 'open browser on startup with specific route', true)
+    .option('--list', 'list all available pages', false)
     .action(async ({ rootDir, ...commandArgs }, ctx) => {
       renamePlatformToTarget(commandArgs);
       process.env.NODE_ENV = 'development';

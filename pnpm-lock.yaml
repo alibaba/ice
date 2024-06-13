@@ -130,21 +130,12 @@ importers:
       '@ice/app':
         specifier: workspace:*
         version: link:../../packages/ice
-      '@ice/plugin-auth':
+      '@ice/plugin-externals':
         specifier: workspace:*
-        version: link:../../packages/plugin-auth
-      '@ice/plugin-rax-compat':
-        specifier: workspace:*
-        version: link:../../packages/plugin-rax-compat
+        version: link:../../packages/plugin-externals
       '@ice/runtime':
         specifier: workspace:*
         version: link:../../packages/runtime
-      '@uni/env':
-        specifier: ^1.1.0
-        version: 1.1.0
-      ahooks:
-        specifier: ^3.3.8
-        version: 3.7.5(react@18.2.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -158,12 +149,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.0.2
         version: 18.0.11
-      speed-measure-webpack-plugin:
-        specifier: ^1.5.0
-        version: 1.5.0(webpack@5.88.2)
-      webpack:
-        specifier: ^5.88.0
-        version: 5.88.2
 
   examples/basic-project:
     dependencies:
@@ -944,6 +929,31 @@ importers:
         specifier: ^3.12.1
         version: 3.12.3
 
+  examples/with-intl:
+    dependencies:
+      '@ice/app':
+        specifier: workspace:*
+        version: link:../../packages/ice
+      '@ice/plugin-intl':
+        specifier: workspace:*
+        version: link:../../packages/plugin-intl
+      '@ice/runtime':
+        specifier: workspace:*
+        version: link:../../packages/runtime
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.0.0
+        version: 18.0.34
+      '@types/react-dom':
+        specifier: ^18.0.2
+        version: 18.0.11
+
   examples/with-jest:
     dependencies:
       '@ice/runtime':
@@ -1650,16 +1660,16 @@ importers:
         specifier: 1.2.2
         version: link:../route-manifest
       '@ice/rspack-config':
-        specifier: 1.1.6
+        specifier: 1.1.7
         version: link:../rspack-config
       '@ice/runtime':
-        specifier: ^1.4.3
+        specifier: ^1.4.8
         version: link:../runtime
       '@ice/shared-config':
-        specifier: 1.2.6
+        specifier: 1.2.7
         version: link:../shared-config
       '@ice/webpack-config':
-        specifier: 1.1.13
+        specifier: 1.1.14
         version: link:../webpack-config
       '@swc/helpers':
         specifier: 0.5.1
@@ -1946,6 +1956,24 @@ importers:
         specifier: ^3.3.2
         version: link:../ice
 
+  packages/plugin-externals:
+    devDependencies:
+      '@ice/app':
+        specifier: ^3.3.2
+        version: link:../ice
+      '@ice/runtime':
+        specifier: ^1.2.9
+        version: link:../runtime
+      '@types/react':
+        specifier: ^18.0.0
+        version: 18.0.34
+      '@types/react-dom':
+        specifier: ^18.0.0
+        version: 18.0.11
+      webpack:
+        specifier: ^5.88.0
+        version: 5.88.2
+
   packages/plugin-fusion:
     dependencies:
       '@ice/style-import':
@@ -1959,7 +1987,7 @@ importers:
   packages/plugin-i18n:
     dependencies:
       '@ice/jsx-runtime':
-        specifier: ^0.2.2
+        specifier: ^0.3.0
         version: link:../jsx-runtime
       '@swc/helpers':
         specifier: ^0.5.1
@@ -2017,6 +2045,28 @@ importers:
       '@types/react':
         specifier: ^18.0.0
         version: 18.0.28
+      '@types/react-dom':
+        specifier: ^18.0.0
+        version: 18.0.11
+
+  packages/plugin-intl:
+    dependencies:
+      fast-glob:
+        specifier: ^3.3.2
+        version: 3.3.2
+      react-intl:
+        specifier: ^6.0.0
+        version: 6.3.2(react@18.2.0)(typescript@4.9.5)
+    devDependencies:
+      '@ice/app':
+        specifier: ^3.4.9
+        version: link:../ice
+      '@ice/runtime':
+        specifier: ^1.4.8
+        version: link:../runtime
+      '@types/react':
+        specifier: ^18.0.0
+        version: 18.0.34
       '@types/react-dom':
         specifier: ^18.0.0
         version: 18.0.11
@@ -2184,7 +2234,7 @@ importers:
         version: 0.9.1
     devDependencies:
       '@ice/app':
-        specifier: ^3.4.2
+        specifier: ^3.4.8
         version: link:../ice
       '@types/lodash-es':
         specifier: ^4.17.7
@@ -2209,10 +2259,10 @@ importers:
         version: 18.2.0(react@18.2.0)
     devDependencies:
       '@ice/app':
-        specifier: ^3.3.2
+        specifier: ^3.4.9
         version: link:../ice
       '@ice/runtime':
-        specifier: ^1.2.9
+        specifier: ^1.4.8
         version: link:../runtime
       '@types/react':
         specifier: ^18.0.0
@@ -2332,7 +2382,7 @@ importers:
         specifier: 0.2.6
         version: link:../bundles
       '@ice/shared-config':
-        specifier: 1.2.6
+        specifier: 1.2.7
         version: link:../shared-config
     devDependencies:
       '@rspack/core':
@@ -2342,7 +2392,7 @@ importers:
   packages/runtime:
     dependencies:
       '@ice/jsx-runtime':
-        specifier: ^0.2.2
+        specifier: ^0.3.0
         version: link:../jsx-runtime
       '@ice/shared':
         specifier: ^1.0.2
@@ -2437,7 +2487,7 @@ importers:
         specifier: 0.2.6
         version: link:../bundles
       '@ice/shared-config':
-        specifier: 1.2.6
+        specifier: 1.2.7
         version: link:../shared-config
       fast-glob:
         specifier: ^3.2.11
@@ -10665,7 +10715,7 @@ packages:
       commander: 2.20.3
       consola: 2.15.3
       esbuild: 0.16.17
-      fast-glob: 3.3.0
+      fast-glob: 3.3.2
       fs-extra: 8.1.0
       json5: 2.2.3
       lodash: 4.17.21
@@ -13453,6 +13503,7 @@ packages:
       glob-parent: 5.1.2
       merge2: 1.4.1
       micromatch: 4.0.5
+    dev: false
 
   /fast-glob@3.3.2:
     resolution: {integrity: sha512-oX2ruAFQwf/Orj8m737Y5adxDQO0LAB7/S5MnxCdTNDd4p6BsyIVsv9JQsATbTSq8KHRpLwIHbVlUNatxd+1Ow==}
@@ -13996,6 +14047,7 @@ packages:
 
   /glob@7.1.6:
     resolution: {integrity: sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==}
+    deprecated: Glob versions prior to v9 are no longer supported
     dependencies:
       fs.realpath: 1.0.0
       inflight: 1.0.6
@@ -14076,7 +14128,7 @@ packages:
       '@types/glob': 7.2.0
       array-union: 2.1.0
       dir-glob: 3.0.1
-      fast-glob: 3.3.0
+      fast-glob: 3.3.2
       glob: 7.2.3
       ignore: 5.2.4
       merge2: 1.4.1
@@ -14089,7 +14141,7 @@ packages:
     dependencies:
       array-union: 2.1.0
       dir-glob: 3.0.1
-      fast-glob: 3.3.0
+      fast-glob: 3.3.2
       ignore: 5.2.4
       merge2: 1.4.1
       slash: 3.0.0
@@ -14100,7 +14152,7 @@ packages:
     dependencies:
       array-union: 3.0.1
       dir-glob: 3.0.1
-      fast-glob: 3.3.0
+      fast-glob: 3.3.2
       ignore: 5.2.4
       merge2: 1.4.1
       slash: 4.0.0
@@ -21605,7 +21657,7 @@ packages:
       css-functions-list: 3.1.0
       css-tree: 2.3.1
       debug: 4.3.4
-      fast-glob: 3.3.0
+      fast-glob: 3.3.2
       fastest-levenshtein: 1.0.16
       file-entry-cache: 6.0.1
       global-modules: 2.0.0

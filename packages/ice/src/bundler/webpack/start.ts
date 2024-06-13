@@ -9,7 +9,7 @@ import { logger } from '../../utils/logger.js';
 import { WEB } from '../../constant.js';
 import getMiddlewares from '../config/middlewares.js';
 import getDefaultServerConfig from '../config/defaultServerConfig.js';
-import getUrls from '../config/getUrls.js';
+import getUrls, { getUrlInfo } from '../config/getUrls.js';
 import type { BundlerOptions, Context } from '../types.js';
 
 const { merge } = lodash;
@@ -88,9 +88,7 @@ export async function startDevServer(
       isSuccessful,
       isFirstCompile,
       urls,
-      devUrlInfo: {
-        devPath: (routePaths[0] || '').replace(/^[/\\]/, ''),
-      },
+      devUrlInfo: getUrlInfo(routePaths),
       messages,
       taskConfigs,
       ...hooksAPI,

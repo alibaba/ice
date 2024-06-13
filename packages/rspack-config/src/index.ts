@@ -108,6 +108,7 @@ const getConfig: GetConfig = async (options) => {
     redirectImports,
     fastRefresh,
     sourceMap,
+    https,
   } = taskConfig || {};
   const isDev = mode === 'development';
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
@@ -306,6 +307,7 @@ const getConfig: GetConfig = async (options) => {
       client: {
         logging: 'info',
       },
+      https,
       ...devServer,
       setupMiddlewares: middlewares,
     },

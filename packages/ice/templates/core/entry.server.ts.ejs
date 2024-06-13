@@ -4,6 +4,7 @@ import { getAppConfig, renderToHTML as renderAppToHTML, renderToResponse as rend
 <% } else { -%>
 import { getAppConfig, getDocumentResponse as renderAppToHTML, renderDocumentToResponse as renderAppToResponse } from '@ice/runtime/server';
 <% }-%>
+<%- entryServer.imports %>
 <% if (hydrate) {-%>
 import { commons, statics } from './runtime-modules';
 <% }-%>
@@ -18,12 +19,13 @@ import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 // @ts-ignore
 import assetsManifest from 'virtual:assets-manifest.json';
 <% if (hydrate) {-%>
-import createRoutes from './routes';
+import createRoutes from '<%- routesFile %>';
 <% } else { -%>
 import routesManifest from './route-manifest.json';
 <% } -%>
 <% if (dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
 <% if (hydrate) {-%><%- runtimeOptions.imports %><% } -%>
+
 <% if (!hydrate) {-%>
 // Do not inject runtime modules when render mode is document only.
 const commons = [];

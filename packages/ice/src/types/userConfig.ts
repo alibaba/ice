@@ -220,7 +220,7 @@ export interface UserConfig {
     /**
      * bundle server code as a single file
      */
-    bundle?: boolean;
+    bundle?: boolean | 'page';
     /**
      * ignore file when bundle server code, module return empty when match
      */

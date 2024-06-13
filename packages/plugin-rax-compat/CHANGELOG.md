@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1
+
+### Patch Changes
+
+- e4a32686: fix: support pass options for `compilationConfig`
+
 ## 0.3.0
 
 ### Minor Changes

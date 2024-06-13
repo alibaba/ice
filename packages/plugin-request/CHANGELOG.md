@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.0.3
+
+### Patch Changes
+
+- 570205a8: chore: fix the default type of TParams
+
 ## 1.0.2
 
 ### Patch Changes
