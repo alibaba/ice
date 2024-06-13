@@ -33,7 +33,9 @@ function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Option
   const isEsm = userConfig?.server?.format === 'esm';
   const defaultEntryPoints = { index: getServerEntry(rootDir, serverEntry) };
   if (fallbackEntry) {
-    entryPoints['index.fallback'] = fallbackEntry;
+    if (entryPoints) {
+      entryPoints['index.fallback'] = fallbackEntry;
+    }
     defaultEntryPoints['index.fallback'] = fallbackEntry;
   }
 
