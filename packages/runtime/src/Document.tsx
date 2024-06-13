@@ -250,5 +250,12 @@ export function getEntryAssets(assetsManifest: AssetsManifest): string[] {
     result = result.concat(assets);
   });
 
-  return result.map(filePath => `${publicPath}${filePath}`);
+  return result.map((filePath: string) => {
+    const prefixes = ['http:', 'https:', '//'];
+    if (prefixes.some(prefix => filePath.startsWith(prefix))) {
+      return filePath;
+    } else {
+      return `${publicPath}${filePath}`;
+    }
+  });
 }
