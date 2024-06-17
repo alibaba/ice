@@ -10,7 +10,7 @@ function useAppContext() {
   return value;
 }
 
-function useAppData() {
+function useAppData<T = any>(): T {
   const value = React.useContext(Context);
   return value.appData;
 }

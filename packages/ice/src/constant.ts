@@ -5,6 +5,7 @@ export const DEFAULT_HOST = '0.0.0.0';
 
 export const RUNTIME_TMP_DIR = '.ice';
 export const SERVER_ENTRY = path.join(RUNTIME_TMP_DIR, 'entry.server.ts');
+export const FALLBACK_ENTRY = 'entry.document.ts';
 export const DATA_LOADER_ENTRY = path.join(RUNTIME_TMP_DIR, 'data-loader.ts');
 export const SERVER_OUTPUT_DIR = 'server';
 export const IMPORT_META_TARGET = 'import.meta.target';

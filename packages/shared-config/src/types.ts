@@ -192,6 +192,12 @@ export interface Config {
   memoryRouter?: boolean;
 
   server?: {
+    /**
+     * Generate sperate bundle for fallback,
+     * it only outputs document content.
+    */
+    fallbackEntry?: boolean;
+
     entry?: string;
 
     buildOptions?: (options: BuildOptions) => BuildOptions;

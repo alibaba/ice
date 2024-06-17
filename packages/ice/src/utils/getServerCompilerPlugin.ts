@@ -10,6 +10,7 @@ interface Options {
   userConfig: UserConfig;
   outputDir: string;
   serverEntry: string;
+  fallbackEntry?: string;
   serverCompileTask: ExtendsPluginAPI['serverCompileTask'];
   ensureRoutesConfig: () => Promise<void>;
   runtimeDefineVars: Record<string, string>;
@@ -25,16 +26,24 @@ function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Option
     serverCompileTask,
     ensureRoutesConfig,
     runtimeDefineVars,
+    fallbackEntry,
     entryPoints,
   } = options;
   const { ssg, ssr, server: { format } } = userConfig;
   const isEsm = userConfig?.server?.format === 'esm';
+  const defaultEntryPoints = { index: getServerEntry(rootDir, serverEntry) };
+  if (fallbackEntry) {
+    if (entryPoints) {
+      entryPoints['index.fallback'] = fallbackEntry;
+    }
+    defaultEntryPoints['index.fallback'] = fallbackEntry;
+  }
 
   return new ServerCompilerPlugin(
     serverCompiler,
     [
       {
-        entryPoints: entryPoints || { index: getServerEntry(rootDir, serverEntry) },
+        entryPoints: entryPoints || defaultEntryPoints,
         outdir: path.join(outputDir, SERVER_OUTPUT_DIR),
         splitting: isEsm,
         format,

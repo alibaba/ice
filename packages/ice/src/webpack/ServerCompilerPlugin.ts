@@ -36,7 +36,6 @@ export default class ServerCompilerPlugin {
   public compileTask = async (compilation?: Compilation) => {
     const [buildOptions] = this.serverCompilerOptions;
     if (!this.isCompiling) {
-      await this.ensureRoutesConfig();
       if (compilation) {
         // Option of compilationInfo need to be object, while it may changed during multi-time compilation.
         this.compilerOptions.compilationInfo.assetsManifest =

@@ -1,6 +1,10 @@
 import './env.server';
+<% if (hydrate) {-%>
+import { getAppConfig, renderToHTML as renderAppToHTML, renderToResponse as renderAppToResponse } from '@ice/runtime/server';
+<% } else { -%>
+import { getAppConfig, getDocumentResponse as renderAppToHTML, renderDocumentToResponse as renderAppToResponse } from '@ice/runtime/server';
+<% }-%>
 <%- entryServer.imports %>
-import * as runtime from '@ice/runtime/server';
 <% if (hydrate) {-%>
 import { commons, statics } from './runtime-modules';
 <% }-%>
@@ -19,7 +23,6 @@ import createRoutes from '<%- routesFile %>';
 <% } else { -%>
 import routesManifest from './route-manifest.json';
 <% } -%>
-import routesConfig from './routes-config.bundle.mjs';
 <% if (dataLoaderImport.imports) {-%><%-dataLoaderImport.imports%><% } -%>
 <% if (hydrate) {-%><%- runtimeOptions.imports %><% } -%>
 
@@ -32,10 +35,11 @@ const createRoutes = () => routesManifest;
 const runtimeModules = { commons, statics };
 
 const getRouterBasename = () => {
-  const appConfig = runtime.getAppConfig(app);
+  const appConfig = getAppConfig(app);
   return appConfig?.router?.basename ?? <%- basename %> ?? '';
 }
 
+<% if (hydrate) {-%>
 const setRuntimeEnv = (renderMode) => {
   if (renderMode === 'SSG') {
     process.env.ICE_CORE_SSG = 'true';
@@ -43,6 +47,7 @@ const setRuntimeEnv = (renderMode) => {
     process.env.ICE_CORE_SSR = 'true';
   }
 }
+<% } -%>
 
 interface RenderOptions {
   documentOnly?: boolean;
@@ -57,19 +62,21 @@ interface RenderOptions {
 }
 
 export async function renderToHTML(requestContext, options: RenderOptions = {}) {
+<% if (hydrate) {-%>
   const { renderMode = 'SSR' } = options;
   setRuntimeEnv(renderMode);
-
+<% }-%>
   const mergedOptions = mergeOptions(options);
-  return await runtime.renderToHTML(requestContext, mergedOptions);
+  return await renderAppToHTML(requestContext, mergedOptions);
 }
 
 export async function renderToResponse(requestContext, options: RenderOptions = {}) {
+<% if (hydrate) {-%>
   const { renderMode = 'SSR' } = options;
   setRuntimeEnv(renderMode);
-
+<% }-%>
   const mergedOptions = mergeOptions(options);
-  return runtime.renderToResponse(requestContext, mergedOptions);
+  return renderAppToResponse(requestContext, mergedOptions);
 }
 
 function mergeOptions(options) {
@@ -89,16 +96,13 @@ function mergeOptions(options) {
     Document: Document.default,
     basename: basename || getRouterBasename(),
     renderMode,
-    routesConfig,
-    <% if (hydrate) {-%>
-    runtimeOptions: {
-    <% if (runtimeOptions.exports) { -%>
+    <% if (hydrate) {-%>runtimeOptions: {
+<% if (runtimeOptions.exports) { -%>
       <%- runtimeOptions.exports %>
-    <% } -%>
-    <% if (locals.customRuntimeOptions) { _%>
-    ...<%- JSON.stringify(customRuntimeOptions) %>,
-    <% } _%>
+<% } -%>
+<% if (locals.customRuntimeOptions) { -%>
+      ...<%- JSON.stringify(customRuntimeOptions) %>,
+<% } -%>
     },
-    <% } -%>
-  };
+  <% } -%>};
 }

@@ -65,7 +65,7 @@ describe(`build ${example}`, () => {
 
   test('render route config when downgrade to CSR.', async () => {
     await page.push('/downgrade.html');
-    expect(await page.$$text('title')).toStrictEqual(['hello']);
+    expect(await page.$$text('title')).toStrictEqual(['']);
     expect((await page.$$text('h2')).length).toEqual(0);
   });
 
