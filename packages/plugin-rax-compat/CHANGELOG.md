@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.2
+
+### Patch Changes
+
+- Updated dependencies [9926faae]
+  - rax-compat@0.3.0
+
 ## 0.3.1
 
 ### Patch Changes

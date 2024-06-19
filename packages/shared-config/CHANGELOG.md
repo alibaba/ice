@@ -1,5 +1,11 @@
 # @ice/shared-config
 
+## 1.2.8
+
+### Patch Changes
+
+- 15c8200f: feat: support build additional server entry for fallback
+
 ## 1.2.7
 
 ### Patch Changes
