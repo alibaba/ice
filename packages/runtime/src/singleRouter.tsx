@@ -309,6 +309,10 @@ export const useRevalidator = () => {
   throw new Error('useRevalidator is not supported in single router mode');
 };
 
+export const useAsyncValue = () => {
+  throw new Error('useAsyncValue is not supported in single router mode');
+};
+
 export const getSingleRoute = async (
   routes: RouteItem[],
   basename: string,

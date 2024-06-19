@@ -1,5 +1,9 @@
 # @ice/runtime
 
+## 1.4.9
+
+Fix: add export of useAsyncValue in single route mode
+
 ## 1.4.8
 
 ### Patch Changes

@@ -9,9 +9,10 @@ const cache = createIntlCache();
 
 const getDefaultLocale = () => {
   // @ts-ignore
-  return (typeof window !== 'undefined' && window.__ICE_DEFAULT_LOCALE__) ||
+  const defaultLocale = (typeof window !== 'undefined' && window.__ICE_DEFAULT_LOCALE__) ||
     (typeof navigator !== 'undefined' && navigator.language) ||
     'zh-CN';
+  return defaultLocale.replace('_', '-');
 };
 
 const getLocaleMessages = () => {
