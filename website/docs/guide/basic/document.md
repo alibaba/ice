@@ -119,9 +119,14 @@ function Document() {
       <body>
         <Main />
         <Scripts ScriptElement={(props) => {
-            return <script {...props} >
-              console.log('custom script');
-            </script>;
+            console.log('Script props passed from framework', props);
+            return (
+              <script
+                dangerouslySetInnerHTML={{
+                  __html: `console.log('custom scripts')`,
+                }}
+              />
+            );
           }}
         />
       </body>
