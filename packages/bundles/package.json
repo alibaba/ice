@@ -33,7 +33,7 @@
     "react-refresh": "0.14.0",
     "core-js-pure": "^3.8.1",
     "error-stack-parser": "^2.0.6",
-    "@ice/css-modules-hash": "0.0.8",
+    "@ice/css-modules-hash": "0.0.9",
     "browserslist": "^4.21.3",
     "compare-versions": "6.0.0-rc.1",
     "enhanced-resolve": "5.12.0",
@@ -45,7 +45,7 @@
     "zod": "^3.22.3",
     "zod-validation-error": "1.2.0",
     "terminal-link": "^2.1.1",
-    "@ice/pack-binding": "0.0.12",
+    "@ice/pack-binding": "0.0.13",
     "mime-types": "2.1.35"
   },
   "devDependencies": {
