@@ -51,6 +51,7 @@ const runtime: RuntimePlugin = ({ getAppRouter, setAppRouter, appContext }) => {
               onRouteChange={handleRouteChange}
               onAppEnter={handleAppEnter}
               onAppLeave={handleAppLeave}
+              apps={apps}
             >
               {apps.map((item: AppConfig, idx: number) => {
                 return (
