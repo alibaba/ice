@@ -1,5 +1,12 @@
 # @ice/runtime
 
+## 1.4.10
+
+### Patch Changes
+
+- 15c8200f: feat: support build additional server entry for fallback
+- d073ee5a: fix: support cdn url in assets manifest
+
 ## 1.4.9
 
 Fix: add export of useAsyncValue in single route mode

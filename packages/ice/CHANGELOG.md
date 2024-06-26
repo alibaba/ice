@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.4.10
+
+### Patch Changes
+
+- 15c8200f: feat: support build additional server entry for fallback
+- Updated dependencies [15c8200f]
+- Updated dependencies [d073ee5a]
+  - @ice/shared-config@1.2.8
+  - @ice/runtime@1.4.10
+  - @ice/rspack-config@1.1.8
+  - @ice/webpack-config@1.1.15
+
 ## 3.4.9
 
 ### Patch Changes

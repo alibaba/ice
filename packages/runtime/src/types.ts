@@ -3,6 +3,8 @@ import type { InitialEntry, AgnosticRouteObject, Location, History, RouterInit, 
 import type { ComponentType, PropsWithChildren } from 'react';
 import type { HydrationOptions, Root } from 'react-dom/client';
 import type { Params, RouteObject } from 'react-router-dom';
+import type { RouteLoaderOptions } from './routes.js';
+import type { RenderToPipeableStreamOptions, NodeWritablePiper } from './server/streamRender.js';
 
 type UseConfig = () => RouteConfig<Record<string, any>>;
 type UseData = () => RouteData;
@@ -299,6 +301,42 @@ export interface RouteMatch {
 }
 
 export type RenderMode = 'SSR' | 'SSG' | 'CSR';
+
+interface Piper {
+  pipe: NodeWritablePiper;
+  fallback: Function;
+}
+
+export interface Response {
+  statusCode?: number;
+  statusText?: string;
+  value?: string | Piper;
+  headers?: Record<string, string>;
+}
+
+export interface RenderOptions {
+  app: AppExport;
+  assetsManifest: AssetsManifest;
+  createRoutes: (options: Pick<RouteLoaderOptions, 'requestContext' | 'renderMode'>) => RouteItem[];
+  runtimeModules: RuntimeModules;
+  documentDataLoader?: DocumentDataLoaderConfig;
+  Document?: DocumentComponent;
+  documentOnly?: boolean;
+  preRender?: boolean;
+  renderMode?: RenderMode;
+  // basename is used both for server and client, once set, it will be sync to client.
+  basename?: string;
+  // serverOnlyBasename is used when just want to change basename for server.
+  serverOnlyBasename?: string;
+  routePath?: string;
+  disableFallback?: boolean;
+  routesConfig?: {
+    [key: string]: PageConfig;
+  };
+  runtimeOptions?: Record<string, any>;
+  serverData?: any;
+  streamOptions?: RenderToPipeableStreamOptions;
+}
 
 declare global {
   interface ImportMeta {

@@ -4,7 +4,7 @@ import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 import { Context } from 'build-scripts';
-import type { CommandArgs, CommandName } from 'build-scripts';
+import type { CommandArgs, CommandName, TaskConfig } from 'build-scripts';
 import type { Config } from '@ice/shared-config/types';
 import type { AppConfig } from '@ice/runtime/types';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
@@ -23,7 +23,7 @@ import { setEnv, updateRuntimeEnv, getCoreEnvKeys } from './utils/runtimeEnv.js'
 import getRuntimeModules from './utils/getRuntimeModules.js';
 import { generateRoutesInfo, getRoutesDefinition } from './routes.js';
 import * as config from './config.js';
-import { RUNTIME_TMP_DIR, WEB, RUNTIME_EXPORTS, SERVER_ENTRY } from './constant.js';
+import { RUNTIME_TMP_DIR, WEB, RUNTIME_EXPORTS, SERVER_ENTRY, FALLBACK_ENTRY } from './constant.js';
 import createSpinner from './utils/createSpinner.js';
 import ServerCompileTask from './utils/ServerCompileTask.js';
 import { getAppExportConfig, getRouteExportConfig } from './service/config.js';
@@ -215,7 +215,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
     ctx.registerConfig(configType, configData);
   });
-  let taskConfigs = await ctx.setup();
+  let taskConfigs: TaskConfig<Config>[] = await ctx.setup();
 
   // get userConfig after setup because of userConfig maybe modified by plugins
   const { userConfig } = ctx;
@@ -295,6 +295,11 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
       dataLoader: Boolean(userConfig.dataLoader),
     },
   );
+
+  if (platformTaskConfig.config.server?.fallbackEntry) {
+    // Add fallback entry for server side rendering.
+    generator.addRenderFile('core/entry.server.ts.ejs', FALLBACK_ENTRY, { hydrate: false });
+  }
 
   if (typeof userConfig.dataLoader === 'object' && userConfig.dataLoader.fetcher) {
     const {

@@ -130,21 +130,12 @@ importers:
       '@ice/app':
         specifier: workspace:*
         version: link:../../packages/ice
-      '@ice/plugin-auth':
+      '@ice/plugin-externals':
         specifier: workspace:*
-        version: link:../../packages/plugin-auth
-      '@ice/plugin-rax-compat':
-        specifier: workspace:*
-        version: link:../../packages/plugin-rax-compat
+        version: link:../../packages/plugin-externals
       '@ice/runtime':
         specifier: workspace:*
         version: link:../../packages/runtime
-      '@uni/env':
-        specifier: ^1.1.0
-        version: 1.1.0
-      ahooks:
-        specifier: ^3.3.8
-        version: 3.7.5(react@18.2.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -158,12 +149,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.0.2
         version: 18.0.11
-      speed-measure-webpack-plugin:
-        specifier: ^1.5.0
-        version: 1.5.0(webpack@5.88.2)
-      webpack:
-        specifier: ^5.88.0
-        version: 5.88.2
 
   examples/basic-project:
     dependencies:
@@ -817,7 +802,7 @@ importers:
         specifier: ^18.0.6
         version: 18.0.11
 
-  examples/with-entry-type:
+  examples/with-fallback-entry:
     dependencies:
       '@ice/app':
         specifier: workspace:*
@@ -826,10 +811,10 @@ importers:
         specifier: workspace:*
         version: link:../../packages/runtime
       react:
-        specifier: ^18.0.0
+        specifier: ^18.2.0
         version: 18.2.0
       react-dom:
-        specifier: ^18.0.0
+        specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
     devDependencies:
       '@types/react':
@@ -838,9 +823,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.0.2
         version: 18.0.11
-      fs-extra:
-        specifier: ^10.0.0
-        version: 10.1.0
       webpack:
         specifier: ^5.88.0
         version: 5.88.2
@@ -1678,16 +1660,16 @@ importers:
         specifier: 1.2.2
         version: link:../route-manifest
       '@ice/rspack-config':
-        specifier: 1.1.7
+        specifier: 1.1.8
         version: link:../rspack-config
       '@ice/runtime':
-        specifier: ^1.4.8
+        specifier: ^1.4.10
         version: link:../runtime
       '@ice/shared-config':
-        specifier: 1.2.7
+        specifier: 1.2.8
         version: link:../shared-config
       '@ice/webpack-config':
-        specifier: 1.1.14
+        specifier: 1.1.15
         version: link:../webpack-config
       '@swc/helpers':
         specifier: 0.5.1
@@ -1974,6 +1956,24 @@ importers:
         specifier: ^3.3.2
         version: link:../ice
 
+  packages/plugin-externals:
+    devDependencies:
+      '@ice/app':
+        specifier: ^3.3.2
+        version: link:../ice
+      '@ice/runtime':
+        specifier: ^1.2.9
+        version: link:../runtime
+      '@types/react':
+        specifier: ^18.0.0
+        version: 18.0.34
+      '@types/react-dom':
+        specifier: ^18.0.0
+        version: 18.0.11
+      webpack:
+        specifier: ^5.88.0
+        version: 5.88.2
+
   packages/plugin-fusion:
     dependencies:
       '@ice/style-import':
@@ -2224,7 +2224,7 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       rax-compat:
-        specifier: ^0.2.10
+        specifier: ^0.3.0
         version: link:../rax-compat
       style-unit:
         specifier: ^3.0.5
@@ -2234,7 +2234,7 @@ importers:
         version: 0.9.1
     devDependencies:
       '@ice/app':
-        specifier: ^3.4.8
+        specifier: ^3.4.10
         version: link:../ice
       '@types/lodash-es':
         specifier: ^4.17.7
@@ -2382,7 +2382,7 @@ importers:
         specifier: 0.2.6
         version: link:../bundles
       '@ice/shared-config':
-        specifier: 1.2.7
+        specifier: 1.2.8
         version: link:../shared-config
     devDependencies:
       '@rspack/core':
@@ -2487,7 +2487,7 @@ importers:
         specifier: 0.2.6
         version: link:../bundles
       '@ice/shared-config':
-        specifier: 1.2.7
+        specifier: 1.2.8
         version: link:../shared-config
       fast-glob:
         specifier: ^3.2.11
@@ -19937,7 +19937,7 @@ packages:
     dependencies:
       '@babel/code-frame': 7.18.6
       address: 1.2.2
-      browserslist: 4.22.1
+      browserslist: 4.22.3
       chalk: 4.1.2
       cross-spawn: 7.0.3
       detect-port-alt: 1.1.6
@@ -23580,7 +23580,7 @@ packages:
       '@webassemblyjs/wasm-parser': 1.11.5
       acorn: 8.11.2
       acorn-import-assertions: 1.9.0(acorn@8.11.2)
-      browserslist: 4.21.5
+      browserslist: 4.22.3
       chrome-trace-event: 1.0.3
       enhanced-resolve: 5.15.0
       es-module-lexer: 1.2.1
@@ -23619,7 +23619,7 @@ packages:
       '@webassemblyjs/wasm-parser': 1.11.5
       acorn: 8.11.2
       acorn-import-assertions: 1.9.0(acorn@8.11.2)
-      browserslist: 4.21.5
+      browserslist: 4.22.3
       chrome-trace-event: 1.0.3
       enhanced-resolve: 5.15.0
       es-module-lexer: 1.2.1

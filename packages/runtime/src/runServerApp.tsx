@@ -1,22 +1,14 @@
-import type { ServerResponse, IncomingMessage } from 'http';
 import * as React from 'react';
-import * as ReactDOMServer from 'react-dom/server';
 import type { Location } from 'history';
-import { parsePath } from 'history';
-import { isFunction } from '@ice/shared';
-import type { RenderToPipeableStreamOptions, OnAllReadyParams, NodeWritablePiper } from './server/streamRender.js';
+import type { OnAllReadyParams } from './server/streamRender.js';
 import type {
-  AppContext, RouteItem, ServerContext,
-  AppExport,
-  AssetsManifest,
+  AppContext,
+  ServerContext,
   RouteMatch,
-  PageConfig,
-  RenderMode,
-  DocumentComponent,
-  RuntimeModules,
   AppData,
   ServerAppRouterProps,
-  DocumentDataLoaderConfig,
+  RenderOptions,
+  Response,
 } from './types.js';
 import Runtime from './runtime.js';
 import { AppContextProvider } from './AppContext.js';
@@ -24,48 +16,15 @@ import { getAppData } from './appData.js';
 import getAppConfig from './appConfig.js';
 import { DocumentContextProvider } from './Document.js';
 import { loadRouteModules } from './routes.js';
-import type { RouteLoaderOptions } from './routes.js';
 import { pipeToString, renderToNodeStream } from './server/streamRender.js';
 import getRequestContext from './requestContext.js';
 import matchRoutes from './matchRoutes.js';
 import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
 import ServerRouter from './ServerRouter.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
-
-export interface RenderOptions {
-  app: AppExport;
-  assetsManifest: AssetsManifest;
-  createRoutes: (options: Pick<RouteLoaderOptions, 'requestContext' | 'renderMode'>) => RouteItem[];
-  runtimeModules: RuntimeModules;
-  documentDataLoader?: DocumentDataLoaderConfig;
-  Document?: DocumentComponent;
-  documentOnly?: boolean;
-  preRender?: boolean;
-  renderMode?: RenderMode;
-  // basename is used both for server and client, once set, it will be sync to client.
-  basename?: string;
-  // serverOnlyBasename is used when just want to change basename for server.
-  serverOnlyBasename?: string;
-  routePath?: string;
-  disableFallback?: boolean;
-  routesConfig: {
-    [key: string]: PageConfig;
-  };
-  runtimeOptions?: Record<string, any>;
-  serverData?: any;
-  streamOptions?: RenderToPipeableStreamOptions;
-}
-
-interface Piper {
-  pipe: NodeWritablePiper;
-  fallback: Function;
-}
-interface Response {
-  statusCode?: number;
-  statusText?: string;
-  value?: string | Piper;
-  headers?: Record<string, string>;
-}
+import { renderDocument } from './renderDocument.js';
+import { sendResponse, getLocation } from './server/response.js';
+import getDocumentData from './server/getDocumentData.js';
 
 /**
  * Render and return the result as html string.
@@ -161,23 +120,6 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
   }
 }
 
-async function sendResponse(
-  req: IncomingMessage,
-  res: ServerResponse,
-  response: Response,
-) {
-  res.statusCode = response.statusCode;
-  res.statusMessage = response.statusText;
-  Object.entries(response.headers || {}).forEach(([name, value]) => {
-    res.setHeader(name, value);
-  });
-  if (response.value && req.method !== 'HEAD') {
-    res.end(response.value);
-  } else {
-    res.end();
-  }
-}
-
 function needRevalidate(matchedRoutes: RouteMatch[]) {
   return matchedRoutes.some(({ route }) => route.exports.includes('dataLoader') && route.exports.includes('staticDataLoader'));
 }
@@ -227,18 +169,13 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
   }
 
-  // Execute document dataLoader.
-  let documentData: any;
-  if (renderOptions.documentDataLoader) {
-    const { loader } = renderOptions.documentDataLoader;
-    if (isFunction(loader)) {
-      documentData = await loader(requestContext, { documentOnly });
-      // @TODO: document should have it's own context, not shared with app.
-      appContext.documentData = documentData;
-    } else {
-      console.warn('Document dataLoader only accepts function.');
-    }
-  }
+  const documentData = await getDocumentData({
+    loaderConfig: renderOptions.documentDataLoader,
+    requestContext,
+    documentOnly,
+  });
+  // @TODO: document should have it's own context, not shared with app.
+  appContext.documentData = documentData;
 
   // Not to execute [getAppData] when CSR.
   if (!documentOnly) {
@@ -399,106 +336,4 @@ async function renderServerEntry(
       fallback,
     },
   };
-}
-
-interface RenderDocumentOptions {
-  matches: RouteMatch[];
-  renderOptions: RenderOptions;
-  routes: RouteItem[];
-  documentData: any;
-  routePath?: string;
-  downgrade?: boolean;
-}
-
-/**
- * Render Document for CSR.
- */
-function renderDocument(options: RenderDocumentOptions): Response {
-  const {
-    matches,
-    renderOptions,
-    routePath = '',
-    downgrade,
-    routes,
-    documentData,
-  }: RenderDocumentOptions = options;
-
-  const {
-    assetsManifest,
-    app,
-    Document,
-    basename,
-    routesConfig = {},
-    serverData,
-  } = renderOptions;
-
-  const appData = null;
-  const appConfig = getAppConfig(app);
-
-  const loaderData = {};
-  matches.forEach(async (match) => {
-    const { id } = match.route;
-    const pageConfig = routesConfig[id];
-
-    loaderData[id] = {
-      pageConfig: pageConfig ? pageConfig({}) : {},
-    };
-  });
-
-  const appContext: AppContext = {
-    assetsManifest,
-    appConfig,
-    appData,
-    loaderData,
-    matches,
-    routes,
-    documentOnly: true,
-    renderMode: 'CSR',
-    routePath,
-    basename,
-    downgrade,
-    serverData,
-    documentData,
-  };
-
-  const documentContext = {
-    main: null,
-  };
-
-  const htmlStr = ReactDOMServer.renderToString(
-    <AppContextProvider value={appContext}>
-      <DocumentContextProvider value={documentContext}>
-        {
-          Document && <Document pagePath={routePath} />
-        }
-      </DocumentContextProvider>
-    </AppContextProvider>,
-  );
-
-  return {
-    value: `<!DOCTYPE html>${htmlStr}`,
-    headers: {
-      'Content-Type': 'text/html; charset=utf-8',
-    },
-    statusCode: 200,
-  };
-}
-
-/**
- * ref: https://github.com/remix-run/react-router/blob/main/packages/react-router-dom/server.tsx
- */
-const REGEXP_WITH_HOSTNAME = /^https?:\/\/[^/]+/i;
-function getLocation(url: string) {
-  // In case of invalid URL, provide a default base url.
-  const locationPath = url.replace(REGEXP_WITH_HOSTNAME, '') || '/';
-  const locationProps = parsePath(locationPath);
-  const location: Location = {
-    pathname: locationProps.pathname || '/',
-    search: locationProps.search || '',
-    hash: locationProps.hash || '',
-    state: null,
-    key: 'default',
-  };
-
-  return location;
 }
