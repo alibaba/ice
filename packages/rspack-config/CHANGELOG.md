@@ -1,5 +1,12 @@
 # @ice/rspack-config
 
+## 1.1.8
+
+### Patch Changes
+
+- Updated dependencies [15c8200f]
+  - @ice/shared-config@1.2.8
+
 ## 1.1.7
 
 ### Patch Changes

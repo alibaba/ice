@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0
+
+### Minor Changes
+
+- 9926faae: feat: export es2021 output
+
 ## 0.2.12
 
 ### Patch Changes
