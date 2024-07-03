@@ -66,21 +66,21 @@ export function useSuspenseData(request?: Request, options?: SuspenseDataProps) 
   if (!hasHydrateData && !error && !done && !promise && request && !queryInProcess) {
     thenable = request(requestContext);
     thenable.then((response) => {
-      querySet.delete(options.queryKey);
+      querySet.delete(options?.queryKey);
       update({
         done: true,
         data: response,
         promise: null,
       });
     }).catch(e => {
-      querySet.delete(options.queryKey);
+      querySet.delete(options?.queryKey);
       update({
         done: true,
         error: e,
         promise: null,
       });
     });
-    if (options.queryKey) {
+    if (options?.queryKey) {
       querySet.add(options.queryKey);
     }
   }
