@@ -47,7 +47,13 @@ const getHydrateData = (id: string) => {
   };
 };
 
-export function useSuspenseData(request?: Request) {
+const querySet = new Set<string>();
+
+interface SuspenseDataProps {
+  queryKey?: string;
+}
+
+export function useSuspenseData(request?: Request, options?: SuspenseDataProps) {
   const appContext = useAppContext();
   const { requestContext } = appContext;
   const suspenseState = React.useContext(SuspenseContext);
@@ -55,22 +61,28 @@ export function useSuspenseData(request?: Request) {
   const { data, done, promise, update, error, id } = suspenseState;
   const { hasHydrateData, data: hydrateData } = getHydrateData(id);
 
+  const queryInProcess = options?.queryKey && querySet.has(options.queryKey);
   let thenable: Promise<any> = null;
-  if (!hasHydrateData && !error && !done && !promise && request) {
+  if (!hasHydrateData && !error && !done && !promise && request && !queryInProcess) {
     thenable = request(requestContext);
     thenable.then((response) => {
+      querySet.delete(options.queryKey);
       update({
         done: true,
         data: response,
         promise: null,
       });
     }).catch(e => {
+      querySet.delete(options.queryKey);
       update({
         done: true,
         error: e,
         promise: null,
       });
     });
+    if (options.queryKey) {
+      querySet.add(options.queryKey);
+    }
   }
 
   React.useEffect(() => {
@@ -117,7 +129,12 @@ export function useSuspenseData(request?: Request) {
       promise: thenable,
     });
   }
-  throw thenable;
+  if (thenable) {
+    throw thenable;
+  } else {
+    // Throw a pending promise to Suspense, otherwise the component will be error because of undefined data.
+    throw new Promise(() => {});
+  }
 }
 
 interface SuspenseProps {
