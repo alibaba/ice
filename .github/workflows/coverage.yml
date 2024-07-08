@@ -31,7 +31,7 @@ jobs:
     strategy:
       matrix:
         node-version: [16.x]
-    
+
     steps:
       - uses: actions/checkout@v3
         with:
@@ -42,7 +42,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           registry-url: https://registry.npmjs.org/
       - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.2
+        uses: pnpm/action-setup@v4
         with:
           run_install: false
       - name: Get pnpm store directory
