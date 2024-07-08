@@ -29,6 +29,7 @@ const babelTransformOptions = {
       'topLevelAwait',
       'classProperties',
       'classPrivateMethods',
+      'decorators-legacy', // allowing decorators by default
     ],
     generatorOpts: {
       decoratorsBeforeExport: true,
@@ -107,7 +108,6 @@ const plugin: Plugin<JSXPlusOptions> = (options: JSXPlusOptions = {}) => ({
           if (/\.tsx?$/.test(id)) {
             // When routes file is a typescript file, add ts parser plugins.
             options.parserOpts.plugins.push('typescript');
-            options.parserOpts.plugins.push('decorators-legacy'); // allowing decorators by default
           }
 
           const { code, map } = transformSync(source, options);
