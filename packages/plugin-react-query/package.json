@@ -1,0 +1,35 @@
+{
+  "name": "@ice/plugin-react-query",
+  "version": "1.0.0",
+  "description": "React Query plugin for ice.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
+  "files": [
+    "esm",
+    "!esm/**/*.map",
+    "*.d.ts"
+  ],
+  "dependencies": {
+    "@tanstack/react-query": "^5.50.1",
+    "@tanstack/react-query-devtools": "^5.50.1"
+  },
+  "devDependencies": {
+    "@ice/app": "^3.4.9",
+    "@ice/runtime": "^1.4.8",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-request"
+  },
+  "scripts": {
+    "watch": "tsc -w --sourceMap",
+    "build": "tsc"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
