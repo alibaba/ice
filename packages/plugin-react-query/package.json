@@ -19,7 +19,8 @@
     "@ice/app": "^3.4.9",
     "@ice/runtime": "^1.4.8",
     "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0"
+    "@types/react-dom": "^18.0.0",
+    "@tanstack/query-devtools": "^5.50.1"
   },
   "repository": {
     "type": "http",
