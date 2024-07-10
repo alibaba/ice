@@ -90,8 +90,8 @@ export function getRoutesDefinition(options: GetDefinationOptions) {
       loadStatement = routeSpecifier;
     }
     // Keep the string in a single line for the code style.
-    const lazyStatment = `lazyLoadComponent(${lazy ? 'componentModule' : loadStatement}, { routeId: '${id}', layout: ${layout}, renderMode, requestContext })`;
-    const routeProperties: string[] = [`...getRouteProps({ path: '${formatPath(routePath || '')}', componentName: '${componentName}', index: ${index}, id: '${id}', layout: ${layout}, exports: ${JSON.stringify(exports)} }),`];
+    const lazyStatment = `lazyLoadComponent(${lazy ? 'componentModule' : loadStatement}, { routeId: '${id}', ${layout ? `layout: ${layout}, ` : ''}renderMode, requestContext })`;
+    const routeProperties: string[] = [`...getRouteProps({ path: '${formatPath(routePath || '')}', componentName: '${componentName}', ${index ? `index: ${index}, ` : ''}id: '${id}',${layout ? `layout: ${layout}, ` : ''}exports: ${JSON.stringify(exports)} }),`];
     routeProperties.push(`async lazy() {${lazy ? `const componentModule = await ${loadStatement}` : ''}; return ${lazyStatment};},`);
     if (children) {
       const res = getRoutesDefinition({

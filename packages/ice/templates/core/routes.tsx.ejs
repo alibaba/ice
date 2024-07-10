@@ -5,7 +5,7 @@ import type { ComponentModule, RenderMode, RequestContext } from '@ice/runtime/t
 
 interface RouteOptions {
   routeId: string;
-  layout: boolean;
+  layout?: boolean;
   renderMode: RenderMode;
   requestContext?: RequestContext;
 }
@@ -15,7 +15,7 @@ function lazyLoadComponent(componentModule: ComponentModule, options: RouteOptio
     ...componentModule,
     Component: () => WrapRouteComponent({
       routeId: routeId,
-      isLayout: layout,
+      isLayout: Boolean(layout),
       routeExports: componentModule,
     }),
     loader: createRouteLoader({
@@ -32,7 +32,7 @@ interface GetRoutePropsOptions {
   index?: any;
   id: string;
   exports: string[];
-  layout: boolean;
+  layout?: boolean;
 }
 function getRouteProps(options: GetRoutePropsOptions) {
   const { path, componentName, index, id, exports, layout } = options;
@@ -43,7 +43,7 @@ function getRouteProps(options: GetRoutePropsOptions) {
     index,
     id,
     exports,
-    layout,
+    layout: Boolean(layout),
     exact: true,
   };
 }
