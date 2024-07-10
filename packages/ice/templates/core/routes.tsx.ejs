@@ -1,5 +1,53 @@
+import * as React from 'react';
 import { createRouteLoader, WrapRouteComponent, RouteErrorComponent } from '@ice/runtime';
 import type { CreateRoutes } from '@ice/runtime';
+import type { ComponentModule, RenderMode, RequestContext } from '@ice/runtime/types';
+
+interface RouteOptions {
+  routeId: string;
+  layout: boolean;
+  renderMode: RenderMode;
+  requestContext?: RequestContext;
+}
+function lazyLoadComponent(componentModule: ComponentModule, options: RouteOptions) {
+  const { routeId, layout, renderMode, requestContext } = options;
+  return {
+    ...componentModule,
+    Component: () => WrapRouteComponent({
+      routeId: routeId,
+      isLayout: layout,
+      routeExports: componentModule,
+    }),
+    loader: createRouteLoader({
+      routeId: options.routeId,
+      requestContext,
+      renderMode,
+      module: componentModule,
+    }),
+  };
+}
+interface GetRoutePropsOptions {
+  path: string;
+  componentName: string;
+  index?: any;
+  id: string;
+  exports: string[];
+  layout: boolean;
+}
+function getRouteProps(options: GetRoutePropsOptions) {
+  const { path, componentName, index, id, exports, layout } = options;
+  return {
+    path,
+    componentName,
+    errorElement: <RouteErrorComponent />,
+    index,
+    id,
+    exports,
+    layout,
+    exact: true,
+  };
+}
+
 <%- routeImports.length ? routeImports.join('\n') + '\n\n' : ''; -%>
 const createRoutes: CreateRoutes = ({
   requestContext,
