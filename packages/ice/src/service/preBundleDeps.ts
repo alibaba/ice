@@ -185,7 +185,28 @@ export function resolvePackageESEntry(depId: string, pkgPath: string, alias: Tas
   // rax/element -> ./element
   const entry = aliasKey ? depId.replace(new RegExp(`^${aliasKey}`), '.') : depId;
   // resolve "exports.import" field or "module" field
-  const resolvedEntryPoint = (resolveExports(pkgJSON, entry) || resolveLegacy(pkgJSON) || 'index.js') as string;
+  // 1.resolve exports
+  let resolvedEntryPoint = resolveExports(pkgJSON, entry);
+  // 2.resolve files
+  if (!resolvedEntryPoint && pkgJSON.files && Array.isArray(pkgJSON.files)) {
+    const relativeEntry = entry.replace(`${pkgJSON.name}/`, '');
+    for (const file of pkgJSON.files) {
+        const normalizedFile = path.normalize(file);
+        if (normalizedFile.startsWith(relativeEntry)) {
+            const extension = path.extname(normalizedFile);
+            resolvedEntryPoint = `${relativeEntry}${extension}`;
+            break;
+        }
+    }
+  }
+  // 3.resolve module
+  if (!resolvedEntryPoint) {
+    resolvedEntryPoint = resolveLegacy(pkgJSON);
+  }
+  // 4.downgrade index.js
+  if (!resolvedEntryPoint) {
+    resolvedEntryPoint = 'index.js'
+  }
   const entryPointPath = path.join(pkgDir, resolvedEntryPoint);
   return entryPointPath;
 }
