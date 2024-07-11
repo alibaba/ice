@@ -177,7 +177,7 @@ export async function bundleDeps(options:
   });
 }
 
-function resolveAbsoluteImport (entry: string, pkgDir: string, pkgJSON) {
+function resolveAbsoluteImport(entry: string, pkgDir: string, pkgJSON) {
   const relativePath = entry.replace(`${pkgJSON.name}/`, '');
   const absolutePath = path.join(pkgDir, relativePath);
   return fs.existsSync(absolutePath) ? relativePath : '';
@@ -192,8 +192,8 @@ export function resolvePackageESEntry(depId: string, pkgPath: string, alias: Tas
   // rax/element -> ./element
   const entry = aliasKey ? depId.replace(new RegExp(`^${aliasKey}`), '.') : depId;
   // resolve "exports.import" field or "module" field
-  const resolvedEntryPoint = (resolveExports(pkgJSON, entry) || resolveAbsoluteImport(entry, pkgDir, pkgJSON) || resolveLegacy(pkgJSON) || 'index.js');
-  const entryPointPath = path.join(pkgDir, resolvedEntryPoint);
+  const resolvedEntryPoint = resolveExports(pkgJSON, entry) || resolveAbsoluteImport(entry, pkgDir, pkgJSON) || resolveLegacy(pkgJSON);
+  const entryPointPath = path.join(pkgDir, typeof resolvedEntryPoint === 'string' ? resolvedEntryPoint : 'index.js');
   return entryPointPath;
 }
 
