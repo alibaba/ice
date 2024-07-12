@@ -4,7 +4,8 @@ import type { AxiosRequestConfig } from 'axios';
 import { request } from './request.js';
 
 interface RequestResult<R, P extends any[]> extends Result<R, P> {
-  request: (...args: P) => Promise<R>;
+  request: Result<R, P>['run'];
+  requestAsync: Result<R, P>['runAsync'];
 }
 
 export function useRequest<TData, TParams extends any[] = []>(
@@ -35,6 +36,7 @@ export function useRequest<TData, TParams extends any[] = []>(
     ...req,
     // Modify ahooks' useRequest `run` as `request`
     request: req.run,
+    requestAsync: req.runAsync,
   } as RequestResult<TData, TParams>;
 }
 
