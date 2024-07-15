@@ -1,5 +1,4 @@
 import path from 'path';
-import fs from 'fs';
 import { createHash } from 'crypto';
 import fse from 'fs-extra';
 import { esbuild } from '@ice/bundles';
@@ -180,7 +179,7 @@ export async function bundleDeps(options:
 function resolveAbsoluteImport(entry: string, pkgDir: string, pkgJSON) {
   const relativePath = entry.replace(`${pkgJSON.name}/`, '');
   const absolutePath = path.join(pkgDir, relativePath);
-  return fs.existsSync(absolutePath) ? relativePath : '';
+  return fse.pathExistsSync(absolutePath) ? relativePath : '';
 }
 
 export function resolvePackageESEntry(depId: string, pkgPath: string, alias: TaskConfig<Config>['config']['alias']) {
