@@ -170,7 +170,7 @@ class ServerRunner extends Runner {
     super({
       rootDir,
       meta: {
-        renderer: 'client',
+        renderer: 'server',
         target: 'web',
       },
       resolveId: async (id, importer) => {
