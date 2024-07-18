@@ -2,24 +2,10 @@ import * as React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider, useIntl } from 'react-intl';
 import type { IntlShape } from 'react-intl';
 import type { RuntimePlugin } from '@ice/runtime/types';
+import { getDefaultLocale, getLocaleMessages, EXPORT_NAME } from './intl-until.js';
 import type { LocaleConfig } from './types.js';
 
-const EXPORT_NAME = 'locale';
 const cache = createIntlCache();
-
-const getDefaultLocale = () => {
-  // @ts-ignore
-  const defaultLocale = (typeof window !== 'undefined' && window.__ICE_DEFAULT_LOCALE__) ||
-    (typeof navigator !== 'undefined' && navigator.language) ||
-    'zh-CN';
-  return defaultLocale.replace('_', '-');
-};
-
-const getLocaleMessages = () => {
-  // @ts-ignore
-  const localeMessages = typeof window === 'undefined' ? global.__ICE_LOCALE_MESSAGES__ : window.__ICE_LOCALE_MESSAGES__;
-  return localeMessages || {};
-};
 
 const defaultLocale = getDefaultLocale();
 let intl: IntlShape = createIntl({

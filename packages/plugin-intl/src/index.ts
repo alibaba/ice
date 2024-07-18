@@ -10,12 +10,14 @@ interface PluginOptions {
   localeMessagesKey?: string;
   defaultLocaleKey?: string;
   useCDN?: boolean;
+  intlSolution?: 'react-intl' | 'simple';
 }
 
 const plugin: Plugin<PluginOptions> = ({
   localeMessagesKey = '__LOCALE_MESSAGES__',
   defaultLocaleKey = '__DEFAULT_LOCALE__',
   useCDN = false,
+  intlSolution = 'react-intl',
 } = {}) => ({
   name: 'plugin-intl',
   setup: ({ generator, context, createLogger, watch }) => {
@@ -83,12 +85,19 @@ const plugin: Plugin<PluginOptions> = ({
     }
 
     // Add intl export from ice.
-    generator.addExport({
-      specifier: ['useIntl', 'intl'],
-      source: '@ice/plugin-intl/runtime',
-    });
+    if (intlSolution === 'simple') {
+      generator.addExport({
+        specifier: ['intl'],
+        source: '@ice/plugin-intl/runtime-simple',
+      });
+    } else {
+      generator.addExport({
+        specifier: ['useIntl', 'intl'],
+        source: '@ice/plugin-intl/runtime',
+      });
+    }
   },
-  runtime: '@ice/plugin-intl/runtime',
+  runtime: intlSolution === 'simple' ? '@ice/plugin-intl/runtime-simple' : '@ice/plugin-intl/runtime',
 });
 
 export default plugin;
