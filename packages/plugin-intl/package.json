@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-intl",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "react intl plugin for ice.js 3.",
   "files": [
     "esm",
@@ -15,6 +15,7 @@
   "exports": {
     ".": "./esm/index.js",
     "./runtime": "./esm/runtime.js",
+    "./runtime-simple": "./esm/runtime-simple.js",
     "./types": "./esm/types.js"
   },
   "sideEffects": false,
@@ -28,7 +29,7 @@
   },
   "devDependencies": {
     "@ice/app": "^3.4.9",
-    "@ice/runtime": "^1.4.8",
+    "@ice/runtime": "^1.4.11",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0"
   },

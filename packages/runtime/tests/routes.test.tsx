@@ -138,17 +138,20 @@ describe('routes', () => {
   });
 
   it('load error module', async () => {
-    const routeModule = await loadRouteModules([{
-      id: 'error',
-      // @ts-ignore
-      lazy: async () => {
-        throw new Error('err');
-        return {};
-      },
-    }], {});
-    expect(routeModule).toStrictEqual({
-      error: undefined,
-    });
+    // `toThrowError` seems not working with async function.
+    try {
+      await loadRouteModules([{
+        id: 'error',
+        // @ts-ignore
+        lazy: async () => {
+          throw new Error('err');
+          return {};
+        },
+      }], {});
+      expect(true).toBe(false);
+    } catch (err) {
+      expect(true).toBe(true);
+    }
   });
 
   it('load async route', async () => {

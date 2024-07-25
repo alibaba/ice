@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.4
+
+### Patch Changes
+
+- aaea501d: fix: allow decorators-legacy syntax in js file
+
 ## 1.0.3
 
 ### Patch Changes
