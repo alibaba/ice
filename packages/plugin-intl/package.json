@@ -15,6 +15,7 @@
   "exports": {
     ".": "./esm/index.js",
     "./runtime": "./esm/runtime.js",
+    "./runtime-simple": "./esm/runtime-simple.js",
     "./types": "./esm/types.js"
   },
   "sideEffects": false,
