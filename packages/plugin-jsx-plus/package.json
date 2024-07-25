@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-jsx-plus",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "JSX Plus support for ice.js",
   "license": "MIT",
   "type": "module",

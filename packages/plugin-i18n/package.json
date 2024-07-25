@@ -57,7 +57,7 @@
   },
   "peerDependencies": {
     "@ice/app": "^3.4.10",
-    "@ice/runtime": "^1.4.10"
+    "@ice/runtime": "^1.4.11"
   },
   "publishConfig": {
     "access": "public"
