@@ -1,6 +1,5 @@
-import type { QueryClientConfig } from '@tanstack/react-query';
+import type { QueryClientConfig, QueryClient } from '@tanstack/react-query';
 import type { DevtoolsButtonPosition, DevtoolsPosition, DevToolsErrorType } from '@tanstack/query-devtools';
-import type { QueryClient } from '@tanstack/react-query';
 
 interface DevtoolsOptions {
   initialIsOpen?: boolean;
