@@ -69,6 +69,7 @@ export interface AppConfig {
     basename?: string;
     initialEntries?: InitialEntry[];
   };
+  encodeData?: boolean;
 }
 
 export interface RoutesConfig {
@@ -137,7 +138,7 @@ AppContext,
 export type WindowContext = Pick<
 AppContext,
   'appData' | 'loaderData' | 'routePath' | 'downgrade' | 'matchedIds' | 'documentOnly' | 'renderMode' | 'serverData' | 'revalidate'
->;
+> & Pick<AppContext['appConfig'], 'encodeData'>;
 
 export type Renderer = (
   container: Element | Document,
