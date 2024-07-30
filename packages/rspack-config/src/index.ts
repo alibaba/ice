@@ -109,12 +109,13 @@ const getConfig: GetConfig = async (options) => {
     fastRefresh,
     sourceMap,
     https,
+    enableCopyPlugin,
   } = taskConfig || {};
   const isDev = mode === 'development';
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
   const hashKey = hash === true ? 'hash:8' : (hash || '');
 
-  const { rspack: { DefinePlugin, ProvidePlugin, SwcJsMinimizerRspackPlugin } } = await import('@ice/bundles/esm/rspack.js');
+  const { rspack: { DefinePlugin, ProvidePlugin, SwcJsMinimizerRspackPlugin, CopyRspackPlugin } } = await import('@ice/bundles/esm/rspack.js');
   const cssFilename = `css/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`;
   // get compile plugins
   const compilerWebpackPlugins = getCompilerPlugins(rootDir, {
@@ -280,6 +281,23 @@ const getConfig: GetConfig = async (options) => {
         process: [require.resolve('process/browser')],
       }),
       !!minify && new SwcJsMinimizerRspackPlugin(jsMinimizerPluginOptions),
+      (enableCopyPlugin || !isDev) && new CopyRspackPlugin({
+        patterns: [{
+          from: path.join(rootDir, 'public'),
+          to: absoluteOutputDir,
+          // ignore assets already in compilation.assets such as js and css files
+          force: false,
+          noErrorOnMissing: true,
+          // Skip minimization by default.
+          info: {
+            minimized: true,
+          },
+          globOptions: {
+            dot: true,
+            gitignore: true,
+          },
+        }],
+      }),
     ].filter(Boolean),
     builtins: {
       css: {
