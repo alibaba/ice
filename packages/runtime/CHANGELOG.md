@@ -1,5 +1,11 @@
 # @ice/runtime
 
+## 1.4.11
+
+### Patch Changes
+
+- 7992d405: fix: throw error for better debugging
+
 ## 1.4.10
 
 ### Patch Changes

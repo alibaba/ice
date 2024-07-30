@@ -17,15 +17,15 @@ order: 1
 
 在应用框架之上，我们还提供了 NPM 包开发工具 [ICE PKG](https://pkg.ice.work)：
 
-- 提供 React 组件开发、Node.js 模块开发、前端通用库等[多场景需求](https://pkg.ice.work/scenarios/react)
+- 提供 React 组件开发、Node.js 模块开发、前端通用库等[多场景需求](https://pkg.ice.work/guide/scenarios/)
 - 组件开发提供基础研发范式，提供组件文档、示例、预览等功能，[查看文档](https://pkg.ice.work/guide/preview)
 - 更多场景可以通过插件的方式完成定制，查看[插件开发](https://pkg.ice.work/reference/plugins-development)
 
 你也可以搭配 VS Code 插件 AppWorks 享受到更多功能：
 
-- 通过大量的官方模板（fusion/antd）可视化创建项目，[查看更多](https://appworks.site/materialCenter/react.html)
-- 基于 VS Code 插件可视化的调试、管理依赖、拼装区块等，[查看文档](https://appworks.site)
-- 业务可以根据规范定制自己的物料体系（含项目模板），[查看物料开发文档](https://appworks.site/materials/about.html)
+- 通过大量的官方模板（fusion/antd）可视化创建项目，[查看更多](https://github.com/apptools-lab/AppWorks/blob/master/extensions/application-manager/README.zh-CN.md)
+- 基于 VS Code 插件可视化的调试、管理依赖、拼装区块等，[查看文档](https://github.com/apptools-lab/AppWorks/blob/master/extensions/appworks/README.zh-CN.md)
+- 业务可以根据规范定制自己的物料体系（含项目模板），[查看物料开发文档](https://github.com/apptools-lab/AppWorks/blob/master/extensions/material-helper/README.zh-CN.md)
 - ……
 
 ## 常见问题 📝
@@ -47,7 +47,7 @@ ice.js 3 相比之前的版本，增加了更多对移动端能力的优化和�
 
 ### 使用飞冰 (ICE) 是否需要具备一定的前端基础？
 
-毫无疑问是需要的，同时我们也在努力降低前端开发的门槛，但一些基础的前端知识还是需要具备的，比如 JavaScript 的基础语法、前后端如何通信等。为了便于快速入门前端知识，我们整理了一份 [前端基础知识](https://ice.work/docs/resource/front-basic)，希望能帮助到开发者。
+毫无疑问是需要的，同时我们也在努力降低前端开发的门槛，但一些基础的前端知识还是需要具备的，比如 JavaScript 的基础语法、前后端如何通信等。为了便于快速入门前端知识，我们整理了一份 [前端基础知识](https://v2.ice.work/docs/resource/front-basic/)，希望能帮助到开发者。
 
 ### 资深前端同学是否适合使用飞冰？
 
