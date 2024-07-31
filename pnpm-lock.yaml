@@ -2243,6 +2243,31 @@ importers:
         specifier: ^5.88.0
         version: 5.88.2
 
+  packages/plugin-react-query:
+    dependencies:
+      '@tanstack/react-query':
+        specifier: ^5.50.1
+        version: 5.50.1(react@18.2.0)
+      '@tanstack/react-query-devtools':
+        specifier: ^5.50.1
+        version: 5.50.1(@tanstack/react-query@5.50.1)(react@18.2.0)
+    devDependencies:
+      '@ice/app':
+        specifier: ^3.4.9
+        version: link:../ice
+      '@ice/runtime':
+        specifier: ^1.4.8
+        version: link:../runtime
+      '@tanstack/query-devtools':
+        specifier: ^5.50.1
+        version: 5.50.1
+      '@types/react':
+        specifier: ^18.0.0
+        version: 18.0.34
+      '@types/react-dom':
+        specifier: ^18.0.0
+        version: 18.0.11
+
   packages/plugin-request:
     dependencies:
       ahooks:
@@ -8517,6 +8542,33 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       defer-to-connect: 1.1.3
+
+  /@tanstack/query-core@5.50.1:
+    resolution: {integrity: sha512-lpfhKPrJlyV2DSVcQb/HuozH3Av3kws4ge22agx+lNGpFkS4vLZ7St0l3GLwlAD+bqB+qXGex3JdRKUNtMviEQ==}
+    dev: false
+
+  /@tanstack/query-devtools@5.50.1:
+    resolution: {integrity: sha512-MQ5JK3yRwBP1SRuwoJVPGZP4cMLXCQ0t+6blDbcAVGEoqrEuvbgTdwlN729AKBR0hidOWPFR9n5YpI2Y8bBZOQ==}
+
+  /@tanstack/react-query-devtools@5.50.1(@tanstack/react-query@5.50.1)(react@18.2.0):
+    resolution: {integrity: sha512-zgPmEFv9GhLAx6eaf9r0ACbcxit1ZSuv/uPpOXBTTSPLijlWcfpQTOdZx0jYQ14t2cUfWjrAW41cUmcCvT4X/g==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.50.1
+      react: ^18 || ^19
+    dependencies:
+      '@tanstack/query-devtools': 5.50.1
+      '@tanstack/react-query': 5.50.1(react@18.2.0)
+      react: 18.2.0
+    dev: false
+
+  /@tanstack/react-query@5.50.1(react@18.2.0):
+    resolution: {integrity: sha512-s0DW3rVBDPReDDovUjVqItVa3R2nPfUANK9nqGvarO2DwTiY9U4EBTsqizMxItRCoGgK5apeM7D3mxlHrSKpdQ==}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      '@tanstack/query-core': 5.50.1
+      react: 18.2.0
+    dev: false
 
   /@testing-library/dom@8.20.0:
     resolution: {integrity: sha512-d9ULIT+a4EXLX3UU8FBjauG9NnsZHkHztXoIcTsOKoOw030fyjheN9svkTULjJxtYag9DZz5Jz5qkWZDPxTFwA==}
