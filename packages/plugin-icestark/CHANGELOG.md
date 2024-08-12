@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.5.6
+
+- [fix] lock cheerio version.
+
 ## 2.5.5
 
 - [fix] check router status by userConfig.

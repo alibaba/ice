@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.1.6
+
+- [fix] lock cheerio version.
+
 ## 2.1.5
 
 - [fix] do not remove origin css when config `cssChunkNames`.

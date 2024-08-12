@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-ice-ssr",
-  "version": "3.1.4",
+  "version": "3.1.5",
   "description": "ssr plugin",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -23,12 +23,12 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@builder/app-helpers": "^2.5.2",
+    "@builder/app-helpers": "^2.5.4",
     "@builder/webpack-config": "^2.1.1",
     "@loadable/babel-plugin": "^5.13.2",
     "@loadable/webpack-plugin": "^5.14.0",
     "chalk": "^4.0.0",
-    "cheerio": "^1.0.0-rc.3",
+    "cheerio": "1.0.0-rc.12",
     "deepmerge": "^4.2.2",
     "fs-extra": "^8.1.0",
     "html-minifier": "^4.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "@builder/vite-service",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "vite implementation",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -27,7 +27,7 @@
     "@vitejs/plugin-legacy": "^1.5.0",
     "@vitejs/plugin-react": "^1.0.7",
     "chalk": "^2.4.1",
-    "cheerio": "^1.0.0-rc.10",
+    "cheerio": "1.0.0-rc.12",
     "connect-history-api-fallback": "^1.6.0",
     "deepmerge": "^4.2.2",
     "fast-glob": "^3.2.5",
@@ -37,7 +37,7 @@
     "npmlog": "^4.1.2",
     "rollup-plugin-visualizer": "^5.5.2",
     "vite": "^2.4.2",
-    "vite-plugin-eslint-report": "^1.0.0",
+    "vite-plugin-eslint-report": "^1.0.1",
     "vite-plugin-ts-types": "^1.0.0",
     "webpack-dev-mock": "^2.0.0"
   },

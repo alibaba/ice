@@ -1,6 +1,6 @@
 {
   "name": "build-plugin-icestark",
-  "version": "2.5.5",
+  "version": "2.5.6",
   "description": "Easy use `icestark` in icejs.",
   "author": "ice-admin@alibaba-inc.com",
   "homepage": "",
@@ -18,13 +18,13 @@
   "dependencies": {
     "@babel/core": "^7.15.5",
     "@babel/types": "^7.11.5",
-    "@builder/app-helpers": "^2.4.2",
+    "@builder/app-helpers": "^2.5.4",
     "@ice/stark": "^2.0.0",
     "@ice/stark-app": "^1.2.0",
-    "cheerio": "^1.0.0-rc.10",
+    "cheerio": "1.0.0-rc.12",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.6",
-    "vite-plugin-index-html": "^2.0.0"
+    "vite-plugin-index-html": "^2.0.2"
   },
   "devDependencies": {
     "@types/glob": "^7.1.1",
