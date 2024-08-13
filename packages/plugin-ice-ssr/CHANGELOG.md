@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.5
+
+- [fix] lock cheerio version.
+
 ## 3.1.4
 
 - [fix] not get the route component when the request url has locale prefix
