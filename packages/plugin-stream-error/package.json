@@ -9,7 +9,8 @@
       "types": "./esm/index.d.ts",
       "import": "./esm/index.js",
       "default": "./esm/index.js"
-    }
+    },
+    "./head-stream-error": "./esm/components/headStreamErrorRecoverScript.js"
   },
   "main": "./esm/index.js",
   "types": "./esm/index.d.ts",

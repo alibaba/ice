@@ -28,5 +28,3 @@ if (import.meta.renderer === 'client') {
 });
 
 export default plugin;
-
-export * from './components';

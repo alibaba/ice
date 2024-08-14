@@ -1,6 +1,6 @@
 import react from 'react';
 
-export function HeadStreamErrorRecoverScript({ downgradeCSRHostname }) {
+export default function HeadStreamErrorRecoverScript({ downgradeCSRHostname }) {
   return (
     <script
       dangerouslySetInnerHTML={{
