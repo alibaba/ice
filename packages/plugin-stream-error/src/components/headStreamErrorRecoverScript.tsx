@@ -10,8 +10,7 @@ export default function HeadStreamErrorRecoverScript({ downgradeCSRHostname }) {
                 window.location.hostname = '${downgradeCSRHostname}';
               }
             })`,
-      }
-      }
+      }}
       crossOrigin="anonymous"
     />
   );
