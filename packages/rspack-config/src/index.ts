@@ -109,12 +109,13 @@ const getConfig: GetConfig = async (options) => {
     fastRefresh,
     sourceMap,
     https,
+    enableCopyPlugin,
   } = taskConfig || {};
   const isDev = mode === 'development';
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
   const hashKey = hash === true ? 'hash:8' : (hash || '');
 
-  const { rspack: { DefinePlugin, ProvidePlugin, SwcJsMinimizerRspackPlugin } } = await import('@ice/bundles/esm/rspack.js');
+  const { rspack: { DefinePlugin, ProvidePlugin, SwcJsMinimizerRspackPlugin, CopyRspackPlugin } } = await import('@ice/bundles/esm/rspack.js');
   const cssFilename = `css/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`;
   // get compile plugins
   const compilerWebpackPlugins = getCompilerPlugins(rootDir, {
@@ -169,7 +170,16 @@ const getConfig: GetConfig = async (options) => {
   if (!compileIncludes || compileIncludes?.length === 0) {
     excludeRule = 'node_modules';
   } else if (!compileIncludes?.includes('node_modules') && compileIncludes?.length > 0) {
-    excludeRule = `node_modules[\\/](?!${compileIncludes.map((pkg: string) => {
+    const flattenIncludes = [];
+    compileIncludes.forEach((pkg) => {
+      if (typeof pkg === 'string') {
+        flattenIncludes.push(pkg);
+      } else {
+        // The RegExp type of pkg may include multiple source paths.
+        flattenIncludes.push(...pkg.source.split('|'));
+      }
+    });
+    excludeRule = `node_modules[\\/](?!${flattenIncludes.map((pkg: string) => {
       return `${pkg}[\\/]|_${pkg.replace('/', '_')}@[^/]+[\\/]`;
     }).join('|')}).*`;
   }
@@ -280,6 +290,23 @@ const getConfig: GetConfig = async (options) => {
         process: [require.resolve('process/browser')],
       }),
       !!minify && new SwcJsMinimizerRspackPlugin(jsMinimizerPluginOptions),
+      (enableCopyPlugin || !isDev) && new CopyRspackPlugin({
+        patterns: [{
+          from: path.join(rootDir, 'public'),
+          to: absoluteOutputDir,
+          // ignore assets already in compilation.assets such as js and css files
+          force: false,
+          noErrorOnMissing: true,
+          // Skip minimization by default.
+          info: {
+            minimized: true,
+          },
+          globOptions: {
+            dot: true,
+            gitignore: true,
+          },
+        }],
+      }),
     ].filter(Boolean),
     builtins: {
       css: {

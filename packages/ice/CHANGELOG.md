@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.4.11
+
+### Patch Changes
+
+- a7a6183b: fix: modify meta.renderer in server runner
+- Updated dependencies [eb7e71eb]
+- Updated dependencies [47a5773a]
+  - @ice/rspack-config@1.1.9
+
 ## 3.4.10
 
 ### Patch Changes

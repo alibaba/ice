@@ -1660,7 +1660,7 @@ importers:
         specifier: 1.2.2
         version: link:../route-manifest
       '@ice/rspack-config':
-        specifier: 1.1.8
+        specifier: 1.1.9
         version: link:../rspack-config
       '@ice/runtime':
         specifier: ^1.4.10

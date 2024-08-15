@@ -1,5 +1,12 @@
 # @ice/rspack-config
 
+## 1.1.9
+
+### Patch Changes
+
+- eb7e71eb: feat: align copy plugin with webpack mode
+- 47a5773a: fix: support compileDendencies in speedup mode
+
 ## 1.1.8
 
 ### Patch Changes
