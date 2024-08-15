@@ -170,7 +170,16 @@ const getConfig: GetConfig = async (options) => {
   if (!compileIncludes || compileIncludes?.length === 0) {
     excludeRule = 'node_modules';
   } else if (!compileIncludes?.includes('node_modules') && compileIncludes?.length > 0) {
-    excludeRule = `node_modules[\\/](?!${compileIncludes.map((pkg: string) => {
+    const flattenIncludes = [];
+    compileIncludes.forEach((pkg) => {
+      if (typeof pkg === 'string') {
+        flattenIncludes.push(pkg);
+      } else {
+        // The RegExp type of pkg may include multiple source paths.
+        flattenIncludes.push(...pkg.source.split('|'));
+      }
+    });
+    excludeRule = `node_modules[\\/](?!${flattenIncludes.map((pkg: string) => {
       return `${pkg}[\\/]|_${pkg.replace('/', '_')}@[^/]+[\\/]`;
     }).join('|')}).*`;
   }
