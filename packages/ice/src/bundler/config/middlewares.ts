@@ -6,9 +6,11 @@ import type { Config } from '@ice/shared-config/types';
 import createMockMiddleware from '../../middlewares/mock/createMiddleware.js';
 import createRenderMiddleware from '../../middlewares/renderMiddleware.js';
 import createDataLoaderMiddleware from '../../middlewares/dataLoaderMiddleware.js';
+import createProxyModuleMiddleware from '../../middlewares/proxyModuleMiddleware.js';
 import type { UserConfig } from '../../types/userConfig.js';
 import type RouteManifest from '../../utils/routeManifest.js';
 import type { GetAppConfig } from '../../types/plugin.js';
+import type Generator from '../../service/runtimeGenerator.js';
 
 interface SetupOptions {
   userConfig: UserConfig;
@@ -19,6 +21,7 @@ interface SetupOptions {
   mock: boolean;
   rootDir: string;
   dataLoaderCompiler?: Compiler;
+  generator?: Generator;
 }
 
 function setupMiddlewares(middlewares: Parameters<DevServerConfiguration['setupMiddlewares']>[0], {
@@ -30,8 +33,9 @@ function setupMiddlewares(middlewares: Parameters<DevServerConfiguration['setupM
   mock,
   rootDir,
   dataLoaderCompiler,
+  generator,
 }: SetupOptions) {
-  const { ssr, ssg } = userConfig;
+  const { ssr, ssg, routes } = userConfig;
   let renderMode: RenderMode;
   // If ssr is set to true, use ssr for preview.
   if (ssr) {
@@ -56,8 +60,21 @@ function setupMiddlewares(middlewares: Parameters<DevServerConfiguration['setupM
     middlewares.unshift(dataLoaderMiddleware);
   }
 
+  const proxyModuleMiddleware = createProxyModuleMiddleware({
+    manifest: routeManifest.getNestedRoute(),
+    rootDir,
+    generator,
+  });
+
   // @ts-ignore property of name is exist.
   const insertIndex = middlewares.findIndex(({ name }) => name === 'serve-index');
+  if (routes?.lazyCompile) {
+    middlewares.splice(
+      insertIndex, 0,
+      proxyModuleMiddleware,
+    );
+  }
+
   middlewares.splice(
     insertIndex, 0,
     serverRenderMiddleware,

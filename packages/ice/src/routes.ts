@@ -69,10 +69,11 @@ interface GetDefinationOptions {
   lazy?: boolean;
   depth?: number;
   matchRoute?: (route: NestedRouteManifest) => boolean;
+  compileRoutes?: string[];
 }
 
 export function getRoutesDefinition(options: GetDefinationOptions) {
-  const { manifest, lazy = false, depth = 0, matchRoute = () => true } = options;
+  const { manifest, lazy = false, depth = 0, matchRoute = () => true, compileRoutes } = options;
   const routeImports: string[] = [];
   const routeDefinition = manifest.reduce((prev, route) => {
     if (!matchRoute(route)) {
@@ -80,10 +81,11 @@ export function getRoutesDefinition(options: GetDefinationOptions) {
     }
     const { children, path: routePath, index, componentName, file, id, layout, exports } = route;
     const componentPath = id.startsWith('__') ? file : getFilePath(file);
-
+    const proxyModule = './empty';
     let loadStatement = '';
     if (lazy) {
-      loadStatement = `import(/* webpackChunkName: "p_${componentName}" */ '${formatPath(componentPath)}')`;
+      const filePath = compileRoutes ? (compileRoutes.includes(`/${routePath || ''}`) ? componentPath : proxyModule) : componentPath;
+      loadStatement = `import(/* webpackChunkName: "p_${componentName}" */ '${formatPath(filePath)}')`;
     } else {
       const routeSpecifier = formatRouteSpecifier(id);
       routeImports.push(`import * as ${routeSpecifier} from '${formatPath(componentPath)}';`);
@@ -128,6 +130,7 @@ export function getRoutesDefinition(options: GetDefinationOptions) {
         lazy,
         depth: depth + 1,
         matchRoute,
+        compileRoutes,
       });
       routeImports.push(...res.routeImports);
       routeProperties.push(`children: [${res.routeDefinition}]`);

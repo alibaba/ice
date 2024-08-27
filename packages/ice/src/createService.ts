@@ -221,6 +221,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const { userConfig } = ctx;
   const { routes: routesConfig, server, syntaxFeatures, polyfill } = userConfig;
 
+
   const coreEnvKeys = getCoreEnvKeys();
 
   const routesInfo = await generateRoutesInfo(rootDir, routesConfig, routeManifest.getRoutesDefinitions());
@@ -252,6 +253,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const { routeImports, routeDefinition } = getRoutesDefinition({
     manifest: routesInfo.routes,
     lazy,
+    compileRoutes: routesConfig.lazyCompile ? [] : undefined,
   });
   const loaderExports = hasExportAppData || Boolean(routesInfo.loaders);
   const hasDataLoader = Boolean(userConfig.dataLoader) && loaderExports;
@@ -301,6 +303,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     generator.addRenderFile('core/entry.server.ts.ejs', FALLBACK_ENTRY, { hydrate: false });
   }
 
+  if (routesConfig?.lazyCompile) {
+    generator.addRenderFile('core/empty.tsx.ejs', 'empty.tsx');
+  }
   if (typeof userConfig.dataLoader === 'object' && userConfig.dataLoader.fetcher) {
     const {
       packageName,
@@ -401,6 +406,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         userConfig,
         configFile,
         hasDataLoader,
+        generator,
       };
       try {
         if (command === 'test') {

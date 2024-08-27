@@ -18,6 +18,7 @@ async function bundler(
     routeManifest,
     appConfig,
     hasDataLoader,
+    generator,
   } = options;
   let compiler: MultiCompiler;
   let dataLoaderCompiler: Compiler;
@@ -63,6 +64,7 @@ async function bundler(
     hooksAPI,
     taskConfigs,
     rspackConfigs,
+    generator,
   };
   if (command === 'start') {
     // @ts-expect-error dev-server has been pre-packed, so it will have different type.
