@@ -253,7 +253,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const { routeImports, routeDefinition } = getRoutesDefinition({
     manifest: routesInfo.routes,
     lazy,
-    compileRoutes: routesConfig.lazyCompile ? [] : undefined,
+    compileRoutes: routesConfig?.lazyCompile ? [] : undefined,
   });
   const loaderExports = hasExportAppData || Boolean(routesInfo.loaders);
   const hasDataLoader = Boolean(userConfig.dataLoader) && loaderExports;
