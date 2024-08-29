@@ -167,6 +167,6 @@ function Data(props) {
   const data = useSuspenseData();
 
   return (
-    <script id={props.id} dangerouslySetInnerHTML={{ __html: `!function(){window['${LOADER}'] = window['${LOADER}'] || {};window['${LOADER}']['${props.id}'] = ${JSON.stringify(data)}}();` }} />
+    <script id={props.id ? `suspenseScript:${props.id}` : ''} dangerouslySetInnerHTML={{ __html: `!function(){window['${LOADER}'] = window['${LOADER}'] || {};window['${LOADER}']['${props.id}'] = ${JSON.stringify(data)}}();` }} />
   );
 }
