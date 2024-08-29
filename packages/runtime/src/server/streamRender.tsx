@@ -64,7 +64,7 @@ export function renderToNodeStream(
             matches,
             loaderData,
           } = routerContext;
-          let renderAssets = getAllAssets(loaderData, matches, assetsManifest);
+          const renderAssets = getAllAssets(loaderData, matches, assetsManifest);
           options?.onShellReady && options.onShellReady({
             renderAssets,
           });
