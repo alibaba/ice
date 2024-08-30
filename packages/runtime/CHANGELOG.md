@@ -1,5 +1,12 @@
 # @ice/runtime
 
+## 1.4.12
+
+### Patch Changes
+
+- c5b43d5e: feat: support getAssets for onShellReady
+- 9c3d9c58: feat: support suspense event
+
 ## 1.4.11
 
 ### Patch Changes
