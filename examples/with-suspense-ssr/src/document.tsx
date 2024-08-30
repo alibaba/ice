@@ -13,6 +13,7 @@ function Document() {
       </head>
       <body>
         <Main />
+        <script dangerouslySetInnerHTML={{ __html: 'window.addEventListener(\'suspense\', (d) => console.log(\'suspence event=\', d))' }} />
         <Scripts async />
       </body>
     </html>
