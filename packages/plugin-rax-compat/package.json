@@ -32,7 +32,7 @@
   "devDependencies": {
     "@ice/app": "^3.4.10",
     "@types/lodash-es": "^4.17.7",
-    "webpack": "^5.88.0"
+    "webpack": "^5.94.0"
   },
   "repository": {
     "type": "http",

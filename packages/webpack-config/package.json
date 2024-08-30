@@ -21,7 +21,7 @@
     "process": "^0.11.10"
   },
   "devDependencies": {
-    "webpack": "^5.88.0"
+    "webpack": "^5.94.0"
   },
   "scripts": {
     "watch": "tsc -w --sourceMap",
