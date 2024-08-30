@@ -50,29 +50,31 @@ export function renderToNodeStream(
           pipe(res);
         }
 
-        if (getAssets) {
-          const {
-            renderOptions,
-            routerContext,
-          } = renderToNodeStreamOptions;
+        const {
+          onShellReady,
+        } = options || {};
 
-          const {
-            assetsManifest,
-          } = renderOptions;
+        if (!onShellReady) return;
 
-          const {
-            matches,
-            loaderData,
-          } = routerContext;
-          const renderAssets = getAllAssets(loaderData, matches, assetsManifest);
-          options?.onShellReady && options.onShellReady({
-            renderAssets,
-          });
-        } else {
-          options?.onShellReady && options.onShellReady({
-            renderAssets: [],
-          });
-        }
+        const {
+          renderOptions,
+          routerContext,
+        } = renderToNodeStreamOptions;
+
+        const {
+          assetsManifest,
+        } = renderOptions;
+
+        const {
+          matches,
+          loaderData,
+        } = routerContext;
+
+        const renderAssets = getAssets ? getAllAssets(loaderData, matches, assetsManifest) : [];
+
+        onShellReady({
+          renderAssets,
+        });
       },
       onShellError(error) {
         options?.onShellError && options?.onShellError(error);
