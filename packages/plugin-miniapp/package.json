@@ -49,7 +49,7 @@
   "devDependencies": {
     "@ice/app": "^3.4.0",
     "@ice/runtime": "^1.2.9",
-    "webpack": "^5.88.0"
+    "webpack": "^5.94.0"
   },
   "repository": {
     "type": "http",

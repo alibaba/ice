@@ -21,7 +21,7 @@
     "@ice/bundles": "^0.2.0"
   },
   "devDependencies": {
-    "webpack": "^5.88.0"
+    "webpack": "^5.94.0"
   },
   "publishConfig": {
     "access": "public"
