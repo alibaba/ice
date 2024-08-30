@@ -51,12 +51,6 @@ export function renderToNodeStream(
         }
 
         const {
-          onShellReady,
-        } = options || {};
-
-        if (!onShellReady) return;
-
-        const {
           renderOptions,
           routerContext,
         } = renderToNodeStreamOptions;
@@ -70,10 +64,8 @@ export function renderToNodeStream(
           loaderData,
         } = routerContext;
 
-        const renderAssets = getAssets ? getAllAssets(loaderData, matches, assetsManifest) : [];
-
-        onShellReady({
-          renderAssets,
+        options?.onShellReady && options.onShellReady({
+          renderAssets: getAssets ? getAllAssets(loaderData, matches, assetsManifest) : [],
         });
       },
       onShellError(error) {
