@@ -87,7 +87,9 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
       // Send stream result to ServerResponse.
       pipe(res, {
         onShellReady: () => {
-          onShellReady && onShellReady();
+          onShellReady && onShellReady({
+            renderAssets: [],
+          });
         },
         onShellError: async (err) => {
           onShellError && onShellError(err);
