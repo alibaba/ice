@@ -253,7 +253,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const { routeImports, routeDefinition } = getRoutesDefinition({
     manifest: routesInfo.routes,
     lazy,
-    compileRoutes: routesConfig?.lazyCompile ? [commandArgs.open || '/'] : undefined,
+    compileRoutes: routesConfig?.lazyCompile && command === 'start' ? [commandArgs.open || '/'] : undefined,
   });
   const loaderExports = hasExportAppData || Boolean(routesInfo.loaders);
   const hasDataLoader = Boolean(userConfig.dataLoader) && loaderExports;
@@ -303,7 +303,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     generator.addRenderFile('core/entry.server.ts.ejs', FALLBACK_ENTRY, { hydrate: false });
   }
 
-  if (routesConfig?.lazyCompile) {
+  if (routesConfig?.lazyCompile && command === 'start') {
     generator.addRenderFile('core/empty.tsx.ejs', 'empty.tsx');
   }
   if (typeof userConfig.dataLoader === 'object' && userConfig.dataLoader.fetcher) {
