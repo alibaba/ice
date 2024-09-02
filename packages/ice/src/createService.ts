@@ -67,7 +67,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     templates: [coreTemplate],
   });
 
-  commandArgs.open = typeof commandArgs.open === 'string' ? addLeadingSlash(commandArgs.open) : commandArgs.open;
+  if (commandArgs.open) {
+    commandArgs.open = typeof commandArgs.open === 'string' ? addLeadingSlash(commandArgs.open) : commandArgs.open;
+  }
 
   const { addWatchEvent, removeWatchEvent } = createWatch({
     watchDir: rootDir,
