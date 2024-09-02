@@ -20,6 +20,7 @@ interface SetupOptions {
   excuteServerEntry: () => Promise<any>;
   mock: boolean;
   rootDir: string;
+  open?: boolean | string;
   dataLoaderCompiler?: Compiler;
   generator?: Generator;
 }
@@ -34,6 +35,7 @@ function setupMiddlewares(middlewares: Parameters<DevServerConfiguration['setupM
   rootDir,
   dataLoaderCompiler,
   generator,
+  open,
 }: SetupOptions) {
   const { ssr, ssg, routes } = userConfig;
   let renderMode: RenderMode;
@@ -60,13 +62,13 @@ function setupMiddlewares(middlewares: Parameters<DevServerConfiguration['setupM
     middlewares.unshift(dataLoaderMiddleware);
   }
 
-  const proxyModuleMiddleware = createProxyModuleMiddleware({
-    manifest: routeManifest.getNestedRoute(),
-    rootDir,
-    generator,
-  });
-
   if (routes?.lazyCompile) {
+    const proxyModuleMiddleware = createProxyModuleMiddleware({
+      manifest: routeManifest.getNestedRoute(),
+      rootDir,
+      generator,
+      defaultPath: typeof open === 'string' ? open : '/',
+    });
     // @ts-ignore property of name is exist.
     const staticIndex = middlewares.findIndex(({ name }) => name === 'express-static');
     middlewares.splice(

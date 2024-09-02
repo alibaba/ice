@@ -40,6 +40,7 @@ import rspackBundler from './bundler/rspack/index.js';
 import getDefaultTaskConfig from './plugins/task.js';
 import { multipleServerEntry, renderMultiEntry } from './utils/multipleEntry.js';
 import hasDocument from './utils/hasDocument.js';
+import { addLeadingSlash } from './utils/slash.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -65,6 +66,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     // add default template of ice
     templates: [coreTemplate],
   });
+
+  commandArgs.open = typeof commandArgs.open === 'string' ? addLeadingSlash(commandArgs.open) : commandArgs.open;
 
   const { addWatchEvent, removeWatchEvent } = createWatch({
     watchDir: rootDir,

@@ -12,6 +12,7 @@ interface Options {
   manifest: NestedRouteManifest[];
   generator: Generator;
   rootDir: string;
+  defaultPath: string;
 }
 
 export default function createRenderMiddleware(options: Options): Middleware {
@@ -19,8 +20,9 @@ export default function createRenderMiddleware(options: Options): Middleware {
     manifest,
     generator,
     rootDir,
+    defaultPath,
   } = options;
-  const accessedPath = new Set<string>();
+  const accessedPath = new Set<string>(defaultPath);
 
   const middleware: ExpressRequestHandler = async function (req, res, next) {
     if (req.path === '/proxy-module') {

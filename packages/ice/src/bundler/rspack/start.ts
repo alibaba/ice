@@ -33,6 +33,7 @@ const start = async ({
         taskConfig: webTaskConfig,
         excuteServerEntry,
         mock: commandArgs.mock,
+        open: commandArgs.open,
         rootDir,
         dataLoaderCompiler,
         generator,

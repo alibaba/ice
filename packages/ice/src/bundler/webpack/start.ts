@@ -48,6 +48,7 @@ export async function startDevServer(
         taskConfig: webTaskConfig,
         excuteServerEntry,
         mock: commandArgs.mock,
+        open: commandArgs.open,
         rootDir,
       });
       return customMiddlewares ? customMiddlewares(builtInMiddlewares, devServer) : builtInMiddlewares;
