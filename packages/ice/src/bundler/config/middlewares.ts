@@ -66,15 +66,17 @@ function setupMiddlewares(middlewares: Parameters<DevServerConfiguration['setupM
     generator,
   });
 
-  // @ts-ignore property of name is exist.
-  const insertIndex = middlewares.findIndex(({ name }) => name === 'serve-index');
   if (routes?.lazyCompile) {
+    // @ts-ignore property of name is exist.
+    const staticIndex = middlewares.findIndex(({ name }) => name === 'express-static');
     middlewares.splice(
-      insertIndex, 0,
+      staticIndex, 0,
       proxyModuleMiddleware,
     );
   }
 
+  // @ts-ignore property of name is exist.
+  const insertIndex = middlewares.findIndex(({ name }) => name === 'serve-index');
   middlewares.splice(
     insertIndex, 0,
     serverRenderMiddleware,

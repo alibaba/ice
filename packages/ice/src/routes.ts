@@ -84,7 +84,9 @@ export function getRoutesDefinition(options: GetDefinationOptions) {
     const proxyModule = './empty';
     let loadStatement = '';
     if (lazy) {
-      const filePath = compileRoutes ? (compileRoutes.includes(`/${routePath || ''}`) ? componentPath : proxyModule) : componentPath;
+      const filePath = compileRoutes && !layout
+        ? (compileRoutes.includes(`/${routePath || ''}`) ? componentPath : proxyModule)
+        : componentPath;
       loadStatement = `import(/* webpackChunkName: "p_${componentName}" */ '${formatPath(filePath)}')`;
     } else {
       const routeSpecifier = formatRouteSpecifier(id);
