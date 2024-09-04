@@ -70,7 +70,7 @@ export function connectReactPage(
       };
 
       static getDerivedStateFromError(error: Error) {
-        triggerAppHook('onError', error.message + error.stack);
+        triggerAppHook(this, 'onError', error.message + error.stack);
         return { hasError: true };
       }
       render() {
@@ -185,38 +185,38 @@ export class AppWrapper extends React.Component {
     [ON_LAUNCH]: setDefaultDescriptor({
       value(options) {
         setRouterParams(options);
-        triggerAppHook('onLaunch', options);
+        triggerAppHook(this, 'onLaunch', options);
       },
     }),
 
     [ON_SHOW]: setDefaultDescriptor({
       value(options) {
         setRouterParams(options);
-        triggerAppHook('onShow', options);
+        triggerAppHook(this, 'onShow', options);
       },
     }),
 
     [ON_HIDE]: setDefaultDescriptor({
       value() {
-        triggerAppHook('onHide');
+        triggerAppHook(this, 'onHide');
       },
     }),
 
     [ON_ERROR]: setDefaultDescriptor({
       value(error: string) {
-        triggerAppHook('onError', error);
+        triggerAppHook(this, 'onError', error);
       },
     }),
 
     [ON_PAGE_NOT_FOUND]: setDefaultDescriptor({
       value(res: unknown) {
-        triggerAppHook('onPageNotFound', res);
+        triggerAppHook(this, 'onPageNotFound', res);
       },
     }),
 
     [ON_UNHANDLED_REJECTION]: setDefaultDescriptor({
       value(res: unknown) {
-        triggerAppHook('onUnhandledRejection', res);
+        triggerAppHook(this, 'onUnhandledRejection', res);
       },
     }),
   });
@@ -224,7 +224,7 @@ export class AppWrapper extends React.Component {
   if (lifecycles.onShareAppMessage) {
     // Only works in ali miniapp
     appObj.onShareAppMessage = function (res) {
-      return triggerAppHook('onShareAppMessage', res);
+      return triggerAppHook(this, 'onShareAppMessage', res);
     };
   }
 
@@ -232,15 +232,15 @@ export class AppWrapper extends React.Component {
   return App(appObj);
 }
 
-function triggerAppHook(lifecycle: keyof PageLifeCycle | keyof AppInstance, ...option): any {
+function triggerAppHook(app: unknown, lifecycle: keyof PageLifeCycle | keyof AppInstance, ...option): any {
   const instance = getPageInstance(HOOKS_APP_ID);
   if (instance) {
     const func = hooks.call('getLifecycle', instance, lifecycle);
     if (Array.isArray(func)) {
       if (lifecycle === 'onShareAppMessage') {
-        return func[0].apply(null, option);
+        return func[0].apply(app, option);
       }
-      func.forEach(cb => cb.apply(null, option));
+      func.forEach(cb => cb.apply(app, option));
     }
   }
 }

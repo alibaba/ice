@@ -239,10 +239,18 @@ type IIceHooks = {
   modifyMpEventImpl: (event: MpEvent) => void;
   /** 用于修改 ICE Miniapp DOM 事件对象 */
   modifyIceEvent: (event, element) => void;
+  /**
+   * 修改 setData 的数据
+   * @param data 数据
+   * @param ctx 实例
+   */
+  modifySetDataPayload: (data: Record<string, unknown>, ctx: any) => void;
 
   modifyDispatchEvent: (event, element) => void;
   initNativeApi: (ice: Record<string, any>) => void;
   patchElement: (node) => void;
+
+  hydrateNativeComponentNode: (node) => void;
 };
 
 export const hooks = new IceHooks<IIceHooks>({
@@ -318,7 +326,11 @@ export const hooks = new IceHooks<IIceHooks>({
 
   modifyDispatchEvent: IceHook(HOOK_TYPE.MULTI),
 
+  modifySetDataPayload: IceHook(HOOK_TYPE.SINGLE),
+
   initNativeApi: IceHook(HOOK_TYPE.MULTI),
 
   patchElement: IceHook(HOOK_TYPE.MULTI),
+
+  hydrateNativeComponentNode: IceHook(HOOK_TYPE.SINGLE),
 });

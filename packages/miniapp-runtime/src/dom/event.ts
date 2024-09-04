@@ -14,6 +14,7 @@ import env from '../env.js';
 import type { EventOptions, MpEvent } from '../interface/index.js';
 import { isParentBinded } from '../utils/index.js';
 import type { Element } from './element.js';
+import { type Node } from './node.js';
 
 // 事件对象。以 Web 标准的事件对象为基础，加入小程序事件对象中携带的部分信息，并模拟实现事件冒泡。
 export class Event {
@@ -177,5 +178,25 @@ export function eventHandler(event: MpEvent) {
     } else {
       dispatch();
     }
+  }
+}
+
+export function createEventHandlerForThirdComponent(sid: string, eventName: string) {
+  return (...args: unknown[]) => {
+    const node = env.document.getElementById(sid);
+    if (node) {
+      node.triggerEventListenerInternal(eventName, args);
+    }
+  };
+}
+
+export function bindEventHandlersForThirdComponentNode(node: Node) {
+  const instance = node._root?.ctx;
+  if (!instance) {
+    return;
+  }
+  const eventNames = node.getListenerNames();
+  for (const eventName of eventNames) {
+    instance[`eh_${node.sid}_${eventName}`] = createEventHandlerForThirdComponent(node.sid, eventName);
   }
 }
