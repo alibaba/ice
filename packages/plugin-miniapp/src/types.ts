@@ -1,5 +1,6 @@
 import type { RecursiveTemplate, UnRecursiveTemplate } from '@ice/shared';
 import type { Config, webpack } from '@ice/app/esm/types';
+import type { IMiniBuildConfig } from './miniapp/webpack/utils/types.js';
 
 export interface MiniappConfig {
   rootDir: string;
@@ -29,6 +30,8 @@ export interface TargetConfig {
   projectConfigJson?: string;
   fileType: FileType;
   template: RecursiveTemplate | UnRecursiveTemplate;
+  modifyBuildAssets?: IMiniBuildConfig['modifyBuildAssets'];
+  components: Record<string, Record<string, string>>;
 }
 
 export interface MiniappWebpackOptions {
@@ -42,6 +45,7 @@ export interface MiniappWebpackOptions {
   };
   projectConfigJson?: string;
   nativeConfig: Record<string, any>;
+  modifyBuildAssets?: IMiniBuildConfig['modifyBuildAssets'];
 }
 
 export interface MiniappWebpackConfig {

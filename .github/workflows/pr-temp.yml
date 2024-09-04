@@ -1,0 +1,36 @@
+name: PR Release
+
+on:
+  pull_request:
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18]
+
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Setup
+        run: pnpm run setup
+
+      - name: Config npm
+        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - run: pnpm run release:snapshot

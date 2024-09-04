@@ -28,6 +28,10 @@ export type {
   DefineRoutesOptions,
 };
 
+export {
+  createRouteId2 as createRouteId,
+};
+
 export interface RouteItem {
   path: string;
   component: string;
@@ -315,6 +319,17 @@ export function createRoutePath(routeId: string): string | undefined {
   }
 
   return result || undefined;
+}
+
+function createRouteId2(page: string): string {
+  const fileId = createFileId(page);
+  if (fileId === 'index') {
+    return '/';
+  }
+  if (fileId.endsWith('/index')) {
+    return fileId.slice(0, -'/index'.length);
+  }
+  return fileId;
 }
 
 function findParentFileId(
