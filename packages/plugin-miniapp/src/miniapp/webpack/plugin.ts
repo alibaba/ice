@@ -1,24 +1,16 @@
 import webpack from '@ice/bundles/compiled/webpack/index.js';
-import type { MiniappWebpackOptions } from '../../types.js';
 import MiniPlugin from './plugins/MiniPlugin.js';
+import type { MiniCombination } from './combination.js';
 
 export class MiniWebpackPlugin {
-  config: MiniappWebpackOptions;
-
-  constructor(config: MiniappWebpackOptions) {
-    this.config = config;
-  }
+  constructor(public combination: MiniCombination) {}
 
   getPlugins() {
     const providerPlugin = this.getProviderPlugin();
     const definePlugin = this.getDefinePlugin();
     const miniPlugin = this.getMainPlugin();
     // TODO: any type
-    const plugins: Array<any> = [
-      providerPlugin,
-      definePlugin,
-      miniPlugin,
-    ];
+    const plugins: Array<any> = [providerPlugin, definePlugin, miniPlugin];
     return plugins;
   }
 
@@ -36,9 +28,7 @@ export class MiniWebpackPlugin {
   }
 
   getDefinePlugin() {
-    const {
-      env = {},
-    } = this.config;
+    const { env = {} } = this.combination.config;
 
     const envConstants = Object.keys(env).reduce((target, key) => {
       target[`process.env.${key}`] = env[key];
@@ -51,18 +41,12 @@ export class MiniWebpackPlugin {
   }
 
   getMainPlugin() {
-    const { rootDir, template, fileType, configAPI, nativeConfig, projectConfigJson } = this.config;
-    const options = {
-      rootDir,
-      fileType,
-      template,
+    return new MiniPlugin({
       commonChunks: ['runtime', 'vendors', 'common', 'ice'],
-      baseLevel: 16,
-      minifyXML: {},
-      configAPI,
-      nativeConfig,
-      projectConfigJson,
-    };
-    return new MiniPlugin(options);
+      constantsReplaceList: {},
+      pxTransformConfig: {},
+      hot: false,
+      combination: this.combination,
+    });
   }
 }

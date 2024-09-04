@@ -11,12 +11,14 @@ interface Options {
   postcssOptions: Config['postcss'];
   rootDir: string;
   enableRpx2Vw: boolean;
+  extensionAlias: string[];
 }
 
 const getCssRules = ({
   rootDir,
   postcssOptions,
   enableRpx2Vw,
+  extensionAlias,
 }: Options): Configuration['module']['rules'] => {
   const rules: CSSRuleConfig[] = [
     ['css'],
@@ -27,6 +29,7 @@ const getCssRules = ({
     ['scss', require.resolve('@ice/bundles/compiled/sass-loader'), {
       implementation: sass,
     }],
+    ...extensionAlias.map<CSSRuleConfig>(ext => (ext[0] === '.' ? [ext.slice(1)] : [ext])),
   ];
 
   const defailtOpts = {
