@@ -179,3 +179,10 @@ export function eventHandler(event: MpEvent) {
     }
   }
 }
+
+export function createEventHandlerForThirdComponent(sid: string, eventName: string, args: unknown[]) {
+  const node = env.document.getElementById(sid);
+  if (node) {
+    node.triggerEventListenerInternal(eventName, args);
+  }
+}

@@ -31,3 +31,7 @@ export function isBooleanStringLiteral(o: unknown): o is string {
 }
 
 export const { isArray } = Array;
+
+export function isEmpty(o: unknown): boolean {
+  return Object.keys(o).length === 0;
+}

@@ -12,14 +12,14 @@ import { setHistory } from './history.js';
 import injectMiniappLifecycles from './injectMiniappLifecycles.js';
 
 export default async function runClientApp(options: RunClientAppOptions) {
-  const { app, runtimeModules } = options;
+  const { app, runtimeModules, runtimeOptions } = options;
   const appConfig = getAppConfig(app);
   const appContext: AppContext = {
     appExport: app,
     appConfig,
     appData: null,
   };
-  const runtime = new Runtime(appContext);
+  const runtime = new Runtime(appContext, runtimeOptions);
   if (runtimeModules.statics) {
     await Promise.all(runtimeModules.statics.map(m => runtime.loadModule(m)).filter(Boolean));
   }

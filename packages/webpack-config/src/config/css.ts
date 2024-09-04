@@ -76,6 +76,7 @@ const css: ModifyWebpackConfig<Configuration, typeof webpack> = (config, ctx) =>
     ['scss', require.resolve('@ice/bundles/compiled/sass-loader'), {
       implementation: sass,
     }],
+    ...(ctx.cssExtensionAlias?.map(ext => (ext[0] === '.' ? [ext.slice(1)] : [ext])) ?? []),
   ] as CSSRuleConfig[]).map((config) => configCSSRule(config, {
     publicPath, postcssOptions: postcss, rootDir, enableRpx2Vw, cssModules },
   )));
