@@ -8,7 +8,7 @@ function isEventLikeProp(key: string) {
   return key.indexOf('on') === 0;
 }
 
-function transformProps(props: ComponentProps<JSXElementConstructor<any>>): Record<string, any> {
+function transformProps(type: string, props: ComponentProps<JSXElementConstructor<any>>): Record<string, any> {
   const transformedProps: Record<string, any> = {};
   Object.keys(props).forEach((propKey: string) => {
     let key: string = propKey;
@@ -21,18 +21,23 @@ function transformProps(props: ComponentProps<JSXElementConstructor<any>>): Reco
     // etc...
     if (isEventLikeProp(lowerCasedPropKey)) {
       if (registrationNameToReactEvent.has(lowerCasedPropKey)) {
-        const reactEvent: string = registrationNameToReactEvent.get(lowerCasedPropKey);
+        const reactEvent: string = registrationNameToReactEvent.get(lowerCasedPropKey) || '';
         if (reactEvent !== propKey) {
           key = reactEvent;
         }
       }
       // eslint-disable-next-line no-prototype-builtins
-    } else if (possibleStandardNames.hasOwnProperty(lowerCasedPropKey)) {
-      // Transform attribute names that make it works properly in React.
-      key = possibleStandardNames[lowerCasedPropKey];
-    } else {
-      // Handles component props from rax-components like resizeMode, this causes React to throw a warning.
-      key = lowerCasedPropKey;
+    }
+
+    const needTransform = (type !== 'svg');
+    if (needTransform) {
+      if (possibleStandardNames.hasOwnProperty(lowerCasedPropKey)) {
+        // Transform attribute names that make it works properly in React.
+        key = possibleStandardNames[lowerCasedPropKey];
+      } else {
+        // Handles component props from rax-components like resizeMode, this causes React to throw a warning.
+        key = lowerCasedPropKey;
+      }
     }
 
     transformedProps[key] = val;
