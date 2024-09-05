@@ -58,6 +58,9 @@ describe('events', () => {
   });
 
   it('should work with ondblclick', () => {
+    console.log('aaaaaa', transformProps('div', {
+      ondblclick: () => { },
+    }));
     expect(transformProps('div', {
       ondblclick: () => { },
     }).onDoubleClick).toBeInstanceOf(Function);
