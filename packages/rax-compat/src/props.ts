@@ -31,7 +31,7 @@ function transformProps(type: string, props: ComponentProps<JSXElementConstructo
 
     const needTransform = (type !== 'svg');
     if (needTransform) {
-      if (possibleStandardNames.hasOwnProperty(lowerCasedPropKey)) {
+      if (Object.prototype.hasOwnProperty.call(possibleStandardNames, lowerCasedPropKey)) {
         // Transform attribute names that make it works properly in React.
         key = possibleStandardNames[lowerCasedPropKey];
       } else {
