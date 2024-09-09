@@ -6,6 +6,7 @@ import type { Configuration, rspack as Rspack } from '@rspack/core';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import { coreJsPath } from '@ice/bundles';
 import RefreshPlugin from '@ice/bundles/esm/plugin-refresh.js';
+// import RefreshPlugin from '@ice/bundles/node_modules/@rspack/plugin-react-refresh/dist/index.js';
 import getSplitChunks, { getFrameworkBundles } from './splitChunks.js';
 import getAssetsRule from './assetsRule.js';
 import getCssRules from './cssRules.js';
@@ -204,6 +205,7 @@ const getConfig: GetConfig = async (options) => {
       },
     }];
   }
+  console.log('excludeRule', [...compileExclude, 'bundles/compiled']);
   const config: Configuration = {
     entry: entry || {
       main: [path.join(rootDir, runtimeTmpDir, 'entry.client.tsx')],
@@ -223,9 +225,47 @@ const getConfig: GetConfig = async (options) => {
     context: rootDir,
     module: {
       rules: [
+        // {
+        //   test: /\.ts$/,
+        //   exclude: [/node_modules/],
+        //   loader: 'builtin:swc-loader',
+        //   options: {
+        //     jsc: {
+        //       parser: {
+        //         syntax: 'typescript',
+        //       },
+        //     },
+        //   },
+        //   type: 'javascript/auto',
+        // },
+        // {
+        //   test: /\.(jsx?|tsx?|mjs)$/,
+        //   use: {
+        //     loader: 'builtin:compilation-loader',
+        //     options: {
+        //       jsc: {
+        //         parser: {
+        //           syntax: 'typescript',
+        //           jsx: true,
+        //         },
+        //         transform: {
+        //           react: {
+        //             pragma: 'React.createElement',
+        //             pragmaFrag: 'React.Fragment',
+        //             throwIfNamespace: true,
+        //             development: false,
+        //             useBuiltins: false,
+        //           },
+        //         },
+        //       },
+        //     },
+        //   },
+        //   type: 'javascript/auto',
+        // },
         {
           test: /\.(jsx?|tsx?|mjs)$/,
-          ...(excludeRule ? { exclude: new RegExp(excludeRule) } : {}),
+          ...(excludeRule ? { exclude: new RegExp('node_module') } : {}),
+          // exclude: /compiled/,
           use: {
             loader: 'builtin:compilation-loader',
             options: {
@@ -239,22 +279,22 @@ const getConfig: GetConfig = async (options) => {
           },
           type: 'javascript/auto',
         },
-        {
-          test: /__barrel_optimize__/,
-          use: ({ realResource }: { realResource: string }) => {
-            const names = (
-              realResource.match(/\?names=([^&]+)!=!/)?.[1] || ''
-            ).split(',');
-            return [{
-              loader: 'builtin:barrel-loader',
-              options: {
-                names,
-                cacheDir,
-              },
-            }];
-          },
-          type: 'javascript/auto',
-        },
+        // {
+        //   test: /__barrel_optimize__/,
+        //   use: ({ realResource }: { realResource: string }) => {
+        //     const names = (
+        //       realResource.match(/\?names=([^&]+)!=!/)?.[1] || ''
+        //     ).split(',');
+        //     return [{
+        //       loader: 'builtin:barrel-loader',
+        //       options: {
+        //         names,
+        //         cacheDir,
+        //       },
+        //     }];
+        //   },
+        //   type: 'javascript/auto',
+        // },
         ...getAssetsRule(),
         ...getCssRules({
           rootDir,
@@ -262,6 +302,11 @@ const getConfig: GetConfig = async (options) => {
           postcssOptions: postcss,
         }),
       ],
+      generator: {
+        'css/auto': {
+          localIdentName,
+        },
+      },
     },
     resolve: {
       extensions: ['...', '.ts', '.tsx', '.jsx'],
@@ -279,7 +324,6 @@ const getConfig: GetConfig = async (options) => {
       minimize: !!minify,
       ...(splitChunksStrategy ? { splitChunks: splitChunksStrategy } : {}),
     },
-    // @ts-expect-error plugin instance defined by default in not compatible with rspack.
     plugins: [
       ...plugins,
       // Unplugin should be compatible with rspack.
@@ -308,10 +352,8 @@ const getConfig: GetConfig = async (options) => {
         }],
       }),
     ].filter(Boolean),
-    builtins: {
-      css: {
-        modules: { localIdentName },
-      },
+    experiments: {
+      css: true,
     },
     stats: 'none',
     infrastructureLogging: {
@@ -334,11 +376,14 @@ const getConfig: GetConfig = async (options) => {
       client: {
         logging: 'info',
       },
-      https,
+      server: typeof https === 'object' ? {
+        type: 'https',
+        options: https,
+      } : undefined,
       ...devServer,
       setupMiddlewares: middlewares,
     },
-    features: builtinFeatures,
+    // features: builtinFeatures,
   };
   // Compatible with API configureWebpack.
   const ctx = {

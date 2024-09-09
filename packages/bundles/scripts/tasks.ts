@@ -147,7 +147,7 @@ const tasks = [
       const targetPath = path.join(__dirname, '../compiled/mini-css-extract-plugin');
       const entryPath = path.join(targetPath, 'dist/index.js');
       fs.copySync(path.join(pkgPath, 'dist'), path.join(targetPath, 'dist'));
-      fs.copyFileSync(path.join(targetPath, 'index.d.ts'), path.join(targetPath, 'dist/index.d.ts'));
+      fs.copySync(path.join(pkgPath, 'types'), path.join(targetPath, 'types'));
       fs.writeFileSync(entryPath, fs.readFileSync(entryPath, 'utf-8').replace('schema-utils', '@ice/bundles/compiled/schema-utils/index.js'));
     },
   },
@@ -295,22 +295,23 @@ const tasks = [
         const sourcePath = path.join(pkgPath, filePath);
         const targetPath = path.join(__dirname, `../compiled/@rspack/plugin-react-refresh/${filePath}`);
         if (path.extname(filePath) === '.js') {
-          const fileContent = fs.readFileSync(sourcePath, 'utf8');
-          fs.writeFileSync(targetPath,
-            replaceDeps(fileContent, webpackDevServerDeps.concat([
-              ...commonDeps,
-              '@rspack/core',
-            ])),
-          );
+          // const fileContent = fs.readFileSync(sourcePath, 'utf8');
+          // fs.writeFileSync(targetPath,
+          //   replaceDeps(fileContent, webpackDevServerDeps.concat([
+          //     ...commonDeps,
+          //     // '@rspack/core',
+          //   ])),
+          // );
+          fs.copyFileSync(sourcePath, targetPath);
         } else {
           fs.copyFileSync(sourcePath, targetPath);
         }
       });
       // Overwrite RefreshUtils.js which is customized for ice.js.
-      fs.copyFileSync(
-        path.join(__dirname, '../override/RefreshUtils.js'),
-        path.join(__dirname, '../compiled/@rspack/plugin-react-refresh/client/refreshUtils.js'),
-      );
+      // fs.copyFileSync(
+      //   path.join(__dirname, '../override/RefreshUtils.js'),
+      //   path.join(__dirname, '../compiled/@rspack/plugin-react-refresh/client/refreshUtils.js'),
+      // );
     },
   },
 ];

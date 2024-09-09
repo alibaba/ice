@@ -53,7 +53,7 @@
     "@types/accept-language-parser": "^1.5.3",
     "@types/react": "^18.0.33",
     "cross-env": "^7.0.3",
-    "webpack-dev-server": "4.15.0"
+    "webpack-dev-server": "5.1.0"
   },
   "peerDependencies": {
     "@ice/app": "^3.4.11",

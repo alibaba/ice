@@ -74,7 +74,6 @@ const getWebpackConfig: GetWebpackConfig = async (context, options) => {
     let webpackConfig = getDefaultWebpackConfig({
       config,
       rootDir,
-      // @ts-expect-error fix type error of compiled webpack
       webpack,
       runtimeTmpDir: RUNTIME_TMP_DIR,
       userConfigHash,

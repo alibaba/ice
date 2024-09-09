@@ -562,7 +562,6 @@ const cliOption = [
         if (host && host !== 'localhost') {
           hosts.push(host);
         }
-        // @ts-expect-error certificateFor types
         const certInfo = await certificateFor(hosts, { silent: true });
         const key = await fse.readFile(certInfo.keyFilePath, 'utf8');
         const cert = await fse.readFile(certInfo.certFilePath, 'utf8');

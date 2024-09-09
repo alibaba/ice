@@ -38,13 +38,15 @@ export default function createDataLoaderMiddleware(compiler: Compiler): Middlewa
     if (method !== 'GET') {
       return next();
     }
-    const publicPath = compiler.options.output?.publicPath
-      ? `${compiler.options.output.publicPath.replace(/\/$/, '')}/`
+    const orginalPublicPath = compiler.options.output?.publicPath;
+    const publicPath = orginalPublicPath && typeof orginalPublicPath === 'string'
+      ? `${orginalPublicPath.replace(/\/$/, '')}/`
       : '/';
     const filePath = parse(url || '').pathname;
     const filename = filePath?.startsWith(publicPath) ? filePath.slice(publicPath.length) : filePath.slice(1);
     // Mark sure the compiler is ready.
     await compileTask;
+    // @ts-expect-error
     const buffer = compiler.getAsset(filename);
 
     if (!buffer) {

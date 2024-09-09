@@ -1,6 +1,7 @@
 // This file is based on  https://github.com/facebook/create-react-app/blob/main/packages/react-dev-utils/formatWebpackMessages.js
 // It's been rewrite to ts and ICE specific logic
 import type { StatsCompilation } from 'webpack';
+import type { StatsCompilation as RspackStatsCompilation } from '@rspack/core';
 
 const friendlySyntaxErrorLabel = 'Syntax error:';
 
@@ -8,7 +9,7 @@ type IsLikelyASyntaxError = (message: string) => boolean;
 type Message = string | { message: string } | { message: string }[];
 type FormatMessage = (message: Message) => string;
 type FormatWebpackMessages = (
-  json: StatsCompilation,
+  json: StatsCompilation | RspackStatsCompilation,
 ) => { errors: string[]; warnings: string[] };
 
 const isLikelyASyntaxError: IsLikelyASyntaxError = message => {

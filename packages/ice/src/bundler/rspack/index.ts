@@ -22,7 +22,7 @@ async function bundler(
   let compiler: MultiCompiler;
   let dataLoaderCompiler: Compiler;
   let devServer: RspackDevServer;
-  const { rspack } = await import('@ice/bundles/esm/rspack.js');
+  const { rspack } = await import('@rspack/core');
   // Override the type of rspack, because of rspack is imported from pre-compiled bundle.
   const rspackConfigs = await getConfig(context, options, rspack as unknown as typeof Rspack);
   try {
@@ -65,7 +65,6 @@ async function bundler(
     rspackConfigs,
   };
   if (command === 'start') {
-    // @ts-expect-error dev-server has been pre-packed, so it will have different type.
     devServer = await start(buildOptions, dataLoaderCompiler);
   } else if (command === 'build') {
     await build(buildOptions);

@@ -19,7 +19,7 @@ const getUrls = ({
   devServerConfig,
 }: Options) => {
   const urlPathname = getRouterBasename(taskConfig, appConfig) || '/';
-  const protocol = devServerConfig.https ? 'https' : 'http';
+  const protocol = typeof devServerConfig?.server === 'object' && devServerConfig?.server.type === 'https' ? 'https' : 'http';
   const enabledHashRouter = appConfig.router?.type === 'hash';
   const urls = prepareURLs(
     protocol,
