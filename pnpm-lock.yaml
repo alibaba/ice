@@ -1729,8 +1729,8 @@ importers:
         specifier: ^8.4.0
         version: 8.4.2
       path-to-regexp:
-        specifier: ^6.2.0
-        version: 6.2.1
+        specifier: ^8.0.0
+        version: 8.0.0
       react-dom:
         specifier: '>=18.0.0'
         version: 18.2.0(react@18.2.0)
@@ -17696,8 +17696,9 @@ packages:
   /path-to-regexp@2.2.1:
     resolution: {integrity: sha512-gu9bD6Ta5bwGrrU8muHzVOBFFREpp2iRkVfhBJahwJ6p6Xw20SjT0MxLnwkjOibQmGSYhiUnf2FLe7k+jcFmGQ==}
 
-  /path-to-regexp@6.2.1:
-    resolution: {integrity: sha512-JLyh7xT1kizaEvcaXOQwOc2/Yhw6KZOvPf1S8401UyLk86CU79LN3vl7ztXGm/pZ+YjoyAJ4rxmHwbkBXJX+yw==}
+  /path-to-regexp@8.0.0:
+    resolution: {integrity: sha512-GAWaqWlTjYK/7SVpIUA6CTxmcg65SP30sbjdCvyYReosRkk7Z/LyHWwkK3Vu0FcIi0FNTADUs4eh1AsU5s10cg==}
+    engines: {node: '>=16'}
     dev: false
 
   /path-type@4.0.0:
@@ -23580,7 +23581,7 @@ packages:
       '@webassemblyjs/wasm-parser': 1.11.5
       acorn: 8.11.2
       acorn-import-assertions: 1.9.0(acorn@8.11.2)
-      browserslist: 4.22.3
+      browserslist: 4.21.5
       chrome-trace-event: 1.0.3
       enhanced-resolve: 5.15.0
       es-module-lexer: 1.2.1
@@ -23619,7 +23620,7 @@ packages:
       '@webassemblyjs/wasm-parser': 1.11.5
       acorn: 8.11.2
       acorn-import-assertions: 1.9.0(acorn@8.11.2)
-      browserslist: 4.22.3
+      browserslist: 4.21.5
       chrome-trace-event: 1.0.3
       enhanced-resolve: 5.15.0
       es-module-lexer: 1.2.1
