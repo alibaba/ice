@@ -156,7 +156,6 @@ export function withSuspense(Component) {
         <SuspenseContext.Provider value={suspenseState}>
           <Component {...componentProps} />
           <Data id={id} />
-          <script dangerouslySetInnerHTML={{ __html: `window.dispatchEvent(new CustomEvent('suspense', { detail: { id: '${id}' } }));` }} />
         </SuspenseContext.Provider>
       </React.Suspense>
     );
@@ -167,6 +166,6 @@ function Data(props) {
   const data = useSuspenseData();
 
   return (
-    <script id={props.id ? `suspenseScript:${props.id}` : ''} dangerouslySetInnerHTML={{ __html: `!function(){window['${LOADER}'] = window['${LOADER}'] || {};window['${LOADER}']['${props.id}'] = ${JSON.stringify(data)}}();` }} />
+    <script dangerouslySetInnerHTML={{ __html: `!function(){window['${LOADER}'] = window['${LOADER}'] || {};window['${LOADER}']['${props.id}'] = ${JSON.stringify(data)}}();` }} />
   );
 }
