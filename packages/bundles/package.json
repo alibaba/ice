@@ -33,7 +33,7 @@
     "react-refresh": "0.14.0",
     "core-js-pure": "^3.8.1",
     "error-stack-parser": "^2.0.6",
-    "@ice/css-modules-hash": "0.0.9",
+    "@ice/css-modules-hash": "0.0.10",
     "browserslist": "^4.21.3",
     "compare-versions": "6.0.0-rc.1",
     "enhanced-resolve": "5.12.0",
