@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.7
+
+### Patch Changes
+
+- 0b4e0ccd: fix: support more platforms
+
 ## 0.2.6
 
 ### Patch Changes
