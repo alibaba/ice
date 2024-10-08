@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.16
+
+### Patch Changes
+
+- b0eb09d5: fix: mark browserslist config to cache key
+- Updated dependencies [b0eb09d5]
+- Updated dependencies [0b4e0ccd]
+  - @ice/shared-config@1.2.9
+  - @ice/bundles@0.2.7
+
 ## 1.1.15
 
 ### Patch Changes

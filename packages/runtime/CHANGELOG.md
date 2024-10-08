@@ -1,5 +1,20 @@
 # @ice/runtime
 
+## 1.4.13
+
+### Patch Changes
+
+- a4755e43: feat: support onShellReady options
+- f50fe55d: revert: revert suspence event
+- 31706030: fix: avoid infinite setOutlets loop when config keepAlivePaths
+
+## 1.4.12
+
+### Patch Changes
+
+- c5b43d5e: feat: support getAssets for onShellReady
+- 9c3d9c58: feat: support suspense event
+
 ## 1.4.11
 
 ### Patch Changes
