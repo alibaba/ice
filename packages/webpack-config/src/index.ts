@@ -1,5 +1,6 @@
 import * as path from 'path';
 import { createRequire } from 'module';
+import crypto from 'crypto';
 import fg from 'fast-glob';
 import ReactRefreshWebpackPlugin from '@ice/bundles/compiled/@pmmmwh/react-refresh-webpack-plugin/lib/index.js';
 import bundleAnalyzer from '@ice/bundles/compiled/webpack-bundle-analyzer/index.js';
@@ -11,7 +12,7 @@ import ESlintPlugin from '@ice/bundles/compiled/eslint-webpack-plugin/index.js';
 import CopyPlugin from '@ice/bundles/compiled/copy-webpack-plugin/index.js';
 import type { NormalModule, Compiler, Configuration } from 'webpack';
 import type webpack from 'webpack';
-import { compilationPlugin, compileExcludes, getCompilerPlugins, getDefineVars, getAliasWithRoot, getDevtoolValue } from '@ice/shared-config';
+import { compilationPlugin, compileExcludes, getCompilerPlugins, getDefineVars, getAliasWithRoot, getDevtoolValue, getSupportedBrowsers } from '@ice/shared-config';
 import type { Config, ModifyWebpackConfig } from '@ice/shared-config/types.js';
 import configAssets from './config/assets.js';
 import configCss from './config/css.js';
@@ -152,6 +153,8 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     module: true,
   }, minimizerOptions);
 
+  const supportBrowsers = getSupportedBrowsers(rootDir, dev);
+  const browsersMD5 = supportBrowsers ? crypto.createHash('md5').update(supportBrowsers.join('')).digest('hex') : '';
   const compilation = compilationPlugin({
     rootDir,
     cacheDir,
@@ -257,7 +260,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     } as Configuration['optimization'],
     cache: enableCache ? {
       type: 'filesystem',
-      version: `${process.env.__ICE_VERSION__}|${userConfigHash}`,
+      version: `${process.env.__ICE_VERSION__}|${userConfigHash}|${browsersMD5}`,
       buildDependencies: { config: [path.join(rootDir, 'package.json')] },
       cacheDirectory: path.join(cacheDir, 'webpack'),
     } : false,

@@ -262,11 +262,11 @@ export function getJsxTransformOptions({
   return commonOptions;
 }
 
-function getSupportedBrowsers(
+export function getSupportedBrowsers(
   dir: string,
   isDevelopment: boolean,
 ): string[] | undefined {
-  let browsers: any;
+  let browsers: string[];
   try {
     browsers = browserslist.loadConfig({
       path: dir,
