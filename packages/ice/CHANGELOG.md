@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.4.12
+
+### Patch Changes
+
+- Updated dependencies [a4755e43]
+- Updated dependencies [f50fe55d]
+- Updated dependencies [b0eb09d5]
+- Updated dependencies [31706030]
+- Updated dependencies [0b4e0ccd]
+  - @ice/runtime@1.4.13
+  - @ice/webpack-config@1.1.16
+  - @ice/shared-config@1.2.9
+  - @ice/bundles@0.2.7
+  - @ice/rspack-config@1.1.10
+
 ## 3.4.11
 
 ### Patch Changes
