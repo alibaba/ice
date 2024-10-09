@@ -6,7 +6,6 @@ import type { Plugin } from '@ice/app/esm/types';
 import getMiniappTask from './miniapp/index.js';
 import { MINIAPP_TARGETS } from './constant.js';
 
-
 interface MiniappOptions {
   // TODO: specify the config type of native.
   nativeConfig?: Record<string, any>;
@@ -59,14 +58,17 @@ const plugin: Plugin<MiniappOptions> = (miniappOptions = {}) => ({
         configAPI.getAppConfig = getAppConfig;
         configAPI.getRoutesConfig = getRoutesConfig;
       });
-      registerTask('miniapp', getMiniappTask({
-        rootDir,
-        command,
-        target,
-        configAPI,
-        runtimeDir: '.ice',
-        nativeConfig,
-      }));
+      registerTask(
+        'miniapp',
+        getMiniappTask({
+          rootDir,
+          command,
+          target,
+          configAPI,
+          runtimeDir: '.ice',
+          nativeConfig,
+        }),
+      );
       onHook(`after.${command as 'start' | 'build'}.compile`, async ({ isSuccessful, isFirstCompile }) => {
         const shouldShowLog = isSuccessful && ((command === 'start' && isFirstCompile) || command === 'build');
         if (shouldShowLog) {
