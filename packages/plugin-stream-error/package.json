@@ -10,10 +10,13 @@
       "import": "./esm/index.js",
       "default": "./esm/index.js"
     },
-    "./head-stream-error": {
-      "types": "./esm/components/headStreamErrorRecoverScript.d.ts",
-      "import": "./esm/components/headStreamErrorRecoverScript.js",
-      "default": "./esm/components/headStreamErrorRecoverScript.js"
+    "./head-stream-error": "./esm/components/headStreamErrorRecoverScript.js"
+  },
+  "typesVersions": {
+    "*": {
+      "head-stream-error": [
+        "./esm/components/headStreamErrorRecoverScript.d.ts"
+      ]
     }
   },
   "main": "./esm/index.js",
