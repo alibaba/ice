@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-stream-error",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "license": "MIT",
   "type": "module",
@@ -11,6 +11,13 @@
       "default": "./esm/index.js"
     },
     "./head-stream-error": "./esm/components/headStreamErrorRecoverScript.js"
+  },
+  "typesVersions": {
+    "*": {
+      "head-stream-error": [
+        "./esm/components/headStreamErrorRecoverScript.d.ts"
+      ]
+    }
   },
   "main": "./esm/index.js",
   "types": "./esm/index.d.ts",
