@@ -120,6 +120,9 @@ export default async function runClientApp(options: RunClientAppOptions) {
           reportRecoverableError(error, errorInfo, { ignoreRuntimeWarning: revalidate });
         }),
       };
+      if (appConfig?.app?.onBeforeHydrate) {
+        appConfig?.app?.onBeforeHydrate();
+      }
       return ReactDOM.hydrateRoot(container, element, hydrateOptions);
     });
   }
