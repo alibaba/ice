@@ -1,2 +1,2 @@
 export * from './prod.js';
-export { createElement } from 'react';
+export { createElement } from './createElement.js';
