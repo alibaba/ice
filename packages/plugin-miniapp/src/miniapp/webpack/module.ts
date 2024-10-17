@@ -1,11 +1,10 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { createRequire } from 'node:module';
-import { REG_TEMPLATE } from '../../constant.js';
-import type { MiniappWebpackOptions } from '../../types.js';
+import { REG_NODE_MODULES, REG_TEMPLATE } from '../../helper/index.js';
+import type { MiniCombination } from './combination.js';
 
-
-interface IRule {
+export interface IRule {
   test?: any;
   exclude?: any[];
   include?: any[];
@@ -30,14 +29,10 @@ interface IRule {
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export class MiniWebpackModule {
-  config: MiniappWebpackOptions;
-  sourceRoot: string;
+const nodeModulesRegx = new RegExp(REG_NODE_MODULES, 'gi');
 
-  constructor(config: MiniappWebpackOptions) {
-    this.config = config;
-    this.sourceRoot = 'src';
-  }
+export class MiniWebpackModule {
+  constructor(public combination: MiniCombination) {}
 
   getLoader(loaderName: string, options?: Record<string, any>) {
     return {
@@ -47,9 +42,7 @@ export class MiniWebpackModule {
   }
 
   getModules() {
-    const {
-      fileType,
-    } = this.config;
+    const { fileType, sourceRoot, buildAdapter } = this.combination.config;
 
     const rules: Array<IRule> = [
       {
@@ -57,13 +50,28 @@ export class MiniWebpackModule {
         test: REG_TEMPLATE,
         type: 'asset/resource',
         generator: {
-          filename({ filename }) {
+          filename: ({ filename }) => {
             const extname = path.extname(filename);
-            return filename.replace(`${this.sourceRoot}/`, '').replace(extname, fileType.templ);
+            if (filename.startsWith(`${sourceRoot}/`)) filename = filename.slice(sourceRoot.length + 1);
+            return filename.replace(extname, fileType.templ).replace(nodeModulesRegx, 'npm');
           },
         },
-        use: [this.getLoader(path.resolve(__dirname, './loaders/miniTemplateLoader'))],
+        use: [this.getLoader(path.resolve(__dirname, './loaders/miniTemplateLoader'), {
+          buildAdapter,
+        })],
       },
+      {
+      test: new RegExp(`\\${fileType.xs || 'wxs'}$`),
+        type: 'asset/resource',
+        generator: {
+        filename({ filename }) {
+          return filename
+            .replace(`${sourceRoot}/`, '')
+            .replace(nodeModulesRegx, 'npm');
+        },
+      },
+      use: [this.getLoader(path.resolve(__dirname, './loaders/miniXScriptLoader'))],
+    },
     ];
     return { rules };
   }

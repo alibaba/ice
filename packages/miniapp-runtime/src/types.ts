@@ -1,7 +1,7 @@
 /**
  * 微信小程序全局 Window 配置和页面配置的公共项目
  */
- interface CommonConfig {
+interface CommonConfig {
   /** 导航栏背景颜色，HexColor
    * @default: "#000000"
    */
@@ -61,6 +61,11 @@ export interface MiniappPageConfig extends CommonConfig {
    * @default: false
    */
   disableScroll?: boolean;
+  /** 是否使用页面全局滚动，MPA下默认为全局滚动，SPA默认为局部滚动
+   * 只在H5生效
+   * @default: MPA:true  SPA:false
+   */
+  usingWindowScroll?: boolean;
   /** 禁止页面右滑手势返回
    *
    * **注意** 自微信客户端 7.0.5 开始，页面配置中的 disableSwipeBack 属性将不再生效，
@@ -77,6 +82,12 @@ export interface MiniappPageConfig extends CommonConfig {
    * @default false
    */
   enableShareTimeline?: boolean;
+  /**
+   * 页面是否需要使用 \<page-meta\> 和 \<navigation-bar\> 组件
+   * @default false
+   * @support weapp, alipay
+   */
+  enablePageMeta?: boolean;
   /** 页面自定义组件配置
    * @see https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/
    */
@@ -88,6 +99,63 @@ export interface MiniappPageConfig extends CommonConfig {
   style?: string;
   /** 单页模式相关配置 */
   singlePage?: SinglePage;
+  /**
+   * 事件监听是否为 passive
+   * @default false
+   * @see https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html#enablePassiveEvent
+   */
+  enablePassiveEvent?:
+    | boolean
+    | {
+    /**
+     * 是否设置 touchstart 事件为 passive
+     * @default false
+     */
+    touchstart?: boolean;
+    /**
+     * 是否设置 touchmove 事件为 passive
+     * @default false
+     */
+    touchmove?: boolean;
+    /**
+     * 是否设置 wheel 事件为 passive
+     * @default false
+     */
+    wheel?: boolean;
+  };
+  /**
+   * 渲染后端
+   * @default "webview"
+   */
+  renderer?: 'webview' | 'skyline';
+  /**
+   * 组件框架
+   * @default "exparser"
+   * @see https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/glass-easel/migration.html
+   */
+  componentFramework?: 'exparser' | 'glass-easel';
+  /**
+   * 指定特殊的样式隔离选项
+   *
+   * isolated 表示启用样式隔离，在自定义组件内外，使用 class 指定的样式将不会相互影响（一般情况下的默认值）
+   *
+   * apply-shared 表示页面 wxss 样式将影响到自定义组件，但自定义组件 wxss 中指定的样式不会影响页面
+   *
+   * shared 表示页面 wxss 样式将影响到自定义组件，自定义组件 wxss 中指定的样式也会影响页面和其他设置了 apply-shared 或 shared 的自定义组件。（这个选项在插件中不可用。）
+   */
+  styleIsolation?: 'isolated' | 'apply-shared' | 'shared';
+  /**
+   * 设置导航栏额外图标，目前支持设置属性 icon，值为图标 url（以 https/http 开头）或 base64 字符串，大小建议 30*30 px
+   *
+   * 点击后触发 onOptionMenuClick（**注意**：该配置即将废弃。）。
+   *  @supported alipay
+   */
+  optionMenu?: Record<string, string>;
+  /**
+   * 设置导航栏图标主题，仅支持真机预览。"default" 为蓝色图标，"light" 为白色图标。
+   * @supported alipay
+   */
+  barButtonTheme?: string;
 }
 
 interface WindowConfig extends CommonConfig {
@@ -221,6 +289,8 @@ interface RouterAnimate {
 }
 
 export interface MiniappAppConfig {
+  /** 小程序默认启动首页，未指定 entryPagePath 时，数组的第一项代表小程序的初始页面（首页）。 */
+  entryPagePath?: string;
   /** 接受一个数组，每一项都是字符串，来指定小程序由哪些页面组成，数组的第一项代表小程序的初始页面 */
   pages?: string[];
   /** 全局的默认窗口表现 */
@@ -238,7 +308,11 @@ export interface MiniappAppConfig {
    * @default false
    * @since 2.1.0
    */
-  functionalPages?: boolean;
+  functionalPages?:
+    | boolean
+    | {
+        independent?: boolean;
+      };
   /** 分包结构配置
    * @example
    * ```json
@@ -254,11 +328,12 @@ export interface MiniappAppConfig {
    * @since 1.7.3
    */
   subPackages?: SubPackage[];
+  subpackages?: SubPackage[];
   /** Worker 代码放置的目录
    * 使用 Worker 处理多线程任务时，设置 Worker 代码放置的目录
    * @since 1.9.90
    */
-  workers?: string;
+  workers?: string | string[];
   /** 申明需要后台运行的能力，类型为数组。目前支持以下项目：
    * - audio: 后台音乐播放
    * - location: 后台定位
@@ -277,7 +352,16 @@ export interface MiniappAppConfig {
    * - chooseAddress: 获取用户地址信息
    *  @see https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html#requiredPrivateInfos
    */
-  requiredPrivateInfos?: ('getFuzzyLocation' | 'getLocation' | 'onLocationChange' | 'startLocationUpdate' | 'startLocationUpdateBackground' | 'chooseLocation' | 'choosePoi' | 'chooseAddress')[];
+  requiredPrivateInfos?: (
+    | 'getFuzzyLocation'
+    | 'getLocation'
+    | 'onLocationChange'
+    | 'startLocationUpdate'
+    | 'startLocationUpdateBackground'
+    | 'chooseLocation'
+    | 'choosePoi'
+    | 'chooseAddress'
+  )[];
   /** 使用到的插件
    * @since 1.9.6
    */
@@ -341,16 +425,14 @@ export interface MiniappAppConfig {
    */
   themeLocation?: string;
   /** 配置自定义组件代码按需注入 */
-  lazyCodeLoading?: string;
+  lazyCodeLoading?: 'requiredComponents' | string;
   /** 单页模式相关配置 */
   singlePage?: SinglePage;
   /** 聊天素材小程序打开相关配置
    * @see https://developers.weixin.qq.com/miniprogram/dev/framework/material/support_material.html
    */
   supportedMaterials?: {
-    /** 支持文件类型的MimeType，音频，视频支持二级配置的通配模式，例如: video
-        通配模式配置和精确类型配置同时存在时，则优先使用精确类型的配置(例如video/*和video/mp4同时存在，会优先使用video/mp4的配置)。
-    */
+    /** 支持文件类型的MimeType，音频，视频支持二级配置的通配模式，例如: video/*。通配模式配置和精确类型配置同时存在时，则优先使用精确类型的配置(例如video/*和video/mp4同时存在，会优先使用video/mp4的配置)。 */
     materialType: string;
     /** 开发者配置的标题，在素材页面会展示该标题，配置中必须包含${nickname}, 代码包编译后会自动替换为小程序名称，如果声明了简称则会优先使用简称。除去${nickname}其余字数不得超过6个。 */
     name: string;
@@ -373,15 +455,32 @@ export interface MiniappAppConfig {
     /** 是否开启 FPS 面板，默认false */
     enableFPSPanel?: boolean;
   };
-  /** touch 事件监听是否为 passive，默认false */
-  enablePassiveEvent?: boolean | {
-    /** 是否设置 touchstart 事件为 passive，默认false */
-    touchstart?: boolean;
-    /** 是否设置 touchmove 事件为 passive，默认false */
-    touchmove?: boolean;
-    /** 是否设置 wheel 事件为 passive，默认false */
-    wheel?: boolean;
-  };
+  /**
+   * touch 相关事件默认的 passive 为 false。如果小程序不使用 catchtouch 事件时，可以通过这个选项将 passive 置为 true，以提高滚动性能。
+   * 具体原理可参考[MDN](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#improving_scrolling_performance_with_passive_listeners)
+   *
+   * 可以直接设置这个选项为 true，也可以分别控制某个事件。
+   * @default false
+   */
+  enablePassiveEvent?:
+    | boolean
+    | {
+        /**
+         * 是否设置 touchstart 事件为 passive
+         * @default false
+         */
+        touchstart?: boolean;
+        /**
+         * 是否设置 touchmove 事件为 passive
+         * @default false
+         */
+        touchmove?: boolean;
+        /**
+         * 是否设置 wheel 事件为 passive
+         * @default false
+         */
+        wheel?: boolean;
+      };
   /** 自定义模块映射规则 */
   resolveAlias?: Record<string, string>;
   /** 接受一个数组，每一项都是字符串，来指定编译为原生小程序组件的组件入口 */
@@ -396,9 +495,58 @@ export interface MiniappAppConfig {
    * @since 3.3.18
    */
   animation?: RouterAnimate | boolean;
+  /**
+   * 指定小程序全局的默认渲染后端。
+   * @default "webview"
+   */
+  renderer?: 'webview' | 'skyline';
+  /**
+   * 渲染后端选项
+   * @see https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html#rendererOptions
+   */
+  // rendererOptions?: RenderOptions;
+  /**
+   * 指定小程序使用的组件框架
+   * @default "exparser"
+   * @see https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/glass-easel/migration.html
+   */
+  componentFramework?: 'exparser' | 'glass-easel';
+  /**
+   * 多端模式场景接入身份管理服务时开启小程序授权页相关配置
+   * @see https://dev.weixin.qq.com/docs/framework/getting_started/auth.html#%E6%96%B0%E6%89%8B%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B
+   */
+  miniApp?: {
+    /**
+     * 用于 wx.weixinMinProgramLogin 在小程序中插入「小程序授权 Page」
+     */
+    useAuthorizePage: boolean;
+  };
+  /**
+   * 在 2023年9月15号之前，在 app.json 中配置 __usePrivacyCheck__: true 后，会启用隐私相关功能，如果不配置或者配置为 false 则不会启用。
+   * 在 2023年9月15号之后，不论 app.json 中是否有配置 __usePrivacyCheck__，隐私相关功能都会启用
+   * @supported weapp
+   */
+  __usePrivacyCheck__?: boolean;
+  /**
+   * 正常情况下默认所有资源文件都被打包发布到所有平台，可以通过 static 字段配置特定每个目录/文件只能发布到特定的平台(多端场景)
+   * @see https://dev.weixin.qq.com/docs/framework/guideline/devtools/condition-compile.html#%E8%B5%84%E6%BA%90
+   */
+  static?: { pattern: string; platforms: string[] }[];
+  /**
+   *  动态插件配置规则,声明小程序需要使用动态插件
+   * @supported alipay
+   */
+  useDynamicPlugins?: boolean;
+  /**
+   * 用于改变小程序若干运行行为
+   * @supported alipay
+   */
+  // behavior?: Behavior;
 }
 
-export interface MiniappConfig extends MiniappPageConfig, MiniappAppConfig {}
+export interface MiniappConfig extends MiniappPageConfig, MiniappAppConfig {
+  cloud?: boolean;
+}
 
 export interface MiniappLifecycles {
   onLaunch?: (options: any) => void;
@@ -408,5 +556,6 @@ export interface MiniappLifecycles {
   onPageNotFound?: (options: any) => void;
   onUnhandledRejection?: (options: any) => void;
   onShareAppMessage?: (options: any) => Record<string, any>;
+
   [key: string]: any;
 }
