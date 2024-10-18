@@ -23,8 +23,8 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@ice/miniapp-runtime": "^1.1.2",
-    "@ice/shared": "^1.0.2",
+    "@ice/miniapp-runtime": "workspace:^",
+    "@ice/shared": "workspace:^",
     "react-reconciler": "0.27.0",
     "scheduler": "^0.20.1"
   },

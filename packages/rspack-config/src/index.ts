@@ -110,6 +110,7 @@ const getConfig: GetConfig = async (options) => {
     sourceMap,
     https,
     enableCopyPlugin,
+    cssExtensionAlias,
   } = taskConfig || {};
   const isDev = mode === 'development';
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
@@ -260,6 +261,7 @@ const getConfig: GetConfig = async (options) => {
           rootDir,
           enableRpx2Vw,
           postcssOptions: postcss,
+          extensionAlias: cssExtensionAlias ?? [],
         }),
       ],
     },
