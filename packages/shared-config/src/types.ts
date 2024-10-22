@@ -207,6 +207,11 @@ export interface Config {
 
   cssChunkFilename?: string;
 
+  /**
+   * 配置 CSS 文件的扩展名，一般用于小程序环境，这些文件也会被认为是 CSS 文件
+   */
+  cssExtensionAlias?: string[];
+
   postcss?: ProcessOptions & { plugins?: (string | [string, Record<string, any>?])[] };
 
   cssModules?: {

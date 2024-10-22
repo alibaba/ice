@@ -92,4 +92,20 @@ export class EventTarget {
     const isAnyEventBinded = Object.keys(handlers).find(key => handlers[key].length);
     return Boolean(isAnyEventBinded);
   }
+
+  public triggerEventListenerInternal(type: string, args: unknown[]) {
+    type = type.toLowerCase();
+    const handlers = this.__handlers[type];
+    if (!isArray(handlers)) {
+      return;
+    }
+    for (const handler of handlers) {
+      handler(...args);
+    }
+  }
+
+  public getListenerNames(): string[] {
+    const handlers = this.__handlers;
+    return Object.keys(handlers).filter(key => handlers[key].length);
+  }
 }
