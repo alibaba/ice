@@ -1508,8 +1508,8 @@ importers:
         specifier: 4.2.10
         version: 4.2.10
       http-proxy-middleware:
-        specifier: ^2.0.3
-        version: 2.0.6(@types/express@4.17.17)
+        specifier: ^2.0.7
+        version: 2.0.7(@types/express@4.17.17)
       ipaddr.js:
         specifier: ^2.0.1
         version: 2.0.1
@@ -6990,7 +6990,7 @@ packages:
     dependencies:
       '@jest/fake-timers': 29.5.0
       '@jest/types': 29.5.0
-      '@types/node': 18.14.6
+      '@types/node': 17.0.45
       jest-mock: 29.5.0
     dev: true
 
@@ -7046,7 +7046,7 @@ packages:
     dependencies:
       '@jest/types': 29.5.0
       '@sinonjs/fake-timers': 10.0.2
-      '@types/node': 18.14.6
+      '@types/node': 17.0.45
       jest-message-util: 29.5.0
       jest-mock: 29.5.0
       jest-util: 29.5.0
@@ -7286,7 +7286,7 @@ packages:
       '@jest/schemas': 29.4.3
       '@types/istanbul-lib-coverage': 2.0.4
       '@types/istanbul-reports': 3.0.1
-      '@types/node': 18.14.6
+      '@types/node': 17.0.45
       '@types/yargs': 17.0.22
       chalk: 4.1.2
 
@@ -8834,7 +8834,7 @@ packages:
   /@types/http-proxy@1.17.10:
     resolution: {integrity: sha512-Qs5aULi+zV1bwKAg5z1PWnDXWmsn+LxIvUGv6E2+OOMYhclZMO+OXd9pYVf2gLykf2I7IV2u7oTHwChPNsvJ7g==}
     dependencies:
-      '@types/node': 18.14.6
+      '@types/node': 17.0.45
 
   /@types/inquirer@9.0.3:
     resolution: {integrity: sha512-CzNkWqQftcmk2jaCWdBTf9Sm7xSw4rkI1zpU/Udw3HX5//adEZUIm9STtoRP1qgWj0CWQtJ9UTvqmO2NNjhMJw==}
@@ -9116,7 +9116,7 @@ packages:
   /@types/through@0.0.30:
     resolution: {integrity: sha512-FvnCJljyxhPM3gkRgWmxmDZyAQSiBQQWLI0A0VFL0K7W1oRUrPJSqNO0NvTnLkBcotdlp3lKvaT0JrnyRDkzOg==}
     dependencies:
-      '@types/node': 18.14.6
+      '@types/node': 17.0.45
     dev: true
 
   /@types/tough-cookie@4.0.2:
@@ -14616,9 +14616,28 @@ packages:
       micromatch: 4.0.5
     transitivePeerDependencies:
       - debug
+    dev: true
 
-  /http-proxy-middleware@2.0.6(@types/express@4.17.17)(debug@4.3.4):
-    resolution: {integrity: sha512-ya/UeJ6HVBYxrgYotAZo1KvPWlgB48kUJLDePFeneHsVujFaW5WNj2NgWCAE//B1Dl02BIfYlpNgBy8Kf8Rjmw==}
+  /http-proxy-middleware@2.0.7(@types/express@4.17.17):
+    resolution: {integrity: sha512-fgVY8AV7qU7z/MmXJ/rxwbrtQH4jBQ9m7kp3llF0liB7glmFeVZFBepQb32T3y8n8k2+AEYuMPCpinYW+/CuRA==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      '@types/express': ^4.17.13
+    peerDependenciesMeta:
+      '@types/express':
+        optional: true
+    dependencies:
+      '@types/express': 4.17.17
+      '@types/http-proxy': 1.17.10
+      http-proxy: 1.18.1(debug@4.3.4)
+      is-glob: 4.0.3
+      is-plain-obj: 3.0.0
+      micromatch: 4.0.5
+    transitivePeerDependencies:
+      - debug
+
+  /http-proxy-middleware@2.0.7(@types/express@4.17.17)(debug@4.3.4):
+    resolution: {integrity: sha512-fgVY8AV7qU7z/MmXJ/rxwbrtQH4jBQ9m7kp3llF0liB7glmFeVZFBepQb32T3y8n8k2+AEYuMPCpinYW+/CuRA==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
       '@types/express': ^4.17.13
@@ -15788,7 +15807,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/types': 29.5.0
-      '@types/node': 18.14.6
+      '@types/node': 17.0.45
       jest-util: 29.5.0
     dev: true
 
@@ -16073,7 +16092,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/types': 29.5.0
-      '@types/node': 18.14.6
+      '@types/node': 17.0.45
       chalk: 4.1.2
       ci-info: 3.8.0
       graceful-fs: 4.2.10
@@ -23348,7 +23367,7 @@ packages:
       express: 4.19.2
       graceful-fs: 4.2.10
       html-entities: 2.3.3
-      http-proxy-middleware: 2.0.6(@types/express@4.17.17)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.17)
       ipaddr.js: 2.0.1
       launch-editor: 2.6.0
       open: 8.4.2
@@ -23399,7 +23418,7 @@ packages:
       express: 4.19.2
       graceful-fs: 4.2.10
       html-entities: 2.3.3
-      http-proxy-middleware: 2.0.6(@types/express@4.17.17)(debug@4.3.4)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.17)(debug@4.3.4)
       ipaddr.js: 2.0.1
       launch-editor: 2.6.0
       open: 8.4.2
@@ -23450,7 +23469,7 @@ packages:
       express: 4.19.2
       graceful-fs: 4.2.10
       html-entities: 2.3.3
-      http-proxy-middleware: 2.0.6(@types/express@4.17.17)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.17)
       ipaddr.js: 2.0.1
       launch-editor: 2.6.0
       open: 8.4.2
@@ -23501,7 +23520,7 @@ packages:
       express: 4.19.2
       graceful-fs: 4.2.10
       html-entities: 2.3.3
-      http-proxy-middleware: 2.0.6(@types/express@4.17.17)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.17)
       ipaddr.js: 2.0.1
       launch-editor: 2.6.0
       open: 8.4.2
