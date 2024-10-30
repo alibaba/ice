@@ -10,8 +10,12 @@ export interface OnAllReadyParams {
   renderAssets: string[];
 }
 export type OnAllReady = (OnAllReadyParams) => void;
+export interface OnShellReadyParams {
+  renderAssets: string[];
+}
+export type OnShellReady = (OnShellReadyParams) => void;
 export interface RenderToPipeableStreamOptions {
-  onShellReady?: () => void;
+  onShellReady?: OnShellReady;
   onShellError?: (error: unknown) => void;
   onAllReady?: OnAllReady;
   onError?: (error: unknown) => void;
@@ -36,6 +40,7 @@ export function renderToNodeStream(
     } = renderToNodeStreamOptions;
     const {
       preRender = false,
+      getAssets = false,
     } = renderOptions;
 
     const { pipe } = ReactDOMServer.renderToPipeableStream(element, {
@@ -44,7 +49,24 @@ export function renderToNodeStream(
         if (!preRender) {
           pipe(res);
         }
-        options?.onShellReady && options.onShellReady();
+
+        const {
+          renderOptions,
+          routerContext,
+        } = renderToNodeStreamOptions;
+
+        const {
+          assetsManifest,
+        } = renderOptions;
+
+        const {
+          matches,
+          loaderData,
+        } = routerContext;
+
+        options?.onShellReady && options.onShellReady({
+          renderAssets: getAssets ? getAllAssets(loaderData, matches, assetsManifest) : [],
+        });
       },
       onShellError(error) {
         options?.onShellError && options?.onShellError(error);

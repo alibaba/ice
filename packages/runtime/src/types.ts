@@ -17,6 +17,7 @@ type App = Partial<{
   strict: boolean;
   errorBoundary: boolean;
   onRecoverableError: (error: unknown, errorInfo: ErrorStack) => void;
+  onBeforeHydrate: () => void;
 } & Record<AppLifecycle, VoidFunction>>;
 
 export interface ErrorStack {
@@ -323,6 +324,7 @@ export interface RenderOptions {
   Document?: DocumentComponent;
   documentOnly?: boolean;
   preRender?: boolean;
+  getAssets?: boolean;
   renderMode?: RenderMode;
   // basename is used both for server and client, once set, it will be sync to client.
   basename?: string;

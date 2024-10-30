@@ -1,5 +1,13 @@
 # @ice/shared-config
 
+## 1.2.9
+
+### Patch Changes
+
+- b0eb09d5: fix: mark browserslist config to cache key
+- Updated dependencies [0b4e0ccd]
+  - @ice/bundles@0.2.7
+
 ## 1.2.8
 
 ### Patch Changes

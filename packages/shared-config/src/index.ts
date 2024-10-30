@@ -1,4 +1,4 @@
-import compilationPlugin, { isSupportedFeature, getJsxTransformOptions } from './unPlugins/compilation.js';
+import compilationPlugin, { isSupportedFeature, getJsxTransformOptions, getSupportedBrowsers } from './unPlugins/compilation.js';
 import compileExcludes, { SKIP_COMPILE as skipCompilePackages } from './compileExcludes.js';
 import getCompilerPlugins from './getCompilerPlugins.js';
 import getDefineVars from './getDefineVars.js';
@@ -19,4 +19,5 @@ export {
   getPostcssOpts,
   getAliasWithRoot,
   getDevtoolValue,
+  getSupportedBrowsers,
 };
