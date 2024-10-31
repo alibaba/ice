@@ -87,7 +87,6 @@ export const getVendorStrategy = (options: Configuration['splitChunks']) => {
 
 const getSplitChunks = (_: string, strategy: string | boolean) => {
   if (strategy === false) {
-    // Empty splitChunks configuration if strategy is false.
     return { minChunks: Infinity, cacheGroups: { default: false } };
   } else if (typeof strategy === 'string' && ['page-vendors', 'vendors'].includes(strategy)) {
     const splitChunksOptions = strategy === 'page-vendors' ? { chunks: 'all' } : {};
