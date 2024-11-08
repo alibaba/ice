@@ -87,8 +87,9 @@ export const getVendorStrategy = (options: Configuration['splitChunks']) => {
 
 const getSplitChunks = (_: string, strategy: string | boolean) => {
   if (strategy === false) {
-    // Empty splitChunks configuration if strategy is false.
-    return {};
+    // Set minChunks to a large number to disable the splitChunks feature.
+    // the value of Infinity is not work properly for this version of rspack.
+    return { minChunks: 100000, cacheGroups: { default: false } };
   } else if (typeof strategy === 'string' && ['page-vendors', 'vendors'].includes(strategy)) {
     const splitChunksOptions = strategy === 'page-vendors' ? { chunks: 'all' } : {};
     return getVendorStrategy(splitChunksOptions);
