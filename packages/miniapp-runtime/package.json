@@ -25,8 +25,8 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@ice/shared": "^1.0.2",
-    "@ice/runtime": "^1.2.9",
+    "@ice/shared": "workspace:^",
+    "@ice/runtime": "workspace:^",
     "miniapp-history": "^0.1.7"
   },
   "devDependencies": {

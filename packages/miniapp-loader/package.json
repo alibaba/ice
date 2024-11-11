@@ -18,7 +18,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@ice/bundles": "^0.2.0"
+    "@ice/bundles": "workspace:^"
   },
   "devDependencies": {
     "webpack": "^5.88.0"

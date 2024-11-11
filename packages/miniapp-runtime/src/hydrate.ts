@@ -76,16 +76,8 @@ export function hydrate(node: Element | Text): MiniData {
     }
   }
 
-  let { childNodes } = node;
-
-  // 过滤 comment 节点
-  childNodes = childNodes.filter(node => !isComment(node));
-
-  if (childNodes.length > 0) {
-    data[Shortcuts.Childnodes] = childNodes.map(hydrate);
-  } else {
-    data[Shortcuts.Childnodes] = [];
-  }
+  // Children
+  data[Shortcuts.Childnodes] = node.childNodes.filter(node => !isComment(node)).map(hydrate);
 
   if (node.className !== '') {
     data[Shortcuts.Class] = node.className;
@@ -108,6 +100,8 @@ export function hydrate(node: Element | Text): MiniData {
         delete data[prop];
       }
     }
+  } else {
+    hooks.call('hydrateNativeComponentNode', node);
   }
 
   return data;

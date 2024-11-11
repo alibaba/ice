@@ -1,5 +1,16 @@
 import { toCamelCase, toDashed } from '../utils.js';
-import type { internalComponents } from './components.js';
+import { internalComponents } from './components.js';
+
+export function mergeInternalComponents(components) {
+  Object.keys(components).forEach(name => {
+    if (name in internalComponents) {
+      Object.assign(internalComponents[name], components[name]);
+    } else {
+      internalComponents[name] = components[name];
+    }
+  });
+  return internalComponents;
+}
 
 export function getComponentsAlias(origin: typeof internalComponents) {
   const mapping = {};
