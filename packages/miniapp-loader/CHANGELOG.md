@@ -1,5 +1,11 @@
 # @ice/miniapp-loader
 
+## 1.2.0
+
+### Minor Changes
+
+- 710b2e48: feat: improve miniapp runtime
+
 ## 1.1.2
 
 ### Patch Changes

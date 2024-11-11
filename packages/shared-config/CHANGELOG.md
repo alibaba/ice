@@ -1,5 +1,11 @@
 # @ice/shared-config
 
+## 1.3.0
+
+### Minor Changes
+
+- 710b2e48: feat: improve miniapp runtime
+
 ## 1.2.9
 
 ### Patch Changes
