@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-i18n",
-  "version": "6.0.0",
+  "version": "5.0.1",
   "description": "I18n plugin for ice.js 3.",
   "files": [
     "es2017",
