@@ -1,13 +1,5 @@
 # @ice/plugin-i18n
 
-## 6.0.0
-
-### Patch Changes
-
-- Updated dependencies [710b2e48]
-  - @ice/app@3.5.0
-  - @ice/runtime@1.5.0
-
 ## 5.0.1
 
 ### Patch Changes
