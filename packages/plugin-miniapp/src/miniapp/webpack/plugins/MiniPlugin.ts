@@ -588,6 +588,7 @@ export default class MiniPlugin {
           path: pagePath,
           isNative,
           stylePath: isNative ? this.getStylePath(pagePath) : undefined,
+          templatePath: isNative ? this.getTemplatePath(pagePath) : undefined,
           skeletonPath: isNative ? this.getSkeletonExtraPath(pagePath) : undefined,
         };
       }),
@@ -690,10 +691,10 @@ export default class MiniPlugin {
     }
     this.addEntry(path.resolve(__dirname, '..', 'template/custom-wrapper'), 'custom-wrapper', META_TYPE.STATIC);
 
-    const resolveComponentStyleEntry = (name: string, stylePaths: string[]) => {
+    const resolveComponentStyleEntry = (name: string, stylePaths: string[], ext = this.options.fileType.style) => {
       for (const stylePath of stylePaths) {
         if (fs.existsSync(stylePath)) {
-          this.addEntry(stylePath, this.getTargetFilePath(name, this.options.fileType.style), META_TYPE.NORMAL);
+          this.addEntry(stylePath, this.getTargetFilePath(name, ext), META_TYPE.NORMAL);
           break;
         }
       }
@@ -709,12 +710,10 @@ export default class MiniPlugin {
           this.addEntry(item.templatePath, this.getTemplatePath(item.name), META_TYPE.NORMAL);
         }
 
-        if (item.skeletonPath) {
-          if (item.skeletonPath.template) {
-            this.addEntry(item.skeletonPath.template, this.getTargetFilePath(item.name, `${this.options.fileType.skeletonMidExt}${this.options.fileType.templ}`), META_TYPE.NORMAL);
-          }
+        if (item.skeletonPath && item.skeletonPath.template && fs.existsSync(item.skeletonPath.template)) {
+          this.addEntry(item.skeletonPath.template, this.getTargetFilePath(item.name, `${this.options.fileType.skeletonMidExt}${this.options.fileType.templ}`), META_TYPE.NORMAL);
           if (item.skeletonPath.style) {
-            resolveComponentStyleEntry(this.getTargetFilePath(item.name, this.options.fileType.skeletonMidExt), item.skeletonPath.style);
+            resolveComponentStyleEntry(item.name, item.skeletonPath.style, `${this.options.fileType.skeletonMidExt}${this.options.fileType.style}`);
           }
         }
       } else {
