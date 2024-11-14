@@ -1,11 +1,13 @@
-name: PR Release
+name: Publish canary
 
 on:
-  pull_request:
+  push:
+    branches:
+      - release/**
 
 jobs:
-  release:
-    name: Release
+  canary:
+    name: Canary
     runs-on: ubuntu-latest
 
     strategy:
@@ -27,6 +29,9 @@ jobs:
 
       - name: Setup
         run: pnpm run setup
+
+      - name: Check changeset exists
+        run: test "$(ls -1 .changeset | wc -l)" -gt "2"
 
       - name: Config npm
         run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
