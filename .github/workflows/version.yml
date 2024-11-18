@@ -3,7 +3,7 @@ name: Version
 on:
   push:
     branches:
-      - release/**
+      - release/next
 
 jobs:
   version:
