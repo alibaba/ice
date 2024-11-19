@@ -1990,7 +1990,7 @@ importers:
   packages/plugin-i18n:
     dependencies:
       '@ice/jsx-runtime':
-        specifier: ^0.3.0
+        specifier: ^0.3.1
         version: link:../jsx-runtime
       '@swc/helpers':
         specifier: ^0.5.1
@@ -2157,10 +2157,10 @@ importers:
         version: 1.2.4
     devDependencies:
       '@ice/app':
-        specifier: ^3.5.0
+        specifier: ^3.5.1
         version: link:../ice
       '@ice/runtime':
-        specifier: ^1.5.0
+        specifier: ^1.5.1
         version: link:../runtime
       webpack:
         specifier: ^5.88.0
@@ -2401,7 +2401,7 @@ importers:
   packages/runtime:
     dependencies:
       '@ice/jsx-runtime':
-        specifier: ^0.3.0
+        specifier: ^0.3.1
         version: link:../jsx-runtime
       '@ice/shared':
         specifier: ^1.1.0
@@ -22059,7 +22059,6 @@ packages:
       serialize-javascript: 6.0.1
       terser: 5.16.5
       webpack: 5.88.2(@swc/core@1.3.80)(esbuild@0.17.16)
-    dev: true
 
   /terser-webpack-plugin@5.3.7(esbuild@0.17.16)(webpack@5.86.0):
     resolution: {integrity: sha512-AfKwIktyP7Cu50xNjXF/6Qb5lBNzYaWpU6YfoX3uZicTx0zTy0stDDCsvjDapKsSDvOeWo5MEq4TmdBy2cNoHw==}
@@ -22109,6 +22108,7 @@ packages:
       serialize-javascript: 6.0.1
       terser: 5.16.5
       webpack: 5.88.2(esbuild@0.17.16)
+    dev: true
 
   /terser-webpack-plugin@5.3.7(webpack@5.88.2):
     resolution: {integrity: sha512-AfKwIktyP7Cu50xNjXF/6Qb5lBNzYaWpU6YfoX3uZicTx0zTy0stDDCsvjDapKsSDvOeWo5MEq4TmdBy2cNoHw==}
@@ -23313,7 +23313,7 @@ packages:
       mime-types: 2.1.35
       range-parser: 1.2.1
       schema-utils: 4.0.0
-      webpack: 5.88.2(esbuild@0.17.16)
+      webpack: 5.88.2(@swc/core@1.3.80)(esbuild@0.17.16)
 
   /webpack-dev-middleware@6.0.2(webpack@5.88.2):
     resolution: {integrity: sha512-iOddiJzPcQC6lwOIu60vscbGWth8PCRcWRCwoQcTQf9RMoOWBHg5EyzpGdtSmGMrSPd5vHEfFXmVErQEmkRngQ==}
@@ -23329,7 +23329,7 @@ packages:
       mime-types: 2.1.35
       range-parser: 1.2.1
       schema-utils: 4.0.0
-      webpack: 5.88.2(esbuild@0.17.16)
+      webpack: 5.88.2(@swc/core@1.3.80)(esbuild@0.17.16)
     dev: true
 
   /webpack-dev-server@4.13.1(webpack@5.88.2):
@@ -23373,7 +23373,7 @@ packages:
       serve-index: 1.9.1
       sockjs: 0.3.24
       spdy: 4.0.2
-      webpack: 5.88.2(esbuild@0.17.16)
+      webpack: 5.88.2(@swc/core@1.3.80)(esbuild@0.17.16)
       webpack-dev-middleware: 5.3.4(webpack@5.88.2)
       ws: 8.13.0
     transitivePeerDependencies:
@@ -23526,7 +23526,7 @@ packages:
       serve-index: 1.9.1
       sockjs: 0.3.24
       spdy: 4.0.2
-      webpack: 5.88.2(esbuild@0.17.16)
+      webpack: 5.88.2(@swc/core@1.3.80)(esbuild@0.17.16)
       webpack-dev-middleware: 5.3.4(webpack@5.88.2)
       ws: 8.13.0
     transitivePeerDependencies:
@@ -23675,7 +23675,6 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
-    dev: true
 
   /webpack@5.88.2(esbuild@0.17.16):
     resolution: {integrity: sha512-JmcgNZ1iKj+aiR0OvTYtWQqJwq37Pf683dY9bVORwVbUrDhLhdn/PlO2sHsFHPkj7sHNQF3JwaAkp49V+Sq1tQ==}
@@ -23715,6 +23714,7 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
+    dev: true
 
   /webpackbar@5.0.2(webpack@5.88.2):
     resolution: {integrity: sha512-BmFJo7veBDgQzfWXl/wwYXr/VFus0614qZ8i9znqcl9fnEdiVkdbi0TedLQ6xAK92HZHDJ0QmyQ0fmuZPAgCYQ==}

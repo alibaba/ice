@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.5.1
+
+### Patch Changes
+
+- Updated dependencies [4130611d]
+- Updated dependencies [2e274966]
+  - @ice/rspack-config@1.2.1
+  - @ice/runtime@1.5.1
+
 ## 3.5.0
 
 ### Minor Changes
