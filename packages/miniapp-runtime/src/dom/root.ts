@@ -1,4 +1,4 @@
-import { isFunction, isUndefined, Shortcuts } from '@ice/shared';
+import { hooks, isFunction, isUndefined, Shortcuts } from '@ice/shared';
 
 import {
   CUSTOM_WRAPPER,
@@ -166,6 +166,7 @@ export class RootElement extends Element {
             // eslint-disable-next-line no-console
             console.log('custom wrapper setData: ', data);
           }
+          hooks.call('modifySetDataPayload', data, ctx);
           ctx.setData(data, cb);
         });
       }
@@ -176,6 +177,7 @@ export class RootElement extends Element {
           // eslint-disable-next-line no-console
           console.log('page setData:', normalUpdate);
         }
+        hooks.call('modifySetDataPayload', data, ctx);
         ctx.setData(normalUpdate, cb);
       }
     }, 0);

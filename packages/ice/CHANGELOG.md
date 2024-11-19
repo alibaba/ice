@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.5.0
+
+### Minor Changes
+
+- 710b2e48: feat: improve miniapp runtime
+
+### Patch Changes
+
+- Updated dependencies [710b2e48]
+  - @ice/shared-config@1.3.0
+  - @ice/webpack-config@1.2.0
+  - @ice/rspack-config@1.2.0
+  - @ice/route-manifest@1.3.0
+  - @ice/runtime@1.5.0
+
 ## 3.4.12
 
 ### Patch Changes

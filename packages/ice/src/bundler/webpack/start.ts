@@ -118,12 +118,22 @@ export async function startDevServer(
 
 export async function invokeCompilerWatch(
   compiler: webpack.Compiler,
+  webpackConfigs: Configuration[],
   context: Context,
+  options: BundlerOptions,
 ) {
-  const { userConfig, rootDir } = context;
+  const { userConfig, rootDir, applyHook, commandArgs } = context;
   const { outputDir } = userConfig;
+  const { taskConfigs, hooksAPI } = options;
   const absoluteOutputDir = path.resolve(rootDir, outputDir);
   let messages: { errors: string[]; warnings: string[] };
+  await applyHook('before.start.run', {
+    commandArgs,
+    taskConfigs,
+    webpackConfigs,
+    ...hooksAPI,
+  });
+  let isFirstCompile = true;
   compiler.watch({
     aggregateTimeout: 200,
     ignored: ['**/node_modules/**', `${absoluteOutputDir}/**`],
@@ -139,10 +149,22 @@ export async function invokeCompilerWatch(
     } else {
       messages = formatWebpackMessages(stats.toJson({ all: false, warnings: true, errors: true }));
     }
-
+    const isSuccessful = !messages.errors.length;
     if (messages.errors.length) {
       logger.error('Webpack compile error');
       throw new Error(messages.errors.join('\n\n'));
+    }
+
+    await applyHook('after.start.compile', {
+      stats,
+      isSuccessful,
+      isFirstCompile,
+      messages,
+      taskConfigs,
+      ...hooksAPI,
+    });
+    if (isSuccessful) {
+      isFirstCompile = false;
     }
   });
 }

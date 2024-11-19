@@ -1,5 +1,17 @@
 # @ice/miniapp-react-dom
 
+## 1.1.0
+
+### Minor Changes
+
+- 710b2e48: feat: improve miniapp runtime
+
+### Patch Changes
+
+- Updated dependencies [710b2e48]
+  - @ice/miniapp-runtime@1.2.0
+  - @ice/shared@1.1.0
+
 ## 1.0.2
 
 ### Patch Changes

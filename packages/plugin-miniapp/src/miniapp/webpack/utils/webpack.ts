@@ -1,6 +1,6 @@
 import path from 'path';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
-import { promoteRelativePath } from './index.js';
+import { promoteRelativePath } from '../../../helper/index.js';
 
 const { ConcatSource } = webpack.sources;
 
@@ -15,13 +15,13 @@ export function getChunkEntryModule(compilation: webpack.Compilation, chunk: web
 /**
  * 在文本头部加入一些 require 语句
  */
- export function addRequireToSource(
+export function addRequireToSource(
   id: string,
   modules: any,
   commonChunks: (webpack.Chunk | { name: string })[],
 ): webpack.sources.ConcatSource {
   const source = new ConcatSource();
-  commonChunks.forEach(chunkItem => {
+  commonChunks.forEach((chunkItem) => {
     source.add(`require(${JSON.stringify(promoteRelativePath(path.relative(id, chunkItem.name)))});\n`);
   });
   source.add('\n');

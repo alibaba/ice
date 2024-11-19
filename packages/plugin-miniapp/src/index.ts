@@ -4,8 +4,7 @@ import consola from 'consola';
 import chalk from 'chalk';
 import type { Plugin } from '@ice/app/esm/types';
 import getMiniappTask from './miniapp/index.js';
-import { MINIAPP_TARGETS } from './constant.js';
-
+import { MINIAPP_TARGET_FOLDER_NAMES, MINIAPP_TARGETS } from './constant.js';
 
 interface MiniappOptions {
   // TODO: specify the config type of native.
@@ -18,7 +17,7 @@ const { name: PLUGIN_NAME } = packageJSON;
 
 const plugin: Plugin<MiniappOptions> = (miniappOptions = {}) => ({
   name: PLUGIN_NAME,
-  setup: ({ registerTask, onHook, context, generator }) => {
+  setup: ({ registerTask, onHook, context, generator, modifyUserConfig }) => {
     const { nativeConfig = {} } = miniappOptions;
     const { commandArgs, rootDir, command } = context;
     const { target } = commandArgs;
@@ -54,26 +53,34 @@ const plugin: Plugin<MiniappOptions> = (miniappOptions = {}) => ({
           exports: importSpecifiers.join(',\n'),
         },
       });
+      generator.addRuntimeOptions({
+        source: `${PLUGIN_NAME}/targets/${MINIAPP_TARGET_FOLDER_NAMES[target]}/runtime.js`,
+      });
+      modifyUserConfig('optimization', {
+        router: false,
+        disableRouter: true,
+      });
       // Get server compiler by hooks
       onHook(`before.${command as 'start' | 'build'}.run`, async ({ getAppConfig, getRoutesConfig }) => {
         configAPI.getAppConfig = getAppConfig;
         configAPI.getRoutesConfig = getRoutesConfig;
       });
-      registerTask('miniapp', getMiniappTask({
-        rootDir,
-        command,
-        target,
-        configAPI,
-        runtimeDir: '.ice',
-        nativeConfig,
-      }));
+      registerTask(
+        'miniapp',
+        getMiniappTask({
+          rootDir,
+          command,
+          target,
+          configAPI,
+          runtimeDir: '.ice',
+          nativeConfig,
+        }),
+      );
       onHook(`after.${command as 'start' | 'build'}.compile`, async ({ isSuccessful, isFirstCompile }) => {
         const shouldShowLog = isSuccessful && ((command === 'start' && isFirstCompile) || command === 'build');
         if (shouldShowLog) {
-          const outputDir = context.userConfig?.outputDir || 'build';
           let logoutMessage = '\n';
-          logoutMessage += chalk.green(`Use ${target} developer tools to open the following folder:`);
-          logoutMessage += `\n${chalk.underline.white(path.join(rootDir, outputDir))}\n`;
+          logoutMessage += chalk.green(`Use ${target} developer tools to open the this project or build folder`);
           consola.log(`${logoutMessage}\n`);
         }
       });

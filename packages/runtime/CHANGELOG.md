@@ -1,5 +1,16 @@
 # @ice/runtime
 
+## 1.5.0
+
+### Minor Changes
+
+- 710b2e48: feat: improve miniapp runtime
+
+### Patch Changes
+
+- Updated dependencies [710b2e48]
+  - @ice/shared@1.1.0
+
 ## 1.4.13
 
 ### Patch Changes

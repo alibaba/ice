@@ -1,6 +1,6 @@
 {
   "name": "@ice/webpack-config",
-  "version": "1.1.16",
+  "version": "1.2.0",
   "repository": "alibaba/ice",
   "bugs": "https://github.com/alibaba/ice/issues",
   "homepage": "https://v3.ice.work",
@@ -15,7 +15,7 @@
     "*.d.ts"
   ],
   "dependencies": {
-    "@ice/shared-config": "1.2.9",
+    "@ice/shared-config": "1.3.0",
     "@ice/bundles": "0.2.7",
     "fast-glob": "^3.2.11",
     "process": "^0.11.10"

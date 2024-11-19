@@ -8,6 +8,7 @@ import { createRequire } from 'node:module';
 import fs from 'fs-extra';
 import fg from 'fast-glob';
 import type { Config } from '@ice/app/esm/types';
+import { mergeInternalComponents } from '@ice/shared';
 import getMiniappTargetConfig from '../targets/index.js';
 import getMiniappWebpackConfig from './webpack/index.js';
 
@@ -29,17 +30,10 @@ function getEntry(rootDir: string, runtimeDir: string) {
   };
 }
 
-const getMiniappTask = ({
-  rootDir,
-  command,
-  target,
-  configAPI,
-  runtimeDir,
-  nativeConfig,
-}): Config => {
+const getMiniappTask = ({ rootDir, command, target, configAPI, runtimeDir, nativeConfig }): Config => {
   const entry = getEntry(rootDir, runtimeDir);
   const mode = command === 'start' ? 'development' : 'production';
-  const { template, globalObject, fileType, projectConfigJson } = getMiniappTargetConfig(target);
+  const { template, globalObject, fileType, projectConfigJson, modifyBuildAssets, components } = getMiniappTargetConfig(target);
   const { plugins, module } = getMiniappWebpackConfig({
     rootDir,
     template,
@@ -47,9 +41,13 @@ const getMiniappTask = ({
     configAPI,
     projectConfigJson,
     nativeConfig,
+    modifyBuildAssets,
   });
   const isPublicDirExist = fs.existsSync(path.join(rootDir, 'public'));
   const defaultLogging = command === 'start' ? 'summary' : 'summary assets';
+
+  mergeInternalComponents(components);
+
   return {
     mode,
     entry,
@@ -78,8 +76,11 @@ const getMiniappTask = ({
     },
     // FIXME: enable cache will cause error, disable it temporarily
     enableCache: false,
+    enableEnv: false,
     plugins,
     loaders: module?.rules,
+    assetsManifest: false,
+    fastRefresh: false,
     optimization: {
       sideEffects: true,
       usedExports: true,
@@ -120,9 +121,16 @@ const getMiniappTask = ({
     enableCopyPlugin: isPublicDirExist, // Only when public dir exists should copy-webpack-plugin be enabled
     swcOptions: {
       removeExportExprs: ['serverDataLoader', 'staticDataLoader'],
+      compilationConfig: {
+        jsc: {
+          // 小程序强制编译到 es5
+          target: 'es5',
+        },
+      },
     },
     cssFilename: `[name]${fileType.style}`,
     cssChunkFilename: `[name]${fileType.style}`,
+    cssExtensionAlias: ['.qss', '.jxss', '.wxss', '.acss', '.ttss'],
     enableRpx2Vw: false, // No need to transform rpx to vw in miniapp
     logging: process.env.WEBPACK_LOGGING || defaultLogging,
   };

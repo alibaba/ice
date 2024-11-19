@@ -1,4 +1,5 @@
 import Template from './template.js';
+import { components } from './components.js';
 
 export default {
   globalObject: 'swan',
@@ -10,4 +11,5 @@ export default {
     xs: '.sjs',
   },
   template: new Template(),
+  components,
 };

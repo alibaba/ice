@@ -6,7 +6,7 @@ export default class SingleEntryPlugin {
   name: string;
   miniType: any;
 
-  constructor(context, entry, name, miniType) {
+  constructor(context, entry, name, miniType, public options = {}) {
     this.context = context;
     this.entry = entry;
     this.name = name;
@@ -14,25 +14,16 @@ export default class SingleEntryPlugin {
   }
 
   apply(compiler) {
-    compiler.hooks.compilation.tap(
-      'SingleEntryDependency',
-      (compilation, { normalModuleFactory }) => {
-        compilation.dependencyFactories.set(
-          SingleEntryDependency,
-          normalModuleFactory,
-        );
-      },
-    );
+    compiler.hooks.compilation.tap('SingleEntryDependency', (compilation, { normalModuleFactory }) => {
+      compilation.dependencyFactories.set(SingleEntryDependency, normalModuleFactory);
+    });
 
-    compiler.hooks.make.tapAsync(
-      'SingleEntryPlugin',
-      (compilation, callback) => {
-        const { entry, name, context, miniType } = this;
+    compiler.hooks.make.tapAsync('SingleEntryPlugin', (compilation, callback) => {
+      const { entry, name, context, miniType } = this;
 
-        const dep = SingleEntryPlugin.createDependency(entry, name, miniType);
-        compilation.addEntry(context, dep, name, callback);
-      },
-    );
+      const dep = SingleEntryPlugin.createDependency(entry, name, miniType);
+      compilation.addEntry(context, dep, name, callback);
+    });
   }
 
   static createDependency(entry, name, miniType) {

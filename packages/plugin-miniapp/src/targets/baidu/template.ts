@@ -75,7 +75,14 @@ export default class Template extends RecursiveTemplate {
     const component = this.legacyMiniComponents[nodeName];
 
     return Object.keys(component)
-      .map(k => `${k}="${k.startsWith('bind') || k.startsWith('on') || k.startsWith('catch') ? component[k] : `{{${component[k].replace('i.', 'item.')}}}`}"`)
+      .map(
+        (k) =>
+          `${k}="${
+            k.startsWith('bind') || k.startsWith('on') || k.startsWith('catch')
+              ? component[k]
+              : `{{${component[k].replace('i.', 'item.')}}}`
+          }"`,
+      )
       .join(' ');
   }
 
@@ -94,29 +101,40 @@ export default class Template extends RecursiveTemplate {
     const inputAlias = componentsAlias.input._num;
     const swiperAlias = componentsAlias.swiper._num;
 
-    const template =
-`<view s-if="{{item.nn==='${viewAlias}'&&(item.st||item.cl)}}" id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes('view')}>
+    const template = `<view s-if="{{item.nn==='${viewAlias}'&&(item.st||item.cl)}}" id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes(
+      'view',
+    )}>
   <block s-for="{{item.cn}}" s-key="sid">
     ${indent(child, 4)}
   </block>
 </view>
-<text s-elif="{{item.nn==='${textAlias}'&&(item.st||item.cl)}}" id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes('text')}>
+<text s-elif="{{item.nn==='${textAlias}'&&(item.st||item.cl)}}" id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes(
+      'text',
+    )}>
   <block s-for="{{item.cn}}" s-key="sid">
     <block>{{item.v}}</block>
   </block>
 </text>
-<text s-elif="{{item.nn==='${staticTextAlias}'&&(item.st||item.cl)}}" id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes('static-text')}>
+<text s-elif="{{item.nn==='${staticTextAlias}'&&(item.st||item.cl)}}" id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes(
+      'static-text',
+    )}>
   <block s-for="{{item.cn}}" s-key="sid">
     <block>{{item.v}}</block>
   </block>
 </text>
-<button s-elif="{{item.nn==='${buttonAlias}'&&(item.st||item.cl)}}" id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes('button')}>
+<button s-elif="{{item.nn==='${buttonAlias}'&&(item.st||item.cl)}}" id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes(
+      'button',
+    )}>
   <block s-for="{{item.cn}}" s-key="sid">
     <template is="{{xs.e(0)}}" data="{{{ i:item }}}" />
   </block>
 </button>
-<input s-elif="{{item.nn==='${inputAlias}'&&(item.st||item.cl)}}" id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes('input')} />
-<swiper s-elif="{{item.nn==='${swiperAlias}'&&(item.st||item.cl)}}" id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes('swiper')}>
+<input s-elif="{{item.nn==='${inputAlias}'&&(item.st||item.cl)}}" id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes(
+      'input',
+    )} />
+<swiper s-elif="{{item.nn==='${swiperAlias}'&&(item.st||item.cl)}}" id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes(
+      'swiper',
+    )}>
   <block s-for="{{xs.f(item.cn)}}" s-key="sid">
     <template is="{{xs.e(0)}}" data="{{{ i:item }}}" />
   </block>
@@ -140,13 +158,16 @@ export default class Template extends RecursiveTemplate {
     const coverImageAlias = componentsAlias['cover-image']._num;
     const contentAlias = componentsAlias['#text']._num;
 
-    const template =
-`<cover-view s-if="{{item.nn==='${coverViewAlias}'}}" id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes('cover-view')}>
+    const template = `<cover-view s-if="{{item.nn==='${coverViewAlias}'}}" id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes(
+      'cover-view',
+    )}>
   <block s-for="{{item.cn}}" s-key="sid">
     ${indent(child, 4)}
   </block>
 </cover-view>
-<cover-image s-elif="{{item.nn==='${coverImageAlias}'}}" id="{{item.uid||item.sid}}" data-sid="{{item.sid}}"  ${this.buildFlattenNodeAttributes('cover-image')}></cover-image>
+<cover-image s-elif="{{item.nn==='${coverImageAlias}'}}" id="{{item.uid||item.sid}}" data-sid="{{item.sid}}"  ${this.buildFlattenNodeAttributes(
+      'cover-image',
+    )}></cover-image>
 <block s-elif="{{item.nn==='${contentAlias}'}}">{{item.v}}</block>
 <block s-else>
   <template is="{{xs.e(0)}}" data="{{{i:item}}}" />
@@ -165,8 +186,7 @@ export default class Template extends RecursiveTemplate {
     const { componentsAlias } = this;
     const contentAlias = componentsAlias['#text']._num;
 
-    const template =
-`<block s-if="item.nn === '${contentAlias}'">{{item.v}}</block>
+    const template = `<block s-if="item.nn === '${contentAlias}'">{{item.v}}</block>
 <text s-else id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes('text')}>
   <block s-for="{{item.cn}}" s-key="sid">
     ${indent(child, 4)}
@@ -193,8 +213,9 @@ export default class Template extends RecursiveTemplate {
         return this.buildFlattenCover();
 
       case 'video': {
-        const body =
-          `<ad s-if={{item.nn==='${adAlias}'}} id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes('ad')}></ad>
+        const body = `<ad s-if={{item.nn==='${adAlias}'}} id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes(
+          'ad',
+        )}></ad>
 <block s-else>
   ${indent(this.buildFlattenCover(), 2)}
 </block>`;
@@ -206,7 +227,9 @@ export default class Template extends RecursiveTemplate {
         return this.buildFlattenText();
 
       case 'picker-view':
-        return `<picker-view-column id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes('picker-view-column')}>
+        return `<picker-view-column id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes(
+          'picker-view-column',
+        )}>
           <block s-for="{{item.cn}}" s-key="sid">
             ${child}
           </block>

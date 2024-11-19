@@ -1654,22 +1654,22 @@ importers:
   packages/ice:
     dependencies:
       '@ice/bundles':
-        specifier: 0.2.7
+        specifier: workspace:*
         version: link:../bundles
       '@ice/route-manifest':
-        specifier: 1.2.2
+        specifier: workspace:*
         version: link:../route-manifest
       '@ice/rspack-config':
-        specifier: 1.1.10
+        specifier: workspace:*
         version: link:../rspack-config
       '@ice/runtime':
-        specifier: ^1.4.13
+        specifier: workspace:^
         version: link:../runtime
       '@ice/shared-config':
-        specifier: 1.2.9
+        specifier: workspace:*
         version: link:../shared-config
       '@ice/webpack-config':
-        specifier: 1.1.16
+        specifier: workspace:*
         version: link:../webpack-config
       '@swc/helpers':
         specifier: 0.5.1
@@ -1686,6 +1686,9 @@ importers:
       chalk:
         specifier: ^4.0.0
         version: 4.1.2
+      chokidar:
+        specifier: ^3.5.3
+        version: 3.5.3
       commander:
         specifier: ^9.0.0
         version: 9.5.0
@@ -1783,9 +1786,6 @@ importers:
       '@types/temp':
         specifier: ^0.9.1
         version: 0.9.1
-      chokidar:
-        specifier: ^3.5.3
-        version: 3.5.3
       esbuild:
         specifier: ^0.17.16
         version: 0.17.16
@@ -1844,7 +1844,7 @@ importers:
   packages/miniapp-loader:
     dependencies:
       '@ice/bundles':
-        specifier: ^0.2.0
+        specifier: workspace:^
         version: link:../bundles
     devDependencies:
       webpack:
@@ -1854,10 +1854,10 @@ importers:
   packages/miniapp-react-dom:
     dependencies:
       '@ice/miniapp-runtime':
-        specifier: ^1.1.2
+        specifier: workspace:^
         version: link:../miniapp-runtime
       '@ice/shared':
-        specifier: ^1.0.2
+        specifier: workspace:^
         version: link:../shared
       react-reconciler:
         specifier: 0.27.0
@@ -1873,10 +1873,10 @@ importers:
   packages/miniapp-runtime:
     dependencies:
       '@ice/runtime':
-        specifier: ^1.2.9
+        specifier: workspace:^
         version: link:../runtime
       '@ice/shared':
-        specifier: ^1.0.2
+        specifier: workspace:^
         version: link:../shared
       miniapp-history:
         specifier: ^0.1.7
@@ -2114,19 +2114,22 @@ importers:
   packages/plugin-miniapp:
     dependencies:
       '@ice/bundles':
-        specifier: ^0.2.0
+        specifier: workspace:*
         version: link:../bundles
       '@ice/miniapp-loader':
-        specifier: ^1.1.2
+        specifier: workspace:*
         version: link:../miniapp-loader
       '@ice/miniapp-react-dom':
-        specifier: ^1.0.2
+        specifier: workspace:*
         version: link:../miniapp-react-dom
       '@ice/miniapp-runtime':
-        specifier: ^1.1.2
+        specifier: workspace:*
         version: link:../miniapp-runtime
+      '@ice/route-manifest':
+        specifier: workspace:*
+        version: link:../route-manifest
       '@ice/shared':
-        specifier: ^1.0.2
+        specifier: workspace:*
         version: link:../shared
       acorn-walk:
         specifier: ^8.2.0
@@ -2140,6 +2143,9 @@ importers:
       fast-glob:
         specifier: ^3.2.11
         version: 3.2.12
+      fs-extra:
+        specifier: ^10.0.0
+        version: 10.1.0
       html-minifier:
         specifier: ^4.0.0
         version: 4.0.0
@@ -2151,10 +2157,10 @@ importers:
         version: 1.2.4
     devDependencies:
       '@ice/app':
-        specifier: ^3.4.0
+        specifier: ^3.5.0
         version: link:../ice
       '@ice/runtime':
-        specifier: ^1.2.9
+        specifier: ^1.5.0
         version: link:../runtime
       webpack:
         specifier: ^5.88.0
@@ -2385,7 +2391,7 @@ importers:
         specifier: 0.2.7
         version: link:../bundles
       '@ice/shared-config':
-        specifier: 1.2.9
+        specifier: 1.3.0
         version: link:../shared-config
     devDependencies:
       '@rspack/core':
@@ -2398,7 +2404,7 @@ importers:
         specifier: ^0.3.0
         version: link:../jsx-runtime
       '@ice/shared':
-        specifier: ^1.0.2
+        specifier: ^1.1.0
         version: link:../shared
       '@remix-run/router':
         specifier: 1.14.2
@@ -2490,7 +2496,7 @@ importers:
         specifier: 0.2.7
         version: link:../bundles
       '@ice/shared-config':
-        specifier: 1.2.9
+        specifier: 1.3.0
         version: link:../shared-config
       fast-glob:
         specifier: ^3.2.11
@@ -3215,7 +3221,7 @@ packages:
       debug: 4.3.4
       lodash.debounce: 4.0.8
       resolve: 1.22.1
-      semver: 6.3.0
+      semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
 
@@ -4229,7 +4235,7 @@ packages:
       babel-plugin-polyfill-corejs2: 0.3.3(@babel/core@7.21.0)
       babel-plugin-polyfill-corejs3: 0.6.0(@babel/core@7.21.0)
       babel-plugin-polyfill-regenerator: 0.4.1(@babel/core@7.21.0)
-      semver: 6.3.0
+      semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
 
@@ -4392,7 +4398,7 @@ packages:
       babel-plugin-polyfill-corejs3: 0.6.0(@babel/core@7.21.0)
       babel-plugin-polyfill-regenerator: 0.4.1(@babel/core@7.21.0)
       core-js-compat: 3.29.0
-      semver: 6.3.0
+      semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
 
@@ -10430,7 +10436,7 @@ packages:
       '@babel/compat-data': 7.21.0
       '@babel/core': 7.21.0
       '@babel/helper-define-polyfill-provider': 0.3.3(@babel/core@7.21.0)
-      semver: 6.3.0
+      semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
 
@@ -17657,7 +17663,7 @@ packages:
       got: 9.6.0
       registry-auth-token: 4.2.2
       registry-url: 5.1.0
-      semver: 6.3.0
+      semver: 6.3.1
 
   /param-case@2.1.1:
     resolution: {integrity: sha512-eQE845L6ot89sk2N8liD8HAuH4ca6Vvr7VWAWwt7+kvvG5aBcPmmphQ68JsEG2qa9n1TykS2DLeMt363AAH8/w==}
@@ -21021,7 +21027,7 @@ packages:
     resolution: {integrity: sha512-GX0Ix/CJcHyB8c4ykpHGIAvLyOwOobtM/8d+TQkAd81/bEjgPHrfba41Vpesr7jX/t8Uh+R3EX9eAS5be+jQYg==}
     engines: {node: '>=8'}
     dependencies:
-      semver: 6.3.0
+      semver: 6.3.1
 
   /semver@5.7.1:
     resolution: {integrity: sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==}
@@ -21034,7 +21040,6 @@ packages:
   /semver@6.3.1:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
     hasBin: true
-    dev: true
 
   /semver@7.3.7:
     resolution: {integrity: sha512-QlYTucUYOews+WeEujDoEGziz4K6c47V/Bd+LjSSYcA94p+DmINdf7ncaUinThfvZyu13lN9OY1XDxt8C0Tw0g==}
