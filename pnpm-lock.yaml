@@ -1428,7 +1428,7 @@ importers:
         version: 0.5.10(react-refresh@0.14.0)(webpack-dev-server@4.15.0)(webpack@5.88.2)
       '@rspack/core':
         specifier: 0.5.7
-        version: 0.5.7(patch_hash=hydgitlae4ar2jrvgl5qp2f2um)(@swc/helpers@0.5.1)
+        version: 0.5.7(patch_hash=hydgitlae4ar2jrvgl5qp2f2um)(@swc/helpers@0.5.15)
       '@rspack/dev-server':
         specifier: 0.5.7
         version: 0.5.7(@rspack/core@0.5.7)(@types/express@4.17.17)(webpack@5.88.2)
@@ -1672,8 +1672,8 @@ importers:
         specifier: workspace:*
         version: link:../webpack-config
       '@swc/helpers':
-        specifier: 0.5.1
-        version: 0.5.1
+        specifier: 0.5.15
+        version: 0.5.15
       '@types/express':
         specifier: ^4.17.14
         version: 4.17.17
@@ -1758,7 +1758,7 @@ importers:
     devDependencies:
       '@rspack/core':
         specifier: 0.5.7
-        version: 0.5.7(patch_hash=hydgitlae4ar2jrvgl5qp2f2um)(@swc/helpers@0.5.1)
+        version: 0.5.7(patch_hash=hydgitlae4ar2jrvgl5qp2f2um)(@swc/helpers@0.5.15)
       '@rspack/dev-server':
         specifier: 0.5.7
         version: 0.5.7(@rspack/core@0.5.7)(@types/express@4.17.17)(webpack@5.88.2)
@@ -1814,8 +1814,8 @@ importers:
   packages/jsx-runtime:
     dependencies:
       '@swc/helpers':
-        specifier: ^0.5.13
-        version: 0.5.13
+        specifier: ^0.5.15
+        version: 0.5.15
       style-unit:
         specifier: ^3.0.4
         version: 3.0.5
@@ -1993,8 +1993,8 @@ importers:
         specifier: ^0.3.0
         version: link:../jsx-runtime
       '@swc/helpers':
-        specifier: ^0.5.1
-        version: 0.5.1
+        specifier: ^0.5.15
+        version: 0.5.15
       accept-language-parser:
         specifier: ^1.5.0
         version: 1.5.0
@@ -2348,8 +2348,8 @@ importers:
         specifier: ^0.2.1
         version: link:../appear
       '@swc/helpers':
-        specifier: ^0.5.1
-        version: 0.5.1
+        specifier: ^0.5.15
+        version: 0.5.15
       style-unit:
         specifier: ^3.0.5
         version: 3.0.5
@@ -2396,7 +2396,7 @@ importers:
     devDependencies:
       '@rspack/core':
         specifier: 0.5.7
-        version: 0.5.7(patch_hash=hydgitlae4ar2jrvgl5qp2f2um)(@swc/helpers@0.5.1)
+        version: 0.5.7(patch_hash=hydgitlae4ar2jrvgl5qp2f2um)(@swc/helpers@0.5.15)
 
   packages/runtime:
     dependencies:
@@ -2735,7 +2735,7 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       style-unit: 2.0.1
       swiper: 6.5.0
-      tslib: 2.5.0
+      tslib: 2.8.1
       universal-env: 3.3.3
       universal-panresponder: 0.6.5
       universal-transition: 1.1.1
@@ -2762,7 +2762,7 @@ packages:
       driver-universal: 3.5.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      tslib: 2.5.0
+      tslib: 2.8.1
       universal-canvas-context: 1.0.0
       universal-choose-image: 1.3.0(rax@1.2.3)
       universal-element: 0.0.6
@@ -8000,7 +8000,7 @@ packages:
       '@rspack/binding-win32-x64-msvc': 0.5.7
     dev: true
 
-  /@rspack/core@0.5.7(patch_hash=hydgitlae4ar2jrvgl5qp2f2um)(@swc/helpers@0.5.1):
+  /@rspack/core@0.5.7(patch_hash=hydgitlae4ar2jrvgl5qp2f2um)(@swc/helpers@0.5.15):
     resolution: {integrity: sha512-gUF0PcanPrC2cVfFA4e+qmG66X7FkEKlRbnaUfB4LKw9JQuwiMOXCAtrBdveDjB89KE/3cw/nuYVQwd106uqWA==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -8011,7 +8011,7 @@ packages:
     dependencies:
       '@module-federation/runtime-tools': 0.0.8
       '@rspack/binding': 0.5.7
-      '@swc/helpers': 0.5.1
+      '@swc/helpers': 0.5.15
       browserslist: 4.22.3
       enhanced-resolve: 5.12.0
       events: 3.3.0
@@ -8031,7 +8031,7 @@ packages:
     peerDependencies:
       '@rspack/core': '*'
     dependencies:
-      '@rspack/core': 0.5.7(patch_hash=hydgitlae4ar2jrvgl5qp2f2um)(@swc/helpers@0.5.1)
+      '@rspack/core': 0.5.7(patch_hash=hydgitlae4ar2jrvgl5qp2f2um)(@swc/helpers@0.5.15)
       chokidar: 3.5.3
       connect-history-api-fallback: 2.0.0
       express: 4.18.1
@@ -8577,16 +8577,10 @@ packages:
   /@swc/counter@0.1.3:
     resolution: {integrity: sha512-e2BR4lsJkkRlKZ/qCHPw9ZaSxc0MVUd7gtbtaB7aMvHeJVYe8sOB8DBZkP2DtISHGSku9sCK6T6cnY0CtXrOCQ==}
 
-  /@swc/helpers@0.5.1:
-    resolution: {integrity: sha512-sJ902EfIzn1Fa+qYmjdQqh8tPsoxyBz+8yBKC2HKUxyezKJFwPGOn7pv4WY6QuQW//ySQi5lJjA/ZT9sNWWNTg==}
+  /@swc/helpers@0.5.15:
+    resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
     dependencies:
-      tslib: 2.5.0
-
-  /@swc/helpers@0.5.13:
-    resolution: {integrity: sha512-UoKGxQ3r5kYI9dALKJapMmuK+1zWM/H17Z1+iwnNmzcJRnfFuevZs375TA5rW31pu4BS4NoSy1fRsexDXfWn5w==}
-    dependencies:
-      tslib: 2.5.0
-    dev: false
+      tslib: 2.8.1
 
   /@swc/types@0.1.16:
     resolution: {integrity: sha512-okcPxwxfdKUPrH15TbMcuqMJBu6QcxjHwyhYj1IPyaSAKHY7SHqhaS2UCANaOQ/+E6Dor50IgNpSbeJNqcuehw==}
@@ -10912,7 +10906,7 @@ packages:
     resolution: {integrity: sha512-gxGWBrTT1JuMx6R+o5PTXMmUnhnVzLQ9SNutD4YqKtI6ap897t3tKECYla6gCWEkplXnlNybEkZg9GEGxKFCgw==}
     dependencies:
       pascal-case: 3.1.2
-      tslib: 2.5.0
+      tslib: 2.8.1
 
   /camelcase-css@2.0.1:
     resolution: {integrity: sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==}
@@ -12460,7 +12454,7 @@ packages:
     resolution: {integrity: sha512-Kv5nKlh6yRrdrGvxeJ2e5y2eRUpkUosIW4A2AS38zwSz27zu7ufDwQPi5Jhs3XAlGNetl3bmnGhQsMtkKJnj3w==}
     dependencies:
       no-case: 3.0.4
-      tslib: 2.5.0
+      tslib: 2.8.1
 
   /dot-prop@5.3.0:
     resolution: {integrity: sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q==}
@@ -16737,7 +16731,7 @@ packages:
   /lower-case@2.0.2:
     resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.8.1
 
   /lowercase-keys@1.0.1:
     resolution: {integrity: sha512-G2Lj61tXDnVFFOi8VZds+SoQjtQC3dgokKdDG2mTm1tx4m50NUHBOZSBwQQHyy0V12A0JTG4icfZQH+xPyh8VA==}
@@ -17269,7 +17263,7 @@ packages:
     resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
     dependencies:
       lower-case: 2.0.2
-      tslib: 2.5.0
+      tslib: 2.8.1
 
   /node-emoji@1.11.0:
     resolution: {integrity: sha512-wo2DpQkQp7Sjm2A0cq+sN7EHKO6Sl0ctXeBdFZrL9T9+UywORbufTcTZxom8YqpLQt/FqNMUkOpkZrJVYSKD3A==}
@@ -17681,7 +17675,7 @@ packages:
     resolution: {integrity: sha512-RXlj7zCYokReqWpOPH9oYivUzLYZ5vAPIfEmCTNViosC78F8F0H9y7T7gG2M39ymgutxF5gcFEsyZQSph9Bp3A==}
     dependencies:
       dot-case: 3.0.4
-      tslib: 2.5.0
+      tslib: 2.8.1
 
   /parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
@@ -17737,7 +17731,7 @@ packages:
     resolution: {integrity: sha512-uWlGT3YSnK9x3BQJaOdcZwrnV6hPpd8jFH1/ucpiLRPh/2zCVJKS19E4GvYHvaCcACn3foXZ0cLB9Wrx1KGe5g==}
     dependencies:
       no-case: 3.0.4
-      tslib: 2.5.0
+      tslib: 2.8.1
 
   /path-exists@3.0.0:
     resolution: {integrity: sha512-bpC7GYwiDYQ4wYLe+FA8lhRjhQCMcQGuSgGGqDkg/QerRWw9CmGRT0iSOVRSZJ29NMLZgIzqaljJ63oaL4NIJQ==}
@@ -22424,6 +22418,9 @@ packages:
 
   /tslib@2.5.0:
     resolution: {integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==}
+
+  /tslib@2.8.1:
+    resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
   /tsutils@3.21.0(typescript@4.9.5):
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
