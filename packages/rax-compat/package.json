@@ -100,7 +100,7 @@
   ],
   "dependencies": {
     "@ice/appear": "^0.2.1",
-    "@swc/helpers": "^0.5.1",
+    "@swc/helpers": "^0.5.15",
     "style-unit": "^3.0.5"
   },
   "devDependencies": {
