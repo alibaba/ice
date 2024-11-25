@@ -1813,6 +1813,9 @@ importers:
 
   packages/jsx-runtime:
     dependencies:
+      '@swc/helpers':
+        specifier: ^0.5.13
+        version: 0.5.13
       style-unit:
         specifier: ^3.0.4
         version: 3.0.5
@@ -1987,7 +1990,7 @@ importers:
   packages/plugin-i18n:
     dependencies:
       '@ice/jsx-runtime':
-        specifier: ^0.3.0
+        specifier: ^0.3.1
         version: link:../jsx-runtime
       '@swc/helpers':
         specifier: ^0.5.1
@@ -2154,10 +2157,10 @@ importers:
         version: 1.2.4
     devDependencies:
       '@ice/app':
-        specifier: ^3.5.0
+        specifier: ^3.5.1
         version: link:../ice
       '@ice/runtime':
-        specifier: ^1.5.0
+        specifier: ^1.5.1
         version: link:../runtime
       webpack:
         specifier: ^5.88.0
@@ -2398,7 +2401,7 @@ importers:
   packages/runtime:
     dependencies:
       '@ice/jsx-runtime':
-        specifier: ^0.3.0
+        specifier: ^0.3.1
         version: link:../jsx-runtime
       '@ice/shared':
         specifier: ^1.1.0
@@ -8574,6 +8577,12 @@ packages:
     resolution: {integrity: sha512-sJ902EfIzn1Fa+qYmjdQqh8tPsoxyBz+8yBKC2HKUxyezKJFwPGOn7pv4WY6QuQW//ySQi5lJjA/ZT9sNWWNTg==}
     dependencies:
       tslib: 2.5.0
+
+  /@swc/helpers@0.5.13:
+    resolution: {integrity: sha512-UoKGxQ3r5kYI9dALKJapMmuK+1zWM/H17Z1+iwnNmzcJRnfFuevZs375TA5rW31pu4BS4NoSy1fRsexDXfWn5w==}
+    dependencies:
+      tslib: 2.5.0
+    dev: false
 
   /@swc/types@0.1.4:
     resolution: {integrity: sha512-z/G02d+59gyyUb7KYhKi9jOhicek6QD2oMaotUyG+lUkybpXoV49dY9bj7Ah5Q+y7knK2jU67UTX9FyfGzaxQg==}

@@ -17,6 +17,7 @@ type App = Partial<{
   strict: boolean;
   errorBoundary: boolean;
   onRecoverableError: (error: unknown, errorInfo: ErrorStack) => void;
+  onBeforeHydrate: () => void;
 } & Record<AppLifecycle, VoidFunction>>;
 
 export interface ErrorStack {

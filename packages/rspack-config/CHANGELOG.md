@@ -1,5 +1,11 @@
 # @ice/rspack-config
 
+## 1.2.1
+
+### Patch Changes
+
+- 4130611d: fix: update splitChunk config
+
 ## 1.2.0
 
 ### Minor Changes

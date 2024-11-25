@@ -1,5 +1,13 @@
 # @ice/runtime
 
+## 1.5.1
+
+### Patch Changes
+
+- 2e274966: feat: support hook of onBeforeHydrate
+- Updated dependencies [2e274966]
+  - @ice/jsx-runtime@0.3.1
+
 ## 1.5.0
 
 ### Minor Changes
