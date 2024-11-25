@@ -6,9 +6,26 @@ on:
       - release/**
 
 jobs:
-  canary:
-    name: Canary
+  check_changeset:
+    name: Check Changeset exists
+    outputs:
+      status: ${{ steps.check.outcome }}
     runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v4
+
+      - name: Check
+        id: check
+        continue-on-error: true
+        run: test "$(ls -1 .changeset | wc -l)" -gt "2"
+
+  canary:
+    name: Publish Canary
+    runs-on: ubuntu-latest
+    needs: check_changeset
+    if: needs.check_changeset.outputs.status == 'success'
 
     strategy:
       matrix:
@@ -16,22 +33,19 @@ jobs:
 
     steps:
       - name: Checkout Branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
 
       - name: Setup
         run: pnpm run setup
-
-      - name: Check changeset exists
-        run: test "$(ls -1 .changeset | wc -l)" -gt "2"
 
       - name: Config npm
         run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
