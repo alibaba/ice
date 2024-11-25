@@ -1,5 +1,11 @@
 # @ice/jsx-runtime
 
+## 0.3.1
+
+### Patch Changes
+
+- 2e274966: fix: export createElement for backward compatibility
+
 ## 0.3.0
 
 ### Minor Changes

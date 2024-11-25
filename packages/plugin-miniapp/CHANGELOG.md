@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.1
+
+### Patch Changes
+
+- cce46e9b: fix: should check skeleton file existed before read
+  - @ice/miniapp-runtime@1.2.1
+  - @ice/miniapp-react-dom@1.1.1
+
 ## 1.2.0
 
 ### Minor Changes
