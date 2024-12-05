@@ -17,7 +17,7 @@ export function createJSXElementFactory(factory: typeof ElementFactory) {
     // Compat for props.
     if (isRealDOM) {
       // Only the dom needs to be transformed, not the components.
-      rest = transformProps(rest);
+      rest = transformProps(type, rest);
 
       // Delete props on real dom that are not allowed in react.
       delete rest.onAppear;
