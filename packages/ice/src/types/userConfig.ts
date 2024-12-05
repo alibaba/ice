@@ -49,6 +49,8 @@ interface Fetcher {
   method?: string;
 }
 
+export type HtmlGeneratingMode = 'cleanUrl' | 'compat';
+
 export interface UserConfig {
   /**
    * Feature polyfill for legacy browsers, which can not polyfilled by core-js.
@@ -179,6 +181,15 @@ export interface UserConfig {
    * @see https://v3.ice.work/docs/guide/basic/config#htmlgenerating
    */
   htmlGenerating?: boolean;
+  /**
+   * Control how file structure to generation html.
+   * Route:      '/'           '/foo'            '/foo/bar'
+   * `cleanUrl`: '/index.html' '/foo.html'       '/foo/bar.html'
+   * `compat`:   '/index.html' '/foo/index.html' '/foo/bar/index.html'
+   * @see https://v3.ice.work/docs/guide/basic/config#htmlgeneratingmode
+   * @default 'cleanUrl'
+   */
+  htmlGeneratingMode?: HtmlGeneratingMode;
   /**
    * Choose a style of souce mapping to enhance the debugging process.
    * @see https://v3.ice.work/docs/guide/basic/config#sourcemap

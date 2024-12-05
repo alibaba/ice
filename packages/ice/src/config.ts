@@ -511,6 +511,11 @@ const userConfig = [
     validation: 'boolean',
     defaultValue: true,
   },
+  {
+    name: 'htmlGeneratingMode',
+    validation: 'string',
+    defaultValue: 'cleanUrl',
+  },
 ];
 
 const cliOption = [

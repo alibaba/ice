@@ -625,6 +625,21 @@ export default defineConfig(() => ({
 
 如果产物不想生成 html，可以设置为 `false`，在 SSG 开启的情况下，强制关闭 html 生成，将导致 SSG 失效。
 
+### htmlGeneratingMode
+
+- 类型: `'cleanUrl' | 'compat'`
+- 默认值 `'cleanUrl'`
+
+当开启 html 生成的时候，可以用来配置生成目录的规则，避免在某些服务器下出现非首页内容 404 的情况。目前主要由两种，分别是：
+
+- `cleanUrl` 生成的文件路径和路由一致，只不过多了 `.html`。通常用于支持此模式的现代服务器
+- `compat` 生成兼容模式的路径文件，通常用于一些只能省略 `index.html` 的服务器
+
+| 路径         | `/`           | `/foo`            | `/foo/bar`            |
+|------------|---------------|-------------------|-----------------------|
+| `cleanUrl` | `/index.html` | `/foo.html`       | `/foo/bar.html`       |
+| `compat`   | `/index.html` | `/foo/index.html` | `/foo/bar/index.html` |
+
 ### plugins
 
 - 类型：`PluginList<Config, OverwritePluginAPI>`
