@@ -153,6 +153,10 @@ export interface UserConfig {
      * inject initial route path for each route html.
      */
     injectInitialEntry?: boolean;
+    /**
+     * Enable lazy compile for routes.
+     */
+    lazyCompile?: boolean;
   };
   /**
    * Add ice.js plugin to customize framework config.
