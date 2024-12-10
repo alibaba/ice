@@ -34,6 +34,8 @@ describe(`build ${example}`, () => {
     expect(bundleContent.includes('__IS_NODE__')).toBe(false);
     expect(fs.existsSync(path.join(__dirname, `../../examples/${example}/build/favicon.ico`))).toBe(true);
     expect(fs.existsSync(path.join(__dirname, `../../examples/${example}/build/js/data-loader.js`))).toBe(true);
+    expect(fs.existsSync(path.join(__dirname, `../../examples/${example}/build/index.html`))).toBe(true);
+    expect(fs.existsSync(path.join(__dirname, `../../examples/${example}/build/blog.html`))).toBe(true);
     const jsonContent = fs.readFileSync(path.join(__dirname, `../../examples/${example}/build/assets-manifest.json`), 'utf-8');
     expect(JSON.parse(jsonContent).pages.about.includes('js/framework.js')).toBeFalsy();
     const dataLoaderPath = path.join(__dirname, `../../examples/${example}/build/js/data-loader.js`);
@@ -67,6 +69,14 @@ describe(`build ${example}`, () => {
     await page.push('/downgrade.html');
     expect(await page.$$text('title')).toStrictEqual(['']);
     expect((await page.$$text('h2')).length).toEqual(0);
+  });
+
+  test('using "compat" html generating mode', async () => {
+    await buildFixture(example, {
+      config: 'compatHtml.config.mts',
+    });
+    expect(fs.existsSync(path.join(__dirname, `../../examples/${example}/build/index.html`))).toBeTruthy();
+    expect(fs.existsSync(path.join(__dirname, `../../examples/${example}/build/blog/index.html`))).toBeTruthy();
   });
 
   afterAll(async () => {
