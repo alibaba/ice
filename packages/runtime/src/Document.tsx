@@ -207,7 +207,20 @@ export const Data: DataType = (props: DataProps) => {
 export type FirstChunkCacheType = () => JSX.Element;
 
 export const FirstChunkCache: FirstChunkCacheType = () => {
-  return <div dangerouslySetInnerHTML={{ __html: '<!--fcc-->' }} />;
+  return (
+    <>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: 'window.dispatchEvent(new Event("first-full-screen-paint"));',
+        }}
+      />
+      <div
+        dangerouslySetInnerHTML={{
+          __html: '<!--fcc-->',
+        }}
+      />
+    </>
+  );
 };
 
 export type MainType = (props: React.HTMLAttributes<HTMLDivElement>) => JSX.Element;
