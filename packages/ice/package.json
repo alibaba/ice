@@ -1,6 +1,6 @@
 {
   "name": "@ice/app",
-  "version": "3.5.1",
+  "version": "3.5.2",
   "description": "provide scripts and configuration used by web framework ice",
   "type": "module",
   "main": "./esm/index.js",
