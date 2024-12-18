@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.5.2
+
+### Patch Changes
+
+- f0c6380b: feat: add htmlGenerating `mode` option
+
 ## 3.5.1
 
 ### Patch Changes
