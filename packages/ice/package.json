@@ -98,8 +98,8 @@
     "unplugin": "^1.6.0",
     "webpack": "^5.88.0",
     "webpack-dev-server": "4.15.0",
-    "@rspack/core": "0.5.7",
-    "@rspack/dev-server": "0.5.7"
+    "@rspack/core": "1.1.6",
+    "@rspack/dev-server": "1.0.10"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
