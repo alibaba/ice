@@ -1,5 +1,15 @@
+/**
+ * The following code is modified based on
+ * https://github.com/pmmmwh/react-refresh-webpack-plugin/blob/0b960573797bf38926937994c481e4fec9ed8aa6/lib/runtime/RefreshUtils.js
+ *
+ * MIT Licensed
+ * Author Michael Mok
+ * Copyright (c) 2019 Michael Mok
+ * https://github.com/pmmmwh/react-refresh-webpack-plugin/blob/0b960573797bf38926937994c481e4fec9ed8aa6/LICENSE
+ */
+
 /* global __webpack_require__ */
-let Refresh = require('react-refresh/runtime');
+var Refresh = require('react-refresh/runtime');
 
 /**
  * Extracts exports from a webpack module object.
@@ -14,19 +24,21 @@ function getModuleExports(moduleId) {
     // These are likely runtime or dynamically generated modules.
     return {};
   }
-  // eslint-disable-next-line
-  let maybeModule = __webpack_require__.c[moduleId];
+
+  var maybeModule = __webpack_require__.c[moduleId];
   if (typeof maybeModule === 'undefined') {
     // `moduleId` is available but the module in cache is unavailable,
     // which indicates the module is somehow corrupted (e.g. broken Webpacak `module` globals).
     // We will warn the user (as this is likely a mistake) and assume they cannot be refreshed.
-    console.warn(`[React Refresh] Failed to get exports for module: ${moduleId}.`);
+    console.warn(
+      '[React Refresh] Failed to get exports for module: ' + moduleId + '.',
+    );
     return {};
   }
 
-  let exportsOrPromise = maybeModule.exports;
+  var exportsOrPromise = maybeModule.exports;
   if (typeof Promise !== 'undefined' && exportsOrPromise instanceof Promise) {
-    return exportsOrPromise.then((exports) => {
+    return exportsOrPromise.then(function (exports) {
       return exports;
     });
   }
@@ -42,7 +54,7 @@ function getModuleExports(moduleId) {
  * @returns {string[]} A React refresh boundary signature array.
  */
 function getReactRefreshBoundarySignature(moduleExports) {
-  let signature = [];
+  var signature = [];
   signature.push(Refresh.getFamilyByType(moduleExports));
 
   if (moduleExports == null || typeof moduleExports !== 'object') {
@@ -50,7 +62,7 @@ function getReactRefreshBoundarySignature(moduleExports) {
     return signature;
   }
 
-  for (let key in moduleExports) {
+  for (var key in moduleExports) {
     if (key === '__esModule') {
       continue;
     }
@@ -71,7 +83,7 @@ function createDebounceUpdate() {
    * A cached setTimeout handler.
    * @type {number | undefined}
    */
-  let refreshTimeout;
+  var refreshTimeout;
 
   /**
    * Performs react refresh on a delay and clears the error overlay.
@@ -80,7 +92,7 @@ function createDebounceUpdate() {
    */
   function enqueueUpdate(callback) {
     if (typeof refreshTimeout === 'undefined') {
-      refreshTimeout = setTimeout(() => {
+      refreshTimeout = setTimeout(function () {
         refreshTimeout = undefined;
         Refresh.performReactRefresh();
         callback();
@@ -110,27 +122,34 @@ function isSafeExport(key) {
     key === 'staticDataLoader'
   );
 }
+
 function isReactRefreshBoundary(moduleExports) {
   if (Refresh.isLikelyComponentType(moduleExports)) {
     return true;
   }
-  if (moduleExports === undefined || moduleExports === null || typeof moduleExports !== 'object') {
+  if (
+    moduleExports === undefined ||
+    moduleExports === null ||
+    typeof moduleExports !== 'object'
+  ) {
     // Exit if we can't iterate over exports.
     return false;
   }
 
-  let hasExports = false;
-  let areAllExportsComponents = true;
-  for (let key in moduleExports) {
+  var hasExports = false;
+  var areAllExportsComponents = true;
+  for (var key in moduleExports) {
     hasExports = true;
+
     if (isSafeExport(key)) {
       continue;
     }
+
     // We can (and have to) safely execute getters here,
     // as Webpack manually assigns harmony exports to getters,
     // without any side-effects attached.
     // Ref: https://github.com/webpack/webpack/blob/b93048643fe74de2a6931755911da1212df55897/lib/MainTemplate.js#L281
-    let exportValue = moduleExports[key];
+    var exportValue = moduleExports[key];
     if (!Refresh.isLikelyComponentType(exportValue)) {
       areAllExportsComponents = false;
     }
@@ -150,23 +169,27 @@ function isReactRefreshBoundary(moduleExports) {
 function registerExportsForReactRefresh(moduleExports, moduleId) {
   if (Refresh.isLikelyComponentType(moduleExports)) {
     // Register module.exports if it is likely a component
-    Refresh.register(moduleExports, `${moduleId} %exports%`);
+    Refresh.register(moduleExports, moduleId + ' %exports%');
   }
 
-  if (moduleExports === undefined || moduleExports === null || typeof moduleExports !== 'object') {
+  if (
+    moduleExports === undefined ||
+    moduleExports === null ||
+    typeof moduleExports !== 'object'
+  ) {
     // Exit if we can't iterate over the exports.
     return;
   }
 
-  for (let key in moduleExports) {
+  for (var key in moduleExports) {
     // Skip registering the ES Module indicator
     if (key === '__esModule') {
       continue;
     }
 
-    let exportValue = moduleExports[key];
+    var exportValue = moduleExports[key];
     if (Refresh.isLikelyComponentType(exportValue)) {
-      let typeID = `${moduleId} %exports% ${key}`;
+      var typeID = moduleId + ' %exports% ' + key;
       Refresh.register(exportValue, typeID);
     }
   }
@@ -181,14 +204,14 @@ function registerExportsForReactRefresh(moduleExports, moduleId) {
  * @returns {boolean} Whether the React refresh boundary should be invalidated.
  */
 function shouldInvalidateReactRefreshBoundary(prevExports, nextExports) {
-  let prevSignature = getReactRefreshBoundarySignature(prevExports);
-  let nextSignature = getReactRefreshBoundarySignature(nextExports);
+  var prevSignature = getReactRefreshBoundarySignature(prevExports);
+  var nextSignature = getReactRefreshBoundarySignature(nextExports);
 
   if (prevSignature.length !== nextSignature.length) {
     return true;
   }
 
-  for (let i = 0; i < nextSignature.length; i += 1) {
+  for (var i = 0; i < nextSignature.length; i += 1) {
     if (prevSignature[i] !== nextSignature[i]) {
       return true;
     }
@@ -197,13 +220,19 @@ function shouldInvalidateReactRefreshBoundary(prevExports, nextExports) {
   return false;
 }
 
-let enqueueUpdate = createDebounceUpdate();
-function executeRuntime(moduleExports, moduleId, webpackHot, refreshOverlay, isTest) {
+var enqueueUpdate = createDebounceUpdate();
+function executeRuntime(
+  moduleExports,
+  moduleId,
+  webpackHot,
+  refreshOverlay,
+  isTest,
+) {
   registerExportsForReactRefresh(moduleExports, moduleId);
 
   if (webpackHot) {
-    let isHotUpdate = !!webpackHot.data;
-    let prevExports;
+    var isHotUpdate = !!webpackHot.data;
+    var prevExports;
     if (isHotUpdate) {
       prevExports = webpackHot.data.prevExports;
     }
@@ -216,7 +245,7 @@ function executeRuntime(moduleExports, moduleId, webpackHot, refreshOverlay, isT
          * @param {*} data A hot module data object from Webpack HMR.
          * @returns {void}
          */
-        (data) => {
+        function hotDisposeCallback(data) {
           // We have to mutate the data object to get data registered and cached
           data.prevExports = moduleExports;
         },
@@ -237,7 +266,7 @@ function executeRuntime(moduleExports, moduleId, webpackHot, refreshOverlay, isT
               window.onHotAcceptError(error.message);
             }
           }
-          // eslint-disable-next-line
+
           __webpack_require__.c[moduleId].hot.accept(hotErrorHandler);
         },
       );
@@ -254,7 +283,7 @@ function executeRuntime(moduleExports, moduleId, webpackHot, refreshOverlay, isT
              * A function to dismiss the error overlay after performing React refresh.
              * @returns {void}
              */
-            () => {
+            function updateCallback() {
               if (typeof refreshOverlay !== 'undefined' && refreshOverlay) {
                 refreshOverlay.clearRuntimeErrors();
               }
