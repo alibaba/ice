@@ -1,15 +1,14 @@
-import { esbuild } from '@ice/bundles';
-import webpack from 'webpack';
-import { logger } from '../../utils/logger.js';
+import { createRequire } from 'module';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import MiniCssExtractPlugin from '@ice/bundles/compiled/mini-css-extract-plugin/dist/index.js';
 import { sass, less } from '@ice/bundles';
-
-import { createRequire } from 'module';
+import TerserPlugin from '@ice/bundles/compiled/terser-webpack-plugin/index.js';
+import webpack from 'webpack';
+import { esbuild } from '@ice/bundles';
 import type { ModifyWebpackConfig, Config } from '@ice/shared-config/types';
 import type { LoaderContext, Configuration } from 'webpack';
 import { getCSSModuleLocalIdent, getPostcssOpts } from '@ice/shared-config';
-import { any } from 'micromatch';
+import { logger } from '../../utils/logger.js';
 
 const require = createRequire(import.meta.url);
 
@@ -76,6 +75,7 @@ export class WebpackServerCompiler {
   }
 
   private createWebpackConfig(options: any): webpack.Configuration {
+    console.log('options', options);
     const cssRules = [
       ['css'],
       [
@@ -110,29 +110,38 @@ export class WebpackServerCompiler {
       mode: 'production',
       entry: options.entryPoints as string[],
       output: {
+        filename: `[name].${options.format === 'esm' ? 'mjs' : 'cjs'}`,
         path: options.outdir,
         chunkFormat: {
           esm: 'module',
           cjs: 'commonjs',
         }[options.format],
       },
+      devtool: options.sourcemap,
       externals: options.external,
       optimization: {
         splitChunks: {
           chunks: 'all',
           cacheGroups: {
+            default: false,
             vendors: {
               test: /[\\/]node_modules[\\/]/,
               name: 'vendors',
               chunks: 'all',
               priority: 10,
+              reuseExistingChunk: true,
             },
           },
         },
+        minimize: false,
+        minimizer: [
+          new TerserPlugin({
+            extractComments: false,
+          }),
+        ],
       },
       resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.jsx', '...'],
-        extensionAlias: { '.js': ['.ts', '.js'] },
+        extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs', '...'],
         alias: options.alias,
         mainFields: ['module', 'main'],
         plugins: [
@@ -146,7 +155,7 @@ export class WebpackServerCompiler {
           // Use esbuild to compile JavaScript & TypeScript
           {
             //   // Match `.js`, `.jsx`, `.ts` or `.tsx` files
-            test: /\.[jt]sx?$/,
+            test: /\.m?[jt]sx?$/,
             loader: 'esbuild-loader',
             // available options: https://github.com/evanw/esbuild/blob/88821b7e7d46737f633120f91c65f662eace0bcf/lib/shared/types.ts#L158-L172
             options: {
@@ -160,16 +169,6 @@ export class WebpackServerCompiler {
             },
           },
           ...cssRules,
-          // {
-          //   test: /\.[jt]sx?$/,
-          //   use: {
-          //     loader: 'ts-loader',
-          //     options: {
-          //       transpileOnly: true,
-          //     },
-          //   }, // Replaced with ts-loader
-          //   exclude: /node_modules/,
-          // },
         ],
       },
       plugins: [

@@ -29,7 +29,6 @@ import type { PreBundleDepsMetaData } from './preBundleDeps.js';
 import preBundleDeps from './preBundleDeps.js';
 import { WebpackServerCompiler } from './webpackServerCompiler/compiler.js';
 import VirualAssetPlugin from './webpackServerCompiler/virtualAssetPlugin.js';
-import CssModulePlugin from './webpackServerCompiler/cssModules.js';
 
 const logger = createLogger('server-compiler');
 
@@ -205,14 +204,9 @@ export function createServerCompiler(options: Options) {
       // while it is not recommended
       loader: { '.js': 'jsx' },
       jsx: 'automatic',
-      sourcemap:
-        typeof sourceMap === 'boolean'
-          ? // eslint-disable-next-line operator-linebreak
-            // Transform sourceMap for esbuild.
-            sourceMap
-          : sourceMap.includes('inline')
-          ? 'inline'
-          : !!sourceMap,
+      sourcemap: typeof sourceMap === 'boolean'
+      // Transform sourceMap for esbuild.
+      ? sourceMap : (sourceMap.includes('inline') ? 'inline' : !!sourceMap),
       banner:
         customBuildOptions.platform === 'node' && server?.format !== 'cjs'
           ? {
@@ -286,21 +280,7 @@ export function createServerCompiler(options: Options) {
           const webpackServerCompiler = new WebpackServerCompiler({
             ...buildOptions,
             plugins: [
-              CssModulePlugin.webpack({
-                extract: false,
-                generateLocalIdentName: function (name: string, fileName: string) {
-                  // Compatible with webpack css-loader.
-                  return getCSSModuleIdent({
-                    rootDir,
-                    mode: dev ? 'development' : 'production',
-                    fileName,
-                    localName: name,
-                    rule: speedup ? 'native' : 'loader',
-                    localIdentName: task.config.cssModules?.localIdentName,
-                  });
-                },
-              }),
-              compilationInfo && VirualAssetPlugin.webpack({ compilationInfo, rootDir }),
+              compilationInfo && new VirualAssetPlugin({ compilationInfo, rootDir }),
               ...transformWebpackPlugins,
             ].filter(Boolean),
           });
