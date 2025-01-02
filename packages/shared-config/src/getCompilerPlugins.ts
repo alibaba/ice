@@ -33,24 +33,9 @@ function transformInclude(id: string) {
   return !!id.match(/\.(js|jsx|ts|tsx|mjs|mts|css|less|scss)$/);
 }
 
-function getCompilerPlugins(
-  rootDir: string,
-  config: Config,
-  compiler: 'rspack',
-  transformOptions: TransformOptions,
-): Config['plugins'];
-function getCompilerPlugins(
-  rootDir: string,
-  config: Config,
-  compiler: 'webpack',
-  transformOptions: TransformOptions,
-): Config['plugins'];
-function getCompilerPlugins(
-  rootDir: string,
-  config: Config,
-  compiler: 'esbuild',
-  transformOptions: TransformOptions,
-): BuildOptions['plugins'];
+function getCompilerPlugins(rootDir: string, config: Config, compiler: 'rspack', transformOptions: TransformOptions): Config['plugins'];
+function getCompilerPlugins(rootDir: string, config: Config, compiler: 'webpack', transformOptions: TransformOptions): Config['plugins'];
+function getCompilerPlugins(rootDir: string, config: Config, compiler: 'esbuild', transformOptions: TransformOptions): BuildOptions['plugins'];
 function getCompilerPlugins(rootDir: string, config: Config, compiler: Compiler, transformOptions: TransformOptions) {
   const {
     sourceMap,
@@ -77,42 +62,39 @@ function getCompilerPlugins(rootDir: string, config: Config, compiler: Compiler,
   // Use webpack loader instead of webpack plugin to do the compilation.
   // Reason: https://github.com/unjs/unplugin/issues/154
   if (swcOptions && !clientBundlers.includes(compiler)) {
-    compilerPlugins.push(
-      compilationPlugin({
-        rootDir,
-        cacheDir,
-        sourceMap,
-        fastRefresh,
-        mode,
-        compileIncludes,
-        compileExcludes,
-        swcOptions,
-        polyfill,
-        enableEnv,
-        getRoutesFile,
-      }),
-    );
+    compilerPlugins.push(compilationPlugin({
+      rootDir,
+      cacheDir,
+      sourceMap,
+      fastRefresh,
+      mode,
+      compileIncludes,
+      compileExcludes,
+      swcOptions,
+      polyfill,
+      enableEnv,
+      getRoutesFile,
+    }));
   }
 
-  compilerPlugins.push(...(transformPlugins.filter(({ enforce }) => enforce === 'post') || []));
+  compilerPlugins.push(
+    ...(transformPlugins.filter(({ enforce }) => enforce === 'post') || []),
+  );
 
   // Add redirect import after compilationPlugin.
   if (redirectImports) {
-    compilerPlugins.push(
-      redirectImportPlugin({
-        sourceMap,
-        exportData: redirectImports,
-      }),
-    );
+    compilerPlugins.push(redirectImportPlugin({
+      sourceMap,
+      exportData: redirectImports,
+    }));
   }
   if (clientBundlers.includes(compiler)) {
-    const transformPlugins = compilerPlugins.map((plugin) =>
-      createUnplugin(() => getPluginTransform(plugin, transformOptions))[compiler](),
-    ) as Config['plugins'];
+    const transformPlugins = compilerPlugins
+      .map((plugin) => createUnplugin(() => getPluginTransform(plugin, transformOptions))[compiler]()) as Config['plugins'];
     // Reverse the transformPlugins for rspack, because the unplugin order has been change in rspack mode.
     return compiler === 'rspack' ? transformPlugins.reverse() : transformPlugins;
   } else {
-    return compilerPlugins.map((plugin) => getPluginTransform(plugin, transformOptions));
+    return compilerPlugins.map(plugin => getPluginTransform(plugin, transformOptions));
   }
 }
 
