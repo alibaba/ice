@@ -279,6 +279,7 @@ export function createServerCompiler(options: Options) {
         } else {
           const webpackServerCompiler = new WebpackServerCompiler({
             ...buildOptions,
+            externals,
             plugins: [
               compilationInfo && new VirualAssetPlugin({ compilationInfo, rootDir }),
               ...transformWebpackPlugins,
