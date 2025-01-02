@@ -82,7 +82,7 @@ export class WebpackServerCompiler {
           },
         ],
       },
-      plugins: [...(options.plugins as any)],
+      plugins: options.plugins,
       stats: {
         errorDetails: true,
       },
