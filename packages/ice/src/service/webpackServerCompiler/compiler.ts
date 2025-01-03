@@ -64,7 +64,7 @@ export class WebpackServerCompiler {
           {
             //   // Match `.js`, `.jsx`, `.ts` or `.tsx` files
             test: /\.m?[jt]sx?$/,
-            loader: 'esbuild-loader',
+            loader: require.resolve('@ice/bundles/compiled/esbuild-loader'),
             // available options: https://github.com/evanw/esbuild/blob/88821b7e7d46737f633120f91c65f662eace0bcf/lib/shared/types.ts#L158-L172
             options: {
               target: options.target,
@@ -72,7 +72,8 @@ export class WebpackServerCompiler {
               loader: 'tsx',
               sourcemap: options.sourcemap,
               define: options.define,
-              banner: options.banner,
+              // banner can only be string in transform mode
+              banner: options.banner.js,
               implementation: esbuild,
             },
           },
