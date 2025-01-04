@@ -103,6 +103,12 @@ const tasks = [
     bundleName: 'rspack/loaders/load.js',
   },
   {
+    pkgName: 'tsconfig-paths-webpack-plugin',
+    declaration: false,
+    emptyDir: false,
+    externals: taskExternals,
+  },
+  {
     // pack main package
     pkgName: 'fork-ts-checker-webpack-plugin',
     externals: taskExternals,

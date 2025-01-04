@@ -43,6 +43,7 @@
     "react-refresh": "0.14.0",
     "sass": "1.50.0",
     "terminal-link": "^2.1.1",
+    "tsconfig-paths-webpack-plugin": "^4.2.0",
     "watchpack": "^2.4.0",
     "webpack-sources": "3.2.3",
     "zod": "^3.22.3",
