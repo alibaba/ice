@@ -1410,9 +1410,6 @@ importers:
       terminal-link:
         specifier: ^2.1.1
         version: 2.1.1
-      tsconfig-paths-webpack-plugin:
-        specifier: ^4.2.0
-        version: 4.2.0
       watchpack:
         specifier: ^2.4.0
         version: 2.4.0
@@ -1594,6 +1591,9 @@ importers:
       trusted-cert:
         specifier: 1.1.3
         version: 1.1.3
+      tsconfig-paths-webpack-plugin:
+        specifier: ^4.2.0
+        version: 4.2.0
       typescript:
         specifier: ^4.6.4
         version: 4.9.5
@@ -22675,7 +22675,6 @@ packages:
       enhanced-resolve: 5.12.0
       tapable: 2.2.1
       tsconfig-paths: 4.2.0
-    dev: false
 
   /tsconfig-paths@3.14.2:
     resolution: {integrity: sha512-o/9iXgCYc5L/JxCHPe3Hvh8Q/2xm5Z+p18PESBU6Ff33695QnCHBEjcytY2q19ua7Mbl/DavtBOLq+oG0RCL+g==}
@@ -22693,7 +22692,6 @@ packages:
       json5: 2.2.3
       minimist: 1.2.8
       strip-bom: 3.0.0
-    dev: false
 
   /tslib@1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
