@@ -2,7 +2,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { esbuild } from '@ice/bundles';
 import TerserPlugin from '@ice/bundles/compiled/terser-webpack-plugin/index.js';
-import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+import TsconfigPathsPlugin from '@ice/bundles/compiled/tsconfig-paths-webpack-plugin/index.js';
 import webpack from 'webpack';
 import { logger } from '../../utils/logger.js';
 
