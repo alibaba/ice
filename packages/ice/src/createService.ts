@@ -8,7 +8,11 @@ import type { CommandArgs, CommandName, TaskConfig } from 'build-scripts';
 import type { Config } from '@ice/shared-config/types';
 import type { AppConfig } from '@ice/runtime/types';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
-import type { DeclarationData, PluginData, ExtendsPluginAPI } from './types/index.js';
+import type {
+  DeclarationData,
+  PluginData,
+  ExtendsPluginAPI,
+} from './types/index.js';
 import Generator from './service/runtimeGenerator.js';
 import { createServerCompiler } from './service/serverCompiler.js';
 import createWatch from './service/watchSource.js';
@@ -140,9 +144,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   }
   if (builtinPlugin) {
     try {
-      const pluginModule = await dynamicImport(
-        builtinPlugin.startsWith('.') ? path.join(rootDir, builtinPlugin) : builtinPlugin,
-      );
+      const pluginModule = await dynamicImport(builtinPlugin.startsWith('.') ? path.join(rootDir, builtinPlugin) : builtinPlugin);
       const plugin = pluginModule.default || pluginModule;
       plugins.push(plugin());
     } catch (err) {
@@ -151,7 +153,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     }
   }
   // Register framework level API.
-  RUNTIME_EXPORTS.forEach((exports) => {
+  RUNTIME_EXPORTS.forEach(exports => {
     generatorAPI.addExport(exports);
   });
   const routeManifest = new RouteManifest();
@@ -192,7 +194,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   await ctx.resolveUserConfig();
 
   // get plugins include built-in plugins and custom plugins
-  const resolvedPlugins = (await ctx.resolvePlugins()) as PluginData[];
+  const resolvedPlugins = await ctx.resolvePlugins() as PluginData[];
   const runtimeModules = getRuntimeModules(resolvedPlugins, rootDir);
 
   const { getAppConfig, init: initAppConfigCompiler } = getAppExportConfig(rootDir);
@@ -223,15 +225,14 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
 
   const routesInfo = await generateRoutesInfo(rootDir, routesConfig, routeManifest.getRoutesDefinitions());
   routeManifest.setRoutes(routesInfo.routes);
+
   const hasExportAppData = (await getFileExports({ rootDir, file: 'src/app' })).includes('dataLoader');
   const csr = !userConfig.ssr && !userConfig.ssg;
 
-  const disableRouter =
-    (userConfig?.optimization?.router && routesInfo.routesCount <= 1) || userConfig?.optimization?.disableRouter;
+  const disableRouter = (userConfig?.optimization?.router && routesInfo.routesCount <= 1) ||
+    userConfig?.optimization?.disableRouter;
   if (disableRouter) {
-    logger.info(
-      '`optimization.router` is enabled, ice build will remove react-router and history which is unnecessary.',
-    );
+    logger.info('`optimization.router` is enabled, ice build will remove react-router and history which is unnecessary.');
     taskConfigs = mergeTaskConfig(taskConfigs, {
       alias: {
         '@ice/runtime/router': '@ice/runtime/single-router',
@@ -301,22 +302,21 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   }
 
   if (typeof userConfig.dataLoader === 'object' && userConfig.dataLoader.fetcher) {
-    const { packageName, method } = userConfig.dataLoader.fetcher;
+    const {
+      packageName,
+      method,
+    } = userConfig.dataLoader.fetcher;
 
-    generatorAPI.addDataLoaderImport(
-      method
-        ? {
-            source: packageName,
-            alias: {
-              [method]: 'dataLoaderFetcher',
-            },
-            specifier: [method],
-          }
-        : {
-            source: packageName,
-            specifier: '',
-          },
-    );
+    generatorAPI.addDataLoaderImport(method ? {
+      source: packageName,
+      alias: {
+        [method]: 'dataLoaderFetcher',
+      },
+      specifier: [method],
+    } : {
+      source: packageName,
+      specifier: '',
+    });
   }
 
   if (multipleServerEntry(userConfig, command)) {
@@ -348,8 +348,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         if (eventName === 'change' || eventName === 'add') {
           serverRunner.fileChanged(filePath);
         }
-      },
-    ]);
+      }],
+    );
   }
   // create serverCompiler with task config
   const serverCompiler = createServerCompiler({
