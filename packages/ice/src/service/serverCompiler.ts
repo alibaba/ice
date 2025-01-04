@@ -71,7 +71,9 @@ export const getRuntimeDefination = (
   // esbuild only receive the string type of replacement expressions, so we need to transform the boolean to string.
   // link: https://esbuild.github.io/api/#define
   Object.keys(defineVars).forEach((key) => {
-    stringifiedDefine[key] = typeof defineVars[key] === 'string' ? defineVars[key] : JSON.stringify(defineVars[key]);
+    stringifiedDefine[key] = typeof defineVars[key] === 'string'
+      ? defineVars[key]
+      : JSON.stringify(defineVars[key]);
   });
   // get runtime variable for server build
   Object.keys(process.env).forEach((key) => {
@@ -104,34 +106,28 @@ export function createServerCompiler(options: Options) {
   // Filter empty alias.
   const { ignores, alias } = filterAlias(task.config?.alias || {});
 
-  const serverCompiler: ServerCompiler = async (
-    customBuildOptions,
-    {
-      preBundle,
-      swc,
-      externalDependencies,
-      compilationInfo,
-      redirectImports,
-      removeOutputs,
-      runtimeDefineVars = {},
-      enableEnv = false,
-      transformEnv = true,
-      isServer = true,
-    } = {},
-  ) => {
+  const serverCompiler: ServerCompiler = async (customBuildOptions, {
+    preBundle,
+    swc,
+    externalDependencies,
+    compilationInfo,
+    redirectImports,
+    removeOutputs,
+    runtimeDefineVars = {},
+    enableEnv = false,
+    transformEnv = true,
+    isServer = true,
+  } = {}) => {
     let preBundleDepsMetadata: PreBundleDepsMetaData;
-    let swcOptions = merge(
-      {},
-      {
-        // Only get the `compilationConfig` from task config.
-        compilationConfig: getCompilationConfig(),
-      },
-      swc,
-    );
+    let swcOptions = merge({}, {
+      // Only get the `compilationConfig` from task config.
+      compilationConfig: getCompilationConfig(),
+    }, swc);
     function getCompilationConfig() {
       const customCompilationConfig = task.config?.swcOptions?.compilationConfig || {};
-      const getConfig =
-        typeof customCompilationConfig === 'function' ? customCompilationConfig : () => customCompilationConfig;
+      const getConfig = typeof customCompilationConfig === 'function'
+        ? customCompilationConfig
+        : () => customCompilationConfig;
 
       return (source: string, id: string) => {
         return {
@@ -140,21 +136,16 @@ export function createServerCompiler(options: Options) {
         };
       };
     }
-    const enableSyntaxFeatures = syntaxFeatures && Object.keys(syntaxFeatures).some((key) => syntaxFeatures[key]);
-    const transformPlugins = getCompilerPlugins(
-      rootDir,
-      {
-        ...task.config,
-        fastRefresh: false,
-        enableEnv,
-        polyfill: false,
-        swcOptions,
-        redirectImports,
-        getRoutesFile,
-      },
-      'esbuild',
-      { isServer },
-    );
+    const enableSyntaxFeatures = syntaxFeatures && Object.keys(syntaxFeatures).some(key => syntaxFeatures[key]);
+    const transformPlugins = getCompilerPlugins(rootDir, {
+      ...task.config,
+      fastRefresh: false,
+      enableEnv,
+      polyfill: false,
+      swcOptions,
+      redirectImports,
+      getRoutesFile,
+    }, 'esbuild', { isServer });
     const transformWebpackPlugins = getCompilerPlugins(
       rootDir,
       {
@@ -194,7 +185,9 @@ export function createServerCompiler(options: Options) {
         plugins,
       });
     }
+
     const format = customBuildOptions?.format || 'esm';
+
     let buildOptions: esbuild.BuildOptions = {
       bundle: true,
       format,
@@ -205,15 +198,14 @@ export function createServerCompiler(options: Options) {
       loader: { '.js': 'jsx' },
       jsx: 'automatic',
       sourcemap: typeof sourceMap === 'boolean'
-      // Transform sourceMap for esbuild.
-      ? sourceMap : (sourceMap.includes('inline') ? 'inline' : !!sourceMap),
-      banner:
-        customBuildOptions.platform === 'node' && server?.format !== 'cjs'
-          ? {
-              // See https://github.com/evanw/esbuild/issues/1921#issuecomment-1152991694
-              js: "import { createRequire } from 'module';const require = createRequire(import.meta.url);",
-            }
-          : undefined,
+        // Transform sourceMap for esbuild.
+        ? sourceMap : (sourceMap.includes('inline') ? 'inline' : !!sourceMap),
+      banner: customBuildOptions.platform === 'node' && server?.format !== 'cjs'
+        ? {
+            // See https://github.com/evanw/esbuild/issues/1921#issuecomment-1152991694
+            js: 'import { createRequire } from \'module\';const require = createRequire(import.meta.url);',
+          }
+        : undefined,
       ...customBuildOptions,
       absWorkingDir: rootDir,
       define,
@@ -247,13 +239,10 @@ export function createServerCompiler(options: Options) {
           plugins: [
             ...transformPlugins,
             // Plugin transformImportPlugin need after transformPlugins in case of it has onLoad lifecycle.
-            dev &&
-              preBundle &&
-              preBundleDepsMetadata &&
-              transformImportPlugin(
-                preBundleDepsMetadata,
-                path.join(rootDir, task.config.outputDir, SERVER_OUTPUT_DIR),
-              ),
+            dev && preBundle && preBundleDepsMetadata && transformImportPlugin(
+              preBundleDepsMetadata,
+              path.join(rootDir, task.config.outputDir, SERVER_OUTPUT_DIR),
+            ),
           ].filter(Boolean),
         }),
       ].filter(Boolean),
@@ -272,8 +261,6 @@ export function createServerCompiler(options: Options) {
         context = await esbuild.context(buildOptions);
         esbuildResult = await context.rebuild();
       } else {
-        // esbuildResult = await esbuild.build(buildOptions);
-
         if (Array.isArray(buildOptions.entryPoints)) {
           esbuildResult = await esbuild.build(buildOptions);
         } else {
@@ -286,7 +273,7 @@ export function createServerCompiler(options: Options) {
             ].filter(Boolean),
           });
           esbuildResult = (await webpackServerCompiler.build())?.compilation;
-        }
+        }(buildOptions);
       }
 
       logger.debug('[esbuild]', `time cost: ${new Date().getTime() - startTime}ms`);
@@ -297,12 +284,11 @@ export function createServerCompiler(options: Options) {
 
       if (removeOutputs && esbuildResult.metafile) {
         // build/server/a.mjs -> a.mjs
-        const currentOutputFiles = Object.keys(esbuildResult.metafile.outputs).map((output) =>
-          output.replace(formatPath(`${path.relative(rootDir, buildOptions.outdir)}${path.sep}`), ''),
-        );
+        const currentOutputFiles = Object.keys(esbuildResult.metafile.outputs)
+          .map(output => output.replace(formatPath(`${path.relative(rootDir, buildOptions.outdir)}${path.sep}`), ''));
         const allOutputFiles = fg.sync('**', { cwd: buildOptions.outdir });
         const outdatedFiles = difference(allOutputFiles, currentOutputFiles);
-        outdatedFiles.forEach((outdatedFile) => fse.removeSync(path.join(buildOptions.outdir, outdatedFile)));
+        outdatedFiles.forEach(outdatedFile => fse.removeSync(path.join(buildOptions.outdir, outdatedFile)));
       }
 
       return {
@@ -338,16 +324,9 @@ interface CreateDepsMetadataOptions {
 /**
  *  Create dependencies metadata only when server entry is bundled to esm.
  */
-async function createPreBundleDepsMetadata({
-  rootDir,
-  task,
-  plugins,
-  alias,
-  ignores,
-  define,
-  external,
-  speedup,
-}: CreateDepsMetadataOptions) {
+async function createPreBundleDepsMetadata(
+  { rootDir, task, plugins, alias, ignores, define, external, speedup }: CreateDepsMetadataOptions,
+) {
   const serverEntry = getServerEntry(rootDir, task.config?.server?.entry);
   const deps = await scanImports([serverEntry], {
     rootDir,
