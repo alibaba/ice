@@ -32,6 +32,7 @@ export async function startDevServer(
     // Sort by length, shortest path first.
     a.split('/').filter(Boolean).length - b.split('/').filter(Boolean).length);
   const webTaskConfig = taskConfigs.find(({ name }) => name === WEB);
+  // @ts-expect-error webpack-dev-server types in Configuration is missing.
   const originalDevServer: DevServerConfiguration = webpackConfigs[0].devServer;
   const customMiddlewares = originalDevServer?.setupMiddlewares;
   const defaultDevServerConfig = await getDefaultServerConfig(originalDevServer, commandArgs);
