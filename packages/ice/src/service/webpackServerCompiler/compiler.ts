@@ -76,7 +76,7 @@ export class WebpackServerCompiler {
               sourcemap: options.sourcemap,
               define: options.define,
               // banner can only be string in transform mode
-              banner: options.banner.js,
+              banner: options.banner?.js,
               implementation: esbuild,
             },
           },
