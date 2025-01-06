@@ -29,6 +29,7 @@ import type { PreBundleDepsMetaData } from './preBundleDeps.js';
 import preBundleDeps from './preBundleDeps.js';
 import { WebpackServerCompiler } from './webpackServerCompiler/compiler.js';
 import VirualAssetPlugin from './webpackServerCompiler/virtualAssetPlugin.js';
+import { externalNodeBuiltin } from './webpackServerCompiler/externalNodeBuiltin.js';
 
 const logger = createLogger('server-compiler');
 
@@ -268,6 +269,7 @@ export function createServerCompiler(options: Options) {
             ...buildOptions,
             externals,
             plugins: [
+              externalNodeBuiltin.webpack(),
               compilationInfo && new VirualAssetPlugin({ compilationInfo, rootDir }),
               ...transformWebpackPlugins,
             ].filter(Boolean),
