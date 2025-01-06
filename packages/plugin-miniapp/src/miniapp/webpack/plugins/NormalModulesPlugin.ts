@@ -89,7 +89,7 @@ export default class NormalModulesPlugin {
               }
 
               // @ts-ignore
-              const [type, prop]: [any, any] = node.arguments;
+              const [type, prop] = node.arguments;
 
               if (!type) return;
 
