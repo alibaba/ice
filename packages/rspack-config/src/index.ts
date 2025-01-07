@@ -116,7 +116,7 @@ const getConfig: GetConfig = async (options) => {
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
   const hashKey = hash === true ? 'hash:8' : (hash || '');
   // @ts-expect-error ManifestPlugin is an custom plugin.
-  const { rspack: { DefinePlugin, ProvidePlugin, SwcJsMinimizerRspackPlugin, CopyRspackPlugin, ManifestPlugin } } = await import('@rspack/core');
+  const { rspack: { DefinePlugin, ProvidePlugin, SwcJsMinimizerRspackPlugin, CopyRspackPlugin, ManifestPlugin } } = await import('@ice/bundles/esm/rspack.js');
   const cssFilename = `css/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`;
   // get compile plugins
   const compilerWebpackPlugins = getCompilerPlugins(rootDir, {

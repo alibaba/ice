@@ -280,7 +280,8 @@ const tasks = [
             replaceDeps(fileContent, webpackDevServerDeps.concat([...commonDeps, '@rspack/core', 'webpack-dev-server']))
              .replace(/webpack-dev-server\//g, '@ice/bundles/compiled/webpack-dev-server/')
              .replace(/@rspack\/core\//g, '@ice/bundles/compiled/@rspack/core/')
-             .replace(/@rspack\/dev-server\//g, '@ice/bundles/compiled/@rspack/dev-server/'),
+             .replace(/@rspack\/dev-server\//g, '@ice/bundles/compiled/@rspack/dev-server/')
+             .replace(/"webpack-dev-server"/g, '"@ice/bundles/compiled/webpack-dev-server"'),
           );
         } else {
           fs.copyFileSync(sourcePath, targetPath);

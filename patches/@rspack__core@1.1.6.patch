@@ -1,0 +1,43 @@
+diff --git a/dist/index.js b/dist/index.js
+index 5f652a54af3f404485672f104f0f2da71084a9b3..c64b692f5980ada3f75edc491342a56ec19c9845 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -694,6 +694,7 @@ __export(src_exports, {
+   Compiler: () => Compiler,
+   ContextReplacementPlugin: () => ContextReplacementPlugin,
+   CopyRspackPlugin: () => CopyRspackPlugin,
++  ManifestPlugin: () => ManifestPlugin,
+   CssExtractRspackPlugin: () => CssExtractRspackPlugin,
+   DefinePlugin: () => DefinePlugin,
+   DllPlugin: () => DllPlugin,
+@@ -758,6 +759,7 @@ __export(exports_exports, {
+   Compiler: () => Compiler,
+   ContextReplacementPlugin: () => ContextReplacementPlugin,
+   CopyRspackPlugin: () => CopyRspackPlugin,
++  ManifestPlugin: () => ManifestPlugin,
+   CssExtractRspackPlugin: () => CssExtractRspackPlugin,
+   DefinePlugin: () => DefinePlugin,
+   DllPlugin: () => DllPlugin,
+@@ -5246,6 +5248,14 @@ var CopyRspackPlugin = create2(
+   }
+ );
+ 
++// 
++// Customize builtin plugin.
++var ManifestPlugin = create2(
++  import_binding14.BuiltinPluginName.ManifestPlugin,
++  () => {
++  }
++);
++
+ // src/builtin-plugin/css-extract/index.ts
+ var import_binding16 = require("@rspack/binding");
+ var import_node_path3 = require("path");
+@@ -20193,6 +20203,7 @@ module.exports = rspack;
+   Compiler,
+   ContextReplacementPlugin,
+   CopyRspackPlugin,
++  ManifestPlugin,
+   CssExtractRspackPlugin,
+   DefinePlugin,
+   DllPlugin,

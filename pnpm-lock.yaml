@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
+  '@rspack/core@1.1.6':
+    hash: doltrtdboiowpkwanirvdprb6a
+    path: patches/@rspack__core@1.1.6.patch
   unplugin@1.6.0:
     hash: z2z7uvjbiarznogeja262ejlha
     path: patches/unplugin@1.6.0.patch
@@ -1434,7 +1437,7 @@ importers:
         version: 0.5.15(react-refresh@0.14.0)(webpack-dev-server@5.0.4)(webpack@5.88.2)
       '@rspack/core':
         specifier: 1.1.6
-        version: 1.1.6(@swc/helpers@0.5.1)
+        version: 1.1.6(patch_hash=doltrtdboiowpkwanirvdprb6a)(@swc/helpers@0.5.1)
       '@rspack/dev-server':
         specifier: 1.0.10
         version: 1.0.10(@rspack/core@1.1.6)(@types/express@4.17.21)(webpack@5.88.2)
@@ -1758,7 +1761,7 @@ importers:
     devDependencies:
       '@rspack/core':
         specifier: 1.1.6
-        version: 1.1.6(@swc/helpers@0.5.1)
+        version: 1.1.6(patch_hash=doltrtdboiowpkwanirvdprb6a)(@swc/helpers@0.5.1)
       '@rspack/dev-server':
         specifier: 1.0.10
         version: 1.0.10(@rspack/core@1.1.6)(@types/express@4.17.21)(webpack@5.88.2)
@@ -2396,7 +2399,7 @@ importers:
     devDependencies:
       '@rspack/core':
         specifier: 1.1.6
-        version: 1.1.6(@swc/helpers@0.5.1)
+        version: 1.1.6(patch_hash=doltrtdboiowpkwanirvdprb6a)(@swc/helpers@0.5.1)
 
   packages/runtime:
     dependencies:
@@ -8231,7 +8234,7 @@ packages:
       '@rspack/binding-win32-x64-msvc': 1.1.6
     dev: true
 
-  /@rspack/core@1.1.6(@swc/helpers@0.5.1):
+  /@rspack/core@1.1.6(patch_hash=doltrtdboiowpkwanirvdprb6a)(@swc/helpers@0.5.1):
     resolution: {integrity: sha512-q0VLphOF5VW2FEG7Vbdq3Ke4I74FbELE/8xmKghSalFtULLZ44SoSz8lyotfMim9GXIRFhDokAaH8WICmPxG+g==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -8246,6 +8249,7 @@ packages:
       '@swc/helpers': 0.5.1
       caniuse-lite: 1.0.30001690
     dev: true
+    patched: true
 
   /@rspack/dev-server@1.0.10(@rspack/core@1.1.6)(@types/express@4.17.21)(webpack@5.88.2):
     resolution: {integrity: sha512-iDsEtP0jNHRm4LJxL00QFTlOuqkdxIFxnd69h0KrFadmtxAWiDLIe4vYdZXWF74w4MezsJFx6dB2nUM/Ok8utA==}
@@ -8253,7 +8257,7 @@ packages:
     peerDependencies:
       '@rspack/core': '*'
     dependencies:
-      '@rspack/core': 1.1.6(@swc/helpers@0.5.1)
+      '@rspack/core': 1.1.6(patch_hash=doltrtdboiowpkwanirvdprb6a)(@swc/helpers@0.5.1)
       chokidar: 3.6.0
       connect-history-api-fallback: 2.0.0
       express: 4.21.2
