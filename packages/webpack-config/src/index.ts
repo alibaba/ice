@@ -352,7 +352,10 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
         logging: 'info',
       },
       setupMiddlewares: middlewares,
-      https,
+      server: https ? {
+        type: 'https',
+        options: typeof https === 'object' ? https : {},
+      } : undefined,
     }, devServer || {}) as Config['devServer'],
   } as Configuration;
   // tnpm / cnpm 安装时，webpack 5 的持久缓存无法生成，长时间将导致 OOM
