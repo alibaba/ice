@@ -3,7 +3,7 @@ import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
 import { esbuild } from '@ice/bundles';
 import TerserPlugin from '@ice/bundles/compiled/terser-webpack-plugin/index.js';
-import TsconfigPathsPlugin from '@ice/bundles/compiled/tsconfig-paths-webpack-plugin/index.js';
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import webpack from 'webpack';
 import { logger } from '../../utils/logger.js';
 
@@ -67,7 +67,7 @@ export class WebpackServerCompiler {
           {
             //   // Match `.js`, `.jsx`, `.ts` or `.tsx` files
             test: /\.m?[jt]sx?$/,
-            loader: require.resolve('@ice/bundles/compiled/esbuild-loader'),
+            loader: 'esbuild-loader',
             // available options: https://github.com/evanw/esbuild/blob/88821b7e7d46737f633120f91c65f662eace0bcf/lib/shared/types.ts#L158-L172
             options: {
               target: options.target,
