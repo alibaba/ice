@@ -264,6 +264,11 @@ const getConfig: GetConfig = async (options) => {
           extensionAlias: cssExtensionAlias ?? [],
         }),
       ],
+      generator: {
+        'css/auto': {
+          localIdentName,
+        },
+      },
     },
     resolve: {
       extensions: ['...', '.ts', '.tsx', '.jsx'],
@@ -309,11 +314,6 @@ const getConfig: GetConfig = async (options) => {
         }],
       }),
     ].filter(Boolean),
-    builtins: {
-      css: {
-        modules: { localIdentName },
-      },
-    },
     stats: 'none',
     infrastructureLogging: {
       level: 'warn',
@@ -321,7 +321,6 @@ const getConfig: GetConfig = async (options) => {
     devtool: getDevtoolValue(sourceMap),
     devServer: {
       allowedHosts: 'all',
-      // @ts-expect-error
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': '*',
@@ -331,7 +330,6 @@ const getConfig: GetConfig = async (options) => {
       compress: false,
       proxy,
       devMiddleware: {
-        // @ts-expect-error
         publicPath,
       },
       client: {
@@ -339,7 +337,6 @@ const getConfig: GetConfig = async (options) => {
       },
       https,
       ...devServer,
-      // @ts-expect-error
       setupMiddlewares: middlewares,
     },
   };
