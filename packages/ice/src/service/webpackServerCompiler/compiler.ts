@@ -20,6 +20,7 @@ export class WebpackServerCompiler {
     return {
       mode: 'production',
       entry: options.entryPoints as string[],
+      target: 'node12.20',
       output: {
         filename: `[name].${options.format === 'esm' ? 'mjs' : 'cjs'}`,
         path: options.outdir,
@@ -35,9 +36,9 @@ export class WebpackServerCompiler {
           chunks: 'all',
           cacheGroups: {
             default: false,
-            vendors: {
+            vendor: {
               test: /[\\/]node_modules[\\/]/,
-              name: 'vendors',
+              name: 'vendor',
               chunks: 'all',
               priority: 10,
               reuseExistingChunk: true,
