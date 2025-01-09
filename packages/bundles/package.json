@@ -45,7 +45,7 @@
     "zod": "^3.22.3",
     "zod-validation-error": "1.2.0",
     "terminal-link": "^2.1.1",
-    "@ice/pack-binding": "0.0.13",
+    "@ice/pack-binding": "1.1.6",
     "mime-types": "2.1.35",
     "p-retry": "^6.2.0",
     "open": "^10.0.3",

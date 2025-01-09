@@ -254,8 +254,8 @@ const tasks = [
           const fileContent = fs.readFileSync(sourcePath, 'utf8');
           fs.writeFileSync(
             targetFilePath,
-            fileContent,
-              // .replace(new RegExp('require\\(["\']@rspack/binding["\']\\)', 'g'), 'require("@ice/pack-binding")'),
+            fileContent
+              .replace(new RegExp('require\\(["\']@rspack/binding["\']\\)', 'g'), 'require("@ice/pack-binding")'),
           );
         } else {
           fs.copyFileSync(sourcePath, targetFilePath);
