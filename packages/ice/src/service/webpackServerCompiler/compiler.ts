@@ -93,7 +93,17 @@ export class WebpackServerCompiler {
           },
         ],
       },
-      plugins: options.plugins,
+      plugins: [
+        ...options.plugins,
+        new webpack.SourceMapDevToolPlugin({
+          // remove append sourcemap comment
+          append: false,
+          filename: '[file].map',
+        }),
+        // new webpack.ProvidePlugin({
+        //   'window.jQuery': 'jquery',
+        // }),
+      ],
       stats: {
         errorDetails: true,
       },
