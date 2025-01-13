@@ -13,10 +13,10 @@ class ModifyRequirePlugin {
         (assets) => {
           // TODO: make it more universal
           Object.entries(assets).forEach(([pathname, source]) => {
-            const sourceCode = source.source().toString();
+            let sourceCode = source.source().toString();
             if (pathname.includes('vendor')) {
-              const code = sourceCode
-                .replace(/exports\.id/, 'window.__quickMode.id')
+              let code = sourceCode
+                .replace(/exports\.id/, 'window.__quickMode = {} \nwindow.__quickMode.id')
                 .replace(/exports\.ids/, 'window.__quickMode.ids')
                 .replace(/exports\.modules/, 'window.__quickMode.modules');
               compilation.updateAsset(

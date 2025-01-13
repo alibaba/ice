@@ -17,7 +17,6 @@ export class WebpackServerCompiler {
     this.config = this.createWebpackConfig(options);
   }
   private createWebpackConfig(options: any): webpack.Configuration {
-    console.log('options.sourcemap', options.sourcemap);
     return {
       mode: 'production',
       entry: options.entryPoints as string[],
@@ -45,7 +44,7 @@ export class WebpackServerCompiler {
             },
           },
         },
-        minimize: true,
+        minimize: false,
         minimizer: [
           new TerserPlugin({
             extractComments: false,
