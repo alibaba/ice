@@ -17,6 +17,7 @@ export class WebpackServerCompiler {
     this.config = this.createWebpackConfig(options);
   }
   private createWebpackConfig(options: any): webpack.Configuration {
+    console.log('options.sourcemap', options.sourcemap);
     return {
       mode: 'production',
       entry: options.entryPoints as string[],
@@ -99,6 +100,7 @@ export class WebpackServerCompiler {
           // remove append sourcemap comment
           append: false,
           filename: '[file].map',
+          moduleFilenameTemplate: '[absolute-resource-path]',
         }),
         // new webpack.ProvidePlugin({
         //   'window.jQuery': 'jquery',
