@@ -20,6 +20,7 @@ export class WebpackServerCompiler {
     return {
       mode: 'production',
       entry: options.entryPoints as string[],
+      target: 'node12.20',
       output: {
         filename: `[name].${options.format === 'esm' ? 'mjs' : 'cjs'}`,
         path: options.outdir,
@@ -27,28 +28,28 @@ export class WebpackServerCompiler {
           esm: 'module',
           cjs: 'commonjs',
         }[options.format],
+        clean: true,
       },
       devtool: 'source-map',
       externals: options.externals,
       optimization: {
         splitChunks: {
-          chunks: 'all',
           cacheGroups: {
             default: false,
             vendor: {
               test: /[\\/]node_modules[\\/]/,
               name: 'vendor',
+              chunks: 'all',
               priority: 10,
-              reuseExistingChunk: true,
             },
           },
         },
-        minimize: false,
-        // minimizer: [
-        //   new TerserPlugin({
-        //     extractComments: false,
-        //   }),
-        // ],
+        minimize: true,
+        minimizer: [
+          new TerserPlugin({
+            extractComments: false,
+          }),
+        ],
       },
       resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs', '...'],
@@ -66,18 +67,25 @@ export class WebpackServerCompiler {
           {
             //   // Match `.js`, `.jsx`, `.ts` or `.tsx` files
             test: /\.m?[jt]sx?$/,
-            loader: 'esbuild-loader',
-            // available options: https://github.com/evanw/esbuild/blob/88821b7e7d46737f633120f91c65f662eace0bcf/lib/shared/types.ts#L158-L172
-            options: {
-              target: options.target,
-              format: options.format,
-              loader: 'tsx',
-              sourcemap: options.sourcemap,
-              define: options.define,
-              // banner can only be string in transform mode
-              banner: options.banner?.js,
-              implementation: esbuild,
-            },
+            exclude: /node_modules/,
+            use: [
+              {
+                loader: 'esbuild-loader',
+                // available options: https://github.com/evanw/esbuild/blob/88821b7e7d46737f633120f91c65f662eace0bcf/lib/shared/types.ts#L158-L172
+                options: {
+                  target: options.target,
+                  format: options.format,
+                  loader: 'tsx',
+                  jsx: options.jsx,
+                  sourcemap: options.sourcemap,
+                  define: options.define,
+                  // banner can only be string in transform mode
+                  banner: options.banner?.js,
+                  implementation: esbuild,
+                },
+              },
+              path.resolve(_dirname, 'removeMagicString.js'),
+            ],
           },
           {
             test: /\.(module\.)?(less|css|sass|scss|styl)$/i,

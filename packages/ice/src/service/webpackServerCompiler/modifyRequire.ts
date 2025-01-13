@@ -1,4 +1,5 @@
 import { type Compiler } from 'webpack';
+
 const PLUGIN_NAME = 'modify_require';
 
 class ModifyRequirePlugin {
@@ -10,13 +11,29 @@ class ModifyRequirePlugin {
           stage: compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL,
         },
         (assets) => {
+          // TODO: make it more universal
           Object.entries(assets).forEach(([pathname, source]) => {
-            if (!pathname.includes('vendor')) {
-              const sourceCode = source.source().toString();
+            const sourceCode = source.source().toString();
+            if (pathname.includes('vendor')) {
+              const code = sourceCode
+                .replace(/exports\.id/, 'window.__quickMode.id')
+                .replace(/exports\.ids/, 'window.__quickMode.ids')
+                .replace(/exports\.modules/, 'window.__quickMode.modules');
               compilation.updateAsset(
                 pathname,
                 new compiler.webpack.sources.SourceMapSource(
-                  sourceCode.replace(/require\(/g, 'system.files.import('),
+                  // require is not work in wormhole, so store the module chunk in window instead
+                  code,
+                  pathname,
+                  source.map(),
+                ),
+              );
+            } else {
+              compilation.updateAsset(
+                pathname,
+                new compiler.webpack.sources.SourceMapSource(
+                  // require is not work in wormhole, so store the module chunk in window instead
+                  sourceCode.replace(/installChunk\(.+\)/, 'installChunk(window.__quickMode)'),
                   pathname,
                   source.map(),
                 ),
