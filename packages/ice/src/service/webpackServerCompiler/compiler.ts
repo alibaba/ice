@@ -12,8 +12,10 @@ const _dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fil
 
 export class WebpackServerCompiler {
   private config: webpack.Configuration;
+  private options: Record<string, any>;
 
   constructor(options: any) {
+    this.options = options;
     this.config = this.createWebpackConfig(options);
   }
   private createWebpackConfig(options: any): webpack.Configuration {
@@ -101,9 +103,6 @@ export class WebpackServerCompiler {
           filename: '[file].map',
           moduleFilenameTemplate: '[absolute-resource-path]',
         }),
-        // new webpack.ProvidePlugin({
-        //   'window.jQuery': 'jquery',
-        // }),
       ],
       stats: {
         errorDetails: true,
@@ -111,7 +110,20 @@ export class WebpackServerCompiler {
     };
   }
 
+  private async handleEsbuildInject() {
+    const provideRecord = {};
+    const allInjects = await Promise.all(this.options.inject.map((inj) => import(inj)));
+    allInjects.forEach((injs, index) => {
+      Object.keys(injs).forEach((key) => {
+        provideRecord[key] = [this.options.inject[index], key];
+      });
+    });
+    return new webpack.ProvidePlugin(provideRecord);
+  }
+
   async build(): Promise<any> {
+    const providePlugin = await this.handleEsbuildInject();
+    this.config.plugins.push(providePlugin);
     return new Promise((resolve, reject) => {
       webpack(this.config, (err, stats) => {
         if (err || stats?.hasErrors?.()) {
