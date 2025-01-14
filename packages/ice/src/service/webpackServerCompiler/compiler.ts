@@ -22,7 +22,10 @@ export class WebpackServerCompiler {
     return {
       mode: 'production',
       entry: options.entryPoints as string[],
-      target: false,
+      target: 'node12.20',
+      externalsPresets: {
+        node: false,
+      },
       output: {
         filename: `[name].${options.format === 'esm' ? 'mjs' : 'cjs'}`,
         path: options.outdir,
@@ -31,6 +34,9 @@ export class WebpackServerCompiler {
           cjs: 'commonjs',
         }[options.format],
         clean: true,
+        library: {
+          type: 'commonjs2',
+        },
       },
       devtool: 'source-map',
       externals: options.externals,
