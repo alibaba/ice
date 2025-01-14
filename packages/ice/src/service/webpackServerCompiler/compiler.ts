@@ -22,7 +22,7 @@ export class WebpackServerCompiler {
     return {
       mode: 'production',
       entry: options.entryPoints as string[],
-      target: 'node12.20',
+      target: false,
       output: {
         filename: `[name].${options.format === 'esm' ? 'mjs' : 'cjs'}`,
         path: options.outdir,
@@ -54,9 +54,8 @@ export class WebpackServerCompiler {
         ],
       },
       resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs', '...'],
         alias: options.alias,
-        mainFields: ['module', 'main'],
+        extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs', '...'],
         plugins: [
           new TsconfigPathsPlugin({
             /* options: see below */
