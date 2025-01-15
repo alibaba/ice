@@ -61,6 +61,7 @@ export class WebpackServerCompiler {
       },
       resolve: {
         alias: options.alias,
+        fallback: { crypto: false },
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs', '...'],
         plugins: [
           new TsconfigPathsPlugin({
@@ -74,7 +75,17 @@ export class WebpackServerCompiler {
           {
             //   // Match `.js`, `.jsx`, `.ts` or `.tsx` files
             test: /\.m?[jt]sx?$/,
-            exclude: /node_modules/,
+            exclude(path) {
+              // TODO: more universal
+              if (path.includes('node_modules')) {
+                if (path.includes('@ali/alimod-ufirst-bottom-bar')) {
+                  return false;
+                } else {
+                  return true;
+                }
+              }
+              return false;
+            },
             use: [
               {
                 loader: 'esbuild-loader',
@@ -102,6 +113,7 @@ export class WebpackServerCompiler {
       },
       plugins: [
         ...options.plugins,
+        new webpack.DefinePlugin(options.define),
         new webpack.SourceMapDevToolPlugin({
           // remove append sourcemap comment
           append: false,

@@ -57,8 +57,8 @@ class VirtualManifestPlugin {
       NormalModule.getCompilationHooks(compilation)
         .readResource.for('virtual')
         .tap(PLUGIN_NAME, () => {
-          const manifest = this.generateManifestContent() || '';
-          return JSON.stringify(manifest);
+          const manifest = this.generateManifestContent();
+          return JSON.stringify(manifest?.assetsManifest || '');
         });
       normalModuleFactory.hooks.beforeResolve.tap(PLUGIN_NAME, (resolveData) => {
         if (resolveData.request === 'virtual:assets-manifest.json') {

@@ -188,7 +188,6 @@ export function createServerCompiler(options: Options) {
     }
 
     const format = customBuildOptions?.format || 'esm';
-
     let buildOptions: esbuild.BuildOptions = {
       bundle: true,
       format,
