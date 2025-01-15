@@ -52,7 +52,7 @@ export class WebpackServerCompiler {
             },
           },
         },
-        minimize: false,
+        minimize: true,
         minimizer: [
           new TerserPlugin({
             extractComments: false,
