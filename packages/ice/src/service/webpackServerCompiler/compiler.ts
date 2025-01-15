@@ -52,9 +52,10 @@ export class WebpackServerCompiler {
             },
           },
         },
-        minimize: true,
+        minimize: options.minify,
         minimizer: [
           new TerserPlugin({
+            // TODO: read minify config
             extractComments: false,
           }),
         ],
