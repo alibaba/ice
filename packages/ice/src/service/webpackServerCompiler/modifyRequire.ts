@@ -16,13 +16,16 @@ class ModifyRequirePlugin {
             let sourceCode = source.source().toString();
             if (pathname.includes('vendor')) {
               let code = sourceCode
-                .replace(/exports\.id/, 'window.__quickMode = {} \nwindow.__quickMode.id')
-                .replace(/exports\.ids/, 'window.__quickMode.ids')
-                .replace(/exports\.modules/, 'window.__quickMode.modules')
+                .replace(/exports\.id/, 'const __quickMode = {} \n__quickMode.id')
+                .replace(/exports\.ids/, '__quickMode.ids')
+                .replace(/exports\.modules/, '__quickMode.modules')
                 .replace(
                   'const { Writable } = stream_browserify_namespaceObject;',
                   'const { Writable } = stream_browserify;',
                 );
+              code += `\nmodule.exports = function () {
+  window.__quickMode = __quickMode;
+}`;
               compilation.updateAsset(
                 pathname,
                 new compiler.webpack.sources.SourceMapSource(
