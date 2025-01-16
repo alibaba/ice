@@ -187,6 +187,7 @@ export class WebpackServerCompiler {
                   format: options.format,
                   loader: 'tsx',
                   jsx: options.jsx,
+                  jsxImportSource: '@ice/runtime/react',
                   sourcemap: options.sourcemap,
                   define: options.define,
                   // banner can only be string in transform mode
