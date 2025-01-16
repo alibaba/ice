@@ -233,4 +233,6 @@ export interface Config {
   useDataLoader?: boolean;
 
   optimizePackageImports?: string[];
+
+  runtimeSource?: string;
 }

@@ -246,7 +246,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   // Get first task config as default platform config.
   const platformTaskConfig = taskConfigs[0];
 
-  const iceRuntimePath = '@ice/runtime';
+  const iceRuntimePath = platformTaskConfig.config.runtimeSource || '@ice/runtime';
   // Only when code splitting use the default strategy or set to `router`, the router will be lazy loaded.
   const lazy = [true, 'chunks', 'page', 'page-vendors'].includes(userConfig.codeSplitting);
   const { routeImports, routeDefinition } = getRoutesDefinition({

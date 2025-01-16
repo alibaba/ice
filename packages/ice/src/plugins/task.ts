@@ -33,6 +33,7 @@ const getDefaultTaskConfig = ({ rootDir, command }): Config => {
     logging: process.env.WEBPACK_LOGGING || defaultLogging,
     minify: command === 'build',
     useDevServer: true,
+    runtimeSource: '@ice/runtime',
   };
 };
 
