@@ -2,20 +2,19 @@
   "name": "@ice/runtime-kit",
   "version": "0.1.0",
   "description": "Runtime utilities and tools for ICE framework",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "main": "./esm/index.js",
+  "module": "./esm/index.mjs",
+  "types": "./esm/index.d.ts",
   "files": [
-    "dist"
+    "esm"
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "tsup",
-    "watch": "tsup --watch"
+    "watch": "tsc -w --sourceMap",
+    "build": "tsc"
   },
   "dependencies": {},
   "devDependencies": {
-    "tsup": "^8.0.0",
     "typescript": "^5.0.0",
     "@types/react": "^18.0.8",
     "@types/react-dom": "^18.0.3",
