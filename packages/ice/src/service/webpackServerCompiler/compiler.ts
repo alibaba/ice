@@ -136,7 +136,7 @@ export class WebpackServerCompiler {
           cacheGroups: {
             default: false,
             vendor: {
-              test: /[\\/]node_modules\/@ali/,
+              test: /[\\/]node_modules\/(?!@ali)/,
               name: 'vendor',
               chunks: 'all',
               priority: 10,
