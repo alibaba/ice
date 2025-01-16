@@ -37,7 +37,7 @@ export class WebpackServerCompiler {
     const { publicPath, rootDir, enableRpx2Vw, postcssOptions: userPostcssOptions, cssModules } = options;
     const [style, loader, loaderOptions] = config;
     const cssLoaderOpts = {
-      sourceMap: true,
+      sourceMap: false,
     };
     const cssModuleLoaderOpts = {
       ...cssLoaderOpts,
@@ -80,7 +80,6 @@ export class WebpackServerCompiler {
   }
 
   private createWebpackConfig(options: any): webpack.Configuration {
-    console.log('options', options);
     const cssRules = [
       ['css'],
       [
