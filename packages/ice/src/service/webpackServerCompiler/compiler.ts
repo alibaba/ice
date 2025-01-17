@@ -112,7 +112,7 @@ export class WebpackServerCompiler {
     const cssChunkFilename = undefined;
 
     for (const key of Object.keys(options.alias)) {
-      if (!path.isAbsolute(options.alias[key])) {
+      if ((options.alias[key]).startsWith('./')) {
         options.alias[key] = path.resolve(options.rootDir, options.alias[key]);
       }
     }
