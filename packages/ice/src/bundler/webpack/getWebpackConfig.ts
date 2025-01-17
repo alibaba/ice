@@ -12,6 +12,7 @@ import type RouteManifest from '../../utils/routeManifest.js';
 import type ServerRunnerPlugin from '../../webpack/ServerRunnerPlugin.js';
 import type ServerCompilerPlugin from '../../webpack/ServerCompilerPlugin.js';
 import type { BundlerOptions, Context } from '../types.js';
+import { bundlerConfigContext } from '../../service/onGetBundlerConfig.js';
 
 const { debounce } = lodash;
 
@@ -67,7 +68,7 @@ const getWebpackConfig: GetWebpackConfig = async (context, options) => {
   const { target = WEB } = commandArgs;
   const userConfigHash = await getFileHash(configFilePath);
 
-  const webpackConfigs = taskConfigs.map(({ config }) => {
+  const webpackConfigs = taskConfigs.map(({ config, name }) => {
     const { useDevServer, useDataLoader, server } = config;
     // If the target in the task config doesn't exit, use the target from cli command option.
     config.target ||= target;
@@ -125,10 +126,23 @@ const getWebpackConfig: GetWebpackConfig = async (context, options) => {
     // Add spinner for webpack task.
     webpackConfig.plugins.push(getSpinnerPlugin(spinner));
 
-    return webpackConfig;
+    return {
+      webpackConfig,
+      name,
+    };
   });
 
-  return webpackConfigs;
+  const finalConfigs = await Promise.all(
+    webpackConfigs.map(async ({ webpackConfig, name }) => {
+      const result = await bundlerConfigContext.runOnGetBundlerConfig(webpackConfig, {
+        environment: { name },
+        type: 'webpack',
+      });
+      return result;
+    }),
+  );
+
+  return finalConfigs as Configuration[];
 };
 
 export default getWebpackConfig;

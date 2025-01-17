@@ -40,6 +40,8 @@ import rspackBundler from './bundler/rspack/index.js';
 import getDefaultTaskConfig from './plugins/task.js';
 import { multipleServerEntry, renderMultiEntry } from './utils/multipleEntry.js';
 import hasDocument from './utils/hasDocument.js';
+import { onGetBundlerConfig } from './service/onGetBundlerConfig.js';
+import { onGetEnvironmentConfig, environmentConfigContext } from './service/onGetEnvironmentConfig.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -186,6 +188,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         const defaultTaskConfig = getDefaultTaskConfig({ rootDir, command });
         return ctx.registerTask(target, mergeConfig(defaultTaskConfig, config));
       },
+      onGetBundlerConfig,
+      onGetEnvironmentConfig,
     },
   });
   // Load .env before resolve user config, so we can access env variables defined in .env files.
@@ -383,6 +387,16 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     routesConfig: command !== 'build' || routesInfo.routesExports.length > 0,
     dataLoader: command !== 'build' || loaderExports,
   });
+
+  const { environments } = userConfig;
+  if (environments) {
+    for (const [envName, envConfig] of Object.entries(environments)) {
+      const envTaskConfig = mergeConfig(Object.assign({}, platformTaskConfig.config), envConfig as Config);
+      ctx.registerTask(envName, envTaskConfig);
+    }
+
+    environmentConfigContext.runOnGetEnvironmentConfig(taskConfigs);
+  }
 
   return {
     run: async () => {

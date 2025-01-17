@@ -7,6 +7,8 @@ import type { Config } from '@ice/shared-config/types';
 import type { AppConfig, AssetsManifest } from '@ice/runtime/types';
 import type ServerCompileTask from '../utils/ServerCompileTask.js';
 import type { CreateLogger } from '../utils/logger.js';
+import type { OnGetEnvironmentConfig } from '../service/onGetEnvironmentConfig.js';
+import type { OnGetBundlerConfig } from '../service/onGetBundlerConfig.js';
 import type { DeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport, Render } from './generator.js';
 
 export type { CreateLoggerReturnType } from '../utils/logger.js';
@@ -167,6 +169,8 @@ export interface ExtendsPluginAPI {
   addRoutesDefinition: (defineRoutes: DefineExtraRoutes) => void;
   dataCache: Map<string, string>;
   createLogger: CreateLogger;
+  onGetBundlerConfig: OnGetBundlerConfig;
+  onGetEnvironmentConfig: OnGetEnvironmentConfig;
 }
 
 export interface OverwritePluginAPI extends ExtendsPluginAPI {

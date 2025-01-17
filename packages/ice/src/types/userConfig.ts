@@ -4,6 +4,7 @@ import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import type { ProcessOptions } from '@ice/bundles';
 import type { Config, ModifyWebpackConfig, MinimizerOptions } from '@ice/shared-config/types';
 import type { OverwritePluginAPI } from './plugin';
+import type { EnvironmentUserConfig } from './environment';
 
 interface SyntaxFeatures {
   // syntax exportDefaultFrom and functionBind is not supported by esbuild
@@ -281,4 +282,8 @@ export interface UserConfig {
    * @see https://v3.ice.work/docs/guide/basic/config#crossoriginloading
    */
   crossOriginLoading?: Config['output']['crossOriginLoading'];
+  /**
+   * Setup environments
+   */
+  environments?: EnvironmentUserConfig;
 }
