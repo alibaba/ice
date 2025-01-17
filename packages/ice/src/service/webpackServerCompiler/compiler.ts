@@ -110,6 +110,12 @@ export class WebpackServerCompiler {
     const hashKey = '';
     const cssFilename = undefined;
     const cssChunkFilename = undefined;
+
+    for (const key of Object.keys(options.alias)) {
+      if (!path.isAbsolute(options.alias[key])) {
+        options.alias[key] = path.resolve(options.rootDir, options.alias[key]);
+      }
+    }
     return {
       mode: 'production',
       entry: options.entryPoints as string[],

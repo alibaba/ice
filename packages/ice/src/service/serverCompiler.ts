@@ -272,6 +272,7 @@ export function createServerCompiler(options: Options) {
               ...transformWebpackPlugins,
               new ModifyRequirePlugin(),
             ].filter(Boolean),
+            rootDir,
           });
           esbuildResult = (await webpackServerCompiler.build())?.compilation;
         }(buildOptions);
