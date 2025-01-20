@@ -103,7 +103,6 @@ export function createServerCompiler(options: Options) {
   const externals = task.config?.externals || {};
   const sourceMap = task.config?.sourceMap;
   const dev = command === 'start';
-
   // Filter empty alias.
   const { ignores, alias } = filterAlias(task.config?.alias || {});
 
@@ -273,6 +272,7 @@ export function createServerCompiler(options: Options) {
               new ModifyRequirePlugin(),
             ].filter(Boolean),
             rootDir,
+            userServerConfig: server,
           });
           esbuildResult = (await webpackServerCompiler.build())?.compilation;
         }(buildOptions);

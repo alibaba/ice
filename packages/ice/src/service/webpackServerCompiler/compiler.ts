@@ -80,6 +80,8 @@ export class WebpackServerCompiler {
   }
 
   private createWebpackConfig(options: any): webpack.Configuration {
+    const { userServerConfig } = options;
+    const { webpackConfig = {} } = userServerConfig;
     const cssRules = [
       ['css'],
       [
@@ -112,7 +114,7 @@ export class WebpackServerCompiler {
     const cssChunkFilename = undefined;
 
     for (const key of Object.keys(options.alias)) {
-      if ((options.alias[key]).startsWith('./')) {
+      if (options.alias[key].startsWith('./')) {
         options.alias[key] = path.resolve(options.rootDir, options.alias[key]);
       }
     }
@@ -156,6 +158,7 @@ export class WebpackServerCompiler {
             extractComments: false,
           }),
         ],
+        ...webpackConfig.optimization,
       },
       resolve: {
         alias: options.alias,
@@ -190,7 +193,8 @@ export class WebpackServerCompiler {
                 // available options: https://github.com/evanw/esbuild/blob/88821b7e7d46737f633120f91c65f662eace0bcf/lib/shared/types.ts#L158-L172
                 options: {
                   target: options.target,
-                  format: options.format,
+                  // make sure tree shaking is worked
+                  format: 'esm',
                   loader: 'tsx',
                   jsx: options.jsx,
                   jsxImportSource: '@ice/runtime/react',
@@ -222,6 +226,7 @@ export class WebpackServerCompiler {
           // If the warning is triggered, it seen to be unactionable for the user,
           ignoreOrder: true,
         }),
+        ...webpackConfig.plugins,
       ],
       stats: {
         errorDetails: true,
