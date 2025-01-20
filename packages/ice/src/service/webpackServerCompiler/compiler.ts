@@ -158,7 +158,7 @@ export class WebpackServerCompiler {
             extractComments: false,
           }),
         ],
-        ...(webpackConfig.optimization || []),
+        ...webpackConfig.optimization,
       },
       resolve: {
         alias: options.alias,
@@ -226,7 +226,7 @@ export class WebpackServerCompiler {
           // If the warning is triggered, it seen to be unactionable for the user,
           ignoreOrder: true,
         }),
-        ...webpackConfig.plugins,
+        ...(webpackConfig.plugins || []),
       ],
       stats: {
         errorDetails: true,

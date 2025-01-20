@@ -1,6 +1,6 @@
 {
   "name": "@ali/ice-quick-app",
-  "version": "3.6.1-beta.6",
+  "version": "3.6.1-beta.7",
   "description": "provide scripts and configuration used by web framework ice",
   "type": "module",
   "main": "./esm/index.js",
