@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Runtime utilities and tools for ICE framework",
   "main": "./esm/index.js",
-  "module": "./esm/index.mjs",
+  "module": "./esm/index.js",
   "types": "./esm/index.d.ts",
   "files": [
     "esm"

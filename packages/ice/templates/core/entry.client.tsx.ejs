@@ -3,8 +3,8 @@
 import { runClientApp, getAppConfig } from '<%- iceRuntimePath %>';
 import { commons, statics } from './runtime-modules';
 import * as app from '@/app';
-<% if (enableRoutes) { -%>
-import createRoutes from './routes';
+<% if (routesFile) { -%>
+import createRoutes from '<%- routesFile %>';
 <% } -%>
 <%- runtimeOptions.imports %>
 <% if (dataLoaderImport.imports && hasDataLoader) {-%><%-dataLoaderImport.imports%><% } -%>
@@ -21,7 +21,7 @@ const renderOptions: RunClientAppOptions = {
     commons,
     statics,
   },
-  <% if (enableRoutes) { %>createRoutes,<% } %>
+  <% if (routesFile) { %>createRoutes,<% } %>
   basename: getRouterBasename(),
   hydrate: <%- hydrate %>,
   memoryRouter: <%- memoryRouter || false %>,

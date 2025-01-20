@@ -252,6 +252,31 @@ importers:
         specifier: ^5.88.0
         version: 5.88.2
 
+  examples/custom-runtime:
+    dependencies:
+      '@ice/app':
+        specifier: workspace:*
+        version: link:../../packages/ice
+      '@ice/runtime':
+        specifier: workspace:*
+        version: link:../../packages/runtime
+      '@ice/runtime-kit':
+        specifier: workspace:*
+        version: link:../../packages/runtime-kit
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.0.0
+        version: 18.0.34
+      '@types/react-dom':
+        specifier: ^18.0.2
+        version: 18.0.11
+
   examples/disable-data-loader:
     dependencies:
       '@ice/app':
@@ -2486,6 +2511,9 @@ importers:
         specifier: ^0.11.10
         version: 0.11.10
     devDependencies:
+      '@ice/route-manifest':
+        specifier: workspace:*
+        version: link:../route-manifest
       esbuild:
         specifier: ^0.17.16
         version: 0.17.16

@@ -14,6 +14,7 @@ import type Server from 'webpack-dev-server';
 import type { SwcCompilationConfig } from '@ice/bundles';
 import type { BuildOptions } from 'esbuild';
 import type { ProcessOptions } from 'postcss';
+import type { NestedRouteManifest } from '@ice/route-manifest';
 
 export type ECMA = 5 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020;
 
@@ -89,6 +90,17 @@ export type ModifyWebpackConfig<T=Configuration, U=typeof webpack> = (config: T,
 export type { webpack };
 
 type PluginFunction = (this: Compiler, compiler: Compiler) => void;
+
+export interface RouteDefinitionOptions {
+  manifest: NestedRouteManifest[];
+  lazy?: boolean;
+  depth?: number;
+  matchRoute?: (route: NestedRouteManifest) => boolean;
+}
+export interface RouteDefinition {
+  routeImports: string[];
+  routeDefinition: string;
+}
 
 export interface Config {
   // The name of the task, used for the output log.
@@ -234,5 +246,18 @@ export interface Config {
 
   optimizePackageImports?: string[];
 
-  runtimeSource?: string;
+  runtime?: {
+    source?: string;
+    server?: string;
+    exports?: {
+      specifier: string[];
+      source: string;
+      alias?: Record<string, string>;
+    }[];
+    router?: {
+      routesDefinition?: (options: RouteDefinitionOptions) => RouteDefinition;
+      source?: string;
+      template?: string;
+    };
+  };
 }

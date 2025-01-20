@@ -10,7 +10,7 @@ const defaultAppConfig: AppConfig = {
   },
 } as const;
 
-export default function getAppConfig(appExport: AppExport): AppConfig {
+export function getAppConfig(appExport: AppExport): AppConfig {
   const { default: appConfig = {} } = appExport || {};
   const { app, router, ...others } = appConfig;
 

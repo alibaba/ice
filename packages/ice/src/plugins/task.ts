@@ -1,7 +1,8 @@
 import * as path from 'path';
 import { createRequire } from 'module';
 import type { Config } from '@ice/shared-config/types';
-import { CACHE_DIR, RUNTIME_TMP_DIR } from '../constant.js';
+import { CACHE_DIR, RUNTIME_TMP_DIR, RUNTIME_EXPORTS } from '../constant.js';
+import { getRoutesDefinition } from '../routes.js';
 
 const require = createRequire(import.meta.url);
 const getDefaultTaskConfig = ({ rootDir, command }): Config => {
@@ -33,7 +34,16 @@ const getDefaultTaskConfig = ({ rootDir, command }): Config => {
     logging: process.env.WEBPACK_LOGGING || defaultLogging,
     minify: command === 'build',
     useDevServer: true,
-    runtimeSource: '@ice/runtime',
+    runtime: {
+      exports: RUNTIME_EXPORTS,
+      source: '@ice/runtime',
+      server: '@ice/runtime/server',
+      router: {
+        routesDefinition: getRoutesDefinition,
+        source: './routes.tsx',
+        template: 'core/routes.tsx.ejs',
+      },
+    },
   };
 };
 

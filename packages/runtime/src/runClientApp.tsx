@@ -36,7 +36,6 @@ export interface RunClientAppOptions {
   dataLoaderDecorator?: Function;
 }
 
-
 export default async function runClientApp(options: RunClientAppOptions) {
   const {
     app,
