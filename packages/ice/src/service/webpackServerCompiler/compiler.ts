@@ -158,7 +158,7 @@ export class WebpackServerCompiler {
             extractComments: false,
           }),
         ],
-        ...webpackConfig.optimization,
+        ...(webpackConfig.optimization || []),
       },
       resolve: {
         alias: options.alias,
