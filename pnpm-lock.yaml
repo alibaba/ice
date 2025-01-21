@@ -1690,6 +1690,9 @@ importers:
       '@ice/runtime':
         specifier: workspace:^
         version: link:../runtime
+      '@ice/runtime-kit':
+        specifier: workspace:^
+        version: link:../runtime-kit
       '@ice/shared-config':
         specifier: workspace:*
         version: link:../shared-config

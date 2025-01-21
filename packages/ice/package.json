@@ -50,6 +50,7 @@
     "@ice/bundles": "workspace:*",
     "@ice/route-manifest": "workspace:*",
     "@ice/runtime": "workspace:^",
+    "@ice/runtime-kit": "workspace:^",
     "@ice/shared-config": "workspace:*",
     "@ice/webpack-config": "workspace:*",
     "@ice/rspack-config": "workspace:*",

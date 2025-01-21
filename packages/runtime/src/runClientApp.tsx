@@ -1,42 +1,40 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { createHashHistory, createBrowserHistory, createMemoryHistory } from '@remix-run/router';
+import {
+  createHashHistory,
+  createBrowserHistory,
+  createMemoryHistory,
+} from '@remix-run/router';
 import type { History } from '@remix-run/router';
 import type {
-  AppContext, WindowContext, AppExport, RouteItem, RuntimeModules, AppConfig, AssetsManifest, ClientAppRouterProps,
+  AppContext,
+  AppConfig,
+  AssetsManifest,
+  RunClientAppOptions,
   ErrorStack,
+} from '@ice/runtime-kit';
+import { setFetcher, setDecorator, getRequestContext, getAppConfig } from '@ice/runtime-kit';
+import type {
+  WindowContext,
+  RouteItem,
+  ClientAppRouterProps,
 } from './types.js';
-import { createHistory as createHistorySingle, getSingleRoute } from './singleRouter.js';
-import { setHistory } from './history.js';
 import Runtime from './runtime.js';
+import {
+  createHistory as createHistorySingle,
+  getSingleRoute,
+} from './singleRouter.js';
+import { setHistory } from './history.js';
 import { getAppData } from './appData.js';
 import { getRoutesPath, loadRouteModule } from './routes.js';
-import type { RouteLoaderOptions } from './routes.js';
-import getRequestContext from './requestContext.js';
-import getAppConfig from './appConfig.js';
 import matchRoutes from './matchRoutes.js';
-import { setFetcher, setDecorator } from './dataLoader.js';
 import ClientRouter from './ClientRouter.js';
-import addLeadingSlash from './utils/addLeadingSlash.js';
 import { AppContextProvider } from './AppContext.js';
+import addLeadingSlash from './utils/addLeadingSlash.js';
 import { deprecatedHistory } from './utils/deprecatedHistory.js';
 import reportRecoverableError from './reportRecoverableError.js';
 
-export type CreateRoutes = (options: Pick<RouteLoaderOptions, 'renderMode' | 'requestContext'>) => RouteItem[];
-
-export interface RunClientAppOptions {
-  app: AppExport;
-  runtimeModules: RuntimeModules;
-  createRoutes?: CreateRoutes;
-  hydrate?: boolean;
-  basename?: string;
-  memoryRouter?: boolean;
-  runtimeOptions?: Record<string, any>;
-  dataLoaderFetcher?: Function;
-  dataLoaderDecorator?: Function;
-}
-
-export default async function runClientApp(options: RunClientAppOptions) {
+export default async function runClientApp(options: RunClientAppOptions<RouteItem>) {
   const {
     app,
     createRoutes,

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import type { ComponentType } from 'react';
-import { routerHistory as history } from './history.js';
 import type {
   Renderer,
   AppContext,
@@ -14,14 +13,15 @@ import type {
   AddWrapper,
   RouteWrapperConfig,
   SetRender,
-  AppRouterProps,
   ComponentWithChildren,
   ResponseHandler,
-} from './types.js';
+} from '@ice/runtime-kit';
+import type { History } from '@remix-run/router';
+import { routerHistory as history } from './history.js';
+import type { AppRouterProps } from './types.js';
 import { useData, useConfig } from './RouteContext.js';
 import { useData as useSingleRouterData, useConfig as useSingleRouterConfig } from './singleRouter.js';
 import { useAppContext } from './AppContext.js';
-
 class Runtime {
   private appContext: AppContext;
 
@@ -73,7 +73,7 @@ class Runtime {
   public getWrappers = () => this.RouteWrappers;
 
   public loadModule(module: RuntimePlugin | StaticRuntimePlugin | CommonJsRuntime) {
-    let runtimeAPI: RuntimeAPI = {
+    let runtimeAPI: RuntimeAPI<History> = {
       addProvider: this.addProvider,
       addResponseHandler: this.addResponseHandler,
       getResponseHandlers: this.getResponseHandlers,
@@ -88,7 +88,7 @@ class Runtime {
       history,
     };
 
-    const runtimeModule = ((module as CommonJsRuntime).default || module) as RuntimePlugin;
+    const runtimeModule = ((module as CommonJsRuntime).default || module) as RuntimePlugin<any, History>;
     if (module) {
       return runtimeModule(runtimeAPI, this.runtimeOptions);
     }

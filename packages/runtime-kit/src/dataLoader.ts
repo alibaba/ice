@@ -1,8 +1,9 @@
-import getRequestContext from './requestContext.js';
+import { getRequestContext } from './requestContext.js';
 import type {
   RequestContext, RenderMode, AppExport,
   RuntimeModules, StaticRuntimePlugin, CommonJsRuntime,
   Loader, DataLoaderResult, StaticDataLoader, DataLoaderConfig, DataLoaderOptions,
+  RunClientAppOptions,
 } from './types.js';
 
 interface Loaders {
@@ -14,8 +15,8 @@ interface CachedResult {
 }
 
 interface Options {
-  fetcher: (config: StaticDataLoader) => Promise<any>;
-  decorator: (dataLoader: Function, id?: number) => Function;
+  fetcher: RunClientAppOptions['dataLoaderFetcher'];
+  decorator: RunClientAppOptions['dataLoaderDecorator'];
   runtimeModules: RuntimeModules['statics'];
   appExport: AppExport;
 }
@@ -49,18 +50,16 @@ export function defineStaticDataLoader(dataLoader: Loader): DataLoaderConfig {
  * Custom fetcher for load static data loader config.
  * Set globally to avoid passing this fetcher too deep.
  */
-let dataLoaderFetcher: (config: StaticDataLoader) => Promise<any>;
-export function setFetcher(customFetcher: (config: StaticDataLoader) => Promise<any>): void {
+let dataLoaderFetcher: RunClientAppOptions['dataLoaderFetcher'];
+export function setFetcher(customFetcher: RunClientAppOptions['dataLoaderFetcher']): void {
   dataLoaderFetcher = customFetcher;
 }
 
 /**
  * Custom decorator for deal with data loader.
  */
-let dataLoaderDecorator = (dataLoader: Function, id?: number): Function => {
-  return dataLoader;
-};
-export function setDecorator(customDecorator: (dataLoader: Function, id?: number) => Function): void {
+let dataLoaderDecorator: RunClientAppOptions['dataLoaderDecorator'];
+export function setDecorator(customDecorator: RunClientAppOptions['dataLoaderDecorator']): void {
   dataLoaderDecorator = customDecorator;
 }
 
@@ -125,7 +124,7 @@ export function loadDataByCustomFetcher(config: StaticDataLoader): Promise<any> 
   } catch (error) {
     console.error('parse template error: ', error);
   }
-  return dataLoaderFetcher(parsedConfig);
+  return dataLoaderFetcher?.(parsedConfig);
 }
 
 /**
@@ -142,7 +141,7 @@ export function callDataLoader(dataLoader: Loader, requestContext: RequestContex
     return loadDataByCustomFetcher(dataLoader);
   }
 
-  return dataLoaderDecorator(dataLoader)(requestContext);
+  return dataLoaderDecorator?.(dataLoader)?.(requestContext);
 }
 
 const cache = new Map<string, CachedResult>();

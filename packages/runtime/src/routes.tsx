@@ -3,21 +3,13 @@ import { useRouteError, defer, Await as ReactRouterAwait } from 'react-router-do
 import type { AwaitProps } from 'react-router-dom';
 // eslint-disable-next-line camelcase
 import type { UNSAFE_DeferredData, LoaderFunctionArgs } from '@remix-run/router';
-import type {
-  RouteItem,
-  RouteModules,
-  RenderMode,
-  RequestContext,
-  ComponentModule,
-  DataLoaderConfig,
-  DataLoaderOptions,
-  Loader,
-} from './types.js';
+import type { RouteModules, RenderMode, RequestContext, ComponentModule, DataLoaderConfig, DataLoaderOptions, Loader } from '@ice/runtime-kit';
+import { callDataLoader } from '@ice/runtime-kit';
+import { parseSearch } from '@ice/runtime-kit';
+import type { RouteItem } from './types.js';
 import RouteWrapper from './RouteWrapper.js';
 import { useAppContext } from './AppContext.js';
-import { callDataLoader } from './dataLoader.js';
 import { updateRoutesConfig } from './routesConfig.js';
-import { parseSearch } from './requestContext.js';
 
 type RouteModule = Pick<RouteItem, 'id' | 'lazy'>;
 

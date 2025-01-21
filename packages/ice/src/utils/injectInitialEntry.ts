@@ -1,6 +1,6 @@
 import path from 'path';
 import fse from 'fs-extra';
-import type { RouteItem } from '@ice/runtime/types';
+import type { RouteItem } from '@ice/runtime';
 import matchRoutes from '@ice/runtime/matchRoutes';
 import { logger } from './logger.js';
 import type RouteManifest from './routeManifest.js';

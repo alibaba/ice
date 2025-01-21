@@ -1,4 +1,4 @@
-import type { ErrorStack } from './types.js';
+import type { ErrorStack } from '@ice/runtime-kit';
 
 interface ErrorOptions {
   ignoreRuntimeWarning?: boolean;

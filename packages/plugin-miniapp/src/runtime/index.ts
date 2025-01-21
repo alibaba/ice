@@ -1,4 +1,4 @@
-import type { RuntimePlugin } from '@ice/runtime/types';
+import type { RuntimePlugin } from '@ice/runtime';
 import type { MiniappLifecycles } from '@ice/miniapp-runtime/esm/types';
 
 export function defineMiniappConfig(

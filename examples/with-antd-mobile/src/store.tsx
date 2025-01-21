@@ -1,4 +1,3 @@
-import type { ComponentWithChildren } from '@ice/runtime/types';
 import { useState } from 'react';
 import constate from 'constate';
 
@@ -12,7 +11,7 @@ function useCounter() {
 
 const [CounterProvider, useCounterContext] = constate(useCounter);
 
-export const StoreProvider: ComponentWithChildren = ({ children }) => {
+export const StoreProvider = ({ children }) => {
   return <CounterProvider>{ children } </CounterProvider>;
 };
 

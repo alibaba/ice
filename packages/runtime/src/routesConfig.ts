@@ -1,4 +1,5 @@
-import type { RouteMatch, LoadersData, LoaderData, RouteConfig } from './types.js';
+import type { RouteConfig, LoadersData, LoaderData } from '@ice/runtime-kit';
+import type { RouteMatch } from './types.js';
 
 export function getMeta(
   matches: RouteMatch[],

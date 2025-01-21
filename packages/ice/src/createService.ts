@@ -7,7 +7,7 @@ import webpack from '@ice/bundles/compiled/webpack/index.js';
 import { Context } from 'build-scripts';
 import type { CommandArgs, CommandName, TaskConfig } from 'build-scripts';
 import type { Config } from '@ice/shared-config/types';
-import type { AppConfig } from '@ice/runtime/types';
+import type { AppConfig } from '@ice/runtime';
 import * as config from './config.js';
 import test from './commands/test.js';
 import webpackBundler from './bundler/webpack/index.js';

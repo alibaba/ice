@@ -8,7 +8,7 @@ interface Location {
 /**
  * context for getData both in server and client side.
  */
-export default function getRequestContext(location: Location, serverContext: ServerContext = {}): RequestContext {
+export function getRequestContext(location: Location, serverContext: ServerContext = {}): RequestContext {
   const { pathname, search } = location;
   // Use query form server context first to avoid unnecessary parsing.
   // @ts-ignore

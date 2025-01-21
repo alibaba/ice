@@ -22,6 +22,9 @@ export default defineConfig(() => ({
             ],
             source: '../runtime',
             server: '@ice/runtime/server',
+            router: {
+              source: '@/routes',
+            },
           };
         })
       },

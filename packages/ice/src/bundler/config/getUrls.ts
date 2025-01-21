@@ -1,6 +1,6 @@
 import type { TaskConfig } from 'build-scripts';
 import type { Config } from '@ice/shared-config/types';
-import type { AppConfig } from '@ice/runtime/types';
+import type { AppConfig } from '@ice/runtime-kit';
 import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
 import type { Configuration as RSPackDevServerConfiguration } from '@rspack/dev-server';
 

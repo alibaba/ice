@@ -3,6 +3,7 @@ import type { ComponentType, PropsWithChildren } from 'react';
 import type { HydrationOptions, Root } from 'react-dom/client';
 
 // Basic Types
+export type AppData = any;
 export type RouteData = any;
 export type RenderMode = 'SSR' | 'SSG' | 'CSR';
 
@@ -181,7 +182,7 @@ type UseConfig = () => RouteConfig<Record<string, any>>;
 type UseData = () => RouteData;
 type UseAppContext = () => AppContext;
 
-export interface RuntimeAPI {
+export interface RuntimeAPI<T = History> {
   setAppRouter?: SetAppRouter;
   getAppRouter: GetAppRouter;
   addProvider: AddProvider;
@@ -193,12 +194,12 @@ export interface RuntimeAPI {
   useData: UseData;
   useConfig: UseConfig;
   useAppContext: UseAppContext;
-  history: History;
+  history: T;
 }
 
 // Plugin Types
-export interface RuntimePlugin<T = Record<string, any>> {
-  (apis: RuntimeAPI, runtimeOptions?: T): Promise<void> | void;
+export interface RuntimePlugin<T = Record<string, any>, H = History> {
+  (apis: RuntimeAPI<H>, runtimeOptions?: T): Promise<void> | void;
 }
 
 export interface StaticRuntimeAPI {
@@ -253,7 +254,7 @@ export interface RunClientAppOptions<T = any> {
   basename?: string;
   memoryRouter?: boolean;
   runtimeOptions?: Record<string, any>;
-  dataLoaderFetcher?: (config: StaticDataLoader) => void;
+  dataLoaderFetcher?: (config: StaticDataLoader) => any;
   dataLoaderDecorator?: (loader: Loader, index?: number) => (requestContext: RequestContext) => DataLoaderResult;
 }
 

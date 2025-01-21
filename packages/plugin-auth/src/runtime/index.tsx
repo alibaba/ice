@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { RuntimePlugin, AppProvider, RouteWrapper } from '@ice/runtime/types';
+import type { RuntimePlugin, AppProvider, RouteWrapper } from '@ice/runtime';
 import type { AuthConfig, AuthType, Auth } from '../types.js';
 import { AuthProvider, useAuth, withAuth } from './Auth.js';
 import type { InjectProps } from './Auth.js';
