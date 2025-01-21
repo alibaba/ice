@@ -1,4 +1,4 @@
-import type { AppConfig } from '@ice/runtime';
+import type { AppConfig } from '@ice/runtime-kit';
 import type { Config } from '@ice/shared-config/types';
 import type { TaskConfig } from 'build-scripts';
 
