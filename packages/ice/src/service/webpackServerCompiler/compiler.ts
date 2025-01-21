@@ -1,15 +1,15 @@
 import { createRequire } from 'module';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+import { esbuild, less, sass } from '@ice/bundles';
 import MiniCssExtractPlugin from '@ice/bundles/compiled/mini-css-extract-plugin/dist/index.js';
-import { sass, less } from '@ice/bundles';
 import TerserPlugin from '@ice/bundles/compiled/terser-webpack-plugin/index.js';
-import webpack from 'webpack';
-import { esbuild } from '@ice/bundles';
-import type { Config } from '@ice/shared-config/types';
-import type { LoaderContext } from 'webpack';
 import { getCSSModuleLocalIdent, getPostcssOpts } from '@ice/shared-config';
+import type { Config } from '@ice/shared-config/types';
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+import type { LoaderContext } from 'webpack';
+import webpack from 'webpack';
+import type { UserConfig } from '../../types/userConfig.js';
 import { logger } from '../../utils/logger.js';
 
 const require = createRequire(import.meta.url);
@@ -27,7 +27,7 @@ type CSSRuleConfig = [string, string?, Record<string, any>?];
 
 export class WebpackServerCompiler {
   private config: webpack.Configuration;
-  private options: Record<string, any>;
+  private options: { userServerConfig: UserConfig['server']; [key: string]: any };
 
   constructor(options: any) {
     this.options = options;
@@ -79,7 +79,10 @@ export class WebpackServerCompiler {
     };
   }
 
-  private createWebpackConfig(options: any): webpack.Configuration {
+  private createWebpackConfig(options: {
+    userServerConfig: UserConfig['server'];
+    [key: string]: any;
+  }): webpack.Configuration {
     const { userServerConfig } = options;
     const { webpackConfig = {} } = userServerConfig;
     const cssRules = [
@@ -158,7 +161,7 @@ export class WebpackServerCompiler {
             extractComments: false,
           }),
         ],
-        ...webpackConfig.optimization,
+        ...(webpackConfig.optimization as any),
       },
       resolve: {
         alias: options.alias,
@@ -177,9 +180,8 @@ export class WebpackServerCompiler {
             //   // Match `.js`, `.jsx`, `.ts` or `.tsx` files
             test: /\.m?[jt]sx?$/,
             exclude(path) {
-              // TODO: more universal
               if (path.includes('node_modules')) {
-                if (path.includes('@ali/alimod-ufirst-bottom-bar')) {
+                if (webpackConfig.transformInclude && webpackConfig.transformInclude.test(path)) {
                   return false;
                 } else {
                   return true;
@@ -189,6 +191,7 @@ export class WebpackServerCompiler {
             },
             use: [
               {
+                // TODO: compile to @ice/bundle
                 loader: 'esbuild-loader',
                 // available options: https://github.com/evanw/esbuild/blob/88821b7e7d46737f633120f91c65f662eace0bcf/lib/shared/types.ts#L158-L172
                 options: {

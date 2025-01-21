@@ -261,21 +261,30 @@ export function createServerCompiler(options: Options) {
         esbuildResult = await context.rebuild();
       } else {
         if (Array.isArray(buildOptions.entryPoints)) {
+          // this build phase is aimed to generate .ice/
           esbuildResult = await esbuild.build(buildOptions);
         } else {
-          const webpackServerCompiler = new WebpackServerCompiler({
-            ...buildOptions,
-            externals,
-            plugins: [
-              compilationInfo && new VirualAssetPlugin({ compilationInfo, rootDir }),
-              ...transformWebpackPlugins,
-              new ModifyRequirePlugin(),
-            ].filter(Boolean),
-            rootDir,
-            userServerConfig: server,
-          });
-          esbuildResult = (await webpackServerCompiler.build())?.compilation;
-        }(buildOptions);
+          switch (server.bundler) {
+            case 'webpack':
+              const webpackServerCompiler = new WebpackServerCompiler({
+                ...buildOptions,
+                externals,
+                plugins: [
+                  compilationInfo && new VirualAssetPlugin({ compilationInfo, rootDir }),
+                  ...transformWebpackPlugins,
+                  new ModifyRequirePlugin(),
+                ].filter(Boolean),
+                rootDir,
+                userServerConfig: server,
+              });
+              esbuildResult = (await webpackServerCompiler.build())?.compilation;
+              break;
+            case 'esbuild':
+            default:
+              esbuildResult = await esbuild.build(buildOptions);
+              break;
+          }
+        }
       }
 
       logger.debug('[esbuild]', `time cost: ${new Date().getTime() - startTime}ms`);
