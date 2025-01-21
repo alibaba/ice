@@ -58,7 +58,10 @@ export function setFetcher(customFetcher: RunClientAppOptions['dataLoaderFetcher
 /**
  * Custom decorator for deal with data loader.
  */
-let dataLoaderDecorator: RunClientAppOptions['dataLoaderDecorator'];
+// @ts-ignore
+let dataLoaderDecorator: RunClientAppOptions['dataLoaderDecorator'] = (dataLoader) => {
+  return dataLoader;
+};
 export function setDecorator(customDecorator: RunClientAppOptions['dataLoaderDecorator']): void {
   dataLoaderDecorator = customDecorator;
 }

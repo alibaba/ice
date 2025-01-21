@@ -3,7 +3,7 @@
  */
 
 import { expect, it, describe, beforeEach, afterEach, vi } from 'vitest';
-import { parseTemplate } from '../src/dataLoader';
+import { parseTemplate } from '@ice/runtime-kit';
 
 describe('parseTemplate', () => {
   let locationSpy;
