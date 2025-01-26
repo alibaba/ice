@@ -35,13 +35,14 @@ class ModifyRequirePlugin {
                     path.node.callee.type === 'ArrowFunctionExpression' &&
                     path.node.callee.body &&
                     path.node.callee.body.body &&
+                    path.node.callee.body.body[0] &&
                     path.node.callee.body.body[0].type === 'ExpressionStatement' &&
                     path.node.callee.body.body[0].expression.type === 'AssignmentExpression'
                   ) {
                     const assignmentExpression = path.node.callee.body.body[0].expression;
                     const { start, end } = assignmentExpression.left;
                     const left = sourceCode.slice(start, end);
-                    if (left === '__webpack_require__.r') {
+                    if (left === '__webpack_require__.j') {
                       webpackRuntimeChunkEndIndex = path.node.end;
                     }
                   }
@@ -95,8 +96,8 @@ class ModifyRequirePlugin {
                 .replace(/exports\.ids/, '__quickMode.ids')
                 .replace(/exports\.modules/, 'const __webpack_modules__')
                 .replace(
-                  'const { Writable } = stream_browserify_namespaceObject;',
-                  'const { Writable } = stream_browserify;',
+                  'const { Writable } = /*#__PURE__*/ (stream__WEBPACK_IMPORTED_MODULE_0___namespace_cache || (stream__WEBPACK_IMPORTED_MODULE_0___namespace_cache = __webpack_require__.t(stream__WEBPACK_IMPORTED_MODULE_0__, 2)));',
+                  'const { Writable } = stream__WEBPACK_IMPORTED_MODULE_0__;',
                 );
               code += `\n${webpackRuntimeChunk.toString()}`;
               code += `\nmodule.exports = function () {
