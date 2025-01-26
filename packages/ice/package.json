@@ -1,6 +1,6 @@
 {
   "name": "@ali/ice-quick-app",
-  "version": "3.6.1-beta.8",
+  "version": "3.6.1-beta.9",
   "description": "provide scripts and configuration used by web framework ice",
   "type": "module",
   "main": "./esm/index.js",
@@ -47,6 +47,8 @@
   "bugs": "https://github.com/alibaba/ice/issues",
   "homepage": "https://v3.ice.work",
   "dependencies": {
+    "@babel/parser": "^7.26.5",
+    "@babel/traverse": "^7.26.5",
     "@ice/bundles": "workspace:*",
     "@ice/route-manifest": "workspace:*",
     "@ice/rspack-config": "workspace:*",
