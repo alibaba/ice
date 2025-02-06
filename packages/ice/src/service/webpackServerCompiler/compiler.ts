@@ -11,6 +11,8 @@ import type { LoaderContext } from 'webpack';
 import webpack from 'webpack';
 import type { UserConfig } from '../../types/userConfig.js';
 import { logger } from '../../utils/logger.js';
+import SelfContainedVendorPlugin from './selfContainedVendorPlugin.js';
+import CommonJsChunkFormatPlugin from './CommonJsChunkLoadingPlugin.js';
 
 const require = createRequire(import.meta.url);
 const _dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
@@ -121,6 +123,22 @@ export class WebpackServerCompiler {
         options.alias[key] = path.resolve(options.rootDir, options.alias[key]);
       }
     }
+    if (webpackConfig.optimization) {
+      if (webpackConfig.optimization?.splitChunks) {
+        const { splitChunks } = webpackConfig.optimization;
+        if (splitChunks.cacheGroups) {
+          const { vendor } = splitChunks.cacheGroups;
+          delete splitChunks.cacheGroups.vendor;
+          splitChunks.cacheGroups.vendor = {
+            ...(vendor as any),
+            chunks: (chunk) => {
+              return chunk.name === 'home';
+            },
+            name: 'home.vendor',
+          };
+        }
+      }
+    }
     return {
       mode: 'production',
       entry: options.entryPoints as string[],
@@ -135,6 +153,7 @@ export class WebpackServerCompiler {
           esm: 'module',
           cjs: 'commonjs',
         }[options.format],
+        chunkLoading: 'async-wormhole',
         clean: true,
         library: {
           type: 'commonjs2',
@@ -146,12 +165,6 @@ export class WebpackServerCompiler {
         splitChunks: {
           cacheGroups: {
             default: false,
-            vendor: {
-              test: /[\\/]node_modules\/(?!@ali)/,
-              name: 'vendor',
-              chunks: 'all',
-              priority: 10,
-            },
           },
         },
         minimize: options.minify,
@@ -230,6 +243,8 @@ export class WebpackServerCompiler {
           ignoreOrder: true,
         }),
         ...(webpackConfig.plugins || []),
+        new CommonJsChunkFormatPlugin(),
+        new SelfContainedVendorPlugin(),
       ],
       stats: {
         errorDetails: true,
