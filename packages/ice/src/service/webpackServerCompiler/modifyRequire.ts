@@ -19,18 +19,26 @@ class ModifyRequirePlugin {
           stage: compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL,
         },
         (assets) => {
-          // TODO: make it more universal
+          const mainChunkNames = [];
+
+          for (const chunk of compilation.chunks) {
+            if (chunk.hasRuntime() && !chunk.name.includes('.fallback')) {
+              mainChunkNames.push(chunk.name);
+            }
+          }
           Object.entries(assets).forEach(([pathname, source]) => {
             let sourceCode = source.source().toString();
-            // TODO: 判断入口文件名
-            if (pathname.includes('home.cjs')) {
+            if (mainChunkNames.some((chunkName) => pathname.includes(`${chunkName}.cjs`))) {
               const ast = babelParser.parse(sourceCode);
               const magicString = new MagicString(sourceCode);
               babelTraverse(ast, {
                 AssignmentExpression(path) {
                   const left = sourceCode.slice(path.node.left.start, path.node.left.end);
                   if (left === RuntimeGlobals.createFakeNamespaceObject) {
-                    magicString.overwrite(path.node.right.start, path.node.right.end, `
+                    magicString.overwrite(
+                      path.node.right.start,
+                      path.node.right.end,
+                      `
                       function(value, mode) {
 /******/ 			if(mode & 1) value = this(value);
 /******/ 			if(mode & 8) return value;
@@ -48,7 +56,8 @@ class ModifyRequirePlugin {
 /******/ 			def['default'] = () => (value);
 /******/ 			__webpack_require__.d(ns, def);
 /******/ 			return ns;
-/******/ 		}; `);
+/******/ 		}; `,
+                    );
                   }
                 },
                 FunctionDeclaration: function (path) {
@@ -86,8 +95,6 @@ else { throw new Error("Module " + moduleId + " not found"); }
               compilation.updateAsset(
                 pathname,
                 new compiler.webpack.sources.SourceMapSource(
-                  // require is not work in wormhole, so store the module chunk in window instead
-                  // sourceCode.replace(/installChunk\(.+\)/, 'installChunk(window.__quickMode)'),
                   magicString.toString(),
                   pathname,
                   // TODO: real sourcemap

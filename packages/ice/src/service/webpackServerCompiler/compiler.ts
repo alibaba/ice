@@ -123,22 +123,6 @@ export class WebpackServerCompiler {
         options.alias[key] = path.resolve(options.rootDir, options.alias[key]);
       }
     }
-    if (webpackConfig.optimization) {
-      if (webpackConfig.optimization?.splitChunks) {
-        const { splitChunks } = webpackConfig.optimization;
-        if (splitChunks.cacheGroups) {
-          const { vendor } = splitChunks.cacheGroups;
-          delete splitChunks.cacheGroups.vendor;
-          splitChunks.cacheGroups.vendor = {
-            ...(vendor as any),
-            chunks: (chunk) => {
-              return chunk.name === 'home';
-            },
-            name: 'home.vendor',
-          };
-        }
-      }
-    }
     return {
       mode: 'production',
       entry: options.entryPoints as string[],
@@ -162,12 +146,7 @@ export class WebpackServerCompiler {
       devtool: 'source-map',
       externals: options.externals,
       optimization: {
-        splitChunks: {
-          cacheGroups: {
-            default: false,
-          },
-        },
-        minimize: options.minify,
+        minimize: true,
         minimizer: [
           new TerserPlugin({
             // TODO: read minify config
