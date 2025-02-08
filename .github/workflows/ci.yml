@@ -25,6 +25,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
           cache: 'pnpm'
       - run: npm run setup
+      - run: npm run puppeteer:install
       - run: npm run dependency:check
       - run: npm run lint
       - run: npm run test

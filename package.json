@@ -21,6 +21,7 @@
     "cov": "echo 'test'",
     "test": "vitest run app-config",
     "changeset": "changeset",
+    "puppeteer:install": "tsx ./scripts/puppeteer.ts",
     "install:frozen": "pnpm install --frozen-lockfile false",
     "version": "changeset version && pnpm install:frozen",
     "release": "changeset publish",
