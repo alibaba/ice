@@ -37,7 +37,7 @@ jobs:
             .cache
           key: ${{ runner.os }}-pnpm-store-node-${{ matrix.node-version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-node-${{ matrix.node-version }}
+            ${{ runner.os }}-pnpm-store-node-${{ matrix.node-version }}-
       - run: npm run setup
       - run: npm run dependency:check
       - run: npm run lint
