@@ -8,7 +8,7 @@
   "repository": "alibaba/ice",
   "bugs": "https://github.com/alibaba/ice/issues",
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky",
     "setup": "rm -rf node_modules packages/*/node_modules && pnpm install && pnpm prebundle && pnpm build",
     "setup-git": "tsx ./scripts/setupUser.ts",
     "rebuild": "pnpm install && pnpm run build",
@@ -51,7 +51,7 @@
     "fs-extra": "^10.1.0",
     "get-port": "^6.1.2",
     "glob": "^7.2.3",
-    "husky": "^7.0.4",
+    "husky": "^9.1.7",
     "ice-npm-utils": "^3.0.2",
     "jsdom": "^20.0.0",
     "lint-staged": "^13.0.3",
