@@ -6,12 +6,12 @@ import type Browser from '../utils/browser';
 
 const example = 'app-config';
 
-// describe(`build ${example}`, () => {
-//   test('open /', async () => {
-//     await buildFixture(example);
-//     // await setupBrowser({ example });
-//   });
-// });
+describe(`build ${example}`, () => {
+  test('open /', async () => {
+    await buildFixture(example);
+    await setupBrowser({ example });
+  });
+});
 
 // describe(`start ${example}`, () => {
 //   let page: Page;
@@ -53,8 +53,8 @@ const example = 'app-config';
 //   });
 // });
 
-describe(`build ${example} in speedup mode`, () => {
-  test('open /', async () => {
-    await buildFixture(example, { speedup: true });
-  });
-});
+// describe(`build ${example} in speedup mode`, () => {
+//   test('open /', async () => {
+//     await buildFixture(example, { speedup: true });
+//   });
+// });
