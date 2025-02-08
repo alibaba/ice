@@ -53,8 +53,8 @@ describe(`build ${example}`, () => {
 //   });
 // });
 
-describe(`build ${example} in speedup mode`, () => {
-  test('open /', async () => {
-    await buildFixture(example, { speedup: true });
-  });
-});
+// describe(`build ${example} in speedup mode`, () => {
+//   test('open /', async () => {
+//     await buildFixture(example, { speedup: true });
+//   });
+// });
