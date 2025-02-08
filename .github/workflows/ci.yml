@@ -18,6 +18,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Install pnpm
         uses: pnpm/action-setup@v4
+      - name: Install Puppeteer
+        run: pnpm add puppeteer@19.11.1
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
