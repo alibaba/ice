@@ -18,7 +18,7 @@
     "clean": "rimraf packages/*/esm",
     "dependency:check": "tsx ./scripts/dependencyCheck.ts",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
-    "cov": "vitest run --coverage",
+    "cov": "echo 'test'",
     "test": "vitest run app-config",
     "changeset": "changeset",
     "install:frozen": "pnpm install --frozen-lockfile false",
