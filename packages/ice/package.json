@@ -98,7 +98,7 @@
     "unplugin": "^1.6.0",
     "webpack": "^5.88.0",
     "webpack-dev-server": "5.0.4",
-    "@rspack/core": "1.1.6",
+    "@rspack/core": "1.2.2",
     "@rspack/dev-server": "1.0.10"
   },
   "peerDependencies": {

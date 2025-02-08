@@ -72,7 +72,7 @@
   "pnpm": {
     "patchedDependencies": {
       "unplugin@1.6.0": "patches/unplugin@1.6.0.patch",
-      "@rspack/core@1.1.6": "patches/@rspack__core@1.1.6.patch"
+      "@rspack/core@1.2.2": "patches/@rspack__core@1.2.2.patch"
     }
   }
 }
