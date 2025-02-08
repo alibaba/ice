@@ -18,7 +18,7 @@
     "clean": "rimraf packages/*/esm",
     "dependency:check": "tsx ./scripts/dependencyCheck.ts",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
-    "cov": "echo 'test'",
+    "cov": "vitest run --coverage",
     "test": "vitest run app-config",
     "changeset": "changeset",
     "puppeteer:install": "tsx ./scripts/puppeteer.ts",
