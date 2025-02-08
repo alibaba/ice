@@ -19,7 +19,7 @@
     "dependency:check": "tsx ./scripts/dependencyCheck.ts",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
     "cov": "vitest run --coverage",
-    "test": "vitest run app-config",
+    "test": "vitest run",
     "changeset": "changeset",
     "puppeteer:install": "tsx ./scripts/puppeteer.ts",
     "install:frozen": "pnpm install --frozen-lockfile false",
