@@ -24,7 +24,7 @@
     "core-js": "3.32.0",
     "caniuse-lite": "^1.0.30001561",
     "chokidar": "3.5.3",
-    "esbuild": "^0.17.16",
+    "esbuild": "^0.25.0",
     "events": "3.3.0",
     "jest-worker": "27.5.1",
     "less": "4.1.2",
