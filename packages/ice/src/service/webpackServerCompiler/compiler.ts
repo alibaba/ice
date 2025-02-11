@@ -7,16 +7,12 @@ import TerserPlugin from '@ice/bundles/compiled/terser-webpack-plugin/index.js';
 import { getCSSModuleLocalIdent, getPostcssOpts } from '@ice/shared-config';
 import type { Config } from '@ice/shared-config/types';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
-import type { LoaderContext } from 'webpack';
-import webpack from 'webpack';
+import webpack, { type LoaderContext } from 'webpack';
 import type { UserConfig } from '../../types/userConfig.js';
 import { logger } from '../../utils/logger.js';
-import SelfContainedVendorPlugin from './selfContainedVendorPlugin.js';
-import CommonJsChunkFormatPlugin from './CommonJsChunkLoadingPlugin.js';
 
 const require = createRequire(import.meta.url);
 const _dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
-
 interface Options {
   publicPath: string;
   postcssOptions: Config['postcss'];
@@ -137,16 +133,16 @@ export class WebpackServerCompiler {
           esm: 'module',
           cjs: 'commonjs',
         }[options.format],
-        chunkLoading: 'async-wormhole',
         clean: true,
         library: {
           type: 'commonjs2',
         },
+        ...(webpackConfig.output as any),
       },
       devtool: 'source-map',
       externals: options.externals,
       optimization: {
-        minimize: true,
+        minimize: options.minify,
         minimizer: [
           new TerserPlugin({
             // TODO: read minify config
@@ -222,8 +218,6 @@ export class WebpackServerCompiler {
           ignoreOrder: true,
         }),
         ...(webpackConfig.plugins || []),
-        new CommonJsChunkFormatPlugin(),
-        new SelfContainedVendorPlugin(),
       ],
       stats: {
         errorDetails: true,

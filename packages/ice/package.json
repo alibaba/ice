@@ -1,5 +1,5 @@
 {
-  "name": "@ali/ice-quick-app",
+  "name": "@ice/app",
   "version": "3.6.1-beta.19",
   "description": "provide scripts and configuration used by web framework ice",
   "type": "module",
