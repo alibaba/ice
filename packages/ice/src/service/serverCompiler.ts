@@ -29,7 +29,6 @@ import type { PreBundleDepsMetaData } from './preBundleDeps.js';
 import preBundleDeps from './preBundleDeps.js';
 import { WebpackServerCompiler } from './webpackServerCompiler/compiler.js';
 import VirualAssetPlugin from './webpackServerCompiler/virtualAssetPlugin.js';
-import ModifyRequirePlugin from './webpackServerCompiler/modifyRequire.js';
 
 const logger = createLogger('server-compiler');
 
@@ -272,7 +271,6 @@ export function createServerCompiler(options: Options) {
                 plugins: [
                   compilationInfo && new VirualAssetPlugin({ compilationInfo, rootDir }),
                   ...transformWebpackPlugins,
-                  new ModifyRequirePlugin(),
                 ].filter(Boolean),
                 rootDir,
                 userServerConfig: server,
