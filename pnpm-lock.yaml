@@ -1591,9 +1591,6 @@ importers:
       trusted-cert:
         specifier: 1.1.3
         version: 1.1.3
-      tsconfig-paths-webpack-plugin:
-        specifier: ^4.2.0
-        version: 4.2.0
       typescript:
         specifier: ^4.6.4
         version: 4.9.5
@@ -2831,8 +2828,8 @@ packages:
     resolution: {integrity: sha512-lFMjJTrFL3j7L9yBxwYfCq2k6qqwHyzuUl/XBnif78PWTJYyL/dfowQHWE3sp6U6ZzqWiiIZnpTMO96zhkjwtg==}
     engines: {node: '>=6.0.0'}
     dependencies:
-      '@jridgewell/gen-mapping': 0.3.2
-      '@jridgewell/trace-mapping': 0.3.17
+      '@jridgewell/gen-mapping': 0.3.8
+      '@jridgewell/trace-mapping': 0.3.25
     dev: true
 
   /@ant-design/colors@6.0.0:
@@ -3105,14 +3102,14 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       '@ampproject/remapping': 2.2.1
-      '@babel/code-frame': 7.23.5
-      '@babel/generator': 7.23.6
+      '@babel/code-frame': 7.26.2
+      '@babel/generator': 7.26.5
       '@babel/helper-compilation-targets': 7.23.6
       '@babel/helper-module-transforms': 7.23.3(@babel/core@7.23.9)
       '@babel/helpers': 7.23.9
       '@babel/parser': 7.26.5
-      '@babel/template': 7.23.9
-      '@babel/traverse': 7.23.9
+      '@babel/template': 7.25.9
+      '@babel/traverse': 7.26.5
       '@babel/types': 7.26.5
       convert-source-map: 2.0.0
       debug: 4.3.4
@@ -3441,8 +3438,8 @@ packages:
     resolution: {integrity: sha512-87ICKgU5t5SzOT7sBMfCOZQ2rHjRU+Pcb9BoILMYz600W6DkVRLFBPwQ18gwUVvggqXivaUakpnxWQGbpywbBQ==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/template': 7.23.9
-      '@babel/traverse': 7.23.9
+      '@babel/template': 7.25.9
+      '@babel/traverse': 7.26.5
       '@babel/types': 7.26.5
     transitivePeerDependencies:
       - supports-color
@@ -22426,7 +22423,6 @@ packages:
       serialize-javascript: 6.0.1
       terser: 5.16.5
       webpack: 5.88.2(@swc/core@1.3.80)(esbuild@0.17.16)
-    dev: true
 
   /terser-webpack-plugin@5.3.7(esbuild@0.17.16)(webpack@5.86.0):
     resolution: {integrity: sha512-AfKwIktyP7Cu50xNjXF/6Qb5lBNzYaWpU6YfoX3uZicTx0zTy0stDDCsvjDapKsSDvOeWo5MEq4TmdBy2cNoHw==}
@@ -22476,6 +22472,7 @@ packages:
       serialize-javascript: 6.0.1
       terser: 5.16.5
       webpack: 5.88.2(esbuild@0.17.16)
+    dev: true
 
   /terser-webpack-plugin@5.3.7(webpack@5.88.2):
     resolution: {integrity: sha512-AfKwIktyP7Cu50xNjXF/6Qb5lBNzYaWpU6YfoX3uZicTx0zTy0stDDCsvjDapKsSDvOeWo5MEq4TmdBy2cNoHw==}
@@ -23697,7 +23694,7 @@ packages:
       mime-types: 2.1.35
       range-parser: 1.2.1
       schema-utils: 4.0.0
-      webpack: 5.88.2(esbuild@0.17.16)
+      webpack: 5.88.2(@swc/core@1.3.80)(esbuild@0.17.16)
 
   /webpack-dev-middleware@6.0.2(webpack@5.88.2):
     resolution: {integrity: sha512-iOddiJzPcQC6lwOIu60vscbGWth8PCRcWRCwoQcTQf9RMoOWBHg5EyzpGdtSmGMrSPd5vHEfFXmVErQEmkRngQ==}
@@ -23713,7 +23710,7 @@ packages:
       mime-types: 2.1.35
       range-parser: 1.2.1
       schema-utils: 4.0.0
-      webpack: 5.88.2(esbuild@0.17.16)
+      webpack: 5.88.2(@swc/core@1.3.80)(esbuild@0.17.16)
     dev: true
 
   /webpack-dev-server@4.13.1(webpack@5.88.2):
@@ -23757,7 +23754,7 @@ packages:
       serve-index: 1.9.1
       sockjs: 0.3.24
       spdy: 4.0.2
-      webpack: 5.88.2(esbuild@0.17.16)
+      webpack: 5.88.2(@swc/core@1.3.80)(esbuild@0.17.16)
       webpack-dev-middleware: 5.3.4(webpack@5.88.2)
       ws: 8.13.0
     transitivePeerDependencies:
@@ -23910,7 +23907,7 @@ packages:
       serve-index: 1.9.1
       sockjs: 0.3.24
       spdy: 4.0.2
-      webpack: 5.88.2(esbuild@0.17.16)
+      webpack: 5.88.2(@swc/core@1.3.80)(esbuild@0.17.16)
       webpack-dev-middleware: 5.3.4(webpack@5.88.2)
       ws: 8.13.0
     transitivePeerDependencies:
@@ -24097,7 +24094,6 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
-    dev: true
 
   /webpack@5.88.2(esbuild@0.17.16):
     resolution: {integrity: sha512-JmcgNZ1iKj+aiR0OvTYtWQqJwq37Pf683dY9bVORwVbUrDhLhdn/PlO2sHsFHPkj7sHNQF3JwaAkp49V+Sq1tQ==}
@@ -24137,6 +24133,7 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
+    dev: true
 
   /webpackbar@5.0.2(webpack@5.88.2):
     resolution: {integrity: sha512-BmFJo7veBDgQzfWXl/wwYXr/VFus0614qZ8i9znqcl9fnEdiVkdbi0TedLQ6xAK92HZHDJ0QmyQ0fmuZPAgCYQ==}
