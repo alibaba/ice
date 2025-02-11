@@ -97,9 +97,9 @@ export default class Browser {
     // @ts-ignore
     if (this.server.stop) {
       // @ts-ignore
-      this.server.stop();
+      await this.server.stop();
     } else {
-      this.server.close();
+      await this.server.close();
     }
   }
 

@@ -3,7 +3,6 @@ import type { RuleSetRule, Configuration, Compiler, WebpackPluginInstance } from
 import type {
   ProxyConfigArray,
   ProxyConfigArrayItem,
-  ProxyConfigMap,
   Middleware,
   ServerOptions,
 } from 'webpack-dev-server';
@@ -149,7 +148,7 @@ export interface Config {
   | ((middlewares: Middleware[], devServer: Server) => Middleware[])
   | undefined;
 
-  proxy?: ProxyConfigArrayItem | ProxyConfigMap | ProxyConfigArray | undefined;
+  proxy?: ProxyConfigArray;
 
   polyfill?: 'usage' | 'entry' | false;
   // You can use `browserslist` to automatically configure supported browsers if set to be true.

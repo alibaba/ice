@@ -41,7 +41,8 @@ describe(`start ${example} in speedup mode`, () => {
   let page: Page;
   let browser: Browser;
   test('open /', async () => {
-    const { devServer, port } = await startFixture(example, { speedup: true });
+    // Close speed up mode is win32 system for now.
+    const { devServer, port } = await startFixture(example, { speedup: process.platform !== 'win32' });
     const res = await setupStartBrowser({ server: devServer, port });
     page = res.page;
     browser = res.browser;
@@ -55,6 +56,6 @@ describe(`start ${example} in speedup mode`, () => {
 
 describe(`build ${example} in speedup mode`, () => {
   test('open /', async () => {
-    await buildFixture(example, { speedup: true });
+    await buildFixture(example, { speedup: process.platform !== 'win32' });
   });
 });

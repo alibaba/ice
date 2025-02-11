@@ -11,34 +11,21 @@ jobs:
     strategy:
       matrix:
         node-version: [16.x, 18.x]
-        os: [ubuntu-latest, windows-latest]
+        os: [windows-latest, ubuntu-latest]
       fail-fast: false
     steps:
       - name: Checkout Branch
         uses: actions/checkout@v3
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: https://registry.npmjs.org/
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          run_install: false
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "pnpm_cache_dir=$(pnpm store path)" >> "$GITHUB_OUTPUT"
-      - uses: actions/cache@v3
-        name: Setup pnpm cache
-        with:
-          path: |
-            ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-            .cache
-          key: ${{ runner.os }}-pnpm-store-node-${{ matrix.node-version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-node-${{ matrix.node-version }}
+          cache: 'pnpm'
       - run: npm run setup
+      - run: npm run puppeteer:install
       - run: npm run dependency:check
       - run: npm run lint
       - run: npm run test
