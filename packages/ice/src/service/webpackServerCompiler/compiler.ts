@@ -129,10 +129,8 @@ export class WebpackServerCompiler {
       output: {
         filename: `[name].${options.format === 'esm' ? 'mjs' : 'cjs'}`,
         path: options.outdir,
-        chunkFormat: {
-          esm: 'module',
-          cjs: 'commonjs',
-        }[options.format],
+        // align the output with former esbuild
+        chunkFormat: false,
         clean: true,
         library: {
           type: 'commonjs2',
