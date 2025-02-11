@@ -115,8 +115,8 @@ const getConfig: GetConfig = async (options) => {
   const isDev = mode === 'development';
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
   const hashKey = hash === true ? 'hash:8' : (hash || '');
-
-  const { rspack: { DefinePlugin, ProvidePlugin, SwcJsMinimizerRspackPlugin, CopyRspackPlugin } } = await import('@ice/bundles/esm/rspack.js');
+  // @ts-expect-error ManifestPlugin is an custom plugin.
+  const { rspack: { DefinePlugin, ProvidePlugin, SwcJsMinimizerRspackPlugin, CopyRspackPlugin, ManifestPlugin } } = await import('@ice/bundles/esm/rspack.js');
   const cssFilename = `css/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`;
   // get compile plugins
   const compilerWebpackPlugins = getCompilerPlugins(rootDir, {
@@ -264,6 +264,11 @@ const getConfig: GetConfig = async (options) => {
           extensionAlias: cssExtensionAlias ?? [],
         }),
       ],
+      generator: {
+        'css/auto': {
+          localIdentName,
+        },
+      },
     },
     resolve: {
       extensions: ['...', '.ts', '.tsx', '.jsx'],
@@ -281,7 +286,6 @@ const getConfig: GetConfig = async (options) => {
       minimize: !!minify,
       ...(splitChunksStrategy ? { splitChunks: splitChunksStrategy } : {}),
     },
-    // @ts-expect-error plugin instance defined by default in not compatible with rspack.
     plugins: [
       ...plugins,
       // Unplugin should be compatible with rspack.
@@ -291,6 +295,7 @@ const getConfig: GetConfig = async (options) => {
       new ProvidePlugin({
         process: [require.resolve('process/browser')],
       }),
+      new ManifestPlugin({}),
       !!minify && new SwcJsMinimizerRspackPlugin(jsMinimizerPluginOptions),
       (enableCopyPlugin || !isDev) && new CopyRspackPlugin({
         patterns: [{
@@ -305,16 +310,11 @@ const getConfig: GetConfig = async (options) => {
           },
           globOptions: {
             dot: true,
-            gitignore: true,
+            ignore: ['.gitignore'],
           },
         }],
       }),
     ].filter(Boolean),
-    builtins: {
-      css: {
-        modules: { localIdentName },
-      },
-    },
     stats: 'none',
     infrastructureLogging: {
       level: 'warn',
@@ -336,11 +336,16 @@ const getConfig: GetConfig = async (options) => {
       client: {
         logging: 'info',
       },
-      https,
+      server: https ? {
+        type: 'https',
+        options: typeof https === 'object' ? https : {},
+      } : undefined,
       ...devServer,
       setupMiddlewares: middlewares,
     },
-    features: builtinFeatures,
+    experiments: {
+      css: true,
+    },
   };
   // Compatible with API configureWebpack.
   const ctx = {

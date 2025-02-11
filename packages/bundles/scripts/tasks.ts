@@ -25,10 +25,26 @@ export const taskExternals = {
 const commonDeps = ['terser', 'tapable', 'cssnano', 'terser-webpack-plugin', 'webpack', 'schema-utils',
   'lodash', 'postcss-preset-env', 'loader-utils', 'find-up', 'common-path-prefix', 'magic-string'];
 
-const webpackDevServerDeps = ['bonjour-service', 'colorette', 'compression', 'connect-history-api-fallback',
-'default-gateway', 'express', 'graceful-fs', 'http-proxy-middleware',
-'ipaddr.js', 'open', 'p-retry', 'portfinder', 'rimraf', 'selfsigned', 'serve-index',
-'sockjs', 'spdy', 'webpack-dev-middleware', 'ws'];
+const webpackDevServerDeps = [
+  'bonjour-service',
+  'colorette',
+  'compression',
+  'connect-history-api-fallback',
+  'default-gateway',
+  'express',
+  'graceful-fs',
+  'http-proxy-middleware',
+  'ipaddr.js',
+  'portfinder',
+  'rimraf',
+  'selfsigned',
+  'serve-index',
+  'sockjs',
+  'spdy',
+  'webpack-dev-middleware',
+  'ws',
+];
+
 
 commonDeps.concat(webpackDevServerDeps).forEach(dep => taskExternals[dep] = `@ice/bundles/compiled/${dep}`);
 
@@ -230,29 +246,17 @@ const tasks = [
       // Copy the entire directory.
       // filter out js files and replace with compiled files.
       const filePaths = globbySync(['**/*'], { cwd: pkgPath, ignore: ['node_modules'] });
-      const filesAddOverwrite = [
-        'dist/util/bindingVersionCheck.js',
-      ];
       filePaths.forEach((filePath) => {
         const sourcePath = path.join(pkgPath, filePath);
         const targetFilePath = path.join(targetPath, filePath);
         fs.ensureDirSync(path.dirname(targetFilePath));
         if (path.extname(filePath) === '.js') {
-          const matched = filesAddOverwrite.some(filePath => {
-            const matched = sourcePath.split(path.sep).join('/').includes(filePath);
-            if (matched) {
-              fs.copyFileSync(path.join(__dirname, `../override/rspack/${path.basename(filePath)}`), targetFilePath);
-            }
-            return matched;
-          });
-          if (!matched) {
-            const fileContent = fs.readFileSync(sourcePath, 'utf8');
-            fs.writeFileSync(
-              targetFilePath,
-              replaceDeps(fileContent, ['tapable', 'schema-utils', 'graceful-fs'])
-                .replace(new RegExp('require\\(["\']@rspack/binding["\']\\)', 'g'), 'require("@ice/pack-binding")'),
-            );
-          }
+          const fileContent = fs.readFileSync(sourcePath, 'utf8');
+          fs.writeFileSync(
+            targetFilePath,
+            fileContent
+              .replace(new RegExp('require\\(["\']@rspack/binding["\']\\)', 'g'), 'require("@ice/pack-binding")'),
+          );
         } else {
           fs.copyFileSync(sourcePath, targetFilePath);
         }
@@ -276,7 +280,8 @@ const tasks = [
             replaceDeps(fileContent, webpackDevServerDeps.concat([...commonDeps, '@rspack/core', 'webpack-dev-server']))
              .replace(/webpack-dev-server\//g, '@ice/bundles/compiled/webpack-dev-server/')
              .replace(/@rspack\/core\//g, '@ice/bundles/compiled/@rspack/core/')
-             .replace(/@rspack\/dev-server\//g, '@ice/bundles/compiled/@rspack/dev-server/'),
+             .replace(/@rspack\/dev-server\//g, '@ice/bundles/compiled/@rspack/dev-server/')
+             .replace(/"webpack-dev-server"/g, '"@ice/bundles/compiled/webpack-dev-server"'),
           );
         } else {
           fs.copyFileSync(sourcePath, targetPath);

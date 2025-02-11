@@ -97,9 +97,9 @@
     "sass": "^1.50.0",
     "unplugin": "^1.6.0",
     "webpack": "^5.88.0",
-    "webpack-dev-server": "4.15.0",
-    "@rspack/core": "0.5.7",
-    "@rspack/dev-server": "0.5.7"
+    "webpack-dev-server": "5.0.4",
+    "@rspack/core": "1.2.2",
+    "@rspack/dev-server": "1.0.10"
   },
   "peerDependencies": {
     "react": ">=18.0.0",

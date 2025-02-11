@@ -92,10 +92,11 @@ export default class NormalModulesPlugin {
               const [type, prop] = node.arguments;
 
               if (!type) return;
-
+              // @ts-ignore
               const componentName = type.name;
-
+              // @ts-ignore
               if (type.value) {
+                // @ts-ignore
                 this.onParseCreateElement?.(type.value, componentConfig);
                 // @ts-ignore
                 currentModule.elementNameSet.add(type.value);
