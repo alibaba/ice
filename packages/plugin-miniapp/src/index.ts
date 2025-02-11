@@ -44,7 +44,7 @@ const plugin: Plugin<MiniappOptions> = (miniappOptions = {}) => ({
       ];
       generator.addRenderFile('core/entry.client.tsx.ejs', 'entry.miniapp.tsx', {
         iceRuntimePath: miniappRuntime,
-        enableRoutes: false,
+        routesFile: '',
       });
 
       generator.addRenderFile('core/index.ts.ejs', 'index.miniapp.ts', {

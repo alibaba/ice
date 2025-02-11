@@ -1,16 +1,16 @@
 import matchRoutes from '@ice/runtime/matchRoutes';
 import type { NestedRouteManifest } from '@ice/route-manifest';
 import type { CommandName } from 'build-scripts';
-import { getRoutesDefinition } from '../routes.js';
+import type { Config } from '@ice/shared-config/types';
 import type Generator from '../service/runtimeGenerator.js';
 import type { UserConfig } from '../types/userConfig.js';
 import { escapeRoutePath } from './generateEntry.js';
-
 interface Options {
   renderRoutes: string[];
   routesManifest: NestedRouteManifest[];
   generator: Generator;
   lazy: boolean;
+  routesDefinition?: Config['runtime']['router']['routesDefinition'];
 }
 
 export const multipleServerEntry = (userConfig: UserConfig, command: CommandName): boolean => {
@@ -29,7 +29,7 @@ export const formatServerEntry = (route: string) => {
 };
 
 export function renderMultiEntry(options: Options) {
-  const { renderRoutes, routesManifest, generator, lazy } = options;
+  const { renderRoutes, routesManifest, generator, lazy, routesDefinition } = options;
   renderRoutes.forEach((route) => {
     const routeId = formatRoutePath(route);
     generator.addRenderFile(
@@ -41,13 +41,13 @@ export function renderMultiEntry(options: Options) {
     );
     // Generate route file for each route.
     const matches = matchRoutes(routesManifest, route);
-    const { routeImports, routeDefinition } = getRoutesDefinition({
+    const { routeImports, routeDefinition } = routesDefinition?.({
       manifest: routesManifest,
       lazy,
       matchRoute: (routeItem) => {
         return matches.some((match) => match.route.id === routeItem.id);
       },
-    });
+    }) || {};
     generator.addRenderFile('core/routes.tsx.ejs', `routes.${routeId}.tsx`, {
       routeImports,
       routeDefinition,

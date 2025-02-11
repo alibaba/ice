@@ -5,7 +5,8 @@
 import * as React from 'react';
 import type { History } from '@remix-run/router';
 import type { RouteObject } from 'react-router-dom';
-import type { LoaderData, RouteItem } from './types.js';
+import type { LoaderData } from '@ice/runtime-kit';
+import type { RouteItem } from './types.js';
 import { loadRouteModules } from './routes.js';
 
 const Context = React.createContext<LoaderData>(undefined);

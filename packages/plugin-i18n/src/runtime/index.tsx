@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { RuntimePlugin } from '@ice/runtime/types';
+import type { RuntimePlugin } from '@ice/runtime';
 import detectLocale from '../utils/detectLocale.js';
 import type { I18nAppConfig, I18nConfig } from '../types.js';
 import getLocaleRedirectPath from '../utils/getLocaleRedirectPath.js';

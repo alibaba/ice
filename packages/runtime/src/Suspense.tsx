@@ -1,8 +1,8 @@
 import * as React from 'react';
 import type { ReactNode } from 'react';
+import type { RequestContext } from '@ice/runtime-kit';
 import { useAppContext } from './AppContext.js';
 import proxyData from './proxyData.js';
-import type { RequestContext } from './types.js';
 
 const LOADER = '__ICE_SUSPENSE_LOADER__';
 const isClient = typeof window !== 'undefined' && 'onload' in window;

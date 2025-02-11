@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { RouteWrapperConfig, ComponentModule } from './types.js';
+import type { RouteWrapperConfig, ComponentModule } from '@ice/runtime-kit';
 
 interface Props {
   id: string;

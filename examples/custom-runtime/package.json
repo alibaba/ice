@@ -1,0 +1,23 @@
+{
+  "name": "@examples/custom-runtime",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "ice start",
+    "build": "ice build"
+  },
+  "description": "",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@ice/app": "workspace:*",
+    "@ice/runtime": "workspace:*",
+    "@ice/runtime-kit": "workspace:*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.2"
+  }
+}

@@ -1,7 +1,7 @@
 import type { Config } from '@ice/shared-config/types';
 import type ora from '@ice/bundles/compiled/ora/index.js';
 import type { Stats as WebpackStats } from '@ice/bundles/compiled/webpack/index.js';
-import type { AppConfig } from '@ice/runtime/types';
+import type { AppConfig } from '@ice/runtime-kit';
 import type { Configuration, MultiCompiler, MultiStats } from '@rspack/core';
 import type { Context as DefaultContext, TaskConfig } from 'build-scripts';
 import type { ServerCompiler, GetAppConfig, GetRoutesConfig, GetDataloaderConfig, ExtendsPluginAPI } from '../types/plugin.js';

@@ -1,5 +1,5 @@
 import type * as React from 'react';
-import type { RouteConfig } from '@ice/runtime/types';
+import type { RouteConfig } from '@ice/runtime';
 
 export interface AuthConfig {
   initialAuth: {

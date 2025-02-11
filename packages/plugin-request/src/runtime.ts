@@ -1,4 +1,4 @@
-import type { StaticRuntimePlugin } from '@ice/runtime/types';
+import type { StaticRuntimePlugin } from '@ice/runtime';
 import { createAxiosInstance, setAxiosInstance } from './request.js';
 import type { RequestConfig } from './types';
 

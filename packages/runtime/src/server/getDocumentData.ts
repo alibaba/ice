@@ -1,4 +1,5 @@
-import type { DocumentDataLoaderConfig, RequestContext } from '../types.js';
+import type { RequestContext } from '@ice/runtime-kit';
+import type { DocumentDataLoaderConfig } from '../types.js';
 
 interface Options {
   loaderConfig: DocumentDataLoaderConfig;

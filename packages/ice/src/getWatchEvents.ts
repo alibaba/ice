@@ -2,7 +2,7 @@ import * as path from 'path';
 import type { Context } from 'build-scripts';
 import type { Config } from '@ice/shared-config/types';
 import type { WatchEvent } from './types/plugin.js';
-import { generateRoutesInfo, getRoutesDefinition } from './routes.js';
+import { generateRoutesInfo } from './routes.js';
 import type Generator from './service/runtimeGenerator';
 import getGlobalStyleGlobPattern from './utils/getGlobalStyleGlobPattern.js';
 import renderExportsTemplate from './utils/renderExportsTemplate.js';
@@ -20,31 +20,38 @@ interface Options {
   ctx: Context<Config>;
   routeManifest: RouteManifest;
   lazyRoutes: boolean;
+  router: {
+    source?: string;
+    template?: string;
+    routesDefinition?: Config['runtime']['router']['routesDefinition'];
+  };
 }
 
 const getWatchEvents = (options: Options): WatchEvent[] => {
-  const { generator, targetDir, templateDir, cache, ctx, routeManifest, lazyRoutes } = options;
+  const { generator, targetDir, templateDir, cache, ctx, routeManifest, lazyRoutes, router } = options;
   const { userConfig: { routes: routesConfig, dataLoader }, configFile, rootDir } = ctx;
   const watchRoutes: WatchEvent = [
     /src\/pages\/?[\w*-:.$]+$/,
     async (eventName: string) => {
       if (eventName === 'add' || eventName === 'unlink' || eventName === 'change') {
         const routesRenderData = await generateRoutesInfo(rootDir, routesConfig);
-        const { routeImports, routeDefinition } = getRoutesDefinition({
+        const { routeImports, routeDefinition } = router?.routesDefinition?.({
           manifest: routesRenderData.routes,
           lazy: lazyRoutes,
-        });
+        }) || {};
         const stringifiedData = JSON.stringify(routesRenderData);
         if (cache.get('routes') !== stringifiedData) {
           cache.set('routes', stringifiedData);
           logger.debug(`routes data regenerated: ${stringifiedData}`);
           if (eventName !== 'change') {
             // Specify the route files to re-render.
-            generator.renderFile(
-              path.join(templateDir, 'routes.tsx.ejs'),
-              path.join(rootDir, targetDir, 'routes.tsx'),
-              { routeImports, routeDefinition },
-            );
+            if (router.source && router.template) {
+              generator.renderFile(
+                router.template,
+                router.source,
+                { routeImports, routeDefinition },
+              );
+            }
             // Keep generate route manifest for avoid breaking change.
             generator.renderFile(
               path.join(templateDir, 'route-manifest.json.ejs'),

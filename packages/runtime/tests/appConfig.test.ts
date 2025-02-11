@@ -1,5 +1,5 @@
 import { expect, it, describe } from 'vitest';
-import getAppConfig, { defineAppConfig } from '../src/appConfig.js';
+import { getAppConfig, defineAppConfig } from '@ice/runtime-kit';
 
 describe('AppConfig', () => {
   it('getAppConfig', () => {

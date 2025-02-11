@@ -252,6 +252,31 @@ importers:
         specifier: ^5.88.0
         version: 5.88.2
 
+  examples/custom-runtime:
+    dependencies:
+      '@ice/app':
+        specifier: workspace:*
+        version: link:../../packages/ice
+      '@ice/runtime':
+        specifier: workspace:*
+        version: link:../../packages/runtime
+      '@ice/runtime-kit':
+        specifier: workspace:*
+        version: link:../../packages/runtime-kit
+      react:
+        specifier: ^18.2.0
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.0.0
+        version: 18.3.18
+      '@types/react-dom':
+        specifier: ^18.0.2
+        version: 18.3.5(@types/react@18.3.18)
+
   examples/disable-data-loader:
     dependencies:
       '@ice/app':
@@ -1668,6 +1693,9 @@ importers:
       '@ice/runtime':
         specifier: workspace:^
         version: link:../runtime
+      '@ice/runtime-kit':
+        specifier: workspace:^
+        version: link:../runtime-kit
       '@ice/shared-config':
         specifier: workspace:*
         version: link:../shared-config
@@ -2406,6 +2434,9 @@ importers:
       '@ice/jsx-runtime':
         specifier: ^0.3.1
         version: link:../jsx-runtime
+      '@ice/runtime-kit':
+        specifier: ^0.1.0
+        version: link:../runtime-kit
       '@ice/shared':
         specifier: ^1.1.0
         version: link:../shared
@@ -2444,6 +2475,21 @@ importers:
         specifier: ^0.13.9
         version: 0.13.11
 
+  packages/runtime-kit:
+    devDependencies:
+      '@types/react':
+        specifier: ^18.0.8
+        version: 18.3.18
+      '@types/react-dom':
+        specifier: ^18.0.3
+        version: 18.3.5(@types/react@18.3.18)
+      react:
+        specifier: ^18.0.0
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.0.0
+        version: 18.3.1(react@18.3.1)
+
   packages/shared:
     devDependencies:
       typescript:
@@ -2471,6 +2517,9 @@ importers:
         specifier: ^0.11.10
         version: 0.11.10
     devDependencies:
+      '@ice/route-manifest':
+        specifier: workspace:*
+        version: link:../route-manifest
       esbuild:
         specifier: ^0.17.16
         version: 0.17.19
