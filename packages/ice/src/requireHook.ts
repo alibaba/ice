@@ -28,10 +28,24 @@ export function getHookFiles() {
     'webpack/lib/ExternalsPlugin',
     'webpack/lib/web/FetchCompileAsyncWasmPlugin',
     'webpack/lib/web/FetchCompileWasmPlugin',
+    'webpack/lib/runtime/StartupChunkDependenciesPlugin',
+    'webpack/lib/javascript/JavascriptModulesPlugin',
+    'webpack/lib/javascript/StartupHelpers',
+    'webpack/lib/util/identifier',
+    'webpack/lib/util/compileBooleanMatcher',
   ];
   const webpackDir = path.join(require.resolve('@ice/bundles/compiled/webpack'), '../');
   const pluginMap = webpackPlugins.map((pluginPath) => {
-    return [pluginPath, pluginPath.replace(/^webpack\/lib\/((web|node|optimize|webworker)\/)?/, webpackDir)];
+    return [
+      pluginPath,
+      pluginPath.replace(/^webpack\/lib\/((web|node|optimize|webworker|runtime|javascript|util)\/)?/, webpackDir),
+    ];
+  });
+  const pluginMapWithJs = webpackPlugins.map((pluginPath) => {
+    return [
+      `${pluginPath}.js`,
+      pluginPath.replace(/^webpack\/lib\/((web|node|optimize|webworker|runtime|javascript|util)\/)?/, webpackDir),
+    ];
   });
 
   return [
@@ -42,6 +56,7 @@ export function getHookFiles() {
     ['webpack/hot/only-dev-server', `${webpackDir}hot/only-dev-server`],
     ['webpack/hot/emitter', `${webpackDir}hot/emitter`],
     ...pluginMap,
+    ...pluginMapWithJs,
   ];
 }
 
@@ -52,12 +67,7 @@ function hijackWebpack() {
   // eslint-disable-next-line global-require
   const mod = require('module');
   const resolveFilename = mod._resolveFilename;
-  mod._resolveFilename = function (
-    request: string,
-    parent: any,
-    isMain: boolean,
-    options: any,
-  ) {
+  mod._resolveFilename = function (request: string, parent: any, isMain: boolean, options: any) {
     const hookResolved = hookPropertyMap.get(request);
     if (hookResolved) request = hookResolved;
     return resolveFilename.call(mod, request, parent, isMain, options);
