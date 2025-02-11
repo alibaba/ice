@@ -6,7 +6,7 @@ import MiniCssExtractPlugin from '@ice/bundles/compiled/mini-css-extract-plugin/
 import TerserPlugin from '@ice/bundles/compiled/terser-webpack-plugin/index.js';
 import { getCSSModuleLocalIdent, getPostcssOpts } from '@ice/shared-config';
 import type { Config } from '@ice/shared-config/types';
-import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+import TsconfigPathsPlugin from '@ice/bundles/compiled/tsconfig-paths-webpack-plugin/index.js';
 import webpack, { type LoaderContext } from 'webpack';
 import type { UserConfig } from '../../types/userConfig.js';
 import { logger } from '../../utils/logger.js';
@@ -177,8 +177,7 @@ export class WebpackServerCompiler {
             },
             use: [
               {
-                // TODO: compile to @ice/bundle
-                loader: 'esbuild-loader',
+                loader: '@ice/bundles/compiled/esbuild-loader',
                 // available options: https://github.com/evanw/esbuild/blob/88821b7e7d46737f633120f91c65f662eace0bcf/lib/shared/types.ts#L158-L172
                 options: {
                   target: options.target,

@@ -47,14 +47,12 @@
   "bugs": "https://github.com/alibaba/ice/issues",
   "homepage": "https://v3.ice.work",
   "dependencies": {
-    "@babel/parser": "^7.26.5",
-    "@babel/traverse": "^7.26.5",
     "@ice/bundles": "workspace:*",
     "@ice/route-manifest": "workspace:*",
-    "@ice/rspack-config": "workspace:*",
     "@ice/runtime": "workspace:^",
     "@ice/shared-config": "workspace:*",
     "@ice/webpack-config": "workspace:*",
+    "@ice/rspack-config": "workspace:*",
     "@swc/helpers": "0.5.1",
     "@types/express": "^4.17.14",
     "address": "^1.1.2",
@@ -84,8 +82,6 @@
     "yargs-parser": "^21.1.1"
   },
   "devDependencies": {
-    "@rspack/core": "0.5.7",
-    "@rspack/dev-server": "0.5.7",
     "@types/babel__generator": "^7.6.4",
     "@types/babel__traverse": "^7.17.1",
     "@types/cross-spawn": "^6.0.2",
@@ -99,10 +95,11 @@
     "react": "^18.2.0",
     "react-router": "6.21.3",
     "sass": "^1.50.0",
-    "tsconfig-paths-webpack-plugin": "^4.2.0",
     "unplugin": "^1.6.0",
     "webpack": "^5.88.0",
-    "webpack-dev-server": "4.15.0"
+    "webpack-dev-server": "4.15.0",
+    "@rspack/core": "0.5.7",
+    "@rspack/dev-server": "0.5.7"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
