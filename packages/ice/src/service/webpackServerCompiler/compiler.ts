@@ -23,6 +23,40 @@ interface Options {
 
 type CSSRuleConfig = [string, string?, Record<string, any>?];
 
+export const ASSET_TYPES = [
+  // images
+  'png',
+  'jpe?g',
+  'gif',
+  'svg',
+  'ico',
+  'webp',
+  'avif',
+
+  // media
+  'mp4',
+  'webm',
+  'ogg',
+  'mp3',
+  'wav',
+  'flac',
+  'aac',
+
+  // fonts
+  'woff2?',
+  'eot',
+  'ttf',
+  'otf',
+
+  // other
+  'wasm',
+  'webmanifest',
+  'pdf',
+  'txt',
+];
+
+const ASSETS_RE = new RegExp(`\\.(${ASSET_TYPES.join('|')})(\\?.*)?$`);
+
 export class WebpackServerCompiler {
   private config: webpack.Configuration;
   private options: { userServerConfig: UserConfig['server']; [key: string]: any };
@@ -208,7 +242,7 @@ export class WebpackServerCompiler {
             ],
           },
           {
-            test: /\.svg/,
+            test: ASSETS_RE,
             type: 'asset/inline',
           },
           ...cssRules,
