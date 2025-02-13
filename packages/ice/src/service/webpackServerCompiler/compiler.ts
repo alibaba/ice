@@ -184,27 +184,35 @@ export class WebpackServerCompiler {
               return false;
             },
             use: [
-              {
-                loader: '@ice/bundles/compiled/esbuild-loader',
-                // available options: https://github.com/evanw/esbuild/blob/88821b7e7d46737f633120f91c65f662eace0bcf/lib/shared/types.ts#L158-L172
-                options: {
-                  target: options.target,
-                  // make sure tree shaking is worked
-                  format: 'esm',
-                  loader: 'tsx',
-                  jsx: options.jsx,
-                  jsxImportSource: '@ice/runtime/react',
-                  sourcemap: options.sourcemap,
-                  define: options.define,
-                  // banner can only be string in transform mode
-                  banner: options.banner?.js,
-                  implementation: esbuild,
-                },
+              (info: any) => {
+                const ext = path.extname(info.resource);
+                return {
+                  loader: '@ice/bundles/compiled/esbuild-loader',
+                  // available options: https://github.com/evanw/esbuild/blob/88821b7e7d46737f633120f91c65f662eace0bcf/lib/shared/types.ts#L158-L172
+                  options: {
+                    target: options.target,
+                    // make sure tree shaking is worked
+                    format: 'esm',
+                    loader: ext === '.js' ? 'jsx' : 'default',
+                    jsx: options.jsx,
+                    jsxImportSource: '@ice/runtime/react',
+                    sourcemap: options.sourcemap,
+                    define: options.define,
+                    // banner can only be string in transform mode
+                    banner: options.banner?.js,
+                    implementation: esbuild,
+                  },
+                };
               },
               path.resolve(_dirname, 'removeMagicString.js'),
             ],
           },
+          {
+            test: /\.svg/,
+            type: 'asset/inline',
+          },
           ...cssRules,
+          ...(webpackConfig.module?.rules || []),
         ],
       },
       plugins: [
