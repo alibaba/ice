@@ -167,8 +167,16 @@ export class WebpackServerCompiler {
             test: /\.m?[jt]sx?$/,
             exclude(path) {
               if (path.includes('node_modules')) {
-                if (webpackConfig.transformInclude && webpackConfig.transformInclude.test(path)) {
-                  return false;
+                if (webpackConfig.transformInclude) {
+                  return !webpackConfig.transformInclude.some((i) => {
+                    if (i instanceof RegExp) {
+                      return i.test(path);
+                    } else if (typeof i === 'string') {
+                      return path.includes(i);
+                    } else {
+                      return false;
+                    }
+                  });
                 } else {
                   return true;
                 }

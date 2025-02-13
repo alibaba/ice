@@ -257,7 +257,7 @@ export interface UserConfig {
        *
        * use this if you need to transform some packages inside of node_modues
        */
-      transformInclude?: RegExp;
+      transformInclude?: Array<RegExp | string>;
     };
   };
   /**
