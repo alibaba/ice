@@ -7,6 +7,7 @@ import TerserPlugin from '@ice/bundles/compiled/terser-webpack-plugin/index.js';
 import { getCSSModuleLocalIdent, getPostcssOpts } from '@ice/shared-config';
 import type { Config } from '@ice/shared-config/types';
 import TsconfigPathsPlugin from '@ice/bundles/compiled/tsconfig-paths-webpack-plugin/index.js';
+import CssMinimizerPlugin from '@ice/bundles/compiled/css-minimizer-webpack-plugin/index.js';
 import webpack, { type LoaderContext } from 'webpack';
 import type { UserConfig } from '../../types/userConfig.js';
 import { logger } from '../../utils/logger.js';
@@ -180,6 +181,17 @@ export class WebpackServerCompiler {
             extractComments: false,
             terserOptions: typeof options.minify === 'object' ? options.minify : undefined,
             minify: TerserPlugin.esbuildMinify,
+          }),
+          new CssMinimizerPlugin({
+            parallel: false,
+            minimizerOptions: {
+              preset: [
+                'default',
+                {
+                  discardComments: { removeAll: true },
+                },
+              ],
+            },
           }),
         ],
         ...(webpackConfig.optimization as any),
