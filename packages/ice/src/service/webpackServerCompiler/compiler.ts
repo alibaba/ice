@@ -174,11 +174,12 @@ export class WebpackServerCompiler {
       devtool: 'source-map',
       externals: options.externals,
       optimization: {
-        minimize: options.minify,
+        minimize: !!options.minify,
         minimizer: [
           new TerserPlugin({
-            // TODO: read minify config
             extractComments: false,
+            terserOptions: typeof options.minify === 'object' ? options.minify : undefined,
+            minify: TerserPlugin.esbuildMinify,
           }),
         ],
         ...(webpackConfig.optimization as any),
