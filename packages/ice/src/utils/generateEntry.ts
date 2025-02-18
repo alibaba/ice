@@ -13,6 +13,7 @@ interface Options {
   routeType: AppConfig['router']['type'];
   renderMode?: RenderMode;
   routeManifest: RouteManifest;
+  publicPath?: string;
 }
 
 interface EntryResult {
@@ -20,15 +21,7 @@ interface EntryResult {
 }
 
 export default async function generateEntry(options: Options): Promise<EntryResult> {
-  const {
-    rootDir,
-    entry,
-    outputDir,
-    documentOnly,
-    renderMode,
-    routeType,
-    routeManifest,
-  } = options;
+  const { rootDir, entry, outputDir, documentOnly, renderMode, routeType, routeManifest, publicPath } = options;
 
   let serverEntry: string;
   try {
@@ -43,16 +36,11 @@ export default async function generateEntry(options: Options): Promise<EntryResu
   const outputPaths = [];
   for (let i = 0, n = paths.length; i < n; i++) {
     const routePath = paths[i];
-    const {
-      htmlOutput,
-    } = await renderEntry({ routePath, serverEntry, documentOnly, renderMode });
+    const { htmlOutput } = await renderEntry({ routePath, serverEntry, documentOnly, renderMode, publicPath });
     const generateOptions = { rootDir, routePath, outputDir };
     if (htmlOutput) {
       const path = await generateFilePath({ ...generateOptions, type: 'html' });
-      await writeFile(
-        path,
-        htmlOutput,
-      );
+      await writeFile(path, htmlOutput);
       outputPaths.push(path);
     }
   }
@@ -76,19 +64,17 @@ function formatFilePath(routePath: string, type: 'js' | 'html' | 'js.map'): stri
   return routePath === '/' ? `index.${type}` : `${escapeRoutePath(routePath)}.${type}`;
 }
 
-async function generateFilePath(
-  {
-    rootDir,
-    routePath,
-    outputDir,
-    type,
-  }: {
-    rootDir: string;
-    routePath: string;
-    outputDir: string;
-    type: 'js' | 'html' | 'js.map' ;
-  },
-) {
+async function generateFilePath({
+  rootDir,
+  routePath,
+  outputDir,
+  type,
+}: {
+  rootDir: string;
+  routePath: string;
+  outputDir: string;
+  type: 'js' | 'html' | 'js.map';
+}) {
   const fileName = formatFilePath(routePath, type);
   if (fse.existsSync(path.join(rootDir, 'public', fileName))) {
     logger.warn(`${fileName} is overwrite by framework, rename file name if it is necessary.`);
@@ -97,31 +83,30 @@ async function generateFilePath(
   return path.join(outputDir, fileName);
 }
 
-async function renderEntry(
-  {
-    routePath,
-    serverEntry,
-    documentOnly,
-    renderMode,
-  }: {
-    routePath: string;
-    serverEntry: any;
-    documentOnly: boolean;
-    renderMode?: RenderMode;
-  },
-) {
+async function renderEntry({
+  routePath,
+  serverEntry,
+  documentOnly,
+  renderMode,
+  publicPath,
+}: {
+  routePath: string;
+  serverEntry: any;
+  documentOnly: boolean;
+  renderMode?: RenderMode;
+  publicPath?: string;
+}) {
   const serverContext: ServerContext = {
     req: {
       url: routePath,
     } as any,
   };
-  const {
-    value,
-  } = await serverEntry.renderToHTML(serverContext, {
+  const { value } = await serverEntry.renderToHTML(serverContext, {
     renderMode,
     documentOnly,
     routePath,
     serverOnlyBasename: '/',
+    publicPath,
   });
 
   return {

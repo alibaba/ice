@@ -57,21 +57,33 @@ async function build(
 
   if (isSuccessful) {
     // Generate html when SSG.
-    const outputDir = webpackConfigs[0].output.path;
-    const { serverEntry, error } = await extendsPluginAPI.serverCompileTask.get() || {};
+
+    const { serverEntry, error } = (await extendsPluginAPI.serverCompileTask.get()) || {};
     if (error) {
       throw new Error('Build failed, please check the error message.');
     }
-    const outputPaths = await getOutputPaths({
-      rootDir,
-      serverEntry,
-      outputDir,
-      bundleOptions: {
-        userConfig,
-        appConfig,
-        routeManifest,
-      },
-    });
+
+    const outputPaths: string[] = [];
+
+    for (const config of webpackConfigs) {
+      const outputDir = config.output.path;
+      const outputPath = await getOutputPaths({
+        rootDir,
+        serverEntry,
+        outputDir,
+        bundleOptions: {
+          userConfig,
+          appConfig,
+          routeManifest,
+          // todo: function type publicPath
+          publicPath: config.output.publicPath as string,
+        },
+      });
+      outputPaths.push(...outputPath);
+
+      await removeServerOutput(outputDir, userConfig.ssr);
+    }
+
     await applyHook('after.build.compile', {
       ...hooksAPI,
       stats,
@@ -83,7 +95,6 @@ async function build(
       output: { paths: outputPaths },
       appConfig,
     });
-    await removeServerOutput(outputDir, userConfig.ssr);
   }
 }
 

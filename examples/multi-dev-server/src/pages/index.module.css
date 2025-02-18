@@ -1,0 +1,50 @@
+/*
+ * Style in CSS Modules.
+ */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.app > header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} 
+
+.app > header > img {
+  width: 120px;
+}
+
+.app > header > p {
+  margin: 20px 0;
+  text-align: center;
+  font-size: 2.6rem;
+}
+
+.app > main {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0 10px;
+  font-size: 0.9rem;
+}
+
+.link {
+  font-size: 1.2rem;
+  color: var(--primary);
+}
+
+.button {
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 35px;
+  background: var(--primary);
+  box-shadow: 0 5px 10px 0 #ddd;
+  color: white;
+  font-size: calc(10px + 2vmin);
+}

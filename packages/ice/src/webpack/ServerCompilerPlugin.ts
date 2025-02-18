@@ -38,6 +38,7 @@ export default class ServerCompilerPlugin {
     if (!this.isCompiling) {
       if (compilation) {
         // Option of compilationInfo need to be object, while it may changed during multi-time compilation.
+        // todo: 多个 task 的情况，如何处理多个 manifest
         this.compilerOptions.compilationInfo.assetsManifest =
           JSON.parse(compilation.getAsset('assets-manifest.json').source.source().toString());
       }

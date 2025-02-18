@@ -1,0 +1,12 @@
+/**
+ * The global.css defines the style of the entire project,
+ * ice.js will globally import this file by default.
+ */
+:root {
+  --primary: #3178f6;
+  --bg-primary: white;
+}
+
+body {
+  margin: 0;
+}
