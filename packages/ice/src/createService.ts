@@ -8,6 +8,7 @@ import { Context } from 'build-scripts';
 import type { CommandArgs, CommandName, TaskConfig } from 'build-scripts';
 import type { Config } from '@ice/shared-config/types';
 import type { AppConfig } from '@ice/runtime-kit';
+import lodash from '@ice/bundles/compiled/lodash/index.js';
 import * as config from './config.js';
 import test from './commands/test.js';
 import webpackBundler from './bundler/webpack/index.js';
@@ -22,10 +23,7 @@ import Generator from './service/runtimeGenerator.js';
 import ServerRunner from './service/ServerRunner.js';
 import { createServerCompiler } from './service/serverCompiler.js';
 import createWatch from './service/watchSource.js';
-import type {
-  PluginData,
-  ExtendsPluginAPI,
-} from './types/index.js';
+import type { PluginData, ExtendsPluginAPI } from './types/index.js';
 import addPolyfills from './utils/runtimePolyfill.js';
 import createSpinner from './utils/createSpinner.js';
 import dynamicImport from './utils/dynamicImport.js';
@@ -41,6 +39,8 @@ import ServerCompileTask from './utils/ServerCompileTask.js';
 import { generateRoutesInfo } from './routes.js';
 import GeneratorAPI from './service/generatorAPI.js';
 import renderTemplate from './service/renderTemplate.js';
+
+const { cloneDeep } = lodash;
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -106,7 +106,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   }
   if (builtinPlugin) {
     try {
-      const pluginModule = await dynamicImport(builtinPlugin.startsWith('.') ? path.join(rootDir, builtinPlugin) : builtinPlugin);
+      const pluginModule = await dynamicImport(
+        builtinPlugin.startsWith('.') ? path.join(rootDir, builtinPlugin) : builtinPlugin,
+      );
       const plugin = pluginModule.default || pluginModule;
       plugins.push(plugin());
     } catch (err) {
@@ -155,7 +157,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   await ctx.resolveUserConfig();
 
   // get plugins include built-in plugins and custom plugins
-  const resolvedPlugins = await ctx.resolvePlugins() as PluginData[];
+  const resolvedPlugins = (await ctx.resolvePlugins()) as PluginData[];
   const runtimeModules = getRuntimeModules(resolvedPlugins, rootDir);
 
   const { getAppConfig, init: initAppConfigCompiler } = getAppExportConfig(rootDir);
@@ -190,10 +192,12 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const hasExportAppData = (await getFileExports({ rootDir, file: 'src/app' })).includes('dataLoader');
   const csr = !userConfig.ssr && !userConfig.ssg;
 
-  const disableRouter = (userConfig?.optimization?.router && routesInfo.routesCount <= 1) ||
-    userConfig?.optimization?.disableRouter;
+  const disableRouter =
+    (userConfig?.optimization?.router && routesInfo.routesCount <= 1) || userConfig?.optimization?.disableRouter;
   if (disableRouter) {
-    logger.info('`optimization.router` is enabled, ice build will remove react-router and history which is unnecessary.');
+    logger.info(
+      '`optimization.router` is enabled, ice build will remove react-router and history which is unnecessary.',
+    );
     taskConfigs = mergeTaskConfig(taskConfigs, {
       alias: {
         '@ice/runtime/router': '@ice/runtime/single-router',
@@ -278,8 +282,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         if (eventName === 'change' || eventName === 'add') {
           serverRunner.fileChanged(filePath);
         }
-      }],
-    );
+      },
+    ]);
   }
   // create serverCompiler with task config
   const serverCompiler = createServerCompiler({
@@ -318,7 +322,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const { environments } = userConfig;
   if (environments) {
     for (const [envName, envConfig] of Object.entries(environments)) {
-      const envTaskConfig = mergeConfig(Object.assign({}, platformTaskConfig.config), envConfig as Config);
+      const envTaskConfig = mergeConfig(cloneDeep(platformTaskConfig.config), envConfig as Config);
       ctx.registerTask(envName, envTaskConfig);
     }
 
