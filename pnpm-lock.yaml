@@ -470,17 +470,17 @@ importers:
         version: link:../../packages/runtime
       react:
         specifier: ^18.0.0
-        version: 18.2.0
+        version: 18.3.1
       react-dom:
         specifier: ^18.0.0
-        version: 18.2.0(react@18.2.0)
+        version: 18.3.1(react@18.3.1)
     devDependencies:
       '@types/react':
         specifier: ^18.0.0
-        version: 18.0.34
+        version: 18.3.18
       '@types/react-dom':
         specifier: ^18.0.2
-        version: 18.0.11
+        version: 18.3.5(@types/react@18.3.18)
 
   examples/multi-target:
     dependencies:
