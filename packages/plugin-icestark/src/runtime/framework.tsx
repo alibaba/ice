@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AppRouter, AppRoute } from '@ice/stark';
-import type { RuntimePlugin, ClientAppRouterProps } from '@ice/runtime/types';
+import type { RuntimePlugin, ClientAppRouterProps } from '@ice/runtime';
 import type { RouteInfo, AppConfig } from '../types';
 
 const { useState, useEffect } = React;

@@ -1,5 +1,6 @@
 import * as React from 'react';
-import type { WindowContext, RouteMatch, AssetsManifest } from './types.js';
+import type { AssetsManifest } from '@ice/runtime-kit';
+import type { WindowContext, RouteMatch } from './types.js';
 import { useAppContext, useAppData } from './AppContext.js';
 import { getMeta, getTitle, getLinks, getScripts } from './routesConfig.js';
 import getCurrentRoutePath from './utils/getCurrentRoutePath.js';

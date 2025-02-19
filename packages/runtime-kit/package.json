@@ -1,0 +1,36 @@
+{
+  "name": "@ice/runtime-kit",
+  "version": "0.1.0",
+  "description": "Runtime utilities and tools for ICE framework",
+  "main": "./esm/index.js",
+  "module": "./esm/index.js",
+  "types": "./esm/index.d.ts",
+  "type": "module",
+  "files": [
+    "esm"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "watch": "tsc -w --sourceMap",
+    "build": "tsc"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/react": "^18.0.8",
+    "@types/react-dom": "^18.0.3",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alibaba/ice.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alibaba/ice/issues"
+  },
+  "homepage": "https://ice.work",
+  "license": "MIT"
+}

@@ -39,27 +39,28 @@ export default function createDataLoaderMiddleware(compiler: Compiler): Middlewa
       return next();
     }
     const publicPath = compiler.options.output?.publicPath
-      ? `${compiler.options.output.publicPath.replace(/\/$/, '')}/`
+      // Only support string publicPath config for now
+      ? `${(compiler.options.output.publicPath as unknown as string)?.replace(/\/$/, '')}/`
       : '/';
     const filePath = parse(url || '').pathname;
     const filename = filePath?.startsWith(publicPath) ? filePath.slice(publicPath.length) : filePath.slice(1);
     // Mark sure the compiler is ready.
     await compileTask;
-    const buffer = compiler.getAsset(filename);
-
-    if (!buffer) {
-      return next();
-    }
-    const calcEtag = etag(buffer);
-		const oldEtag = req.headers['if-none-match'];
-    // Only data-loader.js will be matched.
-    res.setHeader('Content-Type', 'text/javascript');
-    res.setHeader('ETag', calcEtag);
-    if (calcEtag === oldEtag) {
-			res.status(304).send();
-		} else {
-			res.send(buffer);
-		}
+    compiler.outputFileSystem.readFile(filename, (err, data) => {
+      if (err) {
+        return next();
+      }
+      const calcEtag = etag(data as Buffer);
+      const oldEtag = req.headers['if-none-match'];
+      // Only data-loader.js will be matched.
+      res.setHeader('Content-Type', 'text/javascript');
+      res.setHeader('ETag', calcEtag);
+      if (calcEtag === oldEtag) {
+        res.status(304).send();
+      } else {
+        res.send(data);
+      }
+    });
   };
   return {
     name: 'data-loader-middleware',

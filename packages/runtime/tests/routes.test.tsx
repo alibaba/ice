@@ -155,6 +155,7 @@ describe('routes', () => {
   });
 
   it('load async route', async () => {
+    process.env.ICE_CORE_ROUTER = 'true';
     const { data: deferredResult } = await createRouteLoader({
       routeId: 'home',
       module: InfoItem,

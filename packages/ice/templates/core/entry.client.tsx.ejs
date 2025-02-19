@@ -1,11 +1,10 @@
 <% if (importCoreJs) { -%>import 'core-js';<% } %>
 <%- entry.imports %>
-import { createElement, Fragment } from 'react';
 import { runClientApp, getAppConfig } from '<%- iceRuntimePath %>';
 import { commons, statics } from './runtime-modules';
 import * as app from '@/app';
-<% if (enableRoutes) { -%>
-import createRoutes from './routes';
+<% if (routesFile) { -%>
+import createRoutes from '<%- routesFile %>';
 <% } -%>
 <%- runtimeOptions.imports %>
 <% if (dataLoaderImport.imports && hasDataLoader) {-%><%-dataLoaderImport.imports%><% } -%>
@@ -15,19 +14,6 @@ const getRouterBasename = () => {
   const appConfig = getAppConfig(app);
   return appConfig?.router?.basename ?? <%- basename %> ?? '';
 }
-// Add react fragment for split chunks of app.
-// Otherwise chunk of route component will pack @ice/jsx-runtime and depend on framework bundle.
-const App = <></>;
-
-<% if (!dataLoaderImport.imports && hasDataLoader) {-%>
-let dataLoaderFetcher = (options) => {
-  return window.fetch(options.url, options);
-}
-
-let dataLoaderDecorator = (dataLoader) => {
-  return dataLoader;
-}
-<% } -%>
 
 const renderOptions: RunClientAppOptions = {
   app,
@@ -35,11 +21,11 @@ const renderOptions: RunClientAppOptions = {
     commons,
     statics,
   },
-  <% if (enableRoutes) { %>createRoutes,<% } %>
+  <% if (routesFile) { %>createRoutes,<% } %>
   basename: getRouterBasename(),
   hydrate: <%- hydrate %>,
   memoryRouter: <%- memoryRouter || false %>,
-<% if (hasDataLoader) { -%>
+<% if (dataLoaderImport.imports && hasDataLoader) { -%>
   dataLoaderFetcher,
   dataLoaderDecorator,<% } -%>
   runtimeOptions: {
@@ -50,27 +36,23 @@ const renderOptions: RunClientAppOptions = {
   },
 };
 
-const defaultRender = (customOptions: Partial<RunClientAppOptions> = {}) => {
-  return runClientApp({
-    ...renderOptions,
-    ...customOptions,
-    runtimeOptions: {
-      ...(renderOptions.runtimeOptions || {}),
-      ...customOptions.runtimeOptions,
+const mergeOptions = (customOptions: Partial<RunClientAppOptions> = {}): RunClientAppOptions => ({
+  ...renderOptions,
+  ...customOptions,
+  runtimeOptions: {
+    ...renderOptions.runtimeOptions,
+    ...customOptions.runtimeOptions,
+  },
+});
+
+const render = () => {
+  return app.runApp?.(
+    (customOptions: Partial<RunClientAppOptions> = {}) => {
+      const options = mergeOptions(customOptions);
+      return runClientApp(options);
     },
-  });
-};
-
-const renderApp = (appExport: any, customOptions: Partial<RunClientAppOptions>) => {
-  if (appExport.runApp) {
-    return appExport.runApp(defaultRender, renderOptions);
-  } else {
-    return defaultRender(customOptions);
-  }
-};
-
-const render = (customOptions: Partial<RunClientAppOptions> = {}) => {
-  return renderApp(app, customOptions);
+    renderOptions
+  ) ?? runClientApp(renderOptions);
 };
 
 <%- entryCode %>

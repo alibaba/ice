@@ -1,20 +1,27 @@
 import type {
+  RunClientAppOptions,
+  CreateRoutes,
   RuntimePlugin,
   AppContext,
-  PublicAppContext,
   AppConfig,
   RouteConfig,
-  RouteItem,
-  ServerContext,
-  AppProvider,
+  RouteWrapperConfig,
   RouteWrapper,
   RenderMode,
   Loader,
-  RouteWrapperConfig,
+  ServerContext,
+  AppProvider,
+  StaticRuntimePlugin,
+} from '@ice/runtime-kit';
+import { dataLoader, defineDataLoader, defineServerDataLoader, defineStaticDataLoader, callDataLoader, getRequestContext } from '@ice/runtime-kit';
+import { getAppConfig, defineAppConfig } from '@ice/runtime-kit';
+import type {
+  PublicAppContext,
+  RouteItem,
+  ClientAppRouterProps,
 } from './types.js';
 import Runtime from './runtime.js';
 import runClientApp from './runClientApp.js';
-import type { RunClientAppOptions, CreateRoutes } from './runClientApp.js';
 import { useAppContext as useInternalAppContext, useAppData, AppContextProvider } from './AppContext.js';
 import { getAppData } from './appData.js';
 import { useData, useConfig } from './RouteContext.js';
@@ -37,10 +44,7 @@ import type {
   DataType,
   MainType,
 } from './Document.js';
-import dataLoader, { defineDataLoader, defineServerDataLoader, defineStaticDataLoader, callDataLoader } from './dataLoader.js';
-import getRequestContext from './requestContext.js';
 import AppErrorBoundary from './AppErrorBoundary.js';
-import getAppConfig, { defineAppConfig } from './appConfig.js';
 import { routerHistory as history } from './history.js';
 import KeepAliveOutlet from './KeepAliveOutlet.js';
 import { useActive } from './Activity.js';
@@ -150,6 +154,7 @@ export {
 } from 'react-router-dom';
 
 export type {
+  StaticRuntimePlugin,
   RuntimePlugin,
   AppContext,
   AppConfig,
@@ -170,4 +175,5 @@ export type {
   DataType,
   MainType,
   CreateRoutes,
+  ClientAppRouterProps,
 };

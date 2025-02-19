@@ -1,10 +1,7 @@
 import * as path from 'path';
 import fse from 'fs-extra';
 import type Generator from '../service/runtimeGenerator.js';
-
-type RenderData = {
-  loaders: string;
-} & Record<string, any>;
+import type { RenderData } from '../types/generator.js';
 
 function renderExportsTemplate(
   renderData: RenderData,

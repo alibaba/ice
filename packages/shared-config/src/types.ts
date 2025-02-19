@@ -3,7 +3,6 @@ import type { RuleSetRule, Configuration, Compiler, WebpackPluginInstance } from
 import type {
   ProxyConfigArray,
   ProxyConfigArrayItem,
-  ProxyConfigMap,
   Middleware,
   ServerOptions,
 } from 'webpack-dev-server';
@@ -14,6 +13,7 @@ import type Server from 'webpack-dev-server';
 import type { SwcCompilationConfig } from '@ice/bundles';
 import type { BuildOptions } from 'esbuild';
 import type { ProcessOptions } from 'postcss';
+import type { NestedRouteManifest } from '@ice/route-manifest';
 
 export type ECMA = 5 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020;
 
@@ -90,6 +90,17 @@ export type { webpack };
 
 type PluginFunction = (this: Compiler, compiler: Compiler) => void;
 
+export interface RouteDefinitionOptions {
+  manifest: NestedRouteManifest[];
+  lazy?: boolean;
+  depth?: number;
+  matchRoute?: (route: NestedRouteManifest) => boolean;
+}
+export interface RouteDefinition {
+  routeImports: string[];
+  routeDefinition: string;
+}
+
 export interface Config {
   // The name of the task, used for the output log.
   name?: string;
@@ -137,7 +148,7 @@ export interface Config {
   | ((middlewares: Middleware[], devServer: Server) => Middleware[])
   | undefined;
 
-  proxy?: ProxyConfigArrayItem | ProxyConfigMap | ProxyConfigArray | undefined;
+  proxy?: ProxyConfigArray;
 
   polyfill?: 'usage' | 'entry' | false;
   // You can use `browserslist` to automatically configure supported browsers if set to be true.
@@ -233,4 +244,19 @@ export interface Config {
   useDataLoader?: boolean;
 
   optimizePackageImports?: string[];
+
+  runtime?: {
+    source?: string;
+    server?: string;
+    exports?: {
+      specifier: string[];
+      source: string;
+      alias?: Record<string, string>;
+    }[];
+    router?: {
+      routesDefinition?: (options: RouteDefinitionOptions) => RouteDefinition;
+      source?: string;
+      template?: string;
+    };
+  };
 }

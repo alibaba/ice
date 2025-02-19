@@ -19,8 +19,9 @@
     "dependency:check": "tsx ./scripts/dependencyCheck.ts",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
     "cov": "vitest run --coverage",
-    "test": "vitest",
+    "test": "vitest run",
     "changeset": "changeset",
+    "puppeteer:install": "tsx ./scripts/puppeteer.ts",
     "install:frozen": "pnpm install --frozen-lockfile false",
     "version": "changeset version && pnpm install:frozen",
     "release": "changeset publish",
@@ -61,7 +62,7 @@
     "react-dom": "^18.2.0",
     "rimraf": "^3.0.2",
     "stylelint": "^15.10.1",
-    "tsx": "^3.12.1",
+    "tsx": "3.12.1",
     "typescript": "^4.7.4",
     "vitest": "^0.15.2"
   },
@@ -71,8 +72,11 @@
   "packageManager": "pnpm@8.9.2",
   "pnpm": {
     "patchedDependencies": {
-      "@rspack/core@0.5.7": "patches/@rspack__core@0.5.7.patch",
-      "unplugin@1.6.0": "patches/unplugin@1.6.0.patch"
+      "unplugin@1.6.0": "patches/unplugin@1.6.0.patch",
+      "@rspack/core@1.2.2": "patches/@rspack__core@1.2.2.patch"
     }
-  }
+  },
+  "workspaces": [
+    "packages/runtime-kit"
+  ]
 }

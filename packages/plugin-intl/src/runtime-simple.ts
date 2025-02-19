@@ -1,4 +1,4 @@
-import type { RuntimePlugin } from '@ice/runtime/types';
+import type { RuntimePlugin } from '@ice/runtime';
 import { getDefaultLocale, getLocaleMessages, EXPORT_NAME } from './intl-until.js';
 
 let currentLocale = getDefaultLocale();

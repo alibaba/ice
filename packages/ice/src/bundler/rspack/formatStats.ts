@@ -6,7 +6,7 @@ import formatWebpackMessages from '../../utils/formatWebpackMessages.js';
 function formatStats(stats: Stats | MultiStats, showWarnings = true) {
   const statsData = stats.toJson({
     preset: 'errors-warnings',
-  }) as StatsCompilation;
+  }) as unknown as StatsCompilation;
 
   const { errors, warnings } = formatWebpackMessages(statsData);
 

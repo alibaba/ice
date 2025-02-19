@@ -4,7 +4,7 @@ import type { Configuration, Stats, WebpackOptionsNormalized } from '@ice/bundle
 import type { esbuild } from '@ice/bundles';
 import type { DefineExtraRoutes, NestedRouteManifest } from '@ice/route-manifest';
 import type { Config } from '@ice/shared-config/types';
-import type { AppConfig, AssetsManifest } from '@ice/runtime/types';
+import type { AppConfig, AssetsManifest } from '@ice/runtime-kit';
 import type ServerCompileTask from '../utils/ServerCompileTask.js';
 import type { CreateLogger } from '../utils/logger.js';
 import type { OnGetEnvironmentConfig } from '../service/onGetEnvironmentConfig.js';

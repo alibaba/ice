@@ -1,5 +1,5 @@
-import type { AppExport, AppData, RequestContext, Loader } from './types.js';
-import { callDataLoader } from './dataLoader.js';
+import type { AppExport, AppData, RequestContext, Loader } from '@ice/runtime-kit';
+import { callDataLoader } from '@ice/runtime-kit';
 
 /**
  * Call the getData of app config.
