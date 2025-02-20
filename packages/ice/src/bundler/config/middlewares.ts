@@ -19,7 +19,7 @@ interface SetupOptions {
   taskConfig: TaskConfig<Config>;
   routeManifest: RouteManifest;
   getAppConfig: GetAppConfig;
-  excuteServerEntry: () => Promise<any>;
+  excuteServerEntry: (name?: string) => Promise<any>;
   mock: boolean;
   rootDir: string;
   dataLoaderCompiler?: Compiler;
