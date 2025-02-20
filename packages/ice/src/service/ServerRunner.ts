@@ -209,6 +209,7 @@ class ServerRunner extends Runner {
                     // Add kind of entry-point or import-statement to distinguish the type of resolve.
                     kind: firstResolve ? 'entry-point' : 'import-statement',
                     pluginData: {},
+                    with: {},
                   });
 
                   if (res) {
@@ -272,6 +273,7 @@ class ServerRunner extends Runner {
                     pluginData: {},
                     ...args,
                     path: formatedId,
+                    with: {},
                   });
                   // If res is undefined, it means the plugin does not handle the file, fallback to default handler.
                   if (!res && FALLBACK_LOADERS[path.extname(formatedId)]) {
