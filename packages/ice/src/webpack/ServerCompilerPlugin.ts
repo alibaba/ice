@@ -39,8 +39,9 @@ export default class ServerCompilerPlugin {
       if (compilation) {
         // Option of compilationInfo need to be object, while it may changed during multi-time compilation.
         // todo: 多个 task 的情况，如何处理多个 manifest
-        this.compilerOptions.compilationInfo.assetsManifest =
-          JSON.parse(compilation.getAsset('assets-manifest.json').source.source().toString());
+        this.compilerOptions.compilationInfo.assetsManifest = JSON.parse(
+          compilation.getAsset('assets-manifest.json').source.source().toString(),
+        );
       }
       // For first time, we create a new task.
       // The next time, we use incremental build so do not create task again.
@@ -65,20 +66,21 @@ export default class ServerCompilerPlugin {
       await this.compileTask(compilation);
 
       const compilerTask = this.buildResult?.context.rebuild
-        ? this.buildResult.context.rebuild()
-          .then((result) => {
-            return {
-              // Pass original buildResult, because it's returned serverEntry.
-              ...this.buildResult,
-              result,
-            };
-          })
-          .catch(({ errors }) => {
-            return { error: errors };
-          })
+        ? this.buildResult.context
+            .rebuild()
+            .then((result) => {
+              return {
+                // Pass original buildResult, because it's returned serverEntry.
+                ...this.buildResult,
+                result,
+              };
+            })
+            .catch(({ errors }) => {
+              return { error: errors };
+            })
         : this.task;
       if (this.serverCompileTask) {
-        this.serverCompileTask.set(compilerTask);
+        this.serverCompileTask.set(compilerTask, this.compilerOptions.name);
       } else {
         return compilerTask;
       }

@@ -16,10 +16,7 @@ import { bundlerConfigContext } from '../../service/onGetBundlerConfig.js';
 
 const { debounce } = lodash;
 
-type GetWebpackConfig = (
-  context: Context,
-  options: BundlerOptions
-) => Promise<Configuration[]>;
+type GetWebpackConfig = (context: Context, options: BundlerOptions) => Promise<Configuration[]>;
 
 interface DevOptions {
   context: Context;
@@ -32,9 +29,7 @@ const addDevPlugins = (webpackConfig: Configuration, options: DevOptions) => {
   const { reCompile, context, routeManifest, serverCompilerPlugin } = options;
   const { watch } = context.extendsPluginAPI;
   // Add re-compile plugin
-  webpackConfig.plugins.push(
-    getReCompilePlugin(reCompile, routeManifest),
-  );
+  webpackConfig.plugins.push(getReCompilePlugin(reCompile, routeManifest));
   const debounceCompile = debounce(() => {
     (serverCompilerPlugin as ServerCompilerPlugin)?.buildResult?.context.rebuild();
     console.log('Document updated, try to reload page for latest html content.');
@@ -50,7 +45,13 @@ const addDevPlugins = (webpackConfig: Configuration, options: DevOptions) => {
 };
 
 const getWebpackConfig: GetWebpackConfig = async (context, options) => {
-  const { hooksAPI: { serverRunner, serverCompiler }, spinner, taskConfigs, routeManifest } = options;
+  const {
+    hooksAPI: { serverRunner, serverCompiler },
+    spinner,
+    taskConfigs,
+    routeManifest,
+    multiEnvServerCompilers,
+  } = options;
   const {
     rootDir,
     command,
@@ -58,12 +59,7 @@ const getWebpackConfig: GetWebpackConfig = async (context, options) => {
     userConfig,
     getAllPlugin,
     configFilePath,
-    extendsPluginAPI: {
-      serverCompileTask,
-      getFlattenRoutes,
-      getRoutesFile,
-      generator,
-    },
+    extendsPluginAPI: { serverCompileTask, getFlattenRoutes, getRoutesFile, generator },
   } = context;
   const { target = WEB } = commandArgs;
   const userConfigHash = await getFileHash(configFilePath);
@@ -88,24 +84,27 @@ const getWebpackConfig: GetWebpackConfig = async (context, options) => {
     });
     const { reCompile, ensureRoutesConfig } = getRouteExportConfig(rootDir);
     const outputDir = webpackConfig.output.path;
-    const serverCompilerPlugin = useDevServer && getServerPlugin({
-      serverRunner,
-      ensureRoutesConfig,
-      serverCompiler,
-      target,
-      rootDir,
-      fallbackEntry: getFallbackEntry({
+    const serverCompilerPlugin =
+      useDevServer &&
+      getServerPlugin({
+        serverRunner,
+        ensureRoutesConfig,
+        serverCompiler: multiEnvServerCompilers?.get(name) || serverCompiler,
+        target,
         rootDir,
+        fallbackEntry: getFallbackEntry({
+          rootDir,
+          command,
+          fallbackEntry: server?.fallbackEntry,
+        }),
+        serverEntry: server?.entry,
+        outputDir,
+        serverCompileTask,
+        userConfig,
         command,
-        fallbackEntry: server?.fallbackEntry,
-      }),
-      serverEntry: server?.entry,
-      outputDir,
-      serverCompileTask,
-      userConfig,
-      command,
-      getFlattenRoutes,
-    });
+        getFlattenRoutes,
+        name,
+      });
     if (serverCompilerPlugin) {
       webpackConfig.plugins.push(serverCompilerPlugin);
     }
@@ -115,13 +114,15 @@ const getWebpackConfig: GetWebpackConfig = async (context, options) => {
     }
     if (useDataLoader) {
       const frameworkExports = generator.getExportList('framework', target);
-      webpackConfig.plugins.push(new DataLoaderPlugin({
-        serverCompiler,
-        target,
-        rootDir,
-        getAllPlugin,
-        frameworkExports,
-      }));
+      webpackConfig.plugins.push(
+        new DataLoaderPlugin({
+          serverCompiler,
+          target,
+          rootDir,
+          getAllPlugin,
+          frameworkExports,
+        }),
+      );
     }
     // Add spinner for webpack task.
     webpackConfig.plugins.push(getSpinnerPlugin(spinner));

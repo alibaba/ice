@@ -77,12 +77,12 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   let serverRunner: ServerRunner;
   const serverCompileTask = new ServerCompileTask();
 
-  async function excuteServerEntry() {
+  async function excuteServerEntry(name?: string) {
     try {
       if (serverRunner) {
         return serverRunner.run(SERVER_ENTRY);
       } else {
-        const { error, serverEntry } = await serverCompileTask.get();
+        const { error, serverEntry } = await serverCompileTask.get(name);
         if (error) {
           logger.error('Server compile error:', error);
           return;
@@ -319,6 +319,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     dataLoader: command !== 'build' || loaderExports,
   });
 
+  const multiEnvServerCompilers = new Map<string, ReturnType<typeof createServerCompiler>>();
   const { environments } = userConfig;
   if (environments) {
     for (const [envName, envConfig] of Object.entries(environments)) {
@@ -327,6 +328,22 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     }
 
     environmentConfigContext.runOnGetEnvironmentConfig(taskConfigs);
+
+    Object.keys(environments).forEach((envName) => {
+      const envConfig = taskConfigs.find((taskConfig) => taskConfig.name === envName);
+      if (envConfig) {
+        const serverCompiler = createServerCompiler({
+          rootDir,
+          task: envConfig,
+          command,
+          speedup: commandArgs.speedup,
+          server,
+          syntaxFeatures,
+          getRoutesFile: () => routeManifest.getRoutesFile(),
+        });
+        multiEnvServerCompilers.set(envName, serverCompiler);
+      }
+    });
   }
 
   return {
@@ -346,6 +363,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         userConfig,
         configFile,
         hasDataLoader,
+        multiEnvServerCompilers,
       };
       try {
         if (command === 'test') {

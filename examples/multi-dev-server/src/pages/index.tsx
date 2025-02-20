@@ -1,6 +1,9 @@
-import { useState, lazy } from 'react';
+import { useState } from 'react';
 import styles from './index.module.css';
 import logo from '@/assets/logo.png';
+
+// @ts-expect-error
+console.log(APP_NAME);
 
 export default function IndexPage() {
   const [count, setCount] = useState(1);

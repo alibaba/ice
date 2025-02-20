@@ -8,16 +8,17 @@ import { WEB } from '../../constant.js';
 import type { BuildOptions } from '../types.js';
 import formatStats from './formatStats.js';
 
-const start = async ({
-  context,
-  rspackConfigs,
-  taskConfigs,
-  routeManifest,
-  compiler,
-  appConfig,
-  hooksAPI,
-}: BuildOptions, dataLoaderCompiler?: Compiler) => {
-  const { rootDir, applyHook, commandArgs, userConfig, extendsPluginAPI: { excuteServerEntry } } = context;
+const start = async (
+  { context, rspackConfigs, taskConfigs, routeManifest, compiler, appConfig, hooksAPI }: BuildOptions,
+  dataLoaderCompiler?: Compiler,
+) => {
+  const {
+    rootDir,
+    applyHook,
+    commandArgs,
+    userConfig,
+    extendsPluginAPI: { excuteServerEntry },
+  } = context;
   const customMiddlewares = rspackConfigs[0].devServer?.setupMiddlewares;
   const defaultConfig = await getDefaultServerConfig(rspackConfigs[0].devServer, commandArgs);
   const webTaskConfig = taskConfigs.find(({ name }) => name === WEB);
@@ -34,14 +35,17 @@ const start = async ({
         mock: commandArgs.mock,
         rootDir,
         dataLoaderCompiler,
+        compiler,
       });
       return customMiddlewares ? customMiddlewares(builtInMiddlewares, devServer) : builtInMiddlewares;
     },
   };
-  const routePaths = routeManifest.getFlattenRoute().sort((a, b) =>
-    // Sort by length, shortest path first.
-    a.split('/').filter(Boolean).length - b.split('/').filter(Boolean).length);
-    let isFirstCompile = true;
+  const routePaths = routeManifest.getFlattenRoute().sort(
+    (a, b) =>
+      // Sort by length, shortest path first.
+      a.split('/').filter(Boolean).length - b.split('/').filter(Boolean).length,
+  );
+  let isFirstCompile = true;
   const urls = getUrls({
     taskConfig: webTaskConfig,
     appConfig,
@@ -58,15 +62,14 @@ const start = async ({
   const { RspackDevServer } = await import('@ice/bundles/esm/dev-server.js');
   const devServer = new RspackDevServer(devServerConfig, compiler);
 
-  compiler.hooks.done.tap('done', async stats => {
+  compiler.hooks.done.tap('done', async (stats) => {
     const obj = stats.toJson({
       all: false,
       timings: true,
     });
     if (!stats.hasErrors()) {
-      obj.children?.forEach(c => {
-        c.time &&
-          logger.success(`${c.name} compiled successfully in`, c.time, 'ms');
+      obj.children?.forEach((c) => {
+        c.time && logger.success(`${c.name} compiled successfully in`, c.time, 'ms');
       });
     }
     const { message, level } = formatStats(stats);

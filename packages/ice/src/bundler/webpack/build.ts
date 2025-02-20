@@ -65,18 +65,19 @@ async function build(
 
     const outputPaths: string[] = [];
 
-    for (const config of webpackConfigs) {
-      const outputDir = config.output.path;
+    for (const taskConfig of taskConfigs) {
+      const { serverEntry: envServerEntry } = (await extendsPluginAPI.serverCompileTask.get(taskConfig.name)) || {};
+      const { outputDir } = taskConfig.config;
       const outputPath = await getOutputPaths({
         rootDir,
-        serverEntry,
+        serverEntry: envServerEntry,
         outputDir,
         bundleOptions: {
           userConfig,
           appConfig,
           routeManifest,
           // todo: function type publicPath
-          publicPath: config.output.publicPath as string,
+          publicPath: taskConfig.config.publicPath as string,
         },
       });
       outputPaths.push(...outputPath);
