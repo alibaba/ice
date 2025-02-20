@@ -1,0 +1,47 @@
+{
+  "name": "@ice/runtime-next",
+  "version": "1.0.0",
+  "description": "Runtime module for ice.js",
+  "type": "module",
+  "types": "./esm/index.d.ts",
+  "main": "./esm/index.js",
+  "exports": {
+    ".": "./esm/index.js",
+    "./server": "./esm/server.js",
+    "./document": "./esm/document.js"
+  },
+  "files": [
+    "esm",
+    "!esm/**/*.map",
+    "templates",
+    "*.d.ts",
+    "scripts"
+  ],
+  "author": "ICE",
+  "license": "MIT",
+  "repository": "alibaba/ice",
+  "bugs": "https://github.com/alibaba/ice/issues",
+  "homepage": "https://v3.ice.work",
+  "scripts": {
+    "watch": "tsc -w --sourceMap",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@tanstack/react-router": "^1.106.0",
+    "@tanstack/virtual-file-routes": "^1.97.8",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "dependencies": {
+    "@ice/runtime-kit": "^0.1.0"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "@ice/plugin-runtime-next",
+  "version": "1.0.0",
+  "description": "runtime next plugin for ice.js.",
+  "files": [
+    "esm",
+    "!esm/**/*.map",
+    "*.d.ts",
+    "templates"
+  ],
+  "type": "module",
+  "main": "esm/index.js",
+  "module": "esm/index.js",
+  "types": "esm/index.d.ts",
+  "exports": {
+    ".": "./esm/index.js"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "watch": "tsc -w --sourceMap",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@tanstack/router-generator": "^1.106.0"
+  },
+  "devDependencies": {
+    "@ice/app": "workspace:*",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-runtime-next"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

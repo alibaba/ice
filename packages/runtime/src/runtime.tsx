@@ -17,11 +17,12 @@ import type {
   ResponseHandler,
 } from '@ice/runtime-kit';
 import type { History } from '@remix-run/router';
+import { useAppContext } from '@ice/runtime-kit';
 import { routerHistory as history } from './history.js';
 import type { AppRouterProps } from './types.js';
 import { useData, useConfig } from './RouteContext.js';
 import { useData as useSingleRouterData, useConfig as useSingleRouterConfig } from './singleRouter.js';
-import { useAppContext } from './AppContext.js';
+
 class Runtime {
   private appContext: AppContext;
 

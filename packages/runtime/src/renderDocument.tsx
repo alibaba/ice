@@ -1,22 +1,18 @@
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
-import { getRequestContext, getAppConfig } from '@ice/runtime-kit';
-import type { ServerContext, AppContext } from '@ice/runtime-kit';
-import { AppContextProvider } from './AppContext.js';
+import { getRequestContext, getAppConfig, getCurrentRoutePath, AppContextProvider } from '@ice/runtime-kit';
+import type { ServerContext, AppContext, RouteMatch } from '@ice/runtime-kit';
 import { DocumentContextProvider } from './Document.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 import matchRoutes from './matchRoutes.js';
 import getDocumentData from './server/getDocumentData.js';
-import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
 import { sendResponse, getLocation } from './server/response.js';
 
 import type {
   RouteItem,
-  RouteMatch,
   RenderOptions,
   Response,
 } from './types.js';
-
 
 interface RenderDocumentOptions {
   matches: RouteMatch[];

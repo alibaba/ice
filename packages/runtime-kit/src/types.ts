@@ -141,12 +141,7 @@ export interface AppContext<T = any> {
   routeModules?: RouteModules;
   RouteWrappers?: RouteWrapperConfig[];
   routePath?: string;
-  matches?: {
-    params: Params;
-    pathname: string;
-    pathnameBase: string;
-    route: T;
-  }[];
+  matches?: RouteMatch[];
   routes?: T[];
   documentOnly?: boolean;
   matchedIds?: string[];
@@ -157,6 +152,11 @@ export interface AppContext<T = any> {
   requestContext?: RequestContext;
   revalidate?: boolean;
 }
+
+export type WindowContext = Pick<
+AppContext,
+  'appData' | 'loaderData' | 'routePath' | 'downgrade' | 'matchedIds' | 'documentOnly' | 'renderMode' | 'serverData' | 'revalidate'
+>;
 
 // Runtime API Types
 export type Renderer = (
@@ -256,6 +256,13 @@ export interface RunClientAppOptions<T = any> {
   runtimeOptions?: Record<string, any>;
   dataLoaderFetcher?: (config: StaticDataLoader) => any;
   dataLoaderDecorator?: (loader: Loader, index?: number) => (requestContext: RequestContext) => DataLoaderResult;
+}
+
+export interface RouteMatch<T = any> {
+  params: Params;
+  pathname: string;
+  pathnameBase: string;
+  route: T;
 }
 
 declare global {

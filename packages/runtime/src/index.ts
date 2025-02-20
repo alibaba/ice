@@ -12,9 +12,16 @@ import type {
   ServerContext,
   AppProvider,
   StaticRuntimePlugin,
+  MetaType,
+  TitleType,
+  LinksType,
+  ScriptsType,
+  FirstChunkCacheType,
+  DataType,
+  MainType,
 } from '@ice/runtime-kit';
 import { dataLoader, defineDataLoader, defineServerDataLoader, defineStaticDataLoader, callDataLoader, getRequestContext } from '@ice/runtime-kit';
-import { getAppConfig, defineAppConfig } from '@ice/runtime-kit';
+import { getAppConfig, defineAppConfig, useAppContext as useInternalAppContext, useAppData, AppContextProvider } from '@ice/runtime-kit';
 import type {
   PublicAppContext,
   RouteItem,
@@ -22,7 +29,6 @@ import type {
 } from './types.js';
 import Runtime from './runtime.js';
 import runClientApp from './runClientApp.js';
-import { useAppContext as useInternalAppContext, useAppData, AppContextProvider } from './AppContext.js';
 import { getAppData } from './appData.js';
 import { useData, useConfig } from './RouteContext.js';
 import {
@@ -34,15 +40,6 @@ import {
   Main,
   Data,
   usePageAssets,
-} from './Document.js';
-import type {
-  MetaType,
-  TitleType,
-  LinksType,
-  ScriptsType,
-  FirstChunkCacheType,
-  DataType,
-  MainType,
 } from './Document.js';
 import AppErrorBoundary from './AppErrorBoundary.js';
 import { routerHistory as history } from './history.js';

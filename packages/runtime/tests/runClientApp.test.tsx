@@ -6,8 +6,8 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { expect, it, vi, describe, beforeEach, afterEach } from 'vitest';
 import { fetch, Request, Response } from '@remix-run/web-fetch';
+import { useAppData } from '@ice/runtime-kit';
 import runClientApp from '../src/runClientApp';
-import { useAppData } from '../src/AppContext';
 
 describe('run client app', () => {
   let windowSpy;

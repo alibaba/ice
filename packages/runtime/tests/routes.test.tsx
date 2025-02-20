@@ -5,7 +5,7 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { expect, it, describe, beforeEach, afterEach, vi } from 'vitest';
-import { AppContextProvider } from '../src/AppContext';
+import { AppContextProvider } from '@ice/runtime-kit';
 import {
   RouteComponent,
   loadRouteModules,

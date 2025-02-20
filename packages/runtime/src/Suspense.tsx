@@ -1,7 +1,7 @@
 import * as React from 'react';
 import type { ReactNode } from 'react';
 import type { RequestContext } from '@ice/runtime-kit';
-import { useAppContext } from './AppContext.js';
+import { useAppContext } from '@ice/runtime-kit';
 import proxyData from './proxyData.js';
 
 const LOADER = '__ICE_SUSPENSE_LOADER__';

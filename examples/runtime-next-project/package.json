@@ -1,0 +1,22 @@
+{
+  "name": "runtime-next-project",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Example for @ice/runtime-next usage",
+  "scripts": {
+    "start": "ice start",
+    "build": "ice build"
+  },
+  "dependencies": {
+    "@ice/runtime": "workspace:*",
+    "@ice/runtime-next": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@ice/app": "workspace:*",
+    "@ice/plugin-runtime-next": "workspace:*",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0"
+  }
+}

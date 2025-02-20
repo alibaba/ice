@@ -1,22 +1,18 @@
 import * as React from 'react';
 import type { Location } from 'history';
-import type { AppContext, ServerContext, AppData } from '@ice/runtime-kit';
-import { getAppConfig, getRequestContext } from '@ice/runtime-kit';
+import type { AppContext, ServerContext, AppData, RouteMatch } from '@ice/runtime-kit';
+import { getAppConfig, getRequestContext, getCurrentRoutePath, AppContextProvider, DocumentContextProvider } from '@ice/runtime-kit';
 import type { OnAllReadyParams, OnShellReadyParams } from './server/streamRender.js';
 import type {
-  RouteMatch,
   ServerAppRouterProps,
   RenderOptions,
   Response,
 } from './types.js';
 import Runtime from './runtime.js';
-import { AppContextProvider } from './AppContext.js';
 import { getAppData } from './appData.js';
-import { DocumentContextProvider } from './Document.js';
 import { loadRouteModules } from './routes.js';
 import { pipeToString, renderToNodeStream } from './server/streamRender.js';
 import matchRoutes from './matchRoutes.js';
-import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
 import ServerRouter from './ServerRouter.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 import { renderDocument } from './renderDocument.js';
@@ -285,8 +281,8 @@ async function renderServerEntry(
   const { routes, routePath, loaderData, basename } = appContext;
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
   const AppRouter = runtime.getAppRouter<ServerAppRouterProps>();
+  // @ts-expect-error matches type should be RouteMatch[]
   const routerContext: ServerAppRouterProps['routerContext'] = {
-    // @ts-expect-error matches type should be use `AgnosticDataRouteMatch[]`
     matches,
     basename,
     loaderData,
