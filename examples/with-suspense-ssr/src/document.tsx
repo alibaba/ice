@@ -13,7 +13,13 @@ function Document() {
       </head>
       <body>
         <Main />
-        <script dangerouslySetInnerHTML={{ __html: 'window.addEventListener(\'suspense\', (d) => console.log(\'suspence event=\', d))' }} />
+        <script
+          defer
+          dangerouslySetInnerHTML={{
+            __html:
+              "window.addEventListener('load', () => console.log(performance.getEntriesByName('ice-suspense-loaded')));",
+          }}
+        />
         <Scripts async />
       </body>
     </html>
