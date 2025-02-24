@@ -158,7 +158,7 @@ export function withSuspense(Component) {
           <Data id={id} />
           <script
             dangerouslySetInnerHTML={{
-              __html: `performance && typeof performance.mark === "function" && performance.mark("ice-suspense-loaded", { detail: "suspense:${id}" })`,
+              __html: `window.dispatchEvent(new CustomEvent('ice-suspense', { detail: { id: '${id}' } }));`,
             }}
           />
         </SuspenseContext.Provider>

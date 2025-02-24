@@ -16,8 +16,7 @@ function Document() {
         <script
           defer
           dangerouslySetInnerHTML={{
-            __html:
-              "window.addEventListener('load', () => console.log(performance.getEntriesByName('ice-suspense-loaded')));",
+            __html: "window.addEventListener('ice-suspense', (e) => console.log('ice-suspense', e));",
           }}
         />
         <Scripts async />
