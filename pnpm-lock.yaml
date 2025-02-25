@@ -2564,6 +2564,9 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.0.0(react@19.0.0)
+      typescript:
+        specifier: ^5.7.3
+        version: 5.7.3
 
   packages/shared:
     devDependencies:
@@ -23694,6 +23697,12 @@ packages:
     engines: {node: '>=4.2.0'}
     hasBin: true
 
+  /typescript@5.7.3:
+    resolution: {integrity: sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+    dev: true
+
   /ua-parser-js@1.0.40:
     resolution: {integrity: sha512-z6PJ8Lml+v3ichVojCiB8toQJBuwR42ySM4ezjXIqXK3M0HczmKQ3LF4rhU55PfD99KEEXQG6yb7iOMyvYuHew==}
     hasBin: true
@@ -24472,7 +24481,7 @@ packages:
       on-finished: 2.4.1
       range-parser: 1.2.1
       schema-utils: 4.3.0
-      webpack: 5.88.2(@swc/core@1.3.80)(esbuild@0.25.0)
+      webpack: 5.88.2(esbuild@0.25.0)
     dev: true
 
   /webpack-dev-server@4.15.0(debug@4.4.0)(webpack@5.88.2):
@@ -24617,7 +24626,7 @@ packages:
       serve-index: 1.9.1
       sockjs: 0.3.24
       spdy: 4.0.2
-      webpack: 5.88.2(@swc/core@1.3.80)(esbuild@0.25.0)
+      webpack: 5.88.2(esbuild@0.25.0)
       webpack-dev-middleware: 7.4.2(webpack@5.88.2)
       ws: 8.18.0
     transitivePeerDependencies:

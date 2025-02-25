@@ -31,8 +31,8 @@ interface Piper {
 }
 
 interface Response {
-  statusCode?: number;
-  statusText?: string;
+  statusCode: number;
+  statusText: string;
   value?: string | Piper;
   headers?: Record<string, string>;
 }
@@ -56,10 +56,10 @@ export async function sendResponse(
   }
 }
 
-export const getDocumentResponse = (
+export const getDocumentResponse = async (
   serverContext: ServerContext,
   renderOptions: any,
-): Response => {
+): Promise<Response> => {
   // TODO: get matches by serverContext.
   const {
     assetsManifest,
@@ -90,15 +90,18 @@ export const getDocumentResponse = (
 
   const documentContext = { main: null };
   const htmlStr = ReactDOMServer.renderToString(
+    // @ts-ignore fix the type error by union react types.
     <AppContextProvider value={appContext}>
+      {/* @ts-ignore fix the type error by union react types */}
       <DocumentContextProvider value={documentContext}>
-        {Document && <Document pagePath={routePath} />}
+        {Document ? <Document pagePath={routePath} /> : null}
       </DocumentContextProvider>
     </AppContextProvider>,
   );
 
   return {
     value: `<!DOCTYPE html>${htmlStr}`,
+    statusText: '',
     headers: {
       'Content-Type': 'text/html; charset=utf-8',
     },
@@ -112,7 +115,9 @@ export const renderDocumentToResponse = async (
 ): Promise<void> => {
   const { req, res } = serverContext;
   const response = await getDocumentResponse(serverContext, renderOptions);
-  await sendResponse(req, res, response);
+  if (req && res) {
+    await sendResponse(req, res, response);
+  }
 };
 
 export { getAppConfig };

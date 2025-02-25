@@ -31,7 +31,8 @@
     "@types/react-dom": "^19.0.0",
     "@tanstack/react-router": "^1.106.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "typescript": "^5.7.3"
   },
   "dependencies": {
     "@ice/runtime-kit": "^0.1.0"

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import ReactDOM from 'react-dom/client';
 import { defineAppConfig, getAppConfig } from '@ice/runtime-kit';
 import type { RunClientAppOptions } from '@ice/runtime-kit';
@@ -12,6 +12,7 @@ const runClientApp = (options: RunClientAppOptions) => {
 
   // Create router with optimized defaults
   const router = createRouter({
+    // @ts-ignore
     routeTree: createRoutes,
     defaultPreload: 'intent',
     defaultStaleTime: DEFAULT_STALE_TIME,
