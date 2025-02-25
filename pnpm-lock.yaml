@@ -639,6 +639,12 @@ importers:
       '@ice/plugin-runtime-next':
         specifier: workspace:*
         version: link:../../packages/plugin-runtime-next
+      '@tanstack/react-router':
+        specifier: ^1.106.0
+        version: 1.106.0(react-dom@19.0.0)(react@19.0.0)
+      '@tanstack/virtual-file-routes':
+        specifier: ^1.97.8
+        version: 1.99.0
       '@types/react':
         specifier: ^19.0.0
         version: 19.0.10
@@ -2347,6 +2353,9 @@ importers:
       '@tanstack/router-generator':
         specifier: ^1.106.0
         version: 1.106.0
+      '@tanstack/virtual-file-routes':
+        specifier: ^1.97.8
+        version: 1.99.0
     devDependencies:
       '@ice/app':
         specifier: workspace:*
@@ -2543,9 +2552,6 @@ importers:
       '@tanstack/react-router':
         specifier: ^1.106.0
         version: 1.106.0(react-dom@19.0.0)(react@19.0.0)
-      '@tanstack/virtual-file-routes':
-        specifier: ^1.97.8
-        version: 1.99.0
       '@types/react':
         specifier: ^19.0.0
         version: 19.0.10

@@ -40,7 +40,7 @@ const getDefaultTaskConfig = ({ rootDir, command }): Config => {
       source: '@ice/runtime',
       server: '@ice/runtime/server',
       router: {
-        routesDefinition: (args) => {
+        routesDefinition: async (args) => {
           const { routeImports, routeDefinition } = getRoutesDefinition(args);
           return createRouteConfig(routeImports, routeDefinition);
         },

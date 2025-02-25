@@ -21,7 +21,8 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@tanstack/router-generator": "^1.106.0"
+    "@tanstack/router-generator": "^1.106.0",
+    "@tanstack/virtual-file-routes": "^1.97.8"
   },
   "devDependencies": {
     "@ice/app": "workspace:*",

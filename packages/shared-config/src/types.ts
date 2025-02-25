@@ -254,7 +254,7 @@ export interface Config {
       alias?: Record<string, string>;
     }[];
     router?: {
-      routesDefinition?: (options: RouteDefinitionOptions) => string;
+      routesDefinition?: (options: RouteDefinitionOptions) => Promise<string | void>;
       source?: string;
       template?: string;
     };

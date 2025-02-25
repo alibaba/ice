@@ -17,6 +17,8 @@
     "@ice/app": "workspace:*",
     "@ice/plugin-runtime-next": "workspace:*",
     "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0"
+    "@types/react-dom": "^19.0.0",
+    "@tanstack/virtual-file-routes": "^1.97.8",
+    "@tanstack/react-router": "^1.106.0"
   }
 }

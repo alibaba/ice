@@ -210,13 +210,12 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   // Only when code splitting use the default strategy or set to `router`, the router will be lazy loaded.
   const lazy = [true, 'chunks', 'page', 'page-vendors'].includes(userConfig.codeSplitting);
   const runtimeRouter = runtimeConfig?.router;
-  const routeDefinition = runtimeRouter?.routesDefinition?.({
+  const routeDefinition = await runtimeRouter?.routesDefinition?.({
     manifest: routesInfo.routes,
     lazy,
   });
 
   const routesFile = runtimeRouter?.source;
-  console.log('routesFile', routesFile);
   const loaderExports = hasExportAppData || Boolean(routesInfo.loaders);
   const hasDataLoader = Boolean(userConfig.dataLoader) && loaderExports;
   const renderData = {
