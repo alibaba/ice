@@ -6,7 +6,6 @@ import MiniCssExtractPlugin from '@ice/bundles/compiled/mini-css-extract-plugin/
 import TerserPlugin from '@ice/bundles/compiled/terser-webpack-plugin/index.js';
 import { getCSSModuleLocalIdent, getPostcssOpts } from '@ice/shared-config';
 import type { Config } from '@ice/shared-config/types';
-import TsconfigPathsPlugin from '@ice/bundles/compiled/tsconfig-paths-webpack-plugin/index.js';
 import CssMinimizerPlugin from '@ice/bundles/compiled/css-minimizer-webpack-plugin/index.js';
 import webpack, { type LoaderContext } from 'webpack';
 import type { UserConfig } from '../../types/userConfig.js';
@@ -200,11 +199,6 @@ export class WebpackServerCompiler {
         alias: options.alias,
         fallback: { crypto: false },
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs', '...'],
-        plugins: [
-          new TsconfigPathsPlugin({
-            /* options: see below */
-          }),
-        ],
       },
       module: {
         rules: [
