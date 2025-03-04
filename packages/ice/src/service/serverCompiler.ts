@@ -116,6 +116,7 @@ export function createServerCompiler(options: Options) {
     enableEnv = false,
     transformEnv = true,
     isServer = true,
+    bundler,
   } = {}) => {
     let preBundleDepsMetadata: PreBundleDepsMetaData;
     let swcOptions = merge({}, {
@@ -145,20 +146,7 @@ export function createServerCompiler(options: Options) {
       redirectImports,
       getRoutesFile,
     }, 'esbuild', { isServer });
-    const transformWebpackPlugins = getCompilerPlugins(
-      rootDir,
-      {
-        ...task.config,
-        fastRefresh: false,
-        enableEnv,
-        polyfill: false,
-        swcOptions,
-        redirectImports,
-        getRoutesFile,
-      },
-      'webpack',
-      { isServer },
-    );
+
     const define = getRuntimeDefination(task.config?.define || {}, runtimeDefineVars, transformEnv);
     if (preBundle) {
       const plugins = [
@@ -184,7 +172,7 @@ export function createServerCompiler(options: Options) {
         plugins,
       });
     }
-
+    server.bundler = bundler ?? server.bundler ?? 'esbuild';
     const format = customBuildOptions?.format || 'esm';
     let buildOptions: esbuild.BuildOptions = {
       bundle: true,
@@ -259,29 +247,38 @@ export function createServerCompiler(options: Options) {
         context = await esbuild.context(buildOptions);
         esbuildResult = await context.rebuild();
       } else {
-        if (Array.isArray(buildOptions.entryPoints)) {
-          // this build phase is aimed to generate .ice/
-          esbuildResult = await esbuild.build(buildOptions);
-        } else {
-          switch (server.bundler) {
-            case 'webpack':
-              const webpackServerCompiler = new WebpackServerCompiler({
-                ...buildOptions,
-                externals,
-                plugins: [
-                  compilationInfo && new VirualAssetPlugin({ compilationInfo, rootDir }),
-                  ...transformWebpackPlugins,
-                ].filter(Boolean),
-                rootDir,
-                userServerConfig: server,
-              });
-              esbuildResult = (await webpackServerCompiler.build())?.compilation;
-              break;
-            case 'esbuild':
-            default:
-              esbuildResult = await esbuild.build(buildOptions);
-              break;
-          }
+        switch (server.bundler) {
+          case 'webpack':
+            const transformWebpackPlugins = getCompilerPlugins(
+              rootDir,
+              {
+                ...task.config,
+                fastRefresh: false,
+                enableEnv,
+                polyfill: false,
+                swcOptions,
+                redirectImports,
+                getRoutesFile,
+              },
+              'webpack',
+              { isServer },
+            );
+            const webpackServerCompiler = new WebpackServerCompiler({
+              ...buildOptions,
+              externals,
+              plugins: [
+                compilationInfo && new VirualAssetPlugin({ compilationInfo, rootDir }),
+                ...transformWebpackPlugins,
+              ].filter(Boolean),
+              rootDir,
+              userServerConfig: server,
+            });
+            esbuildResult = (await webpackServerCompiler.build())?.compilation;
+            break;
+          case 'esbuild':
+          default:
+            esbuildResult = await esbuild.build(buildOptions);
+            break;
         }
       }
 

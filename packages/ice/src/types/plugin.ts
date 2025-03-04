@@ -60,6 +60,7 @@ export interface CompilerOptions {
   runtimeDefineVars?: Record<string, string>;
   enableEnv?: boolean;
   isServer?: boolean;
+  bundler?: 'esbuild' | 'webpack';
 }
 
 export type ServerCompiler = (
