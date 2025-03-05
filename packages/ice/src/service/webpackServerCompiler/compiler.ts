@@ -1,114 +1,23 @@
-import { createRequire } from 'module';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { esbuild, less, sass } from '@ice/bundles';
-import MiniCssExtractPlugin from '@ice/bundles/compiled/mini-css-extract-plugin/dist/index.js';
+import { esbuild } from '@ice/bundles';
 import TerserPlugin from '@ice/bundles/compiled/terser-webpack-plugin/index.js';
-import { getCSSModuleLocalIdent, getPostcssOpts } from '@ice/shared-config';
-import type { Config } from '@ice/shared-config/types';
 import CssMinimizerPlugin from '@ice/bundles/compiled/css-minimizer-webpack-plugin/index.js';
-import webpack, { type LoaderContext } from 'webpack';
+import webpack from 'webpack';
+import processCss from '@ice/webpack-config/esm/config/css.js';
+import processAssets from '@ice/webpack-config/esm/config/assets.js';
 import type { UserConfig } from '../../types/userConfig.js';
 import { logger } from '../../utils/logger.js';
 
-const require = createRequire(import.meta.url);
 const _dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
-interface Options {
-  publicPath: string;
-  postcssOptions: Config['postcss'];
-  rootDir: string;
-  enableRpx2Vw: boolean;
-  cssModules: Config['cssModules'];
-}
-
-type CSSRuleConfig = [string, string?, Record<string, any>?];
-
-export const ASSET_TYPES = [
-  // images
-  'png',
-  'jpe?g',
-  'gif',
-  'svg',
-  'ico',
-  'webp',
-  'avif',
-
-  // media
-  'mp4',
-  'webm',
-  'ogg',
-  'mp3',
-  'wav',
-  'flac',
-  'aac',
-
-  // fonts
-  'woff2?',
-  'eot',
-  'ttf',
-  'otf',
-
-  // other
-  'wasm',
-  'webmanifest',
-  'pdf',
-  'txt',
-];
-
-const ASSETS_RE = new RegExp(`\\.(${ASSET_TYPES.join('|')})(\\?.*)?$`);
 
 export class WebpackServerCompiler {
   private config: webpack.Configuration;
-  private options: { userServerConfig: UserConfig['server']; [key: string]: any };
+  private options: { userServerConfig: UserConfig['server']; rootDir: string; [key: string]: any };
 
   constructor(options: any) {
     this.options = options;
     this.config = this.createWebpackConfig(options);
-  }
-  private configCSSRule(config: CSSRuleConfig, options: Options) {
-    const { publicPath, rootDir, enableRpx2Vw, postcssOptions: userPostcssOptions, cssModules } = options;
-    const [style, loader, loaderOptions] = config;
-    const cssLoaderOpts = {
-      sourceMap: false,
-    };
-    const cssModuleLoaderOpts = {
-      ...cssLoaderOpts,
-      modules: {
-        auto: (resourcePath: string) => resourcePath.endsWith(`.module.${style}`),
-        getLocalIdent: (context: LoaderContext<any>, localIdentName: string, localName: string) => {
-          return getCSSModuleLocalIdent(context.resourcePath, localName, cssModules?.localIdentName);
-        },
-      },
-    };
-    const postcssOpts = getPostcssOpts({ rootDir, userPostcssOptions, enableRpx2Vw });
-    return {
-      test: new RegExp(`\\.${style}$`),
-      use: [
-        {
-          loader: MiniCssExtractPlugin.loader,
-          // compatible with commonjs syntax: const styles = require('./index.module.less')
-          options: {
-            esModule: false,
-            publicPath,
-          },
-        },
-        {
-          loader: require.resolve('@ice/bundles/compiled/css-loader'),
-          options: cssModuleLoaderOpts,
-        },
-        {
-          loader: require.resolve('@ice/bundles/compiled/postcss-loader'),
-          options: {
-            ...cssLoaderOpts,
-            ...postcssOpts,
-          },
-        },
-        loader && {
-          loader,
-          options: { ...cssLoaderOpts, ...loaderOptions },
-        },
-      ].filter(Boolean),
-    };
   }
 
   private createWebpackConfig(options: {
@@ -117,43 +26,13 @@ export class WebpackServerCompiler {
   }): webpack.Configuration {
     const { userServerConfig } = options;
     const { webpackConfig = {} } = userServerConfig;
-    const cssRules = [
-      ['css'],
-      [
-        'less',
-        require.resolve('@ice/bundles/compiled/less-loader'),
-        {
-          lessOptions: { javascriptEnabled: true },
-          implementation: less,
-        },
-      ],
-      [
-        'scss',
-        require.resolve('@ice/bundles/compiled/sass-loader'),
-        {
-          implementation: sass,
-        },
-      ],
-    ].map((config: any) =>
-      this.configCSSRule(config, {
-        publicPath: '/',
-        postcssOptions: {},
-        rootDir: process.cwd(),
-        enableRpx2Vw: true,
-        cssModules: {},
-      }),
-    );
-    const cssOutputFolder = 'css';
-    const hashKey = '';
-    const cssFilename = undefined;
-    const cssChunkFilename = undefined;
 
     for (const key of Object.keys(options.alias)) {
       if (options.alias[key].startsWith('./')) {
         options.alias[key] = path.resolve(options.rootDir, options.alias[key]);
       }
     }
-    return {
+    const config = {
       mode: 'production',
       entry: options.entryPoints as string[],
       target: 'node12.20',
@@ -248,11 +127,6 @@ export class WebpackServerCompiler {
               path.resolve(_dirname, 'removeMagicString.js'),
             ],
           },
-          {
-            test: ASSETS_RE,
-            type: 'asset/inline',
-          },
-          ...cssRules,
           ...(webpackConfig.module?.rules || []),
         ],
       },
@@ -265,18 +139,21 @@ export class WebpackServerCompiler {
           filename: '[file].map',
           moduleFilenameTemplate: '[absolute-resource-path]',
         }),
-        new MiniCssExtractPlugin({
-          filename: cssFilename || `${cssOutputFolder}/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`,
-          chunkFilename: cssChunkFilename || `${cssOutputFolder}/${hashKey ? `[name]-[${hashKey}].css` : '[name].css'}`,
-          // If the warning is triggered, it seen to be unactionable for the user,
-          ignoreOrder: true,
-        }),
         ...(webpackConfig.plugins || []),
       ],
       stats: {
         errorDetails: true,
       },
-    };
+    } as webpack.Configuration;
+    processCss(config, {
+      publicPath: '/',
+      postcssOptions: {},
+      rootDir: options.rootDir,
+      enableRpx2Vw: true,
+      cssModules: {},
+    } as any);
+    processAssets(config, {} as any);
+    return config;
   }
 
   private async handleEsbuildInject() {

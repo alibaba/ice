@@ -238,7 +238,7 @@ export function createServerCompiler(options: Options) {
     }
 
     const startTime = new Date().getTime();
-    logger.debug('[esbuild]', `start compile for: ${JSON.stringify(buildOptions.entryPoints)}`);
+    logger.debug(`[${server.bundler}]`, `start compile for: ${JSON.stringify(buildOptions.entryPoints)}`);
 
     try {
       let esbuildResult: esbuild.BuildResult;
@@ -282,7 +282,7 @@ export function createServerCompiler(options: Options) {
         }
       }
 
-      logger.debug('[esbuild]', `time cost: ${new Date().getTime() - startTime}ms`);
+      logger.debug(`[${server.bundler}]`, `time cost: ${new Date().getTime() - startTime}ms`);
 
       const esm = server?.format === 'esm';
       const outJSExtension = esm ? '.mjs' : '.cjs';

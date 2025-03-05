@@ -7,7 +7,8 @@
   "type": "module",
   "main": "./esm/index.js",
   "exports": {
-    ".": "./esm/index.js"
+    ".": "./esm/index.js",
+    "./*": "./*"
   },
   "files": [
     "esm",
