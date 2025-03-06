@@ -1,0 +1,12 @@
+import { useEffect } from 'react';
+import { useLocation } from 'ice';
+
+const ProxyModule =  () => {
+  const location = useLocation();
+  useEffect(() => {
+    fetch(`/proxy-module?pathname=${location.pathname}`);
+  }, []);
+  return <></>;
+};
+
+export default ProxyModule;
