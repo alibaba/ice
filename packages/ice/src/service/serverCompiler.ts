@@ -171,7 +171,7 @@ export function createServerCompiler(options: Options) {
         plugins,
       });
     }
-    server.bundler = bundler ?? server.bundler ?? 'esbuild';
+    server.bundler = server.bundler ?? 'esbuild';
     const format = customBuildOptions?.format || 'esm';
 
     let buildOptions: esbuild.BuildOptions = {
