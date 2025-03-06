@@ -116,7 +116,6 @@ export function createServerCompiler(options: Options) {
     enableEnv = false,
     transformEnv = true,
     isServer = true,
-    bundler,
   } = {}) => {
     let preBundleDepsMetadata: PreBundleDepsMetaData;
     let swcOptions = merge({}, {

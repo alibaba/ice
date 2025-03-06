@@ -55,7 +55,7 @@ export function filterExternals(externals: Record<string, string>, keys: string[
 const tasks = [
   // simple task
   ...['cssnano', 'tapable', 'schema-utils', 'lodash',
-    'less-loader', 'postcss-loader', 'sass-loader', 'css-loader', 'esbuild-loader',
+    'less-loader', 'postcss-loader', 'sass-loader', 'css-loader',
     'postcss-preset-env', 'postcss-nested', 'postcss-modules', 'postcss-plugin-rpx2vw',
     'webpack-bundle-analyzer', 'es-module-lexer', 'terser', 'trusted-cert', 'magic-string',
     'eslint-webpack-plugin', 'copy-webpack-plugin', 'cacache', 'ora', 'unplugin',
@@ -101,12 +101,6 @@ const tasks = [
     externals: taskExternals,
     file: 'node_modules/unplugin/dist/rspack/loaders/load.js',
     bundleName: 'rspack/loaders/load.js',
-  },
-  {
-    pkgName: 'tsconfig-paths-webpack-plugin',
-    declaration: false,
-    emptyDir: false,
-    externals: taskExternals,
   },
   {
     // pack main package
