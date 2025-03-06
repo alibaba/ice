@@ -21,6 +21,7 @@ import addLeadingSlash from './utils/addLeadingSlash.js';
 import { AppContextProvider } from './AppContext.js';
 import { deprecatedHistory } from './utils/deprecatedHistory.js';
 import reportRecoverableError from './reportRecoverableError.js';
+import { decodeWindowContext } from './utils/formatWindowContext.js';
 
 export type CreateRoutes = (options: Pick<RouteLoaderOptions, 'renderMode' | 'requestContext'>) => RouteItem[];
 
@@ -49,7 +50,7 @@ export default async function runClientApp(options: RunClientAppOptions) {
     dataLoaderFetcher,
     dataLoaderDecorator,
   } = options;
-
+  const appConfig = getAppConfig(app);
   const windowContext: WindowContext = (window as any).__ICE_APP_CONTEXT__ || {};
   const assetsManifest: AssetsManifest = (window as any).__ICE_ASSETS_MANIFEST__ || {};
   let {
@@ -61,10 +62,10 @@ export default async function runClientApp(options: RunClientAppOptions) {
     renderMode,
     serverData,
     revalidate,
-  } = windowContext;
+  } = appConfig.encodeData ? decodeWindowContext(windowContext) : windowContext;
   const formattedBasename = addLeadingSlash(basename);
   const requestContext = getRequestContext(window.location);
-  const appConfig = getAppConfig(app);
+
   const routes = createRoutes ? createRoutes({
     requestContext,
     renderMode: 'CSR',
