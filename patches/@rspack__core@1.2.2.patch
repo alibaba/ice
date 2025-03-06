@@ -1,5 +1,5 @@
 diff --git a/dist/index.js b/dist/index.js
-index 57955f085ab0ccf9cb514390a6d2472531a1e6c1..d333b82dcbc299c4580288955df54f1d77ff625b 100644
+index 57955f085ab0ccf9cb514390a6d2472531a1e6c1..07bf7c4a7addf83ebbb13bd38e56e271244e9945 100644
 --- a/dist/index.js
 +++ b/dist/index.js
 @@ -694,6 +694,7 @@ __export(src_exports, {
@@ -31,7 +31,120 @@ index 57955f085ab0ccf9cb514390a6d2472531a1e6c1..d333b82dcbc299c4580288955df54f1d
  // src/builtin-plugin/css-extract/index.ts
  var import_binding11 = require("@rspack/binding");
  var import_node_path3 = require("path");
-@@ -20545,6 +20553,7 @@ module.exports = rspack;
+@@ -13128,110 +13136,9 @@ var Watching = class {
+ };
+ 
+ // src/util/bindingVersionCheck.ts
+-var import_node_fs3 = require("fs");
+-var import_node_path11 = __toESM(require("path"));
+-var NodePlatformArchToAbi = {
+-  android: {
+-    arm64: "",
+-    arm: "eabi"
+-  },
+-  win32: {
+-    x64: "msvc",
+-    ia32: "msvc",
+-    arm64: "msvc"
+-  },
+-  darwin: {
+-    x64: "",
+-    arm64: ""
+-  },
+-  freebsd: {
+-    x64: ""
+-  },
+-  linux: {
+-    x64: {
+-      musl: "musl",
+-      gnu: "gnu"
+-    },
+-    arm64: {
+-      musl: "musl",
+-      gnu: "gnu"
+-    },
+-    arm: "gnueabihf"
+-  }
+-};
+-function isMusl() {
+-  if (!process.report || typeof process.report.getReport !== "function") {
+-    try {
+-      const lddPath = require("child_process").execSync("which ldd").toString().trim();
+-      return (0, import_node_fs3.readFileSync)(lddPath, "utf8").includes("musl");
+-    } catch (e) {
+-      return true;
+-    }
+-  } else {
+-    const { glibcVersionRuntime } = process.report.getReport().header;
+-    return !glibcVersionRuntime;
+-  }
+-}
+-var BINDING_VERSION = require("@rspack/binding/package.json").version;
+-var CORE_VERSION = require("../package.json").version;
+-var getAddonPlatformArchAbi = () => {
+-  const { platform, arch } = process;
+-  let binding9 = "";
+-  binding9 += platform;
+-  const abi = NodePlatformArchToAbi[platform][arch];
+-  if (abi === void 0) return new Error(`unsupported cpu arch: ${arch}`);
+-  binding9 += `-${arch}`;
+-  if (typeof abi === "string") {
+-    binding9 += abi.length ? `-${abi}` : "";
+-  } else if (typeof abi === "object") {
+-    binding9 += `-${abi[isMusl() ? "musl" : "gnu"]}`;
+-  } else {
+-    return new Error(`unsupported abi: ${abi}`);
+-  }
+-  return binding9;
+-};
+-var result;
+ var checkVersion = () => {
+-  if (result !== void 0) {
+-    return result;
+-  }
+-  const platformArchAbi = getAddonPlatformArchAbi();
+-  if (platformArchAbi instanceof Error) {
+-    return result = platformArchAbi;
+-  }
+-  let ADDON_VERSION;
+-  try {
+-    const BINDING_PKG_DIR = import_node_path11.default.dirname(
+-      require.resolve("@rspack/binding/package.json")
+-    );
+-    const isLocal = (0, import_node_fs3.readdirSync)(BINDING_PKG_DIR).some(
+-      (item) => item === `rspack.${platformArchAbi}.node`
+-    );
+-    if (isLocal) {
+-      ADDON_VERSION = BINDING_VERSION;
+-    } else {
+-      ADDON_VERSION = require(require.resolve(`@rspack/binding-${platformArchAbi}/package.json`, {
+-        paths: [BINDING_PKG_DIR]
+-      })).version;
+-    }
+-  } catch (error) {
+-    if (error instanceof Error) {
+-      return result = new Error(
+-        `${error.toString()}. Maybe you forget to install the correct addon package ${`@rspack/binding-${platformArchAbi}`} or forget to build binding locally?`
+-      );
+-    }
+-    return result = new Error(error);
+-  }
+-  const isMatch = [CORE_VERSION, BINDING_VERSION, ADDON_VERSION].every(
+-    (v, _, arr) => v === arr[0]
+-  );
+-  if (!isMatch) {
+-    return result = new Error(
+-      `Unmatched version @rspack/core@${CORE_VERSION}, @rspack/binding@${BINDING_VERSION}, @rspack/binding-${platformArchAbi}@${ADDON_VERSION}.
+-Rspack requires these versions to be the same or you may have installed the wrong version. Otherwise, Rspack may not work properly.`
+-    );
+-  }
+-  return result = null;
++  // Remove version check, ice framework will handle it.
++  return null;
+ };
+ 
+ // src/builtin-plugin/html-plugin/taps.ts
+@@ -20545,6 +20452,7 @@ module.exports = rspack;
    Compiler,
    ContextReplacementPlugin,
    CopyRspackPlugin,
