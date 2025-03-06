@@ -20,16 +20,23 @@ export class WebpackServerCompiler {
 
   private createWebpackConfig(options: {
     userServerConfig: UserConfig['server'];
+    rootDir: string;
+    taskConfig?: Record<string, any>;
     [key: string]: any;
   }): webpack.Configuration {
     const { userServerConfig } = options;
     const { webpackConfig = {} } = userServerConfig;
     return getWebpackConfig({
       config: {
+        // ...options.taskConfig,
         mode: 'production',
         entry: options.entryPoints,
-        target: 'node12.20',
         alias: options.alias,
+        target: 'node12.20',
+        // output: {
+        //   ...options.taskConfig?.output,
+        //   ...(webpackConfig.output as any),
+        // },
         output: {
           filename: `[name].${options.format === 'esm' ? 'mjs' : 'cjs'}`,
           path: options.outdir,
@@ -50,30 +57,16 @@ export class WebpackServerCompiler {
           {
             //   // Match `.js`, `.jsx`, `.ts` or `.tsx` files
             test: /\.m?[jt]sx?$/,
-            exclude(path) {
-              if (path.includes('node_modules')) {
-                if (webpackConfig.transformInclude) {
-                  return !webpackConfig.transformInclude.some((i) => {
-                    if (i instanceof RegExp) {
-                      return i.test(path);
-                    } else if (typeof i === 'string') {
-                      return path.includes(i);
-                    } else {
-                      return false;
-                    }
-                  });
-                } else {
-                  return true;
-                }
-              }
-              return false;
-            },
             use: [path.resolve(_dirname, 'removeMagicString.js')],
           },
           ...(webpackConfig.module?.rules || []),
         ],
+        useDevServer: false,
+        analyzer: false,
+        assetsManifest: false,
         define: options.define,
-        optimization: webpackConfig.optimization as any,
+        // optimization: { ...webpackConfig.optimization } as any,
+        optimization: { ...options.taskConfig?.optimization, ...webpackConfig.optimization } as any,
       },
       rootDir: options.rootDir,
       webpack,

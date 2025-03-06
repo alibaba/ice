@@ -174,6 +174,7 @@ export function createServerCompiler(options: Options) {
     }
     server.bundler = bundler ?? server.bundler ?? 'esbuild';
     const format = customBuildOptions?.format || 'esm';
+
     let buildOptions: esbuild.BuildOptions = {
       bundle: true,
       format,
@@ -250,11 +251,26 @@ export function createServerCompiler(options: Options) {
         switch (server.bundler) {
           case 'webpack':
             const webpackServerCompiler = new WebpackServerCompiler({
+              // taskConfig: {
+              //   ...task.config,
+              //   define,
+              //   entry: buildOptions.entryPoints,
+              //   output: {
+              //     filename: `[name].${buildOptions.format === 'esm' ? 'mjs' : 'cjs'}`,
+              //     path: buildOptions.outdir,
+              //     // align the output with former esbuild
+              //     chunkFormat: false,
+              //     clean: true,
+              //     library: {
+              //       type: 'commonjs2',
+              //     },
+              //   },
+              //   outputDir: buildOptions.outdir,
+              // },
+              // inject: buildOptions.inject,
               ...buildOptions,
               externals,
-              plugins: [
-                compilationInfo && new VirualAssetPlugin({ compilationInfo, rootDir }),
-              ],
+              plugins: [compilationInfo && new VirualAssetPlugin({ compilationInfo, rootDir })],
               rootDir,
               userServerConfig: server,
               runtimeDefineVars,
