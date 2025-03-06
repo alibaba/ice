@@ -17,18 +17,11 @@ interface Options {
   renderMode?: RenderMode;
   taskConfig?: TaskConfig<Config>;
   routeManifest: RouteManifest;
+  allTaskConfigs?: TaskConfig<Config>[];
 }
 
 export default function createRenderMiddleware(options: Options): Middleware {
-  const {
-    documentOnly,
-    renderMode,
-    excuteServerEntry,
-    getAppConfig,
-    taskConfig,
-    userConfig,
-    routeManifest,
-  } = options;
+  const { documentOnly, renderMode, excuteServerEntry, getAppConfig, taskConfig, userConfig, routeManifest } = options;
   const middleware: ExpressRequestHandler = async function (req, res, next) {
     const routes = routeManifest.getNestedRoute();
     const appConfig = (await getAppConfig()).default;
@@ -39,9 +32,11 @@ export default function createRenderMiddleware(options: Options): Middleware {
     const matches = matchRoutes(routes, req.path, basename);
     const isStaticResources = /\.(js|mjs|map|json|png|jpg|jpeg|gif|svg|eot|woff2|ttf)$/;
     // When documentOnly is true, it means that the app is CSR and it should return the html.
-    if ((matches.length || documentOnly) &&
+    if (
+      (matches.length || documentOnly) &&
       // Ignore static resources.
-      !isStaticResources.test(req.path)) {
+      !isStaticResources.test(req.path)
+    ) {
       const serverModule = await excuteServerEntry();
       if (serverModule) {
         const requestContext: ServerContext = {

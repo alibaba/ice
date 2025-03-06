@@ -20,17 +20,18 @@ export async function startDevServer(
   context: Context,
   options: BundlerOptions,
 ) {
-  const { rootDir, applyHook, commandArgs, extendsPluginAPI: { excuteServerEntry } } = context;
   const {
-    taskConfigs,
-    hooksAPI,
-    routeManifest,
-    userConfig,
-    appConfig,
-  } = options;
-  const routePaths = routeManifest.getFlattenRoute().sort((a, b) =>
-    // Sort by length, shortest path first.
-    a.split('/').filter(Boolean).length - b.split('/').filter(Boolean).length);
+    rootDir,
+    applyHook,
+    commandArgs,
+    extendsPluginAPI: { excuteServerEntry },
+  } = context;
+  const { taskConfigs, hooksAPI, routeManifest, userConfig, appConfig } = options;
+  const routePaths = routeManifest.getFlattenRoute().sort(
+    (a, b) =>
+      // Sort by length, shortest path first.
+      a.split('/').filter(Boolean).length - b.split('/').filter(Boolean).length,
+  );
   const webTaskConfig = taskConfigs.find(({ name }) => name === WEB);
   const originalDevServer: DevServerConfiguration = webpackConfigs[0].devServer;
   const customMiddlewares = originalDevServer?.setupMiddlewares;
@@ -46,6 +47,8 @@ export async function startDevServer(
         excuteServerEntry,
         mock: commandArgs.mock,
         rootDir,
+        compiler,
+        allTaskConfigs: taskConfigs,
       });
       return customMiddlewares ? customMiddlewares(builtInMiddlewares, devServer) : builtInMiddlewares;
     },
@@ -58,7 +61,7 @@ export async function startDevServer(
     appConfig,
   });
   let isFirstCompile = true;
-  compiler.hooks.done.tap('done', async stats => {
+  compiler.hooks.done.tap('done', async (stats) => {
     const statsData = stats.toJson({
       all: false,
       warnings: true,
@@ -133,37 +136,40 @@ export async function invokeCompilerWatch(
     ...hooksAPI,
   });
   let isFirstCompile = true;
-  compiler.watch({
-    aggregateTimeout: 200,
-    ignored: ['**/node_modules/**', `${absoluteOutputDir}/**`],
-  }, async (err, stats) => {
-    if (err) {
-      if (!err.message) {
-        throw err;
+  compiler.watch(
+    {
+      aggregateTimeout: 200,
+      ignored: ['**/node_modules/**', `${absoluteOutputDir}/**`],
+    },
+    async (err, stats) => {
+      if (err) {
+        if (!err.message) {
+          throw err;
+        }
+        messages = formatWebpackMessages({
+          errors: [err.message as unknown as StatsError],
+          warnings: [],
+        });
+      } else {
+        messages = formatWebpackMessages(stats.toJson({ all: false, warnings: true, errors: true }));
       }
-      messages = formatWebpackMessages({
-        errors: [err.message as unknown as StatsError],
-        warnings: [],
-      });
-    } else {
-      messages = formatWebpackMessages(stats.toJson({ all: false, warnings: true, errors: true }));
-    }
-    const isSuccessful = !messages.errors.length;
-    if (messages.errors.length) {
-      logger.error('Webpack compile error');
-      throw new Error(messages.errors.join('\n\n'));
-    }
+      const isSuccessful = !messages.errors.length;
+      if (messages.errors.length) {
+        logger.error('Webpack compile error');
+        throw new Error(messages.errors.join('\n\n'));
+      }
 
-    await applyHook('after.start.compile', {
-      stats,
-      isSuccessful,
-      isFirstCompile,
-      messages,
-      taskConfigs,
-      ...hooksAPI,
-    });
-    if (isSuccessful) {
-      isFirstCompile = false;
-    }
-  });
+      await applyHook('after.start.compile', {
+        stats,
+        isSuccessful,
+        isFirstCompile,
+        messages,
+        taskConfigs,
+        ...hooksAPI,
+      });
+      if (isSuccessful) {
+        isFirstCompile = false;
+      }
+    },
+  );
 }

@@ -10,7 +10,7 @@ export async function getOutputPaths(options: {
   rootDir: string;
   outputDir: string;
   serverEntry: string;
-  bundleOptions: Pick<BundlerOptions, 'userConfig' | 'appConfig' | 'routeManifest'>;
+  bundleOptions: Pick<BundlerOptions, 'userConfig' | 'appConfig' | 'routeManifest'> & { publicPath?: string };
 }) {
   const { outputDir, serverEntry, bundleOptions, rootDir } = options;
   const { userConfig } = bundleOptions;
@@ -36,14 +36,12 @@ async function buildCustomOutputs(
   rootDir: string,
   outputDir: string,
   serverEntry: string,
-  bundleOptions: Pick<BundlerOptions, 'userConfig' | 'appConfig' | 'routeManifest'>,
+  bundleOptions: Pick<BundlerOptions, 'userConfig' | 'appConfig' | 'routeManifest'> & { publicPath?: string },
 ) {
-  const { userConfig, appConfig, routeManifest } = bundleOptions;
+  const { userConfig, appConfig, routeManifest, publicPath } = bundleOptions;
   const { ssg } = userConfig;
   const routeType = appConfig?.router?.type;
-  const {
-    outputPaths = [],
-  } = await generateEntry({
+  const { outputPaths = [] } = await generateEntry({
     rootDir,
     outputDir,
     entry: serverEntry,
@@ -52,6 +50,7 @@ async function buildCustomOutputs(
     renderMode: ssg ? 'SSG' : undefined,
     routeType: appConfig?.router?.type,
     routeManifest,
+    publicPath,
   });
   if (routeType === 'memory' && userConfig?.routes?.injectInitialEntry) {
     injectInitialEntry(routeManifest, outputDir);

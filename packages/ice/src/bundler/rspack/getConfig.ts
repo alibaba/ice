@@ -15,6 +15,7 @@ import { getFallbackEntry, getReCompilePlugin, getServerPlugin, getSpinnerPlugin
 import { getExpandedEnvs } from '../../utils/runtimeEnv.js';
 import type { BundlerOptions, Context } from '../types.js';
 import type { PluginData } from '../../types/plugin.js';
+import { bundlerConfigContext } from '../../service/onGetBundlerConfig.js';
 
 type GetConfig = (
   context: Context,
@@ -71,25 +72,37 @@ const getConfig: GetConfig = async (context, options, rspack) => {
       getReCompilePlugin(reCompile, routeManifest),
     ].filter(Boolean) as Config['plugins'];
   };
-  return await Promise.all(taskConfigs.map(async ({ config }) => {
-    const plugins = getPlugins(config);
-    return await getRspackConfig({
-      rootDir,
-      rspack,
-      runtimeTmpDir: RUNTIME_TMP_DIR,
-      runtimeDefineVars: {
-        [IMPORT_META_TARGET]: JSON.stringify(config.target),
-        [IMPORT_META_RENDERER]: JSON.stringify('client'),
-      },
-      getRoutesFile,
-      getExpandedEnvs,
-      localIdentName: config.cssModules?.localIdentName || (config.mode === 'development' ? CSS_MODULES_LOCAL_IDENT_NAME_DEV : CSS_MODULES_LOCAL_IDENT_NAME),
-      taskConfig: {
-        ...config,
-        plugins: (config.plugins || []).concat(plugins),
-      },
-    });
-  }));
+  return await Promise.all(
+    taskConfigs.map(async ({ config, name }) => {
+      const plugins = getPlugins(config);
+      const rspackConfig = await getRspackConfig({
+        rootDir,
+        rspack,
+        runtimeTmpDir: RUNTIME_TMP_DIR,
+        runtimeDefineVars: {
+          [IMPORT_META_TARGET]: JSON.stringify(config.target),
+          [IMPORT_META_RENDERER]: JSON.stringify('client'),
+        },
+        getRoutesFile,
+        getExpandedEnvs,
+        localIdentName:
+          config.cssModules?.localIdentName ||
+          (config.mode === 'development' ? CSS_MODULES_LOCAL_IDENT_NAME_DEV : CSS_MODULES_LOCAL_IDENT_NAME),
+        taskConfig: {
+          ...config,
+          plugins: (config.plugins || []).concat(plugins),
+        },
+      });
+
+      // run onGetBundlerConfig hooks
+      const finalConfig = await bundlerConfigContext.runOnGetBundlerConfig(rspackConfig, {
+        environment: { name },
+        type: 'rspack',
+      });
+
+      return finalConfig as Configuration;
+    }),
+  );
 };
 
 type GetDataLoaderRspackConfig = (

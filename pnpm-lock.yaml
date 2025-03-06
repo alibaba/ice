@@ -457,6 +457,31 @@ importers:
         specifier: ^5.88.0
         version: 5.88.2
 
+  examples/multi-dev-server:
+    dependencies:
+      '@ice/app':
+        specifier: workspace:*
+        version: link:../../packages/ice
+      '@ice/plugin-rax-compat':
+        specifier: workspace:*
+        version: link:../../packages/plugin-rax-compat
+      '@ice/runtime':
+        specifier: workspace:*
+        version: link:../../packages/runtime
+      react:
+        specifier: ^18.0.0
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.0.0
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.0.0
+        version: 18.3.18
+      '@types/react-dom':
+        specifier: ^18.0.2
+        version: 18.3.5(@types/react@18.3.18)
+
   examples/multi-target:
     dependencies:
       '@ice/app':

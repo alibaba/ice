@@ -57,21 +57,34 @@ async function build(
 
   if (isSuccessful) {
     // Generate html when SSG.
-    const outputDir = webpackConfigs[0].output.path;
-    const { serverEntry, error } = await extendsPluginAPI.serverCompileTask.get() || {};
+
+    const { serverEntry, error } = (await extendsPluginAPI.serverCompileTask.get()) || {};
     if (error) {
       throw new Error('Build failed, please check the error message.');
     }
-    const outputPaths = await getOutputPaths({
-      rootDir,
-      serverEntry,
-      outputDir,
-      bundleOptions: {
-        userConfig,
-        appConfig,
-        routeManifest,
-      },
-    });
+
+    const outputPaths: string[] = [];
+
+    for (const taskConfig of taskConfigs) {
+      const { serverEntry: envServerEntry } = (await extendsPluginAPI.serverCompileTask.get(taskConfig.name)) || {};
+      const { outputDir } = taskConfig.config;
+      const outputPath = await getOutputPaths({
+        rootDir,
+        serverEntry: envServerEntry,
+        outputDir,
+        bundleOptions: {
+          userConfig,
+          appConfig,
+          routeManifest,
+          // todo: function type publicPath
+          publicPath: taskConfig.config.publicPath as string,
+        },
+      });
+      outputPaths.push(...outputPath);
+
+      await removeServerOutput(outputDir, userConfig.ssr);
+    }
+
     await applyHook('after.build.compile', {
       ...hooksAPI,
       stats,
@@ -83,7 +96,6 @@ async function build(
       output: { paths: outputPaths },
       appConfig,
     });
-    await removeServerOutput(outputDir, userConfig.ssr);
   }
 }
 

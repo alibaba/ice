@@ -4,7 +4,13 @@ import type { Stats as WebpackStats } from '@ice/bundles/compiled/webpack/index.
 import type { AppConfig } from '@ice/runtime-kit';
 import type { Configuration, MultiCompiler, MultiStats } from '@rspack/core';
 import type { Context as DefaultContext, TaskConfig } from 'build-scripts';
-import type { ServerCompiler, GetAppConfig, GetRoutesConfig, GetDataloaderConfig, ExtendsPluginAPI } from '../types/plugin.js';
+import type {
+  ServerCompiler,
+  GetAppConfig,
+  GetRoutesConfig,
+  GetDataloaderConfig,
+  ExtendsPluginAPI,
+} from '../types/plugin.js';
 import type { UserConfig } from '../types/userConfig.js';
 import type RouteManifest from '../utils/routeManifest.js';
 import type ServerRunner from '../service/ServerRunner.js';
@@ -39,6 +45,7 @@ export interface BundlerOptions {
   userConfig: UserConfig;
   routeManifest: RouteManifest;
   hasDataLoader: boolean;
+  multiEnvServerCompilers?: Map<string, ServerCompiler>;
 }
 
 export type CompileResults = {

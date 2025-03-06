@@ -15,6 +15,7 @@ interface Options {
   ensureRoutesConfig: () => Promise<void>;
   runtimeDefineVars: Record<string, string>;
   entryPoints?: Record<string, string>;
+  name?: string;
 }
 
 function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Options) {
@@ -28,8 +29,13 @@ function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Option
     runtimeDefineVars,
     fallbackEntry,
     entryPoints,
+    name,
   } = options;
-  const { ssg, ssr, server: { format } } = userConfig;
+  const {
+    ssg,
+    ssr,
+    server: { format },
+  } = userConfig;
   const isEsm = userConfig?.server?.format === 'esm';
   const defaultEntryPoints = { index: getServerEntry(rootDir, serverEntry) };
   if (fallbackEntry) {
@@ -58,10 +64,11 @@ function getServerCompilerPlugin(serverCompiler: ServerCompiler, options: Option
         // so we need to prebundle all the dependencies first to avoid errors of importing non-js file in ESM.
         preBundle: format === 'esm' && (ssr || ssg),
         swc: {
-          keepExports: (!ssg && !ssr) ? ['pageConfig'] : null,
+          keepExports: !ssg && !ssr ? ['pageConfig'] : null,
         },
         removeOutputs: true,
         runtimeDefineVars,
+        name,
       },
     ],
     ensureRoutesConfig,

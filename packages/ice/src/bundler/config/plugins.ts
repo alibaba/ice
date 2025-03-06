@@ -47,6 +47,7 @@ interface ServerPluginOptions {
   fallbackEntry?: string;
   getFlattenRoutes?: () => string[];
   command?: string;
+  name?: string;
 }
 export const getServerPlugin = ({
   serverRunner,
@@ -61,6 +62,7 @@ export const getServerPlugin = ({
   fallbackEntry,
   getFlattenRoutes,
   command,
+  name,
 }: ServerPluginOptions) => {
   if (serverRunner) {
     return new ServerRunnerPlugin(serverRunner, ensureRoutesConfig);
@@ -75,11 +77,13 @@ export const getServerPlugin = ({
       userConfig,
       ensureRoutesConfig,
       entryPoints: multipleServerEntry(userConfig, command)
-        ? getEntryPoints(rootDir, getFlattenRoutes(), serverEntry) : undefined,
+        ? getEntryPoints(rootDir, getFlattenRoutes(), serverEntry)
+        : undefined,
       runtimeDefineVars: {
         [IMPORT_META_TARGET]: JSON.stringify(target),
         [IMPORT_META_RENDERER]: JSON.stringify('server'),
       },
+      name,
     });
   }
 };
@@ -88,6 +92,6 @@ export const getReCompilePlugin = (reCompile: (taskKey: string) => void, routeMa
   return new ReCompilePlugin(reCompile, (files) => {
     // Only when routes file changed.
     const routeFiles = routeManifest.getRoutesFile();
-    return files.some((filePath) => routeFiles.some(routeFile => filePath.includes(routeFile)));
+    return files.some((filePath) => routeFiles.some((routeFile) => filePath.includes(routeFile)));
   });
 };

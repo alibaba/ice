@@ -511,6 +511,10 @@ const userConfig = [
     validation: 'boolean',
     defaultValue: true,
   },
+  {
+    name: 'environments',
+    validation: 'object',
+  },
 ];
 
 const cliOption = [
