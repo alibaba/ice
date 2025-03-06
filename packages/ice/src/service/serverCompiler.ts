@@ -252,6 +252,7 @@ export function createServerCompiler(options: Options) {
             const webpackServerCompiler = new WebpackServerCompiler({
               ...buildOptions,
               externals,
+              compileIncludes: task.config.compileIncludes,
               plugins: [compilationInfo && new VirualAssetPlugin({ compilationInfo, rootDir })],
               rootDir,
               userServerConfig: server,

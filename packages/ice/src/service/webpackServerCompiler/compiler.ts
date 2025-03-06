@@ -11,7 +11,7 @@ const _dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fil
 
 export class WebpackServerCompiler {
   private config: webpack.Configuration;
-  private options: { userServerConfig: UserConfig['server']; rootDir: string; [key: string]: any };
+  private options;
 
   constructor(options: any) {
     this.options = options;
@@ -21,7 +21,6 @@ export class WebpackServerCompiler {
   private createWebpackConfig(options: {
     userServerConfig: UserConfig['server'];
     rootDir: string;
-    taskConfig?: Record<string, any>;
     [key: string]: any;
   }): webpack.Configuration {
     const { userServerConfig } = options;
@@ -62,6 +61,20 @@ export class WebpackServerCompiler {
         define: options.define,
         optimization: { ...webpackConfig.optimization } as any,
         minify: options.minify,
+        compileIncludes: webpackConfig.transformInclude,
+        swcOptions: {
+          compilationConfig: {
+            jsc: {
+              externalHelpers: false,
+              transform: {
+                react: {
+                  runtime: options.jsx,
+                  importSource: '@ice/runtime/react',
+                },
+              },
+            },
+          },
+        },
       },
       rootDir: options.rootDir,
       webpack,
