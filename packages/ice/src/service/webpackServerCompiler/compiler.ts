@@ -28,15 +28,10 @@ export class WebpackServerCompiler {
     const { webpackConfig = {} } = userServerConfig;
     return getWebpackConfig({
       config: {
-        // ...options.taskConfig,
         mode: 'production',
         entry: options.entryPoints,
         alias: options.alias,
         target: 'node12.20',
-        // output: {
-        //   ...options.taskConfig?.output,
-        //   ...(webpackConfig.output as any),
-        // },
         output: {
           filename: `[name].${options.format === 'esm' ? 'mjs' : 'cjs'}`,
           path: options.outdir,
@@ -65,8 +60,8 @@ export class WebpackServerCompiler {
         analyzer: false,
         assetsManifest: false,
         define: options.define,
-        // optimization: { ...webpackConfig.optimization } as any,
-        optimization: { ...options.taskConfig?.optimization, ...webpackConfig.optimization } as any,
+        optimization: { ...webpackConfig.optimization } as any,
+        minify: options.minify,
       },
       rootDir: options.rootDir,
       webpack,
