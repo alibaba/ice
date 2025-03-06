@@ -21,13 +21,22 @@ function filterAssets(assets: Assets): string[] {
   );
 }
 
+interface PluginOptions {
+  fileName?: string;
+  outputDir?: string;
+  // Inject assets manifest to entry file.
+  inject?: boolean;
+}
+
 export default class AssetsManifestPlugin {
   private fileName: string;
   private outputDir: string;
+  private inject: boolean;
 
-  public constructor(options) {
+  public constructor(options: PluginOptions) {
     this.fileName = options.fileName || 'assets-manifest.json';
     this.outputDir = options.outputDir || './';
+    this.inject = options.inject;
   }
 
   public createAssets(compilation: Compilation) {
@@ -77,12 +86,14 @@ export default class AssetsManifestPlugin {
     // Emit asset manifest for server compile.
     compilation.emitAsset(this.fileName, new webpack.sources.RawSource(output));
     // Inject assets manifest to entry file.
-    entryFiles.forEach((entryFile) => {
-      compilation.assets[entryFile] = new webpack.sources.ConcatSource(
-        new webpack.sources.RawSource(String(`window.__ICE_ASSETS_MANIFEST__=${output};\n`)),
-        compilation.assets[entryFile],
-      );
-    });
+    if (this.inject) {
+      entryFiles.forEach((entryFile) => {
+        compilation.assets[entryFile] = new webpack.sources.ConcatSource(
+          new webpack.sources.RawSource(String(`window.__ICE_ASSETS_MANIFEST__=${output};\n`)),
+          compilation.assets[entryFile],
+        );
+      });
+    }
   }
 
   public apply(compiler: Compiler) {
