@@ -1,13 +1,11 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { esbuild } from '@ice/bundles';
-import TerserPlugin from '@ice/bundles/compiled/terser-webpack-plugin/index.js';
-import CssMinimizerPlugin from '@ice/bundles/compiled/css-minimizer-webpack-plugin/index.js';
 import webpack from 'webpack';
-import processCss from '@ice/webpack-config/esm/config/css.js';
-import processAssets from '@ice/webpack-config/esm/config/assets.js';
+import { getWebpackConfig } from '@ice/webpack-config';
 import type { UserConfig } from '../../types/userConfig.js';
 import { logger } from '../../utils/logger.js';
+import { getExpandedEnvs } from '../../utils/runtimeEnv.js';
+import { RUNTIME_TMP_DIR } from '../../constant.js';
 
 const _dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
@@ -26,61 +24,28 @@ export class WebpackServerCompiler {
   }): webpack.Configuration {
     const { userServerConfig } = options;
     const { webpackConfig = {} } = userServerConfig;
-
-    for (const key of Object.keys(options.alias)) {
-      if (options.alias[key].startsWith('./')) {
-        options.alias[key] = path.resolve(options.rootDir, options.alias[key]);
-      }
-    }
-    const config = {
-      mode: 'production',
-      entry: options.entryPoints as string[],
-      target: 'node12.20',
-      externalsPresets: {
-        node: false,
-      },
-      output: {
-        filename: `[name].${options.format === 'esm' ? 'mjs' : 'cjs'}`,
-        path: options.outdir,
-        // align the output with former esbuild
-        chunkFormat: false,
-        clean: true,
-        library: {
-          type: 'commonjs2',
-        },
-        ...(webpackConfig.output as any),
-      },
-      devtool: 'source-map',
-      externals: options.externals,
-      optimization: {
-        minimize: !!options.minify,
-        minimizer: [
-          new TerserPlugin({
-            extractComments: false,
-            terserOptions: typeof options.minify === 'object' ? options.minify : undefined,
-            minify: TerserPlugin.esbuildMinify,
-          }),
-          new CssMinimizerPlugin({
-            parallel: false,
-            minimizerOptions: {
-              preset: [
-                'default',
-                {
-                  discardComments: { removeAll: true },
-                },
-              ],
-            },
-          }),
-        ],
-        ...(webpackConfig.optimization as any),
-      },
-      resolve: {
+    return getWebpackConfig({
+      config: {
+        mode: 'production',
+        entry: options.entryPoints,
+        target: 'node12.20',
         alias: options.alias,
-        fallback: { crypto: false },
-        extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs', '...'],
-      },
-      module: {
-        rules: [
+        output: {
+          filename: `[name].${options.format === 'esm' ? 'mjs' : 'cjs'}`,
+          path: options.outdir,
+          // align the output with former esbuild
+          chunkFormat: false,
+          clean: true,
+          library: {
+            type: 'commonjs2',
+          },
+          ...(webpackConfig.output as any),
+        },
+        plugins: [...options.plugins, ...(webpackConfig.plugins || [])] as any,
+        externals: options.externals,
+        outputDir: options.outdir,
+        enableCache: false,
+        loaders: [
           // Use esbuild to compile JavaScript & TypeScript
           {
             //   // Match `.js`, `.jsx`, `.ts` or `.tsx` files
@@ -103,57 +68,20 @@ export class WebpackServerCompiler {
               }
               return false;
             },
-            use: [
-              (info: any) => {
-                const ext = path.extname(info.resource);
-                return {
-                  loader: '@ice/bundles/compiled/esbuild-loader',
-                  // available options: https://github.com/evanw/esbuild/blob/88821b7e7d46737f633120f91c65f662eace0bcf/lib/shared/types.ts#L158-L172
-                  options: {
-                    target: options.target,
-                    // make sure tree shaking is worked
-                    format: 'esm',
-                    loader: ext === '.js' ? 'jsx' : 'default',
-                    jsx: options.jsx,
-                    jsxImportSource: '@ice/runtime/react',
-                    sourcemap: options.sourcemap,
-                    define: options.define,
-                    // banner can only be string in transform mode
-                    banner: options.banner?.js,
-                    implementation: esbuild,
-                  },
-                };
-              },
-              path.resolve(_dirname, 'removeMagicString.js'),
-            ],
+            use: [path.resolve(_dirname, 'removeMagicString.js')],
           },
           ...(webpackConfig.module?.rules || []),
         ],
+        define: options.define,
+        optimization: webpackConfig.optimization as any,
       },
-      plugins: [
-        ...options.plugins,
-        new webpack.DefinePlugin(options.define),
-        new webpack.SourceMapDevToolPlugin({
-          // remove append sourcemap comment
-          append: false,
-          filename: '[file].map',
-          moduleFilenameTemplate: '[absolute-resource-path]',
-        }),
-        ...(webpackConfig.plugins || []),
-      ],
-      stats: {
-        errorDetails: true,
-      },
-    } as webpack.Configuration;
-    processCss(config, {
-      publicPath: '/',
-      postcssOptions: {},
       rootDir: options.rootDir,
-      enableRpx2Vw: true,
-      cssModules: {},
-    } as any);
-    processAssets(config, {} as any);
-    return config;
+      webpack,
+      runtimeTmpDir: RUNTIME_TMP_DIR,
+      userConfigHash: '',
+      getExpandedEnvs,
+      isServer: true,
+    });
   }
 
   private async handleEsbuildInject() {

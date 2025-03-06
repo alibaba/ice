@@ -249,29 +249,15 @@ export function createServerCompiler(options: Options) {
       } else {
         switch (server.bundler) {
           case 'webpack':
-            const transformWebpackPlugins = getCompilerPlugins(
-              rootDir,
-              {
-                ...task.config,
-                fastRefresh: false,
-                enableEnv,
-                polyfill: false,
-                swcOptions,
-                redirectImports,
-                getRoutesFile,
-              },
-              'webpack',
-              { isServer },
-            );
             const webpackServerCompiler = new WebpackServerCompiler({
               ...buildOptions,
               externals,
               plugins: [
                 compilationInfo && new VirualAssetPlugin({ compilationInfo, rootDir }),
-                ...transformWebpackPlugins,
-              ].filter(Boolean),
+              ],
               rootDir,
               userServerConfig: server,
+              runtimeDefineVars,
             });
             esbuildResult = (await webpackServerCompiler.build())?.compilation;
             break;
