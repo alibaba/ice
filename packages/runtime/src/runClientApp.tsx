@@ -13,7 +13,7 @@ import type {
   RunClientAppOptions,
   ErrorStack,
 } from '@ice/runtime-kit';
-import { setFetcher, setDecorator, getRequestContext, getAppConfig } from '@ice/runtime-kit';
+import { setFetcher, setDecorator, getRequestContext, getAppConfig, AppContextProvider } from '@ice/runtime-kit';
 import type {
   WindowContext,
   RouteItem,
@@ -29,7 +29,6 @@ import { getAppData } from './appData.js';
 import { getRoutesPath, loadRouteModule } from './routes.js';
 import matchRoutes from './matchRoutes.js';
 import ClientRouter from './ClientRouter.js';
-import { AppContextProvider } from './AppContext.js';
 import addLeadingSlash from './utils/addLeadingSlash.js';
 import { deprecatedHistory } from './utils/deprecatedHistory.js';
 import reportRecoverableError from './reportRecoverableError.js';

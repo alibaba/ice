@@ -35,10 +35,10 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
     async (eventName: string) => {
       if (eventName === 'add' || eventName === 'unlink' || eventName === 'change') {
         const routesRenderData = await generateRoutesInfo(rootDir, routesConfig);
-        const { routeImports, routeDefinition } = router?.routesDefinition?.({
+        const routeDefinition = router?.routesDefinition?.({
           manifest: routesRenderData.routes,
           lazy: lazyRoutes,
-        }) || {};
+        }) || '';
         const stringifiedData = JSON.stringify(routesRenderData);
         if (cache.get('routes') !== stringifiedData) {
           cache.set('routes', stringifiedData);
@@ -49,7 +49,7 @@ const getWatchEvents = (options: Options): WatchEvent[] => {
               generator.renderFile(
                 router.template,
                 router.source,
-                { routeImports, routeDefinition },
+                { routeDefinition },
               );
             }
             // Keep generate route manifest for avoid breaking change.

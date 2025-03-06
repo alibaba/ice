@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 import type { AgnosticRouteObject, Location, RouterInit, StaticHandlerContext } from '@remix-run/router';
-import type { Params, RouteObject } from 'react-router-dom';
+import type { RouteObject } from 'react-router-dom';
 import type {
   AppContext,
   AppExport,
@@ -65,26 +65,6 @@ export interface ServerAppRouterProps extends AppRouterProps {
 
 export interface AppRouteProps {
   routes: RouteItem[];
-}
-
-// rewrite the `RouteMatch` type which is referenced by the react-router-dom
-export interface RouteMatch {
-  /**
-   * The names and values of dynamic parameters in the URL.
-   */
-  params: Params;
-  /**
-   * The portion of the URL pathname that was matched.
-   */
-  pathname: string;
-  /**
-   * The portion of the URL pathname that was matched before child routes.
-   */
-  pathnameBase: string;
-  /**
-   * The route object that was used to match.
-   */
-  route: RouteItem;
 }
 
 interface Piper {

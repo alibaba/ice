@@ -3,7 +3,7 @@
  */
 import { expect, it, vi, describe, beforeEach, afterEach } from 'vitest';
 
-import { updateRoutesConfig } from '../src/routesConfig';
+import { updateRoutesConfig } from '@ice/runtime-kit';
 
 describe('routes config', () => {
   let documentSpy;

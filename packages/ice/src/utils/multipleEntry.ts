@@ -41,15 +41,14 @@ export function renderMultiEntry(options: Options) {
     );
     // Generate route file for each route.
     const matches = matchRoutes(routesManifest, route);
-    const { routeImports, routeDefinition } = routesDefinition?.({
+    const routeDefinition = routesDefinition?.({
       manifest: routesManifest,
       lazy,
       matchRoute: (routeItem) => {
         return matches.some((match) => match.route.id === routeItem.id);
       },
-    }) || {};
+    }) || '';
     generator.addRenderFile('core/routes.tsx.ejs', `routes.${routeId}.tsx`, {
-      routeImports,
       routeDefinition,
     });
   });

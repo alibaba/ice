@@ -1,6 +1,6 @@
 import React from 'react';
+import { useAppContext } from '@ice/runtime-kit';
 import AppErrorBoundary from './AppErrorBoundary.js';
-import { useAppContext } from './AppContext.js';
 
 export default function App({ children }) {
   const { appConfig } = useAppContext();

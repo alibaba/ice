@@ -3,9 +3,8 @@
  */
 import React from 'react';
 import { expect, it, describe } from 'vitest';
+import { Meta, Title, Links, Main, Scripts, usePageAssets, useAppContext } from '@ice/runtime-kit';
 import { renderToHTML, renderToResponse } from '../src/runServerApp';
-import { Meta, Title, Links, Main, Scripts, usePageAssets } from '../src/Document';
-import { useAppContext } from '../src/';
 import {
   createRouteLoader,
 } from '../src/routes.js';

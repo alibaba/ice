@@ -1,5 +1,4 @@
-import type { RouteConfig, LoadersData, LoaderData } from '@ice/runtime-kit';
-import type { RouteMatch } from './types.js';
+import type { RouteConfig, LoadersData, LoaderData, RouteMatch } from './types.js';
 
 export function getMeta(
   matches: RouteMatch[],
@@ -30,22 +29,16 @@ export function getTitle(matches: RouteMatch[], loadersData: LoadersData): strin
  * merge value for each matched route
  */
 function getMergedValue(key: string, matches: RouteMatch[], loadersData: LoadersData) {
-  let result;
-  for (let match of matches) {
-    const routeId = match.route.id;
-    const data = loadersData[routeId]?.pageConfig;
-    const value = data?.[key];
+  return matches.reduce((result, match) => {
+    const value = loadersData[match.route.id]?.pageConfig?.[key];
 
     if (Array.isArray(value)) {
-      // merge array
-      result = result ? result.concat(value) : value;
+      return Array.isArray(result) ? result.concat(value) : value;
     } else if (value) {
-      // overwrite
-      result = value;
+      return value;
     }
-  }
-
-  return result;
+    return result;
+  }, undefined);
 }
 
 /**

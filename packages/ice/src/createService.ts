@@ -39,6 +39,7 @@ import ServerCompileTask from './utils/ServerCompileTask.js';
 import { generateRoutesInfo } from './routes.js';
 import GeneratorAPI from './service/generatorAPI.js';
 import renderTemplate from './service/renderTemplate.js';
+import createRouteConfig from './utils/createRouteConfig.js';
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -209,16 +210,12 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   // Only when code splitting use the default strategy or set to `router`, the router will be lazy loaded.
   const lazy = [true, 'chunks', 'page', 'page-vendors'].includes(userConfig.codeSplitting);
   const runtimeRouter = runtimeConfig?.router;
-  const { routeImports, routeDefinition } = runtimeRouter?.routesDefinition?.({
+  const routeDefinition = await runtimeRouter?.routesDefinition?.({
     manifest: routesInfo.routes,
     lazy,
-  }) || {
-    routeImports: [],
-    routeDefinition: '',
-  };
+  });
 
   const routesFile = runtimeRouter?.source;
-
   const loaderExports = hasExportAppData || Boolean(routesInfo.loaders);
   const hasDataLoader = Boolean(userConfig.dataLoader) && loaderExports;
   const renderData = {
@@ -237,7 +234,6 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     hasDocument: hasDocument(rootDir),
     dataLoader: userConfig.dataLoader,
     hasDataLoader,
-    routeImports,
     routeDefinition,
     routesFile: routesFile?.replace(/\.[^.]+$/, ''),
     lazy,

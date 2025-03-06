@@ -5,11 +5,9 @@ import type { AwaitProps } from 'react-router-dom';
 import type { UNSAFE_DeferredData, LoaderFunctionArgs } from '@remix-run/router';
 import type { RouteModules, RenderMode, RequestContext, ComponentModule, DataLoaderConfig, DataLoaderOptions, Loader } from '@ice/runtime-kit';
 import { callDataLoader } from '@ice/runtime-kit';
-import { parseSearch } from '@ice/runtime-kit';
+import { parseSearch, updateRoutesConfig, useAppContext } from '@ice/runtime-kit';
 import type { RouteItem } from './types.js';
 import RouteWrapper from './RouteWrapper.js';
-import { useAppContext } from './AppContext.js';
-import { updateRoutesConfig } from './routesConfig.js';
 
 type RouteModule = Pick<RouteItem, 'id' | 'lazy'>;
 

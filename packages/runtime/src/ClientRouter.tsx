@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { createRouter } from '@remix-run/router';
 import type { To, History, Router } from '@remix-run/router';
+import { useAppContext } from '@ice/runtime-kit';
 import type { ClientAppRouterProps } from './types.js';
 import App from './App.js';
-import { useAppContext } from './AppContext.js';
 import { setHistory } from './history.js';
 import { disableHistoryWarning } from './utils/deprecatedHistory.js';
 

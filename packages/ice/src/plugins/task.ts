@@ -3,6 +3,7 @@ import { createRequire } from 'module';
 import type { Config } from '@ice/shared-config/types';
 import { CACHE_DIR, RUNTIME_TMP_DIR, RUNTIME_EXPORTS } from '../constant.js';
 import { getRoutesDefinition } from '../routes.js';
+import createRouteConfig from '../utils/createRouteConfig.js';
 
 const require = createRequire(import.meta.url);
 const getDefaultTaskConfig = ({ rootDir, command }): Config => {
@@ -39,7 +40,10 @@ const getDefaultTaskConfig = ({ rootDir, command }): Config => {
       source: '@ice/runtime',
       server: '@ice/runtime/server',
       router: {
-        routesDefinition: getRoutesDefinition,
+        routesDefinition: async (args) => {
+          const { routeImports, routeDefinition } = getRoutesDefinition(args);
+          return createRouteConfig(routeImports, routeDefinition);
+        },
         source: './routes.tsx',
         template: 'core/routes.tsx.ejs',
       },
