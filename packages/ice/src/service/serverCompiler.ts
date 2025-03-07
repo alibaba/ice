@@ -241,11 +241,11 @@ export function createServerCompiler(options: Options) {
     logger.debug(`[${server.bundler}]`, `start compile for: ${JSON.stringify(buildOptions.entryPoints)}`);
 
     try {
-      let esbuildResult: esbuild.BuildResult;
+      let bundleResult: any;
       let context: esbuild.BuildContext;
       if (dev) {
         context = await esbuild.context(buildOptions);
-        esbuildResult = await context.rebuild();
+        bundleResult = await context.rebuild();
       } else {
         switch (server.bundler) {
           case 'webpack':
@@ -258,11 +258,11 @@ export function createServerCompiler(options: Options) {
               userServerConfig: server,
               runtimeDefineVars,
             });
-            esbuildResult = (await webpackServerCompiler.build())?.compilation;
+            bundleResult = (await webpackServerCompiler.build())?.compilation;
             break;
           case 'esbuild':
           default:
-            esbuildResult = await esbuild.build(buildOptions);
+            bundleResult = await esbuild.build(buildOptions);
             break;
         }
       }
@@ -273,9 +273,9 @@ export function createServerCompiler(options: Options) {
       const outJSExtension = esm ? '.mjs' : '.cjs';
       const serverEntry = path.join(rootDir, task.config.outputDir, SERVER_OUTPUT_DIR, `index${outJSExtension}`);
 
-      if (removeOutputs && esbuildResult.metafile) {
+      if (removeOutputs && bundleResult.metafile) {
         // build/server/a.mjs -> a.mjs
-        const currentOutputFiles = Object.keys(esbuildResult.metafile.outputs)
+        const currentOutputFiles = Object.keys(bundleResult.metafile.outputs)
           .map(output => output.replace(formatPath(`${path.relative(rootDir, buildOptions.outdir)}${path.sep}`), ''));
         const allOutputFiles = fg.sync('**', { cwd: buildOptions.outdir });
         const outdatedFiles = difference(allOutputFiles, currentOutputFiles);
@@ -283,7 +283,7 @@ export function createServerCompiler(options: Options) {
       }
 
       return {
-        ...esbuildResult,
+        ...bundleResult,
         context,
         serverEntry,
       };
