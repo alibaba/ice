@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.5.2
+
+### Patch Changes
+
+- f0c6380b: feat: add htmlGenerating `mode` option
+- 15cd5f7f: fix: glob pattern for document
+- Updated dependencies [a0099df5]
+- Updated dependencies [a0099df5]
+  - @ice/runtime@1.5.2
+  - @ice/bundles@0.2.8
+  - @ice/rspack-config@1.2.2
+  - @ice/shared-config@1.3.1
+  - @ice/webpack-config@1.2.1
+
 ## 3.5.1
 
 ### Patch Changes

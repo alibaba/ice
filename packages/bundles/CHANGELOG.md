@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.8
+
+### Patch Changes
+
+- a0099df5: fix: update es-module-lexer
+
 ## 0.2.7
 
 ### Patch Changes

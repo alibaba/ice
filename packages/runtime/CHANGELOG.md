@@ -1,5 +1,11 @@
 # @ice/runtime
 
+## 1.5.2
+
+### Patch Changes
+
+- a0099df5: feat: post event for each suspense.
+
 ## 1.5.1
 
 ### Patch Changes
