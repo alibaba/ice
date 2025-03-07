@@ -158,7 +158,7 @@ export function withSuspense(Component) {
           <Data id={id} />
           <script
             dangerouslySetInnerHTML={{
-              __html: `window.dispatchEvent(new CustomEvent('ice-suspense', { detail: { id: '${id}' } }));`,
+              __html: `window.dispatchEvent(new CustomEvent('ice-suspense', { detail: { id: ${id ? `'${id}'` : undefined} } }));`,
             }}
           />
         </SuspenseContext.Provider>
@@ -172,11 +172,9 @@ function Data(props) {
 
   return (
     <script
-      id={props.id ? `suspenseScript:${props.id}` : ''}
+      id={props.id && `suspense-script-${props.id}`}
       dangerouslySetInnerHTML={{
-        __html: `!function(){window['${LOADER}'] = window['${LOADER}'] || {};window['${LOADER}']['${
-          props.id
-        }'] = ${JSON.stringify(data)}}();`,
+        __html: `!function(){window['${LOADER}'] = window['${LOADER}'] || {};window['${LOADER}']['${props.id}'] = ${JSON.stringify(data)}}();`,
       }}
     />
   );
