@@ -157,6 +157,8 @@ export interface Config {
 
   enableCache?: boolean;
 
+  isServer?: boolean;
+
   cacheDir?: string;
 
   tsCheckerOptions?: ForkTsCheckerWebpackPluginOptions;
