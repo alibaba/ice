@@ -42,7 +42,16 @@ export class WebpackServerCompiler {
           },
           ...(webpackConfig.output as any),
         },
-        plugins: [...options.plugins, ...(webpackConfig.plugins || [])] as any,
+        plugins: [
+          new webpack.SourceMapDevToolPlugin({
+            // remove append sourcemap comment
+            append: false,
+            filename: '[file].map',
+            moduleFilenameTemplate: '[absolute-resource-path]',
+          }),
+          ...options.plugins,
+          ...(webpackConfig.plugins || []),
+        ] as any,
         externals: options.externals,
         outputDir: options.outdir,
         enableCache: false,
