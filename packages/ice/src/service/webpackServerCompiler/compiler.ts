@@ -10,21 +10,22 @@ import { RUNTIME_TMP_DIR } from '../../constant.js';
 const _dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
 export class WebpackServerCompiler {
-  private config;
   private options;
 
   constructor(options: any) {
     this.options = options;
-    this.config = this.createWebpackConfig(options);
   }
 
-  private createWebpackConfig(options: {
+  private async createWebpackConfig(options: {
     userServerConfig: UserConfig['server'];
     rootDir: string;
     [key: string]: any;
   }) {
     const { userServerConfig } = options;
     const { webpackConfig = {} } = userServerConfig;
+    const definitions = await this.getEsbuildInject();
+    console.log('definitions', definitions);
+
     return getWebpackConfig({
       config: {
         mode: 'production',
@@ -75,6 +76,7 @@ export class WebpackServerCompiler {
             },
           },
         },
+        definitions,
       },
       rootDir: options.rootDir,
       webpack: webpack as any,
@@ -85,7 +87,7 @@ export class WebpackServerCompiler {
     });
   }
 
-  private async handleEsbuildInject() {
+  private async getEsbuildInject(): Promise<Record<string, string | string[]>> {
     const provideRecord = {};
     const allInjects = await Promise.all(this.options.inject.map((inj) => import(inj)));
     allInjects.forEach((injs, index) => {
@@ -93,14 +95,13 @@ export class WebpackServerCompiler {
         provideRecord[key] = [this.options.inject[index], key];
       });
     });
-    return new webpack.ProvidePlugin(provideRecord);
+    return provideRecord;
   }
 
   async build(): Promise<any> {
-    const providePlugin = await this.handleEsbuildInject();
-    this.config.plugins.push(providePlugin);
+    const config = await this.createWebpackConfig(this.options);
     return new Promise((resolve, reject) => {
-      webpack(this.config, (err, stats) => {
+      webpack(config as any, (err, stats) => {
         if (err || stats?.hasErrors?.()) {
           logger.error(err || stats.toString());
           reject(err || stats.toString());

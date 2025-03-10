@@ -112,6 +112,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     polyfill,
     enableRpx2Vw = true,
     enableEnv = true,
+    definitions = {},
   } = config;
 
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
@@ -286,6 +287,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
       }),
       new webpack.ProvidePlugin({
         process: require.resolve('process/browser'),
+        ...definitions,
       }),
       // server don't need runtimeDefine
       new webpack.DefinePlugin(isServer ? config.define : defineVarsWithRuntime),

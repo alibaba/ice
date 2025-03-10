@@ -235,4 +235,6 @@ export interface Config {
   useDataLoader?: boolean;
 
   optimizePackageImports?: string[];
+
+  definitions?: Record<string, string | string[]>;
 }
