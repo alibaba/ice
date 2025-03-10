@@ -113,6 +113,8 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     enableRpx2Vw = true,
     enableEnv = true,
     definitions = {},
+    target,
+    externalsPresets,
   } = config;
 
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
@@ -174,6 +176,8 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
 
   const webpackConfig = {
     mode,
+    target,
+    externalsPresets,
     experiments: {
       layers: true,
       cacheUnaffected: true,

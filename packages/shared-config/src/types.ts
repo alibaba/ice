@@ -237,4 +237,6 @@ export interface Config {
   optimizePackageImports?: string[];
 
   definitions?: Record<string, string | string[]>;
+
+  externalsPresets?: Configuration['externalsPresets'];
 }

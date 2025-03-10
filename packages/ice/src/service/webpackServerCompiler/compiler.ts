@@ -24,13 +24,15 @@ export class WebpackServerCompiler {
     const { userServerConfig } = options;
     const { webpackConfig = {} } = userServerConfig;
     const definitions = await this.getEsbuildInject();
-
     return getWebpackConfig({
       config: {
         mode: 'production',
         entry: options.entryPoints,
         alias: options.alias,
         target: 'node12.20',
+        externalsPresets: {
+          node: false,
+        },
         output: {
           filename: `[name].${options.format === 'esm' ? 'mjs' : 'cjs'}`,
           path: options.outdir,
