@@ -1,6 +1,6 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
-import webpack from 'webpack';
+import webpack from '@ice/bundles/compiled/webpack/index.js';
 import { getWebpackConfig } from '@ice/webpack-config';
 import type { UserConfig } from '../../types/userConfig.js';
 import { logger } from '../../utils/logger.js';
@@ -10,7 +10,7 @@ import { RUNTIME_TMP_DIR } from '../../constant.js';
 const _dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
 export class WebpackServerCompiler {
-  private config: webpack.Configuration;
+  private config;
   private options;
 
   constructor(options: any) {
@@ -22,7 +22,7 @@ export class WebpackServerCompiler {
     userServerConfig: UserConfig['server'];
     rootDir: string;
     [key: string]: any;
-  }): webpack.Configuration {
+  }) {
     const { userServerConfig } = options;
     const { webpackConfig = {} } = userServerConfig;
     return getWebpackConfig({
@@ -77,7 +77,7 @@ export class WebpackServerCompiler {
         },
       },
       rootDir: options.rootDir,
-      webpack,
+      webpack: webpack as any,
       runtimeTmpDir: RUNTIME_TMP_DIR,
       userConfigHash: '',
       getExpandedEnvs,

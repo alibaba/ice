@@ -1,5 +1,5 @@
 import { type AssetsManifest } from '@ice/runtime/types';
-import NormalModule from 'webpack/lib/NormalModule.js';
+import NormalModule from '@ice/bundles/compiled/webpack/NormalModule.js';
 import { type Compiler } from '@ice/bundles/compiled/webpack';
 
 interface CompilationInfo {
