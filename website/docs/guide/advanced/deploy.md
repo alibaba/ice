@@ -124,7 +124,7 @@ Listening on http:localhost:3000
 
 #### resources
 
-新建 `/velocity/layout/index.vm`：
+新建 `/velocity/layout/index.html`：
 
 ```html
 <!DOCTYPE html>
