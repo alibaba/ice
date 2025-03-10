@@ -24,7 +24,6 @@ export class WebpackServerCompiler {
     const { userServerConfig } = options;
     const { webpackConfig = {} } = userServerConfig;
     const definitions = await this.getEsbuildInject();
-    console.log('definitions', definitions);
 
     return getWebpackConfig({
       config: {
