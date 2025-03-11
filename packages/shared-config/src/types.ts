@@ -157,6 +157,8 @@ export interface Config {
 
   enableCache?: boolean;
 
+  isServer?: boolean;
+
   cacheDir?: string;
 
   tsCheckerOptions?: ForkTsCheckerWebpackPluginOptions;
@@ -233,4 +235,10 @@ export interface Config {
   useDataLoader?: boolean;
 
   optimizePackageImports?: string[];
+
+  definitions?: Record<string, string | string[]>;
+
+  externalsPresets?: Configuration['externalsPresets'];
+
+  webpackTarget?: Configuration['target'];
 }

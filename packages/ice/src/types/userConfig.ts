@@ -2,6 +2,7 @@ import type { DefineRouteFunction, RouteItem } from '@ice/route-manifest';
 import type { PluginList } from 'build-scripts';
 import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import type { ProcessOptions } from '@ice/bundles';
+import type { Configuration as WebpackConfiguration } from '@ice/bundles/compiled/webpack';
 import type { Config, ModifyWebpackConfig, MinimizerOptions } from '@ice/shared-config/types';
 import type { OverwritePluginAPI } from './plugin';
 
@@ -242,6 +243,22 @@ export interface UserConfig {
      * externals config for server bundle
      */
     externals?: string[];
+    /**
+     * bundler for server bundle, support webpack and esbuild
+     * @default esbuild
+     */
+    bundler?: 'webpack' | 'esbuild';
+    /**
+     * webpack config, only works when bundler is webpack
+     */
+    webpackConfig?: Pick<WebpackConfiguration, 'plugins' | 'optimization' | 'output' | 'module'> & {
+      /**
+       * we exclude the node_modules/* by default
+       *
+       * use this if you need to transform some packages inside of node_modues
+       */
+      transformInclude?: Array<RegExp | string>;
+    };
   };
   /**
    * Optimization options for build.
