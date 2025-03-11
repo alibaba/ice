@@ -239,4 +239,6 @@ export interface Config {
   definitions?: Record<string, string | string[]>;
 
   externalsPresets?: Configuration['externalsPresets'];
+
+  webpackTarget?: Configuration['target'];
 }

@@ -29,7 +29,7 @@ export class WebpackServerCompiler {
         mode: 'production',
         entry: options.entryPoints,
         alias: options.alias,
-        target: 'node12.20',
+        webpackTarget: 'node12.20',
         externalsPresets: {
           node: false,
         },

@@ -113,7 +113,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
     enableRpx2Vw = true,
     enableEnv = true,
     definitions = {},
-    target,
+    webpackTarget,
     externalsPresets,
   } = config;
 
@@ -176,7 +176,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
 
   const webpackConfig = {
     mode,
-    target,
+    target: webpackTarget,
     externalsPresets,
     experiments: {
       layers: true,
