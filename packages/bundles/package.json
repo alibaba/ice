@@ -1,6 +1,6 @@
 {
   "name": "@ice/bundles",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "license": "MIT",
   "author": "ICE",
   "description": "Basic dependencies for ice.",
@@ -118,4 +118,3 @@
     "registry": "https://registry.npmjs.org/"
   }
 }
-
