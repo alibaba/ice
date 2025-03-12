@@ -1,13 +1,14 @@
 {
   "name": "@ice/webpack-config",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "repository": "alibaba/ice",
   "bugs": "https://github.com/alibaba/ice/issues",
   "homepage": "https://v3.ice.work",
   "type": "module",
   "main": "./esm/index.js",
   "exports": {
-    ".": "./esm/index.js"
+    ".": "./esm/index.js",
+    "./*": "./*"
   },
   "files": [
     "esm",
@@ -15,8 +16,8 @@
     "*.d.ts"
   ],
   "dependencies": {
-    "@ice/shared-config": "1.3.0",
-    "@ice/bundles": "0.2.7",
+    "@ice/shared-config": "1.3.1",
+    "@ice/bundles": "0.2.8",
     "fast-glob": "^3.2.11",
     "process": "^0.11.10"
   },

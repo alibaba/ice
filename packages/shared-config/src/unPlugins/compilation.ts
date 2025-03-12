@@ -45,13 +45,13 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
   } = options;
 
   const { removeExportExprs, compilationConfig, keepExports, nodeTransform } = swcOptions;
+
   const compileRegex = [...compileIncludes, ...COMPILE_DEPS].map((includeRule) => {
     return includeRule instanceof RegExp ? includeRule : new RegExp(includeRule);
   });
 
   function isRouteEntry(id: string) {
     const routes = getRoutesFile();
-
     const matched = routes.find(route => {
       return id.indexOf(route) > -1;
     });
