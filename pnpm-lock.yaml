@@ -2233,7 +2233,7 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       rax-compat:
-        specifier: ^0.3.0
+        specifier: ^0.4.0
         version: link:../rax-compat
       style-unit:
         specifier: ^3.0.5
