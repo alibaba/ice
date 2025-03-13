@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-rax-compat",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Provide rax compat support for ice.js",
   "license": "MIT",
   "type": "module",
@@ -25,7 +25,7 @@
     "consola": "^2.15.3",
     "css": "^2.2.1",
     "lodash-es": "^4.17.21",
-    "rax-compat": "^0.3.0",
+    "rax-compat": "^0.4.0",
     "style-unit": "^3.0.5",
     "stylesheet-loader": "^0.9.1"
   },
