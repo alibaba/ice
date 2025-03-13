@@ -37,82 +37,85 @@ describe('events', () => {
   });
 
   it('should work with ontouchstart', () => {
-    expect(transformProps({
+    expect(transformProps('div', {
       ontouchstart: () => { },
     }).onTouchStart).toBeInstanceOf(Function);
   });
 
   it('should work with onclick', () => {
-    expect(transformProps({
+    expect(transformProps('div', {
       onclick: () => { },
     }).onClick).toBeInstanceOf(Function);
-    expect(transformProps({
+    expect(transformProps('div', {
       onclick: () => { },
     }).onclick).toBe(undefined);
   });
 
   it('should work with onClick', () => {
-    expect(transformProps({
+    expect(transformProps('div', {
       onClick: () => { },
     }).onClick).toBeInstanceOf(Function);
   });
 
   it('should work with ondblclick', () => {
-    expect(transformProps({
+    console.log('aaaaaa', transformProps('div', {
+      ondblclick: () => { },
+    }));
+    expect(transformProps('div', {
       ondblclick: () => { },
     }).onDoubleClick).toBeInstanceOf(Function);
-    expect(transformProps({
+    expect(transformProps('div', {
       ondblclick: () => { },
     }).ondblclick).toBe(undefined);
   });
 
   it('should work with onDblclick', () => {
-    expect(transformProps({
+    expect(transformProps('div', {
       onDblclick: () => { },
     }).onDoubleClick).toBeInstanceOf(Function);
-    expect(transformProps({
+    expect(transformProps('div', {
       onDblclick: () => { },
     }).onDblclick).toBe(undefined);
   });
 
   it('should work with onDoubleClick', () => {
-    expect(transformProps({
+    expect(transformProps('div', {
       onDoubleClick: () => { },
     }).onDoubleClick).toBeInstanceOf(Function);
   });
 
   it('should work with onmouseenter', () => {
-    expect(transformProps({
+    expect(transformProps('div', {
       onmouseenter: () => { },
     }).onMouseEnter).toBeInstanceOf(Function);
-    expect(transformProps({
+    expect(transformProps('div', {
       onmouseenter: () => { },
     }).onmouseenter).toBe(undefined);
   });
 
   it('should work with onpointerenter', () => {
-    expect(transformProps({
+    expect(transformProps('div', {
       onpointerenter: () => { },
     }).onPointerEnter).toBeInstanceOf(Function);
-    expect(transformProps({
+    expect(transformProps('div', {
       onpointerenter: () => { },
     }).onpointerenter).toBe(undefined);
   });
 
   it('should work with onchange', () => {
-    expect(transformProps({
+    expect(transformProps('div', {
       onchange: () => { },
     }).onChange).toBeInstanceOf(Function);
-    expect(transformProps({
+    expect(transformProps('div', {
       onchange: () => { },
     }).onchange).toBe(undefined);
   });
 
   it('should work with onbeforeinput', () => {
-    expect(transformProps({
+    expect(transformProps('div', {
       onbeforeinput: () => { },
     }).onBeforeInput).toBeInstanceOf(Function);
-    expect(transformProps({
+    expect(transformProps('div', {
       onbeforeinput: () => { },
     }).onbeforeinput).toBe(undefined);
   });
