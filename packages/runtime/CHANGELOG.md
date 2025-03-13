@@ -1,5 +1,38 @@
 # @ice/runtime
 
+## 1.5.2
+
+### Patch Changes
+
+- a0099df5: feat: post event for each suspense.
+
+## 1.5.1
+
+### Patch Changes
+
+- 2e274966: feat: support hook of onBeforeHydrate
+- Updated dependencies [2e274966]
+  - @ice/jsx-runtime@0.3.1
+
+## 1.5.0
+
+### Minor Changes
+
+- 710b2e48: feat: improve miniapp runtime
+
+### Patch Changes
+
+- Updated dependencies [710b2e48]
+  - @ice/shared@1.1.0
+
+## 1.4.13
+
+### Patch Changes
+
+- a4755e43: feat: support onShellReady options
+- f50fe55d: revert: revert suspence event
+- 31706030: fix: avoid infinite setOutlets loop when config keepAlivePaths
+
 ## 1.4.12
 
 ### Patch Changes

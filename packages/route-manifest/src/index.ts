@@ -28,6 +28,10 @@ export type {
   DefineRoutesOptions,
 };
 
+export {
+  createRouteId,
+};
+
 export interface RouteItem {
   path: string;
   component: string;
@@ -208,7 +212,7 @@ function defineConventionalRoutes(
       if (RegExp(`[^${validRouteChar.join('')}]+`).test(routePath)) {
         throw new Error(`invalid character in '${routeFilePath}'. Only support char: ${validRouteChar.join(', ')}`);
       }
-      const isIndexRoute = fileId === 'index' || fileId.endsWith('/index');
+      const isIndexRoute = isIndexFileId(fileId);
       const fullPath = createRoutePath(fileId);
       const uniqueRouteId = (fullPath || '') + (isIndexRoute ? '?index' : '');
 
@@ -317,6 +321,17 @@ export function createRoutePath(routeId: string): string | undefined {
   return result || undefined;
 }
 
+/**
+ * @param file file path without `src/pages` prefix
+ */
+export function createRouteIdByFile(file: string) {
+  const fileId = createFileId(file);
+  const isIndex = isIndexFileId(fileId);
+  const routePath = createRoutePath(fileId);
+
+  return createRouteId(file, routePath, undefined, isIndex);
+}
+
 function findParentFileId(
   routeIds: string[],
   childRouteId: string,
@@ -347,4 +362,8 @@ function visitFiles(
       visitor(normalizeSlashes(path.relative(baseDir, file)));
     }
   }
+}
+
+function isIndexFileId(fileId: string) {
+  return fileId === 'index' || fileId.endsWith('/index');
 }

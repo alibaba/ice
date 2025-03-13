@@ -1,5 +1,20 @@
 # @ice/miniapp-loader
 
+## 1.2.1
+
+### Patch Changes
+
+- Updated dependencies [97cb2046]
+- Updated dependencies [97cb2046]
+- Updated dependencies [a0099df5]
+  - @ice/bundles@0.2.8
+
+## 1.2.0
+
+### Minor Changes
+
+- 710b2e48: feat: improve miniapp runtime
+
 ## 1.1.2
 
 ### Patch Changes

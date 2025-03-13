@@ -31,7 +31,7 @@ async function bundler(
     if (useDevServer) {
       devServer = await startDevServer(compiler, webpackConfigs, context, options);
     } else {
-      await invokeCompilerWatch(compiler, context);
+      await invokeCompilerWatch(compiler, webpackConfigs, context, options);
     }
   } else if (command === 'build') {
     await build(compiler, webpackConfigs, context, options);

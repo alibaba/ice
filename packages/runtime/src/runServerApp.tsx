@@ -1,6 +1,6 @@
 import * as React from 'react';
 import type { Location } from 'history';
-import type { OnAllReadyParams } from './server/streamRender.js';
+import type { OnAllReadyParams, OnShellReadyParams } from './server/streamRender.js';
 import type {
   AppContext,
   ServerContext,
@@ -86,10 +86,8 @@ export async function renderToResponse(requestContext: ServerContext, renderOpti
     return new Promise<void>((resolve, reject) => {
       // Send stream result to ServerResponse.
       pipe(res, {
-        onShellReady: () => {
-          onShellReady && onShellReady({
-            renderAssets: [],
-          });
+        onShellReady: (params: OnShellReadyParams) => {
+          onShellReady && onShellReady(params);
         },
         onShellError: async (err) => {
           onShellError && onShellError(err);

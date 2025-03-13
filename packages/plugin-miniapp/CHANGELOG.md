@@ -1,5 +1,40 @@
 # Changelog
 
+## 1.2.2
+
+### Patch Changes
+
+- Updated dependencies [97cb2046]
+- Updated dependencies [97cb2046]
+- Updated dependencies [a0099df5]
+  - @ice/bundles@0.2.8
+  - @ice/miniapp-loader@1.2.1
+  - @ice/miniapp-runtime@1.2.2
+  - @ice/miniapp-react-dom@1.1.2
+
+## 1.2.1
+
+### Patch Changes
+
+- cce46e9b: fix: should check skeleton file existed before read
+  - @ice/miniapp-runtime@1.2.1
+  - @ice/miniapp-react-dom@1.1.1
+
+## 1.2.0
+
+### Minor Changes
+
+- 710b2e48: feat: improve miniapp runtime
+
+### Patch Changes
+
+- Updated dependencies [710b2e48]
+  - @ice/miniapp-loader@1.2.0
+  - @ice/miniapp-react-dom@1.1.0
+  - @ice/miniapp-runtime@1.2.0
+  - @ice/shared@1.1.0
+  - @ice/route-manifest@1.3.0
+
 ## 1.1.3
 
 ### Patch Changes

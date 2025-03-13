@@ -2,7 +2,7 @@ import loaderUtils from '@ice/bundles/compiled/loader-utils/index.js';
 import sax from 'sax';
 
 const { isUrlRequest, urlToRequest } = loaderUtils;
-export default function miniTemplateLoader(source) {
+export default function miniTemplateLoader(source: string) {
   this.cacheable && this.cacheable();
   /**
    * 两种fix方案：
@@ -15,32 +15,36 @@ export default function miniTemplateLoader(source) {
    * */
   const sourceWithRoot = `<root>${source}</root>`;
   const parser = sax.parser(false, { lowercase: true });
-  const requests: Set<string> = new Set();
+  const requests = new Map<string, {
+    url: string;
+    // attribute name
+    name: string;
+  }>();
   const callback = this.async();
-  const loadModule = request =>
-    new Promise((resolve, reject) => {
-      this.addDependency(request);
-      this.loadModule(request, (err, src) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(src);
-        }
-      });
-    });
+  const loadModule = (request) => this.importModule(request);
 
-  parser.onattribute = ({ name, value }) => {
-    if (value && name === 'src' && isUrlRequest(value)) {
+  parser.onattribute = (attr) => {
+    const { name, value } = attr;
+    if (value && (name === 'src' || name === 'from') && isUrlRequest(value) && !requests.has(value)) {
       const request = urlToRequest(value);
-      requests.add(request);
+      requests.set(value, {
+        url: request,
+        name: name,
+      });
     }
   };
   parser.onend = async () => {
     try {
-      const requestsArray = Array.from(requests);
+      const requestsArray = Array.from(requests.values()).map(req => req.url);
       if (requestsArray.length) {
         for (let i = 0; i < requestsArray.length; i++) {
           await loadModule(requestsArray[i]);
+        }
+      }
+      for (let url of requests.keys()) {
+        if (url.indexOf('node_modules/') !== -1) {
+          const changedUrl = url.replace(/^.*node_modules\//, '/npm/');
+          source = source.replace(url, changedUrl);
         }
       }
       callback(null, source);

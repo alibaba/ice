@@ -41,10 +41,11 @@ export default function KeepAliveOutlet(props: OutletProps) {
     if (outlets.length !== 0 ||
       outletRef.current?.pathname !== location.pathname) {
       let currentOutlets = outletRef.current ? [outletRef.current] : outlets;
+      // Check current path if exsist before filter, to avoid infinite setOutlets loop.
+      const result = currentOutlets.some(o => o.pathname === location.pathname);
       if (keepAlivePaths && keepAlivePaths.length > 0) {
         currentOutlets = currentOutlets.filter(o => keepAlivePaths.includes(o.pathname));
       }
-      const result = currentOutlets.some(o => o.pathname === location.pathname);
       if (!result) {
         setOutlets([
           ...currentOutlets,

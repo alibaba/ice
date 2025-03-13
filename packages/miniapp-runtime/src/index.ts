@@ -11,7 +11,7 @@ export { caf as cancelAnimationFrame, now, raf as requestAnimationFrame } from '
 export { window } from './bom/window.js';
 // dom
 export { Element } from './dom/element.js';
-export { createEvent, eventHandler, Event } from './dom/event.js';
+export { createEvent, eventHandler, Event, createEventHandlerForThirdComponent, bindEventHandlersForThirdComponentNode } from './dom/event.js';
 export { FormElement } from './dom/form.js';
 export { Node } from './dom/node.js';
 export { RootElement } from './dom/root.js';

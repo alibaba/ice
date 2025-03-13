@@ -79,7 +79,6 @@ const weixinAdapter: IAdapter = {
 export class BaseTemplate {
   protected exportExpr = 'module.exports =';
   protected isSupportRecursive: boolean;
-  protected supportXS = false;
   protected miniComponents: Components;
   protected thirdPartyPatcher: Record<string, Record<string, string>> = {};
   protected componentsAlias;
@@ -88,7 +87,7 @@ export class BaseTemplate {
   protected modifyLoopContainer?: (children: string, nodeName: string) => string;
   protected modifyTemplateResult?: (res: string, nodeName: string, level: number, children: string) => string;
   protected modifyThirdPartyLoopBody?: (child: string, nodeName: string) => string;
-
+  public supportXS = false;
   public adapter = weixinAdapter;
   /** 组件列表 */
   public internalComponents = internalComponents;
@@ -617,15 +616,15 @@ export class UnRecursiveTemplate extends BaseTemplate {
 
     let template = components.reduce((current, nodeName) => {
       if (level !== 0) {
-        if (this.nestElements.has(nodeName)) {
+        if (!this.nestElements.has(nodeName)) {
+          // 不可嵌套自身的组件只需输出一层模板
+          return current;
+        } else {
           // 部分可嵌套自身的组件实际上不会嵌套过深，这里按阈值限制层数
           const max = this.nestElements.get(nodeName)!;
           if (max > 0 && level >= max) {
             return current;
           }
-        } else {
-          // 不可嵌套自身的组件只需输出一层模板
-          return current;
         }
       }
       const attributes: Attributes = this.miniComponents[nodeName];
@@ -658,6 +657,7 @@ export class UnRecursiveTemplate extends BaseTemplate {
     const { componentsAlias } = this;
     const listA = Array.from(isLoopCompsSet).map(item => componentsAlias[item]?._num || item);
     const listB = hasMaxComps.map(item => componentsAlias[item]?._num || item);
+    const containerLevel = this.baseLevel - 1;
 
     return `function (l, n, s) {
     var a = ${JSON.stringify(listA)}
@@ -672,6 +672,9 @@ export class UnRecursiveTemplate extends BaseTemplate {
         if (u[i] === n) depth++
       }
       l = depth
+    }
+    if (l >= ${containerLevel}) {
+      return 'tmpl_${containerLevel}_${Shortcuts.Container}'
     }
     return 'tmpl_' + l + '_' + n
   }`;
