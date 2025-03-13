@@ -2,7 +2,7 @@
 
 ## 0.4.0
 
-### Patch Changes
+### Minor Changes
 
 - Updated dependencies [bbeeaf5d]
   - rax-compat@0.4.0
