@@ -1,6 +1,7 @@
 import * as path from 'path';
 import fse from 'fs-extra';
 import type { ServerContext, RenderMode, AppConfig } from '@ice/runtime';
+import type { HtmlGeneratingMode } from '../types/index.js';
 import dynamicImport from './dynamicImport.js';
 import { logger } from './logger.js';
 import type RouteManifest from './routeManifest.js';
@@ -12,6 +13,7 @@ interface Options {
   documentOnly: boolean;
   routeType: AppConfig['router']['type'];
   renderMode?: RenderMode;
+  generatingMode?: HtmlGeneratingMode;
   routeManifest: RouteManifest;
   publicPath?: string;
 }
@@ -21,7 +23,8 @@ interface EntryResult {
 }
 
 export default async function generateEntry(options: Options): Promise<EntryResult> {
-  const { rootDir, entry, outputDir, documentOnly, renderMode, routeType, routeManifest, publicPath } = options;
+  const { rootDir, entry, outputDir, documentOnly, renderMode, routeType, routeManifest, publicPath, generatingMode } =
+    options;
 
   let serverEntry: string;
   try {
@@ -39,7 +42,7 @@ export default async function generateEntry(options: Options): Promise<EntryResu
     const { htmlOutput } = await renderEntry({ routePath, serverEntry, documentOnly, renderMode, publicPath });
     const generateOptions = { rootDir, routePath, outputDir };
     if (htmlOutput) {
-      const path = await generateFilePath({ ...generateOptions, type: 'html' });
+      const path = await generateFilePath({ ...generateOptions, type: 'html', generatingMode });
       await writeFile(path, htmlOutput);
       outputPaths.push(path);
     }
@@ -60,8 +63,18 @@ export function escapeRoutePath(str: string) {
   return str.replace(/\/(:|\*)/g, '/$');
 }
 
-function formatFilePath(routePath: string, type: 'js' | 'html' | 'js.map'): string {
-  return routePath === '/' ? `index.${type}` : `${escapeRoutePath(routePath)}.${type}`;
+function formatFilePath(
+  routePath: string,
+  type: 'js' | 'html' | 'js.map',
+  generatingMode?: HtmlGeneratingMode,
+): string {
+  if (routePath === '/') {
+    return `index.${type}`;
+  }
+  if (type === 'html' && generatingMode === 'compat') {
+    return `${escapeRoutePath(routePath)}/index.${type}`;
+  }
+  return `${escapeRoutePath(routePath)}.${type}`;
 }
 
 async function generateFilePath({
@@ -69,13 +82,15 @@ async function generateFilePath({
   routePath,
   outputDir,
   type,
+  generatingMode,
 }: {
   rootDir: string;
   routePath: string;
   outputDir: string;
   type: 'js' | 'html' | 'js.map';
+  generatingMode?: HtmlGeneratingMode;
 }) {
-  const fileName = formatFilePath(routePath, type);
+  const fileName = formatFilePath(routePath, type, generatingMode);
   if (fse.existsSync(path.join(rootDir, 'public', fileName))) {
     logger.warn(`${fileName} is overwrite by framework, rename file name if it is necessary.`);
   }

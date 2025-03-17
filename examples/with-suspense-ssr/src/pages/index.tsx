@@ -11,7 +11,7 @@ export default function Home() {
       <h2>Home Page</h2>
       <Counter />
       <Comments id="comments" fallback={<div>loading...</div>} />
-      <Footer id="comments" fallback={<div>loading...</div>} />
+      <Footer id="comments-2" fallback={<div>loading...</div>} />
     </div>
   );
 }

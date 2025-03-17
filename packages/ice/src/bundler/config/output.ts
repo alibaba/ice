@@ -5,6 +5,7 @@ import injectInitialEntry from '../../utils/injectInitialEntry.js';
 import { SERVER_OUTPUT_DIR } from '../../constant.js';
 import { logger } from '../../utils/logger.js';
 import type { BundlerOptions } from '../types.js';
+import type { HtmlGeneratingMode } from '../../types/index.js';
 
 export async function getOutputPaths(options: {
   rootDir: string;
@@ -21,7 +22,9 @@ export async function getOutputPaths(options: {
     }
   }
   if (serverEntry && userConfig.htmlGenerating) {
-    outputPaths = await buildCustomOutputs(rootDir, outputDir, serverEntry, bundleOptions);
+    const htmlGeneratingMode =
+      typeof userConfig.htmlGenerating === 'boolean' ? undefined : userConfig.htmlGenerating?.mode;
+    outputPaths = await buildCustomOutputs(rootDir, outputDir, serverEntry, bundleOptions, htmlGeneratingMode);
   }
   return outputPaths;
 }
@@ -37,6 +40,7 @@ async function buildCustomOutputs(
   outputDir: string,
   serverEntry: string,
   bundleOptions: Pick<BundlerOptions, 'userConfig' | 'appConfig' | 'routeManifest'> & { publicPath?: string },
+  generatingMode?: HtmlGeneratingMode,
 ) {
   const { userConfig, appConfig, routeManifest, publicPath } = bundleOptions;
   const { ssg } = userConfig;
@@ -51,6 +55,7 @@ async function buildCustomOutputs(
     routeType: appConfig?.router?.type,
     routeManifest,
     publicPath,
+    generatingMode,
   });
   if (routeType === 'memory' && userConfig?.routes?.injectInitialEntry) {
     injectInitialEntry(routeManifest, outputDir);
