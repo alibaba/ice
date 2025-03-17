@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.0
+
+### Minor Changes
+
+- Updated dependencies [bbeeaf5d]
+  - rax-compat@0.4.0
+
 ## 0.3.2
 
 ### Patch Changes
