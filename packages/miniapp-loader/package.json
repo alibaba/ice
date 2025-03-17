@@ -1,6 +1,6 @@
 {
   "name": "@ice/miniapp-loader",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "webpack loader for miniapps.",
   "main": "./lib/page.js",
   "files": [

@@ -7,7 +7,16 @@ import type { Config } from '@ice/shared-config/types';
 import type { AppConfig, AssetsManifest } from '@ice/runtime-kit';
 import type ServerCompileTask from '../utils/ServerCompileTask.js';
 import type { CreateLogger } from '../utils/logger.js';
-import type { DeclarationData, AddRenderFile, AddTemplateFiles, ModifyRenderData, AddDataLoaderImport, Render } from './generator.js';
+import type { OnGetEnvironmentConfig } from '../service/onGetEnvironmentConfig.js';
+import type { OnGetBundlerConfig } from '../service/onGetBundlerConfig.js';
+import type {
+  DeclarationData,
+  AddRenderFile,
+  AddTemplateFiles,
+  ModifyRenderData,
+  AddDataLoaderImport,
+  Render,
+} from './generator.js';
 
 export type { CreateLoggerReturnType } from '../utils/logger.js';
 
@@ -20,32 +29,34 @@ type GetExportList = (key: string, target?: string) => DeclarationData[];
 
 type ServerCompilerBuildOptions = Pick<
   esbuild.BuildOptions,
-  'banner' |
-  'write' |
-  'target' |
-  'minify' |
-  'inject' |
-  'format' |
-  'entryPoints' |
-  'outfile' |
-  'bundle' |
-  'outdir' |
-  'splitting' |
-  'platform' |
-  'mainFields' |
-  'outExtension' |
-  'plugins' |
-  'logLevel' |
-  'sourcemap' |
-  'metafile' |
-  'supported'
+  | 'banner'
+  | 'write'
+  | 'target'
+  | 'minify'
+  | 'inject'
+  | 'format'
+  | 'entryPoints'
+  | 'outfile'
+  | 'bundle'
+  | 'outdir'
+  | 'splitting'
+  | 'platform'
+  | 'mainFields'
+  | 'outExtension'
+  | 'plugins'
+  | 'logLevel'
+  | 'sourcemap'
+  | 'metafile'
+  | 'supported'
 >;
 
-export type ServerBuildResult =
-  Partial<
-    esbuild.BuildResult &
-    { serverEntry: string; error: any; context: esbuild.BuildContext<esbuild.BuildOptions> }
-  >;
+export type ServerBuildResult = Partial<
+  esbuild.BuildResult & {
+    serverEntry: string;
+    error: any;
+    context: esbuild.BuildContext<esbuild.BuildOptions>;
+  }
+>;
 
 export interface CompilerOptions {
   swc?: Config['swcOptions'];
@@ -60,6 +71,7 @@ export interface CompilerOptions {
   runtimeDefineVars?: Record<string, string>;
   enableEnv?: boolean;
   isServer?: boolean;
+  name?: string;
 }
 
 export type ServerCompiler = (
@@ -155,7 +167,7 @@ export interface ExtendsPluginAPI {
     addEvent?: (watchEvent: WatchEvent) => void;
     removeEvent?: (name: string) => void;
   };
-  excuteServerEntry: () => Promise<any>;
+  excuteServerEntry: (name?: string) => Promise<any>;
   /**
    * @deprecated
    * Please use `excuteServerEntry` to get server modules.
@@ -167,6 +179,8 @@ export interface ExtendsPluginAPI {
   addRoutesDefinition: (defineRoutes: DefineExtraRoutes) => void;
   dataCache: Map<string, string>;
   createLogger: CreateLogger;
+  onGetBundlerConfig: OnGetBundlerConfig;
+  onGetEnvironmentConfig: OnGetEnvironmentConfig;
 }
 
 export interface OverwritePluginAPI extends ExtendsPluginAPI {

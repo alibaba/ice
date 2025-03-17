@@ -508,8 +508,12 @@ const userConfig = [
   },
   {
     name: 'htmlGenerating',
-    validation: 'boolean',
+    validation: 'boolean|object',
     defaultValue: true,
+  },
+  {
+    name: 'environments',
+    validation: 'object',
   },
 ];
 

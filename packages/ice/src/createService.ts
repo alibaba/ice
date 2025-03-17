@@ -8,6 +8,7 @@ import { Context } from 'build-scripts';
 import type { CommandArgs, CommandName, TaskConfig } from 'build-scripts';
 import type { Config } from '@ice/shared-config/types';
 import type { AppConfig } from '@ice/runtime-kit';
+import lodash from '@ice/bundles/compiled/lodash/index.js';
 import * as config from './config.js';
 import test from './commands/test.js';
 import webpackBundler from './bundler/webpack/index.js';
@@ -22,15 +23,14 @@ import Generator from './service/runtimeGenerator.js';
 import ServerRunner from './service/ServerRunner.js';
 import { createServerCompiler } from './service/serverCompiler.js';
 import createWatch from './service/watchSource.js';
-import type {
-  PluginData,
-  ExtendsPluginAPI,
-} from './types/index.js';
+import type { PluginData, ExtendsPluginAPI } from './types/index.js';
 import addPolyfills from './utils/runtimePolyfill.js';
 import createSpinner from './utils/createSpinner.js';
 import dynamicImport from './utils/dynamicImport.js';
 import getRuntimeModules from './utils/getRuntimeModules.js';
 import hasDocument from './utils/hasDocument.js';
+import { onGetBundlerConfig } from './service/onGetBundlerConfig.js';
+import { onGetEnvironmentConfig, environmentConfigContext } from './service/onGetEnvironmentConfig.js';
 import { logger, createLogger } from './utils/logger.js';
 import mergeTaskConfig, { mergeConfig } from './utils/mergeTaskConfig.js';
 import RouteManifest from './utils/routeManifest.js';
@@ -39,6 +39,8 @@ import ServerCompileTask from './utils/ServerCompileTask.js';
 import { generateRoutesInfo } from './routes.js';
 import GeneratorAPI from './service/generatorAPI.js';
 import renderTemplate from './service/renderTemplate.js';
+
+const { cloneDeep } = lodash;
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -75,12 +77,12 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   let serverRunner: ServerRunner;
   const serverCompileTask = new ServerCompileTask();
 
-  async function excuteServerEntry() {
+  async function excuteServerEntry(name?: string) {
     try {
       if (serverRunner) {
         return serverRunner.run(SERVER_ENTRY);
       } else {
-        const { error, serverEntry } = await serverCompileTask.get();
+        const { error, serverEntry } = await serverCompileTask.get(name);
         if (error) {
           logger.error('Server compile error:', error);
           return;
@@ -104,7 +106,9 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   }
   if (builtinPlugin) {
     try {
-      const pluginModule = await dynamicImport(builtinPlugin.startsWith('.') ? path.join(rootDir, builtinPlugin) : builtinPlugin);
+      const pluginModule = await dynamicImport(
+        builtinPlugin.startsWith('.') ? path.join(rootDir, builtinPlugin) : builtinPlugin,
+      );
       const plugin = pluginModule.default || pluginModule;
       plugins.push(plugin());
     } catch (err) {
@@ -143,6 +147,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         const defaultTaskConfig = getDefaultTaskConfig({ rootDir, command });
         return ctx.registerTask(target, mergeConfig(defaultTaskConfig, config));
       },
+      onGetBundlerConfig,
+      onGetEnvironmentConfig,
     },
   });
   // Load .env before resolve user config, so we can access env variables defined in .env files.
@@ -151,7 +157,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   await ctx.resolveUserConfig();
 
   // get plugins include built-in plugins and custom plugins
-  const resolvedPlugins = await ctx.resolvePlugins() as PluginData[];
+  const resolvedPlugins = (await ctx.resolvePlugins()) as PluginData[];
   const runtimeModules = getRuntimeModules(resolvedPlugins, rootDir);
 
   const { getAppConfig, init: initAppConfigCompiler } = getAppExportConfig(rootDir);
@@ -186,10 +192,12 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
   const hasExportAppData = (await getFileExports({ rootDir, file: 'src/app' })).includes('dataLoader');
   const csr = !userConfig.ssr && !userConfig.ssg;
 
-  const disableRouter = (userConfig?.optimization?.router && routesInfo.routesCount <= 1) ||
-    userConfig?.optimization?.disableRouter;
+  const disableRouter =
+    (userConfig?.optimization?.router && routesInfo.routesCount <= 1) || userConfig?.optimization?.disableRouter;
   if (disableRouter) {
-    logger.info('`optimization.router` is enabled, ice build will remove react-router and history which is unnecessary.');
+    logger.info(
+      '`optimization.router` is enabled, ice build will remove react-router and history which is unnecessary.',
+    );
     taskConfigs = mergeTaskConfig(taskConfigs, {
       alias: {
         '@ice/runtime/router': '@ice/runtime/single-router',
@@ -274,8 +282,8 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         if (eventName === 'change' || eventName === 'add') {
           serverRunner.fileChanged(filePath);
         }
-      }],
-    );
+      },
+    ]);
   }
   // create serverCompiler with task config
   const serverCompiler = createServerCompiler({
@@ -311,6 +319,33 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
     dataLoader: command !== 'build' || loaderExports,
   });
 
+  const multiEnvServerCompilers = new Map<string, ReturnType<typeof createServerCompiler>>();
+  const { environments } = userConfig;
+  if (environments) {
+    for (const [envName, envConfig] of Object.entries(environments)) {
+      const envTaskConfig = mergeConfig(cloneDeep(platformTaskConfig.config), envConfig as Config);
+      ctx.registerTask(envName, envTaskConfig);
+    }
+
+    environmentConfigContext.runOnGetEnvironmentConfig(taskConfigs);
+
+    Object.keys(environments).forEach((envName) => {
+      const envConfig = taskConfigs.find((taskConfig) => taskConfig.name === envName);
+      if (envConfig) {
+        const serverCompiler = createServerCompiler({
+          rootDir,
+          task: envConfig,
+          command,
+          speedup: commandArgs.speedup,
+          server,
+          syntaxFeatures,
+          getRoutesFile: () => routeManifest.getRoutesFile(),
+        });
+        multiEnvServerCompilers.set(envName, serverCompiler);
+      }
+    });
+  }
+
   return {
     run: async () => {
       const bundlerConfig = {
@@ -328,6 +363,7 @@ async function createService({ rootDir, command, commandArgs }: CreateServiceOpt
         userConfig,
         configFile,
         hasDataLoader,
+        multiEnvServerCompilers,
       };
       try {
         if (command === 'test') {

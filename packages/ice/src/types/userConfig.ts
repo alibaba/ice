@@ -2,8 +2,10 @@ import type { DefineRouteFunction, RouteItem } from '@ice/route-manifest';
 import type { PluginList } from 'build-scripts';
 import type { UnpluginOptions } from '@ice/bundles/compiled/unplugin/index.js';
 import type { ProcessOptions } from '@ice/bundles';
+import type { Configuration as WebpackConfiguration } from '@ice/bundles/compiled/webpack';
 import type { Config, ModifyWebpackConfig, MinimizerOptions } from '@ice/shared-config/types';
 import type { OverwritePluginAPI } from './plugin';
+import type { EnvironmentUserConfig } from './environment';
 
 interface SyntaxFeatures {
   // syntax exportDefaultFrom and functionBind is not supported by esbuild
@@ -47,6 +49,19 @@ type DropType = 'trace' | 'debug' | 'log' | 'info' | 'warn' | 'error';
 interface Fetcher {
   packageName: string;
   method?: string;
+}
+
+export type HtmlGeneratingMode = 'cleanUrl' | 'compat';
+
+export interface HtmlGeneratingConfig {
+  /**
+   * Control how file structure to generation html.
+   * Route:      '/'           '/foo'            '/foo/bar'
+   * `cleanUrl`: '/index.html' '/foo.html'       '/foo/bar.html'
+   * `compat`:   '/index.html' '/foo/index.html' '/foo/bar/index.html'
+   * @default 'cleanUrl'
+   */
+  mode?: HtmlGeneratingMode;
 }
 
 export interface UserConfig {
@@ -178,7 +193,7 @@ export interface UserConfig {
    * HTML will not be generated when build, If it is false.
    * @see https://v3.ice.work/docs/guide/basic/config#htmlgenerating
    */
-  htmlGenerating?: boolean;
+  htmlGenerating?: boolean | HtmlGeneratingConfig;
   /**
    * Choose a style of souce mapping to enhance the debugging process.
    * @see https://v3.ice.work/docs/guide/basic/config#sourcemap
@@ -229,6 +244,22 @@ export interface UserConfig {
      * externals config for server bundle
      */
     externals?: string[];
+    /**
+     * bundler for server bundle, support webpack and esbuild
+     * @default esbuild
+     */
+    bundler?: 'webpack' | 'esbuild';
+    /**
+     * webpack config, only works when bundler is webpack
+     */
+    webpackConfig?: Pick<WebpackConfiguration, 'plugins' | 'optimization' | 'output' | 'module'> & {
+      /**
+       * we exclude the node_modules/* by default
+       *
+       * use this if you need to transform some packages inside of node_modues
+       */
+      transformInclude?: Array<RegExp | string>;
+    };
   };
   /**
    * Optimization options for build.
@@ -281,4 +312,8 @@ export interface UserConfig {
    * @see https://v3.ice.work/docs/guide/basic/config#crossoriginloading
    */
   crossOriginLoading?: Config['output']['crossOriginLoading'];
+  /**
+   * Setup environments
+   */
+  environments?: EnvironmentUserConfig;
 }

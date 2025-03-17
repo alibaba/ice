@@ -5,12 +5,13 @@ import injectInitialEntry from '../../utils/injectInitialEntry.js';
 import { SERVER_OUTPUT_DIR } from '../../constant.js';
 import { logger } from '../../utils/logger.js';
 import type { BundlerOptions } from '../types.js';
+import type { HtmlGeneratingMode } from '../../types/index.js';
 
 export async function getOutputPaths(options: {
   rootDir: string;
   outputDir: string;
   serverEntry: string;
-  bundleOptions: Pick<BundlerOptions, 'userConfig' | 'appConfig' | 'routeManifest'>;
+  bundleOptions: Pick<BundlerOptions, 'userConfig' | 'appConfig' | 'routeManifest'> & { publicPath?: string };
 }) {
   const { outputDir, serverEntry, bundleOptions, rootDir } = options;
   const { userConfig } = bundleOptions;
@@ -21,7 +22,9 @@ export async function getOutputPaths(options: {
     }
   }
   if (serverEntry && userConfig.htmlGenerating) {
-    outputPaths = await buildCustomOutputs(rootDir, outputDir, serverEntry, bundleOptions);
+    const htmlGeneratingMode =
+      typeof userConfig.htmlGenerating === 'boolean' ? undefined : userConfig.htmlGenerating?.mode;
+    outputPaths = await buildCustomOutputs(rootDir, outputDir, serverEntry, bundleOptions, htmlGeneratingMode);
   }
   return outputPaths;
 }
@@ -36,14 +39,13 @@ async function buildCustomOutputs(
   rootDir: string,
   outputDir: string,
   serverEntry: string,
-  bundleOptions: Pick<BundlerOptions, 'userConfig' | 'appConfig' | 'routeManifest'>,
+  bundleOptions: Pick<BundlerOptions, 'userConfig' | 'appConfig' | 'routeManifest'> & { publicPath?: string },
+  generatingMode?: HtmlGeneratingMode,
 ) {
-  const { userConfig, appConfig, routeManifest } = bundleOptions;
+  const { userConfig, appConfig, routeManifest, publicPath } = bundleOptions;
   const { ssg } = userConfig;
   const routeType = appConfig?.router?.type;
-  const {
-    outputPaths = [],
-  } = await generateEntry({
+  const { outputPaths = [] } = await generateEntry({
     rootDir,
     outputDir,
     entry: serverEntry,
@@ -52,6 +54,8 @@ async function buildCustomOutputs(
     renderMode: ssg ? 'SSG' : undefined,
     routeType: appConfig?.router?.type,
     routeManifest,
+    publicPath,
+    generatingMode,
   });
   if (routeType === 'memory' && userConfig?.routes?.injectInitialEntry) {
     injectInitialEntry(routeManifest, outputDir);

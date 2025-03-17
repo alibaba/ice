@@ -41,7 +41,7 @@
   "dependencies": {
     "@ice/store": "^2.0.3",
     "fast-glob": "^3.2.11",
-    "micromatch": "^4.0.5"
+    "micromatch": "^4.0.8"
   },
   "devDependencies": {
     "@ice/app": "workspace:^",
