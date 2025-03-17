@@ -1,5 +1,16 @@
 # @ice/shared-config
 
+## 1.3.1
+
+### Patch Changes
+
+- 97cb2046: fix: use @ice/bundles instead of import webpack directly.
+  feat: support pass definitions for provide plugin.
+- Updated dependencies [97cb2046]
+- Updated dependencies [97cb2046]
+- Updated dependencies [a0099df5]
+  - @ice/bundles@0.2.8
+
 ## 1.3.0
 
 ### Minor Changes

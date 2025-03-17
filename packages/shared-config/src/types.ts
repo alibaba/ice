@@ -1,11 +1,6 @@
 import type webpack from '@ice/bundles/compiled/webpack';
 import type { RuleSetRule, Configuration, Compiler, WebpackPluginInstance } from '@ice/bundles/compiled/webpack';
-import type {
-  ProxyConfigArray,
-  ProxyConfigArrayItem,
-  Middleware,
-  ServerOptions,
-} from 'webpack-dev-server';
+import type { ProxyConfigArray, ProxyConfigArrayItem, Middleware, ServerOptions } from 'webpack-dev-server';
 import type { Options } from '@ice/bundles/compiled/eslint-webpack-plugin';
 import type { ForkTsCheckerWebpackPluginOptions } from '@ice/bundles/compiled/fork-ts-checker-webpack-plugin';
 import type { UnpluginOptions, UnpluginContext } from '@ice/bundles/compiled/unplugin';
@@ -53,8 +48,9 @@ export interface GetJsxTransformOptions {
 
 interface SwcOptions {
   removeExportExprs?: string[];
-  compilationConfig?: SwcCompilationConfig |
-    ((source: string, id: string, options: GetJsxTransformOptions) => SwcCompilationConfig);
+  compilationConfig?:
+    | SwcCompilationConfig
+    | ((source: string, id: string, options: GetJsxTransformOptions) => SwcCompilationConfig);
   keepExports?: string[] | { value: string[]; include?: (id: string) => boolean };
   nodeTransform?: boolean;
 }
@@ -73,7 +69,12 @@ type Performance = Configuration['performance'];
 interface TransformOptions {
   isServer: boolean;
 }
-type Transform = (this: UnpluginContext, code: string, id: string, options: TransformOptions) => ReturnType<UnpluginOptions['transform']>;
+type Transform = (
+  this: UnpluginContext,
+  code: string,
+  id: string,
+  options: TransformOptions,
+) => ReturnType<UnpluginOptions['transform']>;
 
 // Only support transform and transformInclude for now
 interface TransformPlugin {
@@ -85,7 +86,7 @@ interface TransformPlugin {
   loadInclude?: UnpluginOptions['loadInclude'];
 }
 
-export type ModifyWebpackConfig<T=Configuration, U=typeof webpack> = (config: T, ctx: ConfigurationCtx<U>) => T;
+export type ModifyWebpackConfig<T = Configuration, U = typeof webpack> = (config: T, ctx: ConfigurationCtx<U>) => T;
 export type { webpack };
 
 type PluginFunction = (this: Compiler, compiler: Compiler) => void;
@@ -131,10 +132,7 @@ export interface Config {
 
   loaders?: (undefined | null | false | '' | 0 | RuleSetRule | '...')[];
 
-  plugins?: (
-    | PluginFunction
-    | WebpackPluginInstance
-  )[];
+  plugins?: (PluginFunction | WebpackPluginInstance)[];
 
   alias?: Record<string, string | false>;
 
@@ -144,9 +142,7 @@ export interface Config {
 
   transforms?: Transform[];
 
-  middlewares?:
-  | ((middlewares: Middleware[], devServer: Server) => Middleware[])
-  | undefined;
+  middlewares?: ((middlewares: Middleware[], devServer: Server) => Middleware[]) | undefined;
 
   proxy?: ProxyConfigArray;
 
@@ -167,6 +163,8 @@ export interface Config {
   port?: string | number;
 
   enableCache?: boolean;
+
+  isServer?: boolean;
 
   cacheDir?: string;
 
@@ -206,7 +204,7 @@ export interface Config {
     /**
      * Generate sperate bundle for fallback,
      * it only outputs document content.
-    */
+     */
     fallbackEntry?: boolean;
 
     entry?: string;
@@ -259,4 +257,9 @@ export interface Config {
       template?: string;
     };
   };
+  definitions?: Record<string, string | string[]>;
+
+  externalsPresets?: Configuration['externalsPresets'];
+
+  webpackTarget?: Configuration['target'];
 }
