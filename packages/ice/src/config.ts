@@ -463,31 +463,27 @@ const userConfig = [
     name: 'splitChunks',
     validation: 'boolean',
     defaultValue: true,
-    setConfig: (config: Config, splitChunks: UserConfig['splitChunks'], context: UserConfigContext) => {
-      const { originalUserConfig } = context;
-      // Make sure config.splitChunks is not overwritten when codeSplitting is set.
-      if (!('codeSplitting' in originalUserConfig)) {
-        config.splitChunks = splitChunks;
-      }
-    },
   },
   {
     name: 'codeSplitting',
     validation: 'boolean|string',
     defaultValue: true,
     setConfig: (config: Config, codeSplitting: UserConfig['codeSplitting'], context: UserConfigContext) => {
-      const { originalUserConfig } = context;
-      if ('splitChunks' in originalUserConfig) {
-        logger.warn(
-          'splitChunks is deprecated, please use codeSplitting instead.https://ice.work/docs/guide/basic/config#codesplitting',
-        );
-      } else {
+      const { originalUserConfig, userConfig } = context;
+      if ('codeSplitting' in originalUserConfig) {
         // When codeSplitting is set to false / router, do not config splitChunks.
         if (codeSplitting === false || codeSplitting === 'page') {
           config.splitChunks = false;
         } else {
           config.splitChunks = codeSplitting;
         }
+      } else {
+        config.splitChunks = userConfig.splitChunks;
+      }
+      if ('splitChunks' in originalUserConfig) {
+        logger.warn(
+          'splitChunks is deprecated, please use codeSplitting instead. https://ice.work/docs/guide/basic/config#codesplitting',
+        );
       }
     },
   },

@@ -65,6 +65,30 @@ describe(`build ${example}`, () => {
     expect(files.length).toBe(11);
   });
 
+  test('disable codeSplitting', async () => {
+    await buildFixture(example, {
+      config: 'codeSplitting.config.mts',
+    });
+    const res = await setupBrowser({ example });
+    page = res.page;
+    browser = res.browser;
+
+    const files = fs.readdirSync(path.join(__dirname, `../../examples/${example}/build/js`), 'utf-8');
+    expect(files.length).toBe(5);
+  });
+
+  test('disable splitChunks and codeSplitting', async () => {
+    await buildFixture(example, {
+      config: 'splitChunksWithCodeSplitting.config.mts',
+    });
+    const res = await setupBrowser({ example });
+    page = res.page;
+    browser = res.browser;
+
+    const files = fs.readdirSync(path.join(__dirname, `../../examples/${example}/build/js`), 'utf-8');
+    expect(files.length).toBe(5);
+  });
+
   test('render route config when downgrade to CSR.', async () => {
     await page.push('/downgrade.html');
     expect(await page.$$text('title')).toStrictEqual(['']);
