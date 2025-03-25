@@ -1,100 +1,101 @@
 import * as React from 'react';
 import { AppRouter, AppRoute } from '@ice/stark';
 import type { RuntimePlugin, ClientAppRouterProps } from '@ice/runtime/types';
-import type { RouteInfo, AppConfig } from '../types';
+import type { AppRouterProps } from '@ice/stark/lib/AppRouter';
+import type { RouteInfo, AppConfig, FrameworkConfig } from '../types';
 
 const { useState, useEffect } = React;
 
 const runtime: RuntimePlugin = ({ getAppRouter, setAppRouter, appContext }) => {
   const { appExport, appData } = appContext;
   const OriginalRouter = getAppRouter();
-  const { layout, getApps, appRouter } = appExport?.icestark || {};
+  const { layout, getApps, appRouter, AppRoute: CustomizeAppRoute } = (appExport?.icestark || {}) as FrameworkConfig;
 
-  if (getApps) {
-    const FrameworkRouter = (props: ClientAppRouterProps) => {
-      const [routeInfo, setRouteInfo] = useState<RouteInfo>({});
-      const [appEnter, setAppEnter] = useState<AppConfig>({});
-      const [appLeave, setAppLeave] = useState<AppConfig>({});
-      const [apps, setApps] = useState([]);
-      const FrameworkLayout = layout || (({ children }) => (<>{children}</>));
-      const appInfo = {
-        pathname: routeInfo.pathname ||
-          (typeof window !== 'undefined' && window.location.pathname),
-        routeInfo,
-        appEnter,
-        appLeave,
-        updateApps: setApps,
-      };
-      useEffect(() => {
-        (async () => {
-          const appList = await getApps(appData);
-          setApps(appList);
-        })();
-      }, []);
-
-      function handleRouteChange(pathname: string, query: Record<string, string>, hash: string, routeType: string) {
-        setRouteInfo({ pathname, query, hash, routeType });
-      }
-
-      function handleAppLeave(config: AppConfig) {
-        setAppLeave(config);
-      }
-
-      function handleAppEnter(config: AppConfig) {
-        setAppEnter(config);
-      }
-      return (
-        <FrameworkLayout {...appInfo}>
-          {apps && (
-            <AppRouter
-              {...appRouter}
-              onRouteChange={handleRouteChange}
-              onAppEnter={handleAppEnter}
-              onAppLeave={handleAppLeave}
-            >
-              {apps.map((item: AppConfig, idx: number) => {
-                return (
-                  <AppRoute
-                    key={idx}
-                    {...item}
-                  />
-                );
-              })}
-              <AppRoute
-                path="/"
-                location={props.location}
-                render={() => {
-                  const { routerContext } = props;
-                  routerContext.routes = [
-                    ...routerContext.routes,
-                    {
-                      path: '*',
-                      Component: () => (
-                        process.env.NODE_ENV === 'development'
-                          ? <div>Add $.tsx to folder pages as a 404 component</div>
-                          : null
-                        ),
-                    },
-                  ];
-                  const routerProps = {
-                    ...props,
-                    routerContext,
-                  };
-                  return <OriginalRouter {...routerProps} />;
-                }}
-              />
-            </AppRouter>
-          )}
-        </FrameworkLayout>
-      );
-    };
-    setAppRouter(FrameworkRouter);
-  } else {
+  if (!getApps) {
     console.warn(`
       [plugin-icestark]: appConfig.icestark.getApps should be not empty if this is an framework app.
       see https://ice.work/docs/guide/advanced/icestark/
     `);
+    return;
   }
+
+  const FrameworkRouter = (props: ClientAppRouterProps) => {
+    const [routeInfo, setRouteInfo] = useState<RouteInfo>({});
+    const [appEnter, setAppEnter] = useState<AppConfig>({});
+    const [appLeave, setAppLeave] = useState<AppConfig>({});
+    const [apps, setApps] = useState<AppConfig[]>([]);
+    const FrameworkLayout = layout || React.Fragment;
+    const appInfo = {
+      pathname: routeInfo.pathname || (typeof window !== 'undefined' ? window.location.pathname : ''),
+      routeInfo,
+      appEnter,
+      appLeave,
+      updateApps: setApps,
+    };
+
+    useEffect(() => {
+      const fetchApps = async () => {
+        try {
+          const appList = await getApps(appData);
+          setApps(appList);
+        } catch (error) {
+          console.error('[plugin-icestark]: Failed to fetch apps', error);
+        }
+      };
+
+      fetchApps();
+    }, []);
+
+    const handleRouteChange: AppRouterProps['onRouteChange'] = (pathname, query, hash, routeType) => {
+      setRouteInfo({ pathname, query, hash, routeType });
+    };
+
+    const handleAppLeave: AppRouterProps['onAppLeave'] = (config) => setAppLeave(config);
+    const handleAppEnter: AppRouterProps['onAppEnter'] = (config) => setAppEnter(config);
+    const AppRouteComponent = CustomizeAppRoute || AppRoute;
+
+    const appRouterProps: AppRouterProps = {
+      ...appRouter,
+      onRouteChange: handleRouteChange,
+      onAppEnter: handleAppEnter,
+      onAppLeave: handleAppLeave,
+    };
+
+    if (!apps.length) {
+      return null;
+    }
+
+    return (
+      <FrameworkLayout {...appInfo}>
+        <AppRouter {...appRouterProps}>
+          {apps.map((item: AppConfig, idx: number) => (
+            <AppRouteComponent key={idx} {...item} />
+          ))}
+          <AppRouteComponent
+            activePath="/"
+            location={props.location}
+            render={() => {
+              const { routerContext } = props;
+              routerContext.routes = [
+                ...routerContext.routes,
+                {
+                  path: '*',
+                  Component: () => (
+                    process.env.NODE_ENV === 'development'
+                      ? <div>Add $.tsx to folder pages as a 404 component</div>
+                      : null
+                  ),
+                },
+              ];
+              return <OriginalRouter {...props} routerContext={routerContext} />;
+            }}
+          />
+        </AppRouter>
+      </FrameworkLayout>
+    );
+  };
+
+  setAppRouter(FrameworkRouter);
 };
 
 export default runtime;
