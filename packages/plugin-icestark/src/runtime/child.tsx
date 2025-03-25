@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import type { RuntimePlugin } from '@ice/runtime/types';
 import type { LifecycleOptions } from '../types';
-import { FrameworkContext } from './Context';
+import { FrameworkContext } from './Context.js';
 
 const runtime: RuntimePlugin<LifecycleOptions> = ({ setRender }, runtimeOptions) => {
   if (runtimeOptions?.container) {
