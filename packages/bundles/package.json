@@ -1,6 +1,6 @@
 {
   "name": "@ice/bundles",
-  "version": "0.2.9-canary-fe24502af-20250327040141",
+  "version": "0.2.8",
   "license": "MIT",
   "author": "ICE",
   "description": "Basic dependencies for ice.",

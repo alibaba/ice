@@ -1,11 +1,5 @@
 # Changelog
 
-## 0.2.9-canary-fe24502af-20250327040141
-
-### Patch Changes
-
-- 23dbf34ed: feat: export ModuleNotFoundError of webpack
-
 ## 0.2.8
 
 ### Patch Changes
