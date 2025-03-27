@@ -19,6 +19,7 @@ module.exports = {
   NormalModule: require('webpack/lib/NormalModule'),
   EntryDependency: require('webpack/lib/dependencies/EntryDependency'),
   ModuleNotFoundError: require('webpack/lib/ModuleNotFoundError'),
+  LazySet: require('webpack/lib/util/LazySet'),
   sources: require('webpack').sources,
   webpack: require('webpack'),
   package: {
