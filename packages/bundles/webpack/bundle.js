@@ -18,6 +18,7 @@ module.exports = {
   StringXor: require('webpack/lib/util/StringXor'),
   NormalModule: require('webpack/lib/NormalModule'),
   EntryDependency: require('webpack/lib/dependencies/EntryDependency'),
+  ModuleNotFoundError: require('webpack/lib/ModuleNotFoundError'),
   sources: require('webpack').sources,
   webpack: require('webpack'),
   package: {
