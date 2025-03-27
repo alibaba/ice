@@ -57,7 +57,7 @@ export function getHookFiles() {
   const webpackDir = path.join(require.resolve('@ice/bundles/compiled/webpack'), '../');
   const createPluginMapping = (pluginPath: string, withJsExtension = false) => [
     withJsExtension ? `${pluginPath}.js` : pluginPath,
-    pluginPath.replace(/^webpack\/lib\/((web|node|optimize|webworker|runtime|javascript|util)\/)?/, webpackDir),
+    pluginPath.replace(/^webpack\/lib\/((web|node|optimize|webworker|runtime|javascript|util|dependencies)\/)?/, webpackDir),
   ];
 
   const pluginMap = webpackPlugins.map(pluginPath => createPluginMapping(pluginPath));
@@ -75,15 +75,6 @@ export function getHookFiles() {
   ];
 }
 
-function getCompiledWebpackPath(resolvePath: string) {
-  const regex = /@ice\/bundles\/compiled\/lib\/((web|node|optimize|webworker|runtime|javascript|util)\/)?(.*)$/;
-  const matches = resolvePath.match(regex);
-  if (!matches || !matches[3]) return null;
-  return resolvePath.replace(regex, () => {
-    return `@ice/bundles/compiled/webpack/${matches[3]}`;
-  });
-}
-
 function hijackWebpack() {
   const hookPropertyMap = new Map(
     getHookFiles().map(([request, replacement]) => [request, require.resolve(replacement)]),
@@ -95,9 +86,6 @@ function hijackWebpack() {
     const hookResolved = hookPropertyMap.get(request);
     if (hookResolved) {
       request = hookResolved;
-    } else if (process.env['CHECK_COMPILED_WEBPACK_PATH']) {
-      const compiledPath = getCompiledWebpackPath(request);
-      if (compiledPath) request = compiledPath;
     }
     return resolveFilename.call(mod, request, parent, isMain, options);
   };
