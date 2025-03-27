@@ -20,6 +20,7 @@ module.exports = {
   EntryDependency: require('webpack/lib/dependencies/EntryDependency'),
   ModuleNotFoundError: require('webpack/lib/ModuleNotFoundError'),
   LazySet: require('webpack/lib/util/LazySet'),
+  fs: require('webpack/lib/util/fs'),
   sources: require('webpack').sources,
   webpack: require('webpack'),
   package: {

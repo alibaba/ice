@@ -35,6 +35,7 @@ export function getHookFiles() {
     'webpack/lib/util/compileBooleanMatcher',
     'webpack/lib/ModuleNotFoundError',
     'webpack/lib/util/LazySet',
+    'webpack/lib/util/fs',
   ];
   const webpackDir = path.join(require.resolve('@ice/bundles/compiled/webpack'), '../');
   const pluginMap = webpackPlugins.map((pluginPath) => {
