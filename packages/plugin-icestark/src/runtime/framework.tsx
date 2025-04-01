@@ -23,7 +23,7 @@ const runtime: RuntimePlugin = ({ getAppRouter, setAppRouter, appContext }) => {
     const [routeInfo, setRouteInfo] = useState<RouteInfo>({});
     const [appEnter, setAppEnter] = useState<AppConfig>({});
     const [appLeave, setAppLeave] = useState<AppConfig>({});
-    const [apps, setApps] = useState<AppConfig[]>([]);
+    const [apps, setApps] = useState<AppConfig[] | null>(null);
     const FrameworkLayout = layout || React.Fragment;
     const appInfo = {
       pathname: routeInfo.pathname || (typeof window !== 'undefined' ? window.location.pathname : ''),
@@ -64,7 +64,7 @@ const runtime: RuntimePlugin = ({ getAppRouter, setAppRouter, appContext }) => {
       <FrameworkLayout {...appInfo}>
         {apps && (
           <AppRouter {...appRouterProps}>
-            {apps.map((item: AppConfig, idx: number) => (
+            {apps?.map((item: AppConfig, idx: number) => (
               <AppRouteComponent key={idx} {...item} />
             ))}
             <AppRouteComponent
