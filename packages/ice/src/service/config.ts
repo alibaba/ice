@@ -64,6 +64,7 @@ class Config {
           },
         },
         redirectImports,
+        bundler: 'esbuild',
       });
       if (!error) {
         this.status = 'RESOLVED';
