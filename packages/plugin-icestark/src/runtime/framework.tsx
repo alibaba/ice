@@ -60,37 +60,34 @@ const runtime: RuntimePlugin = ({ getAppRouter, setAppRouter, appContext }) => {
       onAppEnter: handleAppEnter,
       onAppLeave: handleAppLeave,
     };
-
-    if (!apps.length) {
-      return null;
-    }
-
     return (
       <FrameworkLayout {...appInfo}>
-        <AppRouter {...appRouterProps}>
-          {apps.map((item: AppConfig, idx: number) => (
-            <AppRouteComponent key={idx} {...item} />
-          ))}
-          <AppRouteComponent
-            activePath="/"
-            location={props.location}
-            render={() => {
-              const { routerContext } = props;
-              routerContext.routes = [
-                ...routerContext.routes,
-                {
-                  path: '*',
-                  Component: () => (
-                    process.env.NODE_ENV === 'development'
-                      ? <div>Add $.tsx to folder pages as a 404 component</div>
-                      : null
-                  ),
-                },
-              ];
-              return <OriginalRouter {...props} routerContext={routerContext} />;
-            }}
-          />
-        </AppRouter>
+        {apps && (
+          <AppRouter {...appRouterProps}>
+            {apps.map((item: AppConfig, idx: number) => (
+              <AppRouteComponent key={idx} {...item} />
+            ))}
+            <AppRouteComponent
+              activePath="/"
+              location={props.location}
+              render={() => {
+                const { routerContext } = props;
+                routerContext.routes = [
+                  ...routerContext.routes,
+                  {
+                    path: '*',
+                    Component: () => (
+                      process.env.NODE_ENV === 'development'
+                        ? <div>Add $.tsx to folder pages as a 404 component</div>
+                        : null
+                    ),
+                  },
+                ];
+                return <OriginalRouter {...props} routerContext={routerContext} />;
+              }}
+            />
+          </AppRouter>
+        )}
       </FrameworkLayout>
     );
   };
