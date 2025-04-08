@@ -116,6 +116,7 @@ export function createServerCompiler(options: Options) {
     enableEnv = false,
     transformEnv = true,
     isServer = true,
+    bundler,
   } = {}) => {
     let preBundleDepsMetadata: PreBundleDepsMetaData;
     let swcOptions = merge({}, {
@@ -171,7 +172,7 @@ export function createServerCompiler(options: Options) {
         plugins,
       });
     }
-    server.bundler = server.bundler ?? 'esbuild';
+    server.bundler = bundler ?? server.bundler ?? 'esbuild';
     const format = customBuildOptions?.format || 'esm';
 
     let buildOptions: esbuild.BuildOptions = {
