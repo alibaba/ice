@@ -18,6 +18,11 @@
       "import": "./esm/index.js",
       "default": "./esm/index.js"
     },
+    "./Context": {
+      "types": "./esm/runtime/Context.d.ts",
+      "import": "./esm/runtime/Context.js",
+      "default": "./esm/runtime/Context.js"
+    },
     "./esm/runtime/child": {
       "types": "./esm/runtime/child.d.ts",
       "import": "./esm/runtime/child.js",
