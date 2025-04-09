@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.6.1
+
+### Patch Changes
+
+- 478120d1: fix: always use esbuild to compile server config
+- Updated dependencies [2f73084d]
+  - @ice/bundles@0.2.9
+  - @ice/rspack-config@1.2.3
+  - @ice/shared-config@1.3.2
+  - @ice/webpack-config@1.2.2
+
 ## 3.6.0
 
 ### Minor Changes

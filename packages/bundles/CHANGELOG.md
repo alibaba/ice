@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.9
+
+### Patch Changes
+
+- 2f73084d: feat: export ModuleNotFoundError of webpack
+
 ## 0.2.8
 
 ### Patch Changes
