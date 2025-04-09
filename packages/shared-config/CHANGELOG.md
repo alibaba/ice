@@ -1,5 +1,12 @@
 # @ice/shared-config
 
+## 1.3.2
+
+### Patch Changes
+
+- Updated dependencies [2f73084d]
+  - @ice/bundles@0.2.9
+
 ## 1.3.1
 
 ### Patch Changes
