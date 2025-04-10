@@ -118,6 +118,7 @@ export function createServerCompiler(options: Options) {
     isServer = true,
     bundler,
   } = {}) => {
+    server.bundler = bundler ?? server.bundler ?? 'esbuild';
     let preBundleDepsMetadata: PreBundleDepsMetaData;
     let swcOptions = merge({}, {
       // Only get the `compilationConfig` from task config.
@@ -145,7 +146,7 @@ export function createServerCompiler(options: Options) {
       swcOptions,
       redirectImports,
       getRoutesFile,
-    }, 'esbuild', { isServer });
+    }, server.bundler as 'esbuild', { isServer });
 
     const define = getRuntimeDefination(task.config?.define || {}, runtimeDefineVars, transformEnv);
     if (preBundle) {
@@ -172,7 +173,6 @@ export function createServerCompiler(options: Options) {
         plugins,
       });
     }
-    server.bundler = bundler ?? server.bundler ?? 'esbuild';
     const format = customBuildOptions?.format || 'esm';
 
     let buildOptions: esbuild.BuildOptions = {
@@ -254,7 +254,7 @@ export function createServerCompiler(options: Options) {
               ...buildOptions,
               externals,
               compileIncludes: task.config.compileIncludes,
-              plugins: [compilationInfo && new VirualAssetPlugin({ compilationInfo, rootDir })],
+              plugins: [compilationInfo && new VirualAssetPlugin({ compilationInfo, rootDir }), ...transformPlugins],
               rootDir,
               userServerConfig: server,
               runtimeDefineVars,
