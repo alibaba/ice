@@ -2,7 +2,7 @@ import type { Plugin } from '@ice/app/types';
 
 interface PluginOptions {
   type: 'child' | 'framework';
-  library?: string;
+  library?: string | string[];
 }
 
 const PLUGIN_NAME = '@ice/plugin-icestark';
