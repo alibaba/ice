@@ -50,7 +50,7 @@
   ],
   "dependencies": {
     "ahooks": "^3.0.0",
-    "axios": "^0.27.2"
+    "axios": "^0.30.0"
   },
   "devDependencies": {
     "@ice/app": "^3.4.9",
