@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1
+
+- fix: plugin type definition of `library`
+
 ## 1.2.0
 
 ### Minor Changes
