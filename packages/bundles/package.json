@@ -93,7 +93,7 @@
     "default-gateway": "^6.0.3",
     "express": "^4.19.2",
     "graceful-fs": "4.2.10",
-    "http-proxy-middleware": "^2.0.3",
+    "http-proxy-middleware": "^2.0.9",
     "ipaddr.js": "^2.0.1",
     "open": "^8.0.9",
     "p-retry": "^4.5.0",
