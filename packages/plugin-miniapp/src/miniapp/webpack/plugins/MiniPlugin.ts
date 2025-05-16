@@ -10,6 +10,7 @@ import loaderUtils from '@ice/bundles/compiled/loader-utils/index.js';
 import type { Compilation, Compiler } from '@ice/bundles/compiled/webpack/index.js';
 import EntryDependency from '@ice/bundles/compiled/webpack/EntryDependency.js';
 
+import type { NestedRouteManifest } from '@ice/route-manifest';
 import SingleEntryDependency from '../dependencies/SingleEntryDependency.js';
 import { componentConfig } from '../utils/component.js';
 
@@ -93,7 +94,7 @@ export default class MiniPlugin {
   appConfig: MiniappAppConfig;
   /** app、页面、组件的配置集合 */
   filesConfig: IMiniFilesConfig = {};
-  routeManifest: Record<string, any>[] = [];
+  routeManifest: NestedRouteManifest[] = [];
   isWatch = false;
   /** 页面列表 */
   pages = new Set<IComponent>();
@@ -162,7 +163,7 @@ export default class MiniPlugin {
     this.context = compiler.context;
     this.appEntry = this.getAppEntry(compiler);
 
-    const { commonChunks, combination, framework, isBuildPlugin, newBlended } = this.options;
+    const { commonChunks, combination, framework, isBuildPlugin, newBlended, sourceDir } = this.options;
 
     const { addChunkPages, onCompilerMake, modifyBuildAssets, onParseCreateElement } = combination.config;
 
@@ -281,7 +282,7 @@ export default class MiniPlugin {
                 : this.pageLoaderName;
 
             if (!isLoaderExist(module.loaders, loaderName)) {
-              const routeInfo = this.routeManifest.find(route => path.join('pages', route.id) === module.name);
+              const routeInfo = this.routeManifest.find(route => path.join(sourceDir, 'pages', route.file) === module.resource);
               const hasExportData = routeInfo?.exports?.includes('dataLoader');
               const hasExportConfig = routeInfo?.exports?.includes('pageConfig');
               module.loaders.unshift({
