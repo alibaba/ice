@@ -1,6 +1,5 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
-import fse from 'fs-extra';
 import { swc } from '@ice/bundles';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import { getWebpackConfig } from '@ice/webpack-config';
@@ -46,11 +45,12 @@ export class WebpackServerCompiler {
   }
 
   private async createWebpackConfig(options: {
+    compileIncludes: Array<RegExp>;
     userServerConfig: UserConfig['server'];
     rootDir: string;
     [key: string]: any;
   }) {
-    const { userServerConfig } = options;
+    const { userServerConfig, compileIncludes } = options;
     const { webpackConfig = {} } = userServerConfig;
     const definitions = await this.getEsbuildInject();
     return getWebpackConfig({
@@ -92,7 +92,7 @@ export class WebpackServerCompiler {
         define: options.define,
         optimization: { ...webpackConfig.optimization } as any,
         minify: options.minify,
-        compileIncludes: webpackConfig.transformInclude,
+        compileIncludes,
         swcOptions: {
           compilationConfig: {
             jsc: {
