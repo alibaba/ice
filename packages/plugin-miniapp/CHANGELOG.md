@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.4
+
+### Patch Changes
+
+- 3670eadc: fix: miniapp using absolute path to match route manifest
+
 ## 1.2.3
 
 ### Patch Changes
