@@ -1,5 +1,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fse from 'fs-extra';
+import { swc } from '@ice/bundles';
 import webpack from '@ice/bundles/compiled/webpack/index.js';
 import { getWebpackConfig } from '@ice/webpack-config';
 import type { UserConfig } from '../../types/userConfig.js';
@@ -8,6 +10,33 @@ import { getExpandedEnvs } from '../../utils/runtimeEnv.js';
 import { RUNTIME_TMP_DIR } from '../../constant.js';
 
 const _dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
+
+function visit(node, exports) {
+  if (node.type === 'Module') {
+    node.body.forEach((node) => visit(node, exports));
+  }
+  if (node.type === 'ExportDeclaration') {
+    if (node.declaration) {
+      if (node.declaration.type === 'VariableDeclaration') {
+        node.declaration.declarations.forEach((declaration) => {
+          if (declaration.id.type === 'Identifier') {
+            exports.push(declaration.id.value);
+          }
+        });
+      } else if (node.declaration.id) {
+        exports.push(node.declaration.id.value);
+      }
+    }
+    if (node.specifiers) {
+      node.specifiers.forEach((specifier) => {
+        exports.push(specifier.exported.value);
+      });
+    }
+  } else if (node.type === 'ExportDefaultExpression') {
+    exports.push('default');
+  }
+  return exports;
+}
 
 export class WebpackServerCompiler {
   private options;
@@ -90,9 +119,17 @@ export class WebpackServerCompiler {
 
   private async getEsbuildInject(): Promise<Record<string, string | string[]>> {
     const provideRecord = {};
-    const allInjects = await Promise.all(this.options.inject.map((inj) => import(inj)));
+    const allInjectAst = await Promise.all(
+      this.options.inject.map((inj) =>
+        swc.parseFile(inj, {
+          syntax: 'typescript',
+          isModule: true,
+        }),
+      ),
+    );
+    const allInjects = allInjectAst.map((ast) => visit(ast, []));
     allInjects.forEach((injs, index) => {
-      Object.keys(injs).forEach((key) => {
+      injs.forEach((key) => {
         provideRecord[key] = [this.options.inject[index], key];
       });
     });
