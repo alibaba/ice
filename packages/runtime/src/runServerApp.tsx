@@ -138,6 +138,7 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     renderMode,
     runtimeOptions,
     serverData,
+    documentProps,
   } = renderOptions;
   const finalBasename = addLeadingSlash(serverOnlyBasename || basename);
   const location = getLocation(req.url);
@@ -188,13 +189,13 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
 
   // HashRouter loads route modules by the CSR.
   if (appConfig?.router?.type === 'hash') {
-    return renderDocument({ matches: [], routes, renderOptions, documentData });
+    return renderDocument({ matches: [], routes, renderOptions, documentData, documentProps });
   }
 
   const matches = matchRoutes(routes, location, finalBasename);
   const routePath = getCurrentRoutePath(matches);
   if (documentOnly) {
-    return renderDocument({ matches, routePath, routes, renderOptions, documentData });
+    return renderDocument({ matches, routePath, routes, renderOptions, documentData, documentProps });
   } else if (!matches.length) {
     return handleNotFoundResponse();
   }
@@ -283,7 +284,7 @@ async function renderServerEntry(
     renderOptions,
   }: RenderServerEntry,
 ): Promise<Response> {
-  const { Document } = renderOptions;
+  const { Document, documentProps } = renderOptions;
   const appContext = runtime.getAppContext();
   const { routes, routePath, loaderData, basename } = appContext;
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
@@ -307,7 +308,7 @@ async function renderServerEntry(
       <AppRuntimeProvider>
         <DocumentContextProvider value={documentContext}>
           {
-            Document && <Document pagePath={routePath} />
+            Document && <Document pagePath={routePath} {...(documentProps || {})} />
           }
         </DocumentContextProvider>
       </AppRuntimeProvider>
