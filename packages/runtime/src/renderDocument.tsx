@@ -86,7 +86,7 @@ export function renderDocument(options: RenderDocumentOptions): Response {
     <AppContextProvider value={appContext}>
       <DocumentContextProvider value={documentContext}>
         {
-          Document && <Document pagePath={routePath} {...(documentProps || {})} />
+          Document && <Document pagePath={routePath} {...documentProps} />
         }
       </DocumentContextProvider>
     </AppContextProvider>,
