@@ -308,7 +308,7 @@ async function renderServerEntry(
       <AppRuntimeProvider>
         <DocumentContextProvider value={documentContext}>
           {
-            Document && <Document pagePath={routePath} {...(documentProps || {})} />
+            Document && <Document pagePath={routePath} {...documentProps} />
           }
         </DocumentContextProvider>
       </AppRuntimeProvider>
