@@ -189,13 +189,13 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
 
   // HashRouter loads route modules by the CSR.
   if (appConfig?.router?.type === 'hash') {
-    return renderDocument({ matches: [], routes, renderOptions, documentData, documentProps });
+    return renderDocument({ matches: [], routes, renderOptions, documentData });
   }
 
   const matches = matchRoutes(routes, location, finalBasename);
   const routePath = getCurrentRoutePath(matches);
   if (documentOnly) {
-    return renderDocument({ matches, routePath, routes, renderOptions, documentData, documentProps });
+    return renderDocument({ matches, routePath, routes, renderOptions, documentData });
   } else if (!matches.length) {
     return handleNotFoundResponse();
   }

@@ -59,7 +59,7 @@ interface RenderOptions {
   publicPath?: string;
   serverData?: any;
   streamOptions?: RenderToPipeableStreamOptions;
-  documentProps?: Record<string, any>;
+  documentProps?: Record<string, unknown>;
 }
 
 export async function renderToHTML(requestContext, options: RenderOptions = {}) {

@@ -26,7 +26,6 @@ interface RenderDocumentOptions {
   documentData: any;
   routePath?: string;
   downgrade?: boolean;
-  documentProps?: Record<string, any>;
 }
 
 export function renderDocument(options: RenderDocumentOptions): Response {
@@ -37,7 +36,6 @@ export function renderDocument(options: RenderDocumentOptions): Response {
     downgrade,
     routes,
     documentData,
-    documentProps,
   }: RenderDocumentOptions = options;
 
   const {
@@ -47,6 +45,7 @@ export function renderDocument(options: RenderDocumentOptions): Response {
     basename,
     routesConfig = {},
     serverData,
+    documentProps,
   } = renderOptions;
 
   const appData = null;
