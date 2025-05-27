@@ -138,7 +138,6 @@ async function doRender(serverContext: ServerContext, renderOptions: RenderOptio
     renderMode,
     runtimeOptions,
     serverData,
-    documentProps,
   } = renderOptions;
   const finalBasename = addLeadingSlash(serverOnlyBasename || basename);
   const location = getLocation(req.url);
