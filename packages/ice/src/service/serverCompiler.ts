@@ -27,6 +27,8 @@ import getCSSModuleIdent from '../utils/getCSSModuleIdent.js';
 import { scanImports } from './analyze.js';
 import type { PreBundleDepsMetaData } from './preBundleDeps.js';
 import preBundleDeps from './preBundleDeps.js';
+import { WebpackServerCompiler } from './webpackServerCompiler/compiler.js';
+import VirualAssetPlugin from './webpackServerCompiler/virtualAssetPlugin.js';
 
 const logger = createLogger('server-compiler');
 
@@ -100,7 +102,6 @@ export function createServerCompiler(options: Options) {
   const externals = task.config?.externals || {};
   const sourceMap = task.config?.sourceMap;
   const dev = command === 'start';
-
   // Filter empty alias.
   const { ignores, alias } = filterAlias(task.config?.alias || {});
 
@@ -115,7 +116,9 @@ export function createServerCompiler(options: Options) {
     enableEnv = false,
     transformEnv = true,
     isServer = true,
+    bundler,
   } = {}) => {
+    server.bundler = bundler ?? server.bundler ?? 'esbuild';
     let preBundleDepsMetadata: PreBundleDepsMetaData;
     let swcOptions = merge({}, {
       // Only get the `compilationConfig` from task config.
@@ -143,7 +146,8 @@ export function createServerCompiler(options: Options) {
       swcOptions,
       redirectImports,
       getRoutesFile,
-    }, 'esbuild', { isServer });
+    }, server.bundler as 'esbuild', { isServer });
+
     const define = getRuntimeDefination(task.config?.define || {}, runtimeDefineVars, transformEnv);
     if (preBundle) {
       const plugins = [
@@ -169,7 +173,6 @@ export function createServerCompiler(options: Options) {
         plugins,
       });
     }
-
     const format = customBuildOptions?.format || 'esm';
 
     let buildOptions: esbuild.BuildOptions = {
@@ -236,27 +239,44 @@ export function createServerCompiler(options: Options) {
     }
 
     const startTime = new Date().getTime();
-    logger.debug('[esbuild]', `start compile for: ${JSON.stringify(buildOptions.entryPoints)}`);
+    logger.debug(`[${server.bundler}]`, `start compile for: ${JSON.stringify(buildOptions.entryPoints)}`);
 
     try {
-      let esbuildResult: esbuild.BuildResult;
+      let bundleResult: any;
       let context: esbuild.BuildContext;
       if (dev) {
         context = await esbuild.context(buildOptions);
-        esbuildResult = await context.rebuild();
+        bundleResult = await context.rebuild();
       } else {
-        esbuildResult = await esbuild.build(buildOptions);
+        switch (server.bundler) {
+          case 'webpack':
+            const webpackServerCompiler = new WebpackServerCompiler({
+              ...buildOptions,
+              externals,
+              compileIncludes: task.config.compileIncludes,
+              plugins: [compilationInfo && new VirualAssetPlugin({ compilationInfo, rootDir }), ...transformPlugins],
+              rootDir,
+              userServerConfig: server,
+              runtimeDefineVars,
+            });
+            bundleResult = (await webpackServerCompiler.build())?.compilation;
+            break;
+          case 'esbuild':
+          default:
+            bundleResult = await esbuild.build(buildOptions);
+            break;
+        }
       }
 
-      logger.debug('[esbuild]', `time cost: ${new Date().getTime() - startTime}ms`);
+      logger.debug(`[${server.bundler}]`, `time cost: ${new Date().getTime() - startTime}ms`);
 
       const esm = server?.format === 'esm';
       const outJSExtension = esm ? '.mjs' : '.cjs';
       const serverEntry = path.join(rootDir, task.config.outputDir, SERVER_OUTPUT_DIR, `index${outJSExtension}`);
 
-      if (removeOutputs && esbuildResult.metafile) {
+      if (removeOutputs && bundleResult.metafile) {
         // build/server/a.mjs -> a.mjs
-        const currentOutputFiles = Object.keys(esbuildResult.metafile.outputs)
+        const currentOutputFiles = Object.keys(bundleResult.metafile.outputs)
           .map(output => output.replace(formatPath(`${path.relative(rootDir, buildOptions.outdir)}${path.sep}`), ''));
         const allOutputFiles = fg.sync('**', { cwd: buildOptions.outdir });
         const outdatedFiles = difference(allOutputFiles, currentOutputFiles);
@@ -264,7 +284,7 @@ export function createServerCompiler(options: Options) {
       }
 
       return {
-        ...esbuildResult,
+        ...bundleResult,
         context,
         serverEntry,
       };

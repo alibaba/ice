@@ -1,10 +1,11 @@
 import type { ComponentType } from 'react';
 import type { CompatibleAppConfig } from '@ice/stark/lib/AppRoute';
 import type { AppRouterProps } from '@ice/stark/lib/AppRouter';
+import type { AppRoute } from '@ice/stark';
 
 export interface RouteInfo {
   pathname?: string;
-  query?: Record<string, string>;
+  query?: object;
   hash?: string;
   routeType?: string;
 }
@@ -17,6 +18,7 @@ export interface FrameworkConfig {
   getApps?: (data?: any) => (AppConfig[] | Promise<AppConfig[]>);
   appRouter?: Omit<AppRouterProps, 'onRouteChange' | 'onAppEnter' | 'onAppLeave'>;
   layout?: ComponentType<any>;
+  AppRoute?: typeof AppRoute;
 }
 
 export interface LifecycleOptions {

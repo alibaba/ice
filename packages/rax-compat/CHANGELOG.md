@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0
+
+### Minor Changes
+
+- bbeeaf5d: fix: fix svg
+
 ## 0.3.0
 
 ### Minor Changes

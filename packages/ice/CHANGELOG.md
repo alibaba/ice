@@ -1,5 +1,61 @@
 # Changelog
 
+## 3.6.1
+
+### Patch Changes
+
+- 478120d1: fix: always use esbuild to compile server config
+- Updated dependencies [2f73084d]
+  - @ice/bundles@0.2.9
+  - @ice/rspack-config@1.2.3
+  - @ice/shared-config@1.3.2
+  - @ice/webpack-config@1.2.2
+
+## 3.6.0
+
+### Minor Changes
+
+- 97cb2046: support split server bundle
+
+### Patch Changes
+
+- f0c6380b: feat: add htmlGenerating `mode` option
+- 97cb2046: @ice/app: align the output result with the former esbuild
+  @ice/bundles: export more webpack internal modules
+- 97cb2046: @ice/app: remove unused deps and import them from @ice/bundles
+  @ice/bundles: compile tsconfig-paths-webpack-plugin
+- 97cb2046: rebase releast/next
+- 15cd5f7f: fix: glob pattern for document
+- 97cb2046: feat: minify css file;
+  feat: change minifier from terser to esbuildMinifier.
+  feat: support config minify option
+- 97cb2046: - feat: change transformInclude to array
+  - fix: only treat .js as jsx
+  - feat: support customize webpack.module.rule
+  - feat: support handle assets
+- 97cb2046: refactro: reuse webpackConfig
+- 97cb2046: fix: use @ice/bundles instead of import webpack directly.
+  feat: support pass definitions for provide plugin.
+- Updated dependencies [97cb2046]
+- Updated dependencies [97cb2046]
+- Updated dependencies [a0099df5]
+- Updated dependencies [a0099df5]
+- Updated dependencies [97cb2046]
+  - @ice/bundles@0.2.8
+  - @ice/runtime@1.5.2
+  - @ice/webpack-config@1.2.1
+  - @ice/shared-config@1.3.1
+  - @ice/rspack-config@1.2.2
+
+## 3.5.1
+
+### Patch Changes
+
+- Updated dependencies [4130611d]
+- Updated dependencies [2e274966]
+  - @ice/rspack-config@1.2.1
+  - @ice/runtime@1.5.1
+
 ## 3.5.0
 
 ### Minor Changes

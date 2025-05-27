@@ -39,7 +39,7 @@
     "plugin"
   ],
   "dependencies": {
-    "@ice/jsx-runtime": "^0.3.0",
+    "@ice/jsx-runtime": "^0.3.1",
     "@swc/helpers": "^0.5.15",
     "accept-language-parser": "^1.5.0",
     "universal-cookie": "^4.0.4",
@@ -56,8 +56,8 @@
     "webpack-dev-server": "4.15.0"
   },
   "peerDependencies": {
-    "@ice/app": "^3.5.0",
-    "@ice/runtime": "^1.5.0"
+    "@ice/app": "^3.6.1",
+    "@ice/runtime": "^1.5.2"
   },
   "publishConfig": {
     "access": "public"

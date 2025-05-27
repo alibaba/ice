@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.2.9
+
+### Patch Changes
+
+- 2f73084d: feat: export ModuleNotFoundError of webpack
+
+## 0.2.8
+
+### Patch Changes
+
+- 97cb2046: @ice/app: align the output result with the former esbuild
+  @ice/bundles: export more webpack internal modules
+- 97cb2046: @ice/app: remove unused deps and import them from @ice/bundles
+  @ice/bundles: compile tsconfig-paths-webpack-plugin
+- a0099df5: fix: update es-module-lexer
+
 ## 0.2.7
 
 ### Patch Changes

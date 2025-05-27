@@ -9,12 +9,12 @@ const PLUGIN_NAME = '@ice/plugin-icestark';
 const plugin: Plugin<PluginOptions> = ({ type, library }) => ({
   name: PLUGIN_NAME,
   setup: ({ onGetConfig, context, generator, modifyUserConfig }) => {
+    const libraryName = library || context.pkg?.name as string || 'microApp';
     onGetConfig((config) => {
       config.configureWebpack ??= [];
       config.configureWebpack.push((webpackConfig) => {
         if (type === 'child') {
-          const { pkg } = context;
-          webpackConfig.output.library = library || pkg.name as string || 'microApp';
+          webpackConfig.output.library = libraryName;
           webpackConfig.output.libraryTarget = 'umd';
         }
         return webpackConfig;
@@ -33,6 +33,10 @@ const plugin: Plugin<PluginOptions> = ({ type, library }) => ({
         return `let root;
 if (!window.ICESTARK?.root && !window.__POWERED_BY_QIANKUN__) {
   root = render();
+}
+// Set library name
+if (typeof window !== 'undefined' && window.ICESTARK) {
+  window.ICESTARK.library = ${JSON.stringify(libraryName)};
 }
 
 // For qiankun lifecycle validation.

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.0
+
+### Minor Changes
+
+- 2f73084d: feat: support framework provider
+- 2f73084d: feat: support custom AppRoute
+
 ## 1.1.1
 
 ### Patch Changes

@@ -1,5 +1,30 @@
 # @ice/rspack-config
 
+## 1.2.3
+
+### Patch Changes
+
+- Updated dependencies [2f73084d]
+  - @ice/bundles@0.2.9
+  - @ice/shared-config@1.3.2
+
+## 1.2.2
+
+### Patch Changes
+
+- Updated dependencies [97cb2046]
+- Updated dependencies [97cb2046]
+- Updated dependencies [a0099df5]
+- Updated dependencies [97cb2046]
+  - @ice/bundles@0.2.8
+  - @ice/shared-config@1.3.1
+
+## 1.2.1
+
+### Patch Changes
+
+- 4130611d: fix: update splitChunk config
+
 ## 1.2.0
 
 ### Minor Changes
