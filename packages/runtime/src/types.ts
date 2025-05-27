@@ -338,7 +338,7 @@ export interface RenderOptions {
   runtimeOptions?: Record<string, any>;
   serverData?: any;
   streamOptions?: RenderToPipeableStreamOptions;
-  documentProps?: Record<string, any>;
+  documentProps?: Record<string, unknown>;
 }
 
 declare global {
