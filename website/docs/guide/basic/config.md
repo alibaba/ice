@@ -228,7 +228,7 @@ export default defineConfig(() => ({
 import { defineConfig } from '@ice/app';
 
 export default defineConfig(() => ({
-   dropLog: ['error', 'log'],
+   dropLogLevel: ['error', 'log'],
 }));
 ```
 也可以根据console等级来进行移除
@@ -238,7 +238,7 @@ export default defineConfig(() => ({
 import { defineConfig } from '@ice/app';
 
 export default defineConfig(() => ({
-   dropLog: 'log',
+   dropLogLevel: 'log',
 }));
 ```
 
