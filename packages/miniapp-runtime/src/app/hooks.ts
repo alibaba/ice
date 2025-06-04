@@ -1,5 +1,5 @@
 import { isArray, isFunction, hooks } from '@ice/shared';
-import type { PageLifeCycle } from '../dsl/instance.js';
+import type { Instance, PageLifeCycle, PageProps } from '../dsl/instance.js';
 import type { Func } from '../interface/index.js';
 import {
   getPageInstance,
@@ -13,19 +13,19 @@ const createIceMiniappHook = (lifecycle: keyof PageLifeCycle | string) => {
   return (fn: Func) => {
     const { R: React, PageContext } = reactMeta;
     const id = React.useContext(PageContext) || HOOKS_APP_ID;
+    const instRef = React.useRef<Instance<PageProps>>();
 
     // hold fn ref and keep up to date
     const fnRef = React.useRef(fn);
     if (fnRef.current !== fn) fnRef.current = fn;
     React.useLayoutEffect(() => {
-      let inst = getPageInstance(id);
+      let inst = instRef.current = getPageInstance(id);
       let first = false;
-      if (inst == null) {
+      if (!inst) {
         first = true;
-        inst = Object.create(null);
+        instRef.current = Object.create(null);
+        inst = instRef.current!;
       }
-
-      inst = inst!;
 
       // callback is immutable but inner function is up to date
       const callback = (...args: any) => fnRef.current(...args);
@@ -43,13 +43,15 @@ const createIceMiniappHook = (lifecycle: keyof PageLifeCycle | string) => {
         injectPageInstance(inst!, id);
       }
       return () => {
-        const inst = getPageInstance(id);
+        const inst = instRef.current;
+        if (!inst) return;
         const list = inst![lifecycle];
         if (list === callback) {
           (inst![lifecycle] as any) = undefined;
         } else if (isArray(list)) {
           (inst![lifecycle] as any) = list.filter(item => item !== callback);
         }
+        instRef.current = undefined;
       };
     }, [id]);
   };
