@@ -97,7 +97,7 @@
     "sass": "^1.50.0",
     "unplugin": "^1.6.0",
     "webpack": "^5.88.0",
-    "webpack-dev-server": "4.15.0",
+    "webpack-dev-server": "5.2.1",
     "@rspack/core": "0.5.7",
     "@rspack/dev-server": "0.5.7"
   },
