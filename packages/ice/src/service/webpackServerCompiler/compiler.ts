@@ -45,7 +45,7 @@ export class WebpackServerCompiler {
   }
 
   private async createWebpackConfig(options: {
-    compileIncludes: Array<RegExp>;
+    compileIncludes: Array<RegExp | string>;
     userServerConfig: UserConfig['server'];
     rootDir: string;
     [key: string]: any;
