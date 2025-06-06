@@ -53,7 +53,7 @@
     "@ice/shared-config": "workspace:*",
     "@ice/webpack-config": "workspace:*",
     "@ice/rspack-config": "workspace:*",
-    "@swc/helpers": "0.5.1",
+    "@swc/helpers": "0.5.17",
     "@types/express": "^4.17.14",
     "address": "^1.1.2",
     "build-scripts": "^2.1.2-0",
