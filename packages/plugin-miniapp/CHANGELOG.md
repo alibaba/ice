@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.2.4
+
+### Patch Changes
+
+- 3670eadc: fix: miniapp using absolute path to match route manifest
+- Updated dependencies [d27ad76c]
+  - @ice/miniapp-runtime@1.2.3
+  - @ice/miniapp-react-dom@1.1.3
+
 ## 1.2.3
 
 ### Patch Changes
