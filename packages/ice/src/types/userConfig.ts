@@ -251,14 +251,7 @@ export interface UserConfig {
     /**
      * webpack config, only works when bundler is webpack
      */
-    webpackConfig?: Pick<WebpackConfiguration, 'plugins' | 'optimization' | 'output' | 'module'> & {
-      /**
-       * we exclude the node_modules/* by default
-       *
-       * use this if you need to transform some packages inside of node_modues
-       */
-      transformInclude?: Array<RegExp | string>;
-    };
+    webpackConfig?: Pick<WebpackConfiguration, 'plugins' | 'optimization' | 'output' | 'module'>;
   };
   /**
    * Optimization options for build.
