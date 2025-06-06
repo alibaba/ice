@@ -20,7 +20,7 @@ describe(`build ${example}`, () => {
     sizeFallback = fs.statSync(fallbackPath).size;
 
     expect(sizeFallback).toBeLessThan(sizeServer);
-    // The Stat size of fallback entry will reduce more than 50kb.
-    expect(sizeServer - sizeFallback).toBeGreaterThan(50 * 1024);
+    // The Stat size of fallback entry will reduce more than 50kb, minify size is 20kb.
+    expect(sizeServer - sizeFallback).toBeGreaterThan(20 * 1024);
   });
 });
