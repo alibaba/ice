@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.3
+
+### Patch Changes
+
+- d27ad76c: fix: enter same page twice then exit should not throw error
+
 ## 1.2.2
 
 ### Patch Changes

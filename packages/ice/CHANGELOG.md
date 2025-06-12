@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.6.2
+
+### Patch Changes
+
+- 41951673: chore: update @swc/helpers to 0.5.17
+- 795c1986: fix: compat esbuild config
+  - use AST to get file exports instead of using import()
+  - respect compileDependencies in webpack mode
+- 59414ba4: fix: missing jsx-plus transform when server bundler is webpack
+- Updated dependencies [182929ca]
+  - @ice/rspack-config@1.2.4
+
 ## 3.6.1
 
 ### Patch Changes
