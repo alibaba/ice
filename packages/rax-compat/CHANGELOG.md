@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.1
+
+### Patch Changes
+
+- 41951673: chore: update @swc/helpers to 0.5.17
+
 ## 0.4.0
 
 ### Minor Changes
