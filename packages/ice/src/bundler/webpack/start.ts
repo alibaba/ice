@@ -27,6 +27,7 @@ export async function startDevServer(
     routeManifest,
     userConfig,
     appConfig,
+    generator,
   } = options;
   const routePaths = routeManifest.getFlattenRoute().sort((a, b) =>
     // Sort by length, shortest path first.
@@ -40,12 +41,14 @@ export async function startDevServer(
     ...defaultDevServerConfig,
     setupMiddlewares: (middlewares, devServer) => {
       const builtInMiddlewares = getMiddlewares(middlewares, {
+        generator,
         userConfig,
         routeManifest,
         getAppConfig: hooksAPI.getAppConfig,
         taskConfig: webTaskConfig,
         excuteServerEntry,
         mock: commandArgs.mock,
+        open: commandArgs.open,
         rootDir,
       });
       return customMiddlewares ? customMiddlewares(builtInMiddlewares, devServer) : builtInMiddlewares;
