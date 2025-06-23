@@ -12,6 +12,8 @@ order: 0902
 
 ### 依赖修改
 
+#### 框架依赖
+
 ```diff
 {
   "devDependencies": {
@@ -22,27 +24,121 @@ order: 0902
 }
 ```
 
-对应插件能力：
-- @ali/build-plugin-ice-def -> @ali/ice-plugin-def
-- build-plugin-moment-locales -> @ice/plugin-moment-locales
-- build-plugin-fusion -> @ice/plugin-fusion (多主题能力暂不支持)
-- build-plugin-antd -> @ice/plugin-antd
-- build-plugin-css-assets-local -> @ice/plugin-css-assets-local
-- build-plugin-jsx-plus -> @ice/plugin-jsx-plus [文档](../advanced/jsx-plus.md)
-- build-plugin-keep-alive 不再支持，有 ice.js 3.0 的 [keep alive 方案](../advanced/keep-alive.md)替代
-
-插件使用方式变更为函数调用：
+#### 插件依赖
+##### @ali/build-plugin-ice-def
+插件替换为 `@ali/ice-plugin-def`，使用版本 1.2.4+，使用方式：
 
 ```ts title="ice.config.mts"
 import { defineConfig } from '@ice/app';
-import jsxPlus from '@ice/plugin-jsx-plus';
+import def from '@ali/ice-plugin-def';
 
 export default defineConfig(() => ({
   plugins: [
-    jsxPlus(),
+    def(),
   ],
 }));
 ```
+
+##### build-plugin-moment-locales
+
+插件替换为 `@ice/plugin-moment-locales`，使用版本 1.0.2+，使用方式：
+
+```ts title="ice.config.mts"
+import { defineConfig } from '@ice/app';
+import moment from '@ice/plugin-moment-locales';
+
+export default defineConfig(() => ({
+  plugins: [
+    moment({
+      locales: ['zh-CN'],
+    }),
+  ],
+}));
+```
+
+##### build-plugin-fusion
+替换为 `@ice/plugin-fusion`，使用版本 1.1.0+，使用方式：
+
+```ts title="ice.config.mts"
+import { defineConfig } from '@ice/app';
+import fusion from '@ice/plugin-fusion';
+
+export default defineConfig(() => ({
+  plugins: [fusion({
+    importStyle: true,
+    themePackage: '@alifd/theme-design-pro',
+    theme: {
+      'primary-color': '#fff',
+    },
+  })],
+}));
+```
+
+fusion 插件文档：[链接](../plugins/plugin-fusion.md)
+
+> ice3 下的 fusion 插件不再支持多主题能力，仅支持配置 importStyle、themePackage 和 theme 三个配置项
+
+##### build-plugin-antd
+
+插件替换为 `@ice/plugin-antd`，使用版本 1.0.2+，使用方式：
+
+```ts title="ice.config.mts"
+import { defineConfig } from '@ice/app';
+import antd from '@ice/plugin-antd';
+
+export default defineConfig(() => ({
+  plugins: [antd({
+    dark: true,
+    compact: true,
+    theme: {
+      'primary-color': '#fd8',
+    },
+  })],
+}));
+```
+
+antd 插件文档：[链接](../advanced/antd.md)
+
+##### build-plugin-css-assets-local
+
+插件替换为 `@ice/plugin-css-assets-local`，使用版本 1.0.2+，使用方式：
+
+```ts title="ice.config.mts"
+import { defineConfig } from '@ice/app';
+import cssAssetsLocal from '@ice/plugin-css-assets-local';
+
+export default defineConfig(() => ({
+  plugins: [
+    cssAssetsLocal(),
+  ],
+}));
+```
+
+css-assets-local 插件文档：[链接](../advanced/css-assets-local.md)
+
+##### build-plugin-jsx-plus
+
+插件替换为 `@ice/plugin-jsx-plus`，使用版本 1.0.4+，使用方式：
+
+```ts title="ice.config.mts"
+import { defineConfig } from '@ice/app';
+import jsxplus from '@ice/plugin-jsx-plus';
+
+export default defineConfig(() => ({
+  plugins: [
+    jsxplus({
+      // options
+    }),
+  ],
+}));
+```
+
+jsx-plus 插件文档：[链接](../advanced/jsx-plus.md)
+
+##### build-plugin-keep-alive
+
+ice 3 不再支持插件形式的 keep-alive 方案。由框架内置提供的 `<KeepAliveOutlet />` 组件替代。
+keep-alive 插件文档：[链接](../advanced/keep-alive.md)
 
 > 完成依赖升级后推荐重新安装依赖，即执行 npm update
 
@@ -50,12 +146,24 @@ export default defineConfig(() => ({
 
 为了获取更好的类型提示，ice 新版本中推荐使用 ts 文件进行配置，即在项目目录下新增 `ice.config.mts` 文件，原 json 中的能力支持情况如下：
 
+#### 命令行参数
+
 |  ice 2.x  | ice 3.0  | 备注  |
 |  ----  | ----  | ----  |
-| --port  | ✅ | - |
-| --host  | ✅ | - |
-| --config  | ✅ | - |
-| --disable-open  | ✅ | - |
+| --port  | --port | - |
+| --host  | --host | - |
+| --config  | --config | - |
+| --disable-open  | --no-open | - |
+| --disable-mock  | --no-mock | - |
+| --https  | --https | - |
+| --analyzer  | --analyzer | - |
+| --disable-assets  | ❌ | 不常用通过环境变量控制日志输出详细程度 |
+| --disable-reload  | ❌ | 配置禁止 fastRefresh |
+
+#### 配置项
+
+|  ice 2.x  | ice 3.0  | 备注  |
+|  ----  | ----  | ----  |
 | plugins  | ✅ | - |
 | alias  | ✅ | - |
 | publicPath  | ✅ | - |
@@ -67,9 +175,6 @@ export default defineConfig(() => ({
 | proxy | ✅ | - |
 | define | ✅ | - |
 | ssr | ✅ | - |
-| --disable-mock  | ✅ | - |
-| --https  | ✅ | - |
-| --analyzer  | ✅ | - |
 | dropLogLevel  | ✅ | - |
 | minify | ✅ | 简化配置（true/false） |
 | compileDependencies | ✅ | 配合现有的 compileIncludes 能力 |
@@ -78,8 +183,6 @@ export default defineConfig(() => ({
 | postcssOptions / postcssrc | ✅ | - |
 | polyfill | ✅ | 需要主动开启 |
 | remoteRuntime | ❌ | - |
-| --disable-assets  | ❌ | 不常用通过环境变量控制日志输出详细程度 |
-| --disable-reload  | ❌ | 配置禁止 fastRefresh |
 | terser | ❌ | 内置方案 |
 | outputAssetsPath | ❌ | 后续输出最佳目录实践 |
 | devServer | ❌ | 不支持全量配置 devServer，按需开启 server 相关能力 |
@@ -93,7 +196,7 @@ export default defineConfig(() => ({
 | swc | ❌ | - |
 | store / auth / request / pwa / router | ❌ | 通过定制的插件支持 |
 | disableRuntime | ❌ | - |
-| babelPlugins / babelPresets / webpackPlugins / webpackLoaders | ❌ | 不推荐直接配置 |
+| babelPlugins / babelPresets / webpackPlugins / webpackLoaders | ❌ | 不推荐直接配置，如果有定制需求通过 webpack 配置进行迁移 |
 
 ice.js 3 新版本中不再支持 vite 模式，并且 webpack 相关的快捷配置也不再支持。我们将会将内置的逻辑做到最优。如果存在 webpack 定制需求，可以参考如下自定义方式定制：
 
@@ -113,11 +216,11 @@ export default defineConfig(() => ({
     // 修改内置的 webpack 规则，借助官方工具可以更便捷的修改
     // 修改 css 样式规则下的 postcss-loader 配置项
     return modifyLoader(webpackConfig, {
-    rule: '.css',
-    loader: 'postcss-loader',
-    options: (originOptions) => ({}),
-  });
-  }
+      rule: '.css',
+      loader: 'postcss-loader',
+      options: (originOptions) => ({}),
+    });
+  },
 }));
 ```
 
