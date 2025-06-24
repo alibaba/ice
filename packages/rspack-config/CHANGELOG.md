@@ -1,5 +1,11 @@
 # @ice/rspack-config
 
+## 1.2.4
+
+### Patch Changes
+
+- 182929ca: feat: add support for custom loaders in rspack configuration
+
 ## 1.2.3
 
 ### Patch Changes
