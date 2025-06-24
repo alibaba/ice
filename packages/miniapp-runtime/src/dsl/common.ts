@@ -130,7 +130,7 @@ export function createPageConfig(
       this.config = miniappPageConfig || {};
 
       // this.$icePath 是页面唯一标识
-      const uniqueOptions = Object.assign({}, options);
+      const uniqueOptions = Object.assign({}, options, { $iceTimestamp: Date.now() });
       const $icePath = this.$icePath = getPath(id, uniqueOptions);
       // this.$iceParams 作为暴露给开发者的页面参数对象，可以被随意修改
       if (this.$iceParams == null) {

@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-i18n",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "I18n plugin for ice.js 3.",
   "files": [
     "es2017",
@@ -39,8 +39,8 @@
     "plugin"
   ],
   "dependencies": {
-    "@ice/jsx-runtime": "^0.3.1",
-    "@swc/helpers": "^0.5.1",
+    "@ice/jsx-runtime": "^0.3.2",
+    "@swc/helpers": "^0.5.17",
     "accept-language-parser": "^1.5.0",
     "universal-cookie": "^4.0.4",
     "url-join": "^5.0.0"
@@ -56,7 +56,7 @@
     "webpack-dev-server": "4.15.0"
   },
   "peerDependencies": {
-    "@ice/app": "^3.6.1",
+    "@ice/app": "^3.6.2",
     "@ice/runtime": "^1.5.2"
   },
   "publishConfig": {
