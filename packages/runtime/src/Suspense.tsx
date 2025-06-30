@@ -156,11 +156,6 @@ export function withSuspense(Component) {
         <SuspenseContext.Provider value={suspenseState}>
           <Component {...componentProps} />
           <Data id={id} />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `window.dispatchEvent(new CustomEvent('ice-suspense', { detail: { id: ${id ? `'${id}'` : undefined} } }));`,
-            }}
-          />
         </SuspenseContext.Provider>
       </React.Suspense>
     );
