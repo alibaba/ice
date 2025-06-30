@@ -184,6 +184,7 @@ export function createServerCompiler(options: Options) {
       // while it is not recommended
       loader: { '.js': 'jsx' },
       jsx: 'automatic',
+      minify: !dev,
       sourcemap: typeof sourceMap === 'boolean'
         // Transform sourceMap for esbuild.
         ? sourceMap : (sourceMap.includes('inline') ? 'inline' : !!sourceMap),
