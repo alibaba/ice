@@ -1,5 +1,11 @@
 # @ice/runtime
 
+## 1.5.3
+
+### Patch Changes
+
+- cc0792b0: feat: support custom props when render document
+
 ## 1.5.2
 
 ### Patch Changes
