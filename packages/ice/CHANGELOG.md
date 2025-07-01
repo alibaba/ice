@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.6.3
+
+### Patch Changes
+
+- cc0792b0: fix: minify server bundle when build in prod
+- Updated dependencies [cc0792b0]
+  - @ice/runtime@1.5.3
+
 ## 3.6.2
 
 ### Patch Changes
