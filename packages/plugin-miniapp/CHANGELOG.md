@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.6
+
+### Patch Changes
+
+- @ice/miniapp-runtime@1.2.5
+- @ice/miniapp-react-dom@1.1.5
+
 ## 1.2.5
 
 ### Patch Changes
