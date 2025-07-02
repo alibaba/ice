@@ -1,5 +1,11 @@
 # @ice/runtime
 
+## 1.5.4
+
+### Patch Changes
+
+- 1a0a2c1f: feat: Add custom event for suspense data updates, and remove ice-suspense custom event.
+
 ## 1.5.3
 
 ### Patch Changes
