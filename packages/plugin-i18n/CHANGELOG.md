@@ -1,5 +1,15 @@
 # @ice/plugin-i18n
 
+## 5.0.2
+
+### Patch Changes
+
+- 41951673: chore: update @swc/helpers to 0.5.17
+- Updated dependencies [41951673]
+- Updated dependencies [59414ba4]
+  - @ice/jsx-runtime@0.3.2
+  - @ice/app@3.6.2
+
 ## 5.0.1
 
 ### Patch Changes
