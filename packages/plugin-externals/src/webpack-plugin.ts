@@ -26,7 +26,9 @@ export default class InjectExternalScriptsWebpackPlugin {
           if (assetsManifest) {
             const json = JSON.parse(assetsManifest.source().toString());
             delete compilation.assets[ASSET_MANIFEST_JSON_NAME];
-            json.entries.main.unshift(...this.options.externals);
+            // Ensure externals array exists and add new externals at the beginning.
+            json.externals ||= [];
+            json.externals.unshift(...this.options.externals);
             compilation.emitAsset(
               ASSET_MANIFEST_JSON_NAME,
               new webpack.sources.RawSource(JSON.stringify(json)),

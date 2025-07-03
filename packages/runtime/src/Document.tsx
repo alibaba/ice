@@ -129,6 +129,9 @@ export const Scripts: ScriptsType = (props: ScriptsProps) => {
   return (
     <>
       <Data ScriptElement={ScriptElement} />
+      {assetsManifest.externals?.map(external => (
+        <ScriptElement key={external} src={external} {...rest} data-external-script />
+      ))}
       {
         routeScripts.map(routeScriptProps => {
           return <ScriptElement key={routeScriptProps.src} {...rest} {...routeScriptProps} data-route-script />;
