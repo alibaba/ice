@@ -47,7 +47,35 @@ const getHydrateData = (id: string) => {
   };
 };
 
-export function useSuspenseData(request?: Request) {
+class QueryClient {
+  queryCache: Map<string, Promise<any>>;
+
+  constructor() {
+    this.queryCache = new Map();
+  }
+
+  setQueryData(key: string, promise: Promise<any>) {
+    if (key) {
+      this.queryCache.set(key, promise);
+    }
+  }
+
+  getQueryData(key: string) {
+    return this.queryCache.get(key);
+  }
+
+  removeQueryData(key: string) {
+    this.queryCache.delete(key);
+  }
+}
+
+const queryClient = new QueryClient();
+
+interface SuspenseDataProps {
+  queryKey?: string;
+}
+
+export function useSuspenseData(request?: Request, options?: SuspenseDataProps) {
   const appContext = useAppContext();
   const { requestContext } = appContext;
   const suspenseState = React.useContext(SuspenseContext);
@@ -55,22 +83,26 @@ export function useSuspenseData(request?: Request) {
   const { data, done, promise, update, error, id } = suspenseState;
   const { hasHydrateData, data: hydrateData } = getHydrateData(id);
 
+  const queryInProcess = options?.queryKey && queryClient.getQueryData(options.queryKey);
   let thenable: Promise<any> = null;
-  if (!hasHydrateData && !error && !done && !promise && request) {
+  if (!hasHydrateData && !error && !done && !promise && request && !queryInProcess) {
     thenable = request(requestContext);
     thenable.then((response) => {
+      queryClient.removeQueryData(options?.queryKey);
       update({
         done: true,
         data: response,
         promise: null,
       });
     }).catch(e => {
+      queryClient.removeQueryData(options?.queryKey);
       update({
         done: true,
         error: e,
         promise: null,
       });
     });
+    queryClient.setQueryData(options?.queryKey, thenable);
   }
 
   React.useEffect(() => {
@@ -117,7 +149,12 @@ export function useSuspenseData(request?: Request) {
       promise: thenable,
     });
   }
-  throw thenable;
+  if (thenable) {
+    throw thenable;
+  } else {
+    // Throw a pending promise to Suspense, otherwise the component will be error because of undefined data.
+    throw (queryClient.getQueryData(options?.queryKey) || new Promise(() => {}));
+  }
 }
 
 interface SuspenseProps {
