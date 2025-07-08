@@ -205,6 +205,7 @@ export interface RouteModules {
 }
 
 export interface AssetsManifest {
+  externals?: string[];
   dataLoader?: string;
   publicPath: string;
   entries: {
