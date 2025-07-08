@@ -2157,7 +2157,7 @@ importers:
         version: 1.2.4
     devDependencies:
       '@ice/app':
-        specifier: ^3.6.4
+        specifier: ^3.6.3
         version: link:../ice
       '@ice/runtime':
         specifier: ^1.5.4
