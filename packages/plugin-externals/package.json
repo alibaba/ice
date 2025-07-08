@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-externals",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "plugin to make externals much easier in ice.js",
   "files": [
     "esm",
@@ -20,8 +20,8 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "@ice/app": "^3.3.2",
-    "@ice/runtime": "^1.2.9",
+    "@ice/app": "^3.6.4",
+    "@ice/runtime": "^1.5.4",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "webpack": "^5.88.0"

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.5
+
+### Patch Changes
+
+- Updated dependencies [4569200c]
+  - @ice/runtime@1.5.4
+
 ## 1.2.4
 
 ### Patch Changes
