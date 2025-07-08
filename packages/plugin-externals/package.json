@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-externals",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "plugin to make externals much easier in ice.js",
   "files": [
     "esm",
