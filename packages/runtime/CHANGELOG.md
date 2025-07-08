@@ -1,10 +1,16 @@
 # @ice/runtime
 
-## 1.5.4
+## 1.5.5
 
 ### Patch Changes
 
 - 4569200ca: fix: support externals field in assets-manifest
+
+## 1.5.4
+
+### Patch Changes
+
+- 1a0a2c1f: feat: Add custom event for suspense data updates, and remove ice-suspense custom event.
 
 ## 1.5.3
 
