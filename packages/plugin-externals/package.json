@@ -20,7 +20,7 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "@ice/app": "^3.6.4",
+    "@ice/app": "^3.3.2",
     "@ice/runtime": "^1.5.4",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
