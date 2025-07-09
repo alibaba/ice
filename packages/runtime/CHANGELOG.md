@@ -1,5 +1,11 @@
 # @ice/runtime
 
+## 1.5.5
+
+### Patch Changes
+
+- 4569200ca: fix: support externals field in assets-manifest
+
 ## 1.5.4
 
 ### Patch Changes
