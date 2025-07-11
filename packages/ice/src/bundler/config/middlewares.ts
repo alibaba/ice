@@ -6,9 +6,11 @@ import type { Config } from '@ice/shared-config/types';
 import createMockMiddleware from '../../middlewares/mock/createMiddleware.js';
 import createRenderMiddleware from '../../middlewares/renderMiddleware.js';
 import createDataLoaderMiddleware from '../../middlewares/dataLoaderMiddleware.js';
+import createProxyModuleMiddleware from '../../middlewares/proxyModuleMiddleware.js';
 import type { UserConfig } from '../../types/userConfig.js';
 import type RouteManifest from '../../utils/routeManifest.js';
 import type { GetAppConfig } from '../../types/plugin.js';
+import type Generator from '../../service/runtimeGenerator.js';
 
 interface SetupOptions {
   userConfig: UserConfig;
@@ -18,7 +20,9 @@ interface SetupOptions {
   excuteServerEntry: () => Promise<any>;
   mock: boolean;
   rootDir: string;
+  open?: boolean | string;
   dataLoaderCompiler?: Compiler;
+  generator?: Generator;
 }
 
 function setupMiddlewares(middlewares: Parameters<DevServerConfiguration['setupMiddlewares']>[0], {
@@ -30,8 +34,10 @@ function setupMiddlewares(middlewares: Parameters<DevServerConfiguration['setupM
   mock,
   rootDir,
   dataLoaderCompiler,
+  generator,
+  open,
 }: SetupOptions) {
-  const { ssr, ssg } = userConfig;
+  const { ssr, ssg, routes } = userConfig;
   let renderMode: RenderMode;
   // If ssr is set to true, use ssr for preview.
   if (ssr) {
@@ -54,6 +60,21 @@ function setupMiddlewares(middlewares: Parameters<DevServerConfiguration['setupM
   if (dataLoaderCompiler) {
     const dataLoaderMiddleware = createDataLoaderMiddleware(dataLoaderCompiler);
     middlewares.unshift(dataLoaderMiddleware);
+  }
+
+  if (routes?.lazyCompile) {
+    const proxyModuleMiddleware = createProxyModuleMiddleware({
+      manifest: routeManifest.getNestedRoute(),
+      rootDir,
+      generator,
+      defaultPath: typeof open === 'string' ? open : '/',
+    });
+    // @ts-ignore property of name is exist.
+    const staticIndex = middlewares.findIndex(({ name }) => name === 'express-static');
+    middlewares.splice(
+      staticIndex, 0,
+      proxyModuleMiddleware,
+    );
   }
 
   // @ts-ignore property of name is exist.
