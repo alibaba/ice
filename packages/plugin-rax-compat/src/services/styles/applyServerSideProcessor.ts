@@ -3,8 +3,9 @@ import fs from 'fs';
 import styleSheetLoader from '../../lib/transform-styles.js';
 
 import { checkInlineStyleEnable, checkStyleKind } from '../../utils.js';
-
 import type { ESBuildPlugin, NormalizedRaxCompatPluginOptions, PluginAPI } from '../../typings';
+import { createCSSImportPlugin } from './esbuildCSSImportPlugin.js';
+
 
 const ESBuildInlineStylePlugin = (options: NormalizedRaxCompatPluginOptions): ESBuildPlugin => {
   return {
@@ -45,9 +46,16 @@ export const applyServerSideStyleProcessor = (api: PluginAPI, options: Normalize
 
       const cssModuleIndex = currentOptions.plugins?.findIndex(({ name }) => name === 'esbuild-css-modules') as number;
 
+      // Add CSS import tilde transform plugin first
+      currentOptions.plugins?.splice(
+        cssModuleIndex >= 0 ? cssModuleIndex : 0,
+        0,
+        createCSSImportPlugin(),
+      );
+
       // Add custom transform for server compile.
       currentOptions.plugins?.splice(
-        options.cssModule ? cssModuleIndex + 1 : cssModuleIndex,
+        options.cssModule ? cssModuleIndex + 2 : cssModuleIndex + 1,
         0,
         ESBuildInlineStylePlugin(options),
       );

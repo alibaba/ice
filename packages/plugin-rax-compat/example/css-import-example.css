@@ -1,0 +1,23 @@
+/* 示例：CSS 中使用波浪号导入语法 */
+
+/* 导入第三方包的样式 */
+@import "~@ali/fusion-design/theme.css";
+@import "~antd/dist/antd.css";
+
+/* 导入内部包的样式 */
+@import "~@company/design-system/tokens.css";
+@import '~@internal/shared-styles/base.css';
+
+/* 常规导入（不受影响） */
+@import "./local-styles.css";
+@import url("https://cdn.example.com/remote.css");
+
+/* 组件样式 */
+.example-component {
+  color: var(--primary-color);
+  font-size: 16px;
+}
+
+.example-component:hover {
+  color: var(--primary-hover-color);
+}
