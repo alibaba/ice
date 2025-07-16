@@ -10,11 +10,11 @@
 
 ### 1. 服务端渲染（SSR/SSG）- ESBuild 插件
 
-**文件：** `esbuildCSSImportPlugin.ts`
+**文件：** `applyServerSideProcessor.ts`
 
-- 在 esbuild 构建过程中拦截 CSS 文件
-- 对包含 `~` 引入语法的文件进行转换
-- 优先级设置在 CSS 模块处理之前
+- 在 `ESBuildInlineStylePlugin` 中添加了 `onResolve` 钩子
+- 拦截以 `~` 开头的模块路径并解析为正确的 node_modules 路径
+- 支持模块解析和外部依赖标记
 
 ### 2. 内联样式处理
 
