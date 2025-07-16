@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { createRequire } from 'module';
 
 import styleSheetLoader from '../../lib/transform-styles.js';
 
@@ -11,6 +12,29 @@ const ESBuildInlineStylePlugin = (options: NormalizedRaxCompatPluginOptions): ES
   return {
     name: 'esbuild-inline-style',
     setup: (build) => {
+      build.onResolve({ filter: /\.(css|sass|scss|less)$/ }, async (args) => {
+        if (args.path.startsWith('~')) {
+          const cleanPath = args.path.slice(1);
+
+          try {
+            // Try to resolve as absolute path
+            const require = createRequire(args.importer || import.meta.url);
+            const resolvedPath = require.resolve(cleanPath);
+            return {
+              path: resolvedPath,
+              namespace: args.namespace,
+            };
+          } catch (resolveError) {
+            // If unable to resolve, mark as external dependency
+            return {
+              path: cleanPath,
+              external: true,
+            };
+          }
+        }
+        return null;
+      });
+
       build.onLoad({ filter: /\.(css|sass|scss|less)$/ }, async (args) => {
         if (checkInlineStyleEnable(args.path, options.inlineStyle) === false) {
           return null;
