@@ -131,7 +131,7 @@ export function withSuspense(Component) {
     const { fallback, id, ...componentProps } = props;
 
     function dispatchSuspenseEvent(event: string, id?: string) {
-      window.dispatchEvent(new CustomEvent(event, { detail: { id: id ? `${id}` : undefined } }));
+      window.dispatchEvent(new CustomEvent(event, { detail: { id: id || undefined } }));
     }
 
     const [suspenseState, updateSuspenseData] = React.useState({
@@ -194,10 +194,10 @@ interface InlineScriptProps {
 }
 
 function InlineScript(props: InlineScriptProps) {
-  const children = React.Children.map(props.children, content => content)?.join('') || '';
+  const children = React.Children.toArray(props.children).join('') || '';
   return (
     <script
-      id={props?.id}
+      id={props.id}
       dangerouslySetInnerHTML={{
         __html: children,
       }}
