@@ -130,6 +130,10 @@ export function withSuspense(Component) {
   return (props: SuspenseProps) => {
     const { fallback, id, ...componentProps } = props;
 
+    function dispatchSuspenseEvent(event: string, id?: string) {
+      window.dispatchEvent(new CustomEvent(event, { detail: { id: id ? `${id}` : undefined } }));
+    }
+
     const [suspenseState, updateSuspenseData] = React.useState({
       id: id,
       data: null,
@@ -153,10 +157,19 @@ export function withSuspense(Component) {
 
     return (
       <React.Suspense fallback={fallback || null}>
+        <InlineScript id={`suspense-parse-start-${id}`}>
+          {`(${dispatchSuspenseEvent.toString()})('ice-suspense-parse-start','${id}');`}
+        </InlineScript>
         <SuspenseContext.Provider value={suspenseState}>
           <Component {...componentProps} />
+          <InlineScript id={`suspense-parse-data-${id}`}>
+            {`(${dispatchSuspenseEvent.toString()})('ice-suspense-parse-data','${id}');`}
+          </InlineScript>
           <Data id={id} />
         </SuspenseContext.Provider>
+        <InlineScript id={`suspense-parse-end-${id}`}>
+          {`(${dispatchSuspenseEvent.toString()})('ice-suspense-parse-end','${id}');`}
+        </InlineScript>
       </React.Suspense>
     );
   };
@@ -171,6 +184,24 @@ function Data(props) {
       dangerouslySetInnerHTML={{
         __html: `!function(){window['${LOADER}'] = window['${LOADER}'] || {};window['${LOADER}']['${props.id}'] = ${JSON.stringify(data)}}();window.dispatchEvent(new CustomEvent('ice-suspense-data', { detail: { id: ${props.id ? `'${props.id}'` : undefined} } }));`,
       }}
+    />
+  );
+}
+
+interface InlineScriptProps {
+  id: string;
+  children: React.ReactNode;
+}
+
+function InlineScript(props: InlineScriptProps) {
+  const children = React.Children.map(props.children, content => content)?.join('') || '';
+  return (
+    <script
+      id={props?.id}
+      dangerouslySetInnerHTML={{
+        __html: children,
+      }}
+      suppressHydrationWarning
     />
   );
 }
