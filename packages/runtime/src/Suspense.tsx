@@ -157,19 +157,22 @@ export function withSuspense(Component) {
 
     return (
       <React.Suspense fallback={fallback || null}>
-        <InlineScript id={`suspense-parse-start-${id}`}>
-          {`(${dispatchSuspenseEvent.toString()})('ice-suspense-parse-start','${id}');`}
-        </InlineScript>
+        <InlineScript
+          id={`suspense-parse-start-${id}`}
+          script={`(${dispatchSuspenseEvent.toString()})('ice-suspense-parse-start','${id}');`}
+        />
         <SuspenseContext.Provider value={suspenseState}>
           <Component {...componentProps} />
-          <InlineScript id={`suspense-parse-data-${id}`}>
-            {`(${dispatchSuspenseEvent.toString()})('ice-suspense-parse-data','${id}');`}
-          </InlineScript>
+          <InlineScript
+            id={`suspense-parse-data-${id}`}
+            script={`(${dispatchSuspenseEvent.toString()})('ice-suspense-parse-data','${id}');`}
+          />
           <Data id={id} />
         </SuspenseContext.Provider>
-        <InlineScript id={`suspense-parse-end-${id}`}>
-          {`(${dispatchSuspenseEvent.toString()})('ice-suspense-parse-end','${id}');`}
-        </InlineScript>
+        <InlineScript
+          id={`suspense-parse-end-${id}`}
+          script={`(${dispatchSuspenseEvent.toString()})('ice-suspense-parse-end','${id}');`}
+        />
       </React.Suspense>
     );
   };
@@ -190,16 +193,15 @@ function Data(props) {
 
 interface InlineScriptProps {
   id: string;
-  children: React.ReactNode;
+  script: string;
 }
 
 function InlineScript(props: InlineScriptProps) {
-  const children = React.Children.toArray(props.children).join('') || '';
   return (
     <script
       id={props.id}
       dangerouslySetInnerHTML={{
-        __html: children,
+        __html: props.script,
       }}
       suppressHydrationWarning
     />
