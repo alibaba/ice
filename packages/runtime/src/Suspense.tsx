@@ -126,13 +126,14 @@ interface SuspenseProps {
   [key: string]: any;
 }
 
+function dispatchSuspenseEvent(event: string, id: string) {
+  window.dispatchEvent(new CustomEvent(event, { detail: { id } }));
+}
+const DISPATCH_SUSPENSE_EVENT_STRING = dispatchSuspenseEvent.toString();
+
 export function withSuspense(Component) {
   return (props: SuspenseProps) => {
     const { fallback, id, ...componentProps } = props;
-
-    function dispatchSuspenseEvent(event: string, id?: string) {
-      window.dispatchEvent(new CustomEvent(event, { detail: { id: id || undefined } }));
-    }
 
     const [suspenseState, updateSuspenseData] = React.useState({
       id: id,
@@ -159,19 +160,19 @@ export function withSuspense(Component) {
       <React.Suspense fallback={fallback || null}>
         <InlineScript
           id={`suspense-parse-start-${id}`}
-          script={`(${dispatchSuspenseEvent.toString()})('ice-suspense-parse-start','${id}');`}
+          script={`(${DISPATCH_SUSPENSE_EVENT_STRING})('ice-suspense-parse-start','${id}');`}
         />
         <SuspenseContext.Provider value={suspenseState}>
           <Component {...componentProps} />
           <InlineScript
             id={`suspense-parse-data-${id}`}
-            script={`(${dispatchSuspenseEvent.toString()})('ice-suspense-parse-data','${id}');`}
+            script={`(${DISPATCH_SUSPENSE_EVENT_STRING})('ice-suspense-parse-data','${id}');`}
           />
           <Data id={id} />
         </SuspenseContext.Provider>
         <InlineScript
           id={`suspense-parse-end-${id}`}
-          script={`(${dispatchSuspenseEvent.toString()})('ice-suspense-parse-end','${id}');`}
+          script={`(${DISPATCH_SUSPENSE_EVENT_STRING})('ice-suspense-parse-end','${id}');`}
         />
       </React.Suspense>
     );
