@@ -1,5 +1,11 @@
 # @ice/runtime
 
+## 1.5.6
+
+### Patch Changes
+
+- d55e34bc: feat: add suspense event dispatch in Suspense component
+
 ## 1.5.5
 
 ### Patch Changes
