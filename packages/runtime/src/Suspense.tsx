@@ -126,6 +126,11 @@ interface SuspenseProps {
   [key: string]: any;
 }
 
+function dispatchSuspenseEvent(event: string, id: string) {
+  window.dispatchEvent(new CustomEvent(event, { detail: { id } }));
+}
+const DISPATCH_SUSPENSE_EVENT_STRING = dispatchSuspenseEvent.toString();
+
 export function withSuspense(Component) {
   return (props: SuspenseProps) => {
     const { fallback, id, ...componentProps } = props;
@@ -153,10 +158,22 @@ export function withSuspense(Component) {
 
     return (
       <React.Suspense fallback={fallback || null}>
+        <InlineScript
+          id={`suspense-parse-start-${id}`}
+          script={`(${DISPATCH_SUSPENSE_EVENT_STRING})('ice-suspense-parse-start','${id}');`}
+        />
         <SuspenseContext.Provider value={suspenseState}>
           <Component {...componentProps} />
+          <InlineScript
+            id={`suspense-parse-data-${id}`}
+            script={`(${DISPATCH_SUSPENSE_EVENT_STRING})('ice-suspense-parse-data','${id}');`}
+          />
           <Data id={id} />
         </SuspenseContext.Provider>
+        <InlineScript
+          id={`suspense-parse-end-${id}`}
+          script={`(${DISPATCH_SUSPENSE_EVENT_STRING})('ice-suspense-parse-end','${id}');`}
+        />
       </React.Suspense>
     );
   };
@@ -171,6 +188,23 @@ function Data(props) {
       dangerouslySetInnerHTML={{
         __html: `!function(){window['${LOADER}'] = window['${LOADER}'] || {};window['${LOADER}']['${props.id}'] = ${JSON.stringify(data)}}();window.dispatchEvent(new CustomEvent('ice-suspense-data', { detail: { id: ${props.id ? `'${props.id}'` : undefined} } }));`,
       }}
+    />
+  );
+}
+
+interface InlineScriptProps {
+  id: string;
+  script: string;
+}
+
+function InlineScript(props: InlineScriptProps) {
+  return (
+    <script
+      id={props.id}
+      dangerouslySetInnerHTML={{
+        __html: props.script,
+      }}
+      suppressHydrationWarning
     />
   );
 }
