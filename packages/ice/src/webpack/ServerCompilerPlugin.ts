@@ -14,7 +14,7 @@ export default class ServerCompilerPlugin {
   private isCompiling: boolean;
   private task: ReturnType<ServerCompiler>;
   private compilerOptions: Parameters<ServerCompiler>[1];
-  public buildResult: ServerBuildResult;
+  public buildResult: ServerBuildResult & { assetsManifestChanged?: boolean };
 
   public constructor(
     serverCompiler: ServerCompiler,
@@ -36,10 +36,17 @@ export default class ServerCompilerPlugin {
   public compileTask = async (compilation?: Compilation) => {
     const [buildOptions] = this.serverCompilerOptions;
     if (!this.isCompiling) {
+      let assetsManifestChanged = false;
       if (compilation) {
         // Option of compilationInfo need to be object, while it may changed during multi-time compilation.
-        this.compilerOptions.compilationInfo.assetsManifest =
-          JSON.parse(compilation.getAsset('assets-manifest.json').source.source().toString());
+        const newAssetsManifest = JSON.parse(compilation.getAsset('assets-manifest.json').source.source().toString());
+        const oldAssetsManifest = this.compilerOptions.compilationInfo.assetsManifest;
+
+        // Check if assets manifest has changed
+        if (JSON.stringify(oldAssetsManifest) !== JSON.stringify(newAssetsManifest)) {
+          assetsManifestChanged = true;
+          this.compilerOptions.compilationInfo.assetsManifest = newAssetsManifest;
+        }
       }
       // For first time, we create a new task.
       // The next time, we use incremental build so do not create task again.
@@ -51,6 +58,9 @@ export default class ServerCompilerPlugin {
             this.task = null;
           }
         });
+      } else if (assetsManifestChanged && this.buildResult?.context?.rebuild) {
+        // Force rebuild when assets manifest changes
+        this.buildResult.assetsManifestChanged = true;
       }
     }
   };
@@ -64,8 +74,9 @@ export default class ServerCompilerPlugin {
       this.isCompiling = false;
       await this.compileTask(compilation);
 
-      const compilerTask = this.buildResult?.context.rebuild
-        ? this.buildResult.context.rebuild()
+      let compilerTask: Promise<ServerBuildResult>;
+      if (this.buildResult?.context.rebuild && !this.buildResult?.assetsManifestChanged) {
+        compilerTask = this.buildResult.context.rebuild()
           .then((result) => {
             return {
               // Pass original buildResult, because it's returned serverEntry.
@@ -75,8 +86,20 @@ export default class ServerCompilerPlugin {
           })
           .catch(({ errors }) => {
             return { error: errors };
-          })
-        : this.task;
+          });
+      } else if (this.buildResult?.assetsManifestChanged) {
+        compilerTask = (async () => {
+          // When assets manifest changes, force full rebuild to get fresh document
+          this.buildResult.assetsManifestChanged = false;
+          this.task = this.serverCompiler(this.serverCompilerOptions[0], this.compilerOptions);
+          const newBuildResult = await this.task;
+          this.buildResult = newBuildResult;
+          return newBuildResult;
+        })();
+      } else {
+        compilerTask = this.task;
+      }
+
       if (this.serverCompileTask) {
         this.serverCompileTask.set(compilerTask);
       } else {
