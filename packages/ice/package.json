@@ -8,7 +8,8 @@
     ".": "./esm/index.js",
     "./types": "./esm/types/index.js",
     "./analyze": "./esm/service/analyze.js",
-    "./service": "./esm/createService.js"
+    "./service": "./esm/createService.js",
+    "./router": "./esm/routes.js"
   },
   "typesVersions": {
     "*": {
@@ -17,6 +18,9 @@
       ],
       "service": [
         "./esm/createService.d.ts"
+      ],
+      "router": [
+        "./esm/routes.d.ts"
       ]
     }
   },
