@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.6.5
+
+- hotfix: add isPHA and isKraken env for backward compatibility.
+
 ## 3.6.4
 
 ### Patch Changes
