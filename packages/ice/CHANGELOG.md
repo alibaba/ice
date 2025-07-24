@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.6.4
+
+### Patch Changes
+
+- 0dd4aab0: refactor: add env for themis, delete PHA/Kraken, simplize WindVane
+- Updated dependencies [d55e34bc]
+  - @ice/runtime@1.5.6
+
 ## 3.6.3
 
 ### Patch Changes
