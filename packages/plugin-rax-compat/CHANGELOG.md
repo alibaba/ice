@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.1
+
+### Patch Changes
+
+- 41cbaa9c: Support css build
+
 ## 0.4.0
 
 ### Minor Changes
