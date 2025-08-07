@@ -4,7 +4,9 @@ import fse from 'fs-extra';
 import temp from 'temp';
 import cssModules from '@ice/bundles/compiled/postcss-modules/index.js';
 import { less, sass, postcss } from '@ice/bundles';
-import type { Plugin, PluginBuild, OnResolveArgs, OnResolveResult, OnLoadArgs, OnLoadResult } from 'esbuild';
+import type { Plugin, PluginBuild, OnResolveArgs, OnLoadArgs, OnLoadResult } from 'esbuild';
+import { resolveId } from '../service/analyze.js';
+import type { AliasWithEmpty } from '../service/analyze.js';
 
 const cssModulesStyleFilter = /\.module\.(css|sass|scss|less)$/;
 const STYLE_HANDLER_NAMESPACE = 'style-handler-namespace';
@@ -12,6 +14,7 @@ const STYLE_HANDLER_NAMESPACE = 'style-handler-namespace';
 type GenerateScopedNameFunction = (name: string, filename: string, css: string) => string;
 
 interface PluginOptions {
+  alias: AliasWithEmpty;
   /** extract css files, default is true */
   extract?: false;
   /** css classname identifier default is `[hash:base64]` */
@@ -24,22 +27,21 @@ const cssModulesPlugin = (options: PluginOptions): Plugin => {
   return {
     name: 'esbuild-css-modules',
     setup: async (build: PluginBuild) => {
-      build.onResolve({ filter: cssModulesStyleFilter }, onResolve);
+      build.onResolve({ filter: cssModulesStyleFilter }, (args: OnResolveArgs) => {
+        const { resolveDir } = args;
+        const resolvePath = args.path ? resolveId(args.path, options.alias) : '';
+        const absolutePath = path.resolve(resolveDir, resolvePath && typeof resolvePath === 'string' ? resolvePath : args.path);
+        // Generate css and put it in the `STYLE_HANDLER_NAMESPACE` namespace to handle css file
+        return {
+          path: absolutePath,
+          namespace: STYLE_HANDLER_NAMESPACE,
+        };
+      });
 
       build.onLoad({ filter: /.*/, namespace: STYLE_HANDLER_NAMESPACE }, onStyleLoad(options));
     },
   };
 };
-
-async function onResolve(args: OnResolveArgs): Promise<OnResolveResult> {
-  const { resolveDir } = args;
-  const absolutePath = path.resolve(resolveDir, args.path);
-  // Generate css and put it in the `STYLE_HANDLER_NAMESPACE` namespace to handle css file
-  return {
-    path: absolutePath,
-    namespace: STYLE_HANDLER_NAMESPACE,
-  };
-}
 
 /**
  * parse less/scss/css-modules to css
