@@ -15,7 +15,7 @@ import { createLogger } from '../utils/logger.js';
 const logger = createLogger('scan-modules');
 
 type Alias = Record<string, string>;
-type AliasWithEmpty = Record<string, string | false>;
+export type AliasWithEmpty = Record<string, string | false>;
 
 interface Options {
   parallel?: number;
