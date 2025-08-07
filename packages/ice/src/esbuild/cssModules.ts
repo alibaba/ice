@@ -29,7 +29,7 @@ const cssModulesPlugin = (options: PluginOptions): Plugin => {
     setup: async (build: PluginBuild) => {
       build.onResolve({ filter: cssModulesStyleFilter }, (args: OnResolveArgs) => {
         const { resolveDir } = args;
-        const resolvePath = args.path ? resolveId(args.path, options.alias) : '';
+        const resolvePath = !args.path.startsWith('.') ? resolveId(args.path, options.alias) : '';
         const absolutePath = path.resolve(resolveDir, resolvePath && typeof resolvePath === 'string' ? resolvePath : args.path);
         // Generate css and put it in the `STYLE_HANDLER_NAMESPACE` namespace to handle css file
         return {
