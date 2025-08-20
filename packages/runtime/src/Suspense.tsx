@@ -135,7 +135,8 @@ export function withSuspense(Component) {
   return (props: SuspenseProps) => {
     const { fallback, id, ...componentProps } = props;
 
-    const [suspenseState, updateSuspenseData] = React.useState({
+
+    const [suspenseState, updateSuspenseData] = React.useState<SuspenseState>({
       id: id,
       data: null,
       done: false,
@@ -156,24 +157,44 @@ export function withSuspense(Component) {
       updateSuspenseData(newState);
     }
 
-    return (
-      <React.Suspense fallback={fallback || null}>
+
+    // Get SuspenseWrappers from app context
+    const { SuspenseWrappers = [] } = useAppContext();
+
+    // Compose SuspenseWrappers
+    const composeSuspenseWrappers = (children: React.ReactNode) => {
+      if (!SuspenseWrappers.length) return children;
+
+      return SuspenseWrappers.reduce((WrappedComponent, wrapperConfig) => {
+        const { Wrapper } = wrapperConfig;
+        return <Wrapper id={id}>{WrappedComponent}</Wrapper>;
+      }, children);
+    };
+
+    const wrappedComponent = (
+      <>
         <InlineScript
           id={`suspense-parse-start-${id}`}
           script={`(${DISPATCH_SUSPENSE_EVENT_STRING})('ice-suspense-parse-start','${id}');`}
         />
-        <SuspenseContext.Provider value={suspenseState}>
-          <Component {...componentProps} />
-          <InlineScript
-            id={`suspense-parse-data-${id}`}
-            script={`(${DISPATCH_SUSPENSE_EVENT_STRING})('ice-suspense-parse-data','${id}');`}
-          />
-          <Data id={id} />
-        </SuspenseContext.Provider>
+        <Component {...componentProps} />
+        <InlineScript
+          id={`suspense-parse-data-${id}`}
+          script={`(${DISPATCH_SUSPENSE_EVENT_STRING})('ice-suspense-parse-data','${id}');`}
+        />
+        <Data id={id} />
         <InlineScript
           id={`suspense-parse-end-${id}`}
           script={`(${DISPATCH_SUSPENSE_EVENT_STRING})('ice-suspense-parse-end','${id}');`}
         />
+      </>
+    );
+
+    return (
+      <React.Suspense fallback={fallback || null}>
+        <SuspenseContext.Provider value={suspenseState}>
+          {composeSuspenseWrappers(wrappedComponent)}
+        </SuspenseContext.Provider>
       </React.Suspense>
     );
   };
