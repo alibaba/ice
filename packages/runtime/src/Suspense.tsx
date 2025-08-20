@@ -162,13 +162,6 @@ export function withSuspense(Component) {
     const { SuspenseWrappers = [] } = useAppContext();
 
     // Compose SuspenseWrappers
-    const composeSuspenseWrappers = (children: React.ReactNode) => {
-      if (!SuspenseWrappers.length) return children;
-
-      return SuspenseWrappers.reduce((WrappedComponent, wrapperConfig) => {
-        const { Wrapper } = wrapperConfig;
-        return <Wrapper id={id}>{WrappedComponent}</Wrapper>;
-      }, children);
     const composeSuspenseWrappers = React.useCallback(
       (children: React.ReactNode) => {
         if (!SuspenseWrappers.length) return children;
@@ -178,7 +171,7 @@ export function withSuspense(Component) {
           return <Wrapper id={id}>{WrappedComponent}</Wrapper>;
         }, children);
       },
-      [SuspenseWrappers, id]
+      [SuspenseWrappers, id],
     );
 
     const wrappedComponent = (
