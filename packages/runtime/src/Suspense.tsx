@@ -169,7 +169,17 @@ export function withSuspense(Component) {
         const { Wrapper } = wrapperConfig;
         return <Wrapper id={id}>{WrappedComponent}</Wrapper>;
       }, children);
-    };
+    const composeSuspenseWrappers = React.useCallback(
+      (children: React.ReactNode) => {
+        if (!SuspenseWrappers.length) return children;
+
+        return SuspenseWrappers.reduce((WrappedComponent, wrapperConfig) => {
+          const { Wrapper } = wrapperConfig;
+          return <Wrapper id={id}>{WrappedComponent}</Wrapper>;
+        }, children);
+      },
+      [SuspenseWrappers, id]
+    );
 
     const wrappedComponent = (
       <>
