@@ -29,7 +29,10 @@ const cssModulesPlugin = (options: PluginOptions): Plugin => {
     setup: async (build: PluginBuild) => {
       build.onResolve({ filter: cssModulesStyleFilter }, (args: OnResolveArgs) => {
         const { resolveDir } = args;
-        const resolvePath = !args.path.startsWith('.') ? resolveId(args.path, options.alias) : '';
+        // Only apply alias resolution to bare imports (not relative or absolute paths)
+        const isRelative = args.path.startsWith('./') || args.path.startsWith('../');
+        const isAbsolute = path.isAbsolute(args.path);
+        const resolvePath = (!isRelative && !isAbsolute) ? resolveId(args.path, options.alias) : '';
         const absolutePath = path.resolve(resolveDir, resolvePath && typeof resolvePath === 'string' ? resolvePath : args.path);
         // Generate css and put it in the `STYLE_HANDLER_NAMESPACE` namespace to handle css file
         return {
