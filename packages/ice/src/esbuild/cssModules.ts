@@ -33,7 +33,7 @@ const cssModulesPlugin = (options: PluginOptions): Plugin => {
         const isRelative = args.path.startsWith('./') || args.path.startsWith('../');
         const isAbsolute = path.isAbsolute(args.path);
         const resolvePath = (!isRelative && !isAbsolute) ? resolveId(args.path, options.alias) : '';
-        const absolutePath = path.resolve(resolveDir, resolvePath && typeof resolvePath === 'string' ? resolvePath : args.path);
+        const absolutePath = path.resolve(resolveDir, resolvePath ? resolvePath : args.path);
         // Generate css and put it in the `STYLE_HANDLER_NAMESPACE` namespace to handle css file
         return {
           path: absolutePath,
