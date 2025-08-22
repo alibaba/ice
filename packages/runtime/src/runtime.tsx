@@ -12,7 +12,9 @@ import type {
   SetAppRouter,
   AddProvider,
   AddWrapper,
+  AddSuspenseWrapper,
   RouteWrapperConfig,
+  SuspenseWrapperConfig,
   SetRender,
   AppRouterProps,
   ComponentWithChildren,
@@ -33,6 +35,8 @@ class Runtime {
 
   private RouteWrappers: RouteWrapperConfig[];
 
+  private SuspenseWrappers: SuspenseWrapperConfig[];
+
   private render: Renderer;
 
   private responseHandlers: ResponseHandler[];
@@ -46,6 +50,7 @@ class Runtime {
       return root;
     };
     this.RouteWrappers = [];
+    this.SuspenseWrappers = [];
     this.runtimeOptions = runtimeOptions;
     this.responseHandlers = [];
     this.getAppRouter = this.getAppRouter.bind(this);
@@ -55,6 +60,7 @@ class Runtime {
     return {
       ...this.appContext,
       RouteWrappers: this.RouteWrappers,
+      SuspenseWrappers: this.SuspenseWrappers,
     };
   };
 
@@ -72,6 +78,8 @@ class Runtime {
 
   public getWrappers = () => this.RouteWrappers;
 
+  public getSuspenseWrappers = () => this.SuspenseWrappers;
+
   public loadModule(module: RuntimePlugin | StaticRuntimePlugin | CommonJsRuntime) {
     let runtimeAPI: RuntimeAPI = {
       addProvider: this.addProvider,
@@ -80,6 +88,7 @@ class Runtime {
       getAppRouter: this.getAppRouter,
       setRender: this.setRender,
       addWrapper: this.addWrapper,
+      addSuspenseWrapper: this.addSuspenseWrapper,
       appContext: this.appContext,
       setAppRouter: this.setAppRouter,
       useData: process.env.ICE_CORE_ROUTER === 'true' ? useData : useSingleRouterData,
@@ -119,6 +128,12 @@ class Runtime {
     this.RouteWrappers.push({
       Wrapper,
       layout: forLayout,
+    });
+  };
+
+  private addSuspenseWrapper: AddSuspenseWrapper = (Wrapper) => {
+    this.SuspenseWrappers.push({
+      Wrapper,
     });
   };
 
