@@ -50,7 +50,7 @@
     "sax": "^1.2.4"
   },
   "devDependencies": {
-    "@ice/app": "^3.6.5",
+    "@ice/app": "^3.6.4",
     "@ice/runtime": "^1.5.7",
     "webpack": "^5.88.0"
   },
