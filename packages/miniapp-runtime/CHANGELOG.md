@@ -1,12 +1,5 @@
 # Changelog
 
-## 1.2.7
-
-### Patch Changes
-
-- Updated dependencies [4ff29969c]
-  - @ice/runtime@1.5.7
-
 ## 1.2.6
 
 ### Patch Changes
