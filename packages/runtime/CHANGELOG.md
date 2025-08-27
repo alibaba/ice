@@ -1,5 +1,11 @@
 # @ice/runtime
 
+## 1.5.7
+
+### Patch Changes
+
+- 4ff29969c: feat: add SuspenseWrappers to Runtime
+
 ## 1.5.6
 
 ### Patch Changes
