@@ -209,6 +209,7 @@ export function createServerCompiler(options: Options) {
         }),
         server?.ignores && ignorePlugin(server.ignores),
         cssModulesPlugin({
+          alias,
           extract: false,
           generateLocalIdentName: function (name: string, fileName: string) {
             // Compatible with webpack css-loader.

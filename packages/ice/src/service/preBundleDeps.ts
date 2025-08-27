@@ -157,6 +157,7 @@ export async function bundleDeps(options:
       emptyCSSPlugin(),
       externalPlugin({ ignores, format: 'esm', externalDependencies: false }),
       cssModulesPlugin({
+        alias,
         extract: false,
         generateLocalIdentName: function (name: string, fileName: string) {
           return getCSSModuleIdent({
