@@ -128,7 +128,7 @@ export function defineRoutes(
       ? parentRoutes[parentRoutes.length - 1]
       : undefined;
 
-    const id = createRouteId(file, path, parentRoute?.id || parentRoute?.path, options.index);
+    const id = createRouteId(file, path, parentRoute?.id, options.index);
     const route: ConfigRoute = {
       path,
       index: options.index ? true : undefined,
