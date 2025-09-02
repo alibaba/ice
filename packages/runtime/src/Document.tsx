@@ -1,7 +1,7 @@
 import * as React from 'react';
-import type { WindowContext, RouteMatch, AssetsManifest } from './types.js';
 import { useAppContext, useAppData } from './AppContext.js';
-import { getMeta, getTitle, getLinks, getScripts } from './routesConfig.js';
+import { getLinks, getMeta, getScripts, getTitle } from './routesConfig.js';
+import type { AssetsManifest, RouteMatch, WindowContext } from './types.js';
 import getCurrentRoutePath from './utils/getCurrentRoutePath.js';
 
 interface DocumentContext {
@@ -81,7 +81,15 @@ export const Links: LinksType = (props: LinksProps) => {
   const routeLinks = getLinks(matches, loaderData);
   const pageAssets = getPageAssets(matches, assetsManifest);
   const entryAssets = getEntryAssets(assetsManifest);
-  const styles = entryAssets.concat(pageAssets).filter(path => path.indexOf('.css') > -1);
+  let styles = entryAssets.concat(pageAssets).filter(path => path.indexOf('.css') > -1);
+
+  // Unique styles for duplicate CSS files.
+  const cssSet = {};
+  styles = styles.filter((style) => {
+    if (cssSet[style]) return false;
+    cssSet[style] = true;
+    return true;
+  });
 
   return (
     <>
