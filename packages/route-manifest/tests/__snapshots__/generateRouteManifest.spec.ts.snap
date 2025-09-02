@@ -2,42 +2,6 @@
 
 exports[`generateRouteManifest function > basic-routes 1`] = `
 {
-  "/": {
-    "componentName": "index",
-    "file": "index.tsx",
-    "id": "/",
-    "index": true,
-    "layout": false,
-    "parentId": "layout",
-    "path": undefined,
-  },
-  "About": {
-    "componentName": "about-index",
-    "file": "About/index.tsx",
-    "id": "About",
-    "index": true,
-    "layout": false,
-    "parentId": "layout",
-    "path": "About",
-  },
-  "About/me": {
-    "componentName": "about-me-index",
-    "file": "About/me/index.tsx",
-    "id": "About/me",
-    "index": true,
-    "layout": false,
-    "parentId": "layout",
-    "path": "About/me",
-  },
-  "home": {
-    "componentName": "home",
-    "file": "home.tsx",
-    "id": "home",
-    "index": undefined,
-    "layout": false,
-    "parentId": "layout",
-    "path": "home",
-  },
   "layout": {
     "componentName": "layout",
     "file": "layout.tsx",
@@ -47,20 +11,47 @@ exports[`generateRouteManifest function > basic-routes 1`] = `
     "parentId": undefined,
     "path": undefined,
   },
-}
-`;
-
-exports[`generateRouteManifest function > define-extra-routes 1`] = `
-{
-  "/": {
+  "layout/": {
     "componentName": "index",
     "file": "index.tsx",
-    "id": "/",
+    "id": "layout/",
     "index": true,
     "layout": false,
     "parentId": "layout",
     "path": undefined,
   },
+  "layout/About": {
+    "componentName": "about-index",
+    "file": "About/index.tsx",
+    "id": "layout/About",
+    "index": true,
+    "layout": false,
+    "parentId": "layout",
+    "path": "About",
+  },
+  "layout/About/me": {
+    "componentName": "about-me-index",
+    "file": "About/me/index.tsx",
+    "id": "layout/About/me",
+    "index": true,
+    "layout": false,
+    "parentId": "layout",
+    "path": "About/me",
+  },
+  "layout/home": {
+    "componentName": "home",
+    "file": "home.tsx",
+    "id": "layout/home",
+    "index": undefined,
+    "layout": false,
+    "parentId": "layout",
+    "path": "home",
+  },
+}
+`;
+
+exports[`generateRouteManifest function > define-extra-routes 1`] = `
+{
   "/about-me": {
     "componentName": "about-index",
     "file": "About/index.tsx",
@@ -70,24 +61,6 @@ exports[`generateRouteManifest function > define-extra-routes 1`] = `
     "parentId": undefined,
     "path": "/about-me",
   },
-  "About/me": {
-    "componentName": "about-me-index",
-    "file": "About/me/index.tsx",
-    "id": "About/me",
-    "index": true,
-    "layout": false,
-    "parentId": "layout",
-    "path": "About/me",
-  },
-  "home": {
-    "componentName": "home",
-    "file": "home.tsx",
-    "id": "home",
-    "index": undefined,
-    "layout": false,
-    "parentId": "layout",
-    "path": "home",
-  },
   "layout": {
     "componentName": "layout",
     "file": "layout.tsx",
@@ -96,21 +69,39 @@ exports[`generateRouteManifest function > define-extra-routes 1`] = `
     "layout": true,
     "parentId": undefined,
     "path": undefined,
+  },
+  "layout/": {
+    "componentName": "index",
+    "file": "index.tsx",
+    "id": "layout/",
+    "index": true,
+    "layout": false,
+    "parentId": "layout",
+    "path": undefined,
+  },
+  "layout/About/me": {
+    "componentName": "about-me-index",
+    "file": "About/me/index.tsx",
+    "id": "layout/About/me",
+    "index": true,
+    "layout": false,
+    "parentId": "layout",
+    "path": "About/me",
+  },
+  "layout/home": {
+    "componentName": "home",
+    "file": "home.tsx",
+    "id": "layout/home",
+    "index": undefined,
+    "layout": false,
+    "parentId": "layout",
+    "path": "home",
   },
 }
 `;
 
 exports[`generateRouteManifest function > doc-delimeters-routes 1`] = `
 {
-  "home/news": {
-    "componentName": "home.news",
-    "file": "home.news.tsx",
-    "id": "home/news",
-    "index": undefined,
-    "layout": false,
-    "parentId": "layout",
-    "path": "home/news",
-  },
   "layout": {
     "componentName": "layout",
     "file": "layout.tsx",
@@ -119,6 +110,15 @@ exports[`generateRouteManifest function > doc-delimeters-routes 1`] = `
     "layout": true,
     "parentId": undefined,
     "path": undefined,
+  },
+  "layout/home/news": {
+    "componentName": "home.news",
+    "file": "home.news.tsx",
+    "id": "layout/home/news",
+    "index": undefined,
+    "layout": false,
+    "parentId": "layout",
+    "path": "home/news",
   },
 }
 `;
@@ -189,33 +189,6 @@ exports[`generateRouteManifest function > escape-routes 1`] = `
 
 exports[`generateRouteManifest function > ignore-routes 1`] = `
 {
-  "/": {
-    "componentName": "index",
-    "file": "index.tsx",
-    "id": "/",
-    "index": true,
-    "layout": false,
-    "parentId": "layout",
-    "path": undefined,
-  },
-  "About/me": {
-    "componentName": "about-me-index",
-    "file": "About/me/index.tsx",
-    "id": "About/me",
-    "index": true,
-    "layout": false,
-    "parentId": "layout",
-    "path": "About/me",
-  },
-  "home": {
-    "componentName": "home",
-    "file": "home.tsx",
-    "id": "home",
-    "index": undefined,
-    "layout": false,
-    "parentId": "layout",
-    "path": "home",
-  },
   "layout": {
     "componentName": "layout",
     "file": "layout.tsx",
@@ -224,75 +197,39 @@ exports[`generateRouteManifest function > ignore-routes 1`] = `
     "layout": true,
     "parentId": undefined,
     "path": undefined,
+  },
+  "layout/": {
+    "componentName": "index",
+    "file": "index.tsx",
+    "id": "layout/",
+    "index": true,
+    "layout": false,
+    "parentId": "layout",
+    "path": undefined,
+  },
+  "layout/About/me": {
+    "componentName": "about-me-index",
+    "file": "About/me/index.tsx",
+    "id": "layout/About/me",
+    "index": true,
+    "layout": false,
+    "parentId": "layout",
+    "path": "About/me",
+  },
+  "layout/home": {
+    "componentName": "home",
+    "file": "home.tsx",
+    "id": "layout/home",
+    "index": undefined,
+    "layout": false,
+    "parentId": "layout",
+    "path": "home",
   },
 }
 `;
 
 exports[`generateRouteManifest function > layout-routes 1`] = `
 {
-  "/": {
-    "componentName": "index",
-    "file": "index.tsx",
-    "id": "/",
-    "index": true,
-    "layout": false,
-    "parentId": "layout",
-    "path": undefined,
-  },
-  "about": {
-    "componentName": "about",
-    "file": "about.tsx",
-    "id": "about",
-    "index": undefined,
-    "layout": false,
-    "parentId": "layout",
-    "path": "about",
-  },
-  "blog/": {
-    "componentName": "blog-index",
-    "file": "blog/index.tsx",
-    "id": "blog/",
-    "index": true,
-    "layout": false,
-    "parentId": "blog/layout",
-    "path": undefined,
-  },
-  "blog/:id": {
-    "componentName": "blog-$id",
-    "file": "blog/$id.tsx",
-    "id": "blog/:id",
-    "index": undefined,
-    "layout": false,
-    "parentId": "blog/layout",
-    "path": ":id",
-  },
-  "blog/layout": {
-    "componentName": "blog-layout",
-    "file": "blog/layout.tsx",
-    "id": "blog/layout",
-    "index": undefined,
-    "layout": true,
-    "parentId": "layout",
-    "path": "blog",
-  },
-  "home/": {
-    "componentName": "home-index",
-    "file": "home/index.tsx",
-    "id": "home/",
-    "index": true,
-    "layout": false,
-    "parentId": "home/layout",
-    "path": undefined,
-  },
-  "home/layout": {
-    "componentName": "home-layout-index",
-    "file": "home/layout/index.tsx",
-    "id": "home/layout",
-    "index": true,
-    "layout": true,
-    "parentId": "home/layout",
-    "path": "layout",
-  },
   "layout": {
     "componentName": "layout",
     "file": "layout.tsx",
@@ -301,6 +238,78 @@ exports[`generateRouteManifest function > layout-routes 1`] = `
     "layout": true,
     "parentId": undefined,
     "path": undefined,
+  },
+  "layout/": {
+    "componentName": "index",
+    "file": "index.tsx",
+    "id": "layout/",
+    "index": true,
+    "layout": false,
+    "parentId": "layout",
+    "path": undefined,
+  },
+  "layout/about": {
+    "componentName": "about",
+    "file": "about.tsx",
+    "id": "layout/about",
+    "index": undefined,
+    "layout": false,
+    "parentId": "layout",
+    "path": "about",
+  },
+  "layout/blog/layout": {
+    "componentName": "blog-layout",
+    "file": "blog/layout.tsx",
+    "id": "layout/blog/layout",
+    "index": undefined,
+    "layout": true,
+    "parentId": "layout",
+    "path": "blog",
+  },
+  "layout/blog/layout/": {
+    "componentName": "blog-index",
+    "file": "blog/index.tsx",
+    "id": "layout/blog/layout/",
+    "index": true,
+    "layout": false,
+    "parentId": "layout/blog/layout",
+    "path": undefined,
+  },
+  "layout/blog/layout/:id": {
+    "componentName": "blog-$id",
+    "file": "blog/$id.tsx",
+    "id": "layout/blog/layout/:id",
+    "index": undefined,
+    "layout": false,
+    "parentId": "layout/blog/layout",
+    "path": ":id",
+  },
+  "layout/home/layout": {
+    "componentName": "home-layout",
+    "file": "home/layout.tsx",
+    "id": "layout/home/layout",
+    "index": undefined,
+    "layout": true,
+    "parentId": "layout",
+    "path": "home",
+  },
+  "layout/home/layout/": {
+    "componentName": "home-index",
+    "file": "home/index.tsx",
+    "id": "layout/home/layout/",
+    "index": true,
+    "layout": false,
+    "parentId": "layout/home/layout",
+    "path": undefined,
+  },
+  "layout/home/layout/layout": {
+    "componentName": "home-layout-index",
+    "file": "home/layout/index.tsx",
+    "id": "layout/home/layout/layout",
+    "index": true,
+    "layout": true,
+    "parentId": "layout/home/layout",
+    "path": "layout",
   },
 }
 `;
@@ -328,26 +337,67 @@ exports[`generateRouteManifest function > nested-routes 1`] = `
 }
 `;
 
+exports[`generateRouteManifest function > nexted-routes-with-same-children 1`] = `
+{
+  "/prefix-a": {
+    "componentName": "layout-a",
+    "file": "layout-a.tsx",
+    "id": "/prefix-a",
+    "index": undefined,
+    "layout": false,
+    "parentId": undefined,
+    "path": "/prefix-a",
+  },
+  "/prefix-a/base": {
+    "componentName": "layout-a-a",
+    "file": "layout-a-a.tsx",
+    "id": "/prefix-a/base",
+    "index": undefined,
+    "layout": false,
+    "parentId": "/prefix-a",
+    "path": "base",
+  },
+  "/prefix-a/base/index": {
+    "componentName": "a",
+    "file": "a.tsx",
+    "id": "/prefix-a/base/index",
+    "index": undefined,
+    "layout": false,
+    "parentId": "/prefix-a/base",
+    "path": "index",
+  },
+  "/prefix-b": {
+    "componentName": "layout-b",
+    "file": "layout-b.tsx",
+    "id": "/prefix-b",
+    "index": undefined,
+    "layout": false,
+    "parentId": undefined,
+    "path": "/prefix-b",
+  },
+  "/prefix-b/base": {
+    "componentName": "layout-b-b",
+    "file": "layout-b-b.tsx",
+    "id": "/prefix-b/base",
+    "index": undefined,
+    "layout": false,
+    "parentId": "/prefix-b",
+    "path": "base",
+  },
+  "/prefix-b/base/index": {
+    "componentName": "b",
+    "file": "b.tsx",
+    "id": "/prefix-b/base/index",
+    "index": undefined,
+    "layout": false,
+    "parentId": "/prefix-b/base",
+    "path": "index",
+  },
+}
+`;
+
 exports[`generateRouteManifest function > splat-routes 1`] = `
 {
-  "*": {
-    "componentName": "$",
-    "file": "$.tsx",
-    "id": "*",
-    "index": undefined,
-    "layout": false,
-    "parentId": "layout",
-    "path": "*",
-  },
-  "home": {
-    "componentName": "home",
-    "file": "home.tsx",
-    "id": "home",
-    "index": undefined,
-    "layout": false,
-    "parentId": "layout",
-    "path": "home",
-  },
   "layout": {
     "componentName": "layout",
     "file": "layout.tsx",
@@ -356,6 +406,24 @@ exports[`generateRouteManifest function > splat-routes 1`] = `
     "layout": true,
     "parentId": undefined,
     "path": undefined,
+  },
+  "layout/*": {
+    "componentName": "$",
+    "file": "$.tsx",
+    "id": "layout/*",
+    "index": undefined,
+    "layout": false,
+    "parentId": "layout",
+    "path": "*",
+  },
+  "layout/home": {
+    "componentName": "home",
+    "file": "home.tsx",
+    "id": "layout/home",
+    "index": undefined,
+    "layout": false,
+    "parentId": "layout",
+    "path": "home",
   },
 }
 `;
