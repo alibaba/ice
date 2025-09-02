@@ -78,4 +78,27 @@ describe('generateRouteManifest function', () => {
     );
     expect(routeManifest).toMatchSnapshot();
   });
+
+  test('nexted-routes-with-same-children', () => {
+    const rootDir = path.join(fixturesDir, 'nexted-with-same-children');
+    const routeManifest = generateRouteManifest(
+      rootDir,
+      [
+        '**',
+      ],
+      [(defineRoute) => {
+        defineRoute('/prefix-a', 'layout-a.tsx', () => {
+          defineRoute('base', 'layout-a-a.tsx', () => {
+            defineRoute('index', 'a.tsx');
+          });
+        });
+        defineRoute('/prefix-b', 'layout-b.tsx', () => {
+          defineRoute('base', 'layout-b-b.tsx', () => {
+            defineRoute('index', 'b.tsx');
+          });
+        });
+      }],
+    );
+    expect(routeManifest).toMatchSnapshot();
+  });
 });
