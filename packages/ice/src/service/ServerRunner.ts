@@ -145,6 +145,7 @@ class ServerRunner extends Runner {
       }),
       server?.ignores && ignorePlugin(server.ignores),
       cssModulesPlugin({
+        alias,
         extract: false,
         generateLocalIdentName: function (name: string, fileName: string) {
           return getCSSModuleIdent({
