@@ -48,7 +48,9 @@ Please see our [CONTRIBUTING.md](/.github/CONTRIBUTING.md)
 
 Contributors can contact us to join the Contributor Group.
 
- <a href="https://github.com/alibaba/ice/graphs/contributors"><img src="https://alibaba.github.io/ice/ice.png" /></a>
+<a href="https://openomy.com/alibaba/ice" target="_blank" style="display: block; width: 100%;" align="center">
+  <img src="https://openomy.com/svg?repo=alibaba/ice&chart=bubble&latestMonth=6" target="_blank" alt="Contribution Leaderboard" style="display: block; width: 100%;" />
+</a>
 
 ## Community
 
