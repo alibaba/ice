@@ -1,5 +1,35 @@
 # @ice/runtime
 
+## 1.5.7
+
+### Patch Changes
+
+- 4ff29969c: feat: add SuspenseWrappers to Runtime
+
+## 1.5.6
+
+### Patch Changes
+
+- d55e34bc: feat: add suspense event dispatch in Suspense component
+
+## 1.5.5
+
+### Patch Changes
+
+- 4569200ca: fix: support externals field in assets-manifest
+
+## 1.5.4
+
+### Patch Changes
+
+- 1a0a2c1f: feat: Add custom event for suspense data updates, and remove ice-suspense custom event.
+
+## 1.5.3
+
+### Patch Changes
+
+- cc0792b0: feat: support custom props when render document
+
 ## 1.5.2
 
 ### Patch Changes

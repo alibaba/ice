@@ -1,6 +1,6 @@
 {
   "name": "@ice/appear",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "",
   "main": "./esm/index.js",
   "types": "./esm/index.d.ts",

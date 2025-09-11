@@ -1,5 +1,37 @@
 # Changelog
 
+## 3.6.5
+
+- hotfix: add isPHA and isKraken env for backward compatibility.
+
+## 3.6.4
+
+### Patch Changes
+
+- 0dd4aab0: refactor: add env for themis, delete PHA/Kraken, simplize WindVane
+- Updated dependencies [d55e34bc]
+  - @ice/runtime@1.5.6
+
+## 3.6.3
+
+### Patch Changes
+
+- cc0792b0: fix: minify server bundle when build in prod
+- Updated dependencies [cc0792b0]
+  - @ice/runtime@1.5.3
+
+## 3.6.2
+
+### Patch Changes
+
+- 41951673: chore: update @swc/helpers to 0.5.17
+- 795c1986: fix: compat esbuild config
+  - use AST to get file exports instead of using import()
+  - respect compileDependencies in webpack mode
+- 59414ba4: fix: missing jsx-plus transform when server bundler is webpack
+- Updated dependencies [182929ca]
+  - @ice/rspack-config@1.2.4
+
 ## 3.6.1
 
 ### Patch Changes

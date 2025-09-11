@@ -1,6 +1,6 @@
 {
   "name": "@ice/plugin-miniapp",
-  "version": "1.2.3",
+  "version": "1.2.7",
   "description": "ice.js plugin for miniapp.",
   "license": "MIT",
   "type": "module",
@@ -50,8 +50,8 @@
     "sax": "^1.2.4"
   },
   "devDependencies": {
-    "@ice/app": "^3.6.1",
-    "@ice/runtime": "^1.5.2",
+    "@ice/app": "^3.6.4",
+    "@ice/runtime": "^1.5.7",
     "webpack": "^5.88.0"
   },
   "repository": {

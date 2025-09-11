@@ -2,7 +2,7 @@ import * as path from 'path';
 import { createRequire } from 'module';
 import { getDefineVars, getCompilerPlugins, getJsxTransformOptions, getAliasWithRoot, skipCompilePackages, getDevtoolValue } from '@ice/shared-config';
 import type { Config, ModifyWebpackConfig, ImportDeclaration } from '@ice/shared-config/types';
-import type { Configuration, rspack as Rspack } from '@rspack/core';
+import type { Configuration, rspack as Rspack, RuleSetRule } from '@rspack/core';
 import lodash from '@ice/bundles/compiled/lodash/index.js';
 import { coreJsPath } from '@ice/bundles';
 import RefreshPlugin from '@ice/bundles/esm/plugin-refresh.js';
@@ -111,6 +111,7 @@ const getConfig: GetConfig = async (options) => {
     https,
     enableCopyPlugin,
     cssExtensionAlias,
+    loaders,
   } = taskConfig || {};
   const isDev = mode === 'development';
   const absoluteOutputDir = path.isAbsolute(outputDir) ? outputDir : path.join(rootDir, outputDir);
@@ -205,6 +206,7 @@ const getConfig: GetConfig = async (options) => {
       },
     }];
   }
+  const additionalRules = (loaders || []) as RuleSetRule[];
   const config: Configuration = {
     entry: entry || {
       main: [path.join(rootDir, runtimeTmpDir, 'entry.client.tsx')],
@@ -263,6 +265,7 @@ const getConfig: GetConfig = async (options) => {
           postcssOptions: postcss,
           extensionAlias: cssExtensionAlias ?? [],
         }),
+        ...additionalRules,
       ],
     },
     resolve: {

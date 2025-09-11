@@ -1,5 +1,30 @@
 # @ice/miniapp-react-dom
 
+## 1.1.6
+
+### Patch Changes
+
+- @ice/miniapp-runtime@1.2.6
+
+## 1.1.5
+
+### Patch Changes
+
+- @ice/miniapp-runtime@1.2.5
+
+## 1.1.4
+
+### Patch Changes
+
+- @ice/miniapp-runtime@1.2.4
+
+## 1.1.3
+
+### Patch Changes
+
+- Updated dependencies [d27ad76c]
+  - @ice/miniapp-runtime@1.2.3
+
 ## 1.1.2
 
 ### Patch Changes

@@ -6,6 +6,7 @@ import type { UserConfig } from '../../types/userConfig.js';
 import { logger } from '../../utils/logger.js';
 import { getExpandedEnvs } from '../../utils/runtimeEnv.js';
 import { RUNTIME_TMP_DIR } from '../../constant.js';
+import { getExportsVariables } from '../../utils/getExportsVariables.js';
 
 const _dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
@@ -17,11 +18,12 @@ export class WebpackServerCompiler {
   }
 
   private async createWebpackConfig(options: {
+    compileIncludes: Array<RegExp>;
     userServerConfig: UserConfig['server'];
     rootDir: string;
     [key: string]: any;
   }) {
-    const { userServerConfig } = options;
+    const { userServerConfig, compileIncludes } = options;
     const { webpackConfig = {} } = userServerConfig;
     const definitions = await this.getEsbuildInject();
     return getWebpackConfig({
@@ -63,7 +65,7 @@ export class WebpackServerCompiler {
         define: options.define,
         optimization: { ...webpackConfig.optimization } as any,
         minify: options.minify,
-        compileIncludes: webpackConfig.transformInclude,
+        compileIncludes,
         swcOptions: {
           compilationConfig: {
             jsc: {
@@ -90,9 +92,9 @@ export class WebpackServerCompiler {
 
   private async getEsbuildInject(): Promise<Record<string, string | string[]>> {
     const provideRecord = {};
-    const allInjects = await Promise.all(this.options.inject.map((inj) => import(inj)));
+    const allInjects = await Promise.all(this.options.inject.map((inj) => getExportsVariables(inj)));
     allInjects.forEach((injs, index) => {
-      Object.keys(injs).forEach((key) => {
+      injs.forEach((key) => {
         provideRecord[key] = [this.options.inject[index], key];
       });
     });

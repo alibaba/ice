@@ -45,6 +45,7 @@ export function renderDocument(options: RenderDocumentOptions): Response {
     basename,
     routesConfig = {},
     serverData,
+    documentProps,
   } = renderOptions;
 
   const appData = null;
@@ -84,7 +85,7 @@ export function renderDocument(options: RenderDocumentOptions): Response {
     <AppContextProvider value={appContext}>
       <DocumentContextProvider value={documentContext}>
         {
-          Document && <Document pagePath={routePath} />
+          Document && <Document pagePath={routePath} {...documentProps} />
         }
       </DocumentContextProvider>
     </AppContextProvider>,

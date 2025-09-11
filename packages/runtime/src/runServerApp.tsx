@@ -283,7 +283,7 @@ async function renderServerEntry(
     renderOptions,
   }: RenderServerEntry,
 ): Promise<Response> {
-  const { Document } = renderOptions;
+  const { Document, documentProps } = renderOptions;
   const appContext = runtime.getAppContext();
   const { routes, routePath, loaderData, basename } = appContext;
   const AppRuntimeProvider = runtime.composeAppProvider() || React.Fragment;
@@ -307,7 +307,7 @@ async function renderServerEntry(
       <AppRuntimeProvider>
         <DocumentContextProvider value={documentContext}>
           {
-            Document && <Document pagePath={routePath} />
+            Document && <Document pagePath={routePath} {...documentProps} />
           }
         </DocumentContextProvider>
       </AppRuntimeProvider>

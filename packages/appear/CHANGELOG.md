@@ -1,5 +1,11 @@
 # @ice/appear
 
+## 0.2.2
+
+### Patch Changes
+
+- 451839c5: fix appear event handler callback refs in WeexAppear component
+
 ## 0.2.1
 
 ### Patch Changes

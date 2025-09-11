@@ -117,6 +117,7 @@ export interface AppContext {
   loaderData?: LoadersData;
   routeModules?: RouteModules;
   RouteWrappers?: RouteWrapperConfig[];
+  SuspenseWrappers?: SuspenseWrapperConfig[];
   routePath?: string;
   matches?: RouteMatch[];
   routes?: RouteItem[];
@@ -187,16 +188,26 @@ export interface RouteWrapperConfig {
 
 export type AppProvider = ComponentWithChildren<any>;
 export type RouteWrapper = ComponentType<any>;
+
+export type SuspenseWrapper = ComponentWithChildren<{
+  id: string;
+}>;
+
 export type ResponseHandler = (
   req: IncomingMessage,
   res: ServerResponse,
 ) => any | Promise<any>;
+
+export interface SuspenseWrapperConfig {
+  Wrapper: SuspenseWrapper;
+}
 
 export type SetAppRouter = <T>(AppRouter: ComponentType<T>) => void;
 export type GetAppRouter = () => AppProvider;
 export type AddProvider = (Provider: AppProvider) => void;
 export type SetRender = (render: Renderer) => void;
 export type AddWrapper = (wrapper: RouteWrapper, forLayout?: boolean) => void;
+export type AddSuspenseWrapper = (wrapper: SuspenseWrapper) => void;
 export type AddResponseHandler = (handler: ResponseHandler) => void;
 export type GetResponseHandlers = () => ResponseHandler[];
 
@@ -205,6 +216,7 @@ export interface RouteModules {
 }
 
 export interface AssetsManifest {
+  externals?: string[];
   dataLoader?: string;
   publicPath: string;
   entries: {
@@ -226,6 +238,7 @@ export interface RuntimeAPI {
   getResponseHandlers: GetResponseHandlers;
   setRender: SetRender;
   addWrapper: AddWrapper;
+  addSuspenseWrapper: AddSuspenseWrapper;
   appContext: AppContext;
   useData: UseData;
   useConfig: UseConfig;
@@ -338,6 +351,7 @@ export interface RenderOptions {
   runtimeOptions?: Record<string, any>;
   serverData?: any;
   streamOptions?: RenderToPipeableStreamOptions;
+  documentProps?: Record<string, unknown>;
 }
 
 declare global {

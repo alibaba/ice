@@ -1,5 +1,9 @@
 # @ice/plugin-stream-error
 
+## 1.0.3
+
+- feat: empty root element when stream error
+
 ## 1.0.0
 
 ### Major Changes

@@ -1,5 +1,32 @@
 # Changelog
 
+## 1.2.6
+
+### Patch Changes
+
+- Updated dependencies [d55e34bc]
+  - @ice/runtime@1.5.6
+
+## 1.2.5
+
+### Patch Changes
+
+- Updated dependencies [1a0a2c1f]
+  - @ice/runtime@1.5.4
+
+## 1.2.4
+
+### Patch Changes
+
+- Updated dependencies [cc0792b0]
+  - @ice/runtime@1.5.3
+
+## 1.2.3
+
+### Patch Changes
+
+- d27ad76c: fix: enter same page twice then exit should not throw error
+
 ## 1.2.2
 
 ### Patch Changes
