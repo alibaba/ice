@@ -2,4 +2,4 @@
 '@ice/runtime': patch
 ---
 
-fix duplicate css
+fix: duplicate css
