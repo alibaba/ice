@@ -8,6 +8,7 @@ import type { ServerCompiler, GetAppConfig, GetRoutesConfig, GetDataloaderConfig
 import type { UserConfig } from '../types/userConfig.js';
 import type RouteManifest from '../utils/routeManifest.js';
 import type ServerRunner from '../service/ServerRunner.js';
+import type Generator from '../service/runtimeGenerator.js';
 
 export type Context = DefaultContext<Config, ExtendsPluginAPI>;
 
@@ -19,9 +20,11 @@ export interface BuildOptions {
   appConfig: BundlerOptions['appConfig'];
   hooksAPI: BundlerOptions['hooksAPI'];
   taskConfigs: BundlerOptions['taskConfigs'];
+  generator: Generator;
 }
 
 export interface BundlerOptions {
+  generator: Generator;
   taskConfigs: TaskConfig<Config>[];
   spinner: ora.Ora;
   hooksAPI: {
