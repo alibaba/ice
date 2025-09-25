@@ -1,5 +1,11 @@
 # @ice/runtime
 
+## 1.5.8
+
+### Patch Changes
+
+- 2742ac467: fix: duplicate css
+
 ## 1.5.7
 
 ### Patch Changes

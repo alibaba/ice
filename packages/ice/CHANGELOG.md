@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.6.6
+
+### Patch Changes
+
+- Updated dependencies [2742ac467]
+  - @ice/runtime@1.5.8
+
 ## 3.6.5
 
 - hotfix: add isPHA and isKraken env for backward compatibility.
