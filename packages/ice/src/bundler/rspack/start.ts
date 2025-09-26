@@ -16,6 +16,7 @@ const start = async ({
   compiler,
   appConfig,
   hooksAPI,
+  generator,
 }: BuildOptions, dataLoaderCompiler?: Compiler) => {
   const { rootDir, applyHook, commandArgs, userConfig, extendsPluginAPI: { excuteServerEntry } } = context;
   const customMiddlewares = rspackConfigs[0].devServer?.setupMiddlewares;
@@ -32,8 +33,10 @@ const start = async ({
         taskConfig: webTaskConfig,
         excuteServerEntry,
         mock: commandArgs.mock,
+        open: commandArgs.open,
         rootDir,
         dataLoaderCompiler,
+        generator,
       });
       return customMiddlewares ? customMiddlewares(builtInMiddlewares, devServer) : builtInMiddlewares;
     },
