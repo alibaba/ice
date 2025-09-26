@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.1
+
+### Patch Changes
+
+- 41cbaa9c: Adds support for the “tilde” (~) import syntax in CSS files when using esbuild, ensuring @import "~foo/bar.css" is rewritten to @import "foo/bar.css" during server-side builds.
+
 ## 0.4.0
 
 ### Minor Changes

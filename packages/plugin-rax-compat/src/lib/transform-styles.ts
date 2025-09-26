@@ -25,9 +25,11 @@ const transformer = transformerModule.default;
 
 async function styleSheetLoader(source: string, sourcePath: string, type: StyleKind = 'css') {
   let cssContent = source;
+
+  // Transform @import "~..." to @import "..." for all style types
+  cssContent = cssContent.replace(/@import\s+(['"])~([^'"]+)\1/g, '@import $1$2$1');
+
   if (type === 'less') {
-    // compact for @import "~bootstrap/less/bootstrap";
-    cssContent = cssContent.replace(/@import "~/g, '@import "');
     cssContent = (
       await less.render(cssContent, {
         // For relative @import path
