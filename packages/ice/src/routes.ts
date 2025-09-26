@@ -89,39 +89,10 @@ export function getRoutesDefinition(options: GetDefinationOptions) {
       routeImports.push(`import * as ${routeSpecifier} from '${formatPath(componentPath)}';`);
       loadStatement = routeSpecifier;
     }
-    const component = `Component: () => WrapRouteComponent({
-          routeId: '${id}',
-          isLayout: ${layout},
-          routeExports: ${lazy ? 'componentModule' : loadStatement},
-        })`;
-    const loader = `loader: createRouteLoader({
-          routeId: '${id}',
-          requestContext,
-          renderMode,
-          module: ${lazy ? 'componentModule' : loadStatement},
-        })`;
-    const routeProperties: string[] = [
-      `path: '${formatPath(routePath || '')}',`,
-      `async lazy() {
-      ${lazy ? `const componentModule = await ${loadStatement}` : ''};
-      return {
-        ${lazy ? '...componentModule' : `...${loadStatement}`},
-        ${component},
-        ${loader},
-      };
-    },`,
-      // Empty errorElement to avoid default ui provided by react-router.
-      'errorElement: <RouteErrorComponent />,',
-      `componentName: '${componentName}',`,
-      `index: ${index},`,
-      `id: '${id}',`,
-      'exact: true,',
-      `exports: ${JSON.stringify(exports)},`,
-    ].filter(Boolean);
-
-    if (layout) {
-      routeProperties.push('layout: true,');
-    }
+    // Keep the string in a single line for the code style.
+    const lazyStatment = `lazyLoadComponent(${lazy ? 'componentModule' : loadStatement}, { routeId: '${id}', ${layout ? `layout: ${layout}, ` : ''}renderMode, requestContext })`;
+    const routeProperties: string[] = [`...getRouteProps({ path: '${formatPath(routePath || '')}', componentName: '${componentName}', ${index ? `index: ${index}, ` : ''}id: '${id}',${layout ? `layout: ${layout}, ` : ''}exports: ${JSON.stringify(exports)} }),`];
+    routeProperties.push(`async lazy() {${lazy ? `const componentModule = await ${loadStatement}` : ''}; return ${lazyStatment};},`);
     if (children) {
       const res = getRoutesDefinition({
         manifest: children,

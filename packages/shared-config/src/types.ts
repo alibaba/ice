@@ -179,7 +179,7 @@ export interface Config {
 
   performance?: Performance;
 
-  assetsManifest?: boolean;
+  assetsManifest?: boolean | { inject: boolean };
 
   concatenateModules?: boolean;
 

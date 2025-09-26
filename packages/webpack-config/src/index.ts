@@ -298,6 +298,7 @@ export function getWebpackConfig(options: GetWebpackConfigOptions): Configuratio
       assetsManifest && new AssetsManifestPlugin({
         fileName: 'assets-manifest.json',
         outputDir: path.join(rootDir, runtimeTmpDir),
+        inject: typeof assetsManifest === 'boolean' ? false : assetsManifest?.inject,
       }),
       analyzer && new BundleAnalyzerPlugin(),
       tsCheckerOptions && new ForkTsCheckerPlugin(tsCheckerOptions),

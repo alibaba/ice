@@ -149,7 +149,7 @@ const getConfig: GetConfig = async (options) => {
     module: true,
   }, minimizerOptions);
   const builtinFeatures: BuiltinFeatures = {
-    assetsManifest,
+    assetsManifest: Boolean(assetsManifest),
   };
   let splitChunksStrategy = null;
   // Use builtin splitChunks strategy by default.
