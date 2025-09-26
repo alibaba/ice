@@ -101,7 +101,6 @@ export default defineConfig(() => ({
 }));
 ```
 
-
 ### 兼容使用内联样式构建的模块
 
 Rax 的 inlineStyle 模式是具有传染性的，因此，如果你的项目中存在使用内联样式构建的模块，在 rax-compat 模式下需要确保这些模块也使用内联样式处理，否则会出现样式丢失的问题。此时你可以使用函数形式的 inlineStyle：
@@ -122,3 +121,13 @@ export default defineConfig(() => ({
 
 ### 事件差异
 React 通过[合成事件](https://zh-hans.reactjs.org/docs/events.html)机制对浏览器环境中的事件进行代理，而 rax.js 则是通过节点(EventTarget)原生的 `addEventListener()` 方法将事件与处理函数绑定在一起。在你清楚地了解 Rax 与 React 的事件实现差异之前，尽量不要使用 ref 访问真实 DOM 节点来处理原生事件，否则可能会出现未预料的行为。
+
+### 数组样式支持
+Rax 支持数组类型的 style 属性，而 React 不支持。rax-compat 会将数组样式扁平化合并成单个对象，并透传给 React 的 createElement 方法。
+
+### Hooks 的定制化实现
+rax-compat 对 useState 进行了额外定制化，以保证与 Rax 行为一致：
+- 在调用 React state 变化之前，rax-compat 前置添加了浅比较逻辑，避免设置相同值时的重新渲染
+- 返回三个值（而不是 React 的两个），第三个值是 eagerState，即为状态值的实时引用
+
+> React 内部在触发状态变化时同样会进行浅比较，并对当前 Fiber 节点是否需要渲染进行标记，但这个标记并不一定会阻止渲染。其他 React API（如 useExternalStore）的调用也可能对 Fiber 节点进行标记，因此仍有可能导致重新渲染。
