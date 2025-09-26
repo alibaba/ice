@@ -9,7 +9,7 @@ const PLUGIN_NAME = '@ice/plugin-icestark';
 const plugin: Plugin<PluginOptions> = ({ type, library }) => ({
   name: PLUGIN_NAME,
   setup: ({ onGetConfig, context, generator, modifyUserConfig }) => {
-    const libraryName = library || context.pkg?.name as string || 'microApp';
+    const libraryName = library || (context.pkg?.name as string) || 'microApp';
     onGetConfig((config) => {
       config.configureWebpack ??= [];
       config.configureWebpack.push((webpackConfig) => {
@@ -52,12 +52,13 @@ export async function mount(props) {
     // Props of container if conflict with render node in ice, it may cause node overwritten.
     let runtimeOptions = props;
     if (props.singleSpa) {
-      const iceContainer = props.container?.querySelector('#ice-container');
+      const targetId = app?.default?.app?.rootId || 'ice-container'
+      const iceContainer = props.container?.querySelector('#' + targetId);
       if (iceContainer) {
         runtimeOptions = {...props, container: iceContainer };
       } else {
         const ele = document.createElement('div');
-        ele.id = 'ice-container';
+        ele.id = targetId;
         props.container.appendChild(ele);
         runtimeOptions = {...props, container: ele };
       }
@@ -72,7 +73,7 @@ export async function unmount(props) {
   // Reset root to null when app unmount.
   root = null;
 }`;
-});
+      });
     } else {
       // Plugin icestark do not support ssr yet.
       modifyUserConfig('ssr', false);
