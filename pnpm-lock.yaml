@@ -802,6 +802,28 @@ importers:
         specifier: ^18.0.6
         version: 18.0.11
 
+  examples/with-fallback-element:
+    dependencies:
+      '@ice/runtime':
+        specifier: workspace:*
+        version: link:../../packages/runtime
+      react:
+        specifier: ^18.0.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.0.0
+        version: 18.2.0(react@18.2.0)
+    devDependencies:
+      '@ice/app':
+        specifier: workspace:*
+        version: link:../../packages/ice
+      '@types/react':
+        specifier: ^18.0.0
+        version: 18.0.34
+      '@types/react-dom':
+        specifier: ^18.0.0
+        version: 18.0.11
+
   examples/with-fallback-entry:
     dependencies:
       '@ice/app':

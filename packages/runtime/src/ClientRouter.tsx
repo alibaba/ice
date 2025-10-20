@@ -25,7 +25,7 @@ function createRouterHistory(history: History, router: Router) {
 let router: Router = null;
 function ClientRouter(props: ClientAppRouterProps) {
   const { Component, routerContext } = props;
-  const { revalidate } = useAppContext();
+  const { revalidate, appConfig } = useAppContext();
 
   function clearRouter() {
     if (router) {
@@ -57,7 +57,8 @@ function ClientRouter(props: ClientAppRouterProps) {
 
   let element: React.ReactNode;
   if (process.env.ICE_CORE_ROUTER === 'true') {
-    element = <RouterProvider router={router} fallbackElement={null} />;
+    const fallbackElement = appConfig?.router?.fallbackElement ?? null;
+    element = <RouterProvider router={router} fallbackElement={fallbackElement} />;
   } else {
     element = <Component />;
   }

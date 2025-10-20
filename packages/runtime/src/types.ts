@@ -69,6 +69,7 @@ export interface AppConfig {
     type?: 'hash' | 'browser' | 'memory';
     basename?: string;
     initialEntries?: InitialEntry[];
+    fallbackElement?: React.ReactNode;
   };
 }
 
