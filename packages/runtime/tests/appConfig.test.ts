@@ -17,6 +17,7 @@ describe('AppConfig', () => {
         strict: false,
       },
       router: {
+        fallbackElement: null,
         type: 'browser',
       },
     });

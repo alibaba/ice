@@ -7,6 +7,7 @@ const defaultAppConfig: AppConfig = {
   },
   router: {
     type: 'browser',
+    fallbackElement: null,
   },
 };
 
