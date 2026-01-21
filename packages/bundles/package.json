@@ -67,7 +67,7 @@
     "fork-ts-checker-webpack-plugin": "7.2.6",
     "fs-extra": "^10.0.0",
     "less-loader": "10.2.0",
-    "lodash": "4.17.21",
+    "lodash": "4.17.23",
     "magic-string": "0.27.0",
     "mini-css-extract-plugin": "2.6.1",
     "ora": "5.4.1",
