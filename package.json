@@ -45,7 +45,7 @@
     "chokidar": "^3.5.3",
     "dependency-check": "^4.1.0",
     "dts-bundle": "^0.7.3",
-    "eslint": "^8.22.0",
+    "eslint": "^9.26.0",
     "execa": "^6.1.0",
     "find-up": "^5.0.0",
     "fs-extra": "^10.1.0",
