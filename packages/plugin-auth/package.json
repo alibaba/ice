@@ -41,13 +41,13 @@
   "devDependencies": {
     "@ice/app": "^3.3.2",
     "@ice/runtime": "^1.2.9",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "regenerator-runtime": "^0.13.9"
   },
   "peerDependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
   },
   "repository": {
     "type": "http",

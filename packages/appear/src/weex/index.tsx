@@ -2,6 +2,7 @@ import type { ForwardedRef } from 'react';
 import { useEffect, useRef, forwardRef, cloneElement, Children } from 'react';
 import type { AppearProps } from '../typings';
 
+// TODO: React 19 可以移除 forwardRef，ref 作为普通 prop 传递
 const WeexAppear = forwardRef<any, AppearProps>((props, ref) => {
   const internalRef = useRef<HTMLDivElement>(null);
   const childrenRef: ForwardedRef<HTMLDivElement> = ref ?? internalRef;

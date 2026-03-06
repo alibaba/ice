@@ -23,6 +23,7 @@ function useDocumentContext() {
   return value;
 }
 
+// TODO: React 19 支持直接使用 <Context> 替代 <Context.Provider>，当不再需要兼容 React 18 时可简化
 export const DocumentContextProvider = Context.Provider;
 
 interface MetaProps extends React.HTMLAttributes<HTMLMetaElement>{
