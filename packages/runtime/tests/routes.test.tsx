@@ -155,16 +155,25 @@ describe('routes', () => {
   });
 
   it('load async route', async () => {
-    const { data: deferredResult } = await createRouteLoader({
-      routeId: 'home',
-      module: InfoItem,
-    })();
+    // Set ICE_CORE_ROUTER to enable defer support
+    const originalRouter = process.env.ICE_CORE_ROUTER;
+    process.env.ICE_CORE_ROUTER = 'true';
 
-    const data = await deferredResult.data;
+    try {
+      const { data: deferredResult } = await createRouteLoader({
+        routeId: 'home',
+        module: InfoItem,
+      })();
 
-    expect(data).toStrictEqual({
-      type: 'getAsyncData',
-    });
+      const data = await deferredResult.data;
+
+      expect(data).toStrictEqual({
+        type: 'getAsyncData',
+      });
+    } finally {
+      // Restore original value
+      process.env.ICE_CORE_ROUTER = originalRouter;
+    }
   });
 
   it('load route data for SSG', async () => {
