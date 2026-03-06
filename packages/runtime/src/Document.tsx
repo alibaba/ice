@@ -30,7 +30,7 @@ interface MetaProps extends React.HTMLAttributes<HTMLMetaElement>{
   MetaElement?: React.ComponentType<React.HTMLAttributes<HTMLMetaElement>>;
 }
 
-export type MetaType = (props: MetaProps) => JSX.Element;
+export type MetaType = (props: MetaProps) => React.ReactElement;
 
 export const Meta: MetaType = (props: MetaProps) => {
   const { matches, loaderData } = useAppContext();
@@ -51,7 +51,7 @@ interface TitleProps extends React.HTMLAttributes<HTMLTitleElement>{
   TitleElement?: React.ComponentType<React.HTMLAttributes<HTMLTitleElement>>;
 }
 
-export type TitleType = (props: TitleProps) => JSX.Element;
+export type TitleType = (props: TitleProps) => React.ReactElement;
 
 export const Title: TitleType = (props: TitleProps) => {
   const { matches, loaderData } = useAppContext();
@@ -70,7 +70,7 @@ interface LinksProps extends React.LinkHTMLAttributes<HTMLLinkElement>{
   LinkElement?: React.ComponentType<React.LinkHTMLAttributes<HTMLLinkElement>>;
 }
 
-export type LinksType = (props: LinksProps) => JSX.Element;
+export type LinksType = (props: LinksProps) => React.ReactElement;
 
 export const Links: LinksType = (props: LinksProps) => {
   const { loaderData, matches, assetsManifest } = useAppContext();
@@ -108,7 +108,7 @@ interface ScriptsProps extends React.ScriptHTMLAttributes<HTMLScriptElement>{
   ScriptElement?: React.ComponentType<React.ScriptHTMLAttributes<HTMLScriptElement>> | string;
 }
 
-export type ScriptsType = (props: ScriptsProps) => JSX.Element;
+export type ScriptsType = (props: ScriptsProps) => React.ReactElement;
 
 export const Scripts: ScriptsType = (props: ScriptsProps) => {
   const { loaderData, matches, assetsManifest } = useAppContext();
@@ -179,7 +179,7 @@ interface DataProps {
   ScriptElement?: React.ComponentType<React.ScriptHTMLAttributes<HTMLScriptElement>> | string;
 }
 
-export type DataType = (props: DataProps) => JSX.Element;
+export type DataType = (props: DataProps) => React.ReactElement;
 
 // use app context separately
 export const Data: DataType = (props: DataProps) => {
@@ -216,13 +216,13 @@ export const Data: DataType = (props: DataProps) => {
 /**
  * Flag of first chunk cache.
  */
-export type FirstChunkCacheType = () => JSX.Element;
+export type FirstChunkCacheType = () => React.ReactElement;
 
 export const FirstChunkCache: FirstChunkCacheType = () => {
   return <div dangerouslySetInnerHTML={{ __html: '<!--fcc-->' }} />;
 };
 
-export type MainType = (props: React.HTMLAttributes<HTMLDivElement>) => JSX.Element;
+export type MainType = (props: React.HTMLAttributes<HTMLDivElement>) => React.ReactElement;
 
 export const Main: MainType = (props: React.HTMLAttributes<HTMLDivElement>) => {
   const { main } = useDocumentContext();
