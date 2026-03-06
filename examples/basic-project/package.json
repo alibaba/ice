@@ -12,7 +12,6 @@
   "license": "MIT",
   "dependencies": {
     "@ice/app": "workspace:*",
-    "@ice/plugin-rax-compat": "workspace:*",
     "@ice/runtime": "workspace:*",
     "@uni/env": "^1.1.0",
     "ahooks": "^3.3.8",
