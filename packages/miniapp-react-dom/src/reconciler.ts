@@ -40,6 +40,9 @@ const hostConfig: HostConfig<
   setCurrentUpdatePriority: (priority: number) => void;
   getCurrentUpdatePriority: () => number;
   shouldAttemptEagerTransition: () => boolean;
+  resolveEventTimeStamp: () => number;
+  resolveEventType: () => number;
+  trackSchedulerEvent: () => void;
 } = {
   createInstance(type) {
     return document.createElement(type);
@@ -85,6 +88,18 @@ const hostConfig: HostConfig<
 
   shouldAttemptEagerTransition() {
     return false;
+  },
+
+  resolveEventTimeStamp() {
+    return 0;
+  },
+
+  resolveEventType() {
+    return 0;
+  },
+
+  trackSchedulerEvent() {
+    // noop
   },
 
   appendChild(parent, child) {
@@ -182,7 +197,7 @@ const IceMiniappReconciler = Reconciler(hostConfig);
 if (process.env.NODE_ENV !== 'production') {
   const foundDevTools = IceMiniappReconciler.injectIntoDevTools({
     bundleType: 1,
-    version: '18.0.0',
+    version: '19.0.0',
     rendererPackageName: '@ice/miniapp-react-dom',
   });
   if (!foundDevTools) {
