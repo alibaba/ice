@@ -72,7 +72,8 @@
   "pnpm": {
     "patchedDependencies": {
       "@rspack/core@0.5.7": "patches/@rspack__core@0.5.7.patch",
-      "unplugin@1.6.0": "patches/unplugin@1.6.0.patch"
+      "unplugin@1.6.0": "patches/unplugin@1.6.0.patch",
+      "dts-bundle@0.7.3": "patches/dts-bundle@0.7.3.patch"
     },
     "overrides": {
       "react": "^19.0.0",
