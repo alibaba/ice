@@ -4,7 +4,6 @@ import { fileURLToPath } from 'url';
 import fs from 'fs-extra';
 import ncc from '@vercel/ncc';
 import chalk from 'chalk';
-import { bundle as dtsBundle } from 'dts-bundle';
 import glob from 'glob';
 import findUp from 'find-up';
 import tasks, { taskExternals } from './tasks';
@@ -15,6 +14,9 @@ process.cwd = () => path.join(cwd, '..');
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Use require() for CommonJS module dts-bundle
+const dtsBundle = require('dts-bundle').bundle;
 
 interface Options {
   pkgName?: string;
