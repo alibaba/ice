@@ -78,8 +78,6 @@ export default class ServerCompilerPlugin {
         : this.task;
       if (this.serverCompileTask) {
         this.serverCompileTask.set(compilerTask);
-      } else {
-        return compilerTask;
       }
     });
   }

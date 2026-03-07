@@ -32,7 +32,7 @@ export async function startDevServer(
     // Sort by length, shortest path first.
     a.split('/').filter(Boolean).length - b.split('/').filter(Boolean).length);
   const webTaskConfig = taskConfigs.find(({ name }) => name === WEB);
-  const originalDevServer: DevServerConfiguration = webpackConfigs[0].devServer;
+  const originalDevServer: DevServerConfiguration | undefined = (webpackConfigs[0] as Configuration & { devServer?: DevServerConfiguration }).devServer;
   const customMiddlewares = originalDevServer?.setupMiddlewares;
   const defaultDevServerConfig = await getDefaultServerConfig(originalDevServer, commandArgs);
   let devServerConfig: DevServerConfiguration = {
