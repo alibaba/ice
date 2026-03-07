@@ -36,6 +36,10 @@ const hostConfig: HostConfig<
   unhideInstance: (instance: Element, props) => void;
   getCurrentEventPriority: () => number;
   detachDeletedInstance: () => void;
+  resolveUpdatePriority: () => number;
+  setCurrentUpdatePriority: (priority: number) => void;
+  getCurrentUpdatePriority: () => number;
+  shouldAttemptEagerTransition: () => boolean;
 } = {
   createInstance(type) {
     return document.createElement(type);
@@ -64,6 +68,23 @@ const hostConfig: HostConfig<
 
   detachDeletedInstance() {
     // noop
+  },
+
+  resolveUpdatePriority() {
+    // Default priority: 16 = DefaultEventPriority
+    return 16;
+  },
+
+  setCurrentUpdatePriority() {
+    // noop for miniapp
+  },
+
+  getCurrentUpdatePriority() {
+    return 16; // DefaultEventPriority
+  },
+
+  shouldAttemptEagerTransition() {
+    return false;
   },
 
   appendChild(parent, child) {
