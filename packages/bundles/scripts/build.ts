@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import fs from 'fs-extra';
 import ncc from '@vercel/ncc';
 import chalk from 'chalk';
-import * as dts from 'dts-bundle';
+import { bundle as dtsBundle } from 'dts-bundle';
 import glob from 'glob';
 import findUp from 'find-up';
 import tasks, { taskExternals } from './tasks';
@@ -121,7 +121,7 @@ export async function packDependency(options: Options): Promise<void> {
       if (pkgJson.types) {
         dtsName = 'index.d.ts';
         console.log(chalk.green(`bundle dts file for ${pkgName || file}`));
-        dts.bundle({
+        dtsBundle({
           name: pkgJson.name,
           outputAsModuleFolder: true,
           out: path.join(targetPath, dtsName),
