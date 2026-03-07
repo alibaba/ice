@@ -308,7 +308,7 @@ const getConfig: GetConfig = async (options) => {
           },
           globOptions: {
             dot: true,
-            gitignore: true,
+            ignore: ['.gitignore'],
           },
         }],
       }),
