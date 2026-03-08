@@ -180,9 +180,9 @@ export function resolvePackageESEntry(depId: string, pkgPath: string, alias: Tas
   const pkgJSON = fse.readJSONSync(pkgPath);
   const pkgDir = path.dirname(pkgPath);
   const aliasKey = Object.keys(alias).find(key => depId === key || depId.startsWith(`${depId}/`));
-  // alias: { rax: 'rax-compat' }
-  // rax -> .
-  // rax/element -> ./element
+  // alias: { foo: 'foo-compat' }
+  // foo -> .
+  // foo/element -> ./element
   const entry = aliasKey ? depId.replace(new RegExp(`^${aliasKey}`), '.') : depId;
   // resolve "exports.import" field or "module" field
   const resolvedEntryPoint = (resolveExports(pkgJSON, entry) || resolveLegacy(pkgJSON) || 'index.js') as string;

@@ -13,7 +13,7 @@ const createIceMiniappHook = (lifecycle: keyof PageLifeCycle | string) => {
   return (fn: Func) => {
     const { R: React, PageContext } = reactMeta;
     const id = React.useContext(PageContext) || HOOKS_APP_ID;
-    const instRef = React.useRef<Instance<PageProps>>();
+    const instRef = React.useRef<Instance<PageProps> | undefined>(undefined);
 
     // hold fn ref and keep up to date
     const fnRef = React.useRef(fn);

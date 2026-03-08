@@ -12,6 +12,7 @@ const Context = React.createContext<LoaderData>(undefined);
 
 Context.displayName = 'DataContext';
 
+// TODO: React 19 支持直接使用 <Context> 替代 <Context.Provider>，当不再需要兼容 React 18 时可简化
 export const DataContextProvider = Context.Provider;
 
 export const RouteContext = React.createContext({

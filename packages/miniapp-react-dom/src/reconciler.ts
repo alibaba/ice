@@ -17,6 +17,16 @@ function returnFalse() {
   return false;
 }
 
+// React 19 transition context placeholder
+const NotPendingTransition = null;
+
+// HostTransitionContext for React 19
+const HostTransitionContext = {
+  _currentValue: NotPendingTransition,
+  _currentValue2: NotPendingTransition,
+  _provider: null,
+};
+
 const hostConfig: HostConfig<
   string, // Type
   Props, // Props
@@ -33,9 +43,29 @@ const hostConfig: HostConfig<
   unknown // NoTimeout
 > & {
   hideInstance: (instance: Element) => void;
+  hideTextInstance: (textInstance: Text) => void;
   unhideInstance: (instance: Element, props) => void;
+  unhideTextInstance: (textInstance: Text, text: string) => void;
   getCurrentEventPriority: () => number;
   detachDeletedInstance: () => void;
+  resolveUpdatePriority: () => number;
+  setCurrentUpdatePriority: (priority: number) => void;
+  getCurrentUpdatePriority: () => number;
+  shouldAttemptEagerTransition: () => boolean;
+  resolveEventTimeStamp: () => number;
+  resolveEventType: () => number;
+  trackSchedulerEvent: () => void;
+  resetTextContent: (instance: Element) => void;
+  maySuspendCommit: (type: string, props: Props) => boolean;
+  preloadInstance: (type: string, props: Props) => boolean;
+  startSuspendingCommit: () => unknown;
+  suspendInstance: (suspendedState: unknown, instance: Element, type: string, props: Props) => void;
+  waitForCommitToBeReady: (suspendedState: unknown) => ((initiateCommit: () => void) => () => void) | null;
+  NotPendingTransition: unknown;
+  HostTransitionContext: typeof HostTransitionContext;
+  resetFormInstance: (instance: Element) => void;
+  bindToConsole: (methodName: string, fn: (...args: unknown[]) => unknown, browserNativeMethod: (...args: unknown[]) => unknown) => (...args: unknown[]) => unknown;
+  scheduleMicrotask: (callback: () => void) => void;
 } = {
   createInstance(type) {
     return document.createElement(type);
@@ -63,6 +93,35 @@ const hostConfig: HostConfig<
   },
 
   detachDeletedInstance() {
+    // noop
+  },
+
+  resolveUpdatePriority() {
+    // Default priority: 16 = DefaultEventPriority
+    return 16;
+  },
+
+  setCurrentUpdatePriority() {
+    // noop for miniapp
+  },
+
+  getCurrentUpdatePriority() {
+    return 16; // DefaultEventPriority
+  },
+
+  shouldAttemptEagerTransition() {
+    return false;
+  },
+
+  resolveEventTimeStamp() {
+    return 0;
+  },
+
+  resolveEventType() {
+    return 0;
+  },
+
+  trackSchedulerEvent() {
     // noop
   },
 
@@ -107,13 +166,19 @@ const hostConfig: HostConfig<
     return EMPTY_ARR;
   },
 
-  commitUpdate(dom, _payload, _type, oldProps, newProps) {
-    updateProps(dom, oldProps, newProps);
+  commitUpdate(instance, type, oldProps, newProps, _internalHandle) {
+    updateProps(instance, oldProps, newProps);
   },
 
   hideInstance(instance) {
     const { style } = instance;
     style.setProperty('display', 'none');
+  },
+
+  hideTextInstance(textInstance) {
+    // For text nodes, we can't really hide them in the same way as elements
+    // Store the original text and clear it
+    textInstance.nodeValue = '';
   },
 
   unhideInstance(instance, props) {
@@ -124,22 +189,67 @@ const hostConfig: HostConfig<
     instance.style['display'] = display;
   },
 
+  unhideTextInstance(textInstance, text) {
+    // Restore the text content
+    textInstance.nodeValue = text;
+  },
+
+  resetTextContent(instance) {
+    instance.textContent = '';
+  },
+
+  maySuspendCommit() {
+    return false;
+  },
+
+  preloadInstance() {
+    return false;
+  },
+
+  startSuspendingCommit() {
+    return null;
+  },
+
+  suspendInstance() {
+    // noop
+  },
+
+  waitForCommitToBeReady() {
+    return null;
+  },
+
+  NotPendingTransition,
+
+  HostTransitionContext,
+
+  resetFormInstance() {
+    // noop - miniapp doesn't have native form reset
+  },
+
+  bindToConsole(_methodName, fn) {
+    return fn;
+  },
+
+  scheduleMicrotask(callback) {
+    // React 19 requires scheduleMicrotask to execute synchronously for flushSyncWork to work
+    // Using queueMicrotask or direct call depending on environment
+    if (typeof queueMicrotask === 'function') {
+      queueMicrotask(callback);
+    } else if (!isUndefined(Promise)) {
+      Promise.resolve(null).then(callback).catch((error) => {
+        setTimeout(() => { throw error; });
+      });
+    } else {
+      // Fallback: execute synchronously
+      callback();
+    }
+  },
+
   clearContainer(element) {
     if (element.childNodes.length > 0) {
       element.textContent = '';
     }
   },
-
-  queueMicrotask: isUndefined(Promise)
-  ? setTimeout
-  : callback =>
-  Promise.resolve(null)
-    .then(callback)
-    .catch((error) => {
-      setTimeout(() => {
-        throw error;
-      });
-    }),
 
   shouldSetTextContent: returnFalse,
   prepareForCommit() { return null; },
@@ -161,7 +271,7 @@ const IceMiniappReconciler = Reconciler(hostConfig);
 if (process.env.NODE_ENV !== 'production') {
   const foundDevTools = IceMiniappReconciler.injectIntoDevTools({
     bundleType: 1,
-    version: '18.0.0',
+    version: '19.0.0',
     rendererPackageName: '@ice/miniapp-react-dom',
   });
   if (!foundDevTools) {

@@ -51,7 +51,7 @@
     "@ice/runtime": "workspace:^",
     "@remix-run/router": "^1.14.2",
     "@types/accept-language-parser": "^1.5.3",
-    "@types/react": "^18.0.33",
+    "@types/react": "^19.0.0",
     "cross-env": "^7.0.3",
     "webpack-dev-server": "4.15.0"
   },

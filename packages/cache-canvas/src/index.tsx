@@ -43,6 +43,7 @@ export type CacheCanvasProps = {
   className?: HTMLAttributes;
 };
 
+// TODO: React 19 可以移除 forwardRef，ref 作为普通 prop 传递
 export const CacheCanvas = forwardRef((props: CacheCanvasProps, ref) => {
   const { id, init, useCache = true, getSnapshot, fallback, style, className, bizID = '', ...rest } = props;
 

@@ -4,7 +4,6 @@ import { fileURLToPath } from 'url';
 import fs from 'fs-extra';
 import ncc from '@vercel/ncc';
 import chalk from 'chalk';
-import * as dts from 'dts-bundle';
 import glob from 'glob';
 import findUp from 'find-up';
 import tasks, { taskExternals } from './tasks';
@@ -15,6 +14,9 @@ process.cwd = () => path.join(cwd, '..');
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Use require() for CommonJS module dts-bundle
+const dtsBundle = require('dts-bundle').bundle;
 
 interface Options {
   pkgName?: string;
@@ -121,7 +123,7 @@ export async function packDependency(options: Options): Promise<void> {
       if (pkgJson.types) {
         dtsName = 'index.d.ts';
         console.log(chalk.green(`bundle dts file for ${pkgName || file}`));
-        dts.bundle({
+        dtsBundle({
           name: pkgJson.name,
           outputAsModuleFolder: true,
           out: path.join(targetPath, dtsName),

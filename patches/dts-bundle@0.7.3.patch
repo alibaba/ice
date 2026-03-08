@@ -1,0 +1,6 @@
+diff --git a/lib/index.ts b/lib/index.ts
+deleted file mode 100644
+index 6e744c4f6ea5632927addaa14e1f8da797de80b5..0000000000000000000000000000000000000000
+diff --git a/lib/tsconfig.json b/lib/tsconfig.json
+deleted file mode 100644
+index 79570d5df86ac3159621f25fd97ef06b52fcff8b..0000000000000000000000000000000000000000

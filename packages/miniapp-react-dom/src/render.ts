@@ -10,6 +10,23 @@ type Renderer = typeof IceMiniappReconciler;
 
 export type Callback = () => void | null | undefined;
 
+// Default error handlers for React 19
+const defaultOnUncaughtError = (error: Error) => {
+  console.error('Uncaught error:', error);
+};
+
+const defaultOnCaughtError = (error: Error) => {
+  console.error('Caught error:', error);
+};
+
+const defaultOnRecoverableError = (error: Error) => {
+  console.error('Recoverable error:', error);
+};
+
+const defaultOnDefaultTransitionIndicator = () => {
+  // noop
+};
+
 class Root {
   private renderer: Renderer;
   private internalRoot: OpaqueRoot;
@@ -17,17 +34,35 @@ class Root {
   public constructor(renderer: Renderer, domContainer: Element, isConcurrentRoot = false) {
     this.renderer = renderer;
     /** ConcurrentRoot & LegacyRoot: react-reconciler/src/ReactRootTags.js */
-    this.internalRoot = renderer.createContainer(domContainer, isConcurrentRoot ? 1 : 0, false, null);
+    // React 19 createContainer signature:
+    // createContainer(containerInfo, tag, hydrationCallbacks, isStrictMode,
+    //   concurrentUpdatesByDefaultOverride, identifierPrefix, onUncaughtError,
+    //   onCaughtError, onRecoverableError, onDefaultTransitionIndicator)
+    this.internalRoot = renderer.createContainer(
+      domContainer,
+      isConcurrentRoot ? 1 : 0, // LegacyRoot = 0, ConcurrentRoot = 1
+      null, // hydrationCallbacks
+      false, // isStrictMode
+      null, // concurrentUpdatesByDefaultOverride
+      null, // identifierPrefix
+      defaultOnUncaughtError,
+      defaultOnCaughtError,
+      defaultOnRecoverableError,
+      defaultOnDefaultTransitionIndicator,
+    );
   }
 
   public render(children: ReactNode, cb: Callback) {
     const { renderer, internalRoot } = this;
-    renderer.updateContainer(children, internalRoot, null, cb);
+    // In React 19, use updateContainerSync + flushSyncWork for synchronous rendering
+    renderer.updateContainerSync(children, internalRoot, null, cb);
+    renderer.flushSyncWork();
     return renderer.getPublicRootInstance(internalRoot);
   }
 
   public unmount(cb: Callback) {
-    this.renderer.updateContainer(null, this.internalRoot, null, cb);
+    this.renderer.updateContainerSync(null, this.internalRoot, null, cb);
+    this.renderer.flushSyncWork();
   }
 }
 
