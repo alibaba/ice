@@ -18,7 +18,7 @@ export default function Home() {
         console.log('Something has been shown.')
       }}
       onDisappear={() => {
-        console.log('Something has disappeard.')
+        console.log('Something has disappeared.')
       }}
     >
       Anything you want to show.
