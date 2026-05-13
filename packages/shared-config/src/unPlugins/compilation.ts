@@ -63,7 +63,7 @@ const compilationPlugin = (options: Options): UnpluginOptions => {
     return /(.*)src\/app.(ts|tsx|js|jsx)/.test(id);
   }
 
-  const extensionRegex = /\.(jsx?|tsx?|mjs)$/;
+  const extensionRegex = /\.(jsx?|tsx?|mjs|cjs)$/;
   return {
     name: 'compilation-plugin',
     transformInclude(id) {
