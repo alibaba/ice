@@ -227,7 +227,7 @@ const getConfig: GetConfig = async (options) => {
     module: {
       rules: [
         {
-          test: /\.(jsx?|tsx?|mjs)$/,
+          test: /\.(jsx?|tsx?|mjs|cjs)$/,
           ...(excludeRule ? { exclude: new RegExp(excludeRule) } : {}),
           use: {
             loader: 'builtin:compilation-loader',

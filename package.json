@@ -9,7 +9,7 @@
   "bugs": "https://github.com/alibaba/ice/issues",
   "scripts": {
     "prepare": "husky install",
-    "setup": "rm -rf node_modules packages/*/node_modules && pnpm install && pnpm prebundle && pnpm build",
+    "setup": "node scripts/clean-node-modules.js && pnpm install && pnpm prebundle && pnpm build",
     "setup-git": "tsx ./scripts/setupUser.ts",
     "rebuild": "pnpm install && pnpm run build",
     "watch": "pnpm --parallel --filter=./packages/* run watch",
