@@ -3,8 +3,9 @@
  */
 
 import { expect, it, describe, vi } from 'vitest';
-import React from 'react';
-import { render, renderHook } from '@testing-library/react';
+import React, { startTransition } from 'react';
+import { flushSync } from 'react-dom';
+import { act, render, renderHook } from '@testing-library/react';
 import {
   useState,
   useEffect,
@@ -74,6 +75,39 @@ describe('hooks', () => {
     });
     rerender();
     expect(result.current[0]).toEqual(11);
+  });
+
+  it('useState preserves a value update after a pending transition', async () => {
+    function App() {
+      const [visible, setVisible] = useState(true);
+      const [reopen, setReopen] = React.useState(false);
+
+      useEffect(() => {
+        if (reopen) {
+          setVisible(true);
+        }
+      }, [reopen]);
+
+      return (
+        <button
+          type="button"
+          onClick={() => {
+            startTransition(() => setVisible(false));
+            flushSync(() => setReopen(true));
+          }}
+        >
+          {visible ? 'visible' : 'hidden'}
+        </button>
+      );
+    }
+
+    const { getByRole } = render(<App />);
+    const button = getByRole('button');
+    await act(async () => {
+      button.click();
+    });
+
+    expect(button.textContent).toBe('visible');
   });
 
   it('useEffect', () => {

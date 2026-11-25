@@ -20,7 +20,6 @@ import {
   useState as _useState,
   createContext as _createContext,
 } from 'react';
-import is from './is.js';
 import { isFunction } from './type.js';
 
 /**
@@ -36,18 +35,14 @@ export function useState<S>(initialState: S | (() => S)): ReturnType<typeof _use
   if (isFunction(initialState)) {
     initialState = initialState();
   }
-  // The eagerState should be saved for filter shallow-equal value set.
   const stateHook = _useState(initialState);
   eagerState.current = stateHook[0];
-  // @NOTE: Rax will not re-render if set a same value.
   function updateState(newState: S) {
     if (isFunction(newState)) {
       newState = newState(eagerState.current);
     }
-    // Filter shallow-equal value set.
-    if (!is(newState, eagerState.current)) {
-      stateHook[1](newState);
-    }
+    // React can compare the value after accounting for pending updates.
+    stateHook[1](newState);
     eagerState.current = newState;
   }
 
